@@ -3,7 +3,7 @@ LOTECA X-RAY - BACKEND API
 Backend Flask para servir dados do Cartola FC e APIs futuras
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 import os
 from routes_brasileirao import bp_br
@@ -26,13 +26,14 @@ def create_app():
         "*"                       # Desenvolvimento
     ])
     
-    # Rota raiz
+    # Rota raiz - API info
     @app.route('/')
     def index():
         return jsonify({
             "service": "Loteca X-Ray API",
             "version": "1.0.0",
             "status": "online",
+            "frontend": "/loteca",
             "endpoints": {
                 "brasileirao": "/api/br/",
                 "internacional": "/api/int/", 
@@ -47,6 +48,15 @@ def create_app():
             },
             "documentation": "https://github.com/loteria-inteligente/x-ray-api"
         })
+    
+    # Rota principal - Servir frontend via Flask (SAME ORIGIN)
+    @app.route('/loteca')
+    def loteca_frontend():
+        """
+        Serve o frontend Loteca X-Ray via Flask
+        VANTAGEM: Same origin = sem problemas de CORS
+        """
+        return render_template('loteca.html')
     
     # Registrar blueprints
     app.register_blueprint(bp_br)
