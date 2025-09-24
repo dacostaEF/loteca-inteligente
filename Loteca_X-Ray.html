@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raio-X da Loteca - Loterias Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Font Awesome para ícones -->
+
+    <style>
+        /* CSS EMBUTIDO PARA UMA PÁGINA INDEPENDENTE */
+        
+        :root {
+            --cor-fundo: #12101a;
+            --cor-fundo-card: #1e1b29;
+            --cor-borda: #3a364f;
+            --cor-texto-principal: #e2e8f0;
+            --cor-texto-secundario: #94a3b8;
+            --cor-destaque-primaria: #A855F7; /* Lilás */
+            --cor-destaque-secundaria: #00E38C; /* Verde */
+            --cor-vantagem: #00E38C;
+            --cor-desvantagem: #F43F5E; /* Vermelho/Rosa */
+            --cor-equilibrio: #FBBF24; /* Amarelo */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo );
+            color: var(--cor-texto-principal);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--cor-borda);
+            margin-bottom: 2rem;
+        }
+
+        .header img.logo {
+            max-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--cor-destaque-primaria);
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--cor-texto-secundario);
+            max-width: 600px;
+            margin: 0.5rem auto 0;
+        }
+
+        /* Card de Análise do Jogo */
+        .game-card {
+            background-color: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .game-card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(42,35,64,.95), rgba(30,27,41,.95));
+        }
+
+        .game-card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cor-texto-principal);
+            text-align: center;
+        }
+        
+        .game-card-header .game-info {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+            margin-top: 0.5rem;
+        }
+
+        .game-card-body {
+            padding: 1.5rem;
+        }
+
+        /* Seção de Probabilidades */
+        .probabilities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .prob-item {
+            background-color: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .prob-item .label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--cor-texto-secundario);
+        }
+
+        .prob-item .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+        }
+        
+        .prob-item.col1 .value { color: var(--cor-destaque-secundaria); }
+        .prob-item.colX .value { color: var(--cor-equilibrio); }
+        .prob-item.col2 .value { color: var(--cor-destaque-primaria); }
+
+        /* Recomendação */
+        .recommendation {
+            background-color: rgba(0, 227, 140, 0.1);
+            border: 1px solid var(--cor-destaque-secundaria);
+            color: var(--cor-destaque-secundaria);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .recommendation strong {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* Tabela Raio-X */
+        .analysis-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-table th, .analysis-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        .analysis-table th {
+            color: var(--cor-texto-secundario);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .analysis-table td {
+            font-weight: 500;
+        }
+        
+        .analysis-table .team-header {
+            text-align: center;
+        }
+
+        .status-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        .status-icon.vantagem { color: var(--cor-vantagem); }
+        .status-icon.desvantagem { color: var(--cor-desvantagem); }
+        .status-icon.equilibrio { color: var(--cor-equilibrio); }
+
+        /* Conclusão do Analista */
+        .analyst-conclusion {
+            background-color: rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--cor-destaque-primaria);
+        }
+        
+        .analyst-conclusion h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--cor-destaque-primaria);
+            font-weight: 700;
+        }
+        
+        .analyst-conclusion p {
+            margin: 0;
+            line-height: 1.6;
+            color: var(--cor-texto-secundario);
+        }
+        
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--cor-borda);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+        }
+        
+        .footer a {
+            color: var(--cor-destaque-secundaria);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <img src="https://www.loteriasinteligente.com.br/static/img/Logo_LoteriasIntelitente.png" alt="Logo Loterias Inteligente" class="logo">
+            <h1>Raio-X da Loteca</h1>
+            <p>Análise estatística completa dos 14 jogos para te ajudar a montar um palpite mais inteligente. Cruzamos dados de performance, histórico e momento para calcular as probabilidades de cada confronto.</p>
+        </header>
+
+        <!-- JOGO 1: CORINTHIANS vs FLAMENGO -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 1: CORINTHIANS/SP vs FLAMENGO/RJ</h2>
+                <div class="game-info">Neo Química Arena | Brasileirão Série A | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1">
+                        <div class="label">Coluna 1 (Corinthians )</div>
+                        <div class="value">45%</div>
+                    </div>
+                    <div class="prob-item colX">
+                        <div class="label">Coluna X (Empate)</div>
+                        <div class="value">25%</div>
+                    </div>
+                    <div class="prob-item col2">
+                        <div class="label">Coluna 2 (Flamengo)</div>
+                        <div class="value">30%</div>
+                    </div>
+                </div>
+                <div class="recommendation">
+                    <strong>Recomendação Estatística: Coluna 1 (Corinthians)</strong> - Risco Médio
+                </div>
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Fator Analisado</th>
+                            <th class="team-header">Corinthians</th>
+                            <th class="team-header">Flamengo</th>
+                            <th>Análise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Forma (Últimos 5)</strong></td>
+                            <td class="team-header">V-E-V-D-V</td>
+                            <td class="team-header">V-V-E-E-D</td>
+                            <td><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Posição na Tabela</strong></td>
+                            <td class="team-header">5º</td>
+                            <td class="team-header">2º</td>
+                            <td><span class="status-icon desvantagem">▼</span>Vantagem Flamengo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Confronto Direto (H2H)</strong></td>
+                            <td class="team-header">2V - 1E - 2D</td>
+                            <td class="team-header">2V - 1E - 2D</td>
+                            <td><span class="status-icon equilibrio">▬</span>Equilíbrio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fator Casa</strong></td>
+                            <td class="team-header">80% aprov.</td>
+                            <td class="team-header">-</td>
+                            <td><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Apesar do Flamengo estar melhor posicionado na tabela, o Corinthians tem a vantagem por jogar em casa e apresentar uma forma recente ligeiramente superior. O equilíbrio no confronto direto sugere que o empate é uma possibilidade real, mas a força do Corinthians em seus domínios o coloca como favorito estatístico.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 2: FORTALEZA vs SPORT -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 2: FORTALEZA/CE vs SPORT/PE</h2>
+                <div class="game-info">Arena Castelão | Série B | Sábado</div>
+            </div>
+            <div class="game-card-body">
+                <!-- Aqui você repetiria a mesma estrutura do card anterior, mas com os dados do Jogo 2 -->
+                <div class="probabilities">
+                    <div class="prob-item col1">
+                        <div class="label">Coluna 1 (Fortaleza)</div>
+                        <div class="value">60%</div>
+                    </div>
+                    <div class="prob-item colX">
+                        <div class="label">Coluna X (Empate)</div>
+                        <div class="value">25%</div>
+                    </div>
+                    <div class="prob-item col2">
+                        <div class="label">Coluna 2 (Sport)</div>
+                        <div class="value">15%</div>
+                    </div>
+                </div>
+                <div class="recommendation">
+                    <strong>Recomendação Estatística: Coluna 1 (Fortaleza)</strong> - Risco Baixo
+                </div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O Fortaleza apresenta um favoritismo claro neste confronto. Além de jogar em casa, o time vive uma fase muito superior à do Sport e possui um histórico recente dominante no confronto direto. A aposta na Coluna 1 é a mais segura segundo os dados.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ... Repita a estrutura <div class="game-card">...</div> para os outros 12 jogos ... -->
+
+        <footer class="footer">
+            <p><strong>Aviso Importante:</strong> Esta é uma ferramenta de análise estatística. Loterias envolvem sorte. Jogue com responsabilidade.</p>
+            <p>&copy; 2025 <a href="https://www.loteriasinteligente.com.br/">Loterias Inteligente</a>. Todos os direitos reservados.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raio-X da Loteca - Loterias Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS EMBUTIDO PARA UMA PÁGINA INDEPENDENTE */
+        
+        :root {
+            --cor-fundo: #12101a;
+            --cor-fundo-card: #1e1b29;
+            --cor-borda: #3a364f;
+            --cor-texto-principal: #e2e8f0;
+            --cor-texto-secundario: #94a3b8;
+            --cor-destaque-primaria: #A855F7; /* Lilás */
+            --cor-destaque-secundaria: #00E38C; /* Verde */
+            --cor-vantagem: #00E38C;
+            --cor-desvantagem: #F43F5E; /* Vermelho/Rosa */
+            --cor-equilibrio: #FBBF24; /* Amarelo */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo );
+            color: var(--cor-texto-principal);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--cor-borda);
+            margin-bottom: 2rem;
+        }
+
+        .header img.logo {
+            max-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--cor-destaque-primaria);
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--cor-texto-secundario);
+            max-width: 600px;
+            margin: 0.5rem auto 0;
+        }
+
+        /* Card de Análise do Jogo */
+        .game-card {
+            background-color: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .game-card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(42,35,64,.95), rgba(30,27,41,.95));
+        }
+
+        .game-card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cor-texto-principal);
+            text-align: center;
+        }
+        
+        .game-card-header .game-info {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+            margin-top: 0.5rem;
+        }
+
+        .game-card-body {
+            padding: 1.5rem;
+        }
+
+        /* Seção de Probabilidades */
+        .probabilities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .prob-item {
+            background-color: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .prob-item .label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--cor-texto-secundario);
+        }
+
+        .prob-item .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+        }
+        
+        .prob-item.col1 .value { color: var(--cor-destaque-secundaria); }
+        .prob-item.colX .value { color: var(--cor-equilibrio); }
+        .prob-item.col2 .value { color: var(--cor-destaque-primaria); }
+
+        /* Recomendação */
+        .recommendation {
+            background-color: rgba(0, 227, 140, 0.1);
+            border: 1px solid var(--cor-destaque-secundaria);
+            color: var(--cor-destaque-secundaria);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .recommendation strong {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        /* Tabela Raio-X */
+        .analysis-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-table th, .analysis-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        .analysis-table th {
+            color: var(--cor-texto-secundario);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .analysis-table td {
+            font-weight: 500;
+        }
+        
+        .analysis-table .team-header {
+            text-align: center;
+        }
+
+        .status-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        .status-icon.vantagem { color: var(--cor-vantagem); }
+        .status-icon.desvantagem { color: var(--cor-desvantagem); }
+        .status-icon.equilibrio { color: var(--cor-equilibrio); }
+
+        /* Conclusão do Analista */
+        .analyst-conclusion {
+            background-color: rgba(0,0,0,0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--cor-destaque-primaria);
+        }
+        
+        .analyst-conclusion h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--cor-destaque-primaria);
+            font-weight: 700;
+        }
+        
+        .analyst-conclusion p {
+            margin: 0;
+            line-height: 1.6;
+            color: var(--cor-texto-secundario);
+        }
+        
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--cor-borda);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+        }
+        
+        .footer a {
+            color: var(--cor-destaque-secundaria);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <img src="https://www.loteriasinteligente.com.br/static/img/Logo_LoteriasIntelitente.png" alt="Logo Loterias Inteligente" class="logo">
+            <h1>Raio-X da Loteca</h1>
+            <p>Análise estatística completa dos 14 jogos para te ajudar a montar um palpite mais inteligente. Cruzamos dados de performance, histórico e momento para calcular as probabilidades de cada confronto.</p>
+        </header>
+
+        <!-- JOGO 1: CORINTHIANS vs FLAMENGO -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 1: CORINTHIANS/SP vs FLAMENGO/RJ</h2>
+                <div class="game-info">Neo Química Arena | Brasileirão Série A | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Corinthians )</div><div class="value">45%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">30%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Flamengo)</div><div class="value">25%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Corinthians)</strong> - Risco Médio</div>
+                <table class="analysis-table">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header">Corinthians</th><th class="team-header">Flamengo</th><th>Análise</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Forma (Últimos 5)</strong></td><td class="team-header">V-E-V-D-V</td><td class="team-header">V-V-E-E-D</td><td><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header">5º</td><td class="team-header">2º</td><td><span class="status-icon desvantagem">▼</span>Vantagem Flamengo</td></tr>
+                        <tr><td><strong>Confronto Direto (H2H)</strong></td><td class="team-header">2V-1E-2D</td><td class="team-header">2V-1E-2D</td><td><span class="status-icon equilibrio">▬</span>Equilíbrio</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header">80% aprov.</td><td class="team-header">-</td><td><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td></tr>
+                    </tbody>
+                </table>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Apesar do Flamengo estar melhor posicionado na tabela, o Corinthians tem a vantagem por jogar em casa e apresentar uma forma recente ligeiramente superior. O equilíbrio no confronto direto sugere que o empate é uma possibilidade real, mas a força do Corinthians em seus domínios o coloca como favorito estatístico.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 2: FORTALEZA vs SPORT -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 2: FORTALEZA/CE vs SPORT/PE</h2>
+                <div class="game-info">Arena Castelão | Série B | Sábado</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Fortaleza)</div><div class="value">60%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">25%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Sport)</div><div class="value">15%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Fortaleza)</strong> - Risco Baixo</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O Fortaleza apresenta um favoritismo claro neste confronto. Além de jogar em casa, o time vive uma fase muito superior à do Sport e possui um histórico recente dominante no confronto direto. A aposta na Coluna 1 é a mais segura segundo os dados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 3: JUVENTUDE vs INTERNACIONAL -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 3: JUVENTUDE/RS vs INTERNACIONAL/RS</h2>
+                <div class="game-info">Alfredo Jaconi | Brasileirão Série A | Sábado</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Juventude)</div><div class="value">20%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">35%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Internacional)</div><div class="value">45%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 2 (Internacional)</strong> - Risco Médio</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Clássico gaúcho com favoritismo para o visitante. O Internacional possui um elenco tecnicamente superior e melhor campanha. No entanto, o Juventude é forte em casa e clássicos costumam ser equilibrados, tornando o empate (Coluna X) uma aposta de valor a ser considerada (duplo X2).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 4: VASCO DA GAMA vs CRUZEIRO -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 4: VASCO DA GAMA/RJ vs CRUZEIRO/MG</h2>
+                <div class="game-info">São Januário | Brasileirão Série A | Sábado</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Vasco)</div><div class="value">40%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">35%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Cruzeiro)</div><div class="value">25%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Vasco)</strong> - Risco Alto</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Confronto de gigantes com leve favoritismo para o Vasco, impulsionado pelo fator casa em São Januário. Ambos os times vêm de campanhas irregulares, o que eleva a probabilidade de empate. É um jogo de risco, onde um duplo (1X) pode ser a melhor estratégia para cercar o resultado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 5: ATHLETICO/PR vs OPERARIO/PR -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 5: ATHLETICO/PR vs OPERARIO/PR</h2>
+                <div class="game-info">Ligga Arena | Campeonato Paranaense | Sábado</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Athletico)</div><div class="value">70%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">20%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Operário)</div><div class="value">10%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Athletico)</strong> - Risco Baixo</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Um dos maiores favoritos do concurso. O Athletico/PR é imbatível em sua arena e enfrenta um adversário de menor expressão. A diferença técnica, o fator casa e o histórico apontam para uma vitória tranquila do time mandante. É um dos "secos" mais confiáveis da rodada.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 6: ATLETICO/MG vs MIRASSOL/SP -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 6: ATLETICO/MG vs MIRASSOL/SP</h2>
+                <div class="game-info">Arena MRV | Brasileirão Série A | Sábado</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Atlético/MG)</div><div class="value">65%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">25%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Mirassol)</div><div class="value">10%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Atlético/MG)</strong> - Risco Baixo</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O Atlético Mineiro é amplamente favorito jogando em sua nova arena. Com um elenco muito superior e brigando na parte de cima da tabela, a probabilidade de um tropeço contra o Mirassol é estatisticamente baixa. Coluna 1 é a escolha lógica.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 7: GREMIO vs VITORIA -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 7: GREMIO/RS vs VITORIA/BA</h2>
+                <div class="game-info">Arena do Grêmio | Brasileirão Série A | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Grêmio)</div><div class="value">55%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">30%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Vitória)</div><div class="value">15%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Grêmio)</strong> - Risco Médio</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O Grêmio é favorito em casa, mas o Vitória costuma ser um adversário competitivo. A força da torcida e a qualidade técnica do time gaúcho pesam a favor da Coluna 1, mas a boa organização defensiva do time baiano pode levar a um empate.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 8: ASTON VILLA vs FULHAM -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 8: ASTON VILLA vs FULHAM</h2>
+                <div class="game-info">Villa Park | Premier League | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Aston Villa)</div><div class="value">50%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">25%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Fulham)</div><div class="value">25%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Aston Villa)</strong> - Risco Médio</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Jogando em casa, o Aston Villa tem um claro favoritismo. O time vem fazendo uma campanha sólida na Premier League. O Fulham é um time imprevisível, capaz de surpreender, mas a consistência e o fator casa dão ao Villa a vantagem estatística.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 9: BAHIA vs PALMEIRAS -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 9: BAHIA/BA vs PALMEIRAS/SP</h2>
+                <div class="game-info">Arena Fonte Nova | Brasileirão Série A | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Bahia)</div><div class="value">25%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">30%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Palmeiras)</div><div class="value">45%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 2 (Palmeiras)</strong> - Risco Médio</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Apesar do Bahia ser um mandante forte, o Palmeiras é um dos times mais consistentes do país, mesmo jogando fora. A superioridade técnica do elenco palmeirense o coloca como favorito, mas a força do Bahia na Fonte Nova torna o empate um resultado bastante plausível.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 10: FLUMINENSE vs BOTAFOGO -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 10: FLUMINENSE/RJ vs BOTAFOGO/RJ</h2>
+                <div class="game-info">Maracanã | Brasileirão Série A | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Fluminense)</div><div class="value">35%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">40%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Botafogo)</div><div class="value">25%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna X (Empate)</strong> - Risco Alto</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O clássico mais equilibrado da rodada. Ambos os times possuem estilos de jogo fortes e campanhas similares. O fator "campo neutro" (Maracanã) anula a vantagem de mandante. A alta probabilidade de empate faz da Coluna X a aposta estatisticamente mais provável para este confronto.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 11: CRICIUMA vs PAYSANDU -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 11: CRICIUMA/SC vs PAYSANDU/PA</h2>
+                <div class="game-info">Heriberto Hülse | Série B | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Criciúma)</div><div class="value">55%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">30%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Paysandu)</div><div class="value">15%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Criciúma)</strong> - Risco Médio</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O Criciúma é muito forte em seus domínios e faz uma campanha mais sólida na Série B. O Paysandu sofre com o desgaste da longa viagem e tem um desempenho irregular como visitante. O favoritismo é todo do time da casa.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 12: NEWCASTLE vs ARSENAL -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 12: NEWCASTLE vs ARSENAL</h2>
+                <div class="game-info">St. James' Park | Premier League | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Newcastle)</div><div class="value">30%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">30%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Arsenal)</div><div class="value">40%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 2 (Arsenal)</strong> - Risco Alto</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Jogo de altíssimo nível. O Arsenal é tecnicamente superior e briga pelo título, o que lhe confere um leve favoritismo. Contudo, o Newcastle em casa é um dos adversários mais difíceis da liga. Jogo com tendência a gols e resultado imprevisível. Um duplo (X2) é altamente recomendado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 13: BRAGANTINO vs SANTOS -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 13: BRAGANTINO/SP vs SANTOS/SP</h2>
+                <div class="game-info">Nabi Abi Chedid | Brasileirão Série A | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Bragantino)</div><div class="value">50%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">30%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Santos)</div><div class="value">20%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Bragantino)</strong> - Risco Médio</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>O Bragantino tem um projeto mais consolidado e um time mais entrosado, além de ser muito forte em casa. O Santos, apesar da camisa pesada, vive um momento de maior instabilidade. O favoritismo estatístico recai sobre o mandante.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 14: BARCELONA vs REAL SOCIEDAD -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <h2>JOGO 14: BARCELONA vs REAL SOCIEDAD</h2>
+                <div class="game-info">Camp Nou | La Liga | Domingo</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Barcelona)</div><div class="value">60%</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value">25%</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Real Sociedad)</div><div class="value">15%</div></div>
+                </div>
+                <div class="recommendation"><strong>Recomendação Estatística: Coluna 1 (Barcelona)</strong> - Risco Baixo</div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista (IA)</h4>
+                    <p>Jogando em casa, o Barcelona é o grande favorito. A Real Sociedad é uma equipe qualificada, mas o histórico no Camp Nou e a diferença de investimento pesam muito. A vitória do Barcelona é o resultado mais provável para fechar o concurso.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p><strong>Aviso Importante:</strong> Esta é uma ferramenta de análise estatística. Loterias envolvem sorte. Jogue com responsabilidade.</p>
+            <p>&copy; 2025 <a href="https://www.loteriasinteligente.com.br/">Loterias Inteligente</a>. Todos os direitos reservados.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
