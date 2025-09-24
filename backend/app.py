@@ -1,0 +1,105 @@
+"""
+LOTECA X-RAY - BACKEND API
+Backend Flask para servir dados do Cartola FC e APIs futuras
+"""
+
+from flask import Flask, jsonify
+from flask_cors import CORS
+import os
+from routes_brasileirao import bp_br
+from routes_internacional import bp_int
+
+def create_app():
+    """Criar e configurar a aplicação Flask"""
+    app = Flask(__name__)
+    
+    # Configurações
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'loteca-xray-dev-key')
+    app.config['DEBUG'] = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
+    
+    # CORS - permitir requisições do frontend
+    CORS(app, origins=[
+        "http://localhost:3000",  # React dev
+        "http://localhost:8080",  # Vue dev  
+        "http://127.0.0.1:5500",  # Live Server
+        "file://*",               # Arquivos locais
+        "*"                       # Desenvolvimento
+    ])
+    
+    # Rota raiz
+    @app.route('/')
+    def index():
+        return jsonify({
+            "service": "Loteca X-Ray API",
+            "version": "1.0.0",
+            "status": "online",
+            "endpoints": {
+                "brasileirao": "/api/br/",
+                "internacional": "/api/int/", 
+                "health_br": "/api/br/health",
+                "health_int": "/api/int/health",
+                "clubes": "/api/br/clubes",
+                "stats": "/api/br/clube/{id}/stats",
+                "confronto": "/api/br/confronto/{time1}/{time2}",
+                "leagues": "/api/int/leagues",
+                "fixtures": "/api/int/league/{league}/fixtures",
+                "analysis": "/api/int/fixture/{id}/analysis"
+            },
+            "documentation": "https://github.com/loteria-inteligente/x-ray-api"
+        })
+    
+    # Registrar blueprints
+    app.register_blueprint(bp_br)
+    app.register_blueprint(bp_int)
+    
+    # Error handlers
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            "success": False,
+            "error": "Endpoint não encontrado",
+            "available_endpoints": [
+                "/api/br/clubes",
+                "/api/br/clube/{id}/stats", 
+                "/api/br/confronto/{time1}/{time2}",
+                "/api/br/health"
+            ]
+        }), 404
+    
+    @app.errorhandler(500)
+    def internal_error(error):
+        return jsonify({
+            "success": False,
+            "error": "Erro interno do servidor",
+            "message": "Verifique os logs para mais detalhes"
+        }), 500
+    
+    return app
+
+if __name__ == '__main__':
+    app = create_app()
+    
+    # Configurações de desenvolvimento
+    port = int(os.getenv('PORT', 5000))
+    host = os.getenv('HOST', '127.0.0.1')
+    
+    print(f"""
+🚀 LOTECA X-RAY API INICIANDO...
+
+📡 Servidor: http://{host}:{port}
+🌐 Endpoints disponíveis:
+   • GET /api/br/health - Status da API
+   • GET /api/br/clubes - Lista de clubes
+   • GET /api/br/clube/8/stats - Stats do Corinthians
+   • GET /api/br/confronto/corinthians/flamengo - Comparar times
+
+🧪 Para testar:
+   curl http://{host}:{port}/api/br/health
+    """)
+    
+    app.run(
+        host=host,
+        port=port,
+        debug=app.config['DEBUG'],
+        threaded=True
+    )
