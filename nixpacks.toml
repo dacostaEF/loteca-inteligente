@@ -1,0 +1,14 @@
+[phases.setup]
+nixPkgs = ['python310']
+
+[phases.install]
+cmds = ['pip install -r backend/requirements.txt']
+
+[phases.build]
+cmds = ['echo "Build phase completed"']
+
+[start]
+cmd = 'cd backend && python app.py'
+
+[variables]
+PORT = '5000'
