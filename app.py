@@ -22,7 +22,9 @@ os.chdir(backend_path)
 
 # Import and run the main Flask app
 try:
-    from app import app
+    from app import create_app
+    
+    app = create_app()
     
     # Configurações para Railway (baseado na experiência anterior)
     if __name__ == "__main__":
