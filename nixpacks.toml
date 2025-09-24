@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ['python310']
+nixPkgs = ['python310', 'python310Packages.pip']
 
 [phases.install]
-cmds = ['pip install -r backend/requirements.txt']
+cmds = ['python -m pip install -r backend/requirements.txt']
 
 [phases.build]
 cmds = ['echo "Build phase completed"']
