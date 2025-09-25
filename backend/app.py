@@ -26,9 +26,19 @@ def create_app():
         "*"                       # Desenvolvimento
     ])
     
-    # Rota raiz - API info
+    # Rota raiz - Redireciona automaticamente para o frontend
     @app.route('/')
     def index():
+        """
+        Redireciona automaticamente para o frontend
+        Usuário vai direto para a aplicação
+        """
+        from flask import redirect, url_for
+        return redirect(url_for('loteca_frontend'))
+    
+    # Rota de API info (para desenvolvedores)
+    @app.route('/api')
+    def api_info():
         return jsonify({
             "service": "Loteca X-Ray API",
             "version": "1.0.0",
