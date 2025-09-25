@@ -193,6 +193,32 @@ def clear_cache():
     _CACHE = {}
     print("[Cartola] Cache limpo")
 
+# NOVA FUNÇÃO: Buscar partidas REAIS conforme sugestão do especialista
+def partidas() -> List[Dict[str, Any]]:
+    """
+    CORREÇÃO CRÍTICA: Busca partidas REAIS da API do Cartola FC
+    Endpoint: https://api.cartolafc.globo.com/partidas
+    Resolve problema identificado: dados não eram da rodada atual
+    """
+    try:
+        print("[Cartola] 🎯 Buscando PARTIDAS REAIS da rodada atual...")
+        data = _get(f"{API}/partidas")
+        
+        if isinstance(data, list):
+            print(f"[Cartola] ✅ Encontradas {len(data)} partidas REAIS!")
+            return data
+        elif isinstance(data, dict) and 'partidas' in data:
+            partidas_list = data['partidas']
+            print(f"[Cartola] ✅ Encontradas {len(partidas_list)} partidas REAIS!")
+            return partidas_list
+        else:
+            print(f"[Cartola] ⚠️ Formato inesperado: {type(data)} - Retornando lista vazia")
+            return []
+            
+    except Exception as e:
+        print(f"[Cartola] ❌ Erro ao buscar partidas reais: {e}")
+        return []
+
 # Função para verificar saúde da API
 def health_check() -> Dict[str, Any]:
     """

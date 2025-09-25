@@ -107,8 +107,16 @@ class LotecaProviderNew:
         print("[Loteca-NEW] 🧠 Usando fallback inteligente com dados REAIS...")
         
         try:
-            # Buscar clubes REAIS do Cartola FC
-            from .cartola_provider import clubes
+            # SOLUÇÃO DO ESPECIALISTA: Usar API /partidas do Cartola para dados REAIS
+            from .cartola_provider import partidas, clubes
+            
+            # Prioridade 1: Buscar partidas REAIS da rodada atual
+            partidas_reais = partidas()
+            if partidas_reais:
+                print(f"[Loteca-NEW] 🎯 Usando {len(partidas_reais)} partidas REAIS do Cartola!")
+                return self._convert_cartola_partidas_to_loteca(partidas_reais)
+            
+            # Fallback: Buscar clubes para gerar confrontos realistas
             cartola_clubes = clubes()
             
             if not cartola_clubes:
@@ -345,8 +353,66 @@ class LotecaProviderNew:
         else:
             return "Empate ou análise cuidadosa"
     
+    def _convert_cartola_partidas_to_loteca(self, partidas_cartola: List[Dict]) -> List[Dict[str, Any]]:
+        """
+        NOVA FUNÇÃO: Converte partidas do Cartola FC para formato Loteca
+        Implementa solução sugerida pelo especialista
+        """
+        print("[Loteca-NEW] 🔄 Convertendo partidas do Cartola para formato Loteca...")
+        
+        loteca_matches = []
+        
+        for i, partida in enumerate(partidas_cartola[:14]):  # Máximo 14 jogos para Loteca
+            try:
+                # Extrair dados da partida do Cartola
+                time_casa = partida.get('clube_casa_nome', partida.get('time_casa', f'Casa {i+1}'))
+                time_fora = partida.get('clube_visitante_nome', partida.get('time_fora', f'Fora {i+1}'))
+                
+                # Converter para formato Loteca
+                loteca_match = {
+                    "id": i + 1,
+                    "home": time_casa,
+                    "away": time_fora,
+                    "competition": partida.get('competicao', 'Brasileirão Série A'),
+                    "country": "Brasil",
+                    "is_brazilian": True,
+                    "date": self._format_cartola_date(partida),
+                    "stadium": partida.get('local', f'Estádio {time_casa}'),
+                    "_cartola_id": partida.get('partida_id', partida.get('id')),
+                    "_rodada": partida.get('rodada'),
+                    "_data_source": "cartola_partidas_real",
+                    "_last_update": datetime.now().isoformat()
+                }
+                
+                # Enriquecer com dados reais do Cartola
+                enriched_match = self._add_real_cartola_data(loteca_match)
+                loteca_matches.append(enriched_match)
+                
+                print(f"[Loteca-NEW] ✅ Convertida: {time_casa} vs {time_fora}")
+                
+            except Exception as e:
+                print(f"[Loteca-NEW] ⚠️ Erro ao converter partida {i+1}: {e}")
+                continue
+        
+        print(f"[Loteca-NEW] ✅ Convertidas {len(loteca_matches)} partidas REAIS do Cartola!")
+        return loteca_matches
+    
+    def _format_cartola_date(self, partida: Dict) -> str:
+        """Formata data da partida do Cartola"""
+        try:
+            # Tentar extrair data real da partida
+            if 'data' in partida:
+                return partida['data']
+            elif 'horario' in partida:
+                return partida['horario']
+            else:
+                return datetime.now().strftime("%A, %H:%M")
+        except:
+            return "Data a confirmar"
+
     def _generate_realistic_date(self) -> str:
         """Gera data realística para o jogo"""
+        import random
         today = datetime.now()
         game_date = today + timedelta(days=random.randint(0, 7))
         return game_date.strftime("%A, %H:%M")
