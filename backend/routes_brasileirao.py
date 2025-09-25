@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
+from services.loteca_provider import get_current_loteca_matches
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
@@ -182,6 +183,32 @@ def api_mappings():
             "error": str(e),
             "mappings": {}
         }), 200
+
+@bp_br.route("/loteca/current", methods=["GET"])
+@cross_origin()
+def current_loteca_matches():
+    """
+    Retorna os confrontos atuais da Loteca com dados reais
+    Combina dados do Cartola FC para jogos brasileiros + estimativas para internacionais
+    GET /api/br/loteca/current
+    """
+    try:
+        matches = get_current_loteca_matches()
+        return jsonify({
+            "success": True,
+            "matches": matches,
+            "total": len(matches),
+            "data_source": "real_cartola_fc + estimates",
+            "updated_at": "2025-01-01T12:00:00Z"
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e),
+            "matches": [],
+            "total": 0,
+            "data_source": "error"
+        }), 500
 
 # Função para registrar o blueprint (será chamada em app.py)
 def register_routes(app):

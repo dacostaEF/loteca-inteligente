@@ -151,7 +151,7 @@ def get_clube_mappings() -> Dict[str, int]:
     """
     return {
         'corinthians': 8,
-        'flamengo': 13,
+        'flamengo': 262,
         'fortaleza': 131,
         'sport': 14,
         'juventude': 15,
