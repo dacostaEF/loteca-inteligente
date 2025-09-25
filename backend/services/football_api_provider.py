@@ -36,8 +36,13 @@ def _get_football_api(endpoint: str, params: Optional[Dict] = None) -> Dict[str,
     
     # Se não tiver API key, usar dados mock
     if not API_FOOTBALL_KEY:
-        print(f"[Football-API] Sem API key, usando dados mock para {endpoint}")
-        return get_mock_data(endpoint, params)
+        print(f"[Football-API] ⚠️ SEM API KEY - Usando dados MOCK para {endpoint}")
+        print(f"[Football-API] 🔧 Para dados reais, configure API_FOOTBALL_KEY no Railway")
+        mock_data = get_mock_data(endpoint, params)
+        # Adicionar flag indicando que são dados mock
+        mock_data["_data_source"] = "mock"
+        mock_data["_warning"] = "Dados simulados - Configure API_FOOTBALL_KEY para dados reais"
+        return mock_data
     
     # Fazer requisição real
     try:
@@ -53,10 +58,14 @@ def _get_football_api(endpoint: str, params: Optional[Dict] = None) -> Dict[str,
         
         data = response.json()
         
+        # Adicionar flag indicando dados reais
+        data["_data_source"] = "api_football_real"
+        data["_timestamp"] = datetime.now().isoformat()
+        
         # Armazenar no cache
         _CACHE[cache_key] = (time.time() + ttl, data)
         
-        print(f"[Football-API] ✅ Sucesso: {len(data.get('response', []))} itens")
+        print(f"[Football-API] ✅ DADOS REAIS: {len(data.get('response', []))} itens")
         return data
         
     except Exception as e:

@@ -24,6 +24,13 @@ def _get(url: str, params: Optional[Dict] = None) -> Dict[str, Any]:
     # Headers para autenticação (se disponível)
     headers = {"X-GLB-Token": GLB_TOKEN} if GLB_TOKEN else {}
     
+    # Log sobre autenticação
+    if GLB_TOKEN:
+        print(f"[Cartola] ✅ Usando token de autenticação (dados completos)")
+    else:
+        print(f"[Cartola] ⚠️ SEM TOKEN - Dados podem estar limitados")
+        print(f"[Cartola] 🔧 Configure GLOBO_X_GLB_TOKEN para dados completos")
+    
     try:
         r = requests.get(url, params=params, headers=headers, timeout=TIMEOUT)
         r.raise_for_status()

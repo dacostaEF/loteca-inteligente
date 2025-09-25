@@ -52,9 +52,11 @@ class LotecaProvider:
             return cached_data
         
         try:
-            # Por enquanto, vamos usar confrontos reais conhecidos do Brasileirão
-            # TODO: Integrar com API oficial da Caixa ou fonte de dados esportivos
-            matches = self._get_realistic_matches()
+            # NOVA ABORDAGEM: Buscar jogos REAIS da rodada atual
+            # Prioridade 1: API oficial da Caixa (futuro)
+            # Prioridade 2: Cartola FC + dados atuais
+            # Prioridade 3: Fallback inteligente
+            matches = self._get_current_round_matches()
             
             # Enriquecer com dados reais do Cartola FC
             enriched_matches = []

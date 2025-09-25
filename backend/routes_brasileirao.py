@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
-from services.loteca_provider import get_current_loteca_matches
+from services.loteca_provider_new import get_current_loteca_matches
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
@@ -193,21 +193,30 @@ def current_loteca_matches():
     GET /api/br/loteca/current
     """
     try:
-        matches = get_current_loteca_matches()
+        # Usar provider CORRIGIDO que implementa as correções identificadas
+        result = get_current_loteca_matches()
+        
+        # O novo provider já retorna um dict completo
+        if isinstance(result, dict):
+            return jsonify(result)
+        
+        # Fallback se retornar lista (compatibilidade)
         return jsonify({
             "success": True,
-            "matches": matches,
-            "total": len(matches),
-            "data_source": "real_cartola_fc + estimates",
-            "updated_at": "2025-01-01T12:00:00Z"
+            "matches": result,
+            "total": len(result),
+            "data_source": "corrected_provider",
+            "note": "Dados corrigidos - sem hardcoded, com dados reais quando possível"
         })
+        
     except Exception as e:
         return jsonify({
             "success": False,
             "error": str(e),
             "matches": [],
             "total": 0,
-            "data_source": "error"
+            "data_source": "error",
+            "note": "Configure APIs para dados 100% reais"
         }), 500
 
 # Função para registrar o blueprint (será chamada em app.py)
