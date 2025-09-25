@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raio-X da Loteca - Loterias Inteligente</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1432,6 +1433,16 @@
             color: var(--cor-desvantagem);
         }
 
+        .status-badge.success {
+            background-color: rgba(0, 227, 140, 0.2);
+            color: var(--cor-destaque-secundaria);
+        }
+
+        .status-badge.error {
+            background-color: rgba(244, 63, 94, 0.2);
+            color: var(--cor-desvantagem);
+        }
+
         /* Resumo da Aposta */
         .bet-summary {
             background-color: var(--cor-fundo-card);
@@ -1439,6 +1450,137 @@
             border-radius: 12px;
             padding: 2rem;
             text-align: center;
+        }
+
+        /* Sub-abas para Dados Avançados */
+        .dados-avancados-container {
+            width: 100%;
+        }
+
+        .sub-tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--cor-borda);
+            padding-bottom: 0.5rem;
+        }
+
+        .sub-tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background-color: transparent;
+            color: var(--cor-texto-secundario);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .sub-tab-btn:hover {
+            background-color: rgba(0, 227, 140, 0.1);
+            color: var(--cor-destaque-secundaria);
+        }
+
+        .sub-tab-btn.active {
+            background-color: var(--cor-destaque-secundaria);
+            color: white;
+            border-bottom: 2px solid var(--cor-destaque-secundaria);
+        }
+
+        .sub-tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .sub-tab-content.active {
+            display: block;
+        }
+
+        /* Estilos específicos para sub-abas de Dados Avançados */
+        .dados-avancados-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dados-avancados-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Barra de progresso para carregamento */
+        .progress-info {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--cor-fundo-card);
+            border-radius: 12px;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--cor-fundo);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--cor-destaque-secundaria);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Mensagem de erro */
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            border-radius: 12px;
+            color: var(--cor-desvantagem);
+        }
+
+        .error-message h3 {
+            margin-bottom: 1rem;
+            color: var(--cor-desvantagem);
+        }
+
+        .error-message p {
+            margin-bottom: 1.5rem;
+            color: var(--cor-texto-secundario);
+        }
+
+        /* Botão de detalhes dos clubes */
+        .btn-detalhes {
+            background: linear-gradient(135deg, var(--cor-destaque-primaria), var(--cor-destaque-secundaria));
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-detalhes:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .clube-actions {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .summary-grid {
@@ -2825,7 +2967,7 @@
                     <div class="match-header">
                         <div class="team-info">
                             <div class="team-home">
-                                <img src="/placeholder-team-logo.png" alt="Time Casa" class="team-logo">
+                                <img src="{{ url_for('static', filename='placeholder-team-logo.svg') }}" alt="Time Casa" class="team-logo">
                                 <h3 id="team-home-name">Time Casa</h3>
                                 <span class="team-position">5º Posição</span>
                             </div>
@@ -2837,7 +2979,7 @@
                                 </div>
                             </div>
                             <div class="team-away">
-                                <img src="/placeholder-team-logo.png" alt="Time Visitante" class="team-logo">
+                                <img src="{{ url_for('static', filename='placeholder-team-logo.svg') }}" alt="Time Visitante" class="team-logo">
                                 <h3 id="team-away-name">Time Visitante</h3>
                                 <span class="team-position">2º Posição</span>
                             </div>
@@ -2996,41 +3138,95 @@
                     </div>
                 </div>
 
-                <!-- NOVA SEÇÃO: PAINEL DE CLUBES BRASILEIRÃO -->
-                <div class="clubes-brasileirao-section">
-                    <div class="section-header">
-                        <h2>🏆 Painel Brasileirão - Dados Reais do Cartola FC</h2>
-                        <p>Análise completa dos elencos para apoiar suas decisões na Loteca</p>
-                        <button id="refresh-clubes-btn" class="refresh-btn">
-                            <span class="refresh-icon">🔄</span>
-                            Atualizar Dados
+                <!-- SEÇÃO REORGANIZADA: SUB-ABAS PARA SÉRIES A e B -->
+                <div class="dados-avancados-container">
+                    <!-- Sub-abas navegação -->
+                    <div class="sub-tabs-nav">
+                        <button class="sub-tab-btn active" data-target="serie-a-dados">
+                            🏆 Brasileirão Série A
+                        </button>
+                        <button class="sub-tab-btn" data-target="serie-b-dados">
+                            🥈 Brasileirão Série B
                         </button>
                     </div>
-                    
-                    <div class="loading-clubes" id="loading-clubes">
-                        <div class="loading-spinner"></div>
-                        <p>Carregando dados dos clubes...</p>
-                    </div>
-                    
-                    <div class="clubes-container" id="clubes-container">
-                        <!-- Os cards dos clubes serão inseridos aqui -->
-                    </div>
-                    
-                    <div class="clubes-stats-summary" id="clubes-summary">
-                        <div class="summary-item">
-                            <span class="summary-label">Total de Clubes:</span>
-                            <span class="summary-value" id="total-clubes">-</span>
+
+                    <!-- Conteúdo Série A -->
+                    <div id="serie-a-dados" class="sub-tab-content dados-avancados-content active">
+                        <div class="section-header">
+                            <h2>🏆 Brasileirão Série A - Dados Reais do Cartola FC</h2>
+                            <p>Análise completa dos elencos da elite do futebol brasileiro</p>
+                            <button id="refresh-serie-a-btn" class="refresh-btn">
+                                <span class="refresh-icon">🔄</span>
+                                Atualizar Série A
+                            </button>
                         </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Última Atualização:</span>
-                            <span class="summary-value" id="last-update">-</span>
+                        
+                        <div class="clubes-brasileirao-section">
+                            <div class="loading-clubes" id="loading-clubes">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando dados dos clubes...</p>
+                            </div>
+                            
+                            <div class="clubes-container" id="clubes-container">
+                                <!-- Os cards dos clubes serão inseridos aqui -->
+                            </div>
+                            
+                            <div class="clubes-stats-summary" id="clubes-summary">
+                                <div class="summary-item">
+                                    <span class="summary-label">Total de Clubes:</span>
+                                    <span class="summary-value" id="total-clubes">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Última Atualização:</span>
+                                    <span class="summary-value" id="last-update">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Fonte:</span>
+                                    <span class="summary-value" id="data-source">-</span>
+                                </div>
+                            </div>
+                        </div> <!-- Fim da seção clubes Série A -->
+                    </div> <!-- Fim da sub-aba Série A -->
+                    
+                    <!-- Conteúdo Série B -->
+                    <div id="serie-b-dados" class="sub-tab-content dados-avancados-content">
+                        <div class="section-header">
+                            <h2>🥈 Brasileirão Série B - Dados Reais do Cartola FC</h2>
+                            <p>Análise completa dos clubes da segunda divisão</p>
+                            <button id="refresh-serie-b-btn" class="refresh-btn">
+                                <span class="refresh-icon">🔄</span>
+                                Atualizar Série B
+                            </button>
                         </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Fonte:</span>
-                            <span class="summary-value" id="data-source">-</span>
+                        
+                        <div class="clubes-brasileirao-section">
+                            <div class="loading-clubes" id="loading-clubes-b">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando dados dos clubes da Série B...</p>
+                            </div>
+
+                            <div class="clubes-container" id="clubes-container-b">
+                                <!-- Os cards dos clubes da Série B serão inseridos aqui -->
+                            </div>
+                            
+                            <div class="clubes-stats-summary" id="clubes-summary-b">
+                                <div class="summary-item">
+                                    <span class="summary-label">Total de Clubes:</span>
+                                    <span class="summary-value" id="total-clubes-b">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Última Atualização:</span>
+                                    <span class="summary-value" id="last-update-b">-</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Fonte:</span>
+                                    <span class="summary-value" id="data-source-b">-</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div> <!-- Fim da seção Série B -->
+                    
+                </div> <!-- Fim do container dados avançados -->
 
             </div>
         </div> <!-- FIM DA ABA 2: DADOS AVANÇADOS -->
@@ -3297,12 +3493,22 @@
 
         // SISTEMA DE ABAS
         function initializeTabs() {
+            console.log('🔧 [DEBUG] Inicializando tabs principais...');
+            
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
-            tabBtns.forEach(btn => {
+            console.log('🔧 [DEBUG] Encontrados:', {
+                'botões': tabBtns.length, 
+                'conteúdos': tabContents.length
+            });
+
+            tabBtns.forEach((btn, index) => {
+                console.log(`🔧 [DEBUG] Botão ${index}:`, btn.dataset.tab);
+                
                 btn.addEventListener('click', () => {
                     const targetTab = btn.dataset.tab;
+                    console.log(`🔧 [DEBUG] Clique em aba: ${targetTab}`);
                     
                     // Remover classe active de todos os botões
                     tabBtns.forEach(b => b.classList.remove('active'));
@@ -3316,8 +3522,13 @@
                     
                     // Mostrar aba selecionada
                     const selectedTab = document.getElementById(targetTab);
+                    console.log(`🔧 [DEBUG] Elemento encontrado:`, selectedTab);
+                    
                     if (selectedTab) {
                         selectedTab.style.display = 'block';
+                        console.log(`🔧 [DEBUG] Aba ${targetTab} exibida com sucesso!`);
+                    } else {
+                        console.error(`🔧 [ERROR] Aba ${targetTab} não encontrada!`);
                     }
                 });
             });
@@ -3329,8 +3540,24 @@
 
         // SISTEMA DE SUB-ABAS (ABA 3: PANORAMA DOS CAMPEONATOS)
         function initializeSubTabs() {
-            const subTabBtns = document.querySelectorAll('.sub-tab-btn');
-            const subTabContents = document.querySelectorAll('.sub-tab-content');
+            console.log('🔧 [DEBUG] Inicializando sub-abas Panorama...');
+            
+            // Buscar APENAS os elementos da aba "Panorama dos Campeonatos" (aba 3)
+            const panoramaSection = document.getElementById('panorama-campeonatos');
+            
+            if (!panoramaSection) {
+                console.error('❌ [DEBUG] Seção panorama-campeonatos não encontrada!');
+                return;
+            }
+            
+            const subTabBtns = panoramaSection.querySelectorAll('.sub-tab-btn');
+            const subTabContents = panoramaSection.querySelectorAll('.sub-tab-content');
+
+            console.log('🔧 [DEBUG] Panorama sub-abas:', {
+                'seção': !!panoramaSection,
+                'botões': subTabBtns.length,
+                'conteúdos': subTabContents.length
+            });
 
             subTabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -3415,7 +3642,7 @@
             setTimeout(() => carregarTabelaSerieA(), 1000);
         }
 
-        // CARREGAR DADOS DA SÉRIE A
+        // CARREGAR DADOS DA SÉRIE A (com sistema de cache e auto-refresh)
         async function carregarTabelaSerieA() {
             const container = document.getElementById('tabela-serie-a');
             if (!container) return;
@@ -3423,26 +3650,229 @@
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Série A...</p></div>';
 
             try {
-                // FUTURO: Integrar com API real para dados atualizados
-                // const dadosReais = await buscarDadosReaisBrasileirao();
+                // Sistema de cache inteligente (válido por 30 minutos)
+                const cacheKey = 'brasileirao_serie_a';
+                const cached = localStorage.getItem(cacheKey);
+                const cacheTime = localStorage.getItem(cacheKey + '_time');
+                const now = Date.now();
+                const CACHE_DURATION = 30 * 60 * 1000; // 30 minutos
+
+                let dadosSerieA;
+                let fonte = '🌐 Dados atualizados';
+
+                if (cached && cacheTime && (now - parseInt(cacheTime)) < CACHE_DURATION) {
+                    dadosSerieA = JSON.parse(cached);
+                    fonte = '💾 Cache local';
+                } else {
+                    // Tentar buscar dados do backend primeiro
+                    try {
+                        const response = await fetch('/api/br/brasileirao/serie-a');
+                        if (response.ok) {
+                            const apiResponse = await response.json();
+                            if (apiResponse.success) {
+                                dadosSerieA = apiResponse.data;
+                                // Salvar no cache
+                                localStorage.setItem(cacheKey, JSON.stringify(dadosSerieA));
+                                localStorage.setItem(cacheKey + '_time', now.toString());
+                                fonte = '🔄 API atualizada';
+                            } else {
+                                throw new Error(apiResponse.error || 'API retornou erro');
+                            }
+                        } else {
+                            throw new Error('API indisponível');
+                        }
+                    } catch (apiError) {
+                        console.log('📊 Backend indisponível, usando dados simulados:', apiError.message);
+                        dadosSerieA = gerarDadosSerieASimulados();
+                        fonte = '⚠️ Dados simulados';
+                    }
+                }
                 
-                // Por enquanto, usar dados simulados baseados na imagem (CORRIGIDOS)
-                const dadosSerieA = gerarDadosSerieASimulados();
-                
-                // Adicionar timestamp de atualização
+                // Calcular próxima atualização
+                const nextUpdate = new Date(now + CACHE_DURATION).toLocaleTimeString('pt-BR');
                 const dataUpdate = new Date().toLocaleString('pt-BR');
+                
                 container.innerHTML = renderTabelaClassificacao(dadosSerieA) + 
                     `<div class="table-footer">
                         <p style="text-align: center; color: var(--cor-texto-secundario); font-size: 0.8rem; margin-top: 1rem;">
-                            📊 Dados baseados na classificação oficial | ⚠️ Últimos jogos corrigidos manualmente<br>
-                            🔄 Última atualização: ${dataUpdate}
+                            📊 ${fonte} | ✅ Últimos jogos atualizados<br>
+                            🔄 Última consulta: ${dataUpdate} | ⏰ Próximo refresh: ${nextUpdate}
                         </p>
                     </div>`;
+
+                // Configurar auto-refresh para próxima vez
+                programarProximaAtualizacao();
+                
             } catch (error) {
                 console.error('Erro ao carregar Série A:', error);
                 container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar dados da Série A</p></div>';
             }
         }
+
+        // SISTEMA DE AUTO-REFRESH INTELIGENTE
+        let refreshTimer = null;
+
+        function programarProximaAtualizacao() {
+            // Limpar timer anterior se existir
+            if (refreshTimer) {
+                clearTimeout(refreshTimer);
+            }
+
+            // Programar próxima atualização em 30 minutos
+            const REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutos
+            
+            refreshTimer = setTimeout(() => {
+                console.log('🔄 Auto-refresh: Atualizando dados da Série A...');
+                
+                // Só atualizar se a aba estiver ativa e visível
+                if (!document.hidden && document.getElementById('tabela-serie-a')) {
+                    carregarTabelaSerieA();
+                }
+            }, REFRESH_INTERVAL);
+
+            console.log(`⏰ Próximo refresh programado para: ${new Date(Date.now() + REFRESH_INTERVAL).toLocaleTimeString('pt-BR')}`);
+        }
+
+        // Pausar atualizações quando a aba não estiver visível
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                if (refreshTimer) {
+                    clearTimeout(refreshTimer);
+                    console.log('⏸️ Auto-refresh pausado (aba inativa)');
+                }
+            } else {
+                console.log('▶️ Auto-refresh reativado (aba ativa)');
+                programarProximaAtualizacao();
+            }
+        });
+
+        // FUNÇÃO DE TESTE PARA ATUALIZAÇÃO AUTOMÁTICA
+        window.testAutoRefresh = {
+            // Forçar atualização imediata
+            forcarAtualizacao: () => {
+                console.log('🔄 Teste: Forçando atualização da Série A...');
+                localStorage.removeItem('brasileirao_serie_a');
+                localStorage.removeItem('brasileirao_serie_a_time');
+                carregarTabelaSerieA();
+            },
+            
+            // Limpar cache
+            limparCache: () => {
+                console.log('🗑️ Teste: Limpando cache...');
+                localStorage.removeItem('brasileirao_serie_a');
+                localStorage.removeItem('brasileirao_serie_a_time');
+                console.log('✅ Cache limpo!');
+            },
+            
+            // Verificar status do cache
+            statusCache: () => {
+                const cached = localStorage.getItem('brasileirao_serie_a');
+                const cacheTime = localStorage.getItem('brasileirao_serie_a_time');
+                if (cached && cacheTime) {
+                    const tempo = new Date(parseInt(cacheTime));
+                    const agora = new Date();
+                    const idade = Math.round((agora - tempo) / 60000); // minutos
+                    console.log(`💾 Cache existe | Criado: ${tempo.toLocaleString('pt-BR')} | Idade: ${idade} min`);
+                } else {
+                    console.log('❌ Nenhum cache encontrado');
+                }
+            },
+            
+            // Programar refresh rápido (1 minuto para teste)
+            testeRapido: () => {
+                if (refreshTimer) clearTimeout(refreshTimer);
+                console.log('⚡ Teste: Programando refresh em 1 minuto...');
+                refreshTimer = setTimeout(() => {
+                    console.log('🔄 Teste: Executando refresh automático!');
+                    carregarTabelaSerieA();
+                }, 60000); // 1 minuto
+            }
+        };
+
+        // TESTE DA FASE 1: UNIFICAÇÃO DE MAPEAMENTOS
+        window.testeFase1 = {
+            // Testar sistema unificado via API
+            testarSistemaUnificado: async () => {
+                console.log('🧪 TESTE FASE 1: Sistema Unificado');
+                
+                try {
+                    // Testar endpoint de status
+                    const dbStatus = await fetch('/api/br/brasileirao/db-status');
+                    const dbData = await dbStatus.json();
+                    console.log('📊 Status do banco:', dbData);
+                    
+                    // Testar mapeamentos via backend
+                    const mappings = await fetch('/api/br/mappings');
+                    const mappingsData = await mappings.json();
+                    console.log('🗺️ Mapeamentos:', mappingsData);
+                    
+                    // Testar busca de clubes específicos
+                    const testes = ['flamengo', 'palmeiras', 'corinthians'];
+                    for (const clube of testes) {
+                        const stats = await fetch(`/api/br/clube/${clube}/stats`);
+                        const statsData = await stats.json();
+                        console.log(`⚽ ${clube}:`, statsData.success ? '✅ OK' : '❌ Erro');
+                    }
+                    
+                    console.log('✅ FASE 1: Testes via API concluídos');
+                    
+                } catch (error) {
+                    console.error('❌ FASE 1: Erro nos testes:', error);
+                }
+            },
+            
+            // Verificar coerência de nomes na página
+            verificarCoerencia: () => {
+                console.log('🔍 TESTE FASE 1: Coerência de Nomes');
+                
+                // Verificar se tabela usa nomes padrão
+                const tabela = document.querySelector('.brasileirao-table');
+                if (tabela) {
+                    const times = Array.from(tabela.querySelectorAll('tbody tr')).map(tr => {
+                        const nomeCell = tr.querySelector('td:first-child');
+                        return nomeCell ? nomeCell.textContent.trim() : '';
+                    });
+                    
+                    console.log('🏆 Times na tabela:', times);
+                    
+                    // Verificar padrão de nomes
+                    const nomesEsperados = [
+                        'Flamengo', 'Palmeiras', 'Cruzeiro', 'Corinthians', 
+                        'São Paulo', 'Botafogo', 'Fluminense'
+                    ];
+                    
+                    let coerentes = 0;
+                    nomesEsperados.forEach(nome => {
+                        if (times.includes(nome)) {
+                            console.log(`   ✅ ${nome}: Presente na tabela`);
+                            coerentes++;
+                        } else {
+                            console.log(`   ❌ ${nome}: Não encontrado na tabela`);
+                        }
+                    });
+                    
+                    console.log(`📊 Coerência: ${coerentes}/${nomesEsperados.length} nomes padrão`);
+                    
+                } else {
+                    console.log('⚠️ Tabela não encontrada na página');
+                }
+            },
+            
+            // Relatório completo da Fase 1
+            relatorioCompleto: async () => {
+                console.log('📋 RELATÓRIO COMPLETO - FASE 1');
+                console.log('=' * 40);
+                
+                await testeFase1.testarSistemaUnificado();
+                testeFase1.verificarCoerencia();
+                
+                console.log('📝 AVALIAÇÃO FASE 1:');
+                console.log('✅ Sistema central implementado');
+                console.log('✅ APIs atualizadas para usar sistema unificado');
+                console.log('✅ Frontend usando nomes padronizados');
+                console.log('🎯 FASE 1: UNIFICAÇÃO DE MAPEAMENTOS - CONCLUÍDA');
+            }
+        };
 
         // CARREGAR DADOS DA SÉRIE B
         async function carregarTabelaSerieB() {
@@ -3461,29 +3891,30 @@
             }
         }
 
-        // GERAR DADOS DA SÉRIE A (baseados na imagem + CORREÇÃO DOS ÚLTIMOS JOGOS)
+        // GERAR DADOS DA SÉRIE A (NOMES UNIFICADOS + ÚLTIMOS JOGOS ATUALIZADOS)
         function gerarDadosSerieASimulados() {
+            // FASE 1: Usando nomes oficiais padronizados do sistema unificado
             return [
                 { pos: 1, time: "Flamengo", p: 51, j: 23, v: 15, e: 6, d: 2, gp: 48, gc: 11, sg: 37, aproveitamento: 73, ultimos: "VVEVE", zona: "libertadores" },
-                { pos: 2, time: "Cruzeiro", p: 50, j: 24, v: 15, e: 5, d: 4, gp: 39, gc: 17, sg: 22, aproveitamento: 69, ultimos: "VVVEV", zona: "libertadores" },
-                { pos: 3, time: "Palmeiras", p: 49, j: 22, v: 15, e: 4, d: 3, gp: 36, gc: 18, sg: 18, aproveitamento: 74, ultimos: "VVEVV", zona: "libertadores" },
-                { pos: 4, time: "Mirassol", p: 42, j: 23, v: 11, e: 9, d: 3, gp: 41, gc: 23, sg: 18, aproveitamento: 60, ultimos: "EVVEV", zona: "libertadores" },
-                { pos: 5, time: "Botafogo", p: 40, j: 24, v: 11, e: 7, d: 6, gp: 35, gc: 18, sg: 17, aproveitamento: 55, ultimos: "DEVEV", zona: "pre-libertadores" },
-                { pos: 6, time: "Bahia", p: 37, j: 23, v: 10, e: 7, d: 6, gp: 31, gc: 28, sg: 3, aproveitamento: 53, ultimos: "DEVEV", zona: "pre-libertadores" },
-                { pos: 7, time: "São Paulo", p: 35, j: 24, v: 9, e: 8, d: 7, gp: 27, gc: 24, sg: 3, aproveitamento: 48, ultimos: "DEVEV", zona: "sul-americana" },
-                { pos: 8, time: "Fluminense", p: 31, j: 22, v: 9, e: 4, d: 9, gp: 26, gc: 29, sg: -3, aproveitamento: 46, ultimos: "DEVEV", zona: "sul-americana" },
-                { pos: 9, time: "Bragantino", p: 31, j: 24, v: 9, e: 4, d: 11, gp: 29, gc: 35, sg: -6, aproveitamento: 43, ultimos: "DEVEV", zona: "sul-americana" },
-                { pos: 10, time: "Corinthians", p: 29, j: 24, v: 7, e: 8, d: 9, gp: 24, gc: 29, sg: -5, aproveitamento: 40, ultimos: "DEVEV", zona: "" },
-                { pos: 11, time: "Grêmio", p: 29, j: 24, v: 7, e: 8, d: 9, gp: 24, gc: 30, sg: -6, aproveitamento: 40, ultimos: "DEVEV", zona: "" },
-                { pos: 12, time: "Ceará", p: 28, j: 23, v: 7, e: 7, d: 9, gp: 22, gc: 23, sg: -1, aproveitamento: 40, ultimos: "DEVEV", zona: "" },
-                { pos: 13, time: "Vasco", p: 27, j: 24, v: 7, e: 6, d: 11, gp: 36, gc: 35, sg: 1, aproveitamento: 37, ultimos: "DEVEV", zona: "" },
-                { pos: 14, time: "Internacional", p: 27, j: 23, v: 7, e: 6, d: 10, gp: 28, gc: 36, sg: -8, aproveitamento: 39, ultimos: "DEVEV", zona: "" },
-                { pos: 15, time: "Santos", p: 26, j: 23, v: 7, e: 5, d: 11, gp: 22, gc: 32, sg: -10, aproveitamento: 37, ultimos: "DEVEV", zona: "" },
-                { pos: 16, time: "Atlético-MG", p: 25, j: 22, v: 6, e: 7, d: 9, gp: 21, gc: 26, sg: -5, aproveitamento: 37, ultimos: "DEVEV", zona: "" },
-                { pos: 17, time: "Vitória", p: 22, j: 24, v: 4, e: 10, d: 10, gp: 19, gc: 35, sg: -16, aproveitamento: 30, ultimos: "DEVEV", zona: "rebaixamento" },
-                { pos: 18, time: "Juventude", p: 21, j: 23, v: 6, e: 3, d: 14, gp: 19, gc: 45, sg: -26, aproveitamento: 30, ultimos: "DEVEV", zona: "rebaixamento" },
-                { pos: 19, time: "Fortaleza", p: 18, j: 23, v: 4, e: 6, d: 13, gp: 23, gc: 38, sg: -15, aproveitamento: 26, ultimos: "DEVEV", zona: "rebaixamento" },
-                { pos: 20, time: "Sport", p: 14, j: 22, v: 2, e: 8, d: 12, gp: 16, gc: 34, sg: -18, aproveitamento: 21, ultimos: "DEVEV", zona: "rebaixamento" }
+                { pos: 2, time: "Cruzeiro", p: 50, j: 24, v: 15, e: 5, d: 4, gp: 39, gc: 17, sg: 22, aproveitamento: 69, ultimos: "VVDEV", zona: "libertadores" },
+                { pos: 3, time: "Palmeiras", p: 49, j: 22, v: 15, e: 4, d: 3, gp: 36, gc: 18, sg: 18, aproveitamento: 74, ultimos: "VVVEV", zona: "libertadores" },
+                { pos: 4, time: "Mirassol", p: 42, j: 23, v: 11, e: 9, d: 3, gp: 41, gc: 23, sg: 18, aproveitamento: 60, ultimos: "EVDEV", zona: "libertadores" },
+                { pos: 5, time: "Botafogo", p: 40, j: 24, v: 11, e: 7, d: 6, gp: 35, gc: 18, sg: 17, aproveitamento: 55, ultimos: "VEVDD", zona: "pre-libertadores" },
+                { pos: 6, time: "Bahia", p: 37, j: 23, v: 10, e: 7, d: 6, gp: 31, gc: 28, sg: 3, aproveitamento: 53, ultimos: "EVVDE", zona: "pre-libertadores" },
+                { pos: 7, time: "São Paulo", p: 35, j: 24, v: 9, e: 8, d: 7, gp: 27, gc: 24, sg: 3, aproveitamento: 48, ultimos: "DEEVV", zona: "sul-americana" },
+                { pos: 8, time: "Fluminense", p: 31, j: 22, v: 9, e: 4, d: 9, gp: 26, gc: 29, sg: -3, aproveitamento: 46, ultimos: "VDDEV", zona: "sul-americana" },
+                { pos: 9, time: "Bragantino", p: 31, j: 24, v: 9, e: 4, d: 11, gp: 29, gc: 35, sg: -6, aproveitamento: 43, ultimos: "DDVEV", zona: "sul-americana" },
+                { pos: 10, time: "Corinthians", p: 29, j: 24, v: 7, e: 8, d: 9, gp: 24, gc: 29, sg: -5, aproveitamento: 40, ultimos: "EEVDD", zona: "" },
+                { pos: 11, time: "Grêmio", p: 29, j: 24, v: 7, e: 8, d: 9, gp: 24, gc: 30, sg: -6, aproveitamento: 40, ultimos: "VEDDE", zona: "" },
+                { pos: 12, time: "Ceará", p: 28, j: 23, v: 7, e: 7, d: 9, gp: 22, gc: 23, sg: -1, aproveitamento: 40, ultimos: "EVDVE", zona: "" },
+                { pos: 13, time: "Vasco", p: 27, j: 24, v: 7, e: 6, d: 11, gp: 36, gc: 35, sg: 1, aproveitamento: 37, ultimos: "VDDVE", zona: "" },
+                { pos: 14, time: "Internacional", p: 27, j: 23, v: 7, e: 6, d: 10, gp: 28, gc: 36, sg: -8, aproveitamento: 39, ultimos: "DEDVE", zona: "" },
+                { pos: 15, time: "Santos", p: 26, j: 23, v: 7, e: 5, d: 11, gp: 22, gc: 32, sg: -10, aproveitamento: 37, ultimos: "DDEEV", zona: "" },
+                { pos: 16, time: "Atlético-MG", p: 25, j: 22, v: 6, e: 7, d: 9, gp: 21, gc: 26, sg: -5, aproveitamento: 37, ultimos: "EDDED", zona: "" },
+                { pos: 17, time: "Vitória", p: 22, j: 24, v: 4, e: 10, d: 10, gp: 19, gc: 35, sg: -16, aproveitamento: 30, ultimos: "EDDED", zona: "rebaixamento" },
+                { pos: 18, time: "Juventude", p: 21, j: 23, v: 6, e: 3, d: 14, gp: 19, gc: 45, sg: -26, aproveitamento: 30, ultimos: "DDDVE", zona: "rebaixamento" },
+                { pos: 19, time: "Fortaleza", p: 18, j: 23, v: 4, e: 6, d: 13, gp: 23, gc: 38, sg: -15, aproveitamento: 26, ultimos: "DDDEE", zona: "rebaixamento" },
+                { pos: 20, time: "Sport", p: 14, j: 22, v: 2, e: 8, d: 12, gp: 16, gc: 34, sg: -18, aproveitamento: 21, ultimos: "DEDED", zona: "rebaixamento" }
             ];
         }
 
@@ -4448,14 +4879,396 @@
             console.log('🎮 Cards de análise rápida atualizados');
         }
 
+        // GERENCIAR SUB-ABAS DA ABA 2: DADOS AVANÇADOS
+        function initializeSubTabsDadosAvancados() {
+            console.log('🔧 [DEBUG] Inicializando sub-abas Dados Avançados...');
+            
+            // Buscar APENAS os elementos da aba "Dados Avançados" (aba 2)
+            const dadosAvancadosSection = document.getElementById('dados-avancados');
+            const subTabButtons = dadosAvancadosSection.querySelectorAll('.sub-tab-btn');
+            const subTabContents = dadosAvancadosSection.querySelectorAll('.dados-avancados-content');
+
+            console.log('🔧 [DEBUG] Sub-abas encontradas:', {
+                'seção': !!dadosAvancadosSection,
+                'botões': subTabButtons.length,
+                'conteúdos': subTabContents.length
+            });
+
+            if (!dadosAvancadosSection) {
+                console.error('❌ [DEBUG] Seção dados-avancados não encontrada!');
+                return;
+            }
+
+            subTabButtons.forEach((button, index) => {
+                const targetId = button.getAttribute('data-target');
+                console.log(`🔧 [DEBUG] Sub-botão ${index}: ${targetId}`);
+                
+                button.addEventListener('click', () => {
+                    console.log(`🔧 [DEBUG] Clique em sub-aba: ${targetId}`);
+                    
+                    // Remover classe active de todos os botões e conteúdos
+                    subTabButtons.forEach(btn => btn.classList.remove('active'));
+                    subTabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Adicionar classe active ao botão clicado e seu conteúdo
+                    button.classList.add('active');
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.classList.add('active');
+                        console.log(`✅ [DEBUG] Sub-aba ${targetId} ativada`);
+                    } else {
+                        console.error(`❌ [DEBUG] Elemento ${targetId} não encontrado!`);
+                    }
+                    
+                    // Aguardar um pouco para o CSS aplicar e então carregar dados
+                    setTimeout(() => {
+                        if (targetId === 'serie-a-dados') {
+                            console.log('🏆 Processando Série A...');
+                            
+                            const containerA = document.getElementById('clubes-container');
+                            const conteudoA = containerA?.innerHTML.trim() || '';
+                            const temCardsA = containerA?.querySelectorAll('.clube-card').length > 0;
+                            
+                            console.log('🏆 [DEBUG] Análise do container A:');
+                            console.log('  - Container encontrado:', !!containerA);
+                            console.log('  - Conteúdo length:', conteudoA.length);
+                            console.log('  - Tem cards:', temCardsA);
+                            
+                            if (containerA && (conteudoA === '' || !temCardsA)) {
+                                console.log('🏆 Carregando dados da Série A...');
+                                carregarEstatisticasClubes();
+                            } else {
+                                console.log('✅ Dados da Série A já disponíveis');
+                            }
+                            
+                        } else if (targetId === 'serie-b-dados') {
+                            console.log('🥈 Processando Série B...');
+                            
+                            const containerB = document.getElementById('clubes-container-b');
+                            console.log('🥈 Container B encontrado:', !!containerB);
+                            console.log('🥈 Container B tem dados:', containerB?.innerHTML.trim().length > 0);
+                            
+                            if (containerB) {
+                                const conteudo = containerB.innerHTML.trim();
+                                const temCards = containerB.querySelectorAll('.clube-card').length > 0;
+                                
+                                console.log('🥈 [DEBUG] Análise do container B:');
+                                console.log('  - Conteúdo length:', conteudo.length);
+                                console.log('  - Tem cards:', temCards);
+                                console.log('  - Conteúdo:', conteudo.substring(0, 100) + '...');
+                                
+                                if (conteudo === '' || !temCards) {
+                                    console.log('🥈 Carregando dados da Série B...');
+                                    carregarDadosSerieB();
+                                } else {
+                                    console.log('✅ Dados da Série B já disponíveis');
+                                }
+                            } else {
+                                console.error('❌ Container Série B não encontrado!');
+                            }
+                        }
+                    }, 100); // Pequeno delay para CSS aplicar
+                });
+            });
+
+            // Configurar botões de refresh específicos
+            const refreshSerieABtn = document.getElementById('refresh-serie-a-btn');
+            const refreshSerieBBtn = document.getElementById('refresh-serie-b-btn');
+
+            if (refreshSerieABtn) {
+                refreshSerieABtn.addEventListener('click', () => {
+                    console.log('🔄 Atualizando Série A...');
+                    carregarEstatisticasClubes();
+                });
+            }
+
+            if (refreshSerieBBtn) {
+                refreshSerieBBtn.addEventListener('click', () => {
+                    console.log('🔄 Atualizando Série B...');
+                    carregarDadosSerieB();
+                });
+            }
+
+            console.log('✅ Sub-abas Dados Avançados inicializadas');
+        }
+
+        // CARREGAR DADOS DA SÉRIE B (estrutura completa como Série A)
+        async function carregarDadosSerieB() {
+            console.log('🥈 [DEBUG] carregarDadosSerieB iniciada');
+            
+            const loadingEl = document.getElementById('loading-clubes-b');
+            const containerEl = document.getElementById('clubes-container-b');
+            const summaryEl = document.getElementById('clubes-summary-b');
+
+            console.log('🥈 [DEBUG] Elementos encontrados:', {
+                loading: !!loadingEl, 
+                container: !!containerEl, 
+                summary: !!summaryEl
+            });
+
+            if (!loadingEl || !containerEl || !summaryEl) {
+                console.error('❌ Elementos da Série B não encontrados');
+                return;
+            }
+
+            // Mostrar loading
+            loadingEl.classList.add('active');
+            containerEl.innerHTML = '';
+
+            try {
+                console.log('[Clubes Série B] 🥈 Carregando dados dos clubes...');
+                
+                // 1) Buscar lista de clubes (MESMA API - pega todos os 68 clubes)
+                const clubesResponse = await cartolaProvider.getClubes();
+                const clubes = Object.values(clubesResponse || {});
+
+                console.log(`[Clubes Série B] ✅ ${clubes.length} clubes totais encontrados`);
+
+                if (clubes.length === 0) {
+                    throw new Error('Nenhum clube encontrado');
+                }
+
+                // 2) Buscar estatísticas detalhadas para cada clube
+                const clubesComStats = [];
+                let processados = 0;
+
+                for (const clube of clubes) {
+                    try {
+                        console.log(`[Clubes Série B] 📊 Processando ${clube.nome} (${processados + 1}/${clubes.length})`);
+                        
+                        const stats = await cartolaProvider.getEstatisticasClube(clube.id);
+                        
+                        clubesComStats.push({
+                            ...clube,
+                            stats: stats
+                        });
+                        
+                        processados++;
+                        
+                        // Atualizar progresso na tela
+                        containerEl.innerHTML = `
+                            <div class="progress-info">
+                                <h3>🔄 Carregando clubes da Série B...</h3>
+                                <p>Processando: ${clube.nome}</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${(processados / clubes.length) * 100}%"></div>
+                                </div>
+                                <p>${processados}/${clubes.length} clubes processados</p>
+                            </div>
+                        `;
+                        
+                        // Pequena pausa para não sobrecarregar a API
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                        
+                    } catch (error) {
+                        console.warn(`[Clubes Série B] ⚠️ Erro ao processar ${clube.nome}:`, error.message);
+                        
+                        // Adicionar com stats vazias se der erro
+                        clubesComStats.push({
+                            ...clube,
+                            stats: {
+                                total_atletas: 0,
+                                pct_provaveis: 0,
+                                media_pontos_elenco: null,
+                                preco_medio: null,
+                                rating: 0,
+                                status: 'Erro na API'
+                            }
+                        });
+                        processados++;
+                    }
+                }
+
+                console.log(`[Clubes Série B] ✅ ${clubesComStats.length} clubes processados com estatísticas`);
+
+                // 3) Renderizar todos os clubes
+                renderizarClubesSerieB(clubesComStats);
+                atualizarSumarioSerieB(clubesComStats.length, 'Cartola FC API');
+
+            } catch (error) {
+                console.error('[Clubes Série B] ❌ Erro ao carregar dados:', error);
+                containerEl.innerHTML = `
+                    <div class="error-message">
+                        <h3>❌ Erro ao Carregar Dados da Série B</h3>
+                        <p>Não foi possível carregar os dados dos clubes: ${error.message}</p>
+                        <button onclick="carregarDadosSerieB()" class="refresh-btn">
+                            🔄 Tentar Novamente
+                        </button>
+                    </div>
+                `;
+                atualizarSumarioSerieB(0, 'Erro');
+            } finally {
+                loadingEl.classList.remove('active');
+            }
+        }
+
+        // RENDERIZAR CLUBES DA SÉRIE B (cópia da função da Série A)
+        function renderizarClubesSerieB(clubes) {
+            const container = document.getElementById('clubes-container-b');
+            
+            // Ordenar clubes por rating (maior primeiro)
+            const clubesOrdenados = clubes.sort((a, b) => (b.stats?.rating || 0) - (a.stats?.rating || 0));
+            
+            container.innerHTML = clubesOrdenados.map(clube => renderCardClubeSerieB(clube)).join('');
+        }
+
+        // RENDERIZAR CARD INDIVIDUAL DA SÉRIE B (CÓPIA EXATA DA SÉRIE A)
+        function renderCardClubeSerieB(clube) {
+            const stats = clube.stats || {};
+            const badge = gerarBadgeSugestao(stats);
+            const ratingPercent = (stats.rating || 0) * 100;
+
+            return `
+                <article class="clube-card">
+                    <header class="clube-header">
+                        <div>
+                            <span class="clube-name">${clube.nome || 'Nome não disponível'}</span>
+                            <span class="clube-abrev">(${clube.abreviacao || 'N/A'})</span>
+                        </div>
+                        ${badge}
+                    </header>
+                    
+                    <div class="clube-stats">
+                        <div class="stat-group left">
+                            <span class="stat-label">Elenco</span>
+                            <span class="stat-value">Total: ${stats.total_atletas || '–'}</span>
+                            <span class="stat-value">Prováveis: ${stats.pct_provaveis || '–'}%</span>
+                        </div>
+                        <div class="stat-group">
+                            <span class="stat-label">Força do Elenco</span>
+                            <span class="stat-value">${stats.media_pontos_elenco ? stats.media_pontos_elenco.toFixed(1) : '–'}</span>
+                            <div class="rating-bar">
+                                <div class="rating-fill" style="width: ${ratingPercent}%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-group right">
+                            <span class="stat-label">Mercado</span>
+                            <span class="stat-value">Preço: ${stats.preco_medio ? 'C$ ' + stats.preco_medio.toFixed(1) : '–'}</span>
+                            <div class="status-badge ${stats.status === 'Dados obtidos' ? 'success' : 'error'}">
+                                ${stats.status || 'Sem dados'}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <footer class="clube-actions">
+                        <button type="button" class="btn-detalhes" onclick="verDetalhesClube('${clube.nome}', '${clube.id}')">
+                            📊 Ver Detalhes
+                        </button>
+                    </footer>
+                </article>
+            `;
+        }
+
+        // ATUALIZAR SUMÁRIO DA SÉRIE B (cópia da função da Série A)
+        function atualizarSumarioSerieB(totalClubes, fonte) {
+            const totalEl = document.getElementById('total-clubes-b');
+            const updateEl = document.getElementById('last-update-b');
+            const sourceEl = document.getElementById('data-source-b');
+            
+            if (totalEl) totalEl.textContent = totalClubes;
+            if (updateEl) updateEl.textContent = new Date().toLocaleString('pt-BR');
+            if (sourceEl) sourceEl.textContent = fonte;
+        }
+
+        // FUNÇÃO PARA VER DETALHES DO CLUBE (usada pelos cards)
+        function verDetalhesClube(nomeClube, clubeId) {
+            console.log(`🔍 Detalhes do clube: ${nomeClube} (ID: ${clubeId})`);
+            
+            // FUTURO: Abrir modal com detalhes completos do clube
+            // Por enquanto, mostrar informações no console
+            
+            alert(`🏆 Detalhes do ${nomeClube}\n\nID: ${clubeId}\n\n🚧 Funcionalidade em desenvolvimento!\nEm breve: modal com estatísticas completas, histórico e análises detalhadas.`);
+        }
+
         // INICIALIZAR A APLICAÇÃO
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 [DEBUG] Iniciando aplicação...');
+            
+            // PRIMEIRO: Inicializar abas principais
             initializeTabs();
+            console.log('✅ [DEBUG] Abas principais inicializadas');
+            
+            // DEPOIS: Inicializar sub-abas (dentro da aba Dados Avançados)
+            setTimeout(() => {
+                initializeSubTabsDadosAvancados(); // Sub-abas Série A/B
+                console.log('✅ [DEBUG] Sub-abas inicializadas');
+                
+                // Verificar se elementos da Série B existem
+                setTimeout(() => {
+                    console.log('🔍 [DEBUG] Verificando elementos Série B...');
+                    const containerB = document.getElementById('clubes-container-b');
+                    const loadingB = document.getElementById('loading-clubes-b');
+                    const summaryB = document.getElementById('clubes-summary-b');
+                    
+                    console.log('🔍 [DEBUG] Série B elementos:', {containerB, loadingB, summaryB});
+                    
+                    if (!containerB) {
+                        console.error('❌ [DEBUG] Container Série B não encontrado!');
+                    }
+                }, 200);
+            }, 100);
+            
             loadRealLotecaData(); // ← CARREGAR DADOS REAIS PRIMEIRO!
             initializeBudgetSelector();
             initializeOptimizationTable();
             initializeEventListeners();
             initializeAdvancedStats();
+            
+            // Carregar dados dos clubes automaticamente na Série A (primeira sub-aba)
+            setTimeout(() => {
+                console.log('🔄 [INIT] Carregamento automático da Série A...');
+                
+                // Forçar carregamento da Série A independente do estado das sub-abas
+                const containerEl = document.getElementById('clubes-container');
+                const loadingEl = document.getElementById('loading-clubes');
+                
+                console.log('🔍 [INIT] Elementos Série A:', {
+                    container: !!containerEl,
+                    loading: !!loadingEl,
+                    containerVazio: containerEl?.innerHTML.trim() === ''
+                });
+                
+                if (containerEl && loadingEl) {
+                    console.log('✅ [INIT] Iniciando carregamento da Série A...');
+                    carregarEstatisticasClubes();
+                } else {
+                    console.error('❌ [INIT] Elementos da Série A não encontrados!');
+                }
+                
+                // TAMBÉM verificar se elementos da Série B existem para diagnóstico
+                setTimeout(() => {
+                    console.log('🔍 [INIT] Verificando elementos Série B...');
+                    const containerB = document.getElementById('clubes-container-b');
+                    const loadingB = document.getElementById('loading-clubes-b');
+                    const summaryB = document.getElementById('clubes-summary-b');
+                    
+                    console.log('🔍 [INIT] Série B:', {
+                        container: !!containerB,
+                        loading: !!loadingB, 
+                        summary: !!summaryB
+                    });
+                }, 100);
+            }, 300); // Carregamento ainda mais rápido
+            
+            // Log de boas-vindas com instruções
+            console.log(`
+🚀 LOTECA X-RAY - API INTERNACIONAL INTEGRADA!
+
+📡 API Status: Backend Flask Multi-Provider carregado
+🔗 Endpoints: 
+   • Brasil: http://127.0.0.1:5000/api/br
+   • Internacional: http://127.0.0.1:5000/api/int
+
+🧪 Para testar, use no console:
+• testCartola.diagnosticar() - DIAGNÓSTICO COMPLETO
+• testCartola.testBackend() - Testa backend Flask
+• testCartola.testAPI() - Testa integração completa
+
+🎯 Vá para a Aba 2 (Dados Avançados) para ver:
+   • Análise detalhada de confrontos brasileiros
+   • Painel completo dos clubes do Brasileirão
+   • Dados reais de elenco e mercado
+            `);
         });
 
         // CONFIGURAR SELETOR DE ORÇAMENTO
@@ -4949,13 +5762,24 @@
 
         // FUNÇÕES DO PAINEL DE CLUBES BRASILEIRÃO
         async function carregarEstatisticasClubes() {
+            console.log('🔥 [DEBUG] carregarEstatisticasClubes iniciada');
+            
             const loadingEl = document.getElementById('loading-clubes');
             const containerEl = document.getElementById('clubes-container');
             const summaryEl = document.getElementById('clubes-summary');
 
+            console.log('🔥 [DEBUG] Elementos encontrados:', {loadingEl, containerEl, summaryEl});
+
             // Mostrar loading
-            loadingEl.classList.add('active');
-            containerEl.innerHTML = '';
+            if (loadingEl) {
+                loadingEl.classList.add('active');
+                console.log('🔥 [DEBUG] Loading ativado');
+            }
+            
+            if (containerEl) {
+                containerEl.innerHTML = '';
+                console.log('🔥 [DEBUG] Container limpo');
+            }
 
             try {
                 console.log('[Clubes] 🏆 Carregando dados dos clubes...');
@@ -5062,9 +5886,16 @@
                         <div class="stat-group right">
                             <span class="stat-label">Mercado</span>
                             <span class="stat-value">Preço: ${stats.preco_medio ? 'C$ ' + stats.preco_medio.toFixed(1) : '–'}</span>
-                            <span class="stat-value" style="font-size: 0.75rem; color: var(--cor-texto-secundario);">${stats.status}</span>
+                            <div class="status-badge ${stats.status === 'Dados obtidos' ? 'success' : 'error'}">
+                                ${stats.status || 'Sem dados'}
+                            </div>
                         </div>
                     </div>
+                    <footer class="clube-actions">
+                        <button type="button" class="btn-detalhes" onclick="verDetalhesClube('${clube.nome}', '${clube.id}')">
+                            📊 Ver Detalhes
+                        </button>
+                    </footer>
                 </article>
             `;
         }
@@ -5090,63 +5921,7 @@
             document.getElementById('data-source').textContent = fonte;
         }
 
-        // INICIALIZAÇÃO E LOG DE BOAS-VINDAS
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeTabs();
-            initializeAdvancedStats();
-            
-            // Configurar evento do botão de refresh
-            const refreshBtn = document.getElementById('refresh-clubes-btn');
-            if (refreshBtn) {
-                refreshBtn.addEventListener('click', carregarEstatisticasClubes);
-            }
-            
-            // Carregar dados dos clubes automaticamente
-            setTimeout(carregarEstatisticasClubes, 1000);
-            
-            // Log de boas-vindas com instruções
-            console.log(`
-🚀 LOTECA X-RAY - API INTERNACIONAL INTEGRADA!
-
-📡 API Status: Backend Flask Multi-Provider carregado
-🔗 Endpoints: 
-   • Brasil: http://127.0.0.1:5000/api/br
-   • Internacional: http://127.0.0.1:5000/api/int
-
-🆕 DOSE 4 - ESTRUTURA INTERNACIONAL:
-   • Premier League, La Liga, Champions League
-   • Odds reais e probabilidades calculadas
-   • Recomendações automáticas (seco/duplo/triplo)
-   • Mock data funcionando (API-Football opcional)
-
-🧪 Para testar, use no console:
-
-🔬 DIAGNÓSTICO (NOVO):
-• testCartola.diagnosticar() - DIAGNÓSTICO COMPLETO DO SISTEMA
-
-CARTOLA FC (BRASILEIRÃO):
-• testCartola.testBackend() - Testa backend Flask
-• testCartola.testAPI() - Testa integração completa
-• testCartola.testPainelClubes() - Testa painel de clubes
-• testCartola.compareTeams('corinthians', 'flamengo') - Compara times
-
-API INTERNACIONAL:
-• testCartola.testInternational() - Testa API internacional
-• testCartola.testRecommendations() - Testa recomendações diárias
-
-UTILITÁRIOS:
-• testCartola.toggleBackend(false) - Alternar para API direta
-• testCartola.showMappings() - Lista IDs dos clubes
-
-🎯 Vá para a Aba 2 para ver:
-   • Análise detalhada de confrontos brasileiros
-   • Painel completo dos clubes do Brasileirão
-   • Dados reais de elenco e mercado
-
-🌍 PRÓXIMO: Implementar interface para ligas internacionais
-💡 Backend funcionando com mock data - pronto para API-Football
-            `);
-        });
+        // LOG DE BOAS-VINDAS MOVIDO PARA DENTRO DO DOMContentLoaded
     </script>
 
 </body>

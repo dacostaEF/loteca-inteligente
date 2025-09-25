@@ -154,37 +154,19 @@ def estatisticas_clube(clube_id: int) -> Dict[str, Any]:
 
 def get_clube_mappings() -> Dict[str, int]:
     """
-    Mapeamento de nomes de clubes para IDs do Cartola FC
+    Mapeamento UNIFICADO de nomes de clubes para IDs do Cartola FC
+    Agora usa o sistema central de clubes para garantir coerência
     """
-    return {
-        'corinthians': 8,
-        'flamengo': 262,
-        'fortaleza': 131,
-        'sport': 14,
-        'juventude': 15,
-        'internacional': 4,
-        'vasco': 10,
-        'cruzeiro': 9,
-        'athletico': 3,  # Athletico Paranaense
-        'gremio': 1,
-        'vitoria': 16,
-        'bahia': 2,
-        'palmeiras': 7,
-        'fluminense': 12,
-        'botafogo': 11,
-        'criciuma': 17,
-        'bragantino': 21,
-        'santos': 6
-    }
+    from .clubes_unificados import clubes_unificados
+    return clubes_unificados.get_mapeamento_cartola()
 
 def get_clube_id_by_name(name: str) -> Optional[int]:
     """
-    Buscar ID do clube pelo nome
+    Buscar ID do clube pelo nome usando sistema unificado
+    Suporta nomes oficiais e alternativos
     """
-    import re
-    mappings = get_clube_mappings()
-    normalized_name = re.sub(r'[^a-z]', '', name.lower()).replace('atletico', 'athletico')
-    return mappings.get(normalized_name)
+    from .clubes_unificados import clubes_unificados
+    return clubes_unificados.get_id_cartola(name)
 
 # Função utilitária para limpar cache (útil para testes)
 def clear_cache():
