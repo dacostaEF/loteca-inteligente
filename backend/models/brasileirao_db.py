@@ -15,7 +15,7 @@ class BrasileiraoDB:
     Gerenciador de banco de dados para classificação do Brasileirão
     """
     
-    def __init__(self, db_path: str = "data/brasileirao.db"):
+    def __init__(self, db_path: str = "models/brasileirao.db"):
         self.db_path = db_path
         self.ensure_data_dir()
         self.create_tables()

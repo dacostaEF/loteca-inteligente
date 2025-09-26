@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
 from services.loteca_provider_new import get_current_loteca_matches
+from models.classificacao_db import classificacao_db
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
@@ -422,6 +423,101 @@ def current_loteca_matches():
             "total": 0,
             "data_source": "error",
             "note": "Configure APIs para dados 100% reais"
+        }), 500
+
+# === ROTAS DE CLASSIFICAÇÃO PARA O SITE ===
+
+@bp_br.route("/classificacao/serie-a", methods=["GET"])
+@cross_origin()
+def api_classificacao_serie_a():
+    """
+    Endpoint para obter classificação da Série A
+    GET /api/br/classificacao/serie-a
+    """
+    try:
+        classificacao = classificacao_db.get_classificacao_serie_a()
+        
+        if not classificacao:
+            return jsonify({
+                "success": False,
+                "error": "Nenhum dado de classificação encontrado",
+                "data": []
+            }), 404
+        
+        return jsonify({
+            "success": True,
+            "data": classificacao,
+            "total": len(classificacao),
+            "campeonato": "Brasileirão Série A",
+            "ultima_atualizacao": classificacao[0].get('data_atualizacao') if classificacao else None
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao carregar classificação Série A: {str(e)}"
+        }), 500
+
+@bp_br.route("/classificacao/serie-b", methods=["GET"])
+@cross_origin()
+def api_classificacao_serie_b():
+    """
+    Endpoint para obter classificação da Série B
+    GET /api/br/classificacao/serie-b
+    """
+    try:
+        classificacao = classificacao_db.get_classificacao_serie_b()
+        
+        return jsonify({
+            "success": True,
+            "data": classificacao,
+            "total": len(classificacao),
+            "campeonato": "Brasileirão Série B",
+            "ultima_atualizacao": classificacao[0].get('data_atualizacao') if classificacao else None
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao carregar classificação Série B: {str(e)}"
+        }), 500
+
+@bp_br.route("/classificacao/atualizar", methods=["POST"])
+@cross_origin()
+def api_atualizar_classificacao():
+    """
+    Endpoint para atualizar dados da classificação (via site)
+    POST /api/br/classificacao/atualizar
+    """
+    try:
+        data = request.get_json()
+        time_id = data.get('time_id')
+        campo = data.get('campo')
+        valor = data.get('valor')
+        
+        if not all([time_id, campo, valor]):
+            return jsonify({
+                "success": False,
+                "error": "Parâmetros obrigatórios: time_id, campo, valor"
+            }), 400
+        
+        sucesso = classificacao_db.update_time_stats(time_id, campo, valor)
+        
+        if sucesso:
+            return jsonify({
+                "success": True,
+                "message": "Classificação atualizada com sucesso"
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "Erro ao atualizar classificação"
+            }), 500
+            
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao atualizar classificação: {str(e)}"
         }), 500
 
 # Função para registrar o blueprint (será chamada em app.py)

@@ -8,6 +8,7 @@ from flask_cors import CORS
 import os
 from routes_brasileirao import bp_br
 from routes_internacional import bp_int
+from admin_api import bp_admin
 
 def create_app():
     """Criar e configurar a aplicação Flask"""
@@ -47,6 +48,7 @@ def create_app():
             "endpoints": {
                 "brasileirao": "/api/br/",
                 "internacional": "/api/int/", 
+                "admin": "/admin",
                 "health_br": "/api/br/health",
                 "health_int": "/api/int/health",
                 "clubes": "/api/br/clubes",
@@ -54,7 +56,10 @@ def create_app():
                 "confronto": "/api/br/confronto/{time1}/{time2}",
                 "leagues": "/api/int/leagues",
                 "fixtures": "/api/int/league/{league}/fixtures",
-                "analysis": "/api/int/fixture/{id}/analysis"
+                "analysis": "/api/int/fixture/{id}/analysis",
+                "admin_dashboard": "/api/admin/dashboard",
+                "admin_clubes": "/api/admin/clubes",
+                "admin_stats": "/api/admin/estatisticas"
             },
             "documentation": "https://github.com/loteria-inteligente/x-ray-api"
         })
@@ -71,6 +76,7 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(bp_br)
     app.register_blueprint(bp_int)
+    app.register_blueprint(bp_admin)
     
     # Error handlers
     @app.errorhandler(404)

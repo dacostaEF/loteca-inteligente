@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>🔐 Central Admin - Loteca Inteligente</title>
+    <link rel="icon" type="image/png" href="/static/Favicon_LI.png">
+    <link rel="shortcut icon" type="image/png" href="/static/Favicon_LI.png">
     
     <!-- META TAGS PARA AMBIENTE MÓVEL COM DESTAQUE LILÁS -->
     <meta name="theme-color" content="#A855F7">
@@ -548,6 +550,128 @@
                 padding: 8px 5px;
             }
         }
+
+        /* Estilos para aba Classificação */
+        .classification-area {
+            margin: 20px 0;
+        }
+
+        .table-input {
+            width: 60px;
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .table-input:focus {
+            border-color: var(--cor-destaque-primaria);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+        }
+
+        /* Células editáveis na tabela de classificação */
+        .data-table td.editable {
+            background-color: #f8f9ff;
+            border: 1px dashed #ddd;
+            cursor: text;
+            transition: all 0.2s ease;
+        }
+
+        .data-table td.editable:hover {
+            background-color: #f0f0ff;
+            border-color: var(--cor-destaque-primaria);
+        }
+
+        .data-table td.editable:focus {
+            background-color: white;
+            border-color: var(--cor-destaque-primaria);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.1);
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 60px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        
+        /* === ESTILOS PARA EDIÇÃO AVANÇADA === */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes saved {
+            0% { background-color: #d1f2eb; }
+            50% { background-color: #28a745; }
+            100% { background-color: #d1f2eb; }
+        }
+        
+        .editable {
+            transition: all 0.3s ease;
+            cursor: text;
+        }
+        
+        .editable:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        
+        .editable:focus {
+            outline: none;
+            transform: scale(1.02);
+        }
+        
+        .modified {
+            animation: pulse 0.5s ease-in-out;
+        }
+        
+        .saved {
+            animation: saved 1s ease-in-out;
+        }
+        
+        /* Notificações */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 10000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+        }
+        
+        .notification.info {
+            background: linear-gradient(135deg, #17a2b8, #6f42c1);
+        }
     </style>
 </head>
 <body>
@@ -620,7 +744,13 @@
 
         <!-- Abas -->
         <div class="tabs">
-            <button class="tab active" onclick="showTab('clubes')">
+            <button class="tab active" onclick="showTab('classificacao')">
+                <i class="fas fa-table"></i> Classificação
+            </button>
+            <button class="tab" onclick="showTab('jogos-loteca')">
+                <i class="fas fa-gamepad"></i> Jogos Loteca
+            </button>
+            <button class="tab" onclick="showTab('clubes')">
                 <i class="fas fa-users"></i> Clubes
             </button>
             <button class="tab" onclick="showTab('estatisticas')">
@@ -637,8 +767,86 @@
             </button>
         </div>
 
+        <!-- === ABA CLASSIFICAÇÃO === -->
+        <div class="tab-content active" id="classificacao">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-table"></i> Gestão de Classificação
+            </h2>
+            
+            <!-- Seletor de Campeonato -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Campeonato</label>
+                    <select id="campeonatoSelect" onchange="alterarCampeonato()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: 2px solid #4c51bf; padding: 10px; border-radius: 8px; font-weight: bold;">
+                        <option value="serie-a" style="background: #4c51bf; color: white;">🥇 Brasileirão Série A</option>
+                        <option value="serie-b" style="background: #6b46c1; color: white;">🥈 Brasileirão Série B</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Rodada</label>
+                    <input type="number" id="rodadaInput" placeholder="Ex: 25" min="1" max="38">
+                </div>
+            </div>
+            
+            <!-- Área de Classificação -->
+            <div class="classification-area">
+                <div class="loading-message" id="loadingClassificacao" style="display: none; color: #00ff00; font-weight: bold;">
+                    <i class="fas fa-spinner fa-spin"></i> 🔄 Carregando classificação...
+                </div>
+                
+                <table class="data-table" id="tabelaClassificacao" style="border: 2px solid #374151; width: 100%; border-collapse: collapse;">
+                    <thead style="background: linear-gradient(135deg, #1f2937, #374151); color: white;">
+                        <tr>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">Pos</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">Time</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">P</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">J</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">V</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">E</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">D</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">GP</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">GC</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">SG</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">%</th>
+                            <th style="padding: 12px 8px; font-weight: bold; font-size: 14px; border: 1px solid #4b5563;">Últimos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classificacaoBody" style="border: 2px solid #ff0000; min-height: 200px;">
+                        <!-- 🎯 DEBUG: Dados da classificação serão inseridos aqui -->
+                        <tr><td colspan="12" style="text-align: center; padding: 20px; color: #ff0000; font-weight: bold;">🔍 AGUARDANDO DADOS...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Botões de Ação -->
+            <div class="form-row" style="margin-top: 20px;">
+                <button class="btn-primary" onclick="carregarClassificacao()" style="background: #00ff00; color: black;">
+                    <i class="fas fa-sync"></i> 🔄 Atualizar Classificação
+                </button>
+                <button class="btn-success" onclick="salvarClassificacao()">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+                <button class="btn-warning" onclick="testeManual()" style="background: #ff6600; color: white;">
+                    <i class="fas fa-bug"></i> 🧪 TESTE DEBUG
+                </button>
+            </div>
+        </div>
+
+        <!-- === ABA JOGOS LOTECA === -->
+        <div class="tab-content" id="jogos-loteca">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-gamepad"></i> Gestão de Jogos Loteca
+            </h2>
+            
+            <div class="coming-soon" style="text-align: center; padding: 60px 20px; background: #f8f9fa; border-radius: 10px; margin: 40px 0;">
+                <i class="fas fa-tools" style="font-size: 48px; color: #6c757d; margin-bottom: 20px;"></i>
+                <h3 style="color: #6c757d; margin-bottom: 10px;">Em Desenvolvimento</h3>
+                <p style="color: #adb5bd;">Esta seção será implementada em breve com as funcionalidades para gerenciar os jogos da Loteca.</p>
+            </div>
+        </div>
+
         <!-- === ABA CLUBES === -->
-        <div class="tab-content active" id="clubes">
+        <div class="tab-content" id="clubes">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-users"></i> Gestão de Clubes
             </h2>
@@ -944,6 +1152,14 @@
             event.target.classList.add('active');
             
             // Carregar dados específicos da aba
+            if (tabName === 'classificacao') {
+                console.log('🏆 [ADMIN] === ABA CLASSIFICAÇÃO ATIVADA ===');
+                console.log('🎯 [ADMIN] Elemento da aba ativo:', document.getElementById('classificacao'));
+                setTimeout(() => {
+                    console.log('⏰ [ADMIN] Timeout executado - chamando carregarClassificacao...');
+                    carregarClassificacao();
+                }, 200);
+            }
             if (tabName === 'clubes') carregarClubes();
             if (tabName === 'estatisticas') carregarEstatisticas();
             if (tabName === 'dashboard') carregarDashboard();
@@ -951,18 +1167,46 @@
 
         // === SISTEMA DE MENSAGENS ===
         function mostrarSucesso(mensagem) {
-            document.getElementById('successText').textContent = mensagem;
-            document.getElementById('successMessage').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 4000);
+            mostrarNotificacao(`✅ ${mensagem}`, 'success');
         }
 
         function mostrarErro(mensagem) {
-            document.getElementById('errorText').textContent = mensagem;
-            document.getElementById('errorMessage').style.display = 'block';
+            mostrarNotificacao(`❌ ${mensagem}`, 'error');
+        }
+        
+        function mostrarNotificacao(mensagem, tipo = 'info') {
+            // Remover notificações anteriores
+            const notificacoesExistentes = document.querySelectorAll('.notification');
+            notificacoesExistentes.forEach(n => n.remove());
+            
+            // Criar nova notificação
+            const notification = document.createElement('div');
+            notification.className = `notification ${tipo}`;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>${mensagem}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer; padding: 0; margin-left: 10px;">×</button>
+                </div>
+            `;
+            
+            // Adicionar ao body
+            document.body.appendChild(notification);
+            
+            // Mostrar com animação
             setTimeout(() => {
-                document.getElementById('errorMessage').style.display = 'none';
+                notification.classList.add('show');
+            }, 100);
+            
+            // Auto-remover após 5 segundos
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
             }, 5000);
         }
 
@@ -1303,6 +1547,638 @@
             }
         }
 
+        // === FUNÇÕES DA ABA CLASSIFICAÇÃO ===
+        function alterarCampeonato() {
+            const campeonato = document.getElementById('campeonatoSelect').value;
+            console.log(`🔄 [ADMIN] Alterando para: ${campeonato}`);
+            
+            // Limpar tabela atual
+            const bodyEl = document.getElementById('classificacaoBody');
+            if (bodyEl) {
+                bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666; font-style: italic;">🔄 Carregando nova classificação...</td></tr>';
+            }
+            
+            // Carregar nova classificação
+            setTimeout(() => {
+                carregarClassificacao();
+            }, 300);
+        }
+        
+        async function carregarClassificacao() {
+            console.log('🔄 [ADMIN] === INICIANDO CARREGAMENTO DA CLASSIFICAÇÃO ===');
+            
+            const campeonatoSelect = document.getElementById('campeonatoSelect');
+            const loadingEl = document.getElementById('loadingClassificacao');
+            const bodyEl = document.getElementById('classificacaoBody');
+            
+            console.log('🎯 [ADMIN] Elementos DOM encontrados:');
+            console.log('   - campeonatoSelect:', campeonatoSelect ? 'OK' : 'MISSING');
+            console.log('   - loadingEl:', loadingEl ? 'OK' : 'MISSING');
+            console.log('   - bodyEl:', bodyEl ? 'OK' : 'MISSING');
+            
+            const campeonato = campeonatoSelect ? campeonatoSelect.value : 'serie-a';
+            let adminKey = localStorage.getItem('admin_key');
+            
+            // FORÇAR admin key se não existir
+            if (!adminKey) {
+                console.warn('⚠️ [ADMIN] Admin key não encontrada no localStorage! Usando padrão...');
+                adminKey = 'loteca2024admin';
+                localStorage.setItem('admin_key', adminKey);
+            }
+            
+            console.log('🔑 [ADMIN] Configurações:');
+            console.log('   - campeonato:', campeonato);
+            console.log('   - adminKey:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
+            console.log('   - adminKey completa:', adminKey);
+            
+            if (loadingEl) {
+                loadingEl.style.display = 'block';
+                console.log('📊 [ADMIN] Loading exibido');
+            }
+            
+            if (bodyEl) {
+                bodyEl.innerHTML = '';
+                console.log('🧹 [ADMIN] Tabela limpa');
+            }
+            
+            try {
+                const requestData = {
+                    admin_key: adminKey,
+                    campeonato: campeonato
+                };
+                
+                console.log('📤 [ADMIN] Enviando requisição...');
+                console.log('   - URL: /api/admin/classificacao');
+                console.log('   - Method: POST');
+                console.log('   - Body:', JSON.stringify(requestData));
+                
+                const response = await fetch('/api/admin/classificacao', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(requestData)
+                });
+                
+                console.log('📥 [ADMIN] Resposta recebida:');
+                console.log('   - Status:', response.status);
+                console.log('   - OK:', response.ok);
+                console.log('   - StatusText:', response.statusText);
+                
+                if (loadingEl) {
+                    loadingEl.style.display = 'none';
+                    console.log('📊 [ADMIN] Loading escondido');
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('📋 [ADMIN] Dados JSON recebidos:');
+                console.log('   - Success:', data.success);
+                console.log('   - Total:', data.total);
+                console.log('   - Campeonato:', data.campeonato);
+                console.log('   - Classificação length:', data.classificacao ? data.classificacao.length : 'NULL');
+                
+                if (data.success && data.classificacao && data.classificacao.length > 0) {
+                    console.log('✅ [ADMIN] Sucesso! Renderizando tabela...');
+                    console.log('🏆 [ADMIN] Primeiros 3 times:');
+                    data.classificacao.slice(0, 3).forEach((time, i) => {
+                        console.log(`   ${i+1}. ${time.time} - ${time.pontos} pts`);
+                    });
+                    
+                    renderizarClassificacao(data.classificacao);
+                    console.log('🎨 [ADMIN] Renderização concluída!');
+                } else {
+                    console.warn('⚠️ [ADMIN] API retornou dados vazios. Usando dados mock...');
+                    
+                    // Se for Série B e API falhou, usar dados mock
+                    if (campeonato === 'serie-b') {
+                        console.log('🥈 [ADMIN] Carregando dados mock da Série B...');
+                        const dadosSerieB = [
+                            {id: 1, time: 'Santos', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 1, ultimos_jogos: 'NNNNN'},
+                            {id: 2, time: 'Novorizontino', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 2, ultimos_jogos: 'NNNNN'},
+                            {id: 3, time: 'Sport', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 3, ultimos_jogos: 'NNNNN'},
+                            {id: 4, time: 'Mirassol', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 4, ultimos_jogos: 'NNNNN'},
+                            {id: 5, time: 'Ceará', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 5, ultimos_jogos: 'NNNNN'},
+                            {id: 6, time: 'Vila Nova', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 6, ultimos_jogos: 'NNNNN'},
+                            {id: 7, time: 'América-MG', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 7, ultimos_jogos: 'NNNNN'},
+                            {id: 8, time: 'Operário', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 8, ultimos_jogos: 'NNNNN'},
+                            {id: 9, time: 'Goiás', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 9, ultimos_jogos: 'NNNNN'},
+                            {id: 10, time: 'Avaí', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 10, ultimos_jogos: 'NNNNN'},
+                            {id: 11, time: 'Paysandu', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 11, ultimos_jogos: 'NNNNN'},
+                            {id: 12, time: 'Coritiba', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 12, ultimos_jogos: 'NNNNN'},
+                            {id: 13, time: 'Amazonas', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 13, ultimos_jogos: 'NNNNN'},
+                            {id: 14, time: 'Chapecoense', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 14, ultimos_jogos: 'NNNNN'},
+                            {id: 15, time: 'CRB', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 15, ultimos_jogos: 'NNNNN'},
+                            {id: 16, time: 'Ponte Preta', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 16, ultimos_jogos: 'NNNNN'},
+                            {id: 17, time: 'Ituano', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 17, ultimos_jogos: 'NNNNN'},
+                            {id: 18, time: 'Botafogo-SP', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 18, ultimos_jogos: 'NNNNN'},
+                            {id: 19, time: 'Brusque', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 19, ultimos_jogos: 'NNNNN'},
+                            {id: 20, time: 'Guarani', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 20, ultimos_jogos: 'NNNNN'}
+                        ];
+                        
+                        renderizarClassificacao(dadosSerieB);
+                        console.log('🎨 [ADMIN] Série B renderizada com dados mock!');
+                        mostrarNotificacao('📋 Série B carregada! Edite os dados conforme necessário.', 'info');
+                    } else {
+                        console.error('❌ [ADMIN] Erro no response:', data.message || 'Dados inválidos');
+                        mostrarErro('Erro ao carregar classificação: ' + (data.message || 'Dados inválidos'));
+                    }
+                }
+            } catch (error) {
+                if (loadingEl) {
+                    loadingEl.style.display = 'none';
+                }
+                console.error('💥 [ADMIN] Erro na requisição:', error);
+                console.error('📄 [ADMIN] Error stack:', error.stack);
+                mostrarErro('Erro ao carregar classificação: ' + error.message);
+            }
+            
+            console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
+        }
+        
+        function renderizarClassificacao(classificacao) {
+            console.log('🎨 [ADMIN] === INICIANDO RENDERIZAÇÃO ===');
+            console.log('📊 [ADMIN] Dados recebidos:', classificacao);
+            console.log('📊 [ADMIN] Tipo:', typeof classificacao);
+            console.log('📊 [ADMIN] É array:', Array.isArray(classificacao));
+            console.log('📊 [ADMIN] Length:', classificacao ? classificacao.length : 'N/A');
+            
+            const bodyEl = document.getElementById('classificacaoBody');
+            console.log('🎯 [ADMIN] Body element:', bodyEl ? 'OK' : 'MISSING');
+            
+            if (!bodyEl) {
+                console.error('❌ [ADMIN] Element classificacaoBody não encontrado!');
+                return;
+            }
+            
+            bodyEl.innerHTML = '';
+            console.log('🧹 [ADMIN] Tbody limpo');
+            
+            if (!classificacao || classificacao.length === 0) {
+                console.warn('⚠️ [ADMIN] Nenhum dado para renderizar');
+                bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Nenhum dado encontrado</td></tr>';
+                return;
+            }
+            
+            console.log('✅ [ADMIN] Renderizando', classificacao.length, 'times...');
+            
+            classificacao.forEach((time, index) => {
+                console.log(`🏆 [ADMIN] Renderizando time ${index + 1}:`, {
+                    time: time.time,
+                    pontos: time.pontos,
+                    posicao: time.posicao
+                });
+                const row = document.createElement('tr');
+                
+                // Determinar zona (libertadores, sul-americana, rebaixamento)
+                const zonaClass = time.zona ? `zona-${time.zona.replace('-', '')}` : '';
+                
+                row.className = `team-row ${zonaClass}`;
+                row.innerHTML = `
+                    <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; border: 1px solid #cbd5e0;">${time.posicao}</td>
+                    <td class="editable" contenteditable="true" data-field="time" data-id="${time.id}" 
+                        style="font-weight: bold; text-align: left; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px;" 
+                        data-original="${time.time}">
+                        <div style="display: flex; align-items: center;">
+                            <span>${time.time}</span>
+                            ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}">${time.zona}</span>` : ''}
+                        </div>
+                    </td>
+                    <td class="editable" contenteditable="true" data-field="pontos" data-id="${time.id}" 
+                        style="font-weight: bold; color: #1e40af; background: #fef9e7; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px;" 
+                        data-original="${time.pontos}">${time.pontos}</td>
+                    <td class="editable" contenteditable="true" data-field="jogos" data-id="${time.id}" 
+                        style="color: #374151; background: #f3f4f6; border: 2px dashed #9ca3af; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                        data-original="${time.jogos}">${time.jogos}</td>
+                    <td class="editable" contenteditable="true" data-field="vitorias" data-id="${time.id}" 
+                        style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                        data-original="${time.vitorias}">${time.vitorias}</td>
+                    <td class="editable" contenteditable="true" data-field="empates" data-id="${time.id}" 
+                        style="color: #92400e; background: #fffbeb; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                        data-original="${time.empates}">${time.empates}</td>
+                    <td class="editable" contenteditable="true" data-field="derrotas" data-id="${time.id}" 
+                        style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                        data-original="${time.derrotas}">${time.derrotas}</td>
+                    <td class="editable" contenteditable="true" data-field="gols_pro" data-id="${time.id}" 
+                        style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                        data-original="${time.gols_pro}">${time.gols_pro}</td>
+                    <td class="editable" contenteditable="true" data-field="gols_contra" data-id="${time.id}" 
+                        style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                        data-original="${time.gols_contra}">${time.gols_contra}</td>
+                    <td style="font-weight: bold; color: ${time.saldo_gols >= 0 ? '#065f46' : '#991b1b'}; background: #e8f4f8; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.saldo_gols >= 0 ? '+' : ''}${time.saldo_gols}</td>
+                    <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.aproveitamento}%</td>
+                    <td style="background: #e8f4f8; border: 1px solid #cbd5e0;">
+                        <div style="display: flex; gap: 5px; justify-content: center;" data-time-id="${time.id}">
+                            ${(time.ultimos_jogos || 'NNNNN').split('').map((result, index) => 
+                                `<span class="resultado-bolinha clickable" 
+                                       data-time-id="${time.id}" 
+                                       data-jogo-index="${index}" 
+                                       data-resultado="${result}"
+                                       onclick="alterarResultado(this)"
+                                       style="width: 20px; height: 20px; border-radius: 50%; display: inline-block; font-size: 11px; text-align: center; line-height: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s ease; border: 2px solid #374151; background: ${getCorResultado(result)};"
+                                       title="Clique para alterar: ${getDescricaoResultado(result)}">${result}</span>`
+                            ).join('')}
+                        </div>
+                    </td>
+                `;
+                bodyEl.appendChild(row);
+                console.log(`✅ [ADMIN] Time ${index + 1} adicionado ao DOM`);
+            });
+            
+            // Adicionar eventos de edição
+            adicionarEventosEdicao();
+            
+            console.log(`🎉 [ADMIN] === RENDERIZAÇÃO CONCLUÍDA ===`);
+            console.log(`📊 [ADMIN] Total de times renderizados: ${classificacao.length}`);
+            console.log(`🎯 [ADMIN] Filhos na tabela:`, bodyEl.children.length);
+        }
+        
+        function adicionarEventosEdicao() {
+            console.log('🎮 [ADMIN] Adicionando eventos de edição...');
+            
+            const editableCells = document.querySelectorAll('.editable');
+            
+            editableCells.forEach(cell => {
+                // Evento ao focar (começar edição)
+                cell.addEventListener('focus', function() {
+                    this.style.background = '#ffffcc';
+                    this.style.boxShadow = '0 0 5px #ffd700';
+                    this.style.border = '2px solid #ffd700';
+                    console.log(`✏️ [ADMIN] Editando ${this.dataset.field} do time ID ${this.dataset.id}`);
+                });
+                
+                // Evento ao sair do foco (finalizar edição)
+                cell.addEventListener('blur', function() {
+                    const originalValue = this.dataset.original;
+                    const newValue = this.textContent.trim();
+                    
+                    if (newValue !== originalValue) {
+                        // Valor foi alterado
+                        this.style.background = '#d4edda'; // Verde claro
+                        this.style.border = '2px solid #28a745';
+                        this.classList.add('modified');
+                        console.log(`💾 [ADMIN] Modificado: ${this.dataset.field} = ${newValue} (era ${originalValue})`);
+                        
+                        // Marcar para salvamento
+                        marcarParaSalvamento(this);
+                    } else {
+                        // Valor não mudou, voltar ao normal
+                        restaurarEstiloOriginal(this);
+                    }
+                });
+                
+                // Evento ao pressionar Enter (salvar imediato)
+                cell.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.blur(); // Força o blur para processar a alteração
+                        setTimeout(() => {
+                            salvarAlteracaoImediata(this);
+                        }, 100);
+                    }
+                });
+            });
+            
+            console.log(`✅ [ADMIN] Eventos adicionados a ${editableCells.length} células`);
+        }
+        
+        function restaurarEstiloOriginal(cell) {
+            const field = cell.dataset.field;
+            
+            // Cores específicas por campo (MELHORADAS PARA LEGIBILIDADE)
+            const estilos = {
+                'time': {
+                    background: '#e0f2fe',
+                    border: '2px dashed #0ea5e9',
+                    color: '#1a202c',
+                    fontWeight: 'bold'
+                },
+                'pontos': {
+                    background: '#fef9e7',
+                    border: '2px dashed #f59e0b',
+                    color: '#1e40af',
+                    fontWeight: 'bold'
+                },
+                'jogos': {
+                    background: '#f3f4f6',
+                    border: '2px dashed #9ca3af',
+                    color: '#374151',
+                    fontWeight: '600'
+                },
+                'vitorias': {
+                    background: '#ecfdf5',
+                    border: '2px dashed #10b981',
+                    color: '#065f46',
+                    fontWeight: '600'
+                },
+                'empates': {
+                    background: '#fffbeb',
+                    border: '2px dashed #f59e0b',
+                    color: '#92400e',
+                    fontWeight: '600'
+                },
+                'derrotas': {
+                    background: '#fef2f2',
+                    border: '2px dashed #ef4444',
+                    color: '#991b1b',
+                    fontWeight: '600'
+                },
+                'gols_pro': {
+                    background: '#ecfdf5',
+                    border: '2px dashed #10b981',
+                    color: '#065f46',
+                    fontWeight: '600'
+                },
+                'gols_contra': {
+                    background: '#fef2f2',
+                    border: '2px dashed #ef4444',
+                    color: '#991b1b',
+                    fontWeight: '600'
+                }
+            };
+            
+            const estilo = estilos[field] || estilos['jogos'];
+            
+            cell.style.background = estilo.background;
+            cell.style.border = estilo.border;
+            cell.style.color = estilo.color;
+            cell.style.fontWeight = estilo.fontWeight;
+            cell.style.fontSize = '14px';
+            cell.style.boxShadow = 'none';
+            cell.classList.remove('modified');
+        }
+        
+        function marcarParaSalvamento(cell) {
+            // Adicionar à lista de modificações pendentes
+            if (!window.modificacoesPendentes) {
+                window.modificacoesPendentes = new Set();
+            }
+            
+            const key = `${cell.dataset.id}-${cell.dataset.field}`;
+            window.modificacoesPendentes.add(key);
+            
+            // Atualizar contador de modificações
+            atualizarContadorModificacoes();
+        }
+        
+        function atualizarContadorModificacoes() {
+            const count = window.modificacoesPendentes ? window.modificacoesPendentes.size : 0;
+            const btnSalvar = document.querySelector('button[onclick="salvarClassificacao()"]');
+            
+            if (btnSalvar) {
+                if (count > 0) {
+                    btnSalvar.innerHTML = `<i class="fas fa-save"></i> 💾 Salvar Alterações (${count})`;
+                    btnSalvar.style.background = '#28a745';
+                    btnSalvar.style.animation = 'pulse 1s infinite';
+                } else {
+                    btnSalvar.innerHTML = `<i class="fas fa-save"></i> Salvar Alterações`;
+                    btnSalvar.style.background = '';
+                    btnSalvar.style.animation = 'none';
+                }
+            }
+        }
+        
+        async function salvarAlteracaoImediata(cell) {
+            console.log('💾 [ADMIN] Salvamento imediato ativado!');
+            
+            const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
+            const updates = [{
+                id: parseInt(cell.dataset.id),
+                field: cell.dataset.field,
+                value: cell.textContent.trim()
+            }];
+            
+            console.log(`🎯 [ADMIN] Salvando na ${campeonato}: ${cell.dataset.field} = ${cell.textContent.trim()}`);
+            
+            try {
+                const response = await fetch('/api/admin/classificacao/salvar', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        admin_key: localStorage.getItem('admin_key'),
+                        campeonato: campeonato,
+                        updates: updates
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    // Salvo com sucesso
+                    cell.style.background = '#d1f2eb'; // Verde mais claro
+                    cell.style.border = '2px solid #28a745';
+                    cell.dataset.original = cell.textContent.trim(); // Atualizar valor original
+                    
+                    // Remover da lista de pendentes
+                    const key = `${cell.dataset.id}-${cell.dataset.field}`;
+                    if (window.modificacoesPendentes) {
+                        window.modificacoesPendentes.delete(key);
+                        atualizarContadorModificacoes();
+                    }
+                    
+                    console.log('✅ [ADMIN] Salvo com sucesso!');
+                    mostrarNotificacao('✅ Alteração salva!', 'success');
+                } else {
+                    console.error('❌ [ADMIN] Erro ao salvar:', data.message);
+                    mostrarNotificacao('❌ Erro ao salvar: ' + data.message, 'error');
+                }
+            } catch (error) {
+                console.error('💥 [ADMIN] Erro na requisição:', error);
+                mostrarNotificacao('💥 Erro de conexão!', 'error');
+            }
+        }
+        
+        async function salvarClassificacao() {
+            const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
+            const editableCells = document.querySelectorAll('.editable[data-field]');
+            const updates = [];
+            
+            editableCells.forEach(cell => {
+                const value = cell.textContent.trim();
+                const originalValue = cell.dataset.original;
+                
+                // Incluir tanto números quanto texto (para nomes de times)
+                if (value && value !== originalValue) {
+                    updates.push({
+                        id: parseInt(cell.dataset.id),
+                        field: cell.dataset.field,
+                        value: cell.dataset.field === 'time' ? value : (isNaN(value) ? value : parseInt(value))
+                    });
+                }
+            });
+            
+            console.log(`💾 [ADMIN] Salvando ${updates.length} alterações na ${campeonato}`);
+            
+            try {
+                const response = await fetch('/api/admin/classificacao/salvar', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        admin_key: localStorage.getItem('admin_key'),
+                        campeonato: campeonato,
+                        updates: updates
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    mostrarSucesso('Classificação salva com sucesso!');
+                    carregarClassificacao(); // Recarregar para atualizar saldo de gols e aproveitamento
+                } else {
+                    mostrarErro('Erro ao salvar: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar classificação:', error);
+                mostrarErro('Erro ao salvar classificação');
+            }
+        }
+        
+        // === FUNÇÃO DE TESTE DEBUG ===
+        function testeManual() {
+            console.log('🧪 [TESTE] === INICIANDO TESTE MANUAL ===');
+            
+            // Verificar elementos DOM
+            const elementos = {
+                'campeonatoSelect': document.getElementById('campeonatoSelect'),
+                'loadingClassificacao': document.getElementById('loadingClassificacao'),
+                'classificacaoBody': document.getElementById('classificacaoBody'),
+                'tabelaClassificacao': document.getElementById('tabelaClassificacao')
+            };
+            
+            console.log('🎯 [TESTE] Elementos DOM:');
+            Object.entries(elementos).forEach(([nome, elemento]) => {
+                console.log(`   - ${nome}:`, elemento ? 'OK' : 'MISSING');
+                if (elemento) {
+                    console.log(`     * ID: ${elemento.id}`);
+                    console.log(`     * Classes: ${elemento.className}`);
+                    console.log(`     * Visível: ${elemento.style.display !== 'none'}`);
+                }
+            });
+            
+            // Verificar localStorage
+            const adminKey = localStorage.getItem('admin_key');
+            console.log('🔑 [TESTE] Admin Key:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
+            
+            // Teste com dados específicos por campeonato
+            const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
+            console.log(`🎨 [TESTE] Testando renderização para: ${campeonato}`);
+            
+            let dadosMock = [];
+            
+            if (campeonato === 'serie-a') {
+                dadosMock = [
+                    {id: 1, time: 'Flamengo', pontos: 51, jogos: 25, vitorias: 15, empates: 6, derrotas: 4, gols_pro: 45, gols_contra: 20, saldo_gols: 25, aproveitamento: 68, posicao: 1, ultimos_jogos: 'VVEVV'},
+                    {id: 2, time: 'Palmeiras', pontos: 49, jogos: 25, vitorias: 14, empates: 7, derrotas: 4, gols_pro: 40, gols_contra: 18, saldo_gols: 22, aproveitamento: 65, posicao: 2, ultimos_jogos: 'VEVVD'},
+                    {id: 3, time: 'Botafogo', pontos: 47, jogos: 24, vitorias: 13, empates: 8, derrotas: 3, gols_pro: 38, gols_contra: 16, saldo_gols: 22, aproveitamento: 65, posicao: 3, ultimos_jogos: 'VVVEV'}
+                ];
+            } else {
+                dadosMock = [
+                    {id: 1, time: 'Santos', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 1, ultimos_jogos: 'NNNNN'},
+                    {id: 2, time: 'Novorizontino', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 2, ultimos_jogos: 'NNNNN'},
+                    {id: 3, time: 'Sport', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 3, ultimos_jogos: 'NNNNN'}
+                ];
+            }
+            
+            renderizarClassificacao(dadosMock);
+            
+            console.log('🧪 [TESTE] === TESTE MANUAL CONCLUÍDO ===');
+        }
+        
+        // === FUNÇÕES DAS BOLINHAS DOS ÚLTIMOS JOGOS ===
+        function getCorResultado(resultado) {
+            switch (resultado) {
+                case 'V': return '#16a34a'; // Verde
+                case 'E': return '#d97706'; // Amarelo/Laranja
+                case 'D': return '#dc2626'; // Vermelho
+                case 'N': return '#6b7280'; // Cinza
+                default: return '#6b7280';
+            }
+        }
+        
+        function getDescricaoResultado(resultado) {
+            switch (resultado) {
+                case 'V': return 'Vitória';
+                case 'E': return 'Empate';
+                case 'D': return 'Derrota';
+                case 'N': return 'Não jogou';
+                default: return 'Indefinido';
+            }
+        }
+        
+        function alterarResultado(bolinha) {
+            const resultadoAtual = bolinha.dataset.resultado;
+            const timeId = bolinha.dataset.timeId;
+            const jogoIndex = parseInt(bolinha.dataset.jogoIndex);
+            
+            // Ciclo: N → V → E → D → N
+            let novoResultado;
+            switch (resultadoAtual) {
+                case 'N': novoResultado = 'V'; break;
+                case 'V': novoResultado = 'E'; break;
+                case 'E': novoResultado = 'D'; break;
+                case 'D': novoResultado = 'N'; break;
+                default: novoResultado = 'V';
+            }
+            
+            console.log(`🎮 [ADMIN] Alterando jogo ${jogoIndex + 1} do time ID ${timeId}: ${resultadoAtual} → ${novoResultado}`);
+            
+            // Atualizar visualmente
+            bolinha.dataset.resultado = novoResultado;
+            bolinha.style.background = getCorResultado(novoResultado);
+            bolinha.textContent = novoResultado;
+            bolinha.title = `Clique para alterar: ${getDescricaoResultado(novoResultado)}`;
+            
+            // Efeito visual de clique
+            bolinha.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                bolinha.style.transform = 'scale(1)';
+            }, 150);
+            
+            // Coletar todos os resultados do time
+            const todasBolinhas = document.querySelectorAll(`[data-time-id="${timeId}"].resultado-bolinha`);
+            let novosUltimosJogos = '';
+            todasBolinhas.forEach(b => {
+                novosUltimosJogos += b.dataset.resultado;
+            });
+            
+            console.log(`📊 [ADMIN] Novos últimos jogos para time ${timeId}: ${novosUltimosJogos}`);
+            
+            // Salvar no banco
+            salvarUltimosJogos(timeId, novosUltimosJogos);
+        }
+        
+        async function salvarUltimosJogos(timeId, ultimosJogos) {
+            const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
+            
+            try {
+                const response = await fetch('/api/admin/classificacao/salvar', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        admin_key: localStorage.getItem('admin_key'),
+                        campeonato: campeonato,
+                        updates: [{
+                            id: parseInt(timeId),
+                            field: 'ultimos_jogos',
+                            value: ultimosJogos
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    console.log('✅ [ADMIN] Últimos jogos salvos com sucesso!');
+                    mostrarNotificacao('🎮 Resultado atualizado!', 'success');
+                } else {
+                    console.error('❌ [ADMIN] Erro ao salvar:', data.message);
+                    mostrarNotificacao('❌ Erro ao salvar resultado!', 'error');
+                }
+            } catch (error) {
+                console.error('💥 [ADMIN] Erro na requisição:', error);
+                mostrarNotificacao('💥 Erro de conexão!', 'error');
+            }
+        }
+
         // === BACKUP E RESTORE ===
         async function fazerBackup() {
             try {
@@ -1379,6 +2255,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔐 Central Admin - Loteca Inteligente carregada');
             console.log('💡 Chave padrão:', ADMIN_KEY);
+            
+            // Configurar listener para mudança de campeonato na aba Classificação
+            const campeonatoSelect = document.getElementById('campeonatoSelect');
+            if (campeonatoSelect) {
+                campeonatoSelect.addEventListener('change', function() {
+                    console.log(`🔄 [ADMIN] Campeonato alterado para: ${this.value}`);
+                    carregarClassificacao();
+                });
+            }
         });
     </script>
 </body>

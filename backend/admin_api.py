@@ -4,20 +4,21 @@ API Backend para Interface Administrativa
 Conecta a interface HTML com a Central de Dados SQLite
 """
 
-from flask import Flask, request, jsonify, render_template, send_from_directory
-from flask_cors import CORS
+from flask import Blueprint, request, jsonify, render_template, send_from_directory
+from flask_cors import cross_origin
 import os
 import json
 import logging
 from datetime import datetime
 from models.central_dados import CentralDados
+from models.classificacao_db import classificacao_db
 
 # Configuração do logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
-CORS(app)
+# Criar blueprint para admin
+bp_admin = Blueprint('admin', __name__)
 
 # Configurações
 ADMIN_KEY = 'loteca2024admin'  # Chave de administrador
@@ -26,20 +27,29 @@ central_dados = CentralDados()
 def verificar_auth(request_data):
     """Verificar autenticação do administrador"""
     auth_key = request_data.get('admin_key') or request.headers.get('X-Admin-Key')
-    return auth_key == ADMIN_KEY
+    logger.info(f"🔐 [AUTH] Key recebida: '{auth_key}'")
+    logger.info(f"🔐 [AUTH] Key esperada: '{ADMIN_KEY}'")
+    logger.info(f"🔐 [AUTH] Tipo recebido: {type(auth_key)}")
+    logger.info(f"🔐 [AUTH] Request data: {request_data}")
+    resultado = auth_key == ADMIN_KEY
+    logger.info(f"🔐 [AUTH] Resultado: {resultado}")
+    return resultado
 
-@app.route('/admin')
+@bp_admin.route('/admin')
 def admin_interface():
     """Servir a interface administrativa"""
     try:
-        with open('admin_interface.html', 'r', encoding='utf-8') as f:
+        # Caminho correto para o arquivo admin
+        admin_path = os.path.join(os.path.dirname(__file__), 'admin_interface.html')
+        with open(admin_path, 'r', encoding='utf-8') as f:
             content = f.read()
         return content
     except Exception as e:
         logger.error(f"Erro ao servir interface admin: {e}")
         return f"Erro ao carregar interface: {e}", 500
 
-@app.route('/api/admin/auth', methods=['POST'])
+@bp_admin.route('/api/admin/auth', methods=['POST'])
+@cross_origin()
 def admin_auth():
     """Autenticar administrador"""
     data = request.get_json()
@@ -56,7 +66,8 @@ def admin_auth():
             'message': 'Chave de acesso inválida'
         }), 401
 
-@app.route('/api/admin/dashboard', methods=['GET'])
+@bp_admin.route('/api/admin/dashboard', methods=['GET'])
+@cross_origin()
 def get_dashboard():
     """Obter estatísticas do dashboard"""
     try:
@@ -104,7 +115,8 @@ def get_dashboard():
             'message': 'Erro ao carregar dashboard'
         }), 500
 
-@app.route('/api/admin/clubes', methods=['GET'])
+@bp_admin.route('/api/admin/clubes', methods=['GET'])
+@cross_origin()
 def get_clubes():
     """Obter lista de todos os clubes"""
     try:
@@ -143,7 +155,8 @@ def get_clubes():
             'message': 'Erro ao carregar clubes'
         }), 500
 
-@app.route('/api/admin/clubes', methods=['POST'])
+@bp_admin.route('/api/admin/clubes', methods=['POST'])
+@cross_origin()
 def criar_clube():
     """Criar ou atualizar um clube"""
     data = request.get_json()
@@ -194,7 +207,8 @@ def criar_clube():
             'message': f'Erro ao salvar clube: {str(e)}'
         }), 500
 
-@app.route('/api/admin/clubes/<int:clube_id>', methods=['DELETE'])
+@bp_admin.route('/api/admin/clubes/<int:clube_id>', methods=['DELETE'])
+@cross_origin()
 def excluir_clube(clube_id):
     """Excluir um clube (soft delete)"""
     data = request.get_json() or {}
@@ -236,7 +250,8 @@ def excluir_clube(clube_id):
             'message': 'Erro ao excluir clube'
         }), 500
 
-@app.route('/api/admin/estatisticas', methods=['GET'])
+@bp_admin.route('/api/admin/estatisticas', methods=['GET'])
+@cross_origin()
 def get_estatisticas():
     """Obter todas as estatísticas dos clubes"""
     try:
@@ -285,7 +300,8 @@ def get_estatisticas():
             'message': 'Erro ao carregar estatísticas'
         }), 500
 
-@app.route('/api/admin/estatisticas', methods=['POST'])
+@bp_admin.route('/api/admin/estatisticas', methods=['POST'])
+@cross_origin()
 def salvar_estatisticas():
     """Salvar estatísticas de um clube"""
     data = request.get_json()
@@ -362,7 +378,8 @@ def salvar_estatisticas():
             'message': f'Erro ao salvar estatísticas: {str(e)}'
         }), 500
 
-@app.route('/api/admin/estatisticas/<int:clube_id>', methods=['DELETE'])
+@bp_admin.route('/api/admin/estatisticas/<int:clube_id>', methods=['DELETE'])
+@cross_origin()
 def excluir_estatisticas(clube_id):
     """Excluir estatísticas de um clube"""
     data = request.get_json() or {}
@@ -399,7 +416,8 @@ def excluir_estatisticas(clube_id):
             'message': 'Erro ao excluir estatísticas'
         }), 500
 
-@app.route('/api/admin/backup', methods=['GET'])
+@bp_admin.route('/api/admin/backup', methods=['GET'])
+@cross_origin()
 def gerar_backup():
     """Gerar backup completo dos dados"""
     try:
@@ -445,7 +463,8 @@ def gerar_backup():
             'message': 'Erro ao gerar backup'
         }), 500
 
-@app.route('/api/admin/restore', methods=['POST'])
+@bp_admin.route('/api/admin/restore', methods=['POST'])
+@cross_origin()
 def restaurar_backup():
     """Restaurar dados de um backup"""
     data = request.get_json()
@@ -517,9 +536,165 @@ def _get_db_size():
     except:
         return "N/A"
 
-if __name__ == '__main__':
-    print("🚀 Iniciando API Admin do Loteca X-Ray...")
-    print(f"🔐 Chave de administrador: {ADMIN_KEY}")
-    print("🌐 Interface disponível em: http://127.0.0.1:5001/admin")
+# === ROTAS DA CLASSIFICAÇÃO ===
+
+@bp_admin.route('/api/admin/classificacao', methods=['POST'])
+@cross_origin()
+def get_classificacao():
+    """Obter classificação de um campeonato"""
+    logger.info("🔄 [API] === INICIANDO get_classificacao ===")
     
-    app.run(debug=True, port=5001, host='0.0.0.0')
+    data = request.get_json()
+    logger.info(f"📥 [API] Dados recebidos: {data}")
+    
+    if not verificar_auth(data):
+        logger.warning("🚫 [API] Auth falhou")
+        return jsonify({
+            'success': False,
+            'message': 'Acesso negado'
+        }), 401
+    
+    logger.info("✅ [API] Auth OK")
+    
+    try:
+        campeonato = data.get('campeonato', 'serie-a')
+        logger.info(f"🏆 [API] Campeonato solicitado: {campeonato}")
+        
+        if campeonato == 'serie-a':
+            logger.info("📊 [API] Buscando dados da Série A...")
+            classificacao = classificacao_db.get_classificacao_serie_a()
+            logger.info(f"📋 [API] Série A retornou {len(classificacao)} registros")
+        elif campeonato == 'serie-b':
+            logger.info("📊 [API] Buscando dados da Série B...")
+            
+            # FORÇAR nova instância para debug
+            from models.classificacao_db import ClassificacaoDB
+            db_fresh = ClassificacaoDB()
+            
+            # Teste direto no banco
+            import sqlite3
+            conn = sqlite3.connect("models/tabelas_classificacao.db")
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            
+            cursor.execute("SELECT COUNT(*) as total FROM classificacao_serie_b")
+            count = cursor.fetchone()['total']
+            logger.info(f"🔍 [API] Contagem direta: {count}")
+            
+            cursor.execute("""
+                SELECT id, posicao, time, pontos, jogos, vitorias, empates, derrotas,
+                       gols_pro, gols_contra, saldo_gols, aproveitamento,
+                       ultimos_jogos, zona, created_at, updated_at
+                FROM classificacao_serie_b 
+                ORDER BY posicao ASC
+            """)
+            
+            rows = cursor.fetchall()
+            classificacao = [dict(row) for row in rows]
+            
+            logger.info(f"📋 [API] Query direta retornou: {len(classificacao)} registros")
+            
+            if classificacao:
+                logger.info(f"🏆 [API] Primeiro time: {classificacao[0]['time']}")
+            
+            conn.close()
+        else:
+            logger.warning(f"❌ [API] Campeonato inválido: {campeonato}")
+            return jsonify({
+                'success': False,
+                'message': 'Campeonato inválido'
+            }), 400
+        
+        if classificacao:
+            logger.info(f"🏆 [API] Primeiro time: {classificacao[0]}")
+        
+        response_data = {
+            'success': True,
+            'classificacao': classificacao,
+            'campeonato': campeonato,
+            'total': len(classificacao)
+        }
+        
+        logger.info(f"📤 [API] Retornando: success={response_data['success']}, total={response_data['total']}")
+        return jsonify(response_data)
+        
+    except Exception as e:
+        logger.error(f"💥 [API] Erro ao carregar classificação: {e}")
+        import traceback
+        logger.error(f"📄 [API] Traceback: {traceback.format_exc()}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao carregar classificação: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/classificacao/salvar', methods=['POST'])
+@cross_origin()
+def salvar_classificacao():
+    """Salvar alterações na classificação"""
+    data = request.get_json()
+    
+    if not verificar_auth(data):
+        return jsonify({
+            'success': False,
+            'message': 'Acesso negado'
+        }), 401
+    
+    try:
+        updates = data.get('updates', [])
+        campeonato = data.get('campeonato', 'serie-a')  # Detectar série
+        serie = 'b' if campeonato == 'serie-b' else 'a'
+        
+        sucesso = 0
+        erros = 0
+        
+        logger.info(f"💾 [API] Salvando {len(updates)} alterações na Série {serie.upper()}")
+        
+        for update in updates:
+            time_id = update.get('id')
+            campo = update.get('field')
+            valor = update.get('value')
+            
+            logger.info(f"📝 [API] Atualizando ID {time_id}: {campo} = {valor}")
+            
+            if classificacao_db.update_time_stats(time_id, campo, valor, serie):
+                sucesso += 1
+                logger.info(f"✅ [API] Sucesso: {campo} atualizado")
+            else:
+                erros += 1
+                logger.error(f"❌ [API] Erro ao atualizar {campo}")
+        
+        return jsonify({
+            'success': True,
+            'message': f'Classificação atualizada: {sucesso} sucessos, {erros} erros',
+            'sucessos': sucesso,
+            'erros': erros
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao salvar classificação: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao salvar classificação: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/classificacao/info', methods=['GET'])
+@cross_origin()
+def get_classificacao_info():
+    """Obter informações sobre as tabelas de classificação"""
+    try:
+        info = classificacao_db.get_tables_info()
+        
+        return jsonify({
+            'success': True,
+            'info': info
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao obter info classificação: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao obter informações: {str(e)}'
+        }), 500
+
+# Blueprint integrado ao app principal
+# Acesse via: http://localhost:5000/admin

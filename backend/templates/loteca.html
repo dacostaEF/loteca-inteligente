@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Raio-X da Loteca - Loterias Inteligente</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon_LI.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='Favicon_LI.png') }}">
     
     <!-- META TAGS PARA AMBIENTE MÓVEL COM DESTAQUE LILÁS -->
     <meta name="theme-color" content="#A855F7">
@@ -4002,6 +4004,180 @@
             ];
         }
 
+        // RENDERIZAR TABELA EDITÁVEL COM DADOS REAIS
+        function renderTabelaClassificacaoReal(dados, serie) {
+            const isEditable = true; // Tornar editável
+            
+            const html = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>🏆 ${serie === 'serie-a' ? 'Brasileirão Série A' : 'Brasileirão Série B'} - Classificação</h3>
+                        <button class="refresh-btn" onclick="salvarAlteracoes('${serie}')">
+                            <i class="fas fa-save"></i> Salvar Alterações
+                        </button>
+                    </div>
+                    <div class="classification-wrapper">
+                        <table class="classification-table">
+                            <thead>
+                                <tr>
+                                    <th>Pos</th>
+                                    <th>Time</th>
+                                    <th>P</th>
+                                    <th>J</th>
+                                    <th>V</th>
+                                    <th>E</th>
+                                    <th>D</th>
+                                    <th>GP</th>
+                                    <th>GC</th>
+                                    <th>SG</th>
+                                    <th>%</th>
+                                    <th>Últimos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${dados.map(time => renderLinhaClassificacao(time, isEditable)).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+        
+        function renderLinhaClassificacao(time, isEditable = false) {
+            const zona = determinarZona(time.posicao, time.zona);
+            const ultimos = time.ultimos_jogos || 'VVVVV';
+            
+            return `
+                <tr class="team-row zona-${zona}" data-team-id="${time.id}" data-position="${time.posicao}">
+                    <td class="position">${time.posicao}</td>
+                    <td class="team-name">
+                        <div class="team-info">
+                            <span class="team-short">${time.time}</span>
+                        </div>
+                    </td>
+                    <td class="points ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="pontos" data-id="${time.id}"` : ''}>${time.pontos}</td>
+                    <td class="games ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="jogos" data-id="${time.id}"` : ''}>${time.jogos}</td>
+                    <td class="wins ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="vitorias" data-id="${time.id}"` : ''}>${time.vitorias}</td>
+                    <td class="draws ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="empates" data-id="${time.id}"` : ''}>${time.empates}</td>
+                    <td class="losses ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="derrotas" data-id="${time.id}"` : ''}>${time.derrotas}</td>
+                    <td class="goals-for ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="gols_pro" data-id="${time.id}"` : ''}>${time.gols_pro}</td>
+                    <td class="goals-against ${isEditable ? 'editable' : ''}" ${isEditable ? `contenteditable="true" data-field="gols_contra" data-id="${time.id}"` : ''}>${time.gols_contra}</td>
+                    <td class="goal-diff ${time.saldo_gols >= 0 ? 'positive' : 'negative'}">${time.saldo_gols >= 0 ? '+' : ''}${time.saldo_gols}</td>
+                    <td class="percentage">${time.aproveitamento}%</td>
+                    <td class="recent-games">
+                        <div class="games-indicators">
+                            ${ultimos.split('').map(resultado => `<span class="game-result ${resultado.toLowerCase()}">${resultado}</span>`).join('')}
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        // SALVAR ALTERAÇÕES NA CLASSIFICAÇÃO
+        async function salvarAlteracoes(serie) {
+            console.log(`💾 [SAVE] Salvando alterações da ${serie}...`);
+            
+            const editableCells = document.querySelectorAll('.editable[data-field]');
+            const updates = [];
+            
+            editableCells.forEach(cell => {
+                const id = cell.dataset.id;
+                const field = cell.dataset.field;
+                const value = cell.textContent.trim();
+                
+                updates.push({
+                    time_id: id,
+                    campo: field,
+                    valor: value
+                });
+            });
+            
+            if (updates.length === 0) {
+                console.log('ℹ️ [SAVE] Nenhuma alteração para salvar');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${BACKEND_BASE}/api/br/classificacao/atualizar`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        updates: updates
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log(`✅ [SAVE] Alterações salvas: ${updates.length} campos atualizados`);
+                    
+                    // Mostrar feedback visual
+                    mostrarNotificacao('Classificação salva com sucesso!', 'success');
+                    
+                    // Recarregar dados para mostrar cálculos atualizados
+                    if (serie === 'serie-a') {
+                        carregarTabelaSerieA();
+                    } else if (serie === 'serie-b') {
+                        carregarTabelaSerieB();
+                    }
+                } else {
+                    console.error('❌ [SAVE] Erro:', result.error);
+                    mostrarNotificacao('Erro ao salvar: ' + result.error, 'error');
+                }
+            } catch (error) {
+                console.error('❌ [SAVE] Erro ao salvar:', error);
+                mostrarNotificacao('Erro de conexão ao salvar', 'error');
+            }
+        }
+        
+        // MOSTRAR NOTIFICAÇÃO
+        function mostrarNotificacao(mensagem, tipo = 'info') {
+            // Criar elemento de notificação
+            const notification = document.createElement('div');
+            notification.className = `notification ${tipo}`;
+            notification.innerHTML = `
+                <i class="fas ${tipo === 'success' ? 'fa-check' : tipo === 'error' ? 'fa-times' : 'fa-info'}"></i>
+                ${mensagem}
+            `;
+            
+            // Adicionar estilos
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${tipo === 'success' ? '#00E38C' : tipo === 'error' ? '#F43F5E' : '#A855F7'};
+                color: white;
+                border-radius: 8px;
+                z-index: 10000;
+                font-weight: 500;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animar entrada
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
         // GERAR DADOS DA SÉRIE B (simulados)
         function gerarDadosSerieBSimulados() {
             return [
@@ -5030,23 +5206,11 @@
                             
                             const containerB = document.getElementById('clubes-container-b');
                             console.log('🥈 Container B encontrado:', !!containerB);
-                            console.log('🥈 Container B tem dados:', containerB?.innerHTML.trim().length > 0);
                             
                             if (containerB) {
-                                const conteudo = containerB.innerHTML.trim();
-                                const temCards = containerB.querySelectorAll('.clube-card').length > 0;
-                                
-                                console.log('🥈 [DEBUG] Análise do container B:');
-                                console.log('  - Conteúdo length:', conteudo.length);
-                                console.log('  - Tem cards:', temCards);
-                                console.log('  - Conteúdo:', conteudo.substring(0, 100) + '...');
-                                
-                                if (conteudo === '' || !temCards) {
-                                    console.log('🥈 Carregando dados da Série B...');
-                                    carregarDadosSerieB();
-                                } else {
-                                    console.log('✅ Dados da Série B já disponíveis');
-                                }
+                                // SEMPRE carregar dados da Série B para garantir renderização correta
+                                console.log('🥈 [DEBUG] Forçando carregamento da Série B...');
+                                carregarDadosSerieB();
                             } else {
                                 console.error('❌ Container Série B não encontrado!');
                             }
