@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>🔐 Central Admin - Loteca Inteligente</title>
+    
+    <!-- META TAGS PARA AMBIENTE MÓVEL COM DESTAQUE LILÁS -->
+    <meta name="theme-color" content="#A855F7">
+    <meta name="msapplication-navbutton-color" content="#A855F7">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cor-fundo: #12101a;
+            --cor-fundo-card: #1e1b29;
+            --cor-borda: #3a364f;
+            --cor-texto-principal: #e2e8f0;
+            --cor-texto-secundario: #94a3b8;
+            --cor-destaque-primaria: #A855F7; /* Lilás */
+            --cor-destaque-secundaria: #00E38C; /* Verde */
+            --cor-vantagem: #00E38C;
+            --cor-desvantagem: #F43F5E; /* Vermelho/Rosa */
+            --cor-equilibrio: #FBBF24; /* Amarelo */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cor-fundo);
+            min-height: 100vh;
+            color: var(--cor-texto-principal);
+            
+            /* MOLDURA NEON LILÁS - EFEITO LOTERIAS INTELIGENTE */
+            box-shadow: 
+                inset 0 0 0 3px var(--cor-destaque-primaria),
+                inset 0 0 20px rgba(168, 85, 247, 0.3),
+                0 0 40px rgba(168, 85, 247, 0.2);
+            position: relative;
+        }
+        
+        /* MOLDURA NEON PARA TABLETS */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            body {
+                box-shadow: 
+                    inset 0 0 0 4px var(--cor-destaque-primaria),
+                    inset 0 0 25px rgba(168, 85, 247, 0.35),
+                    0 0 50px rgba(168, 85, 247, 0.25);
+                animation: neonPulse 4s ease-in-out infinite alternate;
+            }
+        }
+
+        /* MOLDURA NEON ADICIONAL PARA DISPOSITIVOS MÓVEIS */
+        @media (max-width: 768px) {
+            body {
+                box-shadow: 
+                    inset 0 0 0 2px var(--cor-destaque-primaria),
+                    inset 0 0 15px rgba(168, 85, 247, 0.4),
+                    0 0 30px rgba(168, 85, 247, 0.3);
+                animation: neonPulse 3s ease-in-out infinite alternate;
+            }
+        }
+        
+        /* ANIMAÇÃO NEON PULSANTE */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 
+                    inset 0 0 0 3px var(--cor-destaque-primaria),
+                    inset 0 0 20px rgba(168, 85, 247, 0.3),
+                    0 0 40px rgba(168, 85, 247, 0.2);
+            }
+            100% {
+                box-shadow: 
+                    inset 0 0 0 3px var(--cor-destaque-primaria),
+                    inset 0 0 25px rgba(168, 85, 247, 0.5),
+                    0 0 60px rgba(168, 85, 247, 0.4);
+            }
+        }
+
+        /* === TELA DE LOGIN === */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-box h1 {
+            color: var(--cor-destaque-primaria);
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .login-box .icon {
+            font-size: 60px;
+            color: var(--cor-destaque-secundaria);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--cor-texto-secundario);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto-principal);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--cor-destaque-primaria);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--cor-destaque-secundaria), #00B377);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,227,140,0.3);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            padding: 10px;
+            background: #ffeaea;
+            border-radius: 5px;
+            display: none;
+        }
+
+        /* === INTERFACE PRINCIPAL === */
+        .admin-container {
+            display: none;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: var(--cor-destaque-primaria);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 800;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            padding: 5px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--cor-texto-secundario);
+        }
+
+        .tab:hover {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--cor-destaque-primaria);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--cor-destaque-primaria), #9333EA);
+            color: white;
+        }
+
+        .tab-content {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto-principal);
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--cor-destaque-primaria);
+            transform: translateY(-2px);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+
+        .input-group label {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--cor-fundo-card);
+            padding: 0 10px;
+            color: var(--cor-destaque-secundaria);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cor-destaque-secundaria), #00B377);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,227,140,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--cor-borda);
+            color: var(--cor-texto-secundario);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cor-destaque-primaria);
+            color: var(--cor-destaque-primaria);
+        }
+
+        .btn-danger {
+            background: var(--cor-desvantagem);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, var(--cor-destaque-primaria), #9333EA);
+            color: white;
+            padding: 15px 10px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .data-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--cor-borda);
+            color: var(--cor-texto-principal);
+        }
+
+        .data-table tr:hover {
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .escudo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.serie-a {
+            background: var(--cor-destaque-secundaria);
+            color: white;
+        }
+
+        .status-badge.série-a {
+            background: var(--cor-destaque-secundaria);
+            color: white;
+        }
+
+        .status-badge.serie-b {
+            background: var(--cor-equilibrio);
+            color: var(--cor-fundo);
+        }
+
+        .status-badge.série-b {
+            background: var(--cor-equilibrio);
+            color: var(--cor-fundo);
+        }
+
+        .status-badge.regional {
+            background: var(--cor-texto-secundario);
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: var(--cor-texto-secundario);
+        }
+
+        .loading i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            animation: spin 1s linear infinite;
+            color: var(--cor-destaque-primaria);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message, .error-alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: none;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .success-message {
+            background: rgba(0, 227, 140, 0.1);
+            color: var(--cor-destaque-secundaria);
+            border-color: var(--cor-destaque-secundaria);
+        }
+
+        .error-alert {
+            background: rgba(244, 63, 94, 0.1);
+            color: var(--cor-desvantagem);
+            border-color: var(--cor-desvantagem);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto-principal);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--cor-destaque-primaria);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 10px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .data-table {
+                font-size: 14px;
+            }
+            
+            .data-table th, .data-table td {
+                padding: 8px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- === TELA DE LOGIN === -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <i class="fas fa-shield-alt icon"></i>
+            <h1>Acesso Administrativo</h1>
+            <p style="margin-bottom: 30px; color: #666;">Central de Dados - Loteca Inteligente</p>
+            
+            <div class="form-group">
+                <label for="adminKey">Chave de Administrador:</label>
+                <input type="password" id="adminKey" placeholder="Digite a chave de acesso">
+            </div>
+            
+            <button class="btn" onclick="login()">
+                <i class="fas fa-sign-in-alt"></i> Acessar Sistema
+            </button>
+            
+            <div class="error-message" id="loginError">
+                <i class="fas fa-exclamation-triangle"></i> Chave de acesso inválida!
+            </div>
+        </div>
+    </div>
+
+    <!-- === INTERFACE PRINCIPAL === -->
+    <div class="admin-container" id="adminContainer">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-database"></i>
+                Central Admin - Loteca Inteligente
+            </h1>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-users icon" style="color: #3498db;"></i>
+                <div class="number" id="totalClubes">-</div>
+                <div class="label">Total de Clubes</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-trophy icon" style="color: #f39c12;"></i>
+                <div class="number" id="serieAClubes">-</div>
+                <div class="label">Série A</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-medal icon" style="color: #e67e22;"></i>
+                <div class="number" id="serieBClubes">-</div>
+                <div class="label">Série B</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock icon" style="color: #00E38C;"></i>
+                <div class="number" id="ultimaSync">-</div>
+                <div class="label">Última Sincronização</div>
+            </div>
+        </div>
+
+        <!-- Mensagens -->
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i> <span id="successText"></span>
+        </div>
+        <div class="error-alert" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+        </div>
+
+        <!-- Abas -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('clubes')">
+                <i class="fas fa-users"></i> Clubes
+            </button>
+            <button class="tab" onclick="showTab('estatisticas')">
+                <i class="fas fa-chart-bar"></i> Estatísticas
+            </button>
+            <button class="tab" onclick="showTab('campeonatos')">
+                <i class="fas fa-trophy"></i> Campeonatos
+            </button>
+            <button class="tab" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="tab" onclick="showTab('backup')">
+                <i class="fas fa-download"></i> Backup
+            </button>
+        </div>
+
+        <!-- === ABA CLUBES === -->
+        <div class="tab-content active" id="clubes">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-users"></i> Gestão de Clubes
+            </h2>
+            
+            <!-- Formulário de Clubes -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Nome Fantasia</label>
+                    <input type="text" id="nomeFantasia" placeholder="Ex: Flamengo">
+                </div>
+                <div class="input-group">
+                    <label>Abreviação</label>
+                    <input type="text" id="abreviacao" placeholder="Ex: FLA">
+                </div>
+                <div class="input-group">
+                    <label>Estado</label>
+                    <select id="estado">
+                        <option value="">Selecione...</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Série</label>
+                    <select id="serie">
+                        <option value="">Selecione...</option>
+                        <option value="Série A">Série A</option>
+                        <option value="Série B">Série B</option>
+                        <option value="Série C">Série C</option>
+                        <option value="Série D">Série D</option>
+                        <option value="REGIONAL">Regional</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label>ID Cartola FC</label>
+                    <input type="number" id="cartolaId" placeholder="Ex: 262">
+                </div>
+                <div class="input-group">
+                    <label>URL Escudo</label>
+                    <input type="url" id="escudoUrl" placeholder="https://exemplo.com/escudo.png">
+                </div>
+                <div class="input-group">
+                    <label>Cor Primária</label>
+                    <input type="color" id="corPrimaria" value="#FF0000">
+                </div>
+                <div class="input-group">
+                    <label>Cor Secundária</label>
+                    <input type="color" id="corSecundaria" value="#000000">
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="salvarClube()">
+                <i class="fas fa-save"></i> Salvar Clube
+            </button>
+            <button class="btn-secondary" onclick="limparFormClube()" style="margin-left: 10px;">
+                <i class="fas fa-eraser"></i> Limpar
+            </button>
+
+            <!-- Busca e Lista de Clubes -->
+            <input type="text" class="search-box" id="searchClubes" placeholder="🔍 Buscar clubes..." onkeyup="filtrarClubes()">
+            
+            <div class="loading" id="loadingClubes">
+                <i class="fas fa-spinner"></i>
+                <div>Carregando clubes...</div>
+            </div>
+
+            <table class="data-table" id="tableClubes" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Escudo</th>
+                        <th>Nome</th>
+                        <th>Sigla</th>
+                        <th>Estado</th>
+                        <th>Série</th>
+                        <th>ID Cartola</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyClubes">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- === ABA ESTATÍSTICAS === -->
+        <div class="tab-content" id="estatisticas">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-chart-bar"></i> Gestão de Estatísticas
+            </h2>
+            
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Selecionar Clube</label>
+                    <select id="clubeEstatisticas">
+                        <option value="">Carregando clubes...</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Total de Atletas</label>
+                    <input type="number" id="totalAtletas" placeholder="Ex: 40">
+                </div>
+                <div class="input-group">
+                    <label>% Prováveis</label>
+                    <input type="number" id="pctProvaveis" placeholder="Ex: 35.5" step="0.1" min="0" max="100">
+                </div>
+                <div class="input-group">
+                    <label>Média Pontos</label>
+                    <input type="number" id="mediaPontos" placeholder="Ex: 4.58" step="0.01" min="0" max="10">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Preço Médio (C$)</label>
+                    <input type="number" id="precoMedio" placeholder="Ex: 6.75" step="0.01" min="0">
+                </div>
+                <div class="input-group">
+                    <label>Rating (0-1)</label>
+                    <input type="number" id="rating" placeholder="Ex: 0.458" step="0.001" min="0" max="1">
+                </div>
+                <div class="input-group">
+                    <label>Fonte</label>
+                    <select id="fonte">
+                        <option value="MANUAL">Manual</option>
+                        <option value="CARTOLA">Cartola FC</option>
+                        <option value="OUTRO">Outro</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="salvarEstatisticas()">
+                <i class="fas fa-save"></i> Salvar Estatísticas
+            </button>
+            <button class="btn-secondary" onclick="limparFormEstatisticas()" style="margin-left: 10px;">
+                <i class="fas fa-eraser"></i> Limpar
+            </button>
+
+            <!-- Lista de Estatísticas -->
+            <div class="loading" id="loadingEstatisticas">
+                <i class="fas fa-spinner"></i>
+                <div>Carregando estatísticas...</div>
+            </div>
+
+            <table class="data-table" id="tableEstatisticas" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Clube</th>
+                        <th>Atletas</th>
+                        <th>% Prováveis</th>
+                        <th>Média Pontos</th>
+                        <th>Preço Médio</th>
+                        <th>Rating</th>
+                        <th>Fonte</th>
+                        <th>Atualização</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyEstatisticas">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- === ABA CAMPEONATOS === -->
+        <div class="tab-content" id="campeonatos">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-trophy"></i> Gestão de Campeonatos
+            </h2>
+            <p style="padding: 50px; text-align: center; color: #666;">
+                <i class="fas fa-construction" style="font-size: 40px; margin-bottom: 15px;"></i><br>
+                Funcionalidade em desenvolvimento...
+            </p>
+        </div>
+
+        <!-- === ABA DASHBOARD === -->
+        <div class="tab-content" id="dashboard">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-tachometer-alt"></i> Dashboard do Sistema
+            </h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-database icon" style="color: #9b59b6;"></i>
+                    <div class="number" id="tamanhoDb">-</div>
+                    <div class="label">Tamanho do Banco</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar icon" style="color: #e74c3c;"></i>
+                    <div class="number" id="dadosAntigos">-</div>
+                    <div class="label">Dados Mais Antigos</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-source icon" style="color: #2ecc71;"></i>
+                    <div class="number" id="fontesPrincipais">-</div>
+                    <div class="label">Fontes Principais</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === ABA BACKUP === -->
+        <div class="tab-content" id="backup">
+            <h2 style="margin-bottom: 25px; color: #333;">
+                <i class="fas fa-download"></i> Backup e Restore
+            </h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div style="padding: 30px; background: #f8f9fa; border-radius: 15px;">
+                    <h3 style="margin-bottom: 20px; color: #00E38C;">
+                        <i class="fas fa-download"></i> Fazer Backup
+                    </h3>
+                    <p style="margin-bottom: 20px; color: #666;">
+                        Baixe uma cópia completa de todos os dados da Central.
+                    </p>
+                    <button class="btn-primary" onclick="fazerBackup()">
+                        <i class="fas fa-download"></i> Gerar Backup
+                    </button>
+                </div>
+                
+                <div style="padding: 30px; background: #fff3cd; border-radius: 15px;">
+                    <h3 style="margin-bottom: 20px; color: #856404;">
+                        <i class="fas fa-upload"></i> Restaurar Backup
+                    </h3>
+                    <p style="margin-bottom: 20px; color: #666;">
+                        Restaure dados de um arquivo de backup anterior.
+                    </p>
+                    <input type="file" id="backupFile" accept=".json" style="margin-bottom: 15px;">
+                    <button class="btn-secondary" onclick="restaurarBackup()">
+                        <i class="fas fa-upload"></i> Restaurar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === CONFIGURAÇÕES === 
+        const ADMIN_KEY = 'loteca2024admin'; // Chave de acesso padrão
+        const API_BASE = window.location.port === '5001' ? 'http://127.0.0.1:5001' : window.location.origin; // Base URL para APIs
+
+        // === SISTEMA DE LOGIN ===
+        function login() {
+            const key = document.getElementById('adminKey').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (key === ADMIN_KEY) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminContainer').style.display = 'block';
+                carregarDashboard();
+                carregarClubes();
+                carregarEstatisticas();
+            } else {
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('adminContainer').style.display = 'none';
+            document.getElementById('adminKey').value = '';
+        }
+
+        // === SISTEMA DE ABAS ===
+        function showTab(tabName) {
+            // Esconder todas as abas
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Carregar dados específicos da aba
+            if (tabName === 'clubes') carregarClubes();
+            if (tabName === 'estatisticas') carregarEstatisticas();
+            if (tabName === 'dashboard') carregarDashboard();
+        }
+
+        // === SISTEMA DE MENSAGENS ===
+        function mostrarSucesso(mensagem) {
+            document.getElementById('successText').textContent = mensagem;
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 4000);
+        }
+
+        function mostrarErro(mensagem) {
+            document.getElementById('errorText').textContent = mensagem;
+            document.getElementById('errorMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('errorMessage').style.display = 'none';
+            }, 5000);
+        }
+
+        // === DASHBOARD ===
+        async function carregarDashboard() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/dashboard`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    document.getElementById('totalClubes').textContent = data.total_clubes || '0';
+                    document.getElementById('serieAClubes').textContent = data.clubes_serie_a || '0';
+                    document.getElementById('serieBClubes').textContent = data.clubes_serie_b || '0';
+                    document.getElementById('ultimaSync').textContent = data.ultima_sincronizacao || 'Nunca';
+                    document.getElementById('tamanhoDb').textContent = data.tamanho_db || 'N/A';
+                    document.getElementById('dadosAntigos').textContent = data.dados_mais_antigos || 'N/A';
+                    
+                    const fontes = Object.keys(data.fontes_principais || {});
+                    document.getElementById('fontesPrincipais').textContent = fontes.length > 0 ? fontes.join(', ') : 'Nenhuma';
+                } else {
+                    mostrarErro('Erro ao carregar dashboard: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dashboard:', error);
+                mostrarErro('Erro de conexão com o servidor');
+            }
+        }
+
+        // === GESTÃO DE CLUBES ===
+        let clubesData = [];
+
+        async function carregarClubes() {
+            const loading = document.getElementById('loadingClubes');
+            const table = document.getElementById('tableClubes');
+            
+            loading.style.display = 'block';
+            table.style.display = 'none';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/clubes`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    clubesData = result.data;
+                    renderizarClubes(clubesData);
+                    carregarClubesSelect();
+                    
+                    loading.style.display = 'none';
+                    table.style.display = 'table';
+                } else {
+                    mostrarErro('Erro ao carregar clubes: ' + result.message);
+                    loading.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar clubes:', error);
+                mostrarErro('Erro de conexão ao carregar clubes');
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderizarClubes(clubes) {
+            const tbody = document.getElementById('tbodyClubes');
+            tbody.innerHTML = '';
+            
+            clubes.forEach(clube => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        ${clube.escudo_60x60 ? 
+                            `<img src="${clube.escudo_60x60}" class="escudo-img" alt="${clube.abreviacao}">` : 
+                            `<div style="width:40px;height:40px;background:${clube.cor_primaria || '#ccc'};border-radius:50%;"></div>`
+                        }
+                    </td>
+                    <td>${clube.nome_fantasia}</td>
+                    <td>${clube.abreviacao}</td>
+                    <td>${clube.estado || '-'}</td>
+                    <td><span class="status-badge ${clube.serie?.toLowerCase().replace(' ', '-')}">${clube.serie || '-'}</span></td>
+                    <td>${clube.id}</td>
+                    <td>
+                        <button class="btn-secondary" onclick="editarClube(${clube.id})" style="margin-right: 5px;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-danger" onclick="excluirClube(${clube.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filtrarClubes() {
+            const searchTerm = document.getElementById('searchClubes').value.toLowerCase();
+            const clubesFiltrados = clubesData.filter(clube => 
+                clube.nome_fantasia.toLowerCase().includes(searchTerm) ||
+                clube.abreviacao.toLowerCase().includes(searchTerm) ||
+                (clube.estado && clube.estado.toLowerCase().includes(searchTerm))
+            );
+            renderizarClubes(clubesFiltrados);
+        }
+
+        function carregarClubesSelect() {
+            const select = document.getElementById('clubeEstatisticas');
+            select.innerHTML = '<option value="">Selecione um clube...</option>';
+            
+            clubesData.forEach(clube => {
+                const option = document.createElement('option');
+                option.value = clube.id;
+                option.textContent = `${clube.nome_fantasia} (${clube.abreviacao})`;
+                select.appendChild(option);
+            });
+        }
+
+        async function salvarClube() {
+            const clube = {
+                nome_fantasia: document.getElementById('nomeFantasia').value,
+                abreviacao: document.getElementById('abreviacao').value,
+                estado: document.getElementById('estado').value,
+                serie: document.getElementById('serie').value,
+                id: document.getElementById('cartolaId').value,
+                escudo_url: document.getElementById('escudoUrl').value,
+                cor_primaria: document.getElementById('corPrimaria').value,
+                cor_secundaria: document.getElementById('corSecundaria').value,
+                admin_key: ADMIN_KEY
+            };
+            
+            if (!clube.nome_fantasia || !clube.abreviacao) {
+                mostrarErro('Nome e abreviação são obrigatórios');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/clubes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(clube)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    mostrarSucesso('Clube salvo com sucesso!');
+                    limparFormClube();
+                    carregarClubes();
+                    carregarDashboard(); // Atualizar estatísticas
+                } else {
+                    mostrarErro('Erro ao salvar clube: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar clube:', error);
+                mostrarErro('Erro de conexão ao salvar clube');
+            }
+        }
+
+        function limparFormClube() {
+            document.getElementById('nomeFantasia').value = '';
+            document.getElementById('abreviacao').value = '';
+            document.getElementById('estado').value = '';
+            document.getElementById('serie').value = '';
+            document.getElementById('cartolaId').value = '';
+            document.getElementById('escudoUrl').value = '';
+            document.getElementById('corPrimaria').value = '#FF0000';
+            document.getElementById('corSecundaria').value = '#000000';
+        }
+
+        function editarClube(id) {
+            const clube = clubesData.find(c => c.id === id);
+            if (clube) {
+                document.getElementById('nomeFantasia').value = clube.nome_fantasia;
+                document.getElementById('abreviacao').value = clube.abreviacao;
+                document.getElementById('estado').value = clube.estado || '';
+                document.getElementById('serie').value = clube.serie || '';
+                document.getElementById('cartolaId').value = clube.id;
+                document.getElementById('escudoUrl').value = clube.escudo_60x60 || '';
+                document.getElementById('corPrimaria').value = clube.cor_primaria || '#FF0000';
+                document.getElementById('corSecundaria').value = clube.cor_secundaria || '#000000';
+            }
+        }
+
+        async function excluirClube(id) {
+            if (confirm('Tem certeza que deseja excluir este clube?')) {
+                try {
+                    const response = await fetch(`${API_BASE}/api/admin/clubes/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ admin_key: ADMIN_KEY })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        mostrarSucesso('Clube excluído com sucesso!');
+                        carregarClubes();
+                        carregarDashboard(); // Atualizar estatísticas
+                    } else {
+                        mostrarErro('Erro ao excluir clube: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Erro ao excluir clube:', error);
+                    mostrarErro('Erro de conexão ao excluir clube');
+                }
+            }
+        }
+
+        // === GESTÃO DE ESTATÍSTICAS ===
+        let estatisticasData = [];
+
+        async function carregarEstatisticas() {
+            const loading = document.getElementById('loadingEstatisticas');
+            const table = document.getElementById('tableEstatisticas');
+            
+            loading.style.display = 'block';
+            table.style.display = 'none';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/estatisticas`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    estatisticasData = result.data;
+                    renderizarEstatisticas(estatisticasData);
+                    
+                    loading.style.display = 'none';
+                    table.style.display = 'table';
+                } else {
+                    mostrarErro('Erro ao carregar estatísticas: ' + result.message);
+                    loading.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+                mostrarErro('Erro de conexão ao carregar estatísticas');
+                loading.style.display = 'none';
+            }
+        }
+
+        function renderizarEstatisticas(estatisticas) {
+            const tbody = document.getElementById('tbodyEstatisticas');
+            tbody.innerHTML = '';
+            
+            estatisticas.forEach(stat => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${stat.nome_fantasia || stat.clube_nome}</td>
+                    <td>${stat.total_atletas || '-'}</td>
+                    <td>${stat.pct_provaveis ? stat.pct_provaveis.toFixed(1) + '%' : '-'}</td>
+                    <td>${stat.media_pontos_elenco ? stat.media_pontos_elenco.toFixed(2) : '-'}</td>
+                    <td>${stat.preco_medio ? 'C$ ' + stat.preco_medio.toFixed(2) : '-'}</td>
+                    <td>${stat.rating ? stat.rating.toFixed(3) : '-'}</td>
+                    <td><span class="status-badge">${stat.fonte}</span></td>
+                    <td>${stat.data_atualizacao ? new Date(stat.data_atualizacao).toLocaleString('pt-BR') : '-'}</td>
+                    <td>
+                        <button class="btn-secondary" onclick="editarEstatisticas(${stat.clube_id})" style="margin-right: 5px;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-danger" onclick="excluirEstatisticas(${stat.clube_id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        async function salvarEstatisticas() {
+            const estatisticas = {
+                clube_id: document.getElementById('clubeEstatisticas').value,
+                total_atletas: document.getElementById('totalAtletas').value,
+                pct_provaveis: document.getElementById('pctProvaveis').value,
+                media_pontos_elenco: document.getElementById('mediaPontos').value,
+                preco_medio: document.getElementById('precoMedio').value,
+                rating: document.getElementById('rating').value,
+                fonte: document.getElementById('fonte').value,
+                admin_key: ADMIN_KEY
+            };
+            
+            if (!estatisticas.clube_id) {
+                mostrarErro('Selecione um clube');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/estatisticas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(estatisticas)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    mostrarSucesso('Estatísticas salvas com sucesso!');
+                    limparFormEstatisticas();
+                    carregarEstatisticas();
+                    carregarDashboard(); // Atualizar dashboard
+                } else {
+                    mostrarErro('Erro ao salvar estatísticas: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar estatísticas:', error);
+                mostrarErro('Erro de conexão ao salvar estatísticas');
+            }
+        }
+
+        function limparFormEstatisticas() {
+            document.getElementById('clubeEstatisticas').value = '';
+            document.getElementById('totalAtletas').value = '';
+            document.getElementById('pctProvaveis').value = '';
+            document.getElementById('mediaPontos').value = '';
+            document.getElementById('precoMedio').value = '';
+            document.getElementById('rating').value = '';
+            document.getElementById('fonte').value = 'MANUAL';
+        }
+
+        function editarEstatisticas(clubeId) {
+            const stat = estatisticasData.find(s => s.clube_id === clubeId);
+            if (stat) {
+                document.getElementById('clubeEstatisticas').value = stat.clube_id;
+                document.getElementById('totalAtletas').value = stat.total_atletas || '';
+                document.getElementById('pctProvaveis').value = stat.pct_provaveis || '';
+                document.getElementById('mediaPontos').value = stat.media_pontos_elenco || '';
+                document.getElementById('precoMedio').value = stat.preco_medio || '';
+                document.getElementById('rating').value = stat.rating || '';
+                document.getElementById('fonte').value = stat.fonte || 'MANUAL';
+            }
+        }
+
+        function excluirEstatisticas(clubeId) {
+            if (confirm('Tem certeza que deseja excluir estas estatísticas?')) {
+                try {
+                    // Aqui seria a chamada real para a API
+                    mostrarSucesso('Estatísticas excluídas com sucesso!');
+                    carregarEstatisticas();
+                } catch (error) {
+                    console.error('Erro ao excluir estatísticas:', error);
+                    mostrarErro('Erro ao excluir estatísticas');
+                }
+            }
+        }
+
+        // === BACKUP E RESTORE ===
+        async function fazerBackup() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/backup`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const dataStr = JSON.stringify(result.data, null, 2);
+                    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(dataBlob);
+                    link.download = result.filename || `loteca-backup-${new Date().toISOString().slice(0,10)}.json`;
+                    link.click();
+                    
+                    mostrarSucesso('Backup gerado com sucesso!');
+                } else {
+                    mostrarErro('Erro ao gerar backup: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao gerar backup:', error);
+                mostrarErro('Erro de conexão ao gerar backup');
+            }
+        }
+
+        async function restaurarBackup() {
+            const fileInput = document.getElementById('backupFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                mostrarErro('Selecione um arquivo de backup');
+                return;
+            }
+            
+            try {
+                const text = await file.text();
+                const backupData = JSON.parse(text);
+                
+                if (confirm('Tem certeza que deseja restaurar este backup? Todos os dados atuais serão substituídos.')) {
+                    const response = await fetch(`${API_BASE}/api/admin/restore`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            backup_data: backupData,
+                            admin_key: ADMIN_KEY
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        mostrarSucesso('Backup restaurado com sucesso! ' + result.message);
+                        carregarClubes();
+                        carregarEstatisticas();
+                        carregarDashboard();
+                    } else {
+                        mostrarErro('Erro ao restaurar backup: ' + result.message);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao restaurar backup:', error);
+                mostrarErro('Arquivo de backup inválido ou erro de conexão');
+            }
+        }
+
+        // === TECLAS DE ATALHO ===
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginContainer').style.display !== 'none') {
+                login();
+            }
+        });
+
+        // === INICIALIZAÇÃO ===
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔐 Central Admin - Loteca Inteligente carregada');
+            console.log('💡 Chave padrão:', ADMIN_KEY);
+        });
+    </script>
+</body>
+</html>

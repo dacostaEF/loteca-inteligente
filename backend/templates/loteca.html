@@ -2,8 +2,15 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Raio-X da Loteca - Loterias Inteligente</title>
+    
+    <!-- META TAGS PARA AMBIENTE MÓVEL COM DESTAQUE LILÁS -->
+    <meta name="theme-color" content="#A855F7">
+    <meta name="msapplication-navbutton-color" content="#A855F7">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +38,52 @@
             color: var(--cor-texto-principal);
             margin: 0;
             padding: 0;
+            
+            /* MOLDURA NEON LILÁS - EFEITO LOTERIAS INTELIGENTE */
+            box-shadow: 
+                inset 0 0 0 3px var(--cor-destaque-primaria),
+                inset 0 0 20px rgba(168, 85, 247, 0.3),
+                0 0 40px rgba(168, 85, 247, 0.2);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* MOLDURA NEON PARA TABLETS */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            body {
+                box-shadow: 
+                    inset 0 0 0 4px var(--cor-destaque-primaria),
+                    inset 0 0 25px rgba(168, 85, 247, 0.35),
+                    0 0 50px rgba(168, 85, 247, 0.25);
+                animation: neonPulse 4s ease-in-out infinite alternate;
+            }
+        }
+
+        /* MOLDURA NEON ADICIONAL PARA DISPOSITIVOS MÓVEIS */
+        @media (max-width: 768px) {
+            body {
+                box-shadow: 
+                    inset 0 0 0 2px var(--cor-destaque-primaria),
+                    inset 0 0 15px rgba(168, 85, 247, 0.4),
+                    0 0 30px rgba(168, 85, 247, 0.3);
+                animation: neonPulse 3s ease-in-out infinite alternate;
+            }
+        }
+        
+        /* ANIMAÇÃO NEON PULSANTE */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 
+                    inset 0 0 0 3px var(--cor-destaque-primaria),
+                    inset 0 0 20px rgba(168, 85, 247, 0.3),
+                    0 0 40px rgba(168, 85, 247, 0.2);
+            }
+            100% {
+                box-shadow: 
+                    inset 0 0 0 3px var(--cor-destaque-primaria),
+                    inset 0 0 25px rgba(168, 85, 247, 0.5),
+                    0 0 60px rgba(168, 85, 247, 0.4);
+            }
         }
 
         .container {
@@ -45,6 +98,37 @@
             padding-bottom: 2rem;
             border-bottom: 1px solid var(--cor-borda);
             margin-bottom: 2rem;
+            
+            /* BRILHO NEON NO HEADER */
+            background: linear-gradient(135deg, 
+                rgba(168, 85, 247, 0.05) 0%, 
+                transparent 50%, 
+                rgba(0, 227, 140, 0.05) 100%);
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(168, 85, 247, 0.1) 25%, 
+                transparent 50%, 
+                rgba(0, 227, 140, 0.1) 75%, 
+                transparent 100%);
+            border-radius: 15px;
+            animation: headerShimmer 4s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes headerShimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
 
         .header .logo-link {
