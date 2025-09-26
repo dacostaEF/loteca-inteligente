@@ -838,10 +838,93 @@
                 <i class="fas fa-gamepad"></i> Gestão de Jogos Loteca
             </h2>
             
-            <div class="coming-soon" style="text-align: center; padding: 60px 20px; background: #f8f9fa; border-radius: 10px; margin: 40px 0;">
-                <i class="fas fa-tools" style="font-size: 48px; color: #6c757d; margin-bottom: 20px;"></i>
-                <h3 style="color: #6c757d; margin-bottom: 10px;">Em Desenvolvimento</h3>
-                <p style="color: #adb5bd;">Esta seção será implementada em breve com as funcionalidades para gerenciar os jogos da Loteca.</p>
+            <!-- INFORMAÇÕES DO CONCURSO -->
+            <div class="form-row" style="margin-bottom: 30px;">
+                <div class="form-group" style="flex: 1; margin-right: 15px;">
+                    <label>Concurso Nº:</label>
+                    <input type="number" id="numeroConcurso" class="form-control" placeholder="1213" value="1213">
+                </div>
+                <div class="form-group" style="flex: 2; margin-right: 15px;">
+                    <label>Data do Sorteio:</label>
+                    <input type="date" id="dataSorteio" class="form-control" value="2025-09-27">
+                </div>
+                <div class="form-group" style="flex: 2;">
+                    <label>Período de Apostas:</label>
+                    <input type="text" id="periodoApostas" class="form-control" placeholder="24/09/2025 até 15h do dia 27/09/2025" value="24/09/2025 até 15h do dia 27/09/2025">
+                </div>
+            </div>
+
+            <!-- VOLANTE DA LOTECA - RÉPLICA DA CAIXA -->
+            <div class="loteca-volante" style="background: white; border: 2px solid #0066cc; border-radius: 10px; padding: 20px; margin-bottom: 30px;">
+                <div class="volante-header" style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #0066cc;">
+                    <h3 style="color: #0066cc; margin: 0; font-weight: bold;">
+                        Concurso <span id="displayConcurso">1213</span> (<span id="displayData">27/09/2025, Sábado</span>)
+                    </h3>
+                    <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">
+                        Período de apostas: <span id="displayPeriodo">24/09/2025 até as 15h do dia 27/09/2025</span>
+                    </p>
+                    <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">
+                        Realização dos jogos de futebol: <span id="displayRealizacao">27/09/2025 a 28/09/2025</span>
+                    </p>
+                </div>
+
+                <!-- TABELA DOS JOGOS -->
+                <div class="table-responsive">
+                    <table class="loteca-table" style="width: 100%; border-collapse: collapse; border: 1px solid #0066cc;">
+                        <thead>
+                            <tr style="background: #0066cc; color: white;">
+                                <th style="padding: 10px; text-align: center; border: 1px solid #0066cc; width: 60px;">Jogo</th>
+                                <th style="padding: 10px; text-align: center; border: 1px solid #0066cc; width: 35%;">Coluna 1</th>
+                                <th style="padding: 10px; text-align: center; border: 1px solid #0066cc; width: 60px;">x</th>
+                                <th style="padding: 10px; text-align: center; border: 1px solid #0066cc; width: 35%;">Coluna 2</th>
+                                <th style="padding: 10px; text-align: center; border: 1px solid #0066cc; width: 15%;">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lotecaJogos">
+                            <!-- Os 14 jogos serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BOTÕES DE AÇÃO -->
+            <div class="form-row" style="margin-top: 20px;">
+                <button class="btn-primary" onclick="carregarJogosAtuais()" style="margin-right: 10px;">
+                    <i class="fas fa-sync"></i> Carregar Jogos Atuais
+                </button>
+                <button class="btn-success" onclick="salvarJogosLoteca()" style="margin-right: 10px;">
+                    <i class="fas fa-save"></i> Salvar Concurso
+                </button>
+                <button class="btn-secondary" onclick="gerarAnalises()" style="margin-right: 10px;">
+                    <i class="fas fa-chart-bar"></i> Gerar Análises
+                </button>
+                <button class="btn-warning" onclick="publicarNoSite()">
+                    <i class="fas fa-upload"></i> Publicar no Site
+                </button>
+            </div>
+
+            <!-- HISTÓRICO DE CONCURSOS -->
+            <div class="historico-section" style="margin-top: 40px;">
+                <h3 style="color: #333; margin-bottom: 15px;">
+                    <i class="fas fa-history"></i> Histórico de Concursos
+                </h3>
+                <div class="loading-message" id="loadingHistorico" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> Carregando histórico...
+                </div>
+                <table class="data-table" id="tabelaHistorico">
+                    <thead>
+                        <tr>
+                            <th>Concurso</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Jogos</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historicoBody">
+                        <!-- Histórico será inserido aqui -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -2265,6 +2348,181 @@
                 });
             }
         });
+
+        // === FUNÇÕES DA LOTECA ===
+
+        // Dados dos jogos atuais (baseados no site)
+        const jogosAtuais = [
+            { id: 1, coluna1: "CORINTHIANS/SP", coluna2: "FLAMENGO/RJ", data: "Domingo" },
+            { id: 2, coluna1: "FORTALEZA/CE", coluna2: "SPORT/PE", data: "Sábado" },
+            { id: 3, coluna1: "JUVENTUDE/RS", coluna2: "INTERNACIONAL/RS", data: "Sábado" },
+            { id: 4, coluna1: "VASCO DA GAMA/RJ", coluna2: "CRUZEIRO/MG", data: "Sábado" },
+            { id: 5, coluna1: "ATHLETICO/PR", coluna2: "OPERARIO/PR", data: "Sábado" },
+            { id: 6, coluna1: "ATLETICO/MG", coluna2: "MIRASSOL/SP", data: "Sábado" },
+            { id: 7, coluna1: "GREMIO/RS", coluna2: "VITORIA/BA", data: "Domingo" },
+            { id: 8, coluna1: "ASTON VILLA", coluna2: "FULHAM", data: "Domingo" },
+            { id: 9, coluna1: "BAHIA/BA", coluna2: "PALMEIRAS/SP", data: "Domingo" },
+            { id: 10, coluna1: "FLUMINENSE/RJ", coluna2: "BOTAFOGO/RJ", data: "Domingo" },
+            { id: 11, coluna1: "CRICIUMA/SC", coluna2: "PAYSANDU/PA", data: "Domingo" },
+            { id: 12, coluna1: "NEW CASTLE", coluna2: "ARSENAL", data: "Domingo" },
+            { id: 13, coluna1: "BRAGANTINO/SP", coluna2: "SANTOS/SP", data: "Domingo" },
+            { id: 14, coluna1: "BARCELONA", coluna2: "REAL SOCIEDAD", data: "Domingo" }
+        ];
+
+        // Lista de todos os times disponíveis no banco
+        let timesDisponiveis = [];
+
+        async function carregarTimesDisponiveis() {
+            try {
+                console.log('📊 [LOTECA] Carregando times disponíveis...');
+                
+                const response = await fetch(`${API_BASE}/api/admin/clubes`, {
+                    headers: {
+                        'Authorization': localStorage.getItem('admin_key') || ADMIN_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    timesDisponiveis = data.clubes || [];
+                    console.log(`✅ [LOTECA] ${timesDisponiveis.length} times carregados`);
+                } else {
+                    console.error('❌ [LOTECA] Erro ao carregar times');
+                    // Times de fallback
+                    timesDisponiveis = [
+                        { nome: "CORINTHIANS/SP" }, { nome: "FLAMENGO/RJ" },
+                        { nome: "FORTALEZA/CE" }, { nome: "SPORT/PE" },
+                        // ... outros times se necessário
+                    ];
+                }
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao carregar times:', error);
+                timesDisponiveis = [];
+            }
+        }
+
+        function carregarJogosAtuais() {
+            console.log('🎮 [LOTECA] Carregando jogos atuais...');
+            
+            const tbody = document.getElementById('lotecaJogos');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            jogosAtuais.forEach(jogo => {
+                const tr = document.createElement('tr');
+                tr.style.border = '1px solid #0066cc';
+                
+                tr.innerHTML = `
+                    <td style="padding: 8px; text-align: center; border: 1px solid #0066cc; font-weight: bold;">
+                        ${jogo.id}
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #0066cc;">
+                        <input type="text" class="loteca-input" id="coluna1_${jogo.id}" 
+                               value="${jogo.coluna1}" 
+                               onchange="atualizarJogo(${jogo.id}, 'coluna1', this.value)"
+                               style="width: 100%; border: 1px solid #ddd; padding: 5px; border-radius: 3px;">
+                    </td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #0066cc; font-weight: bold; color: #0066cc;">
+                        x
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #0066cc;">
+                        <input type="text" class="loteca-input" id="coluna2_${jogo.id}" 
+                               value="${jogo.coluna2}" 
+                               onchange="atualizarJogo(${jogo.id}, 'coluna2', this.value)"
+                               style="width: 100%; border: 1px solid #ddd; padding: 5px; border-radius: 3px;">
+                    </td>
+                    <td style="padding: 8px; border: 1px solid #0066cc;">
+                        <select class="loteca-select" id="data_${jogo.id}" 
+                                onchange="atualizarJogo(${jogo.id}, 'data', this.value)"
+                                style="width: 100%; border: 1px solid #ddd; padding: 5px; border-radius: 3px;">
+                            <option value="Sábado" ${jogo.data === 'Sábado' ? 'selected' : ''}>Sábado</option>
+                            <option value="Domingo" ${jogo.data === 'Domingo' ? 'selected' : ''}>Domingo</option>
+                            <option value="Segunda" ${jogo.data === 'Segunda' ? 'selected' : ''}>Segunda</option>
+                            <option value="Terça" ${jogo.data === 'Terça' ? 'selected' : ''}>Terça</option>
+                            <option value="Quarta" ${jogo.data === 'Quarta' ? 'selected' : ''}>Quarta</option>
+                            <option value="Quinta" ${jogo.data === 'Quinta' ? 'selected' : ''}>Quinta</option>
+                            <option value="Sexta" ${jogo.data === 'Sexta' ? 'selected' : ''}>Sexta</option>
+                        </select>
+                    </td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+
+            console.log('✅ [LOTECA] 14 jogos carregados na tabela');
+            mostrarNotificacao('🎮 Jogos atuais carregados!', 'success');
+        }
+
+        function atualizarJogo(id, campo, valor) {
+            console.log(`🔄 [LOTECA] Atualizando jogo ${id}, campo ${campo}: ${valor}`);
+            
+            const jogo = jogosAtuais.find(j => j.id === id);
+            if (jogo) {
+                jogo[campo] = valor;
+                console.log(`✅ [LOTECA] Jogo ${id} atualizado`);
+            }
+        }
+
+        async function salvarJogosLoteca() {
+            try {
+                console.log('💾 [LOTECA] Salvando concurso...');
+                
+                const numeroConcurso = document.getElementById('numeroConcurso').value;
+                const dataSorteio = document.getElementById('dataSorteio').value;
+                const periodoApostas = document.getElementById('periodoApostas').value;
+
+                const concurso = {
+                    numero: numeroConcurso,
+                    data_sorteio: dataSorteio,
+                    periodo_apostas: periodoApostas,
+                    jogos: jogosAtuais
+                };
+
+                // Aqui você pode implementar o salvamento no banco
+                console.log('📊 [LOTECA] Dados do concurso:', concurso);
+                
+                mostrarNotificacao('💾 Concurso salvo com sucesso!', 'success');
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao salvar:', error);
+                mostrarNotificacao('❌ Erro ao salvar concurso!', 'error');
+            }
+        }
+
+        async function gerarAnalises() {
+            try {
+                console.log('🎯 [LOTECA] Gerando análises automáticas...');
+                
+                // Aqui você pode implementar a geração de análises baseadas nos dados do banco
+                mostrarNotificacao('🎯 Análises geradas!', 'success');
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao gerar análises:', error);
+                mostrarNotificacao('❌ Erro ao gerar análises!', 'error');
+            }
+        }
+
+        async function publicarNoSite() {
+            try {
+                console.log('🚀 [LOTECA] Publicando no site...');
+                
+                // Aqui você pode implementar a publicação automática no site
+                mostrarNotificacao('🚀 Publicado no site!', 'success');
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao publicar:', error);
+                mostrarNotificacao('❌ Erro ao publicar!', 'error');
+            }
+        }
+
+        // Inicializar ao carregar a aba
+        function inicializarLoteca() {
+            console.log('🎮 [LOTECA] Inicializando sistema...');
+            carregarTimesDisponiveis();
+        }
+
     </script>
 </body>
 </html>

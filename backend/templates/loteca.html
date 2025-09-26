@@ -196,6 +196,60 @@
             margin-top: 0.5rem;
         }
 
+        /* ESTILO PARA ESCUDOS DOS TIMES */
+        .escudo-time {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            margin: 0 12px;
+        }
+
+        .confronto-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .time-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        .vs-divider {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 15px;
+            opacity: 0.9;
+            color: var(--cor-destaque-secundaria);
+        }
+
+        @media (max-width: 768px) {
+            .escudo-time {
+                width: 40px;
+                height: 40px;
+                margin: 0 8px;
+            }
+            
+            .time-info {
+                font-size: 14px;
+            }
+            
+            .vs-divider {
+                font-size: 18px;
+                margin: 0 10px;
+            }
+        }
+
         .game-card-body {
             padding: 1.5rem;
         }
@@ -2538,6 +2592,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 1: CORINTHIANS/SP vs FLAMENGO/RJ</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/COR/45x45.png" 
+                             alt="Corinthians" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>CORINTHIANS</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/FLA/45x45.png" 
+                             alt="Flamengo" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>FLAMENGO</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Neo Química Arena | Brasileirão Série A | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2612,6 +2684,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 2: FORTALEZA/CE vs SPORT/PE</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/FOR/45x45.png" 
+                             alt="Fortaleza" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>FORTALEZA</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/SPT/45x45.png" 
+                             alt="Sport" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>SPORT</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Arena Castelão | Série B | Sábado</div>
             </div>
             <div class="game-card-body">
@@ -2647,6 +2737,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 3: JUVENTUDE/RS vs INTERNACIONAL/RS</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/JUV/45x45.png" 
+                             alt="Juventude" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>JUVENTUDE</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/INT/45x45.png" 
+                             alt="Internacional" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>INTERNACIONAL</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Alfredo Jaconi | Brasileirão Série A | Sábado</div>
             </div>
             <div class="game-card-body">
@@ -2692,6 +2800,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 4: VASCO DA GAMA/RJ vs CRUZEIRO/MG</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/VAS/45x45.png" 
+                             alt="Vasco" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>VASCO</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/CRU/45x45.png" 
+                             alt="Cruzeiro" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>CRUZEIRO</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">São Januário | Brasileirão Série A | Sábado</div>
             </div>
             <div class="game-card-body">
@@ -2712,6 +2838,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 5: ATHLETICO/PR vs OPERARIO/PR</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/CAP/45x45.png" 
+                             alt="Athletico" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>ATHLETICO</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/OPE/45x45.png" 
+                             alt="Operário" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>OPERÁRIO</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Ligga Arena | Campeonato Paranaense | Sábado</div>
             </div>
             <div class="game-card-body">
@@ -2732,6 +2876,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 6: ATLETICO/MG vs MIRASSOL/SP</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/CAM/45x45.png" 
+                             alt="Atlético/MG" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>ATLÉTICO/MG</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/MIR/45x45.png" 
+                             alt="Mirassol" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>MIRASSOL</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Arena MRV | Brasileirão Série A | Sábado</div>
             </div>
             <div class="game-card-body">
@@ -2752,6 +2914,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 7: GREMIO/RS vs VITORIA/BA</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/GRE/45x45.png" 
+                             alt="Grêmio" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>GRÊMIO</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/VIT/45x45.png" 
+                             alt="Vitória" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>VITÓRIA</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Arena do Grêmio | Brasileirão Série A | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2772,6 +2952,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 8: ASTON VILLA vs FULHAM</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/placeholder-team-logo.svg" 
+                             alt="Aston Villa" class="escudo-time">
+                        <span>ASTON VILLA</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/placeholder-team-logo.svg" 
+                             alt="Fulham" class="escudo-time">
+                        <span>FULHAM</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Villa Park | Premier League | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2792,6 +2990,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 9: BAHIA/BA vs PALMEIRAS/SP</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/BAH/45x45.png" 
+                             alt="Bahia" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>BAHIA</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/PAL/45x45.png" 
+                             alt="Palmeiras" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>PALMEIRAS</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Arena Fonte Nova | Brasileirão Série A | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2812,6 +3028,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 10: FLUMINENSE/RJ vs BOTAFOGO/RJ</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/FLU/45x45.png" 
+                             alt="Fluminense" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>FLUMINENSE</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/BOT/45x45.png" 
+                             alt="Botafogo" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>BOTAFOGO</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Maracanã | Brasileirão Série A | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2832,6 +3066,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 11: CRICIUMA/SC vs PAYSANDU/PA</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/CRI/45x45.png" 
+                             alt="Criciúma" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>CRICIÚMA</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/PAY/45x45.png" 
+                             alt="Paysandu" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>PAYSANDU</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Heriberto Hülse | Série B | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2852,6 +3104,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 12: NEWCASTLE vs ARSENAL</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/placeholder-team-logo.svg" 
+                             alt="Newcastle" class="escudo-time">
+                        <span>NEWCASTLE</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/placeholder-team-logo.svg" 
+                             alt="Arsenal" class="escudo-time">
+                        <span>ARSENAL</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">St. James' Park | Premier League | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2872,6 +3142,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 13: BRAGANTINO/SP vs SANTOS/SP</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/escudos/RBB/45x45.png" 
+                             alt="Bragantino" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>BRAGANTINO</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/escudos/SAN/45x45.png" 
+                             alt="Santos" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span>SANTOS</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Nabi Abi Chedid | Brasileirão Série A | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -2892,6 +3180,24 @@
         <div class="game-card">
             <div class="game-card-header">
                 <h2>JOGO 14: BARCELONA vs REAL SOCIEDAD</h2>
+                
+                <!-- CONFRONTO VISUAL COM ESCUDOS -->
+                <div class="confronto-visual">
+                    <div class="time-info">
+                        <img src="/static/placeholder-team-logo.svg" 
+                             alt="Barcelona" class="escudo-time">
+                        <span>BARCELONA</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img src="/static/placeholder-team-logo.svg" 
+                             alt="Real Sociedad" class="escudo-time">
+                        <span>REAL SOCIEDAD</span>
+                    </div>
+                </div>
+                
                 <div class="game-info">Camp Nou | La Liga | Domingo</div>
             </div>
             <div class="game-card-body">
@@ -5429,6 +5735,48 @@
         }
 
         // INICIALIZAR A APLICAÇÃO
+        // MAPEAMENTO DOS ESCUDOS DOS TIMES
+        const escudosMap = {
+            'CORINTHIANS': 'COR',
+            'FLAMENGO': 'FLA', 
+            'FORTALEZA': 'FOR',
+            'SPORT': 'SPT',
+            'JUVENTUDE': 'JUV',
+            'INTERNACIONAL': 'INT',
+            'VASCO': 'VAS',
+            'VASCO DA GAMA': 'VAS',
+            'CRUZEIRO': 'CRU',
+            'ATHLETICO': 'CAP',
+            'OPERARIO': 'OPE',
+            'ATLETICO': 'CAM',
+            'ATLETICO/MG': 'CAM',
+            'MIRASSOL': 'MIR',
+            'GREMIO': 'GRE',
+            'VITORIA': 'VIT',
+            'BAHIA': 'BAH',
+            'PALMEIRAS': 'PAL',
+            'FLUMINENSE': 'FLU',
+            'BOTAFOGO': 'BOT',
+            'CRICIUMA': 'CRI',
+            'PAYSANDU': 'PAY',
+            'BRAGANTINO': 'BGT',
+            'SANTOS': 'SAN'
+        };
+
+        function getEscudoUrl(nomeTime, tamanho = '45x45') {
+            // Limpar nome do time
+            const nome = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '').trim();
+            const abrev = escudosMap[nome];
+            
+            if (abrev) {
+                // USAR ESCUDOS LOCAIS - mais rápido e confiável
+                return `/static/escudos/${abrev}/${tamanho}.png`;
+            }
+            
+            // Fallback para placeholder
+            return '/static/placeholder-team-logo.svg';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 [DEBUG] Iniciando aplicação...');
             
