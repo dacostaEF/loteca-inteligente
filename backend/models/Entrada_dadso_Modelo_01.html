@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Dados - Loteca Inteligente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #e2e2e2;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tab:hover {
+            background-color: #d1d1d1;
+        }
+        .active {
+            background-color: #00E38C;
+            color: white;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1 );
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            padding: 10px 15px;
+            background-color: #00E38C;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #00b76e;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Central de Dados - Loteca Inteligente</h1>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('clubes')">Clubes</div>
+            <div class="tab" onclick="showTab('campeonatos')">Campeonatos</div>
+            <div class="tab" onclick="showTab('estatisticas')">Estatísticas</div>
+            <div class="tab" onclick="showTab('dashboard')">Dashboard</div>
+        </div>
+
+        <!-- Formulário de Clubes -->
+        <div id="clubes" class="form-container">
+            <h2>Cadastro de Clubes</h2>
+            <div class="form-group">
+                <label for="nome-clube">Nome do Clube:</label>
+                <input type="text" id="nome-clube" placeholder="Ex: Corinthians/SP">
+            </div>
+            <div class="form-group">
+                <label for="escudo-url">URL do Escudo:</label>
+                <input type="text" id="escudo-url" placeholder="Ex: http://link-do-escudo.png">
+            </div>
+            <div class="form-group">
+                <label for="cor-clube">Cor do Clube:</label>
+                <input type="color" id="cor-clube">
+            </div>
+            <button class="btn" onclick="addClub( )">Adicionar Clube</button>
+        </div>
+
+        <!-- Formulário de Campeonatos -->
+        <div id="campeonatos" class="form-container" style="display:none;">
+            <h2>Cadastro de Campeonatos</h2>
+            <div class="form-group">
+                <label for="nome-campeonato">Nome do Campeonato:</label>
+                <input type="text" id="nome-campeonato" placeholder="Ex: Campeonato Brasileiro">
+            </div>
+            <div class="form-group">
+                <label for="pais-campeonato">País:</label>
+                <input type="text" id="pais-campeonato" placeholder="Ex: Brasil">
+            </div>
+            <div class="form-group">
+                <label for="nivel-campeonato">Nível:</label>
+                <select id="nivel-campeonato">
+                    <option value="Série A">Série A</option>
+                    <option value="Série B">Série B</option>
+                    <option value="Estadual">Estadual</option>
+                </select>
+            </div>
+            <button class="btn" onclick="addChampionship()">Adicionar Campeonato</button>
+        </div>
+
+        <!-- Formulário de Estatísticas -->
+        <div id="estatisticas" class="form-container" style="display:none;">
+            <h2>Vinculação de Estatísticas</h2>
+            <div class="form-group">
+                <label for="id-clube">ID do Clube:</label>
+                <input type="text" id="id-clube" placeholder="Ex: 1">
+            </div>
+            <div class="form-group">
+                <label for="valor-total-elenco">Valor Total do Elenco:</label>
+                <input type="number" id="valor-total-elenco" placeholder="Ex: 50000000">
+            </div>
+            <div class="form-group">
+                <label for="expires-at">Data de Expiração:</label>
+                <input type="date" id="expires-at">
+            </div>
+            <button class="btn" onclick="addStatistics()">Adicionar Estatísticas</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="form-container" style="display:none;">
+            <h2>Dashboard Completo</h2>
+            <p>Contadores em tempo real e resumo por fonte de dados serão exibidos aqui.</p>
+            <!-- Você pode adicionar gráficos e contadores aqui futuramente -->
+        </div>
+
+        <table id="clubes-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Nome do Clube</th>
+                    <th>Escudo</th>
+                    <th>Cor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os clubes cadastrados serão exibidos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Função para alternar entre as abas
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.form-container');
+            tabs.forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.getElementById(tabName).style.display = 'block';
+
+            // Atualiza as classes das abas
+            const tabElements = document.querySelectorAll('.tab');
+            tabElements.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.tab:contains(${tabName})`).classList.add('active');
+        }
+
+        // Funções de adição (placeholder)
+        function addClub() {
+            const nome = document.getElementById('nome-clube').value;
+            const escudo = document.getElementById('escudo-url').value;
+            const cor = document.getElementById('cor-clube').value;
+
+            const tableBody = document.querySelector('#clubes-table tbody');
+            const newRow = `<tr>
+                <td>${nome}</td>
+                <td><img src="${escudo}" alt="${nome}" style="width: 50px; height: 50px;"></td>
+                <td style="background-color: ${cor};">${cor}</td>
+            </tr>`;
+            tableBody.innerHTML += newRow;
+
+            // Limpa os campos
+            document.getElementById('nome-clube').value = '';
+            document.getElementById('escudo-url').value = '';
+            document.getElementById('cor-clube').value = '#ffffff'; // Reset color
+        }
+
+        function addChampionship() {
+            // Implementar lógica para adicionar campeonato
+        }
+
+        function addStatistics() {
+            // Implementar lógica para adicionar estatísticas
+        }
+
+        // Inicialização
+        showTab('clubes'); // Mostra a aba de clubes por padrão
+    </script>
+
+</body>
+</html>

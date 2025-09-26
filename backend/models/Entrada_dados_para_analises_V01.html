@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Dados - Gestão de Clubes e Estatísticas</title>
+    <style>
+        /* Estilos CSS (Baseado na sua estrutura, com ajustes para as novas abas) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-tab.active {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+
+        /* Color Picker Special Style */
+        .form-group input[type="color"] {
+            height: 44px; /* Ajustar altura para alinhar com outros inputs */
+            padding: 4px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #1e7e34);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40,167,69,0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220,53,69,0.3);
+        }
+        
+        .btn-info {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+            color: white;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: linear-gradient(45deg, #343a40, #495057);
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .data-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 14px;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .escudo-preview {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #dee2e6;
+            object-fit: cover;
+        }
+        
+        .stats-card {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .stats-card.primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+        }
+
+        .stats-card.success {
+            background: linear-gradient(45deg, #28a745, #1e7e34);
+        }
+
+        .stats-card.info {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+        }
+
+        .stats-card h3 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .stats-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .alert { 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            border-radius: 10px; 
+            font-weight: 500; 
+        } 
+        
+        .alert-success { 
+            background: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        } 
+        
+        .alert-danger { 
+            background: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f1aeb5; 
+        } 
+
+        .log-area {
+            background: #343a40;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            font-family: monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+        }
+
+        .config-section {
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Central de Dados</h1>
+        <p>Gerenciamento e Abastecimento do Banco de Dados SQLite</p>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="nav-tab active" data-tab="clubes">⚽ Clubes</button>
+        <button class="nav-tab" data-tab="campeonatos">🏅 Campeonatos</button>
+        <button class="nav-tab" data-tab="estatisticas">📊 Estatísticas</button>
+        <button class="nav-tab" data-tab="dashboard">📈 Dashboard</button>
+        <button class="nav-tab" data-tab="log">📋 Log de Operações</button>
+        <button class="nav-tab" data-tab="configuracoes">🔧 Configurações</button>
+    </div>
+
+    <div class="content">
+        <div id="clubes" class="tab-content active">
+            <h2>⚽ Gestão de Clubes</h2>
+            <div id="clubeAlert" class="alert" style="display: none;"></div>
+
+            <form id="clubeForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>ID Cartola FC <span class="required">*</span></label>
+                        <input type="number" id="clubeId" min="1" required placeholder="Ex: 290 (Corinthians)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nome <span class="required">*</span></label>
+                        <input type="text" id="clubeNome" required placeholder="Ex: Corinthians">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Abreviação</label>
+                        <input type="text" id="clubeAbreviacao" maxlength="3" placeholder="Ex: COR">
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL Escudo (Normal)</label>
+                        <input type="url" id="clubeEscudoUrl" oninput="document.getElementById('previewNormal').src = this.value" placeholder="URL do escudo 100x100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>URL Escudo (30x30)</label>
+                        <input type="url" id="clubeEscudo30" oninput="document.getElementById('preview30').src = this.value" placeholder="URL para escudo pequeno">
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL Escudo (45x45)</label>
+                        <input type="url" id="clubeEscudo45" oninput="document.getElementById('preview45').src = this.value" placeholder="URL para escudo médio">
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL Escudo (60x60)</label>
+                        <input type="url" id="clubeEscudo60" oninput="document.getElementById('preview60').src = this.value" placeholder="URL para escudo grande">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cor Principal</label>
+                        <input type="color" id="clubeCorPrincipal" value="#000000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Cor Secundária</label>
+                        <input type="color" id="clubeCorSecundaria" value="#ffffff">
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary">➕ Salvar/Atualizar Clube</button>
+                    <button type="button" class="btn btn-danger" onclick="excluirClube()">🗑️ Excluir Clube (Pelo ID)</button>
+                </div>
+            </form>
+
+            <h3 style="margin-top: 30px;">Preview de Escudos</h3>
+            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+                <img id="previewNormal" class="escudo-preview" style="width: 50px; height: 50px;" src="https://via.placeholder.com/50" alt="Preview Normal">
+                <img id="preview60" class="escudo-preview" style="width: 60px; height: 60px;" src="https://via.placeholder.com/60" alt="Preview 60x60">
+                <img id="preview45" class="escudo-preview" style="width: 45px; height: 45px;" src="https://via.placeholder.com/45" alt="Preview 45x45">
+                <img id="preview30" class="escudo-preview" class="escudo-preview" src="https://via.placeholder.com/30" alt="Preview 30x30">
+            </div>
+
+            <h3 style="margin-top: 30px;">Tabela de Clubes Cadastrados</h3>
+            <div id="clubesTabela">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Escudo</th>
+                            <th>Nome</th>
+                            <th>Abrev.</th>
+                            <th>Cores</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="campeonatos" class="tab-content">
+            <h2>🏅 Gestão de Campeonatos e Participações</h2>
+            <div id="campeonatoAlert" class="alert" style="display: none;"></div>
+            
+            <h3 style="margin-top: 30px; margin-bottom: 10px;">Cadastro de Campeonato</h3>
+            <form id="campeonatoForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nome <span class="required">*</span></label>
+                        <input type="text" id="campNome" required placeholder="Ex: Brasileirão Série A">
+                    </div>
+                    <div class="form-group">
+                        <label>País</label>
+                        <input type="text" id="campPais" placeholder="Ex: Brasil">
+                    </div>
+                    <div class="form-group">
+                        <label>Nível</label>
+                        <select id="campNivel">
+                            <option value="1">1 (Principal)</option>
+                            <option value="2">2 (Secundário)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">➕ Salvar/Atualizar Campeonato</button>
+            </form>
+
+            <h3 style="margin-top: 30px; margin-bottom: 10px;">Vincular Clube a Campeonato (Clube_Campeonatos)</h3>
+            <form id="participacaoForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Clube <span class="required">*</span></label>
+                        <select id="participacaoClube" required>
+                            <option value="">Selecione um clube...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Campeonato <span class="required">*</span></label>
+                        <select id="participacaoCampeonato" required>
+                            <option value="">Selecione um campeonato...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Temporada <span class="required">*</span></label>
+                        <input type="number" id="participacaoTemporada" required min="2000" max="2100" value="2025" placeholder="Ex: 2025">
+                    </div>
+                    <div class="form-group">
+                        <label>Data Início</label>
+                        <input type="date" id="participacaoDataInicio">
+                    </div>
+                    <div class="form-group">
+                        <label>Data Fim</label>
+                        <input type="date" id="participacaoDataFim">
+                    </div>
+                    <div class="form-group">
+                        <label>Posição Final</label>
+                        <input type="number" id="participacaoPosicaoFinal" min="1" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Pontos</label>
+                        <input type="number" id="participacaoPontos" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Jogos</label>
+                        <input type="number" id="participacaoJogos" min="0" value="0">
+                    </div>
+                    </div>
+                <button type="submit" class="btn btn-primary">🔗 Salvar Participação</button>
+            </form>
+
+            <h3 style="margin-top: 30px;">Participações Cadastradas</h3>
+            <div id="participacoesTabela">
+                </div>
+        </div>
+        
+        <div id="estatisticas" class="tab-content">
+            <h2>📊 Estatísticas dos Clubes (Cartola FC e Geral)</h2>
+            
+            <div id="statAlert" class="alert" style="display: none;"></div>
+            
+            <form id="statForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Clube <span class="required">*</span></label>
+                        <select id="statClube" required>
+                            <option value="">Selecione um clube...</option>
+                            </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Status (Rodada/Mês)</label>
+                        <input type="text" id="statStatus" placeholder="Ex: Rodada 25">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fonte de Dados <span class="required">*</span></label>
+                        <select id="statFonte" required>
+                            <option value="CARTOLA">CARTOLA FC</option>
+                            <option value="API_INTERNA">API Interna</option>
+                            <option value="MANUAL">Manual</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Valor Total do Elenco (R$) <span class="required">*</span></label>
+                        <input type="number" id="statValorElenco" step="0.01" min="0" required placeholder="Ex: 150.85">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expira em (Cache Expires At)</label>
+                        <input type="datetime-local" id="statExpiresAt">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Total de Atletas</label>
+                        <input type="number" id="statTotalAtletas" min="0" placeholder="Ex: 25">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>% Prováveis (Cartola)</label>
+                        <input type="number" id="statPctProvaveis" step="0.01" min="0" max="100" placeholder="Ex: 68.50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Média Pontos Elenco</label>
+                        <input type="number" id="statMediaPontos" step="0.01" min="0" placeholder="Ex: 7.85">
+                    </div>
+                    
+                    </div>
+                <button type="submit" class="btn btn-success">✅ Salvar Estatísticas</button>
+            </form>
+
+            <h3 style="margin-top: 30px;">Histórico de Estatísticas (Últimas 10)</h3>
+            <div id="estatisticasTabela">
+                </div>
+        </div>
+
+        <div id="dashboard" class="tab-content">
+            <h2>📈 Dashboard Completo</h2>
+            <p>Visão geral, contadores e ferramentas de Backup/Sincronização.</p>
+
+            <div class="form-grid form-grid-3" style="margin-top: 20px;">
+                <div class="stats-card primary">
+                    <p>Total de Clubes Cadastrados</p>
+                    <h3 id="dashTotalClubes">0</h3>
+                </div>
+                <div class="stats-card success">
+                    <p>Total de Registros de Stats</p>
+                    <h3 id="dashTotalStats">0</h3>
+                </div>
+                <div class="stats-card info">
+                    <p>Dados Frescos (is_data_fresh)</p>
+                    <h3 id="dashDataFresh">N/A</h3>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">Backup Inteligente (JSON)</h3>
+            <div class="config-section">
+                <p>Exporte todos os dados cadastrados (Clubes, Campeonatos, Estatísticas) para um arquivo JSON para backup.</p>
+                <button class="btn btn-info" style="margin-top: 10px;">💾 Exportar Dados (JSON)</button>
+                
+                <h4 style="margin-top: 20px;">Importação de Dados</h4>
+                <div class="form-group">
+                    <label>Selecione Arquivo JSON para Importação</label>
+                    <input type="file" id="importFile" accept=".json">
+                </div>
+                <button class="btn btn-info" style="margin-top: 10px;">📤 Importar Dados (JSON)</button>
+            </div>
+            
+            <h3 style="margin-top: 30px;">Resumo por Fonte</h3>
+            <div id="resumoFonte">
+                </div>
+        </div>
+
+        <div id="log" class="tab-content">
+            <h2>📋 Log de Operações (operacoes_log)</h2>
+            <p>Histórico detalhado de todas as operações de Inserção, Atualização e Exclusão.</p>
+
+            <div class="log-area" id="operacoesLog">
+                [2025-09-26 08:30:00] INFO: Sistema iniciado.<br>
+                [2025-09-26 08:35:15] CLUBE: Inserção de novo clube 'Flamengo' (ID: 293).<br>
+                [2025-09-26 08:35:45] STATS: Atualização de estatísticas para 'Corinthians' (Fonte: CARTOLA).<br>
+                </div>
+            <button class="btn btn-danger" style="margin-top: 15px;">🧹 Limpar Log</button>
+        </div>
+
+        <div id="configuracoes" class="tab-content">
+            <h2>🔧 Configurações do Sistema (config_sistema)</h2>
+            <p>Ajuste de parâmetros e controle do sistema de cache.</p>
+
+            <h3 style="margin-top: 20px;">Sistema de Cache</h3>
+            <div class="config-section">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Tempo de Vida (TTL) do Cache (em minutos)</label>
+                        <input type="number" id="configCacheTTL" min="1" value="60" placeholder="Ex: 60">
+                    </div>
+                    <div class="form-group">
+                        <label>Forçar Atualização do Cache (is_data_fresh)</label>
+                        <select id="configForceRefresh">
+                            <option value="true">Sim (Forçar busca de dados novos)</option>
+                            <option value="false" selected>Não (Usar dados em cache, se válidos)</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-info" style="margin-top: 10px;">🔄 Limpar Cache Agora</button>
+            </div>
+
+            <h3 style="margin-top: 20px;">Configurações Gerais</h3>
+            <div class="config-section">
+                <div class="form-group">
+                    <label>URL Base da API Externa (Opcional)</label>
+                    <input type="url" id="configApiUrl" placeholder="Ex: https://api.cartolafc.globo.com">
+                </div>
+                <div class="form-group">
+                    <label>Chave de API (Se Necessário)</label>
+                    <input type="text" id="configApiKey" placeholder="Token de acesso, se houver">
+                </div>
+                <button class="btn btn-primary" style="margin-top: 10px;">💾 Salvar Configurações</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lógica para controle das abas
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.nav-tab');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                openTab(this);
+            });
+        });
+
+        // Abrir a aba de clubes por padrão
+        openTab(document.querySelector('.nav-tab.active'));
+
+        // Simulação de preenchimento de selects (seria feito via fetch/SQLite real)
+        const clubes = [
+            { id: 1, nome: "Flamengo" },
+            { id: 2, nome: "Corinthians" },
+            { id: 3, nome: "Palmeiras" }
+        ];
+
+        const campeonatos = [
+            { id: 10, nome: "Brasileirão Série A" },
+            { id: 20, nome: "Copa do Brasil" }
+        ];
+
+        // Preencher selects de Clube (Estatísticas e Participação)
+        const clubeSelects = document.querySelectorAll('#statClube, #participacaoClube');
+        clubeSelects.forEach(select => {
+            clubes.forEach(clube => {
+                const option = document.createElement('option');
+                option.value = clube.id;
+                option.textContent = clube.nome;
+                select.appendChild(option);
+            });
+        });
+
+        // Preencher select de Campeonato (Participação)
+        const campSelect = document.querySelector('#participacaoCampeonato');
+        campeonatos.forEach(camp => {
+            const option = document.createElement('option');
+            option.value = camp.id;
+            option.textContent = camp.nome;
+            campSelect.appendChild(option);
+        });
+
+        // Simulação de dados do Dashboard
+        document.getElementById('dashTotalClubes').textContent = clubes.length;
+        document.getElementById('dashTotalStats').textContent = 145; // Exemplo
+        document.getElementById('dashDataFresh').textContent = 'Sim (Atualizado há 5min)';
+    });
+
+    /**
+     * Função para controlar a troca de abas
+     * @param {HTMLElement} tabButton - O botão da aba clicada
+     */
+    function openTab(tabButton) {
+        // Remove a classe 'active' de todos os botões e conteúdos
+        document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        // Adiciona a classe 'active' ao botão clicado
+        tabButton.classList.add('active');
+
+        // Mostra o conteúdo da aba correspondente
+        const tabId = tabButton.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // Funções de CRUD (Inserção/Atualização) - Seriam implementadas aqui via Fetch API ou WebAssembly/SQLite
+    document.getElementById('clubeForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Clube Salvo! (Implemente a lógica de inserção SQLite)');
+    });
+
+    document.getElementById('statForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Estatísticas Salvas! (Implemente a lógica de inserção SQLite)');
+    });
+
+    function excluirClube() {
+        alert('Excluir Clube... (Implemente a lógica de exclusão SQLite)');
+    }
+</script>
+</body>
+</html>
