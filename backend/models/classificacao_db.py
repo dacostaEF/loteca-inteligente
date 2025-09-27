@@ -90,6 +90,102 @@ class ClassificacaoDB:
             logger.error(f"Erro ao obter classificação Série B: {e}")
             return []
     
+    def get_classificacao_premier_league(self) -> List[Dict]:
+        """Obter classificação da Premier League"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Verificar se existe tabela da Premier League
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='classificacao_premier_league'
+                """)
+                
+                if not cursor.fetchone():
+                    logger.info("Tabela classificacao_premier_league não existe")
+                    return []
+                
+                cursor.execute("""
+                    SELECT 
+                        id, posicao, clube, pts, pj, vit, e, der,
+                        gm, gc, sg, ultimas_5, zona, badge,
+                        created_at, updated_at
+                    FROM classificacao_premier_league 
+                    ORDER BY posicao ASC
+                """)
+                
+                rows = cursor.fetchall()
+                return [dict(row) for row in rows]
+                
+        except Exception as e:
+            logger.error(f"Erro ao obter classificação Premier League: {e}")
+            return []
+    
+    def get_classificacao_la_liga(self) -> List[Dict]:
+        """Obter classificação da La Liga"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Verificar se existe tabela da La Liga
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='classificacao_la_liga'
+                """)
+                
+                if not cursor.fetchone():
+                    logger.info("Tabela classificacao_la_liga não existe")
+                    return []
+                
+                cursor.execute("""
+                    SELECT 
+                        id, posicao, clube, pts, pj, vit, e, der,
+                        gm, gc, sg, ultimas_5, zona, badge,
+                        created_at, updated_at
+                    FROM classificacao_la_liga 
+                    ORDER BY posicao ASC
+                """)
+                
+                rows = cursor.fetchall()
+                return [dict(row) for row in rows]
+                
+        except Exception as e:
+            logger.error(f"Erro ao obter classificação La Liga: {e}")
+            return []
+    
+    def get_classificacao_frances(self) -> List[Dict]:
+        """Obter classificação da Ligue 1 (França)"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Verificar se existe tabela da Ligue 1
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='classificacao_frances'
+                """)
+                
+                if not cursor.fetchone():
+                    logger.info("Tabela classificacao_frances não existe")
+                    return []
+                
+                cursor.execute("""
+                    SELECT 
+                        id, posicao, clube, pts, pj, vit, e, der,
+                        gm, gc, sg, ultimas_5, zona, badge,
+                        created_at, updated_at
+                    FROM classificacao_frances 
+                    ORDER BY posicao ASC
+                """)
+                
+                rows = cursor.fetchall()
+                return [dict(row) for row in rows]
+                
+        except Exception as e:
+            logger.error(f"Erro ao obter classificação Ligue 1: {e}")
+            return []
+    
     def update_time_stats(self, time_id: int, campo: str, valor: str, serie: str = 'a') -> bool:
         """Atualizar estatística específica de um time"""
         logger.info(f"🔄 [DB] === INICIANDO UPDATE ===")
@@ -99,20 +195,39 @@ class ClassificacaoDB:
             with self.get_connection() as conn:
                 cursor = conn.cursor()
                 
-                # Campos permitidos para atualização
-                campos_permitidos = [
+                # Campos permitidos para atualização (incluindo Premier League)
+                campos_permitidos_brasileirao = [
                     'time', 'pontos', 'jogos', 'vitorias', 'empates', 'derrotas',
                     'gols_pro', 'gols_contra', 'ultimos_jogos'
                 ]
                 
+                campos_permitidos_premier = [
+                    'clube', 'pts', 'pj', 'vit', 'e', 'der',
+                    'gm', 'gc', 'ultimas_5', 'zona', 'badge'
+                ]
+                
+                # Determinar tabela e campos baseados na série
+                if serie == 'premier':
+                    tabela = 'classificacao_premier_league'
+                    campos_permitidos = campos_permitidos_premier
+                elif serie == 'laliga':
+                    tabela = 'classificacao_la_liga'
+                    campos_permitidos = campos_permitidos_premier  # La Liga usa mesmos campos que Premier
+                elif serie == 'ligue1':
+                    tabela = 'classificacao_frances'
+                    campos_permitidos = campos_permitidos_premier  # Ligue 1 usa mesmos campos que Premier
+                elif serie == 'b':
+                    tabela = 'classificacao_serie_b'
+                    campos_permitidos = campos_permitidos_brasileirao
+                else:  # serie == 'a'
+                    tabela = 'classificacao_serie_a'
+                    campos_permitidos = campos_permitidos_brasileirao
+                
                 if campo not in campos_permitidos:
-                    logger.error(f"❌ [DB] Campo {campo} não permitido para atualização")
+                    logger.error(f"❌ [DB] Campo {campo} não permitido para {tabela}")
                     return False
                 
                 logger.info(f"✅ [DB] Campo {campo} é permitido")
-                
-                # Determinar tabela baseada na série
-                tabela = 'classificacao_serie_a' if serie == 'a' else 'classificacao_serie_b'
                 logger.info(f"🏆 [DB] Usando tabela: {tabela}")
                 
                 # Verificar se o ID existe
@@ -124,10 +239,12 @@ class ClassificacaoDB:
                     logger.error(f"❌ [DB] ID {time_id} não encontrado na tabela {tabela}")
                     return False
                 
-                # Para Série A, usar data_atualizacao; para Série B, usar updated_at
+                # Determinar campo de timestamp baseado na série
                 if serie == 'a':
                     timestamp_field = 'data_atualizacao'
-                else:
+                elif serie in ['premier', 'laliga', 'ligue1']:
+                    timestamp_field = 'updated_at'
+                else:  # serie == 'b'
                     timestamp_field = 'updated_at'
                 
                 # Verificar se a coluna timestamp existe
@@ -150,21 +267,41 @@ class ClassificacaoDB:
                 rows_affected = cursor.rowcount
                 logger.info(f"📊 [DB] Linhas afetadas: {rows_affected}")
                 
-                # Recalcular saldo de gols e aproveitamento (só para campos numéricos de estatísticas)
-                campos_numericos_stats = ['pontos', 'jogos', 'vitorias', 'empates', 'derrotas', 'gols_pro', 'gols_contra']
-                if campo in campos_numericos_stats:
-                    logger.info(f"🧮 [DB] Recalculando estatísticas para campo numérico...")
-                    cursor.execute(f"""
-                        UPDATE {tabela} 
-                        SET 
-                            saldo_gols = gols_pro - gols_contra,
-                            aproveitamento = CASE 
-                                WHEN jogos > 0 THEN ROUND((pontos * 100.0) / (jogos * 3), 1)
-                                ELSE 0 
-                            END
-                        WHERE id = ?
-                    """, (time_id,))
-                    logger.info(f"✅ [DB] Estatísticas recalculadas")
+                # Recalcular estatísticas baseado na série
+                if serie in ['premier', 'laliga', 'ligue1']:
+                    # Para campeonatos internacionais: recalcular SG (saldo de gols)
+                    campos_numericos_premier = ['pts', 'pj', 'vit', 'e', 'der', 'gm', 'gc']
+                    if campo in campos_numericos_premier:
+                        if serie == 'premier':
+                            campeonato_nome = "Premier League"
+                        elif serie == 'laliga':
+                            campeonato_nome = "La Liga"
+                        else:  # ligue1
+                            campeonato_nome = "Ligue 1"
+                        
+                        logger.info(f"🧮 [DB] Recalculando estatísticas {campeonato_nome}...")
+                        cursor.execute(f"""
+                            UPDATE {tabela} 
+                            SET sg = gm - gc
+                            WHERE id = ?
+                        """, (time_id,))
+                        logger.info(f"✅ [DB] Saldo de gols recalculado")
+                else:
+                    # Para Brasileirão: recalcular saldo de gols e aproveitamento
+                    campos_numericos_stats = ['pontos', 'jogos', 'vitorias', 'empates', 'derrotas', 'gols_pro', 'gols_contra']
+                    if campo in campos_numericos_stats:
+                        logger.info(f"🧮 [DB] Recalculando estatísticas para campo numérico...")
+                        cursor.execute(f"""
+                            UPDATE {tabela} 
+                            SET 
+                                saldo_gols = gols_pro - gols_contra,
+                                aproveitamento = CASE 
+                                    WHEN jogos > 0 THEN ROUND((pontos * 100.0) / (jogos * 3), 1)
+                                    ELSE 0 
+                                END
+                            WHERE id = ?
+                        """, (time_id,))
+                        logger.info(f"✅ [DB] Estatísticas recalculadas")
                 
                 conn.commit()
                 logger.info(f"💾 [DB] Commit realizado. Sucesso: {rows_affected > 0}")
@@ -206,11 +343,32 @@ class ClassificacaoDB:
                     cursor.execute("SELECT COUNT(*) FROM classificacao_serie_b")
                     info['serie_b_count'] = cursor.fetchone()[0]
                 
+                # Contar registros na Premier League
+                if 'classificacao_premier_league' in tabelas:
+                    cursor.execute("SELECT COUNT(*) FROM classificacao_premier_league")
+                    info['premier_league_count'] = cursor.fetchone()[0]
+                else:
+                    info['premier_league_count'] = 0
+                
+                # Contar registros na La Liga
+                if 'classificacao_la_liga' in tabelas:
+                    cursor.execute("SELECT COUNT(*) FROM classificacao_la_liga")
+                    info['la_liga_count'] = cursor.fetchone()[0]
+                else:
+                    info['la_liga_count'] = 0
+                
+                # Contar registros na Ligue 1
+                if 'classificacao_frances' in tabelas:
+                    cursor.execute("SELECT COUNT(*) FROM classificacao_frances")
+                    info['ligue1_count'] = cursor.fetchone()[0]
+                else:
+                    info['ligue1_count'] = 0
+                
                 return info
                 
         except Exception as e:
             logger.error(f"Erro ao obter info das tabelas: {e}")
-            return {'tabelas': [], 'serie_a_count': 0, 'serie_b_count': 0}
+            return {'tabelas': [], 'serie_a_count': 0, 'serie_b_count': 0, 'premier_league_count': 0, 'la_liga_count': 0, 'ligue1_count': 0}
 
 # Instância global
 classificacao_db = ClassificacaoDB()

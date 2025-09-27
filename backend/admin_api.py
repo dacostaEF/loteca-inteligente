@@ -598,6 +598,18 @@ def get_classificacao():
                 logger.info(f"🏆 [API] Primeiro time: {classificacao[0]['time']}")
             
             conn.close()
+        elif campeonato == 'premier-league':
+            logger.info("📊 [API] Buscando dados da Premier League...")
+            classificacao = classificacao_db.get_classificacao_premier_league()
+            logger.info(f"📋 [API] Premier League retornou {len(classificacao)} registros")
+        elif campeonato == 'la-liga':
+            logger.info("📊 [API] Buscando dados da La Liga...")
+            classificacao = classificacao_db.get_classificacao_la_liga()
+            logger.info(f"📋 [API] La Liga retornou {len(classificacao)} registros")
+        elif campeonato == 'ligue1':
+            logger.info("📊 [API] Buscando dados da Ligue 1...")
+            classificacao = classificacao_db.get_classificacao_frances()
+            logger.info(f"📋 [API] Ligue 1 retornou {len(classificacao)} registros")
         else:
             logger.warning(f"❌ [API] Campeonato inválido: {campeonato}")
             return jsonify({
@@ -642,12 +654,31 @@ def salvar_classificacao():
     try:
         updates = data.get('updates', [])
         campeonato = data.get('campeonato', 'serie-a')  # Detectar série
-        serie = 'b' if campeonato == 'serie-b' else 'a'
+        
+        # Determinar série baseada no campeonato
+        if campeonato == 'serie-b':
+            serie = 'b'
+        elif campeonato == 'premier-league':
+            serie = 'premier'
+        elif campeonato == 'la-liga':
+            serie = 'laliga'
+        elif campeonato == 'ligue1':
+            serie = 'ligue1'
+        else:
+            serie = 'a'
         
         sucesso = 0
         erros = 0
         
-        logger.info(f"💾 [API] Salvando {len(updates)} alterações na Série {serie.upper()}")
+        if serie == 'premier':
+            campeonato_nome = "Premier League"
+        elif serie == 'laliga':
+            campeonato_nome = "La Liga"
+        elif serie == 'ligue1':
+            campeonato_nome = "Ligue 1"
+        else:
+            campeonato_nome = f"Série {serie.upper()}"
+        logger.info(f"💾 [API] Salvando {len(updates)} alterações no {campeonato_nome}")
         
         for update in updates:
             time_id = update.get('id')

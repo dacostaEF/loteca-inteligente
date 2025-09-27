@@ -780,6 +780,9 @@
                     <select id="campeonatoSelect" onchange="alterarCampeonato()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: 2px solid #4c51bf; padding: 10px; border-radius: 8px; font-weight: bold;">
                         <option value="serie-a" style="background: #4c51bf; color: white;">🥇 Brasileirão Série A</option>
                         <option value="serie-b" style="background: #6b46c1; color: white;">🥈 Brasileirão Série B</option>
+                        <option value="premier-league" style="background: #1e40af; color: white;">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</option>
+                        <option value="la-liga" style="background: #dc2626; color: white;">🇪🇸 La Liga</option>
+                        <option value="ligue1" style="background: #0f172a; color: white;">🇫🇷 Ligue 1</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -1804,67 +1807,133 @@
                 return;
             }
             
+            // Detectar tipo de campeonato baseado nos campos
+            const campeonato = document.getElementById('campeonatoSelect').value;
+            const isPremierLeague = campeonato === 'premier-league';
+            const isLaLiga = campeonato === 'la-liga';
+            const isLigue1 = campeonato === 'ligue1';
+            const isInternacional = isPremierLeague || isLaLiga || isLigue1;
+            
             console.log('✅ [ADMIN] Renderizando', classificacao.length, 'times...');
+            console.log('🏴󠁧󠁢󠁥󠁮󠁧󠁿 [ADMIN] Premier League:', isPremierLeague);
+            console.log('🇪🇸 [ADMIN] La Liga:', isLaLiga);
+            console.log('🇫🇷 [ADMIN] Ligue 1:', isLigue1);
+            console.log('🌍 [ADMIN] Internacional:', isInternacional);
             
             classificacao.forEach((time, index) => {
-                console.log(`🏆 [ADMIN] Renderizando time ${index + 1}:`, {
-                    time: time.time,
-                    pontos: time.pontos,
-                    posicao: time.posicao
-                });
+                console.log(`🏆 [ADMIN] Renderizando time ${index + 1}:`, time);
                 const row = document.createElement('tr');
                 
                 // Determinar zona (libertadores, sul-americana, rebaixamento)
                 const zonaClass = time.zona ? `zona-${time.zona.replace('-', '')}` : '';
                 
                 row.className = `team-row ${zonaClass}`;
-                row.innerHTML = `
-                    <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; border: 1px solid #cbd5e0;">${time.posicao}</td>
-                    <td class="editable" contenteditable="true" data-field="time" data-id="${time.id}" 
-                        style="font-weight: bold; text-align: left; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px;" 
-                        data-original="${time.time}">
-                        <div style="display: flex; align-items: center;">
-                            <span>${time.time}</span>
-                            ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}">${time.zona}</span>` : ''}
-                        </div>
-                    </td>
-                    <td class="editable" contenteditable="true" data-field="pontos" data-id="${time.id}" 
-                        style="font-weight: bold; color: #1e40af; background: #fef9e7; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px;" 
-                        data-original="${time.pontos}">${time.pontos}</td>
-                    <td class="editable" contenteditable="true" data-field="jogos" data-id="${time.id}" 
-                        style="color: #374151; background: #f3f4f6; border: 2px dashed #9ca3af; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
-                        data-original="${time.jogos}">${time.jogos}</td>
-                    <td class="editable" contenteditable="true" data-field="vitorias" data-id="${time.id}" 
-                        style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
-                        data-original="${time.vitorias}">${time.vitorias}</td>
-                    <td class="editable" contenteditable="true" data-field="empates" data-id="${time.id}" 
-                        style="color: #92400e; background: #fffbeb; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
-                        data-original="${time.empates}">${time.empates}</td>
-                    <td class="editable" contenteditable="true" data-field="derrotas" data-id="${time.id}" 
-                        style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
-                        data-original="${time.derrotas}">${time.derrotas}</td>
-                    <td class="editable" contenteditable="true" data-field="gols_pro" data-id="${time.id}" 
-                        style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
-                        data-original="${time.gols_pro}">${time.gols_pro}</td>
-                    <td class="editable" contenteditable="true" data-field="gols_contra" data-id="${time.id}" 
-                        style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
-                        data-original="${time.gols_contra}">${time.gols_contra}</td>
-                    <td style="font-weight: bold; color: ${time.saldo_gols >= 0 ? '#065f46' : '#991b1b'}; background: #e8f4f8; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.saldo_gols >= 0 ? '+' : ''}${time.saldo_gols}</td>
-                    <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.aproveitamento}%</td>
-                    <td style="background: #e8f4f8; border: 1px solid #cbd5e0;">
-                        <div style="display: flex; gap: 5px; justify-content: center;" data-time-id="${time.id}">
-                            ${(time.ultimos_jogos || 'NNNNN').split('').map((result, index) => 
-                                `<span class="resultado-bolinha clickable" 
-                                       data-time-id="${time.id}" 
-                                       data-jogo-index="${index}" 
-                                       data-resultado="${result}"
-                                       onclick="alterarResultado(this)"
-                                       style="width: 20px; height: 20px; border-radius: 50%; display: inline-block; font-size: 11px; text-align: center; line-height: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s ease; border: 2px solid #374151; background: ${getCorResultado(result)};"
-                                       title="Clique para alterar: ${getDescricaoResultado(result)}">${result}</span>`
-                            ).join('')}
-                        </div>
-                    </td>
-                `;
+                
+                if (isInternacional) {
+                    // Renderização específica para campeonatos internacionais (Premier League e La Liga)
+                    row.innerHTML = `
+                        <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; border: 1px solid #cbd5e0;">${time.posicao}</td>
+                        <td class="editable" contenteditable="true" data-field="clube" data-id="${time.id}" 
+                            style="font-weight: bold; text-align: left; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px;" 
+                            data-original="${time.clube}">
+                            <div style="display: flex; align-items: center;">
+                                <span>${time.clube}</span>
+                                ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}">${time.zona}</span>` : ''}
+                                ${time.badge ? `<span class="badge-especial" style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 8px;">${time.badge}</span>` : ''}
+                            </div>
+                        </td>
+                        <td class="editable" contenteditable="true" data-field="pts" data-id="${time.id}" 
+                            style="font-weight: bold; color: #1e40af; background: #fef9e7; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px;" 
+                            data-original="${time.pts}">${time.pts}</td>
+                        <td class="editable" contenteditable="true" data-field="pj" data-id="${time.id}" 
+                            style="color: #374151; background: #f3f4f6; border: 2px dashed #9ca3af; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.pj}">${time.pj}</td>
+                        <td class="editable" contenteditable="true" data-field="vit" data-id="${time.id}" 
+                            style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.vit}">${time.vit}</td>
+                        <td class="editable" contenteditable="true" data-field="e" data-id="${time.id}" 
+                            style="color: #92400e; background: #fffbeb; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.e}">${time.e}</td>
+                        <td class="editable" contenteditable="true" data-field="der" data-id="${time.id}" 
+                            style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.der}">${time.der}</td>
+                        <td class="editable" contenteditable="true" data-field="gm" data-id="${time.id}" 
+                            style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.gm}">${time.gm}</td>
+                        <td class="editable" contenteditable="true" data-field="gc" data-id="${time.id}" 
+                            style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.gc}">${time.gc}</td>
+                        <td style="font-weight: bold; color: ${time.sg >= 0 ? '#065f46' : '#991b1b'}; background: #e8f4f8; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.sg >= 0 ? '+' : ''}${time.sg}</td>
+                        <td style="background: #e8f4f8; border: 1px solid #cbd5e0;">
+                            <div class="editable" contenteditable="true" data-field="zona" data-id="${time.id}" 
+                                 style="padding: 4px; text-align: center; font-size: 12px; font-weight: bold;" 
+                                 data-original="${time.zona || ''}">${time.zona || '-'}</div>
+                        </td>
+                        <td style="background: #e8f4f8; border: 1px solid #cbd5e0;">
+                            <div style="display: flex; gap: 3px; justify-content: center;" data-time-id="${time.id}">
+                                ${(time.ultimas_5 || 'NNNNN').split('').map((result, index) => 
+                                    `<span class="resultado-bolinha clickable" 
+                                           data-time-id="${time.id}" 
+                                           data-jogo-index="${index}" 
+                                           data-resultado="${result}"
+                                           onclick="alterarResultado(this)"
+                                           style="width: 18px; height: 18px; border-radius: 50%; display: inline-block; font-size: 10px; text-align: center; line-height: 18px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s ease; border: 1px solid #374151; background: ${getCorResultado(result)};"
+                                           title="Clique para alterar: ${getDescricaoResultado(result)}">${result}</span>`
+                                ).join('')}
+                            </div>
+                        </td>
+                    `;
+                } else {
+                    // Renderização para Brasileirão (Série A e B)
+                    row.innerHTML = `
+                        <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; border: 1px solid #cbd5e0;">${time.posicao}</td>
+                        <td class="editable" contenteditable="true" data-field="time" data-id="${time.id}" 
+                            style="font-weight: bold; text-align: left; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px;" 
+                            data-original="${time.time}">
+                            <div style="display: flex; align-items: center;">
+                                <span>${time.time}</span>
+                                ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}">${time.zona}</span>` : ''}
+                            </div>
+                        </td>
+                        <td class="editable" contenteditable="true" data-field="pontos" data-id="${time.id}" 
+                            style="font-weight: bold; color: #1e40af; background: #fef9e7; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px;" 
+                            data-original="${time.pontos}">${time.pontos}</td>
+                        <td class="editable" contenteditable="true" data-field="jogos" data-id="${time.id}" 
+                            style="color: #374151; background: #f3f4f6; border: 2px dashed #9ca3af; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.jogos}">${time.jogos}</td>
+                        <td class="editable" contenteditable="true" data-field="vitorias" data-id="${time.id}" 
+                            style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.vitorias}">${time.vitorias}</td>
+                        <td class="editable" contenteditable="true" data-field="empates" data-id="${time.id}" 
+                            style="color: #92400e; background: #fffbeb; border: 2px dashed #f59e0b; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.empates}">${time.empates}</td>
+                        <td class="editable" contenteditable="true" data-field="derrotas" data-id="${time.id}" 
+                            style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.derrotas}">${time.derrotas}</td>
+                        <td class="editable" contenteditable="true" data-field="gols_pro" data-id="${time.id}" 
+                            style="color: #065f46; background: #ecfdf5; border: 2px dashed #10b981; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.gols_pro}">${time.gols_pro}</td>
+                        <td class="editable" contenteditable="true" data-field="gols_contra" data-id="${time.id}" 
+                            style="color: #991b1b; background: #fef2f2; border: 2px dashed #ef4444; padding: 8px; text-align: center; font-size: 14px; font-weight: 600;" 
+                            data-original="${time.gols_contra}">${time.gols_contra}</td>
+                        <td style="font-weight: bold; color: ${time.saldo_gols >= 0 ? '#065f46' : '#991b1b'}; background: #e8f4f8; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.saldo_gols >= 0 ? '+' : ''}${time.saldo_gols}</td>
+                        <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; text-align: center; border: 1px solid #cbd5e0; font-size: 14px;">${time.aproveitamento}%</td>
+                        <td style="background: #e8f4f8; border: 1px solid #cbd5e0;">
+                            <div style="display: flex; gap: 5px; justify-content: center;" data-time-id="${time.id}">
+                                ${(time.ultimos_jogos || 'NNNNN').split('').map((result, index) => 
+                                    `<span class="resultado-bolinha clickable" 
+                                           data-time-id="${time.id}" 
+                                           data-jogo-index="${index}" 
+                                           data-resultado="${result}"
+                                           onclick="alterarResultado(this)"
+                                           style="width: 20px; height: 20px; border-radius: 50%; display: inline-block; font-size: 11px; text-align: center; line-height: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.2s ease; border: 2px solid #374151; background: ${getCorResultado(result)};"
+                                           title="Clique para alterar: ${getDescricaoResultado(result)}">${result}</span>`
+                                ).join('')}
+                            </div>
+                        </td>
+                    `;
+                }
+                
                 bodyEl.appendChild(row);
                 console.log(`✅ [ADMIN] Time ${index + 1} adicionado ao DOM`);
             });
@@ -2233,6 +2302,9 @@
         async function salvarUltimosJogos(timeId, ultimosJogos) {
             const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
             
+            // Determinar campo correto baseado no campeonato
+            const fieldName = (campeonato === 'premier-league' || campeonato === 'la-liga' || campeonato === 'ligue1') ? 'ultimas_5' : 'ultimos_jogos';
+            
             try {
                 const response = await fetch('/api/admin/classificacao/salvar', {
                     method: 'POST',
@@ -2242,7 +2314,7 @@
                         campeonato: campeonato,
                         updates: [{
                             id: parseInt(timeId),
-                            field: 'ultimos_jogos',
+                            field: fieldName,
                             value: ultimosJogos
                         }]
                     })
