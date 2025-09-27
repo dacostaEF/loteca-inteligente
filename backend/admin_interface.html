@@ -828,6 +828,13 @@
                 <div class="label">Última Sincronização</div>
             </div>
         </div>
+        
+        <!-- Botão de Debug Dashboard -->
+        <div style="text-align: center; margin: 20px 0;">
+            <button onclick="atualizarDashboard()" style="background: #a855f7; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                🔄 Atualizar Dashboard (Debug)
+            </button>
+        </div>
 
         <!-- Mensagens -->
         <div class="success-message" id="successMessage">
@@ -1494,20 +1501,28 @@
         // === DASHBOARD ===
         async function carregarDashboard() {
             try {
-                const response = await fetch(`${API_BASE}/api/admin/dashboard`);
+                const response = await fetch(`${API_BASE}/api/admin/dashboard-stats`);
                 const result = await response.json();
                 
                 if (result.success) {
                     const data = result.data;
                     document.getElementById('totalClubes').textContent = data.total_clubes || '0';
-                    document.getElementById('serieAClubes').textContent = data.clubes_serie_a || '0';
-                    document.getElementById('serieBClubes').textContent = data.clubes_serie_b || '0';
-                    document.getElementById('ultimaSync').textContent = data.ultima_sincronizacao || 'Nunca';
-                    document.getElementById('tamanhoDb').textContent = data.tamanho_db || 'N/A';
-                    document.getElementById('dadosAntigos').textContent = data.dados_mais_antigos || 'N/A';
-                    
-                    const fontes = Object.keys(data.fontes_principais || {});
-                    document.getElementById('fontesPrincipais').textContent = fontes.length > 0 ? fontes.join(', ') : 'Nenhuma';
+                    document.getElementById('serieAClubes').textContent = data.serie_a || '0';
+                    document.getElementById('serieBClubes').textContent = data.serie_b || '0';
+                    // Formatar data da última sincronização
+                    if (data.ultima_sincronizacao) {
+                        const dataObj = new Date(data.ultima_sincronizacao);
+                        const dataFormatada = dataObj.toLocaleString('pt-BR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        document.getElementById('ultimaSync').textContent = dataFormatada;
+                    } else {
+                        document.getElementById('ultimaSync').textContent = 'Nunca';
+                    }
                 } else {
                     mostrarErro('Erro ao carregar dashboard: ' + result.message);
                 }
@@ -2028,13 +2043,13 @@
                     // Renderização específica para campeonatos internacionais (Premier League e La Liga)
                     row.innerHTML = `
                         <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; border: 1px solid #cbd5e0;">${time.posicao}</td>
-                        <td class="editable" contenteditable="true" data-field="clube" data-id="${time.id}" 
-                            style="font-weight: bold; text-align: left; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px;" 
-                            data-original="${time.clube}">
-                            <div style="display: flex; align-items: center;">
-                                <span>${time.clube}</span>
-                                ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}">${time.zona}</span>` : ''}
-                                ${time.badge ? `<span class="badge-especial" style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 8px;">${time.badge}</span>` : ''}
+                        <td style="position: relative;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="editable" contenteditable="true" data-field="clube" data-id="${time.id}" 
+                                      style="font-weight: bold; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px; min-width: 120px; display: inline-block;" 
+                                      data-original="${time.clube}">${time.clube}</span>
+                                ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}" style="background: #10b981; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">${time.zona}</span>` : ''}
+                                ${time.badge ? `<span class="badge-especial" style="background: #dc2626; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">${time.badge}</span>` : ''}
                             </div>
                         </td>
                         <td class="editable" contenteditable="true" data-field="pts" data-id="${time.id}" 
@@ -2082,12 +2097,12 @@
                     // Renderização para Brasileirão (Série A e B)
                     row.innerHTML = `
                         <td style="font-weight: bold; background: #e8f4f8; color: #1a202c; border: 1px solid #cbd5e0;">${time.posicao}</td>
-                        <td class="editable" contenteditable="true" data-field="time" data-id="${time.id}" 
-                            style="font-weight: bold; text-align: left; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px;" 
-                            data-original="${time.time}">
-                            <div style="display: flex; align-items: center;">
-                                <span>${time.time}</span>
-                                ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}">${time.zona}</span>` : ''}
+                        <td style="position: relative;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="editable" contenteditable="true" data-field="time" data-id="${time.id}" 
+                                      style="font-weight: bold; background: #e0f2fe; color: #1a202c; border: 2px dashed #0ea5e9; padding: 8px; font-size: 14px; min-width: 120px; display: inline-block;" 
+                                      data-original="${time.time}">${time.time}</span>
+                                ${time.zona ? `<span class="zona-badge zona-${time.zona.replace('-', '')}" style="background: #10b981; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px;">${time.zona}</span>` : ''}
                             </div>
                         </td>
                         <td class="editable" contenteditable="true" data-field="pontos" data-id="${time.id}" 
@@ -2349,7 +2364,7 @@
                     updates.push({
                         id: parseInt(cell.dataset.id),
                         field: cell.dataset.field,
-                        value: cell.dataset.field === 'time' ? value : (isNaN(value) ? value : parseInt(value))
+                        value: cell.dataset.field === 'time' || cell.dataset.field === 'clube' ? value : (isNaN(value) ? value : parseInt(value))
                     });
                 }
             });
@@ -2371,6 +2386,7 @@
                 if (data.success) {
                     mostrarSucesso('Classificação salva com sucesso!');
                     carregarClassificacao(); // Recarregar para atualizar saldo de gols e aproveitamento
+                    atualizarDashboard(); // Atualizar estatísticas do dashboard
                 } else {
                     mostrarErro('Erro ao salvar: ' + data.message);
                 }
@@ -2852,10 +2868,79 @@
             alert(`Histórico de ${clubeSelecionado} será implementado em breve!`);
         }
 
+        // === FUNÇÃO PARA ATUALIZAR DASHBOARD ===
+        async function atualizarDashboard() {
+            try {
+                console.log('📊 [DASHBOARD] Atualizando estatísticas...');
+                
+                // Verificar se os elementos existem
+                const totalEl = document.getElementById('totalClubes');
+                const serieAEl = document.getElementById('serieAClubes');
+                const serieBEl = document.getElementById('serieBClubes');
+                const ultimaSyncEl = document.getElementById('ultimaSync');
+                
+                console.log('🔍 [DASHBOARD] Elementos encontrados:', {
+                    totalClubes: !!totalEl,
+                    serieAClubes: !!serieAEl,
+                    serieBClubes: !!serieBEl,
+                    ultimaSync: !!ultimaSyncEl
+                });
+                
+                const response = await fetch('/api/admin/dashboard-stats');
+                const data = await response.json();
+                
+                console.log('📡 [DASHBOARD] Resposta da API:', data);
+                
+                if (data.success) {
+                    const stats = data.data;
+                    
+                    // Atualizar números
+                    if (totalEl) totalEl.textContent = stats.total_clubes || 0;
+                    if (serieAEl) serieAEl.textContent = stats.serie_a || 0;
+                    if (serieBEl) serieBEl.textContent = stats.serie_b || 0;
+                    
+                    // Atualizar última sincronização
+                    if (ultimaSyncEl) {
+                        if (stats.ultima_sincronizacao) {
+                            const dataObj = new Date(stats.ultima_sincronizacao);
+                            const dataFormatada = dataObj.toLocaleString('pt-BR', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                            ultimaSyncEl.textContent = dataFormatada;
+                        } else {
+                            ultimaSyncEl.textContent = 'Nunca';
+                        }
+                    }
+                    
+                    console.log('✅ [DASHBOARD] Estatísticas atualizadas:', {
+                        total: stats.total_clubes,
+                        serieA: stats.serie_a,
+                        serieB: stats.serie_b,
+                        ultimaSync: stats.ultima_sincronizacao
+                    });
+                } else {
+                    console.error('❌ [DASHBOARD] Erro:', data.error);
+                }
+                
+            } catch (error) {
+                console.error('❌ [DASHBOARD] Erro ao atualizar:', error);
+            }
+        }
+
         // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔐 Central Admin - Loteca Inteligente carregada');
             console.log('💡 Chave padrão:', ADMIN_KEY);
+            
+            // Atualizar dashboard na inicialização (com delay para garantir que a página carregou)
+            setTimeout(() => {
+                console.log('⏰ [DASHBOARD] Iniciando atualização após delay...');
+                atualizarDashboard();
+            }, 1000);
             
             // Configurar listener para mudança de campeonato na aba Classificação
             const campeonatoSelect = document.getElementById('campeonatoSelect');

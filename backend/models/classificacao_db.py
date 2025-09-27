@@ -46,7 +46,7 @@ class ClassificacaoDB:
                     SELECT 
                         id, posicao, time, pontos, jogos, vitorias, empates, derrotas,
                         gols_pro, gols_contra, saldo_gols, aproveitamento,
-                        data_atualizacao, rodada, fonte
+                        ultimos_jogos, zona, data_atualizacao, rodada, fonte
                     FROM classificacao_serie_a 
                     ORDER BY posicao ASC
                 """)
@@ -369,6 +369,41 @@ class ClassificacaoDB:
         except Exception as e:
             logger.error(f"Erro ao obter info das tabelas: {e}")
             return {'tabelas': [], 'serie_a_count': 0, 'serie_b_count': 0, 'premier_league_count': 0, 'la_liga_count': 0, 'ligue1_count': 0}
+    
+    def get_last_update(self) -> str:
+        """Obter a data/hora da última atualização em qualquer tabela"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Buscar a data mais recente entre todas as tabelas
+                queries = [
+                    "SELECT MAX(data_atualizacao) as ultima FROM classificacao_serie_a WHERE data_atualizacao IS NOT NULL",
+                    "SELECT MAX(updated_at) as ultima FROM classificacao_serie_b WHERE updated_at IS NOT NULL",
+                    "SELECT MAX(updated_at) as ultima FROM classificacao_premier_league WHERE updated_at IS NOT NULL",
+                    "SELECT MAX(updated_at) as ultima FROM classificacao_la_liga WHERE updated_at IS NOT NULL",
+                    "SELECT MAX(updated_at) as ultima FROM classificacao_frances WHERE updated_at IS NOT NULL"
+                ]
+                
+                datas = []
+                for query in queries:
+                    try:
+                        cursor.execute(query)
+                        result = cursor.fetchone()
+                        if result and result[0]:
+                            datas.append(result[0])
+                    except Exception:
+                        continue  # Tabela pode não existir
+                
+                if datas:
+                    # Retornar a data mais recente
+                    return max(datas)
+                else:
+                    return None
+                    
+        except Exception as e:
+            logger.error(f"Erro ao obter última atualização: {e}")
+            return None
 
 # Instância global
 classificacao_db = ClassificacaoDB()

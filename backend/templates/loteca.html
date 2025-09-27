@@ -4507,26 +4507,38 @@
                     dadosSerieA = JSON.parse(cached);
                     fonte = '💾 Cache local';
                 } else {
-                    // Buscar dados das tabelas manuais (Central Admin)
+                    // Buscar dados das tabelas manuais (Central Admin) - MESMA ROTA DAS INTERNACIONAIS
                     try {
-                        const response = await fetch('/api/br/classificacao/serie-a');
+                        const response = await fetch('/api/admin/classificacao', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                campeonato: 'brasileirao-serie-a',
+                                admin_key: 'loteca2024admin'
+                            })
+                        });
                         if (response.ok) {
                             const apiResponse = await response.json();
-                            if (apiResponse.success && apiResponse.data && apiResponse.data.length > 0) {
+                            // CORREÇÃO: Usar 'classificacao' ou 'data' dependendo da resposta
+                            const dadosArray = apiResponse.classificacao || apiResponse.data || [];
+                            
+                            if (apiResponse.success && dadosArray && dadosArray.length > 0) {
                                 // Converter formato da tabela manual para o formato esperado
-                                dadosSerieA = apiResponse.data.map(time => ({
+                                dadosSerieA = dadosArray.map(time => ({
                                     pos: time.posicao,
-                                    time: time.time,
-                                    p: time.pontos,
-                                    j: time.jogos,
-                                    v: time.vitorias,
-                                    e: time.empates,
-                                    d: time.derrotas,
-                                    gp: time.gols_pro,
-                                    gc: time.gols_contra,
-                                    sg: time.saldo_gols,
-                                    aproveitamento: time.aproveitamento,
-                                    ultimos: time.ultimos_jogos || 'VVVVV',
+                                    time: time.time || time.clube,
+                                    p: time.pontos || time.pts,
+                                    j: time.jogos || time.pj,
+                                    v: time.vitorias || time.vit,
+                                    e: time.empates || time.e,
+                                    d: time.derrotas || time.der,
+                                    gp: time.gols_pro || time.gm,
+                                    gc: time.gols_contra || time.gc,
+                                    sg: time.saldo_gols || time.sg,
+                                    aproveitamento: time.aproveitamento || Math.round((time.pts / (time.pj * 3)) * 100),
+                                    ultimos: time.ultimos_jogos || time.ultimas_5 || '-----',
                                     zona: time.zona || ''
                                 }));
                                 

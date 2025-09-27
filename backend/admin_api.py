@@ -536,6 +536,46 @@ def _get_db_size():
     except:
         return "N/A"
 
+# === ROTA PARA ESTATÍSTICAS DO DASHBOARD ===
+
+@bp_admin.route('/api/admin/dashboard-stats', methods=['GET'])
+@cross_origin()
+def get_dashboard_stats():
+    """Obter estatísticas para o dashboard da Central Admin"""
+    try:
+        # Buscar contagens de cada tabela
+        stats = classificacao_db.get_tables_info()
+        
+        # Calcular total de clubes
+        total_clubes = (stats.get('serie_a_count', 0) + 
+                       stats.get('serie_b_count', 0) + 
+                       stats.get('premier_league_count', 0) + 
+                       stats.get('la_liga_count', 0) + 
+                       stats.get('ligue1_count', 0))
+        
+        # Buscar última sincronização (mais recente entre todas as tabelas)
+        ultima_sync = classificacao_db.get_last_update()
+        
+        return jsonify({
+            'success': True,
+            'data': {
+                'total_clubes': total_clubes,
+                'serie_a': stats.get('serie_a_count', 0),
+                'serie_b': stats.get('serie_b_count', 0),
+                'premier_league': stats.get('premier_league_count', 0),
+                'la_liga': stats.get('la_liga_count', 0),
+                'ligue1': stats.get('ligue1_count', 0),
+                'ultima_sincronizacao': ultima_sync
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao obter estatísticas do dashboard: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 # === ROTAS DA CLASSIFICAÇÃO ===
 
 @bp_admin.route('/api/admin/classificacao', methods=['GET', 'POST'])
