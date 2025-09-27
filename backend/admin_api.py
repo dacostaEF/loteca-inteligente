@@ -925,5 +925,25 @@ def listar_clubes_com_jogos():
             'error': str(e)
         }), 500
 
+@bp_admin.route('/api/admin/estatisticas-jogos/<clube>', methods=['GET'])
+@cross_origin()
+def get_estatisticas_jogos_clube(clube):
+    """Obter estatísticas calculadas dos jogos de um clube para o dashboard"""
+    try:
+        estatisticas = jogos_manager.calcular_estatisticas(clube)
+        
+        return jsonify({
+            'success': True,
+            'data': estatisticas,
+            'clube': clube
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao obter estatísticas de jogos de {clube}: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 # Blueprint integrado ao app principal
 # Acesse via: http://localhost:5000/admin

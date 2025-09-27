@@ -969,6 +969,14 @@
             width: 100% !important;
             text-align: right !important;
             font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            cursor: not-allowed !important;
+            user-select: none !important;
+            pointer-events: none !important;
+        }
+        
+        .campo-bloqueado:focus {
+            outline: 2px solid #dc3545 !important;
+            box-shadow: 0 0 8px rgba(220, 53, 69, 0.6) !important;
         }
         
         /* Campos calculados automaticamente */
@@ -1360,8 +1368,8 @@
                         <tr>
                             <td><strong>Derrotas</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="derrotas" placeholder="" readonly class="campo-bloqueado"></td>
-                            <td><strong>% Vitórias</strong></td>
-                            <td><input type="text" id="pctVitorias" readonly class="campo-calculado"></td>
+                            <td><strong>% Vitórias</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="text" id="percentualVitorias" readonly class="campo-bloqueado"></td>
                         </tr>
 
                         <!-- DADOS OFENSIVOS -->
@@ -1371,8 +1379,8 @@
                         <tr>
                             <td><strong>Gols Marcados</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="golsMarcados" placeholder="Ex: 52" readonly class="campo-bloqueado"></td>
-                            <td><strong>Média Gols</strong> <i class="fas fa-calculator" style="color: #10b981; margin-left: 8px;" title="Campo calculado automaticamente"></i></td>
-                            <td><input type="text" id="mediaGolsMarcados" readonly class="campo-calculado"></td>
+                            <td><strong>Média Gols</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="text" id="mediaGols" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
                             <td><strong>Chutes por Jogo</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
@@ -1388,14 +1396,14 @@
                         <tr>
                             <td><strong>Gols Sofridos</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="golsSofridos" placeholder="Ex: 32" readonly class="campo-bloqueado"></td>
-                            <td><strong>Média Sofridos</strong> <i class="fas fa-calculator" style="color: #10b981; margin-left: 8px;" title="Campo calculado automaticamente"></i></td>
-                            <td><input type="text" id="mediaGolsSofridos" readonly class="campo-calculado"></td>
+                            <td><strong>Média Sofridos</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="text" id="mediaSofridos" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>Clean Sheets</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i><span class="help-icon" onclick="mostrarAjuda('cleansheet')" title="Clique para saber mais sobre Clean Sheets">?</span></td>
-                            <td><input type="number" id="cleanSheets" placeholder="Ex: 12" class="campo-editavel"></td>
-                            <td><strong>% Clean Sheets</strong> <i class="fas fa-calculator" style="color: #10b981; margin-left: 8px;" title="Campo calculado automaticamente"></i></td>
-                            <td><input type="text" id="pctCleanSheets" readonly class="campo-calculado"></td>
+                            <td><strong>Clean Sheets</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('cleansheet')" title="Clique para saber mais sobre Clean Sheets">?</span></td>
+                            <td><input type="number" id="cleanSheets" readonly class="campo-bloqueado"></td>
+                            <td><strong>% Clean Sheets</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="text" id="percentualCleanSheets" readonly class="campo-bloqueado"></td>
                         </tr>
 
                         <!-- MANDANTE vs VISITANTE -->
@@ -1403,16 +1411,16 @@
                             <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Mandante vs Visitante</td>
                         </tr>
                         <tr>
-                            <td><strong>PPG Casa</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i><span class="help-icon" onclick="mostrarAjuda('ppg_casa')" title="Clique para saber mais sobre PPG Casa">?</span></td>
-                            <td><input type="number" step="0.01" id="ppgCasa" placeholder="Ex: 2.31" class="campo-editavel"></td>
-                            <td><strong>PPG Fora</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i><span class="help-icon" onclick="mostrarAjuda('ppg_fora')" title="Clique para saber mais sobre PPG Fora">?</span></td>
-                            <td><input type="number" step="0.01" id="ppgFora" placeholder="Ex: 1.83" class="campo-editavel"></td>
+                            <td><strong>PPG Casa</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('ppg_casa')" title="Clique para saber mais sobre PPG Casa">?</span></td>
+                            <td><input type="number" step="0.01" id="ppgCasa" readonly class="campo-bloqueado"></td>
+                            <td><strong>PPG Fora</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('ppg_fora')" title="Clique para saber mais sobre PPG Fora">?</span></td>
+                            <td><input type="number" step="0.01" id="ppgFora" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Aproveitamento Casa (%)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="number" step="0.1" id="aproveitamentoCasa" placeholder="Ex: 77.0" class="campo-editavel"></td>
-                            <td><strong>✏️ Aproveitamento Fora (%)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="number" step="0.1" id="aproveitamentoFora" placeholder="Ex: 61.0" class="campo-editavel"></td>
+                            <td><strong>Aproveitamento Casa (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="number" step="0.1" id="aproveitamentoCasa" readonly class="campo-bloqueado"></td>
+                            <td><strong>Aproveitamento Fora (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="number" step="0.1" id="aproveitamentoFora" readonly class="campo-bloqueado"></td>
                         </tr>
 
                         <!-- FORMA RECENTE -->
@@ -1422,12 +1430,12 @@
                         <tr>
                             <td><strong>Últimos 5 Jogos</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="text" id="formaUltimos5" placeholder="Ex: V-V-E-E-D" maxlength="11" readonly class="campo-bloqueado"></td>
-                            <td><strong>Pontos Últimos 5</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
-                            <td><input type="number" id="pontosUltimos5" placeholder="Ex: 8" max="15" class="campo-editavel"></td>
+                            <td><strong>Pontos Últimos 5</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="number" id="pontosUltimos5" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Sequência Atual</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="text" id="sequenciaAtual" placeholder="Ex: 2 empates seguidos" class="campo-editavel"></td>
+                            <td><strong>Sequência Atual</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><input type="text" id="sequenciaAtual" readonly class="campo-bloqueado"></td>
                             <td><strong>✏️ Tendência</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
                             <td>
                                 <select id="tendencia" class="campo-editavel">
@@ -3006,6 +3014,9 @@
                 
                 // Carregar dados reais da classificação
                 await carregarDadosReaisClube(clubeSelecionado);
+                
+                // Carregar dados dos jogos (se disponível)
+                await carregarDadosJogosClube(clubeSelecionado);
             } else {
                 formulario.style.display = 'none';
                 mensagem.style.display = 'block';
@@ -3053,9 +3064,154 @@
             }
         }
 
+        // Carregar dados dos jogos do clube (se disponível)
+        async function carregarDadosJogosClube(nomeClube) {
+            try {
+                // Mapear nome do clube para o formato usado nos arquivos
+                let clubeArquivo = nomeClube.toLowerCase();
+                if (clubeArquivo.includes('flamengo')) {
+                    clubeArquivo = 'flamengo';
+                }
+                
+                console.log(`📊 [JOGOS] Tentando carregar estatísticas de jogos para: ${clubeArquivo}`);
+                
+                const response = await fetch(`/api/admin/estatisticas-jogos/${clubeArquivo}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log(`✅ [JOGOS] Estatísticas carregadas:`, data.data);
+                    preencherDadosJogos(data.data);
+                } else {
+                    console.log(`ℹ️ [JOGOS] Sem dados de jogos para ${clubeArquivo}: ${data.error}`);
+                }
+                
+            } catch (error) {
+                console.log(`ℹ️ [JOGOS] Erro ao carregar dados de jogos: ${error.message}`);
+            }
+        }
+
+        // Preencher campos com dados calculados dos jogos
+        function preencherDadosJogos(estatisticas) {
+            // CAMPOS BLOQUEADOS VERDES - Dados calculados dos jogos
+            if (estatisticas.ppg) {
+                document.getElementById('ppg').value = estatisticas.ppg;
+                marcarCampoComoJogos('ppg');
+            }
+            
+            if (estatisticas.ppg_casa) {
+                document.getElementById('ppgCasa').value = estatisticas.ppg_casa;
+                marcarCampoComoJogos('ppgCasa');
+            }
+            
+            if (estatisticas.ppg_fora) {
+                document.getElementById('ppgFora').value = estatisticas.ppg_fora;
+                marcarCampoComoJogos('ppgFora');
+            }
+            
+            if (estatisticas.aproveitamento_casa) {
+                document.getElementById('aproveitamentoCasa').value = estatisticas.aproveitamento_casa;
+                marcarCampoComoJogos('aproveitamentoCasa');
+            }
+            
+            if (estatisticas.aproveitamento_fora) {
+                document.getElementById('aproveitamentoFora').value = estatisticas.aproveitamento_fora;
+                marcarCampoComoJogos('aproveitamentoFora');
+            }
+            
+            if (estatisticas.pct_vitorias) {
+                document.getElementById('percentualVitorias').value = estatisticas.pct_vitorias;
+                marcarCampoComoJogos('percentualVitorias');
+            }
+            
+            if (estatisticas.media_gols_marcados) {
+                document.getElementById('mediaGols').value = estatisticas.media_gols_marcados;
+                marcarCampoComoJogos('mediaGols');
+            }
+            
+            if (estatisticas.media_gols_sofridos) {
+                document.getElementById('mediaSofridos').value = estatisticas.media_gols_sofridos;
+                marcarCampoComoJogos('mediaSofridos');
+            }
+            
+            if (estatisticas.clean_sheets !== undefined) {
+                document.getElementById('cleanSheets').value = estatisticas.clean_sheets;
+                marcarCampoComoJogos('cleanSheets');
+            }
+            
+            if (estatisticas.pct_clean_sheets) {
+                document.getElementById('percentualCleanSheets').value = estatisticas.pct_clean_sheets;
+                marcarCampoComoJogos('percentualCleanSheets');
+            }
+            
+            if (estatisticas.pontos_ultimos_5) {
+                document.getElementById('pontosUltimos5').value = estatisticas.pontos_ultimos_5;
+                marcarCampoComoJogos('pontosUltimos5');
+            }
+            
+            if (estatisticas.sequencia_atual) {
+                document.getElementById('sequenciaAtual').value = estatisticas.sequencia_atual;
+                marcarCampoComoJogos('sequenciaAtual');
+            }
+        }
+
+        // Marcar campo como derivado da tabela de jogos (cadeado verde)
+        function marcarCampoComoJogos(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.classList.remove('campo-editavel', 'campo-calculado');
+                field.classList.add('campo-bloqueado');
+                field.readOnly = true;
+                
+                // Adicionar proteção extra contra edição
+                field.addEventListener('keydown', bloquearEdicao);
+                field.addEventListener('paste', bloquearEdicao);
+                field.addEventListener('input', bloquearEdicao);
+                
+                // Encontrar o ícone do campo e mudar para cadeado verde
+                const label = field.closest('.campo-grupo')?.querySelector('label');
+                if (label) {
+                    const icon = label.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-lock';
+                        icon.style.color = '#00E38C'; // Verde como o botão "Tabela de Jogos"
+                        icon.title = 'Calculado automaticamente da tabela de jogos';
+                    }
+                }
+                
+                console.log(`🔒 [JOGOS] Campo ${fieldId} bloqueado para edição`);
+            }
+        }
+
+        // Função para bloquear tentativas de edição
+        function bloquearEdicao(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Mostrar alerta visual
+            const field = event.target;
+            const originalBorder = field.style.border;
+            field.style.border = '2px solid #dc3545';
+            field.style.boxShadow = '0 0 8px rgba(220, 53, 69, 0.6)';
+            
+            // Restaurar estilo após 1 segundo
+            setTimeout(() => {
+                field.style.border = originalBorder;
+                field.style.boxShadow = '';
+            }, 1000);
+            
+            console.log('🚫 Tentativa de edição bloqueada em campo protegido');
+            return false;
+        }
+
         // Preencher com dados reais da classificação
         function preencherDadosReais(dadosClube) {
-            // CAMPOS BLOQUEADOS - Dados da classificação
+            // CAMPOS BLOQUEADOS - Dados da classificação (SOMENTE LEITURA)
+            const camposClassificacao = [
+                'posicaoAtual', 'pontosTotal', 'jogosDisputados', 'vitorias', 
+                'empates', 'derrotas', 'golsMarcados', 'golsSofridos', 'formaUltimos5'
+            ];
+            
+            // Preencher e bloquear campos da classificação
             document.getElementById('posicaoAtual').value = dadosClube.posicao || '';
             document.getElementById('pontosTotal').value = dadosClube.pontos || '';
             document.getElementById('jogosDisputados').value = dadosClube.jogos || '';
@@ -3066,16 +3222,43 @@
             document.getElementById('golsSofridos').value = dadosClube.gols_contra || '';
             document.getElementById('formaUltimos5').value = dadosClube.ultimos_jogos || '';
             
+            // GARANTIR que todos os campos da classificação sejam SOMENTE LEITURA
+            camposClassificacao.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.readOnly = true;
+                    field.classList.add('campo-bloqueado');
+                    field.classList.remove('campo-editavel');
+                    console.log(`🔒 [CLASSIFICAÇÃO] Campo ${fieldId} bloqueado para edição`);
+                }
+            });
+            
             // CAMPOS EDITÁVEIS - Dados complementares (valores padrão)
             document.getElementById('chutesPorJogo').value = 14.2;
             document.getElementById('posseBola').value = 58.3;
-            document.getElementById('cleanSheets').value = Math.floor((dadosClube.jogos || 0) * 0.4); // Estimativa
-            document.getElementById('ppgCasa').value = 2.31;
-            document.getElementById('ppgFora').value = 1.83;
-            document.getElementById('aproveitamentoCasa').value = 77.0;
-            document.getElementById('aproveitamentoFora').value = 61.0;
-            document.getElementById('pontosUltimos5').value = 8;
-            document.getElementById('sequenciaAtual').value = '2 empates seguidos';
+            // cleanSheets será preenchido pelos jogos se disponível
+            if (!document.getElementById('cleanSheets').classList.contains('campo-bloqueado')) {
+                document.getElementById('cleanSheets').value = Math.floor((dadosClube.jogos || 0) * 0.4); // Estimativa
+            }
+            // PPG campos serão preenchidos pelos jogos se disponível
+            if (!document.getElementById('ppgCasa').classList.contains('campo-bloqueado')) {
+                document.getElementById('ppgCasa').value = 2.31;
+            }
+            if (!document.getElementById('ppgFora').classList.contains('campo-bloqueado')) {
+                document.getElementById('ppgFora').value = 1.83;
+            }
+            if (!document.getElementById('aproveitamentoCasa').classList.contains('campo-bloqueado')) {
+                document.getElementById('aproveitamentoCasa').value = 77.0;
+            }
+            if (!document.getElementById('aproveitamentoFora').classList.contains('campo-bloqueado')) {
+                document.getElementById('aproveitamentoFora').value = 61.0;
+            }
+            if (!document.getElementById('pontosUltimos5').classList.contains('campo-bloqueado')) {
+                document.getElementById('pontosUltimos5').value = 8;
+            }
+            if (!document.getElementById('sequenciaAtual').classList.contains('campo-bloqueado')) {
+                document.getElementById('sequenciaAtual').value = '2 empates seguidos';
+            }
             document.getElementById('tendencia').value = 'Estável';
             document.getElementById('elencoTotal').value = 40;
             document.getElementById('pctProvaveis').value = 42.5;
