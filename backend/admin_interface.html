@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -38,7 +39,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background-color: var(--cor-fundo);
             min-height: 100vh;
             color: var(--cor-texto-principal);
@@ -640,6 +641,243 @@
         .saved {
             animation: saved 1s ease-in-out;
         }
+
+        /* === SISTEMA DE TOOLTIPS EDUCATIVOS === */
+        .help-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+            vertical-align: middle;
+        }
+
+        .help-icon:hover {
+            background: #c82333;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Modal de Ajuda */
+        .help-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .help-modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.4s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .help-modal-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .help-modal-title {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .help-modal-close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .help-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .help-modal-body {
+            padding: 25px;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .help-definition {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .help-formula {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .help-examples {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .help-example {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .help-example-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .help-example-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .help-interpretation {
+            margin-top: 20px;
+        }
+
+        .help-scale {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .help-scale-item {
+            text-align: center;
+            flex: 1;
+            padding: 5px;
+        }
+
+        .help-scale-excellent { color: #28a745; }
+        .help-scale-good { color: #ffc107; }
+        .help-scale-average { color: #fd7e14; }
+        .help-scale-poor { color: #dc3545; }
+
+        /* === ÍCONE TOGGLE SENHA === */
+        #togglePassword:hover {
+            color: #00E38C !important;
+            transform: scale(1.1);
+        }
+
+        /* === BOTÕES DE AÇÃO DESTACADOS === */
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Efeitos hover específicos por cor */
+        button[style*="00E38C"]:hover {
+            box-shadow: 0 8px 25px rgba(0,227,140,0.4) !important;
+        }
+
+        button[style*="6c757d"]:hover {
+            box-shadow: 0 8px 25px rgba(108,117,125,0.4) !important;
+        }
+
+        button[style*="17a2b8"]:hover {
+            box-shadow: 0 8px 25px rgba(23,162,184,0.4) !important;
+        }
+
+        button[style*="ffc107"]:hover {
+            box-shadow: 0 8px 25px rgba(255,193,7,0.4) !important;
+        }
+
+        /* === SCROLL PERSONALIZADO PARA TABELA DE JOGOS === */
+        .tabela-jogos-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #6f42c1 #2a2a2a;
+        }
+
+        .tabela-jogos-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tabela-jogos-scroll::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+
+        .tabela-jogos-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .tabela-jogos-scroll::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+        }
+
+        /* Cabeçalho fixo na tabela */
+        .tabela-jogos-scroll thead th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
         
         /* Notificações */
         .notification {
@@ -719,40 +957,47 @@
 
         /* === ESTILOS DOS CAMPOS === */
         
-        /* Campos bloqueados (dados da classificação) */
+        /* Campos bloqueados (dados da classificação) - VERSÃO PROFISSIONAL */
         .campo-bloqueado {
-            background: #2a2d3a !important;
-            border: 2px solid #dc3545 !important;
-            padding: 8px !important;
-            border-radius: 6px !important;
-            color: #e9ecef !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
+            background: #1a1a1a !important;
+            border: 1px solid #404040 !important;
+            padding: 10px 12px !important;
+            border-radius: 4px !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
             width: 100% !important;
+            text-align: right !important;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
         }
         
         /* Campos calculados automaticamente */
         .campo-calculado {
-            background: #1e3a2e !important;
-            border: 2px solid #28a745 !important;
-            padding: 8px !important;
-            border-radius: 6px !important;
-            color: #d4edda !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
+            background: #1a1a1a !important;
+            border: 1px solid #404040 !important;
+            padding: 10px 12px !important;
+            border-radius: 4px !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 16px !important;
             width: 100% !important;
+            text-align: right !important;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
         }
         
         /* Campos editáveis */
         .campo-editavel {
-            background: #1a2332 !important;
-            border: 2px solid #007bff !important;
-            padding: 8px !important;
-            border-radius: 6px !important;
+            background: #2a2a2a !important;
+            border: 1px solid #555555 !important;
+            padding: 10px 12px !important;
+            border-radius: 4px !important;
             color: #ffffff !important;
-            font-weight: bold !important;
-            font-size: 14px !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
             width: 100% !important;
+            text-align: right !important;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            transition: all 0.2s ease !important;
         }
         
         /* Placeholder mais suave */
@@ -779,7 +1024,13 @@
             
             <div class="form-group">
                 <label for="adminKey">Chave de Administrador:</label>
-                <input type="password" id="adminKey" placeholder="Digite a chave de acesso">
+                <div style="position: relative; display: flex; align-items: center;">
+                    <input type="password" id="adminKey" placeholder="Digite a chave de acesso" style="padding-right: 45px;">
+                    <i class="fas fa-eye" id="togglePassword" 
+                       style="position: absolute; right: 15px; cursor: pointer; color: #666; font-size: 16px; transition: color 0.3s ease;" 
+                       onclick="togglePasswordVisibility()" 
+                       title="Mostrar/Ocultar senha"></i>
+                </div>
             </div>
             
             <button class="btn" onclick="login()">
@@ -1035,9 +1286,14 @@
 
         <!-- === ABA CLUBES - ESTATÍSTICAS DETALHADAS === -->
         <div class="tab-content" id="clubes">
-            <h2 style="margin-bottom: 25px; color: #333;">
-                <i class="fas fa-chart-line"></i> Estatísticas Detalhadas dos Clubes
-            </h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="color: #6f42c1; font-weight: 600; text-shadow: 0 2px 4px rgba(111, 66, 193, 0.3); margin: 0;">
+                    <i class="fas fa-chart-line" style="margin-right: 10px;"></i> Estatísticas Detalhadas dos Clubes
+                </h2>
+                <button id="btnTabelaJogos" class="btn-primary" onclick="abrirTabelaJogos()" style="background: linear-gradient(135deg, #00E38C, #00B377); display: none;">
+                    <i class="fas fa-table" style="margin-right: 8px;"></i> Tabela de Jogos
+                </button>
+            </div>
             
             <!-- Seletor de Clube -->
             <div class="form-row" style="margin-bottom: 30px;">
@@ -1079,77 +1335,77 @@
                     <tbody>
                         <!-- DADOS BÁSICOS -->
                         <tr>
-                            <td><strong>🔒 Posição Atual</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><strong>Posição Atual</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="posicaoAtual" placeholder="Ex: 2" min="1" max="20" readonly class="campo-bloqueado"></td>
-                            <td><strong>🔒 Pontos Total</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><strong>Pontos Total</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="pontosTotal" placeholder="Ex: 58" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>🔒 Jogos Disputados</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><strong>Jogos Disputados</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="jogosDisputados" placeholder="Ex: 28" readonly class="campo-bloqueado"></td>
-                            <td><strong>🔒 PPG (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><strong>PPG</strong><span class="help-icon" onclick="mostrarAjuda('ppg')" title="Clique para saber mais sobre PPG">?</span></td>
                             <td><input type="text" id="ppg" readonly class="campo-calculado"></td>
                         </tr>
                         
                         <!-- PERFORMANCE GERAL -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">⚽ PERFORMANCE GERAL</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Performance Geral</td>
                         </tr>
                         <tr>
-                            <td><strong>🔒 Vitórias</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
-                            <td><input type="number" id="vitorias" placeholder="Ex: 17" readonly class="campo-bloqueado"></td>
-                            <td><strong>🔒 Empates</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
-                            <td><input type="number" id="empates" placeholder="Ex: 7" readonly class="campo-bloqueado"></td>
+                            <td><strong>Vitórias</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
+                            <td><input type="number" id="vitorias" placeholder="" readonly class="campo-bloqueado"></td>
+                            <td><strong>Empates</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
+                            <td><input type="number" id="empates" placeholder="" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>🔒 Derrotas</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
-                            <td><input type="number" id="derrotas" placeholder="Ex: 4" readonly class="campo-bloqueado"></td>
-                            <td><strong>🔒 % Vitórias (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><strong>Derrotas</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
+                            <td><input type="number" id="derrotas" placeholder="" readonly class="campo-bloqueado"></td>
+                            <td><strong>% Vitórias</strong></td>
                             <td><input type="text" id="pctVitorias" readonly class="campo-calculado"></td>
                         </tr>
 
                         <!-- DADOS OFENSIVOS -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🎯 DADOS OFENSIVOS</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Ofensivos</td>
                         </tr>
                         <tr>
-                            <td><strong>🔒 Gols Marcados</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><strong>Gols Marcados</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="golsMarcados" placeholder="Ex: 52" readonly class="campo-bloqueado"></td>
-                            <td><strong>🔒 Média Gols (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><strong>Média Gols</strong> <i class="fas fa-calculator" style="color: #10b981; margin-left: 8px;" title="Campo calculado automaticamente"></i></td>
                             <td><input type="text" id="mediaGolsMarcados" readonly class="campo-calculado"></td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Chutes por Jogo</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>Chutes por Jogo</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
                             <td><input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 14.2" class="campo-editavel"></td>
-                            <td><strong>✏️ Posse de Bola (%)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>Posse de Bola (%)</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
                             <td><input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.3" class="campo-editavel"></td>
                         </tr>
 
                         <!-- DADOS DEFENSIVOS -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🛡️ DADOS DEFENSIVOS</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Defensivos</td>
                         </tr>
                         <tr>
-                            <td><strong>🔒 Gols Sofridos</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><strong>Gols Sofridos</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="golsSofridos" placeholder="Ex: 32" readonly class="campo-bloqueado"></td>
-                            <td><strong>🔒 Média Sofridos (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><strong>Média Sofridos</strong> <i class="fas fa-calculator" style="color: #10b981; margin-left: 8px;" title="Campo calculado automaticamente"></i></td>
                             <td><input type="text" id="mediaGolsSofridos" readonly class="campo-calculado"></td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Clean Sheets</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>Clean Sheets</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i><span class="help-icon" onclick="mostrarAjuda('cleansheet')" title="Clique para saber mais sobre Clean Sheets">?</span></td>
                             <td><input type="number" id="cleanSheets" placeholder="Ex: 12" class="campo-editavel"></td>
-                            <td><strong>🔒 % Clean Sheets (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><strong>% Clean Sheets</strong> <i class="fas fa-calculator" style="color: #10b981; margin-left: 8px;" title="Campo calculado automaticamente"></i></td>
                             <td><input type="text" id="pctCleanSheets" readonly class="campo-calculado"></td>
                         </tr>
 
                         <!-- MANDANTE vs VISITANTE -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🏠 MANDANTE vs ✈️ VISITANTE</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Mandante vs Visitante</td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ PPG Casa</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>PPG Casa</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i><span class="help-icon" onclick="mostrarAjuda('ppg_casa')" title="Clique para saber mais sobre PPG Casa">?</span></td>
                             <td><input type="number" step="0.01" id="ppgCasa" placeholder="Ex: 2.31" class="campo-editavel"></td>
-                            <td><strong>✏️ PPG Fora</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>PPG Fora</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i><span class="help-icon" onclick="mostrarAjuda('ppg_fora')" title="Clique para saber mais sobre PPG Fora">?</span></td>
                             <td><input type="number" step="0.01" id="ppgFora" placeholder="Ex: 1.83" class="campo-editavel"></td>
                         </tr>
                         <tr>
@@ -1160,13 +1416,13 @@
                         </tr>
 
                         <!-- FORMA RECENTE -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">📈 FORMA RECENTE</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Forma Recente</td>
                         </tr>
                         <tr>
-                            <td><strong>🔒 Últimos 5 Jogos</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><strong>Últimos 5 Jogos</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="text" id="formaUltimos5" placeholder="Ex: V-V-E-E-D" maxlength="11" readonly class="campo-bloqueado"></td>
-                            <td><strong>✏️ Pontos Últimos 5</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>Pontos Últimos 5</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
                             <td><input type="number" id="pontosUltimos5" placeholder="Ex: 8" max="15" class="campo-editavel"></td>
                         </tr>
                         <tr>
@@ -1184,8 +1440,8 @@
                         </tr>
 
                         <!-- DADOS CARTOLA FC -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">💰 DADOS CARTOLA FC</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Cartola FC</td>
                         </tr>
                         <tr>
                             <td><strong>✏️ Elenco Total</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
@@ -1201,8 +1457,8 @@
                         </tr>
 
                         <!-- CONTEXTO ATUAL -->
-                        <tr style="background: #f8f9fa;">
-                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🎯 CONTEXTO ATUAL</td>
+                        <tr style="background: #333333;">
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Contexto Atual</td>
                         </tr>
                         <tr>
                             <td><strong>✏️ Desfalques Importantes</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
@@ -1220,19 +1476,21 @@
                 </table>
 
                 <!-- BOTÕES DE AÇÃO -->
-                <div style="margin-top: 20px; text-align: center;">
-                    <button class="btn-success" onclick="salvarEstatisticas()" style="margin: 0 10px;">
-                        <i class="fas fa-save"></i> Salvar Estatísticas
-                    </button>
-                    <button class="btn-secondary" onclick="limparFormulario()" style="margin: 0 10px;">
-                        <i class="fas fa-eraser"></i> Limpar Formulário
-                    </button>
-                    <button class="btn-info" onclick="previewEstatisticas()" style="margin: 0 10px;">
-                        <i class="fas fa-eye"></i> Preview
-                    </button>
-                    <button class="btn-warning" onclick="verHistorico()" style="margin: 0 10px;">
-                        <i class="fas fa-history"></i> Ver Histórico
-                    </button>
+                <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="salvarEstatisticas()" style="background: linear-gradient(135deg, #00E38C, #00B377);">
+                            <i class="fas fa-save"></i> Salvar Estatísticas
+                        </button>
+                        <button class="btn-primary" onclick="limparFormulario()" style="background: linear-gradient(135deg, #6c757d, #495057);">
+                            <i class="fas fa-eraser"></i> Limpar Formulário
+                        </button>
+                        <button class="btn-primary" onclick="previewEstatisticas()" style="background: linear-gradient(135deg, #17a2b8, #138496);">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button class="btn-primary" onclick="verHistorico()" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
+                            <i class="fas fa-history"></i> Ver Histórico
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -1395,10 +1653,117 @@
         </div>
     </div>
 
+    <!-- Modal de Ajuda -->
+    <div id="helpModal" class="help-modal">
+        <div class="help-modal-content">
+            <div class="help-modal-header">
+                <h2 class="help-modal-title" id="helpModalTitle">
+                    <i class="fas fa-question-circle"></i>
+                    <span id="helpModalTitleText">Ajuda</span>
+                </h2>
+                <button class="help-modal-close" onclick="fecharAjuda()">&times;</button>
+            </div>
+            <div class="help-modal-body" id="helpModalBody">
+                <!-- Conteúdo será inserido dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tabela de Jogos -->
+    <div id="jogosModal" class="help-modal">
+        <div class="help-modal-content" style="max-width: 1200px; width: 95%;">
+            <div class="help-modal-header">
+                <h2 class="help-modal-title">
+                    <i class="fas fa-table"></i>
+                    <span id="jogosModalTitle">Histórico de Jogos - Flamengo</span>
+                </h2>
+                <button class="help-modal-close" onclick="fecharTabelaJogos()">&times;</button>
+            </div>
+            <div class="help-modal-body" style="padding: 20px;">
+                <!-- Botão Adicionar Jogo -->
+                <div style="margin-bottom: 20px; text-align: right;">
+                    <button class="btn-primary" onclick="adicionarNovoJogo()" style="background: linear-gradient(135deg, #00E38C, #00B377);">
+                        <i class="fas fa-plus"></i> Adicionar Novo Jogo
+                    </button>
+                </div>
+                
+                <!-- Tabela de Jogos -->
+                <div class="tabela-jogos-scroll" style="overflow-x: auto; max-height: 400px; overflow-y: auto; border: 1px solid #333; border-radius: 8px;">
+                    <table id="tabelaJogos" style="width: 100%; border-collapse: collapse; background: #1a1a1a; border-radius: 8px; overflow: hidden;">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); color: white;">
+                                <th style="padding: 12px; text-align: center;">Data</th>
+                                <th style="padding: 12px; text-align: center;">Casa</th>
+                                <th style="padding: 12px; text-align: center;">Placar</th>
+                                <th style="padding: 12px; text-align: center;">Visitante</th>
+                                <th style="padding: 12px; text-align: center;">Local</th>
+                                <th style="padding: 12px; text-align: center;">Resultado</th>
+                                <th style="padding: 12px; text-align: center;">Pontos</th>
+                                <th style="padding: 12px; text-align: center;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jogosTableBody">
+                            <!-- Jogos serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Resumo Estatístico -->
+                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <h4 style="color: #00E38C; margin-bottom: 10px;">📊 Resumo Estatístico</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #00E38C;" id="totalJogos">0</div>
+                            <div style="font-size: 12px; color: #ccc;">Total de Jogos</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #28a745;" id="totalVitorias">0</div>
+                            <div style="font-size: 12px; color: #ccc;">Vitórias</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #ffc107;" id="totalEmpates">0</div>
+                            <div style="font-size: 12px; color: #ccc;">Empates</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #dc3545;" id="totalDerrotas">0</div>
+                            <div style="font-size: 12px; color: #ccc;">Derrotas</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #17a2b8;" id="ppgCalculado">0.00</div>
+                            <div style="font-size: 12px; color: #ccc;">PPG</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // === CONFIGURAÇÕES === 
         const ADMIN_KEY = 'loteca2024admin'; // Chave de acesso padrão
         const API_BASE = window.location.port === '5001' ? 'http://127.0.0.1:5001' : window.location.origin; // Base URL para APIs
+
+        // === FUNÇÃO PARA MOSTRAR/OCULTAR SENHA ===
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('adminKey');
+            const toggleIcon = document.getElementById('togglePassword');
+            
+            if (passwordField.type === 'password') {
+                // Mostrar senha
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+                toggleIcon.style.color = '#00E38C'; // Verde quando visível
+                toggleIcon.title = 'Ocultar senha';
+            } else {
+                // Ocultar senha
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+                toggleIcon.style.color = '#666'; // Cinza quando oculta
+                toggleIcon.title = 'Mostrar senha';
+            }
+        }
 
         // === SISTEMA DE LOGIN ===
         function login() {
@@ -2624,10 +2989,18 @@
             const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
             const formulario = document.getElementById('formularioEstatisticas');
             const mensagem = document.getElementById('mensagemSelecionar');
+            const btnTabelaJogos = document.getElementById('btnTabelaJogos');
             
             if (clubeSelecionado) {
                 formulario.style.display = 'block';
                 mensagem.style.display = 'none';
+                
+                // Mostrar botão "Tabela de Jogos" apenas para Flamengo (por enquanto)
+                if (clubeSelecionado.toLowerCase().includes('flamengo')) {
+                    btnTabelaJogos.style.display = 'inline-flex';
+                } else {
+                    btnTabelaJogos.style.display = 'none';
+                }
                 
                 console.log(`🔄 Carregando estatísticas REAIS de: ${clubeSelecionado}`);
                 
@@ -2636,6 +3009,7 @@
             } else {
                 formulario.style.display = 'none';
                 mensagem.style.display = 'block';
+                btnTabelaJogos.style.display = 'none';
             }
         }
 
@@ -2866,6 +3240,310 @@
             }
 
             alert(`Histórico de ${clubeSelecionado} será implementado em breve!`);
+        }
+
+        // === SISTEMA DE AJUDA EDUCATIVO ===
+        const helpContent = {
+            ppg: {
+                title: "PPG - Pontos Por Jogo",
+                icon: "📊",
+                definition: "Média de pontos conquistados por partida disputada. É um dos principais indicadores de desempenho de uma equipe.",
+                formula: "PPG = Total de Pontos ÷ Total de Jogos",
+                examples: [
+                    { value: "2.22", label: "Flamengo atual" },
+                    { value: "3.00", label: "Time perfeito" }
+                ],
+                interpretation: "Escala de Interpretação:",
+                scale: [
+                    { range: "2.5+", label: "Excelente", class: "excellent" },
+                    { range: "2.0-2.4", label: "Muito Bom", class: "good" },
+                    { range: "1.5-1.9", label: "Médio", class: "average" },
+                    { range: "<1.5", label: "Ruim", class: "poor" }
+                ]
+            },
+            cleansheet: {
+                title: "Clean Sheet - Jogo Sem Sofrer Gols",
+                icon: "🛡️",
+                definition: "Número de partidas onde o time não sofreu nenhum gol. Indica a solidez defensiva da equipe.",
+                formula: "Clean Sheets = Jogos com 0 gols sofridos",
+                examples: [
+                    { value: "12", label: "Flamengo (exemplo)" },
+                    { value: "15", label: "Defesa sólida" }
+                ],
+                interpretation: "Interpretação por temporada (38 jogos):",
+                scale: [
+                    { range: "15+", label: "Defesa Excelente", class: "excellent" },
+                    { range: "10-14", label: "Defesa Boa", class: "good" },
+                    { range: "6-9", label: "Defesa Média", class: "average" },
+                    { range: "<6", label: "Defesa Frágil", class: "poor" }
+                ]
+            },
+            ppg_casa: {
+                title: "PPG Casa - Pontos Por Jogo em Casa",
+                icon: "🏠",
+                definition: "Média de pontos conquistados especificamente nos jogos disputados em casa (como mandante). Indica a força do time no seu próprio estádio.",
+                formula: "PPG Casa = Pontos em Casa ÷ Jogos em Casa",
+                examples: [
+                    { value: "2.31", label: "Flamengo (exemplo)" },
+                    { value: "2.50", label: "Forte mandante" }
+                ],
+                interpretation: "Interpretação do desempenho em casa:",
+                scale: [
+                    { range: "2.5+", label: "Fortaleza Absoluta", class: "excellent" },
+                    { range: "2.0-2.4", label: "Mandante Forte", class: "good" },
+                    { range: "1.5-1.9", label: "Mandante Médio", class: "average" },
+                    { range: "<1.5", label: "Casa Frágil", class: "poor" }
+                ]
+            },
+            ppg_fora: {
+                title: "PPG Fora - Pontos Por Jogo Fora de Casa",
+                icon: "✈️",
+                definition: "Média de pontos conquistados especificamente nos jogos disputados fora de casa (como visitante). Indica a capacidade do time de pontuar longe de seus domínios.",
+                formula: "PPG Fora = Pontos Fora ÷ Jogos Fora",
+                examples: [
+                    { value: "1.83", label: "Flamengo (exemplo)" },
+                    { value: "2.00", label: "Bom visitante" }
+                ],
+                interpretation: "Interpretação do desempenho fora:",
+                scale: [
+                    { range: "2.0+", label: "Visitante Excepcional", class: "excellent" },
+                    { range: "1.5-1.9", label: "Visitante Bom", class: "good" },
+                    { range: "1.0-1.4", label: "Visitante Médio", class: "average" },
+                    { range: "<1.0", label: "Visitante Fraco", class: "poor" }
+                ]
+            }
+        };
+
+        function mostrarAjuda(termo) {
+            const content = helpContent[termo];
+            if (!content) return;
+
+            const modal = document.getElementById('helpModal');
+            const titleText = document.getElementById('helpModalTitleText');
+            const body = document.getElementById('helpModalBody');
+
+            titleText.textContent = content.title;
+
+            body.innerHTML = `
+                <div class="help-definition">
+                    <h3>${content.icon} ${content.title}</h3>
+                    <p>${content.definition}</p>
+                </div>
+
+                <div class="help-formula">
+                    ${content.formula}
+                </div>
+
+                <div class="help-examples">
+                    ${content.examples.map(ex => `
+                        <div class="help-example">
+                            <div class="help-example-value">${ex.value}</div>
+                            <div class="help-example-label">${ex.label}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="help-interpretation">
+                    <h4>${content.interpretation}</h4>
+                    <div class="help-scale">
+                        ${content.scale.map(item => `
+                            <div class="help-scale-item help-scale-${item.class}">
+                                <strong>${item.range}</strong><br>
+                                ${item.label}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevenir scroll
+        }
+
+        function fecharAjuda() {
+            const modal = document.getElementById('helpModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaurar scroll
+        }
+
+        // Fechar modal clicando fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('helpModal');
+            if (event.target === modal) {
+                fecharAjuda();
+            }
+        }
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                fecharAjuda();
+            }
+        });
+
+        // === DADOS DOS JOGOS DO FLAMENGO ===
+        const jogosFlamengo = [
+            {data: '2025-03-29', timeCasa: 'Fla', golsCasa: 1, golsVisitante: 1, timeVisitante: 'Int', local: 'Rio de Janeiro - RJ', resultado: 'Empate', pontos: 1},
+            {data: '2025-04-06', timeCasa: 'Vit', golsCasa: 1, golsVisitante: 2, timeVisitante: 'Fla', local: 'Salvador - BA', resultado: 'Vitória', pontos: 3},
+            {data: '2025-04-13', timeCasa: 'Grê', golsCasa: 0, golsVisitante: 2, timeVisitante: 'Fla', local: 'Porto Alegre - RS', resultado: 'Vitória', pontos: 3},
+            {data: '2025-04-16', timeCasa: 'Fla', golsCasa: 6, golsVisitante: 0, timeVisitante: 'Juv', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-04-19', timeCasa: 'Vas', golsCasa: 0, golsVisitante: 0, timeVisitante: 'Fla', local: 'Rio de Janeiro - RJ', resultado: 'Empate', pontos: 1},
+            {data: '2025-04-27', timeCasa: 'Fla', golsCasa: 4, golsVisitante: 0, timeVisitante: 'Cor', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-05-04', timeCasa: 'Cru', golsCasa: 2, golsVisitante: 1, timeVisitante: 'Fla', local: 'Belo Horizonte - MG', resultado: 'Derrota', pontos: 0},
+            {data: '2025-05-10', timeCasa: 'Fla', golsCasa: 1, golsVisitante: 0, timeVisitante: 'Bah', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-05-18', timeCasa: 'Fla', golsCasa: 0, golsVisitante: 0, timeVisitante: 'Bot', local: 'Rio de Janeiro - RJ', resultado: 'Empate', pontos: 1},
+            {data: '2025-05-25', timeCasa: 'Pal', golsCasa: 0, golsVisitante: 2, timeVisitante: 'Fla', local: 'Sao Paulo - SP', resultado: 'Vitória', pontos: 3},
+            {data: '2025-06-01', timeCasa: 'Fla', golsCasa: 5, golsVisitante: 0, timeVisitante: 'For', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-07-12', timeCasa: 'Fla', golsCasa: 2, golsVisitante: 0, timeVisitante: 'São', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-07-16', timeCasa: 'San', golsCasa: 1, golsVisitante: 0, timeVisitante: 'Fla', local: 'Santos - SP', resultado: 'Derrota', pontos: 0},
+            {data: '2025-07-20', timeCasa: 'Fla', golsCasa: 1, golsVisitante: 0, timeVisitante: 'Flu', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-07-23', timeCasa: 'Red', golsCasa: 1, golsVisitante: 2, timeVisitante: 'Fla', local: 'Braganca Paulista - SP', resultado: 'Vitória', pontos: 3},
+            {data: '2025-07-27', timeCasa: 'Fla', golsCasa: 1, golsVisitante: 0, timeVisitante: 'Atl', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-08-03', timeCasa: 'Cea', golsCasa: 1, golsVisitante: 1, timeVisitante: 'Fla', local: 'Fortaleza - CE', resultado: 'Empate', pontos: 1},
+            {data: '2025-08-09', timeCasa: 'Fla', golsCasa: 2, golsVisitante: 1, timeVisitante: 'Mir', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-08-17', timeCasa: 'Int', golsCasa: 1, golsVisitante: 3, timeVisitante: 'Fla', local: 'Rio - Porto Alegre', resultado: 'Vitória', pontos: 3},
+            {data: '2025-08-25', timeCasa: 'Fla', golsCasa: 8, golsVisitante: 0, timeVisitante: 'Vit', local: 'Rio de Janeiro - RJ', resultado: 'Vitória', pontos: 3},
+            {data: '2025-08-31', timeCasa: 'Fla', golsCasa: 1, golsVisitante: 1, timeVisitante: 'Grê', local: 'Rio de Janeiro - RJ', resultado: 'Empate', pontos: 1},
+            {data: '2025-09-14', timeCasa: 'Juv', golsCasa: 0, golsVisitante: 2, timeVisitante: 'Fla', local: 'Caxias do Sul - RS', resultado: 'Vitória', pontos: 3},
+            {data: '2025-09-21', timeCasa: 'Fla', golsCasa: 1, golsVisitante: 1, timeVisitante: 'Vas', local: 'Rio de Janeiro - RJ', resultado: 'Empate', pontos: 1}
+        ];
+
+        // === FUNÇÕES DA TABELA DE JOGOS ===
+        async function abrirTabelaJogos() {
+            const modal = document.getElementById('jogosModal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Carregar jogos da API
+            await carregarJogosDoClube('flamengo');
+        }
+
+        function fecharTabelaJogos() {
+            const modal = document.getElementById('jogosModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Variável global para armazenar jogos carregados
+        let jogosCarregados = [];
+        let clubeAtual = '';
+
+        async function carregarJogosDoClube(clube) {
+            try {
+                console.log(`📊 [JOGOS] Carregando jogos de ${clube}...`);
+                
+                const response = await fetch(`/api/admin/jogos/${clube}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    jogosCarregados = data.data.jogos;
+                    clubeAtual = clube;
+                    console.log(`✅ [JOGOS] ${jogosCarregados.length} jogos carregados para ${clube}`);
+                    
+                    // Atualizar título do modal
+                    const tituloModal = document.querySelector('#jogosModal h3');
+                    if (tituloModal) {
+                        tituloModal.textContent = `Tabela de Jogos - ${clube.toUpperCase()}`;
+                    }
+                    
+                    carregarJogosNaTabela();
+                    atualizarResumoEstatistico();
+                } else {
+                    console.error('❌ [JOGOS] Erro ao carregar jogos:', data.error);
+                    alert('Erro ao carregar jogos: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('❌ [JOGOS] Erro na requisição:', error);
+                alert('Erro ao conectar com o servidor');
+            }
+        }
+
+        function carregarJogosNaTabela() {
+            const tbody = document.getElementById('jogosTableBody');
+            tbody.innerHTML = '';
+            
+            jogosCarregados.forEach((jogo, index) => {
+                const row = document.createElement('tr');
+                row.style.cssText = 'border-bottom: 1px solid #333; color: white;';
+                
+                const placar = `${jogo.gols_casa} x ${jogo.gols_visitante}`;
+                const dataFormatada = new Date(jogo.data).toLocaleDateString('pt-BR');
+                
+                row.innerHTML = `
+                    <td style="padding: 10px; text-align: center;">${dataFormatada}</td>
+                    <td style="padding: 10px; text-align: center; font-weight: bold;">${jogo.time_casa}</td>
+                    <td style="padding: 10px; text-align: center; font-weight: bold; color: #00E38C;">${placar}</td>
+                    <td style="padding: 10px; text-align: center; font-weight: bold;">${jogo.time_visitante}</td>
+                    <td style="padding: 10px; text-align: center; font-size: 12px;">${jogo.local}</td>
+                    <td style="padding: 10px; text-align: center;">
+                        <span style="padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; 
+                                     background: ${jogo.resultado === 'Vitória' ? '#28a745' : jogo.resultado === 'Empate' ? '#ffc107' : '#dc3545'}; 
+                                     color: white;">${jogo.resultado}</span>
+                    </td>
+                    <td style="padding: 10px; text-align: center; font-weight: bold; color: #00E38C;">${jogo.pontos}</td>
+                    <td style="padding: 10px; text-align: center;">
+                        <button onclick="editarJogo(${index})" style="background: #17a2b8; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="removerJogo(${index})" style="background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function atualizarResumoEstatistico() {
+            const totalJogos = jogosCarregados.length;
+            const vitorias = jogosCarregados.filter(j => j.resultado === 'Vitória').length;
+            const empates = jogosCarregados.filter(j => j.resultado === 'Empate').length;
+            const derrotas = jogosCarregados.filter(j => j.resultado === 'Derrota').length;
+            const totalPontos = jogosCarregados.reduce((sum, j) => sum + j.pontos, 0);
+            const ppg = totalJogos > 0 ? (totalPontos / totalJogos).toFixed(2) : '0.00';
+            
+            document.getElementById('totalJogos').textContent = totalJogos;
+            document.getElementById('totalVitorias').textContent = vitorias;
+            document.getElementById('totalEmpates').textContent = empates;
+            document.getElementById('totalDerrotas').textContent = derrotas;
+            document.getElementById('ppgCalculado').textContent = ppg;
+        }
+
+        function adicionarNovoJogo() {
+            alert('Funcionalidade de adicionar novo jogo será implementada em breve!');
+        }
+
+        function editarJogo(index) {
+            alert(`Editar jogo ${index + 1} será implementado em breve!`);
+        }
+
+        async function removerJogo(index) {
+            if (confirm('Tem certeza que deseja remover este jogo?')) {
+                try {
+                    console.log(`🗑️ [JOGOS] Removendo jogo ${index} de ${clubeAtual}...`);
+                    
+                    const response = await fetch(`/api/admin/jogos/${clubeAtual}/${index}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        console.log('✅ [JOGOS] Jogo removido com sucesso');
+                        // Recarregar jogos da API
+                        await carregarJogosDoClube(clubeAtual);
+                    } else {
+                        console.error('❌ [JOGOS] Erro ao remover jogo:', data.error);
+                        alert('Erro ao remover jogo: ' + data.error);
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ [JOGOS] Erro na requisição:', error);
+                    alert('Erro ao conectar com o servidor');
+                }
+            }
         }
 
         // === FUNÇÃO PARA ATUALIZAR DASHBOARD ===

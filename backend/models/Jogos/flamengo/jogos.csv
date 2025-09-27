@@ -1,0 +1,24 @@
+data,time_casa,gols_casa,gols_visitante,time_visitante,local,resultado,pontos
+2025-03-29,Fla,1,1,Int,Rio de Janeiro - RJ,Empate,1
+2025-04-06,Vit,1,2,Fla,Salvador - BA,Vitória,3
+2025-04-13,Grê,0,2,Fla,Porto Alegre - RS,Vitória,3
+2025-04-16,Fla,6,0,Juv,Rio de Janeiro - RJ,Vitória,3
+2025-04-19,Vas,0,0,Fla,Rio de Janeiro - RJ,Empate,1
+2025-04-27,Fla,4,0,Cor,Rio de Janeiro - RJ,Vitória,3
+2025-05-04,Cru,2,1,Fla,Belo Horizonte - MG,Derrota,0
+2025-05-10,Fla,1,0,Bah,Rio de Janeiro - RJ,Vitória,3
+2025-05-18,Fla,0,0,Bot,Rio de Janeiro - RJ,Empate,1
+2025-05-25,Pal,0,2,Fla,Sao Paulo - SP,Vitória,3
+2025-06-01,Fla,5,0,For,Rio de Janeiro - RJ,Vitória,3
+2025-07-12,Fla,2,0,São,Rio de Janeiro - RJ,Vitória,3
+2025-07-16,San,1,0,Fla,Santos - SP,Derrota,0
+2025-07-20,Fla,1,0,Flu,Rio de Janeiro - RJ,Vitória,3
+2025-07-23,Red,1,2,Fla,Braganca Paulista - SP,Vitória,3
+2025-07-27,Fla,1,0,Atl,Rio de Janeiro - RJ,Vitória,3
+2025-08-03,Cea,1,1,Fla,Fortaleza - CE,Empate,1
+2025-08-09,Fla,2,1,Mir,Rio de Janeiro - RJ,Vitória,3
+2025-08-17,Int,1,3,Fla,Rio - Porto Alegre,Vitória,3
+2025-08-25,Fla,8,0,Vit,Rio de Janeiro - RJ,Vitória,3
+2025-08-31,Fla,1,1,Grê,Rio de Janeiro - RJ,Empate,1
+2025-09-14,Juv,0,2,Fla,Caxias do Sul - RS,Vitória,3
+2025-09-21,Fla,1,1,Vas,Rio de Janeiro - RJ,Empate,1

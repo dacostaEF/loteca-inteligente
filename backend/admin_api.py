@@ -12,6 +12,7 @@ import logging
 from datetime import datetime
 from models.central_dados import CentralDados
 from models.classificacao_db import classificacao_db
+from models.jogos_manager import jogos_manager
 
 # Configuração do logging
 logging.basicConfig(level=logging.INFO)
@@ -783,6 +784,145 @@ def get_classificacao_info():
         return jsonify({
             'success': False,
             'message': f'Erro ao obter informações: {str(e)}'
+        }), 500
+
+# === ROTAS PARA JOGOS DOS CLUBES ===
+
+@bp_admin.route('/api/admin/jogos/<clube>', methods=['GET'])
+@cross_origin()
+def get_jogos_clube(clube):
+    """Obter jogos de um clube específico"""
+    try:
+        jogos = jogos_manager.carregar_jogos(clube)
+        estatisticas = jogos_manager.calcular_estatisticas(clube)
+        
+        return jsonify({
+            'success': True,
+            'data': {
+                'jogos': jogos,
+                'estatisticas': estatisticas,
+                'clube': clube
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao obter jogos de {clube}: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/jogos/<clube>', methods=['POST'])
+@cross_origin()
+def adicionar_jogo_clube(clube):
+    """Adicionar novo jogo para um clube"""
+    try:
+        data = request.get_json()
+        
+        # Validar dados obrigatórios
+        required_fields = ['data', 'time_casa', 'gols_casa', 'gols_visitante', 
+                          'time_visitante', 'local', 'resultado', 'pontos']
+        
+        for field in required_fields:
+            if field not in data:
+                return jsonify({
+                    'success': False,
+                    'error': f'Campo obrigatório ausente: {field}'
+                }), 400
+        
+        # Adicionar jogo
+        success = jogos_manager.adicionar_jogo(clube, data)
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': f'Jogo adicionado com sucesso para {clube}'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Erro ao adicionar jogo'
+            }), 500
+            
+    except Exception as e:
+        logger.error(f"Erro ao adicionar jogo para {clube}: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/jogos/<clube>/<int:index>', methods=['PUT'])
+@cross_origin()
+def atualizar_jogo_clube(clube, index):
+    """Atualizar jogo específico de um clube"""
+    try:
+        data = request.get_json()
+        
+        success = jogos_manager.atualizar_jogo(clube, index, data)
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': f'Jogo atualizado com sucesso para {clube}'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Erro ao atualizar jogo ou índice inválido'
+            }), 400
+            
+    except Exception as e:
+        logger.error(f"Erro ao atualizar jogo de {clube}: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/jogos/<clube>/<int:index>', methods=['DELETE'])
+@cross_origin()
+def remover_jogo_clube(clube, index):
+    """Remover jogo específico de um clube"""
+    try:
+        success = jogos_manager.remover_jogo(clube, index)
+        
+        if success:
+            return jsonify({
+                'success': True,
+                'message': f'Jogo removido com sucesso de {clube}'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Erro ao remover jogo ou índice inválido'
+            }), 400
+            
+    except Exception as e:
+        logger.error(f"Erro ao remover jogo de {clube}: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/jogos', methods=['GET'])
+@cross_origin()
+def listar_clubes_com_jogos():
+    """Listar todos os clubes que têm jogos salvos"""
+    try:
+        clubes = jogos_manager.listar_clubes_com_jogos()
+        
+        return jsonify({
+            'success': True,
+            'data': {
+                'clubes': clubes,
+                'total': len(clubes)
+            }
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao listar clubes com jogos: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
         }), 500
 
 # Blueprint integrado ao app principal
