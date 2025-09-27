@@ -980,6 +980,261 @@
             transform: translateY(0);
         }
 
+        /* ESTILOS DA ABA 3: TIMES LOTECA JOGOS */
+        .times-loteca-container {
+            padding: 2rem 0;
+        }
+
+        .jogos-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .jogo-confronto {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .jogo-confronto:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--cor-destaque-primaria);
+        }
+
+        .jogo-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        .jogo-numero {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--cor-destaque-primaria);
+            background: rgba(168, 85, 247, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .times-confronto {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .time-container {
+            background: var(--cor-fundo);
+            border: 1px solid var(--cor-borda);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+            border-color: var(--cor-destaque-primaria);
+        }
+
+        .time-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .time-nome {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--cor-texto-principal);
+        }
+
+        .time-abrev {
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+            background: rgba(168, 85, 247, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .time-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-group {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--cor-texto-secundario);
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--cor-texto-principal);
+        }
+
+        .stat-subvalue {
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+        }
+
+        .forca-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--cor-borda);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.3rem;
+        }
+
+        .forca-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--cor-destaque-primaria), var(--cor-destaque-secundaria));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .time-badge {
+            margin-top: 1rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .badge-mediano {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-destaque {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-elite {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .vs-divider-confronto {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--cor-destaque-primaria);
+            background: rgba(168, 85, 247, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--cor-destaque-primaria);
+        }
+
+        .ver-detalhes-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, var(--cor-destaque-primaria), var(--cor-destaque-secundaria));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .ver-detalhes-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .resumo-times-loteca {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--cor-borda);
+        }
+
+        .resumo-card {
+            background: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .resumo-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--cor-fundo);
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .stat-label {
+            font-weight: 500;
+            color: var(--cor-texto-secundario);
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: var(--cor-destaque-primaria);
+            font-size: 1.1rem;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .times-confronto {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .vs-divider-confronto {
+                display: none;
+            }
+
+            .time-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .resumo-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ANÁLISE DETALHADA */
         .detailed-analysis {
             background-color: var(--cor-fundo-card);
@@ -2599,6 +2854,9 @@
                 <button class="tab-btn" data-tab="dados-avancados">
                     📊 Dados Avançados
                 </button>
+                <button class="tab-btn" data-tab="times-loteca-jogos">
+                    ⚽ Times Loteca Jogos
+                </button>
                 <button class="tab-btn" data-tab="panorama-campeonatos">
                     🏆 Panorama dos Campeonatos
                 </button>
@@ -3626,7 +3884,59 @@
             </div>
         </div> <!-- FIM DA ABA 2: DADOS AVANÇADOS -->
 
-        <!-- ABA 3: PANORAMA DOS CAMPEONATOS -->
+        <!-- ABA 3: TIMES LOTECA JOGOS -->
+        <div class="tab-content" id="times-loteca-jogos" style="display: none;">
+            <div class="times-loteca-container">
+                
+                <!-- CABEÇALHO DA ABA -->
+                <div class="section-header">
+                    <h2>⚽ Times Loteca Jogos - Comparação Direta</h2>
+                    <p>Análise lado a lado dos 14 confrontos com dados reais do Cartola FC para facilitar suas apostas</p>
+                    <button id="atualizar-times-loteca" class="update-btn">
+                        🔄 Atualizar Dados dos Times
+                    </button>
+                </div>
+
+                <!-- LOADING -->
+                <div id="loading-times-loteca" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Carregando dados dos times...</p>
+                </div>
+
+                <!-- CONTAINER DOS JOGOS -->
+                <div id="jogos-loteca-container" class="jogos-container">
+                    <!-- Os jogos serão carregados dinamicamente aqui -->
+                </div>
+
+                <!-- RESUMO ESTATÍSTICO -->
+                <div class="resumo-times-loteca">
+                    <div class="resumo-card">
+                        <h3>📊 Resumo Estatístico</h3>
+                        <div class="resumo-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Times Brasileiros:</span>
+                                <span id="total-brasileiros" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Times Internacionais:</span>
+                                <span id="total-internacionais" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Força Média Geral:</span>
+                                <span id="forca-media-geral" class="stat-value">-</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Preço Médio (C$):</span>
+                                <span id="preco-medio-geral" class="stat-value">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- FIM DA ABA 3: TIMES LOTECA JOGOS -->
+
+        <!-- ABA 4: PANORAMA DOS CAMPEONATOS -->
         <div class="tab-content" id="panorama-campeonatos" style="display: none;">
             <div class="panorama-container">
                 
@@ -5266,6 +5576,313 @@
             sincronizarJogosEntreAbas();
         }
 
+        // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS
+        async function carregarTimesLotecaJogos() {
+            console.log('⚽ [TIMES-LOTECA] Carregando dados dos times...');
+            
+            const loadingEl = document.getElementById('loading-times-loteca');
+            const containerEl = document.getElementById('jogos-loteca-container');
+            
+            if (loadingEl) loadingEl.style.display = 'block';
+            if (containerEl) containerEl.innerHTML = '';
+            
+            try {
+                // Extrair jogos da Aba 1
+                const jogos = extrairJogosDaAba1();
+                console.log(`⚽ [TIMES-LOTECA] ${jogos.length} jogos extraídos`);
+                
+                // Buscar dados dos times via Cartola FC
+                const dadosCompletos = await buscarDadosTimesCartola(jogos);
+                
+                // Renderizar jogos
+                renderizarTimesLotecaJogos(dadosCompletos);
+                
+                // Atualizar resumo estatístico
+                atualizarResumoEstatistico(dadosCompletos);
+                
+                console.log('✅ [TIMES-LOTECA] Dados carregados com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ [TIMES-LOTECA] Erro ao carregar dados:', error);
+                
+                if (containerEl) {
+                    containerEl.innerHTML = `
+                        <div class="error-message">
+                            <h3>❌ Erro ao Carregar Dados</h3>
+                            <p>Não foi possível carregar os dados dos times: ${error.message}</p>
+                            <button onclick="carregarTimesLotecaJogos()" class="refresh-btn">
+                                🔄 Tentar Novamente
+                            </button>
+                        </div>
+                    `;
+                }
+            } finally {
+                if (loadingEl) loadingEl.style.display = 'none';
+            }
+        }
+
+        // BUSCAR DADOS DOS TIMES VIA CARTOLA FC
+        async function buscarDadosTimesCartola(jogos) {
+            console.log('🔍 [TIMES-LOTECA] Buscando dados no Cartola FC...');
+            
+            const dadosCompletos = [];
+            
+            for (const jogo of jogos) {
+                try {
+                    // Buscar dados do time da casa
+                    const dadosCasa = await buscarDadosTime(jogo.timeCasa);
+                    
+                    // Buscar dados do time visitante  
+                    const dadosVisitante = await buscarDadosTime(jogo.timeVisitante);
+                    
+                    dadosCompletos.push({
+                        numero: jogo.numero,
+                        casa: dadosCasa,
+                        visitante: dadosVisitante
+                    });
+                    
+                    console.log(`✅ [TIMES-LOTECA] Jogo ${jogo.numero}: ${jogo.timeCasa} vs ${jogo.timeVisitante}`);
+                    
+                } catch (error) {
+                    console.error(`❌ [TIMES-LOTECA] Erro no Jogo ${jogo.numero}:`, error);
+                    
+                    // Dados de fallback
+                    dadosCompletos.push({
+                        numero: jogo.numero,
+                        casa: criarDadosFallback(jogo.timeCasa),
+                        visitante: criarDadosFallback(jogo.timeVisitante)
+                    });
+                }
+            }
+            
+            return dadosCompletos;
+        }
+
+        // BUSCAR DADOS DE UM TIME ESPECÍFICO
+        async function buscarDadosTime(nomeTime) {
+            // Verificar se é time brasileiro
+            const isBrazilian = isBrazilianTeam(nomeTime);
+            
+            if (isBrazilian) {
+                // Buscar via Cartola FC
+                const clubeId = cartolaProvider.getClubIdByName(nomeTime);
+                if (clubeId) {
+                    const stats = await cartolaProvider.getEstatisticasClube(clubeId);
+                    const clubeInfo = await cartolaProvider.getClubeInfo(clubeId);
+                    
+                    return {
+                        nome: nomeTime,
+                        abrev: clubeInfo?.abreviacao || nomeTime.substring(0, 3).toUpperCase(),
+                        total_atletas: stats.total_atletas || 0,
+                        pct_provaveis: stats.pct_provaveis || 0,
+                        forca_elenco: stats.media_pontos_elenco || 0,
+                        preco_medio: stats.preco_medio || 0,
+                        rating: stats.rating || 0,
+                        badge: gerarBadgeTime(stats.rating || 0),
+                        fonte: 'cartola',
+                        brasileiro: true
+                    };
+                }
+            }
+            
+            // Dados simulados para times internacionais
+            return criarDadosFallback(nomeTime);
+        }
+
+        // CRIAR DADOS DE FALLBACK
+        function criarDadosFallback(nomeTime) {
+            const rating = Math.random() * 0.5 + 0.3; // 0.3 - 0.8
+            
+            return {
+                nome: nomeTime,
+                abrev: nomeTime.substring(0, 3).toUpperCase(),
+                total_atletas: Math.floor(Math.random() * 15) + 25, // 25-40
+                pct_provaveis: Math.floor(Math.random() * 30) + 30, // 30-60%
+                forca_elenco: Math.round(rating * 10 * 100) / 100, // 3.0-8.0
+                preco_medio: Math.round((Math.random() * 3 + 4) * 100) / 100, // 4.0-7.0
+                rating: rating,
+                badge: gerarBadgeTime(rating),
+                fonte: 'simulado',
+                brasileiro: isBrazilianTeam(nomeTime)
+            };
+        }
+
+        // GERAR BADGE DO TIME
+        function gerarBadgeTime(rating) {
+            if (rating >= 0.7) return { text: 'Elenco Elite', class: 'badge-elite' };
+            if (rating >= 0.5) return { text: 'Atenção a Destaques', class: 'badge-destaque' };
+            return { text: 'Elenco Mediano', class: 'badge-mediano' };
+        }
+
+        // VERIFICAR SE É TIME BRASILEIRO
+        function isBrazilianTeam(nomeTime) {
+            const brasileiros = [
+                'CORINTHIANS', 'FLAMENGO', 'FORTALEZA', 'SPORT', 'JUVENTUDE',
+                'INTERNACIONAL', 'VASCO', 'CRUZEIRO', 'ATHLETICO', 'OPERARIO',
+                'ATLETICO', 'MIRASSOL', 'GREMIO', 'VITORIA', 'BAHIA',
+                'PALMEIRAS', 'FLUMINENSE', 'BOTAFOGO', 'CRICIUMA', 'PAYSANDU',
+                'BRAGANTINO', 'SANTOS'
+            ];
+            
+            return brasileiros.includes(nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, ''));
+        }
+
+        // RENDERIZAR JOGOS DA TIMES LOTECA
+        function renderizarTimesLotecaJogos(dadosCompletos) {
+            console.log('🎨 [TIMES-LOTECA] Renderizando jogos...');
+            
+            const container = document.getElementById('jogos-loteca-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            dadosCompletos.forEach(jogo => {
+                const jogoHtml = `
+                    <div class="jogo-confronto">
+                        <div class="jogo-header">
+                            <div class="jogo-numero">JOGO ${jogo.numero}</div>
+                        </div>
+                        
+                        <div class="times-confronto">
+                            ${renderizarTimeContainer(jogo.casa, 'casa')}
+                            
+                            <div class="vs-divider-confronto">VS</div>
+                            
+                            ${renderizarTimeContainer(jogo.visitante, 'visitante')}
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML += jogoHtml;
+            });
+        }
+
+        // RENDERIZAR CONTAINER DE UM TIME
+        function renderizarTimeContainer(dadosTime, tipo) {
+            const forcaPercentual = Math.round(dadosTime.rating * 100);
+            const fonteIcon = dadosTime.fonte === 'cartola' ? '🔥' : '🎲';
+            const fonteText = dadosTime.fonte === 'cartola' ? 'Dados reais' : 'Simulado';
+            
+            return `
+                <div class="time-container">
+                    <div class="time-header">
+                        <div class="time-nome">${dadosTime.nome}</div>
+                        <div class="time-abrev">${dadosTime.abrev}</div>
+                    </div>
+                    
+                    <div class="time-stats">
+                        <div class="stat-group">
+                            <span class="stat-label">Elenco</span>
+                            <div class="stat-value">Total: ${dadosTime.total_atletas}</div>
+                            <div class="stat-subvalue">Prováveis: ${dadosTime.pct_provaveis}%</div>
+                        </div>
+                        
+                        <div class="stat-group">
+                            <span class="stat-label">Força do Elenco</span>
+                            <div class="stat-value">${dadosTime.forca_elenco}</div>
+                            <div class="forca-bar">
+                                <div class="forca-fill" style="width: ${forcaPercentual}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-group">
+                            <span class="stat-label">Mercado</span>
+                            <div class="stat-value">Preço: C$</div>
+                            <div class="stat-subvalue">${dadosTime.preco_medio}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="time-badge ${dadosTime.badge.class}">
+                        ${dadosTime.badge.text}
+                    </div>
+                    
+                    <button class="ver-detalhes-btn" onclick="verDetalhesTime('${dadosTime.nome}')">
+                        📊 Ver Detalhes
+                    </button>
+                    
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--cor-texto-secundario); text-align: center;">
+                        ${fonteIcon} ${fonteText}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ATUALIZAR RESUMO ESTATÍSTICO
+        function atualizarResumoEstatistico(dadosCompletos) {
+            console.log('📊 [TIMES-LOTECA] Atualizando resumo estatístico...');
+            
+            let totalBrasileiros = 0;
+            let totalInternacionais = 0;
+            let somaForca = 0;
+            let somaPreco = 0;
+            let totalTimes = 0;
+            
+            dadosCompletos.forEach(jogo => {
+                [jogo.casa, jogo.visitante].forEach(time => {
+                    if (time.brasileiro) {
+                        totalBrasileiros++;
+                    } else {
+                        totalInternacionais++;
+                    }
+                    
+                    somaForca += time.forca_elenco || 0;
+                    somaPreco += time.preco_medio || 0;
+                    totalTimes++;
+                });
+            });
+            
+            const forcaMedia = totalTimes > 0 ? (somaForca / totalTimes).toFixed(1) : '0.0';
+            const precoMedio = totalTimes > 0 ? (somaPreco / totalTimes).toFixed(1) : '0.0';
+            
+            // Atualizar elementos do DOM
+            const elementos = {
+                'total-brasileiros': totalBrasileiros,
+                'total-internacionais': totalInternacionais,
+                'forca-media-geral': forcaMedia,
+                'preco-medio-geral': `C$ ${precoMedio}`
+            };
+            
+            Object.entries(elementos).forEach(([id, valor]) => {
+                const elemento = document.getElementById(id);
+                if (elemento) {
+                    elemento.textContent = valor;
+                }
+            });
+        }
+
+        // VER DETALHES DE UM TIME
+        function verDetalhesTime(nomeTime) {
+            console.log(`🔍 [TIMES-LOTECA] Ver detalhes de: ${nomeTime}`);
+            
+            // Aqui você pode implementar um modal ou redirecionar para uma página de detalhes
+            alert(`Detalhes de ${nomeTime} serão implementados em breve!`);
+        }
+
+        // INICIALIZAR ABA TIMES LOTECA JOGOS
+        function initTimesLotecaJogos() {
+            console.log('🚀 [TIMES-LOTECA] Inicializando aba...');
+            
+            // Adicionar event listener para o botão de atualizar
+            const btnAtualizar = document.getElementById('atualizar-times-loteca');
+            if (btnAtualizar) {
+                btnAtualizar.addEventListener('click', carregarTimesLotecaJogos);
+            }
+            
+            // Carregar dados quando a aba for ativada pela primeira vez
+            const tabBtn = document.querySelector('[data-tab="times-loteca-jogos"]');
+            if (tabBtn) {
+                tabBtn.addEventListener('click', () => {
+                    // Delay para garantir que a aba seja mostrada primeiro
+                    setTimeout(() => {
+                        const container = document.getElementById('jogos-loteca-container');
+                        if (container && container.innerHTML.trim() === '') {
+                            carregarTimesLotecaJogos();
+                        }
+                    }, 100);
+                });
+            }
+        }
+
         // MOSTRAR ANÁLISE DETALHADA COM DADOS REAIS DO CARTOLA
         async function showDetailedAnalysis(gameId) {
             const data = advancedStatsData[gameId];
@@ -6136,6 +6753,7 @@
             initializeOptimizationTable();
             initializeEventListeners();
             initializeAdvancedStats();
+            initTimesLotecaJogos();
             
             // Carregar dados dos clubes automaticamente na Série A (primeira sub-aba)
             setTimeout(() => {
