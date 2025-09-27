@@ -717,11 +717,55 @@
             margin-bottom: 10px;
         }
 
-        /* Campos calculados */
-        input[readonly] {
-            background: #e9ecef !important;
-            color: #6c757d !important;
-            font-weight: 600;
+        /* === ESTILOS DOS CAMPOS === */
+        
+        /* Campos bloqueados (dados da classificação) */
+        .campo-bloqueado {
+            background: #2a2d3a !important;
+            border: 2px solid #dc3545 !important;
+            padding: 8px !important;
+            border-radius: 6px !important;
+            color: #e9ecef !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            width: 100% !important;
+        }
+        
+        /* Campos calculados automaticamente */
+        .campo-calculado {
+            background: #1e3a2e !important;
+            border: 2px solid #28a745 !important;
+            padding: 8px !important;
+            border-radius: 6px !important;
+            color: #d4edda !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            width: 100% !important;
+        }
+        
+        /* Campos editáveis */
+        .campo-editavel {
+            background: #1a2332 !important;
+            border: 2px solid #007bff !important;
+            padding: 8px !important;
+            border-radius: 6px !important;
+            color: #ffffff !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            width: 100% !important;
+        }
+        
+        /* Placeholder mais suave */
+        .campo-editavel::placeholder {
+            color: #adb5bd !important;
+            font-weight: normal !important;
+        }
+        
+        /* Focus nos campos editáveis */
+        .campo-editavel:focus {
+            outline: none !important;
+            border-color: #0056b3 !important;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25) !important;
         }
     </style>
 </head>
@@ -1008,208 +1052,178 @@
                 </div>
             </div>
 
-            <!-- Formulário de Estatísticas -->
+            <!-- Tabela de Estatísticas -->
             <div id="formularioEstatisticas" style="display: none;">
                 
-                <!-- DADOS BÁSICOS -->
-                <div class="stats-section">
-                    <h3 class="section-title">🏆 DADOS BÁSICOS</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Posição Atual</label>
-                            <input type="number" id="posicaoAtual" placeholder="Ex: 2" min="1" max="20">
-                        </div>
-                        <div class="input-group">
-                            <label>Pontos Total</label>
-                            <input type="number" id="pontosTotal" placeholder="Ex: 58" onchange="calcularPPG()">
-                        </div>
-                        <div class="input-group">
-                            <label>Jogos Disputados</label>
-                            <input type="number" id="jogosDisputados" placeholder="Ex: 28" onchange="calcularPPG()">
-                        </div>
-                        <div class="input-group">
-                            <label>PPG (Calculado)</label>
-                            <input type="text" id="ppg" readonly style="background: #f0f0f0;">
-                        </div>
-                    </div>
-                </div>
+                <table class="data-table" id="tabelaEstatisticas">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); color: white;">
+                            <th colspan="4" style="text-align: center; font-size: 18px; padding: 15px;">
+                                📊 Estatísticas Detalhadas do Clube
+                            </th>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <th style="width: 25%;">Campo</th>
+                            <th style="width: 25%;">Valor</th>
+                            <th style="width: 25%;">Campo</th>
+                            <th style="width: 25%;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- DADOS BÁSICOS -->
+                        <tr>
+                            <td><strong>🔒 Posição Atual</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="posicaoAtual" placeholder="Ex: 2" min="1" max="20" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 Pontos Total</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="pontosTotal" placeholder="Ex: 58" readonly class="campo-bloqueado"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Jogos Disputados</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="jogosDisputados" placeholder="Ex: 28" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 PPG (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><input type="text" id="ppg" readonly class="campo-calculado"></td>
+                        </tr>
+                        
+                        <!-- PERFORMANCE GERAL -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">⚽ PERFORMANCE GERAL</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Vitórias</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="vitorias" placeholder="Ex: 17" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 Empates</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="empates" placeholder="Ex: 7" readonly class="campo-bloqueado"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Derrotas</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="derrotas" placeholder="Ex: 4" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 % Vitórias (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><input type="text" id="pctVitorias" readonly class="campo-calculado"></td>
+                        </tr>
 
-                <!-- PERFORMANCE GERAL -->
-                <div class="stats-section">
-                    <h3 class="section-title">⚽ PERFORMANCE GERAL</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Vitórias</label>
-                            <input type="number" id="vitorias" placeholder="Ex: 17" onchange="calcularPercentuais()">
-                        </div>
-                        <div class="input-group">
-                            <label>Empates</label>
-                            <input type="number" id="empates" placeholder="Ex: 7" onchange="calcularPercentuais()">
-                        </div>
-                        <div class="input-group">
-                            <label>Derrotas</label>
-                            <input type="number" id="derrotas" placeholder="Ex: 4" onchange="calcularPercentuais()">
-                        </div>
-                        <div class="input-group">
-                            <label>% Vitórias (Calculado)</label>
-                            <input type="text" id="pctVitorias" readonly style="background: #f0f0f0;">
-                        </div>
-                    </div>
-                </div>
+                        <!-- DADOS OFENSIVOS -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🎯 DADOS OFENSIVOS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Gols Marcados</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="golsMarcados" placeholder="Ex: 52" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 Média Gols (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><input type="text" id="mediaGolsMarcados" readonly class="campo-calculado"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Chutes por Jogo</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 14.2" class="campo-editavel"></td>
+                            <td><strong>✏️ Posse de Bola (%)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.3" class="campo-editavel"></td>
+                        </tr>
 
-                <!-- DADOS OFENSIVOS -->
-                <div class="stats-section">
-                    <h3 class="section-title">🎯 DADOS OFENSIVOS</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Gols Marcados</label>
-                            <input type="number" id="golsMarcados" placeholder="Ex: 52" onchange="calcularMedias()">
-                        </div>
-                        <div class="input-group">
-                            <label>Média Gols (Calculado)</label>
-                            <input type="text" id="mediaGolsMarcados" readonly style="background: #f0f0f0;">
-                        </div>
-                        <div class="input-group">
-                            <label>Chutes por Jogo</label>
-                            <input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 14.2">
-                        </div>
-                        <div class="input-group">
-                            <label>Posse de Bola (%)</label>
-                            <input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.3">
-                        </div>
-                    </div>
-                </div>
+                        <!-- DADOS DEFENSIVOS -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🛡️ DADOS DEFENSIVOS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Gols Sofridos</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="number" id="golsSofridos" placeholder="Ex: 32" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 Média Sofridos (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><input type="text" id="mediaGolsSofridos" readonly class="campo-calculado"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Clean Sheets</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" id="cleanSheets" placeholder="Ex: 12" class="campo-editavel"></td>
+                            <td><strong>🔒 % Clean Sheets (Auto)</strong> <i class="fas fa-calculator" style="color: #28a745;" title="Calculado Automaticamente - Somente Leitura"></i></td>
+                            <td><input type="text" id="pctCleanSheets" readonly class="campo-calculado"></td>
+                        </tr>
 
-                <!-- DADOS DEFENSIVOS -->
-                <div class="stats-section">
-                    <h3 class="section-title">🛡️ DADOS DEFENSIVOS</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Gols Sofridos</label>
-                            <input type="number" id="golsSofridos" placeholder="Ex: 32" onchange="calcularMedias()">
-                        </div>
-                        <div class="input-group">
-                            <label>Média Sofridos (Calculado)</label>
-                            <input type="text" id="mediaGolsSofridos" readonly style="background: #f0f0f0;">
-                        </div>
-                        <div class="input-group">
-                            <label>Clean Sheets</label>
-                            <input type="number" id="cleanSheets" placeholder="Ex: 12" onchange="calcularCleanSheets()">
-                        </div>
-                        <div class="input-group">
-                            <label>% Clean Sheets (Calculado)</label>
-                            <input type="text" id="pctCleanSheets" readonly style="background: #f0f0f0;">
-                        </div>
-                    </div>
-                </div>
+                        <!-- MANDANTE vs VISITANTE -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🏠 MANDANTE vs ✈️ VISITANTE</td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ PPG Casa</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.01" id="ppgCasa" placeholder="Ex: 2.31" class="campo-editavel"></td>
+                            <td><strong>✏️ PPG Fora</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.01" id="ppgFora" placeholder="Ex: 1.83" class="campo-editavel"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Aproveitamento Casa (%)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="aproveitamentoCasa" placeholder="Ex: 77.0" class="campo-editavel"></td>
+                            <td><strong>✏️ Aproveitamento Fora (%)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="aproveitamentoFora" placeholder="Ex: 61.0" class="campo-editavel"></td>
+                        </tr>
 
-                <!-- MANDANTE vs VISITANTE -->
-                <div class="stats-section">
-                    <h3 class="section-title">🏠 MANDANTE vs ✈️ VISITANTE</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>PPG Casa</label>
-                            <input type="number" step="0.01" id="ppgCasa" placeholder="Ex: 2.31">
-                        </div>
-                        <div class="input-group">
-                            <label>PPG Fora</label>
-                            <input type="number" step="0.01" id="ppgFora" placeholder="Ex: 1.83">
-                        </div>
-                        <div class="input-group">
-                            <label>Aproveitamento Casa (%)</label>
-                            <input type="number" step="0.1" id="aproveitamentoCasa" placeholder="Ex: 77.0">
-                        </div>
-                        <div class="input-group">
-                            <label>Aproveitamento Fora (%)</label>
-                            <input type="number" step="0.1" id="aproveitamentoFora" placeholder="Ex: 61.0">
-                        </div>
-                    </div>
-                </div>
+                        <!-- FORMA RECENTE -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">📈 FORMA RECENTE</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Últimos 5 Jogos</strong> <i class="fas fa-lock" style="color: #dc3545;" title="Dados da Tabela de Classificação - Somente Leitura"></i></td>
+                            <td><input type="text" id="formaUltimos5" placeholder="Ex: V-V-E-E-D" maxlength="11" readonly class="campo-bloqueado"></td>
+                            <td><strong>✏️ Pontos Últimos 5</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" id="pontosUltimos5" placeholder="Ex: 8" max="15" class="campo-editavel"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Sequência Atual</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="text" id="sequenciaAtual" placeholder="Ex: 2 empates seguidos" class="campo-editavel"></td>
+                            <td><strong>✏️ Tendência</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td>
+                                <select id="tendencia" class="campo-editavel">
+                                    <option value="">Selecione...</option>
+                                    <option value="Subindo">📈 Subindo</option>
+                                    <option value="Estável">➡️ Estável</option>
+                                    <option value="Descendo">📉 Descendo</option>
+                                </select>
+                            </td>
+                        </tr>
 
-                <!-- FORMA RECENTE -->
-                <div class="stats-section">
-                    <h3 class="section-title">📈 FORMA RECENTE</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Últimos 5 Jogos</label>
-                            <input type="text" id="formaUltimos5" placeholder="Ex: V-V-E-E-D" maxlength="11">
-                        </div>
-                        <div class="input-group">
-                            <label>Pontos Últimos 5</label>
-                            <input type="number" id="pontosUltimos5" placeholder="Ex: 8" max="15">
-                        </div>
-                        <div class="input-group">
-                            <label>Sequência Atual</label>
-                            <input type="text" id="sequenciaAtual" placeholder="Ex: 2 empates seguidos">
-                        </div>
-                        <div class="input-group">
-                            <label>Tendência</label>
-                            <select id="tendencia">
-                                <option value="">Selecione...</option>
-                                <option value="Subindo">📈 Subindo</option>
-                                <option value="Estável">➡️ Estável</option>
-                                <option value="Descendo">📉 Descendo</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                        <!-- DADOS CARTOLA FC -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">💰 DADOS CARTOLA FC</td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Elenco Total</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" id="elencoTotal" placeholder="Ex: 40" class="campo-editavel"></td>
+                            <td><strong>✏️ % Prováveis</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="pctProvaveis" placeholder="Ex: 42.5" class="campo-editavel"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Valor Elenco (C$)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="valorElenco" placeholder="Ex: 272.0" class="campo-editavel"></td>
+                            <td><strong>✏️ Rating Médio</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><input type="number" step="0.1" id="ratingMedio" placeholder="Ex: 4.6" class="campo-editavel"></td>
+                        </tr>
 
-                <!-- DADOS CARTOLA FC -->
-                <div class="stats-section">
-                    <h3 class="section-title">💰 DADOS CARTOLA FC</h3>
-                    <div class="form-row">
-                        <div class="input-group">
-                            <label>Elenco Total</label>
-                            <input type="number" id="elencoTotal" placeholder="Ex: 40">
-                        </div>
-                        <div class="input-group">
-                            <label>% Prováveis</label>
-                            <input type="number" step="0.1" id="pctProvaveis" placeholder="Ex: 42.5">
-                        </div>
-                        <div class="input-group">
-                            <label>Valor Elenco (C$)</label>
-                            <input type="number" step="0.1" id="valorElenco" placeholder="Ex: 272.0">
-                        </div>
-                        <div class="input-group">
-                            <label>Rating Médio</label>
-                            <input type="number" step="0.1" id="ratingMedio" placeholder="Ex: 4.6">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTEXTO ATUAL -->
-                <div class="stats-section">
-                    <h3 class="section-title">🎯 CONTEXTO ATUAL</h3>
-                    <div class="form-row">
-                        <div class="input-group" style="flex: 2;">
-                            <label>Desfalques Importantes</label>
-                            <input type="text" id="desfalques" placeholder="Ex: Arrascaeta (lesão), Viña (suspenso)">
-                        </div>
-                        <div class="input-group" style="flex: 2;">
-                            <label>Motivação Atual</label>
-                            <input type="text" id="motivacao" placeholder="Ex: Briga pelo título - 6 pts do líder">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="input-group" style="flex: 1;">
-                            <label>Próximos Jogos</label>
-                            <input type="text" id="proximosJogos" placeholder="Ex: COR(f), PAL(c), BOT(f)">
-                        </div>
-                    </div>
-                </div>
+                        <!-- CONTEXTO ATUAL -->
+                        <tr style="background: #f8f9fa;">
+                            <td colspan="4" style="text-align: center; font-weight: bold; color: #6f42c1; padding: 10px;">🎯 CONTEXTO ATUAL</td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Desfalques Importantes</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td colspan="3"><input type="text" id="desfalques" placeholder="Ex: Arrascaeta (lesão), Viña (suspenso)" class="campo-editavel"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Motivação Atual</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td colspan="3"><input type="text" id="motivacao" placeholder="Ex: Briga pelo título - 6 pts do líder" class="campo-editavel"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Próximos Jogos</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td colspan="3"><input type="text" id="proximosJogos" placeholder="Ex: COR(f), PAL(c), BOT(f)" class="campo-editavel"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <!-- BOTÕES DE AÇÃO -->
-                <div class="form-actions" style="margin-top: 30px;">
-                    <button class="btn-success" onclick="salvarEstatisticas()">
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn-success" onclick="salvarEstatisticas()" style="margin: 0 10px;">
                         <i class="fas fa-save"></i> Salvar Estatísticas
                     </button>
-                    <button class="btn-secondary" onclick="limparFormulario()">
+                    <button class="btn-secondary" onclick="limparFormulario()" style="margin: 0 10px;">
                         <i class="fas fa-eraser"></i> Limpar Formulário
                     </button>
-                    <button class="btn-info" onclick="previewEstatisticas()">
+                    <button class="btn-info" onclick="previewEstatisticas()" style="margin: 0 10px;">
                         <i class="fas fa-eye"></i> Preview
                     </button>
-                    <button class="btn-warning" onclick="verHistorico()">
+                    <button class="btn-warning" onclick="verHistorico()" style="margin: 0 10px;">
                         <i class="fas fa-history"></i> Ver Histórico
                     </button>
                 </div>
@@ -2590,7 +2604,7 @@
         // === FUNÇÕES DE ESTATÍSTICAS DOS CLUBES ===
         
         // Carregar estatísticas de um clube
-        function carregarEstatisticasClube() {
+        async function carregarEstatisticasClube() {
             const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
             const formulario = document.getElementById('formularioEstatisticas');
             const mensagem = document.getElementById('mensagemSelecionar');
@@ -2599,16 +2613,95 @@
                 formulario.style.display = 'block';
                 mensagem.style.display = 'none';
                 
-                console.log(`Carregando estatísticas de: ${clubeSelecionado}`);
+                console.log(`🔄 Carregando estatísticas REAIS de: ${clubeSelecionado}`);
                 
-                // Exemplo: preencher com dados do Flamengo
-                if (clubeSelecionado === 'flamengo') {
-                    preencherDadosFlamengo();
-                }
+                // Carregar dados reais da classificação
+                await carregarDadosReaisClube(clubeSelecionado);
             } else {
                 formulario.style.display = 'none';
                 mensagem.style.display = 'block';
             }
+        }
+
+        // Carregar dados reais do clube da tabela de classificação
+        async function carregarDadosReaisClube(nomeClube) {
+            try {
+                // Buscar dados da classificação
+                const response = await fetch(`${API_BASE}/api/admin/classificacao`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        campeonato: 'serie-a',
+                        admin_key: ADMIN_KEY
+                    })
+                });
+                const result = await response.json();
+                
+                if (result.success && result.classificacao) {
+                    // Encontrar o clube na classificação
+                    const clube = result.classificacao.find(time => 
+                        time.time.toLowerCase().includes(nomeClube.toLowerCase()) ||
+                        nomeClube.toLowerCase().includes(time.time.toLowerCase())
+                    );
+                    
+                    if (clube) {
+                        console.log(`✅ Dados encontrados para ${clube.time}:`, clube);
+                        preencherDadosReais(clube);
+                    } else {
+                        console.warn(`❌ Clube ${nomeClube} não encontrado na classificação`);
+                        preencherDadosFlamengo(); // Fallback para dados de exemplo
+                    }
+                } else {
+                    console.error('❌ Erro ao carregar classificação:', result.message);
+                    preencherDadosFlamengo(); // Fallback para dados de exemplo
+                }
+            } catch (error) {
+                console.error('❌ Erro na requisição:', error);
+                preencherDadosFlamengo(); // Fallback para dados de exemplo
+            }
+        }
+
+        // Preencher com dados reais da classificação
+        function preencherDadosReais(dadosClube) {
+            // CAMPOS BLOQUEADOS - Dados da classificação
+            document.getElementById('posicaoAtual').value = dadosClube.posicao || '';
+            document.getElementById('pontosTotal').value = dadosClube.pontos || '';
+            document.getElementById('jogosDisputados').value = dadosClube.jogos || '';
+            document.getElementById('vitorias').value = dadosClube.vitorias || '';
+            document.getElementById('empates').value = dadosClube.empates || '';
+            document.getElementById('derrotas').value = dadosClube.derrotas || '';
+            document.getElementById('golsMarcados').value = dadosClube.gols_pro || '';
+            document.getElementById('golsSofridos').value = dadosClube.gols_contra || '';
+            document.getElementById('formaUltimos5').value = dadosClube.ultimos_jogos || '';
+            
+            // CAMPOS EDITÁVEIS - Dados complementares (valores padrão)
+            document.getElementById('chutesPorJogo').value = 14.2;
+            document.getElementById('posseBola').value = 58.3;
+            document.getElementById('cleanSheets').value = Math.floor((dadosClube.jogos || 0) * 0.4); // Estimativa
+            document.getElementById('ppgCasa').value = 2.31;
+            document.getElementById('ppgFora').value = 1.83;
+            document.getElementById('aproveitamentoCasa').value = 77.0;
+            document.getElementById('aproveitamentoFora').value = 61.0;
+            document.getElementById('pontosUltimos5').value = 8;
+            document.getElementById('sequenciaAtual').value = '2 empates seguidos';
+            document.getElementById('tendencia').value = 'Estável';
+            document.getElementById('elencoTotal').value = 40;
+            document.getElementById('pctProvaveis').value = 42.5;
+            document.getElementById('valorElenco').value = 272.0;
+            document.getElementById('ratingMedio').value = 4.6;
+            document.getElementById('desfalques').value = 'Nenhum desfalque importante';
+            document.getElementById('motivacao').value = `${dadosClube.zona || 'Meio da tabela'} - Posição ${dadosClube.posicao}`;
+            document.getElementById('proximosJogos').value = 'A definir';
+            
+            // Calcular campos automáticos
+            calcularPPG();
+            calcularPercentuais();
+            calcularMedias();
+            calcularCleanSheets();
+            
+            console.log(`✅ Dados de ${dadosClube.time} carregados com sucesso!`);
         }
 
         // Preencher dados de exemplo do Flamengo

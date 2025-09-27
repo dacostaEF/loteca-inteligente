@@ -538,29 +538,47 @@ def _get_db_size():
 
 # === ROTAS DA CLASSIFICAÇÃO ===
 
-@bp_admin.route('/api/admin/classificacao', methods=['POST'])
+@bp_admin.route('/api/admin/classificacao', methods=['GET', 'POST'])
 @cross_origin()
 def get_classificacao():
     """Obter classificação de um campeonato"""
     logger.info("🔄 [API] === INICIANDO get_classificacao ===")
     
-    data = request.get_json()
-    logger.info(f"📥 [API] Dados recebidos: {data}")
-    
-    if not verificar_auth(data):
-        logger.warning("🚫 [API] Auth falhou")
-        return jsonify({
-            'success': False,
-            'message': 'Acesso negado'
-        }), 401
+    # Suportar tanto GET quanto POST
+    if request.method == 'GET':
+        # Parâmetros via query string
+        campeonato = request.args.get('campeonato', 'serie-a')
+        admin_key = request.args.get('admin_key', '')
+        
+        # Verificar auth para GET
+        if admin_key != 'loteca2024admin':
+            logger.warning("🚫 [API] Auth falhou (GET)")
+            return jsonify({
+                'success': False,
+                'message': 'Acesso negado'
+            }), 401
+            
+        logger.info(f"📥 [API] GET - campeonato: {campeonato}")
+    else:
+        # POST - dados via JSON
+        data = request.get_json()
+        logger.info(f"📥 [API] POST - Dados recebidos: {data}")
+        
+        if not verificar_auth(data):
+            logger.warning("🚫 [API] Auth falhou (POST)")
+            return jsonify({
+                'success': False,
+                'message': 'Acesso negado'
+            }), 401
+            
+        campeonato = data.get('campeonato', 'serie-a')
     
     logger.info("✅ [API] Auth OK")
     
     try:
-        campeonato = data.get('campeonato', 'serie-a')
         logger.info(f"🏆 [API] Campeonato solicitado: {campeonato}")
         
-        if campeonato == 'serie-a':
+        if campeonato == 'serie-a' or campeonato == 'brasileirao-serie-a':
             logger.info("📊 [API] Buscando dados da Série A...")
             classificacao = classificacao_db.get_classificacao_serie_a()
             logger.info(f"📋 [API] Série A retornou {len(classificacao)} registros")

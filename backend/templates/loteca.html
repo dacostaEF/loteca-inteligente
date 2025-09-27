@@ -699,6 +699,87 @@
             border-color: var(--cor-destaque-primaria);
         }
 
+        /* === BOTÕES INTERNACIONAIS (MESMO ESTILO DOS NACIONAIS) === */
+        .intl-champ-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto-secundario);
+            border: 2px solid var(--cor-borda);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .intl-champ-btn:hover {
+            border-color: var(--cor-destaque-primaria);
+            color: var(--cor-destaque-primaria);
+        }
+
+        .intl-champ-btn.active {
+            background: linear-gradient(135deg, var(--cor-destaque-primaria), #9333EA);
+            color: white;
+            border-color: var(--cor-destaque-primaria);
+        }
+
+        /* === SELETOR INTERNACIONAL (MESMO LAYOUT DOS NACIONAIS) === */
+        .international-selector {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        /* === TABELAS INTERNACIONAIS (MESMO ESTILO DAS NACIONAIS) === */
+        #internacionais .classification-table {
+            background-color: var(--cor-fundo-card);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        #internacionais .classification-table.active {
+            display: block;
+        }
+
+        /* Título das seções internacionais */
+        #current-international-title {
+            color: var(--cor-texto-principal);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Informações da fonte internacional */
+        #internacionais .table-info {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--cor-borda);
+        }
+
+        #internacionais .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #internacionais .info-label {
+            color: var(--cor-texto-secundario);
+            font-size: 0.85rem;
+        }
+
+        #internacionais .info-value {
+            color: var(--cor-destaque-primaria);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
         /* Container da Tabela de Classificação */
         .classification-table-container {
             background-color: var(--cor-fundo-card);
@@ -4006,14 +4087,69 @@
 
                 <!-- SUB-ABA: INTERNACIONAIS -->
                 <div class="sub-tab-content" id="internacionais" style="display: none;">
-                    <div class="coming-soon">
-                        <h3>🌍 Campeonatos Internacionais</h3>
-                        <p>Em breve: Champions League, Premier League, La Liga, Ligue 1 e muito mais!</p>
-                        <div class="features-preview">
-                            <div class="feature-item">🏆 Champions League</div>
-                            <div class="feature-item">⚽ Premier League</div>
-                            <div class="feature-item">🇪🇸 La Liga</div>
-                            <div class="feature-item">Ligue </div>
+                    <div class="championship-section">
+                        <div class="section-header">
+                            <h3 id="current-international-title">🌍 Campeonatos Internacionais</h3>
+                            <button id="refresh-international-btn" class="refresh-btn">
+                                🔄 Atualizar
+                            </button>
+                        </div>
+
+                        <!-- SELETOR DE CAMPEONATOS INTERNACIONAIS -->
+                        <div class="championship-selector international-selector">
+                            <button class="intl-champ-btn active" data-championship="premier-league">
+                                ⚽ Premier League
+                            </button>
+                            <button class="intl-champ-btn" data-championship="la-liga">
+                                🇪🇸 La Liga
+                            </button>
+                            <button class="intl-champ-btn" data-championship="ligue1">
+                                🇫🇷 França
+                            </button>
+                            <button class="intl-champ-btn" data-championship="champions-league">
+                                🏆 Champions League
+                            </button>
+                        </div>
+
+                        <!-- TABELA PREMIER LEAGUE -->
+                        <div id="tabela-premier-league" class="classification-table active">
+                            <div class="table-loading">
+                                <p>🔄 Carregando classificação da Premier League...</p>
+                            </div>
+                        </div>
+
+                        <!-- TABELA LA LIGA -->
+                        <div id="tabela-la-liga" class="classification-table">
+                            <div class="table-loading">
+                                <p>🔄 Carregando classificação da La Liga...</p>
+                            </div>
+                        </div>
+
+                        <!-- TABELA LIGUE 1 (FRANÇA) -->
+                        <div id="tabela-ligue1" class="classification-table">
+                            <div class="table-loading">
+                                <p>🔄 Carregando classificação da França...</p>
+                            </div>
+                        </div>
+
+                        <!-- TABELA CHAMPIONS LEAGUE -->
+                        <div id="tabela-champions-league" class="classification-table">
+                            <div class="coming-soon">
+                                <h4>🏆 Champions League</h4>
+                                <p>Em breve: Classificação da Champions League!</p>
+                            </div>
+                        </div>
+
+                        <!-- INFORMAÇÕES DA FONTE -->
+                        <div class="table-info">
+                            <div class="info-item">
+                                <span class="info-label">📊 Fonte:</span>
+                                <span class="info-value" id="fonte-internacional">📝 Dados manuais (Central Admin)</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">🕒 Última Atualização:</span>
+                                <span class="info-value" id="update-internacional">-</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4339,8 +4475,14 @@
                 });
             }
 
-            // Carregar Série A por padrão
-            setTimeout(() => carregarTabelaSerieA(), 1000);
+            // Carregar ambas as séries por padrão
+            setTimeout(() => {
+                carregarTabelaSerieA();
+                carregarTabelaSerieB(); // ← ADICIONAR SÉRIE B
+            }, 1000);
+            
+            // Inicializar campeonatos internacionais
+            initializeInternationalChampionships();
         }
 
         // CARREGAR DADOS DA SÉRIE A (com sistema de cache e auto-refresh)
@@ -4365,27 +4507,43 @@
                     dadosSerieA = JSON.parse(cached);
                     fonte = '💾 Cache local';
                 } else {
-                    // Tentar buscar dados do backend primeiro
+                    // Buscar dados das tabelas manuais (Central Admin)
                     try {
-                        const response = await fetch('/api/br/brasileirao/serie-a');
+                        const response = await fetch('/api/br/classificacao/serie-a');
                         if (response.ok) {
                             const apiResponse = await response.json();
-                            if (apiResponse.success) {
-                                dadosSerieA = apiResponse.data;
+                            if (apiResponse.success && apiResponse.data && apiResponse.data.length > 0) {
+                                // Converter formato da tabela manual para o formato esperado
+                                dadosSerieA = apiResponse.data.map(time => ({
+                                    pos: time.posicao,
+                                    time: time.time,
+                                    p: time.pontos,
+                                    j: time.jogos,
+                                    v: time.vitorias,
+                                    e: time.empates,
+                                    d: time.derrotas,
+                                    gp: time.gols_pro,
+                                    gc: time.gols_contra,
+                                    sg: time.saldo_gols,
+                                    aproveitamento: time.aproveitamento,
+                                    ultimos: time.ultimos_jogos || 'VVVVV',
+                                    zona: time.zona || ''
+                                }));
+                                
                                 // Salvar no cache
                                 localStorage.setItem(cacheKey, JSON.stringify(dadosSerieA));
                                 localStorage.setItem(cacheKey + '_time', now.toString());
-                                fonte = '🔄 API atualizada';
+                                fonte = '📝 Dados manuais (Central Admin)';
                             } else {
-                                throw new Error(apiResponse.error || 'API retornou erro');
+                                throw new Error('Dados manuais não encontrados');
                             }
                         } else {
-                            throw new Error('API indisponível');
+                            throw new Error('API de classificação indisponível');
                         }
                     } catch (apiError) {
-                        console.log('📊 Backend indisponível, usando dados simulados:', apiError.message);
+                        console.log('📊 Dados manuais indisponíveis, usando dados simulados:', apiError.message);
                         dadosSerieA = gerarDadosSerieASimulados();
-                        fonte = '⚠️ Dados simulados';
+                        fonte = '⚠️ Dados simulados (fallback)';
                     }
                 }
                 
@@ -4583,12 +4741,340 @@
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Série B...</p></div>';
 
             try {
-                // Por enquanto, usar dados simulados
+                console.log('🥈 [Série B] Carregando dados do banco...');
+                
+                // BUSCAR DADOS REAIS DO BANCO (igual Série A)
+                const response = await fetch('/api/br/classificacao/serie-b');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('🥈 [Série B] Dados recebidos:', data);
+                
+                if (data.success && data.data && data.data.length > 0) {
+                    // Mapear campos do banco para formato da tabela
+                    const dadosFormatados = data.data.map(item => ({
+                        pos: item.posicao,
+                        time: item.time,
+                        p: item.pontos,
+                        j: item.jogos,
+                        v: item.vitorias,
+                        e: item.empates,
+                        d: item.derrotas,
+                        gp: item.gols_pro,
+                        gc: item.gols_contra,
+                        sg: item.saldo_gols,
+                        aproveitamento: item.aproveitamento,
+                        ultimos: item.ultimos_jogos,
+                        zona: item.zona || ""
+                    }));
+                    
+                    console.log('🥈 [Série B] Dados formatados:', dadosFormatados.length, 'times');
+                    
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    
+                    // Atualizar fonte
+                    const fonteEl = document.getElementById('fonte-serie-b');
+                    if (fonteEl) {
+                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
+                    }
+                } else {
+                    throw new Error('Dados inválidos recebidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [Série B] Erro ao carregar:', error);
+                
+                // FALLBACK: dados simulados
+                console.log('🥈 [Série B] Usando fallback...');
                 const dadosSerieB = gerarDadosSerieBSimulados();
                 container.innerHTML = renderTabelaClassificacao(dadosSerieB);
+                
+                // Atualizar fonte para indicar fallback
+                const fonteEl = document.getElementById('fonte-serie-b');
+                if (fonteEl) {
+                    fonteEl.textContent = '⚠️ Dados simulados (erro no banco)';
+                }
+            }
+        }
+
+        // === CAMPEONATOS INTERNACIONAIS ===
+        
+        function initializeInternationalChampionships() {
+            console.log('🌍 [DEBUG] Inicializando campeonatos internacionais...');
+            
+            const intlBtns = document.querySelectorAll('.intl-champ-btn');
+            const intlTables = document.querySelectorAll('#internacionais .classification-table');
+            const titleElement = document.getElementById('current-international-title');
+
+            intlBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const championship = btn.dataset.championship;
+                    console.log('🌍 [DEBUG] Clique em campeonato internacional:', championship);
+                    
+                    // Atualizar botões
+                    intlBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Atualizar tabelas
+                    intlTables.forEach(table => table.classList.remove('active'));
+                    const targetTable = document.getElementById(`tabela-${championship}`);
+                    if (targetTable) {
+                        targetTable.classList.add('active');
+                    }
+                    
+                    // Atualizar título
+                    const titles = {
+                        'premier-league': '⚽ Premier League - Classificação',
+                        'la-liga': '🇪🇸 La Liga - Classificação',
+                        'ligue1': '🇫🇷 França (Ligue 1) - Classificação',
+                        'champions-league': '🏆 Champions League - Em Breve'
+                    };
+                    
+                    if (titleElement && titles[championship]) {
+                        titleElement.textContent = titles[championship];
+                    }
+
+                    // Carregar dados da tabela
+                    if (championship === 'premier-league') {
+                        carregarTabelaPremierLeague();
+                    } else if (championship === 'la-liga') {
+                        carregarTabelaLaLiga();
+                    } else if (championship === 'ligue1') {
+                        carregarTabelaLigue1();
+                    }
+                    // Champions League não tem dados ainda
+                });
+            });
+
+            // Configurar botão de refresh internacional
+            const refreshIntlBtn = document.getElementById('refresh-international-btn');
+            if (refreshIntlBtn) {
+                refreshIntlBtn.addEventListener('click', () => {
+                    const activeIntlChamp = document.querySelector('.intl-champ-btn.active');
+                    if (activeIntlChamp) {
+                        const championship = activeIntlChamp.dataset.championship;
+                        if (championship === 'premier-league') {
+                            carregarTabelaPremierLeague();
+                        } else if (championship === 'la-liga') {
+                            carregarTabelaLaLiga();
+                        } else if (championship === 'ligue1') {
+                            carregarTabelaLigue1();
+                        }
+                    }
+                });
+            }
+
+            // Carregar Premier League por padrão
+            setTimeout(() => carregarTabelaPremierLeague(), 1500);
+        }
+
+        // CARREGAR DADOS DA PREMIER LEAGUE
+        async function carregarTabelaPremierLeague() {
+            const container = document.getElementById('tabela-premier-league');
+            if (!container) return;
+
+            container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Premier League...</p></div>';
+
+            try {
+                console.log('⚽ [Premier League] Carregando dados do banco...');
+                
+                const response = await fetch('/api/admin/classificacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        campeonato: 'premier-league',
+                        admin_key: 'loteca2024admin'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('⚽ [Premier League] Dados recebidos:', data);
+                
+                // CORREÇÃO: Ligas internacionais usam 'classificacao' em vez de 'data'
+                const dadosArray = data.classificacao || data.data || [];
+                
+                if (data.success && dadosArray && dadosArray.length > 0) {
+                    // Mapear campos do banco para formato da tabela
+                    const dadosFormatados = dadosArray.map(item => ({
+                        pos: item.posicao,
+                        time: item.clube,
+                        p: item.pts,
+                        j: item.pj,
+                        v: item.vit,
+                        e: item.e,
+                        d: item.der,
+                        gp: item.gm,
+                        gc: item.gc,
+                        sg: item.sg,
+                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
+                        ultimos: item.ultimas_5 || "-----",
+                        zona: item.zona || ""
+                    }));
+                    
+                    console.log('⚽ [Premier League] Dados formatados:', dadosFormatados.length, 'times');
+                    console.log('⚽ [Premier League] Primeiro time formatado:', dadosFormatados[0]);
+                    
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    
+                    // Atualizar informações
+                    const fonteEl = document.getElementById('fonte-internacional');
+                    if (fonteEl) {
+                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
+                    }
+                } else {
+                    throw new Error('Dados inválidos recebidos');
+                }
+                
             } catch (error) {
-                console.error('Erro ao carregar Série B:', error);
-                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar dados da Série B</p></div>';
+                console.error('❌ [Premier League] Erro ao carregar:', error);
+                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar Premier League</p></div>';
+            }
+        }
+
+        // CARREGAR DADOS DA LA LIGA
+        async function carregarTabelaLaLiga() {
+            const container = document.getElementById('tabela-la-liga');
+            if (!container) return;
+
+            container.innerHTML = '<div class="table-loading"><p>🔄 Carregando La Liga...</p></div>';
+
+            try {
+                console.log('🇪🇸 [La Liga] Carregando dados do banco...');
+                
+                const response = await fetch('/api/admin/classificacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        campeonato: 'la-liga',
+                        admin_key: 'loteca2024admin'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('🇪🇸 [La Liga] Dados recebidos:', data);
+                
+                // CORREÇÃO: Ligas internacionais usam 'classificacao' em vez de 'data'
+                const dadosArray = data.classificacao || data.data || [];
+                
+                if (data.success && dadosArray && dadosArray.length > 0) {
+                    // Mapear campos do banco para formato da tabela
+                    const dadosFormatados = dadosArray.map(item => ({
+                        pos: item.posicao,
+                        time: item.clube,
+                        p: item.pts,
+                        j: item.pj,
+                        v: item.vit,
+                        e: item.e,
+                        d: item.der,
+                        gp: item.gm,
+                        gc: item.gc,
+                        sg: item.sg,
+                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
+                        ultimos: item.ultimas_5 || "-----",
+                        zona: item.zona || ""
+                    }));
+                    
+                    console.log('🇪🇸 [La Liga] Dados formatados:', dadosFormatados.length, 'times');
+                    console.log('🇪🇸 [La Liga] Primeiro time formatado:', dadosFormatados[0]);
+                    
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    
+                    // Atualizar informações
+                    const fonteEl = document.getElementById('fonte-internacional');
+                    if (fonteEl) {
+                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
+                    }
+                } else {
+                    throw new Error('Dados inválidos recebidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [La Liga] Erro ao carregar:', error);
+                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar La Liga</p></div>';
+            }
+        }
+
+        // CARREGAR DADOS DA LIGUE 1 (FRANÇA)
+        async function carregarTabelaLigue1() {
+            const container = document.getElementById('tabela-ligue1');
+            if (!container) return;
+
+            container.innerHTML = '<div class="table-loading"><p>🔄 Carregando França (Ligue 1)...</p></div>';
+
+            try {
+                console.log('🇫🇷 [França] Carregando dados do banco...');
+                
+                const response = await fetch('/api/admin/classificacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        campeonato: 'ligue1',
+                        admin_key: 'loteca2024admin'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('🇫🇷 [França] Dados recebidos:', data);
+                
+                // CORREÇÃO: Ligas internacionais usam 'classificacao' em vez de 'data'
+                const dadosArray = data.classificacao || data.data || [];
+                
+                if (data.success && dadosArray && dadosArray.length > 0) {
+                    // Mapear campos do banco para formato da tabela
+                    const dadosFormatados = dadosArray.map(item => ({
+                        pos: item.posicao,
+                        time: item.clube,
+                        p: item.pts,
+                        j: item.pj,
+                        v: item.vit,
+                        e: item.e,
+                        d: item.der,
+                        gp: item.gm,
+                        gc: item.gc,
+                        sg: item.sg,
+                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
+                        ultimos: item.ultimas_5 || "-----",
+                        zona: item.zona || ""
+                    }));
+                    
+                    console.log('🇫🇷 [França] Dados formatados:', dadosFormatados.length, 'times');
+                    console.log('🇫🇷 [França] Primeiro time formatado:', dadosFormatados[0]);
+                    
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    
+                    // Atualizar informações
+                    const fonteEl = document.getElementById('fonte-internacional');
+                    if (fonteEl) {
+                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
+                    }
+                } else {
+                    throw new Error('Dados inválidos recebidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [França] Erro ao carregar:', error);
+                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar França</p></div>';
             }
         }
 

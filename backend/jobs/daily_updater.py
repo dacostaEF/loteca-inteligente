@@ -158,8 +158,9 @@ def job_principal_23h55():
     }
     
     try:
-        # 1. Atualizar Brasileirão
-        resultados['brasileirao'] = atualizar_brasileirao()
+        # 1. Atualizar Brasileirão - DESATIVADO (dados manuais)
+        # resultados['brasileirao'] = atualizar_brasileirao()
+        resultados['brasileirao'] = True  # Marcar como sucesso (dados manuais)
         
         # 2. Atualizar dados internacionais
         resultados['internacional'] = atualizar_internacional()
