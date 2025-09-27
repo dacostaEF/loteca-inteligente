@@ -672,6 +672,57 @@
         .notification.info {
             background: linear-gradient(135deg, #17a2b8, #6f42c1);
         }
+
+        /* === ESTILOS PARA ESTATÍSTICAS === */
+        .stats-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #6f42c1;
+            background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: -20px -20px 20px -20px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        /* Campos calculados */
+        input[readonly] {
+            background: #e9ecef !important;
+            color: #6c757d !important;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -931,117 +982,247 @@
             </div>
         </div>
 
-        <!-- === ABA CLUBES === -->
+        <!-- === ABA CLUBES - ESTATÍSTICAS DETALHADAS === -->
         <div class="tab-content" id="clubes">
             <h2 style="margin-bottom: 25px; color: #333;">
-                <i class="fas fa-users"></i> Gestão de Clubes
+                <i class="fas fa-chart-line"></i> Estatísticas Detalhadas dos Clubes
             </h2>
             
-            <!-- Formulário de Clubes -->
-            <div class="form-row">
-                <div class="input-group">
-                    <label>Nome Fantasia</label>
-                    <input type="text" id="nomeFantasia" placeholder="Ex: Flamengo">
-                </div>
-                <div class="input-group">
-                    <label>Abreviação</label>
-                    <input type="text" id="abreviacao" placeholder="Ex: FLA">
-                </div>
-                <div class="input-group">
-                    <label>Estado</label>
-                    <select id="estado">
-                        <option value="">Selecione...</option>
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
+            <!-- Seletor de Clube -->
+            <div class="form-row" style="margin-bottom: 30px;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Selecionar Clube</label>
+                    <select id="clubeEstatisticas" onchange="carregarEstatisticasClube()">
+                        <option value="">Escolha um clube...</option>
+                        <option value="flamengo">🔥 Flamengo</option>
+                        <option value="corinthians">⚫ Corinthians</option>
+                        <option value="palmeiras">🟢 Palmeiras</option>
+                        <option value="santos">⚪ Santos</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>Série</label>
-                    <select id="serie">
-                        <option value="">Selecione...</option>
-                        <option value="Série A">Série A</option>
-                        <option value="Série B">Série B</option>
-                        <option value="Série C">Série C</option>
-                        <option value="Série D">Série D</option>
-                        <option value="REGIONAL">Regional</option>
-                    </select>
+                    <label>&nbsp;</label>
+                    <button class="btn-primary" onclick="carregarEstatisticasClube()">
+                        <i class="fas fa-sync"></i> Carregar Dados
+                    </button>
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="input-group">
-                    <label>ID Cartola FC</label>
-                    <input type="number" id="cartolaId" placeholder="Ex: 262">
+            <!-- Formulário de Estatísticas -->
+            <div id="formularioEstatisticas" style="display: none;">
+                
+                <!-- DADOS BÁSICOS -->
+                <div class="stats-section">
+                    <h3 class="section-title">🏆 DADOS BÁSICOS</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Posição Atual</label>
+                            <input type="number" id="posicaoAtual" placeholder="Ex: 2" min="1" max="20">
+                        </div>
+                        <div class="input-group">
+                            <label>Pontos Total</label>
+                            <input type="number" id="pontosTotal" placeholder="Ex: 58" onchange="calcularPPG()">
+                        </div>
+                        <div class="input-group">
+                            <label>Jogos Disputados</label>
+                            <input type="number" id="jogosDisputados" placeholder="Ex: 28" onchange="calcularPPG()">
+                        </div>
+                        <div class="input-group">
+                            <label>PPG (Calculado)</label>
+                            <input type="text" id="ppg" readonly style="background: #f0f0f0;">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>URL Escudo</label>
-                    <input type="url" id="escudoUrl" placeholder="https://exemplo.com/escudo.png">
+
+                <!-- PERFORMANCE GERAL -->
+                <div class="stats-section">
+                    <h3 class="section-title">⚽ PERFORMANCE GERAL</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Vitórias</label>
+                            <input type="number" id="vitorias" placeholder="Ex: 17" onchange="calcularPercentuais()">
+                        </div>
+                        <div class="input-group">
+                            <label>Empates</label>
+                            <input type="number" id="empates" placeholder="Ex: 7" onchange="calcularPercentuais()">
+                        </div>
+                        <div class="input-group">
+                            <label>Derrotas</label>
+                            <input type="number" id="derrotas" placeholder="Ex: 4" onchange="calcularPercentuais()">
+                        </div>
+                        <div class="input-group">
+                            <label>% Vitórias (Calculado)</label>
+                            <input type="text" id="pctVitorias" readonly style="background: #f0f0f0;">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Cor Primária</label>
-                    <input type="color" id="corPrimaria" value="#FF0000">
+
+                <!-- DADOS OFENSIVOS -->
+                <div class="stats-section">
+                    <h3 class="section-title">🎯 DADOS OFENSIVOS</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Gols Marcados</label>
+                            <input type="number" id="golsMarcados" placeholder="Ex: 52" onchange="calcularMedias()">
+                        </div>
+                        <div class="input-group">
+                            <label>Média Gols (Calculado)</label>
+                            <input type="text" id="mediaGolsMarcados" readonly style="background: #f0f0f0;">
+                        </div>
+                        <div class="input-group">
+                            <label>Chutes por Jogo</label>
+                            <input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 14.2">
+                        </div>
+                        <div class="input-group">
+                            <label>Posse de Bola (%)</label>
+                            <input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.3">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>Cor Secundária</label>
-                    <input type="color" id="corSecundaria" value="#000000">
+
+                <!-- DADOS DEFENSIVOS -->
+                <div class="stats-section">
+                    <h3 class="section-title">🛡️ DADOS DEFENSIVOS</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Gols Sofridos</label>
+                            <input type="number" id="golsSofridos" placeholder="Ex: 32" onchange="calcularMedias()">
+                        </div>
+                        <div class="input-group">
+                            <label>Média Sofridos (Calculado)</label>
+                            <input type="text" id="mediaGolsSofridos" readonly style="background: #f0f0f0;">
+                        </div>
+                        <div class="input-group">
+                            <label>Clean Sheets</label>
+                            <input type="number" id="cleanSheets" placeholder="Ex: 12" onchange="calcularCleanSheets()">
+                        </div>
+                        <div class="input-group">
+                            <label>% Clean Sheets (Calculado)</label>
+                            <input type="text" id="pctCleanSheets" readonly style="background: #f0f0f0;">
+                        </div>
+                    </div>
                 </div>
+
+                <!-- MANDANTE vs VISITANTE -->
+                <div class="stats-section">
+                    <h3 class="section-title">🏠 MANDANTE vs ✈️ VISITANTE</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>PPG Casa</label>
+                            <input type="number" step="0.01" id="ppgCasa" placeholder="Ex: 2.31">
+                        </div>
+                        <div class="input-group">
+                            <label>PPG Fora</label>
+                            <input type="number" step="0.01" id="ppgFora" placeholder="Ex: 1.83">
+                        </div>
+                        <div class="input-group">
+                            <label>Aproveitamento Casa (%)</label>
+                            <input type="number" step="0.1" id="aproveitamentoCasa" placeholder="Ex: 77.0">
+                        </div>
+                        <div class="input-group">
+                            <label>Aproveitamento Fora (%)</label>
+                            <input type="number" step="0.1" id="aproveitamentoFora" placeholder="Ex: 61.0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORMA RECENTE -->
+                <div class="stats-section">
+                    <h3 class="section-title">📈 FORMA RECENTE</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Últimos 5 Jogos</label>
+                            <input type="text" id="formaUltimos5" placeholder="Ex: V-V-E-E-D" maxlength="11">
+                        </div>
+                        <div class="input-group">
+                            <label>Pontos Últimos 5</label>
+                            <input type="number" id="pontosUltimos5" placeholder="Ex: 8" max="15">
+                        </div>
+                        <div class="input-group">
+                            <label>Sequência Atual</label>
+                            <input type="text" id="sequenciaAtual" placeholder="Ex: 2 empates seguidos">
+                        </div>
+                        <div class="input-group">
+                            <label>Tendência</label>
+                            <select id="tendencia">
+                                <option value="">Selecione...</option>
+                                <option value="Subindo">📈 Subindo</option>
+                                <option value="Estável">➡️ Estável</option>
+                                <option value="Descendo">📉 Descendo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DADOS CARTOLA FC -->
+                <div class="stats-section">
+                    <h3 class="section-title">💰 DADOS CARTOLA FC</h3>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Elenco Total</label>
+                            <input type="number" id="elencoTotal" placeholder="Ex: 40">
+                        </div>
+                        <div class="input-group">
+                            <label>% Prováveis</label>
+                            <input type="number" step="0.1" id="pctProvaveis" placeholder="Ex: 42.5">
+                        </div>
+                        <div class="input-group">
+                            <label>Valor Elenco (C$)</label>
+                            <input type="number" step="0.1" id="valorElenco" placeholder="Ex: 272.0">
+                        </div>
+                        <div class="input-group">
+                            <label>Rating Médio</label>
+                            <input type="number" step="0.1" id="ratingMedio" placeholder="Ex: 4.6">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTEXTO ATUAL -->
+                <div class="stats-section">
+                    <h3 class="section-title">🎯 CONTEXTO ATUAL</h3>
+                    <div class="form-row">
+                        <div class="input-group" style="flex: 2;">
+                            <label>Desfalques Importantes</label>
+                            <input type="text" id="desfalques" placeholder="Ex: Arrascaeta (lesão), Viña (suspenso)">
+                        </div>
+                        <div class="input-group" style="flex: 2;">
+                            <label>Motivação Atual</label>
+                            <input type="text" id="motivacao" placeholder="Ex: Briga pelo título - 6 pts do líder">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group" style="flex: 1;">
+                            <label>Próximos Jogos</label>
+                            <input type="text" id="proximosJogos" placeholder="Ex: COR(f), PAL(c), BOT(f)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTÕES DE AÇÃO -->
+                <div class="form-actions" style="margin-top: 30px;">
+                    <button class="btn-success" onclick="salvarEstatisticas()">
+                        <i class="fas fa-save"></i> Salvar Estatísticas
+                    </button>
+                    <button class="btn-secondary" onclick="limparFormulario()">
+                        <i class="fas fa-eraser"></i> Limpar Formulário
+                    </button>
+                    <button class="btn-info" onclick="previewEstatisticas()">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                    <button class="btn-warning" onclick="verHistorico()">
+                        <i class="fas fa-history"></i> Ver Histórico
+                    </button>
+                </div>
+
             </div>
 
-            <button class="btn-primary" onclick="salvarClube()">
-                <i class="fas fa-save"></i> Salvar Clube
-            </button>
-            <button class="btn-secondary" onclick="limparFormClube()" style="margin-left: 10px;">
-                <i class="fas fa-eraser"></i> Limpar
-            </button>
-
-            <!-- Busca e Lista de Clubes -->
-            <input type="text" class="search-box" id="searchClubes" placeholder="🔍 Buscar clubes..." onkeyup="filtrarClubes()">
-            
-            <div class="loading" id="loadingClubes">
-                <i class="fas fa-spinner"></i>
-                <div>Carregando clubes...</div>
+            <!-- Mensagem quando nenhum clube selecionado -->
+            <div id="mensagemSelecionar" class="empty-state">
+                <i class="fas fa-chart-line" style="font-size: 48px; color: #ccc; margin-bottom: 15px;"></i>
+                <h3>Selecione um clube para começar</h3>
+                <p>Escolha um clube no seletor acima para preencher suas estatísticas detalhadas</p>
             </div>
 
-            <table class="data-table" id="tableClubes" style="display: none;">
-                <thead>
-                    <tr>
-                        <th>Escudo</th>
-                        <th>Nome</th>
-                        <th>Sigla</th>
-                        <th>Estado</th>
-                        <th>Série</th>
-                        <th>ID Cartola</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyClubes">
-                </tbody>
-            </table>
         </div>
 
         <!-- === ABA ESTATÍSTICAS === -->
@@ -2405,6 +2586,178 @@
                 login();
             }
         });
+
+        // === FUNÇÕES DE ESTATÍSTICAS DOS CLUBES ===
+        
+        // Carregar estatísticas de um clube
+        function carregarEstatisticasClube() {
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            const formulario = document.getElementById('formularioEstatisticas');
+            const mensagem = document.getElementById('mensagemSelecionar');
+            
+            if (clubeSelecionado) {
+                formulario.style.display = 'block';
+                mensagem.style.display = 'none';
+                
+                console.log(`Carregando estatísticas de: ${clubeSelecionado}`);
+                
+                // Exemplo: preencher com dados do Flamengo
+                if (clubeSelecionado === 'flamengo') {
+                    preencherDadosFlamengo();
+                }
+            } else {
+                formulario.style.display = 'none';
+                mensagem.style.display = 'block';
+            }
+        }
+
+        // Preencher dados de exemplo do Flamengo
+        function preencherDadosFlamengo() {
+            document.getElementById('posicaoAtual').value = 2;
+            document.getElementById('pontosTotal').value = 58;
+            document.getElementById('jogosDisputados').value = 28;
+            document.getElementById('vitorias').value = 17;
+            document.getElementById('empates').value = 7;
+            document.getElementById('derrotas').value = 4;
+            document.getElementById('golsMarcados').value = 52;
+            document.getElementById('golsSofridos').value = 32;
+            document.getElementById('chutesPorJogo').value = 14.2;
+            document.getElementById('posseBola').value = 58.3;
+            document.getElementById('cleanSheets').value = 12;
+            document.getElementById('ppgCasa').value = 2.31;
+            document.getElementById('ppgFora').value = 1.83;
+            document.getElementById('aproveitamentoCasa').value = 77.0;
+            document.getElementById('aproveitamentoFora').value = 61.0;
+            document.getElementById('formaUltimos5').value = 'V-V-E-E-D';
+            document.getElementById('pontosUltimos5').value = 8;
+            document.getElementById('sequenciaAtual').value = '2 empates seguidos';
+            document.getElementById('tendencia').value = 'Estável';
+            document.getElementById('elencoTotal').value = 40;
+            document.getElementById('pctProvaveis').value = 42.5;
+            document.getElementById('valorElenco').value = 272.0;
+            document.getElementById('ratingMedio').value = 4.6;
+            document.getElementById('desfalques').value = 'Arrascaeta (lesão), Viña (suspenso)';
+            document.getElementById('motivacao').value = 'Briga pelo título - 6 pts do líder';
+            document.getElementById('proximosJogos').value = 'COR(f), PAL(c), BOT(f)';
+            
+            // Calcular campos automáticos
+            calcularPPG();
+            calcularPercentuais();
+            calcularMedias();
+            calcularCleanSheets();
+        }
+
+        // Calcular PPG (Pontos por Jogo)
+        function calcularPPG() {
+            const pontos = parseFloat(document.getElementById('pontosTotal').value) || 0;
+            const jogos = parseFloat(document.getElementById('jogosDisputados').value) || 0;
+            
+            if (jogos > 0) {
+                const ppg = (pontos / jogos).toFixed(2);
+                document.getElementById('ppg').value = ppg;
+            } else {
+                document.getElementById('ppg').value = '';
+            }
+        }
+
+        // Calcular percentuais
+        function calcularPercentuais() {
+            const vitorias = parseFloat(document.getElementById('vitorias').value) || 0;
+            const empates = parseFloat(document.getElementById('empates').value) || 0;
+            const derrotas = parseFloat(document.getElementById('derrotas').value) || 0;
+            const total = vitorias + empates + derrotas;
+            
+            if (total > 0) {
+                const pctVitorias = ((vitorias / total) * 100).toFixed(1);
+                document.getElementById('pctVitorias').value = pctVitorias + '%';
+            } else {
+                document.getElementById('pctVitorias').value = '';
+            }
+        }
+
+        // Calcular médias de gols
+        function calcularMedias() {
+            const jogos = parseFloat(document.getElementById('jogosDisputados').value) || 0;
+            const golsMarcados = parseFloat(document.getElementById('golsMarcados').value) || 0;
+            const golsSofridos = parseFloat(document.getElementById('golsSofridos').value) || 0;
+            
+            if (jogos > 0) {
+                const mediaGolsMarcados = (golsMarcados / jogos).toFixed(2);
+                const mediaGolsSofridos = (golsSofridos / jogos).toFixed(2);
+                
+                document.getElementById('mediaGolsMarcados').value = mediaGolsMarcados;
+                document.getElementById('mediaGolsSofridos').value = mediaGolsSofridos;
+            } else {
+                document.getElementById('mediaGolsMarcados').value = '';
+                document.getElementById('mediaGolsSofridos').value = '';
+            }
+        }
+
+        // Calcular percentual de Clean Sheets
+        function calcularCleanSheets() {
+            const jogos = parseFloat(document.getElementById('jogosDisputados').value) || 0;
+            const cleanSheets = parseFloat(document.getElementById('cleanSheets').value) || 0;
+            
+            if (jogos > 0) {
+                const pctCleanSheets = ((cleanSheets / jogos) * 100).toFixed(1);
+                document.getElementById('pctCleanSheets').value = pctCleanSheets + '%';
+            } else {
+                document.getElementById('pctCleanSheets').value = '';
+            }
+        }
+
+        // Salvar estatísticas
+        function salvarEstatisticas() {
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            
+            if (!clubeSelecionado) {
+                mostrarErro('Selecione um clube primeiro!');
+                return;
+            }
+
+            console.log('Salvando estatísticas do clube:', clubeSelecionado);
+            mostrarSucesso(`Estatísticas do ${clubeSelecionado} salvas com sucesso!`);
+        }
+
+        // Limpar formulário
+        function limparFormulario() {
+            document.getElementById('formularioEstatisticas').querySelectorAll('input, select').forEach(campo => {
+                if (!campo.readOnly) {
+                    campo.value = '';
+                }
+            });
+            
+            // Limpar campos calculados
+            document.getElementById('ppg').value = '';
+            document.getElementById('pctVitorias').value = '';
+            document.getElementById('mediaGolsMarcados').value = '';
+            document.getElementById('mediaGolsSofridos').value = '';
+            document.getElementById('pctCleanSheets').value = '';
+        }
+
+        // Preview das estatísticas
+        function previewEstatisticas() {
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            
+            if (!clubeSelecionado) {
+                mostrarErro('Selecione um clube primeiro!');
+                return;
+            }
+
+            alert(`Preview das estatísticas de ${clubeSelecionado} será implementado em breve!`);
+        }
+
+        // Ver histórico
+        function verHistorico() {
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            
+            if (!clubeSelecionado) {
+                mostrarErro('Selecione um clube primeiro!');
+                return;
+            }
+
+            alert(`Histórico de ${clubeSelecionado} será implementado em breve!`);
+        }
 
         // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', function() {
