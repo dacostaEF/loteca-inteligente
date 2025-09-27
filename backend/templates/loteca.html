@@ -969,6 +969,17 @@
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
         }
 
+        /* BOTÃO DE SINCRONIZAÇÃO */
+        #sync-games-btn:hover {
+            background: var(--cor-destaque-secundaria) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+        }
+
+        #sync-games-btn:active {
+            transform: translateY(0);
+        }
+
         /* ANÁLISE DETALHADA */
         .detailed-analysis {
             background-color: var(--cor-fundo-card);
@@ -1000,8 +1011,18 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--cor-borda);
             margin-bottom: 1rem;
             background-color: var(--cor-borda);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+            border-color: var(--cor-destaque-primaria);
         }
 
         .team-home h3, .team-away h3 {
@@ -3319,23 +3340,19 @@
                 <!-- SELETOR DE CONFRONTO -->
                 <div class="game-selector">
                     <h3>🎮 Selecione o Confronto para Análise Detalhada</h3>
-                    <select id="game-selector" class="game-select">
-                        <option value="">Escolha um jogo...</option>
-                        <option value="1">Jogo 1: Corinthians vs Flamengo</option>
-                        <option value="2">Jogo 2: Fortaleza vs Sport</option>
-                        <option value="3">Jogo 3: Juventude vs Internacional</option>
-                        <option value="4">Jogo 4: Vasco vs Cruzeiro</option>
-                        <option value="5">Jogo 5: Athletico/PR vs Operário/PR</option>
-                        <option value="6">Jogo 6: Atlético/MG vs Mirassol</option>
-                        <option value="7">Jogo 7: Grêmio vs Vitória</option>
-                        <option value="8">Jogo 8: Aston Villa vs Fulham</option>
-                        <option value="9">Jogo 9: Bahia vs Palmeiras</option>
-                        <option value="10">Jogo 10: Fluminense vs Botafogo</option>
-                        <option value="11">Jogo 11: Criciúma vs Paysandu</option>
-                        <option value="12">Jogo 12: Newcastle vs Arsenal</option>
-                        <option value="13">Jogo 13: Bragantino vs Santos</option>
-                        <option value="14">Jogo 14: Barcelona vs Real Sociedad</option>
-                    </select>
+                    <div style="display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap;">
+                        <select id="game-selector" class="game-select" style="flex: 1; min-width: 300px;">
+                            <option value="">Escolha um jogo...</option>
+                            <!-- Jogos serão carregados dinamicamente da Aba 1 -->
+                        </select>
+                        <button id="sync-games-btn" onclick="sincronizarJogosEntreAbas()" 
+                                style="padding: 1rem 1.5rem; background: var(--cor-destaque-primaria); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                            🔄 Sincronizar
+                        </button>
+                    </div>
+                    <p style="margin-top: 1rem; color: var(--cor-texto-secundario); font-size: 0.9rem; text-align: center;">
+                        💡 Os jogos são automaticamente sincronizados com a Aba "Análise Rápida"
+                    </p>
                 </div>
 
                 <!-- ÁREA DE ANÁLISE DETALHADA -->
@@ -5018,6 +5035,212 @@
             }
         };
 
+        // SINCRONIZAR JOGOS ENTRE ABA 1 E ABA 2
+        function sincronizarJogosEntreAbas() {
+            console.log('🔄 [SYNC] Sincronizando jogos entre Aba 1 e Aba 2...');
+            
+            const gameSelector = document.getElementById('game-selector');
+            const syncBtn = document.getElementById('sync-games-btn');
+            
+            if (!gameSelector) {
+                console.error('❌ [SYNC] Seletor de jogos não encontrado!');
+                return;
+            }
+            
+            // Feedback visual no botão
+            if (syncBtn) {
+                syncBtn.innerHTML = '⏳ Sincronizando...';
+                syncBtn.disabled = true;
+            }
+            
+            try {
+                // Extrair jogos da Aba 1 (Análise Rápida)
+                const jogosAba1 = extrairJogosDaAba1();
+                
+                // Atualizar dropdown da Aba 2
+                atualizarDropdownAba2(gameSelector, jogosAba1);
+                
+                // Feedback de sucesso
+                if (syncBtn) {
+                    syncBtn.innerHTML = '✅ Sincronizado!';
+                    setTimeout(() => {
+                        syncBtn.innerHTML = '🔄 Sincronizar';
+                        syncBtn.disabled = false;
+                    }, 2000);
+                }
+                
+                console.log('✅ [SYNC] Sincronização concluída!');
+                
+            } catch (error) {
+                console.error('❌ [SYNC] Erro na sincronização:', error);
+                
+                if (syncBtn) {
+                    syncBtn.innerHTML = '❌ Erro';
+                    setTimeout(() => {
+                        syncBtn.innerHTML = '🔄 Sincronizar';
+                        syncBtn.disabled = false;
+                    }, 2000);
+                }
+            }
+        }
+        
+        // EXTRAIR JOGOS DA ABA 1 (ANÁLISE RÁPIDA)
+        function extrairJogosDaAba1() {
+            console.log('📊 [SYNC] Extraindo jogos da Aba 1...');
+            
+            const jogos = [];
+            const gameCards = document.querySelectorAll('#analise-rapida .game-card');
+            
+            gameCards.forEach((card, index) => {
+                try {
+                    // Método 1: Buscar pelo span com "JOGO X:"
+                    const jogoSpan = card.querySelector('.confronto-visual span[style*="font-size: 18px"]');
+                    const timeInfos = card.querySelectorAll('.time-info span');
+                    
+                    if (jogoSpan && timeInfos.length >= 2) {
+                        const jogoNumero = index + 1;
+                        const timeCasa = timeInfos[0].textContent.trim();
+                        const timeVisitante = timeInfos[1].textContent.trim();
+                        
+                        // Validar se os nomes não estão vazios
+                        if (timeCasa && timeVisitante && timeCasa !== timeVisitante) {
+                            const jogo = {
+                                numero: jogoNumero,
+                                timeCasa: timeCasa,
+                                timeVisitante: timeVisitante,
+                                descricao: `Jogo ${jogoNumero}: ${timeCasa} vs ${timeVisitante}`
+                            };
+                            
+                            jogos.push(jogo);
+                            console.log(`✅ [SYNC] Jogo ${jogoNumero}: ${timeCasa} vs ${timeVisitante}`);
+                        } else {
+                            console.warn(`⚠️ [SYNC] Jogo ${index + 1}: Nomes inválidos - Casa: "${timeCasa}", Visitante: "${timeVisitante}"`);
+                        }
+                    } else {
+                        // Método 2: Fallback - buscar por qualquer estrutura de confronto
+                        console.warn(`⚠️ [SYNC] Jogo ${index + 1}: Estrutura não encontrada, tentando método alternativo...`);
+                        
+                        const allSpans = card.querySelectorAll('span');
+                        const teamNames = [];
+                        
+                        allSpans.forEach(span => {
+                            const text = span.textContent.trim();
+                            // Procurar por nomes de times (palavras em maiúsculo, não números)
+                            if (text && text.length > 2 && /^[A-ZÁÉÍÓÚÂÊÔÀÇ\s/-]+$/.test(text) && !text.includes('JOGO')) {
+                                teamNames.push(text);
+                            }
+                        });
+                        
+                        if (teamNames.length >= 2) {
+                            const jogo = {
+                                numero: index + 1,
+                                timeCasa: teamNames[0],
+                                timeVisitante: teamNames[1],
+                                descricao: `Jogo ${index + 1}: ${teamNames[0]} vs ${teamNames[1]}`
+                            };
+                            
+                            jogos.push(jogo);
+                            console.log(`✅ [SYNC] Jogo ${index + 1} (fallback): ${teamNames[0]} vs ${teamNames[1]}`);
+                        }
+                    }
+                } catch (error) {
+                    console.error(`❌ [SYNC] Erro ao extrair jogo ${index + 1}:`, error);
+                }
+            });
+            
+            console.log(`📋 [SYNC] Total de jogos extraídos: ${jogos.length}`);
+            return jogos;
+        }
+        
+        // ATUALIZAR DROPDOWN DA ABA 2
+        function atualizarDropdownAba2(gameSelector, jogos) {
+            console.log('🎮 [SYNC] Atualizando dropdown da Aba 2...');
+            
+            // Limpar opções existentes (exceto a primeira)
+            while (gameSelector.children.length > 1) {
+                gameSelector.removeChild(gameSelector.lastChild);
+            }
+            
+            // Adicionar jogos extraídos da Aba 1
+            jogos.forEach(jogo => {
+                const option = document.createElement('option');
+                option.value = jogo.numero;
+                option.textContent = jogo.descricao;
+                gameSelector.appendChild(option);
+            });
+            
+            // Atualizar dados dos jogos para análise detalhada
+            atualizarDadosJogosAnalise(jogos);
+            
+            console.log(`✅ [SYNC] ${jogos.length} jogos adicionados ao dropdown`);
+        }
+
+        // ATUALIZAR DADOS DOS JOGOS PARA ANÁLISE DETALHADA
+        function atualizarDadosJogosAnalise(jogos) {
+            console.log('📊 [SYNC] Atualizando dados dos jogos para análise...');
+            
+            jogos.forEach(jogo => {
+                // Atualizar ou criar dados do jogo no advancedStatsData
+                if (!advancedStatsData[jogo.numero]) {
+                    advancedStatsData[jogo.numero] = {};
+                }
+                
+                // Atualizar informações básicas
+                advancedStatsData[jogo.numero].home = {
+                    name: jogo.timeCasa,
+                    position: '5º' // Placeholder - pode ser melhorado futuramente
+                };
+                
+                advancedStatsData[jogo.numero].away = {
+                    name: jogo.timeVisitante,
+                    position: '2º' // Placeholder - pode ser melhorado futuramente
+                };
+                
+                // Informações do jogo (placeholder)
+                advancedStatsData[jogo.numero].stadium = 'Arena - Local';
+                advancedStatsData[jogo.numero].date = 'Domingo, 15h';
+                
+                // Dados estatísticos básicos (placeholder)
+                if (!advancedStatsData[jogo.numero].stats) {
+                    advancedStatsData[jogo.numero].stats = {
+                        home: { form: ['D', 'D', 'D', 'E', 'E'], probable: 0, strength: 0, value: 0 },
+                        away: { form: ['E', 'D', 'E', 'D', 'E'], probable: 0, strength: 0, value: 0 }
+                    };
+                }
+                
+                // H2H básico (placeholder)
+                if (!advancedStatsData[jogo.numero].h2h) {
+                    advancedStatsData[jogo.numero].h2h = {
+                        homeWins: 4,
+                        draws: 2,
+                        awayWins: 4,
+                        recent: [
+                            { date: '15/09/2024', result: 'Casa 2-1 Visitante' },
+                            { date: '20/05/2024', result: 'Casa 0-3 Visitante' },
+                            { date: '12/01/2024', result: 'Casa 1-1 Visitante' }
+                        ]
+                    };
+                }
+                
+                // Recomendação básica (placeholder)
+                if (!advancedStatsData[jogo.numero].recommendation) {
+                    advancedStatsData[jogo.numero].recommendation = {
+                        confidence: 'Alta Confiança',
+                        prediction: 'Duplo X2',
+                        analysis: `Com base nos dados estatísticos, o time visitante apresenta números superiores ofensivos (2.1 gols/jogo vs 1.8) e melhor defesa (1.0 vs 1.2 gols sofridos).`,
+                        factors: [
+                            { text: 'Melhor ataque visitante', positive: true },
+                            { text: 'Melhor defesa visitante', positive: true },
+                            { text: 'H2H equilibrado', neutral: true },
+                            { text: 'Fator casa', negative: true }
+                        ]
+                    };
+                }
+                
+                console.log(`✅ [SYNC] Dados atualizados para Jogo ${jogo.numero}: ${jogo.timeCasa} vs ${jogo.timeVisitante}`);
+            });
+        }
+
         // INICIALIZAR ESTATÍSTICAS AVANÇADAS
         function initializeAdvancedStats() {
             const gameSelector = document.getElementById('game-selector');
@@ -5038,6 +5261,9 @@
                     }
                 });
             }
+            
+            // Sincronizar jogos na inicialização
+            sincronizarJogosEntreAbas();
         }
 
         // MOSTRAR ANÁLISE DETALHADA COM DADOS REAIS DO CARTOLA
@@ -5045,13 +5271,20 @@
             const data = advancedStatsData[gameId];
             if (!data) return;
 
-            // Atualizar cabeçalho do confronto
+            console.log(`🎯 [ANALYSIS] Carregando análise detalhada do Jogo ${gameId}`);
+            console.log(`🏠 [ANALYSIS] Time Casa: ${data.home.name}`);
+            console.log(`✈️ [ANALYSIS] Time Visitante: ${data.away.name}`);
+
+            // Atualizar cabeçalho do confronto com nomes
             document.getElementById('team-home-name').textContent = data.home.name;
             document.getElementById('team-away-name').textContent = data.away.name;
             document.querySelector('.team-home .team-position').textContent = data.home.position + ' Posição';
             document.querySelector('.team-away .team-position').textContent = data.away.position + ' Posição';
             document.querySelector('.stadium').textContent = data.stadium;
             document.querySelector('.date').textContent = data.date;
+
+            // ATUALIZAR ESCUDOS DOS TIMES
+            atualizarEscudosAnaliseDetalhada(data.home.name, data.away.name);
 
             // Verificar se é um jogo brasileiro e buscar dados do Cartola
             const isBrazilianMatch = isBrazilianGame(data.home.name, data.away.name);
@@ -5068,6 +5301,101 @@
 
             // Atualizar recomendação
             updateRecommendation(data.recommendation);
+        }
+
+        // ATUALIZAR ESCUDOS NA ANÁLISE DETALHADA
+        function atualizarEscudosAnaliseDetalhada(timeCasa, timeVisitante) {
+            console.log('🛡️ [ESCUDOS] Atualizando escudos na análise detalhada...');
+            console.log(`🏠 [ESCUDOS] Time Casa: ${timeCasa}`);
+            console.log(`✈️ [ESCUDOS] Time Visitante: ${timeVisitante}`);
+            
+            // Buscar elementos dos escudos
+            const escudoCasa = document.querySelector('.team-home .team-logo');
+            const escudoVisitante = document.querySelector('.team-away .team-logo');
+            
+            if (escudoCasa && escudoVisitante) {
+                // Obter URLs dos escudos usando a função existente
+                const urlEscudoCasa = getEscudoUrlMelhorado(timeCasa);
+                const urlEscudoVisitante = getEscudoUrlMelhorado(timeVisitante);
+                
+                console.log(`🛡️ [ESCUDOS] URL Casa: ${urlEscudoCasa}`);
+                console.log(`🛡️ [ESCUDOS] URL Visitante: ${urlEscudoVisitante}`);
+                
+                // Atualizar escudos com animação suave
+                escudoCasa.style.opacity = '0.5';
+                escudoVisitante.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    escudoCasa.src = urlEscudoCasa;
+                    escudoCasa.alt = timeCasa;
+                    escudoVisitante.src = urlEscudoVisitante;
+                    escudoVisitante.alt = timeVisitante;
+                    
+                    // Restaurar opacidade
+                    escudoCasa.style.opacity = '1';
+                    escudoVisitante.style.opacity = '1';
+                    
+                    console.log('✅ [ESCUDOS] Escudos atualizados com sucesso!');
+                }, 200);
+                
+            } else {
+                console.error('❌ [ESCUDOS] Elementos de escudo não encontrados!');
+            }
+        }
+
+        // FUNÇÃO MELHORADA PARA OBTER URL DO ESCUDO
+        function getEscudoUrlMelhorado(nomeTime) {
+            // Primeiro, tentar extrair da Aba 1 se o jogo estiver lá
+            const escudoAba1 = extrairEscudoDaAba1(nomeTime);
+            if (escudoAba1) {
+                console.log(`🎯 [ESCUDOS] Escudo encontrado na Aba 1: ${escudoAba1}`);
+                return escudoAba1;
+            }
+            
+            // Fallback: usar mapeamento existente
+            const urlMapeamento = getEscudoUrl(nomeTime, 'Corinthians'); // Usar nome do arquivo
+            console.log(`🗺️ [ESCUDOS] Usando mapeamento: ${urlMapeamento}`);
+            return urlMapeamento;
+        }
+
+        // EXTRAIR ESCUDO DA ABA 1 (ANÁLISE RÁPIDA)
+        function extrairEscudoDaAba1(nomeTime) {
+            try {
+                const nomeNormalizado = nomeTime.toUpperCase().trim();
+                console.log(`🔍 [ESCUDOS] Procurando escudo para: ${nomeNormalizado}`);
+                
+                // Buscar em todos os jogos da Aba 1
+                const gameCards = document.querySelectorAll('#analise-rapida .game-card');
+                
+                for (const card of gameCards) {
+                    const timeInfos = card.querySelectorAll('.time-info');
+                    
+                    for (const timeInfo of timeInfos) {
+                        const spanTime = timeInfo.querySelector('span');
+                        const imgEscudo = timeInfo.querySelector('img.escudo-time');
+                        
+                        if (spanTime && imgEscudo) {
+                            const nomeTimeAba1 = spanTime.textContent.trim().toUpperCase();
+                            
+                            if (nomeTimeAba1 === nomeNormalizado || 
+                                nomeTimeAba1.includes(nomeNormalizado) || 
+                                nomeNormalizado.includes(nomeTimeAba1)) {
+                                
+                                console.log(`✅ [ESCUDOS] Match encontrado: ${nomeTimeAba1} = ${nomeNormalizado}`);
+                                console.log(`🛡️ [ESCUDOS] URL do escudo: ${imgEscudo.src}`);
+                                return imgEscudo.src;
+                            }
+                        }
+                    }
+                }
+                
+                console.log(`⚠️ [ESCUDOS] Escudo não encontrado na Aba 1 para: ${nomeNormalizado}`);
+                return null;
+                
+            } catch (error) {
+                console.error(`❌ [ESCUDOS] Erro ao extrair escudo da Aba 1:`, error);
+                return null;
+            }
         }
 
         // Verificar se é jogo brasileiro
@@ -5749,14 +6077,21 @@
             'SANTOS': 'SAN_Santos' // ✅ CORRIGIDO: agora é o Santos real
         };
 
-        function getEscudoUrl(nomeTime, tamanho = '45x45') {
+        function getEscudoUrl(nomeTime, nomeArquivo = '45x45') {
             // Limpar nome do time
             const nome = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '').trim();
             const abrev = escudosMap[nome];
             
             if (abrev) {
-                // USAR ESCUDOS LOCAIS - mais rápido e confiável
-                return `/static/escudos/${abrev}/${tamanho}.png`;
+                // Se nomeArquivo não é um tamanho padrão, usar o nome do clube
+                if (!nomeArquivo.includes('x')) {
+                    // Extrair nome do clube da abreviação (ex: "COR_Corinthians" -> "Corinthians")
+                    const nomeClube = abrev.split('_')[1] || abrev.split('_')[0];
+                    return `/static/escudos/${abrev}/${nomeClube}.png`;
+                } else {
+                    // Usar tamanho padrão
+                    return `/static/escudos/${abrev}/${nomeArquivo}.png`;
+                }
             }
             
             // Fallback para placeholder
@@ -5791,6 +6126,12 @@
             }, 100);
             
             loadRealLotecaData(); // ← CARREGAR DADOS REAIS PRIMEIRO!
+            
+            // SINCRONIZAR JOGOS ENTRE ABAS (após carregar dados)
+            setTimeout(() => {
+                sincronizarJogosEntreAbas();
+                console.log('✅ [DEBUG] Sincronização de jogos inicializada');
+            }, 500);
             initializeBudgetSelector();
             initializeOptimizationTable();
             initializeEventListeners();
