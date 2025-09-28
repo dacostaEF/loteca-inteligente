@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planilha dos Clubes de Futebol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Open Sans', sans-serif;
+            background: #0f0f0f;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #3a364f;
+            margin-bottom: 2rem;
+            
+            /* BRILHO NEON NO HEADER */
+            background: linear-gradient(135deg, 
+                rgba(168, 85, 247, 0.05) 0%, 
+                transparent 50%, 
+                rgba(0, 227, 140, 0.05) 100%);
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(168, 85, 247, 0.1) 25%, 
+                transparent 50%, 
+                rgba(0, 227, 140, 0.1) 75%, 
+                transparent 100%);
+            border-radius: 15px;
+            animation: headerShimmer 4s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes headerShimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .header .logo-link {
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .header .logo-link:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .header img.logo {
+            max-width: 250px;
+            height: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #A855F7;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0.5rem auto 0;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #333;
+            background: #2a2a2a;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #adb5bd;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: #333;
+            color: #ffffff;
+        }
+
+        .tab.active {
+            color: #6f42c1;
+            border-bottom-color: #6f42c1;
+            background: #1a1a1a;
+        }
+
+        .tab.active.serie-a {
+            color: #00E38C;
+            border-bottom-color: #00E38C;
+        }
+
+        .tab.active.serie-b {
+            color: #fbbf24;
+            border-bottom-color: #fbbf24;
+        }
+
+        .export-section {
+            padding: 20px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #333;
+        }
+
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #6f42c1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .export-btn:hover {
+            background: #5a2d91;
+        }
+
+        .export-btn.serie-a {
+            background: #00E38C;
+        }
+
+        .export-btn.serie-a:hover {
+            background: #00B377;
+        }
+
+        .export-btn.serie-b {
+            background: #fbbf24;
+        }
+
+        .export-btn.serie-b:hover {
+            background: #f59e0b;
+        }
+
+        .content {
+            padding: 30px;
+            background: #1a1a1a;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(111, 66, 193, 0.3);
+        }
+
+        .info-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #333;
+        }
+
+        .info-box.blue {
+            background: #1e3a8a;
+            color: #bfdbfe;
+            border-color: #3b82f6;
+        }
+
+        .info-box.yellow {
+            background: #92400e;
+            color: #fde68a;
+            border-color: #f59e0b;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 600px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #2a2a2a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2a2a2a;
+        }
+
+        th {
+            background: #6f42c1;
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .serie-a th {
+            background: #00E38C;
+        }
+
+        .serie-b th {
+            background: #fbbf24;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #333;
+            font-size: 0.9rem;
+            color: #ffffff;
+            background: #2a2a2a;
+        }
+
+        tr:nth-child(even) td {
+            background: #1e1e1e;
+        }
+
+        tr:hover td {
+            background: #333 !important;
+        }
+
+        .valor-cell {
+            font-weight: 600;
+            color: #00E38C;
+        }
+
+        .percentual-positivo {
+            color: #00E38C;
+            font-weight: 600;
+        }
+
+        .percentual-negativo {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .footer {
+            background: #2a2a2a;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+            color: #adb5bd;
+            font-size: 0.8rem;
+        }
+
+        .editable {
+            background: rgba(0, 227, 140, 0.15) !important;
+            border: 1px dashed #00E38C !important;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: text;
+            color: #60a5fa !important;
+        }
+
+        .editable:focus {
+            outline: 2px solid #00E38C !important;
+            background: rgba(0, 227, 140, 0.25) !important;
+        }
+
+        .edit-btn {
+            background: #6f42c1;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background: #5a2d91;
+        }
+
+        .save-btn {
+            background: #00E38C;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            transition: background 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: #00B377;
+        }
+
+        /* Scrollbar personalizada */
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .table-container::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 4px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: #6f42c1;
+            border-radius: 4px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #5a2d91;
+        }
+
+        .table-container::-webkit-scrollbar-corner {
+            background: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <a href="https://www.loteriasinteligente.com.br/" target="_blank" rel="noopener noreferrer" class="logo-link">
+                <img src="./backend/static/Logo_loteraisinteligente.png" alt="Logo Loterias Inteligente - Visite nosso site" class="logo">
+            </a>
+            <h1>Raio-X da Loteca</h1>
+            <p>Planilha dos Clubes de Futebol<br>
+            Dados atualizados - Observatório do Futebol e Transfermarkt</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('top100')">
+                Top 100 Clubes Mais Valiosos
+            </button>
+            <button class="tab" onclick="showTab('serieA')">
+                Série A Brasileirão
+            </button>
+            <button class="tab" onclick="showTab('serieB')">
+                Série B Brasileirão
+            </button>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-section">
+            <button class="export-btn" id="exportBtn" onclick="exportCurrentTab()">
+                📥 Baixar Dados (CSV)
+            </button>
+            <button class="save-btn" onclick="saveChanges()">
+                💾 Salvar Alterações
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Top 100 Tab -->
+            <div id="top100" class="tab-content active">
+                <h2>Top 100 Clubes Mais Valiosos do Mundo
+                    <span style="font-size: 0.8rem; color: #6b7280; margin-left: 10px;">(Observatório do Futebol - 17/09/2025)</span>
+                </h2>
+                <div class="table-container">
+                    <table id="top100Table">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Clube</th>
+                                <th>País</th>
+                                <th>Valor de Mercado</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="top100Body">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Série A Tab -->
+            <div id="serieA" class="tab-content">
+                <h2>Série A do Campeonato Brasileiro
+                    <span style="font-size: 0.8rem; color: #6b7280; margin-left: 10px;">(Transfermarkt - Valores em Euros)</span>
+                </h2>
+                <div class="info-box blue">
+                    <p><strong>Resumo:</strong> 658 jogadores, idade média de 27.6 anos, 154 estrangeiros, valor médio de € 2.76 mi. por jogador</p>
+                    <p style="margin-top: 5px;"><strong>Valor total:</strong> € 1.82 bilhões</p>
+                </div>
+                <div class="table-container">
+                    <table id="serieATable" class="serie-a">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Clube</th>
+                                <th>Plantel</th>
+                                <th>Idade Média</th>
+                                <th>Estrangeiros</th>
+                                <th>Valor Médio</th>
+                                <th>Valor Total</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="serieABody">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Série B Tab -->
+            <div id="serieB" class="tab-content">
+                <h2>Série B do Campeonato Brasileiro
+                    <span style="font-size: 0.8rem; color: #6b7280; margin-left: 10px;">(Transfermarkt - Valores em Euros)</span>
+                </h2>
+                <div class="info-box yellow">
+                    <p><strong>Resumo:</strong> 714 jogadores, idade média de 27.7 anos, 72 estrangeiros, valor médio de € 324 mil por jogador</p>
+                    <p style="margin-top: 5px;"><strong>Valor total:</strong> € 231.60 milhões</p>
+                </div>
+                <div class="table-container">
+                    <table id="serieBTable" class="serie-b">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Clube</th>
+                                <th>Plantel</th>
+                                <th>Idade Média</th>
+                                <th>Estrangeiros</th>
+                                <th>Valor Médio</th>
+                                <th>Valor Total</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="serieBBody">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Dados compilados do Observatório do Futebol (17/09/2025) e Transfermarkt.com.br</p>
+            <p style="margin-top: 5px;">Planilha editável - Clique nos valores para editar</p>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos clubes
+        const top100Clubs = [
+            { posicao: 1, clube: "Real Madrid", pais: "Espanha", valor: "€ 1.726 M" },
+            { posicao: 2, clube: "Manchester City", pais: "Inglaterra", valor: "€ 1.538 M" },
+            { posicao: 3, clube: "Barcelona FC", pais: "Espanha", valor: "€ 1.508 M" },
+            { posicao: 4, clube: "Manchester United", pais: "Inglaterra", valor: "€ 1.394 M" },
+            { posicao: 5, clube: "Liverpool FC", pais: "Inglaterra", valor: "€ 1.363 M" },
+            { posicao: 6, clube: "Arsenal FC", pais: "Inglaterra", valor: "€ 1.262 M" },
+            { posicao: 7, clube: "Chelsea FC", pais: "Inglaterra", valor: "€ 1.174 M" },
+            { posicao: 8, clube: "PSG", pais: "França", valor: "€ 1.137 M" },
+            { posicao: 9, clube: "Tottenham", pais: "Inglaterra", valor: "€ 1.108 M" },
+            { posicao: 10, clube: "Bayern Munich", pais: "Alemanha", valor: "€ 1.074 M" },
+            { posicao: 11, clube: "Newcastle United", pais: "Inglaterra", valor: "€ 945 M" },
+            { posicao: 12, clube: "Atletico Madrid", pais: "Espanha", valor: "€ 939 M" },
+            { posicao: 13, clube: "Juventus FC", pais: "Itália", valor: "€ 936 M" },
+            { posicao: 14, clube: "Borussia Dortmund", pais: "Alemanha", valor: "€ 913 M" },
+            { posicao: 15, clube: "AC Milan", pais: "Itália", valor: "€ 893 M" },
+            { posicao: 16, clube: "West Ham United", pais: "Inglaterra", valor: "€ 859 M" },
+            { posicao: 17, clube: "Brighton & Hove Albion", pais: "Inglaterra", valor: "€ 849 M" },
+            { posicao: 18, clube: "Aston Villa", pais: "Inglaterra", valor: "€ 838 M" },
+            { posicao: 19, clube: "Napoli", pais: "Itália", valor: "€ 831 M" },
+            { posicao: 20, clube: "Inter Milan", pais: "Itália", valor: "€ 818 M" },
+            { posicao: 21, clube: "Bayer Leverkusen", pais: "Alemanha", valor: "€ 803 M" },
+            { posicao: 22, clube: "Crystal Palace", pais: "Inglaterra", valor: "€ 743 M" },
+            { posicao: 23, clube: "RB Leipzig", pais: "Alemanha", valor: "€ 733 M" },
+            { posicao: 24, clube: "Fulham FC", pais: "Inglaterra", valor: "€ 712 M" },
+            { posicao: 25, clube: "Wolverhampton", pais: "Inglaterra", valor: "€ 706 M" },
+            { posicao: 26, clube: "AS Roma", pais: "Itália", valor: "€ 700 M" },
+            { posicao: 27, clube: "Everton FC", pais: "Inglaterra", valor: "€ 697 M" },
+            { posicao: 28, clube: "Brentford FC", pais: "Inglaterra", valor: "€ 694 M" },
+            { posicao: 29, clube: "Leicester City", pais: "Inglaterra", valor: "€ 664 M" },
+            { posicao: 30, clube: "Valencia CF", pais: "Espanha", valor: "€ 647 M" },
+            { posicao: 31, clube: "Sevilla FC", pais: "Espanha", valor: "€ 639 M" },
+            { posicao: 32, clube: "Brighton & Hove Albion", pais: "Inglaterra", valor: "€ 637 M" },
+            { posicao: 33, clube: "Leeds United", pais: "Inglaterra", valor: "€ 632 M" },
+            { posicao: 34, clube: "AFC Bournemouth", pais: "Inglaterra", valor: "€ 630 M" },
+            { posicao: 35, clube: "Lazio", pais: "Itália", valor: "€ 627 M" },
+            { posicao: 36, clube: "Eintracht Frankfurt", pais: "Alemanha", valor: "€ 623 M" },
+            { posicao: 37, clube: "Atalanta BC", pais: "Itália", valor: "€ 618 M" },
+            { posicao: 38, clube: "Nottingham Forest", pais: "Inglaterra", valor: "€ 606 M" },
+            { posicao: 39, clube: "Sheffield United", pais: "Inglaterra", valor: "€ 594 M" },
+            { posicao: 40, clube: "Burnley FC", pais: "Inglaterra", valor: "€ 584 M" },
+            { posicao: 41, clube: "Fiorentina", pais: "Itália", valor: "€ 575 M" },
+            { posicao: 42, clube: "Real Sociedad", pais: "Espanha", valor: "€ 569 M" },
+            { posicao: 43, clube: "Luton Town", pais: "Inglaterra", valor: "€ 564 M" },
+            { posicao: 44, clube: "FC Porto", pais: "Portugal", valor: "€ 558 M" },
+            { posicao: 45, clube: "Southampton FC", pais: "Inglaterra", valor: "€ 554 M" },
+            { posicao: 46, clube: "Olympique Marseille", pais: "França", valor: "€ 547 M" },
+            { posicao: 47, clube: "Athletic Bilbao", pais: "Espanha", valor: "€ 531 M" },
+            { posicao: 48, clube: "AS Monaco", pais: "França", valor: "€ 527 M" },
+            { posicao: 49, clube: "VfL Wolfsburg", pais: "Alemanha", valor: "€ 524 M" },
+            { posicao: 50, clube: "Real Betis", pais: "Espanha", valor: "€ 519 M" },
+            { posicao: 51, clube: "Olympique Lyon", pais: "França", valor: "€ 514 M" },
+            { posicao: 52, clube: "Villarreal CF", pais: "Espanha", valor: "€ 508 M" },
+            { posicao: 53, clube: "FC Salzburg", pais: "Áustria", valor: "€ 503 M" },
+            { posicao: 54, clube: "Union Berlin", pais: "Alemanha", valor: "€ 501 M" },
+            { posicao: 55, clube: "Sporting CP", pais: "Portugal", valor: "€ 497 M" },
+            { posicao: 56, clube: "Ajax Amsterdam", pais: "Holanda", valor: "€ 487 M" },
+            { posicao: 57, clube: "FC Copenhagen", pais: "Dinamarca", valor: "€ 484 M" },
+            { posicao: 58, clube: "Celta Vigo", pais: "Espanha", valor: "€ 473 M" },
+            { posicao: 59, clube: "Girona FC", pais: "Espanha", valor: "€ 470 M" },
+            { posicao: 60, clube: "Getafe CF", pais: "Espanha", valor: "€ 465 M" },
+            { posicao: 61, clube: "FC Twente", pais: "Holanda", valor: "€ 462 M" },
+            { posicao: 62, clube: "Hertha BSC", pais: "Alemanha", valor: "€ 456 M" },
+            { posicao: 63, clube: "Schalke 04", pais: "Alemanha", valor: "€ 453 M" },
+            { posicao: 64, clube: "FC Koln", pais: "Alemanha", valor: "€ 447 M" },
+            { posicao: 65, clube: "VfB Stuttgart", pais: "Alemanha", valor: "€ 441 M" },
+            { posicao: 66, clube: "SC Freiburg", pais: "Alemanha", valor: "€ 438 M" },
+            { posicao: 67, clube: "TSG Hoffenheim", pais: "Alemanha", valor: "€ 435 M" },
+            { posicao: 68, clube: "Borussia M'gladbach", pais: "Alemanha", valor: "€ 432 M" },
+            { posicao: 69, clube: "FSV Mainz 05", pais: "Alemanha", valor: "€ 429 M" },
+            { posicao: 70, clube: "FC Augsburg", pais: "Alemanha", valor: "€ 423 M" },
+            { posicao: 71, clube: "SV Werder Bremen", pais: "Alemanha", valor: "€ 420 M" },
+            { posicao: 72, clube: "FC St. Pauli", pais: "Alemanha", valor: "€ 416 M" },
+            { posicao: 73, clube: "Hamburger SV", pais: "Alemanha", valor: "€ 413 M" },
+            { posicao: 74, clube: "Hannover 96", pais: "Alemanha", valor: "€ 410 M" },
+            { posicao: 75, clube: "Fortuna Düsseldorf", pais: "Alemanha", valor: "€ 407 M" },
+            { posicao: 76, clube: "1. FC Nürnberg", pais: "Alemanha", valor: "€ 404 M" },
+            { posicao: 77, clube: "Karlsruher SC", pais: "Alemanha", valor: "€ 401 M" },
+            { posicao: 78, clube: "SV Darmstadt 98", pais: "Alemanha", valor: "€ 398 M" },
+            { posicao: 79, clube: "Eintracht Braunschweig", pais: "Alemanha", valor: "€ 395 M" },
+            { posicao: 80, clube: "FC Hansa Rostock", pais: "Alemanha", valor: "€ 392 M" },
+            { posicao: 81, clube: "1. FC Magdeburg", pais: "Alemanha", valor: "€ 389 M" },
+            { posicao: 82, clube: "SC Paderborn 07", pais: "Alemanha", valor: "€ 386 M" },
+            { posicao: 83, clube: "SpVgg Greuther Fürth", pais: "Alemanha", valor: "€ 383 M" },
+            { posicao: 84, clube: "SSV Jahn Regensburg", pais: "Alemanha", valor: "€ 380 M" },
+            { posicao: 85, clube: "SV Sandhausen", pais: "Alemanha", valor: "€ 377 M" },
+            { posicao: 86, clube: "Dynamo Dresden", pais: "Alemanha", valor: "€ 374 M" },
+            { posicao: 87, clube: "FC Erzgebirge Aue", pais: "Alemanha", valor: "€ 371 M" },
+            { posicao: 88, clube: "1. FC Heidenheim", pais: "Alemanha", valor: "€ 368 M" },
+            { posicao: 89, clube: "SV Wehen Wiesbaden", pais: "Alemanha", valor: "€ 365 M" },
+            { posicao: 90, clube: "TSV 1860 München", pais: "Alemanha", valor: "€ 362 M" },
+            { posicao: 91, clube: "FC Ingolstadt 04", pais: "Alemanha", valor: "€ 359 M" },
+            { posicao: 92, clube: "MSV Duisburg", pais: "Alemanha", valor: "€ 356 M" },
+            { posicao: 93, clube: "Würzburger Kickers", pais: "Alemanha", valor: "€ 353 M" },
+            { posicao: 94, clube: "KFC Uerdingen 05", pais: "Alemanha", valor: "€ 350 M" },
+            { posicao: 95, clube: "Viktoria Köln", pais: "Alemanha", valor: "€ 347 M" },
+            { posicao: 96, clube: "SC Verl", pais: "Alemanha", valor: "€ 344 M" },
+            { posicao: 97, clube: "FC Bayern München II", pais: "Alemanha", valor: "€ 341 M" },
+            { posicao: 98, clube: "SV Meppen", pais: "Alemanha", valor: "€ 338 M" },
+            { posicao: 99, clube: "Chemnitzer FC", pais: "Alemanha", valor: "€ 335 M" },
+            { posicao: 100, clube: "VfL Osnabrück", pais: "Alemanha", valor: "€ 332 M" }
+        ];
+
+        const serieAClubs = [
+            { posicao: 1, clube: "SE Palmeiras", plantel: 29, idadeMedia: 26.3, estrangeiros: 8, valorMedio: "€ 7.32 mi.", valorTotal: "€ 212.15 mi." },
+            { posicao: 2, clube: "CR Flamengo", plantel: 31, idadeMedia: 28.4, estrangeiros: 10, valorMedio: "€ 6.32 mi.", valorTotal: "€ 195.90 mi." },
+            { posicao: 3, clube: "Botafogo FR", plantel: 31, idadeMedia: 27.4, estrangeiros: 11, valorMedio: "€ 4.46 mi.", valorTotal: "€ 138.35 mi." },
+            { posicao: 4, clube: "Cruzeiro EC", plantel: 31, idadeMedia: 26.6, estrangeiros: 6, valorMedio: "€ 4.05 mi.", valorTotal: "€ 125.65 mi." },
+            { posicao: 5, clube: "SC Corinthians", plantel: 32, idadeMedia: 26.3, estrangeiros: 8, valorMedio: "€ 3.45 mi.", valorTotal: "€ 110.45 mi." },
+            { posicao: 6, clube: "CR Vasco da Gama", plantel: 36, idadeMedia: 26.5, estrangeiros: 9, valorMedio: "€ 3.00 mi.", valorTotal: "€ 108.15 mi." },
+            { posicao: 7, clube: "EC Bahia", plantel: 29, idadeMedia: 27.6, estrangeiros: 5, valorMedio: "€ 3.50 mi.", valorTotal: "€ 101.50 mi." },
+            { posicao: 8, clube: "Atlético Mineiro", plantel: 32, idadeMedia: 26.8, estrangeiros: 6, valorMedio: "€ 3.04 mi.", valorTotal: "€ 97.40 mi." },
+            { posicao: 9, clube: "Fluminense FC", plantel: 34, idadeMedia: 28.9, estrangeiros: 11, valorMedio: "€ 2.77 mi.", valorTotal: "€ 94.10 mi." },
+            { posicao: 10, clube: "RB Bragantino", plantel: 36, idadeMedia: 25.1, estrangeiros: 8, valorMedio: "€ 2.52 mi.", valorTotal: "€ 90.70 mi." },
+            { posicao: 11, clube: "São Paulo FC", plantel: 34, idadeMedia: 27.9, estrangeiros: 11, valorMedio: "€ 2.64 mi.", valorTotal: "€ 89.85 mi." },
+            { posicao: 12, clube: "Grêmio FBPA", plantel: 38, idadeMedia: 27.7, estrangeiros: 12, valorMedio: "€ 2.28 mi.", valorTotal: "€ 86.45 mi." },
+            { posicao: 13, clube: "SC Internacional", plantel: 29, idadeMedia: 27.0, estrangeiros: 9, valorMedio: "€ 2.97 mi.", valorTotal: "€ 86.00 mi." },
+            { posicao: 14, clube: "Santos FC", plantel: 33, idadeMedia: 26.6, estrangeiros: 9, valorMedio: "€ 2.51 mi.", valorTotal: "€ 82.80 mi." },
+            { posicao: 15, clube: "Fortaleza EC", plantel: 37, idadeMedia: 29.2, estrangeiros: 10, valorMedio: "€ 1.28 mi.", valorTotal: "€ 47.18 mi." },
+            { posicao: 16, clube: "Sport Recife", plantel: 31, idadeMedia: 29.1, estrangeiros: 6, valorMedio: "€ 1.27 mi.", valorTotal: "€ 39.25 mi." },
+            { posicao: 17, clube: "EC Vitória", plantel: 34, idadeMedia: 28.2, estrangeiros: 6, valorMedio: "€ 985 mil", valorTotal: "€ 33.50 mi." },
+            { posicao: 18, clube: "Ceará SC", plantel: 32, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 1.03 mi.", valorTotal: "€ 32.85 mi." },
+            { posicao: 19, clube: "EC Juventude", plantel: 36, idadeMedia: 28.1, estrangeiros: 5, valorMedio: "€ 644 mil", valorTotal: "€ 23.20 mi." },
+            { posicao: 20, clube: "Mirassol FC", plantel: 33, idadeMedia: 29.2, estrangeiros: 1, valorMedio: "€ 683 mil", valorTotal: "€ 22.53 mi." }
+        ];
+
+        const serieBClubs = [
+            { posicao: 1, clube: "Athletico Paranaense", plantel: 33, idadeMedia: 26.5, estrangeiros: 10, valorMedio: "€ 1.17 mi.", valorTotal: "€ 38.48 mi." },
+            { posicao: 2, clube: "Clube do Remo", plantel: 40, idadeMedia: 27.4, estrangeiros: 7, valorMedio: "€ 408 mil", valorTotal: "€ 16.30 mi." },
+            { posicao: 3, clube: "Coritiba FC", plantel: 30, idadeMedia: 28.9, estrangeiros: 4, valorMedio: "€ 529 mil", valorTotal: "€ 15.88 mi." },
+            { posicao: 4, clube: "América Mineiro", plantel: 38, idadeMedia: 27.5, estrangeiros: 4, valorMedio: "€ 382 mil", valorTotal: "€ 14.53 mi." },
+            { posicao: 5, clube: "Cuiabá EC", plantel: 31, idadeMedia: 26.6, estrangeiros: 3, valorMedio: "€ 445 mil", valorTotal: "€ 13.80 mi." },
+            { posicao: 6, clube: "Atlético Goianiense", plantel: 34, idadeMedia: 27.2, estrangeiros: 4, valorMedio: "€ 382 mil", valorTotal: "€ 12.98 mi." },
+            { posicao: 7, clube: "Grêmio Novorizontino", plantel: 30, idadeMedia: 29.9, estrangeiros: 1, valorMedio: "€ 423 mil", valorTotal: "€ 12.70 mi." },
+            { posicao: 8, clube: "Goiás EC", plantel: 29, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 417 mil", valorTotal: "€ 12.10 mi." },
+            { posicao: 9, clube: "Criciúma EC", plantel: 49, idadeMedia: 26.4, estrangeiros: 1, valorMedio: "€ 227 mil", valorTotal: "€ 11.10 mi." },
+            { posicao: 10, clube: "CRB", plantel: 28, idadeMedia: 28.0, estrangeiros: 2, valorMedio: "€ 369 mil", valorTotal: "€ 10.33 mi." }
+        ];
+
+        let currentTab = 'top100';
+
+        // Função para mostrar tabs
+        function showTab(tabName) {
+            // Esconder todas as tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os botões
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.classList.remove('active', 'serie-a', 'serie-b');
+            });
+            
+            // Mostrar tab selecionada
+            document.getElementById(tabName).classList.add('active');
+            
+            // Ativar botão correspondente
+            const activeBtn = event.target;
+            activeBtn.classList.add('active');
+            
+            if (tabName === 'serieA') {
+                activeBtn.classList.add('serie-a');
+                document.getElementById('exportBtn').className = 'export-btn serie-a';
+            } else if (tabName === 'serieB') {
+                activeBtn.classList.add('serie-b');
+                document.getElementById('exportBtn').className = 'export-btn serie-b';
+            } else {
+                document.getElementById('exportBtn').className = 'export-btn';
+            }
+            
+            currentTab = tabName;
+        }
+
+        // Função para tornar célula editável
+        function makeEditable(cell, originalValue) {
+            if (cell.classList.contains('editable')) return;
+            
+            cell.classList.add('editable');
+            cell.contentEditable = true;
+            cell.focus();
+            
+            // Selecionar todo o texto
+            const range = document.createRange();
+            range.selectNodeContents(cell);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            // Salvar ao perder foco
+            cell.addEventListener('blur', function() {
+                cell.contentEditable = false;
+                cell.classList.remove('editable');
+            });
+            
+            // Salvar ao pressionar Enter
+            cell.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    cell.blur();
+                }
+            });
+        }
+
+        // Função para popular tabelas
+        function populateTable(tableId, data, columns) {
+            const tbody = document.getElementById(tableId + 'Body');
+            tbody.innerHTML = '';
+            
+            data.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                columns.forEach(col => {
+                    const cell = document.createElement('td');
+                    cell.textContent = item[col];
+                    
+                    // Adicionar classes especiais
+                    if (col === 'valor' || col === 'valorAtual' || col === 'valorTotal') {
+                        cell.classList.add('valor-cell');
+                    }
+                    
+                    if (col === 'percentual') {
+                        cell.classList.add(item[col].includes('-') ? 'percentual-negativo' : 'percentual-positivo');
+                    }
+                    
+                    row.appendChild(cell);
+                });
+                
+                // Adicionar botão de edição
+                const actionCell = document.createElement('td');
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '✏️ Editar';
+                editBtn.className = 'edit-btn';
+                editBtn.onclick = function() {
+                    const cells = row.querySelectorAll('td:not(:last-child)');
+                    cells.forEach(cell => {
+                        if (!cell.textContent.match(/^\d+$/)) { // Não editar posição
+                            makeEditable(cell, cell.textContent);
+                        }
+                    });
+                };
+                actionCell.appendChild(editBtn);
+                row.appendChild(actionCell);
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Função para exportar CSV
+        function exportCurrentTab() {
+            let data, filename, headers;
+            
+            if (currentTab === 'top100') {
+                data = top100Clubs;
+                filename = 'top_100_clubes_mais_valiosos.csv';
+                headers = ['Posição', 'Clube', 'País', 'Valor'];
+            } else if (currentTab === 'serieA') {
+                data = serieAClubs;
+                filename = 'serie_a_brasileirao.csv';
+                headers = ['Posição', 'Clube', 'Plantel', 'Idade Média', 'Estrangeiros', 'Valor Médio', 'Valor Total'];
+            } else if (currentTab === 'serieB') {
+                data = serieBClubs;
+                filename = 'serie_b_brasileirao.csv';
+                headers = ['Posição', 'Clube', 'Plantel', 'Idade Média', 'Estrangeiros', 'Valor Médio', 'Valor Total'];
+            }
+            
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row => headers.map(header => {
+                    const key = header.toLowerCase().replace(/\s+/g, '').replace(/[çã]/g, 'a').replace('ç', 'c');
+                    const value = row[Object.keys(row).find(k => k.toLowerCase().replace(/\s+/g, '').includes(key.substring(0, 5))) || Object.keys(row)[headers.indexOf(header)]];
+                    return `"${value || ''}"`;
+                }).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Função para salvar alterações
+        function saveChanges() {
+            alert('💾 Alterações salvas com sucesso!\n\nNota: Em uma versão completa, os dados seriam salvos em um banco de dados.');
+        }
+
+        // Inicializar tabelas
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTable('top100', top100Clubs, ['posicao', 'clube', 'pais', 'valor']);
+            populateTable('serieA', serieAClubs, ['posicao', 'clube', 'plantel', 'idadeMedia', 'estrangeiros', 'valorMedio', 'valorTotal']);
+            populateTable('serieB', serieBClubs, ['posicao', 'clube', 'plantel', 'idadeMedia', 'estrangeiros', 'valorMedio', 'valorTotal']);
+        });
+    </script>
+</body>
+</html>
