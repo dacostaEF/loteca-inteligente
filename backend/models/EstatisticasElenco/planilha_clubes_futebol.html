@@ -225,6 +225,12 @@
             background: #2a2a2a;
         }
 
+        /* Scrollbar específica para Série B com mais altura */
+        .table-container.serie-b-scroll {
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -474,7 +480,7 @@
                     <p><strong>Resumo:</strong> 714 jogadores, idade média de 27.7 anos, 72 estrangeiros, valor médio de € 324 mil por jogador</p>
                     <p style="margin-top: 5px;"><strong>Valor total:</strong> € 231.60 milhões</p>
                 </div>
-                <div class="table-container">
+                <div class="table-container serie-b-scroll">
                     <table id="serieBTable" class="serie-b">
                         <thead>
                             <tr>
@@ -644,7 +650,17 @@
             { posicao: 7, clube: "Grêmio Novorizontino", plantel: 30, idadeMedia: 29.9, estrangeiros: 1, valorMedio: "€ 423 mil", valorTotal: "€ 12.70 mi.", posseBola: "45.1%", passesCertos: "265", chutesJogo: "7.0" },
             { posicao: 8, clube: "Goiás EC", plantel: 29, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 417 mil", valorTotal: "€ 12.10 mi.", posseBola: "44.9%", passesCertos: "262", chutesJogo: "6.9" },
             { posicao: 9, clube: "Criciúma EC", plantel: 49, idadeMedia: 26.4, estrangeiros: 1, valorMedio: "€ 227 mil", valorTotal: "€ 11.10 mi.", posseBola: "42.6%", passesCertos: "241", chutesJogo: "6.2" },
-            { posicao: 10, clube: "CRB", plantel: 28, idadeMedia: 28.0, estrangeiros: 2, valorMedio: "€ 369 mil", valorTotal: "€ 10.33 mi.", posseBola: "43.8%", passesCertos: "248", chutesJogo: "6.5" }
+            { posicao: 10, clube: "CRB", plantel: 28, idadeMedia: 28.0, estrangeiros: 2, valorMedio: "€ 369 mil", valorTotal: "€ 10.33 mi.", posseBola: "43.8%", passesCertos: "248", chutesJogo: "6.5" },
+            { posicao: 11, clube: "Ponte Preta", plantel: 35, idadeMedia: 27.8, estrangeiros: 3, valorMedio: "€ 295 mil", valorTotal: "€ 10.33 mi.", posseBola: "42.1%", passesCertos: "235", chutesJogo: "6.1" },
+            { posicao: 12, clube: "Avaí FC", plantel: 32, idadeMedia: 28.5, estrangeiros: 2, valorMedio: "€ 321 mil", valorTotal: "€ 10.27 mi.", posseBola: "41.8%", passesCertos: "232", chutesJogo: "5.9" },
+            { posicao: 13, clube: "Operário PR", plantel: 30, idadeMedia: 29.0, estrangeiros: 1, valorMedio: "€ 342 mil", valorTotal: "€ 10.26 mi.", posseBola: "41.5%", passesCertos: "228", chutesJogo: "5.8" },
+            { posicao: 14, clube: "Guarani FC", plantel: 33, idadeMedia: 28.7, estrangeiros: 2, valorMedio: "€ 306 mil", valorTotal: "€ 10.10 mi.", posseBola: "40.9%", passesCertos: "225", chutesJogo: "5.6" },
+            { posicao: 15, clube: "Paysandu SC", plantel: 31, idadeMedia: 27.9, estrangeiros: 1, valorMedio: "€ 325 mil", valorTotal: "€ 10.08 mi.", posseBola: "40.6%", passesCertos: "222", chutesJogo: "5.5" },
+            { posicao: 16, clube: "Vila Nova FC", plantel: 29, idadeMedia: 28.3, estrangeiros: 2, valorMedio: "€ 345 mil", valorTotal: "€ 10.01 mi.", posseBola: "40.2%", passesCertos: "218", chutesJogo: "5.3" },
+            { posicao: 17, clube: "Londrina EC", plantel: 34, idadeMedia: 29.1, estrangeiros: 1, valorMedio: "€ 294 mil", valorTotal: "€ 9.996 mi.", posseBola: "39.8%", passesCertos: "215", chutesJogo: "5.2" },
+            { posicao: 18, clube: "Chapecoense", plantel: 32, idadeMedia: 28.8, estrangeiros: 0, valorMedio: "€ 312 mil", valorTotal: "€ 9.984 mi.", posseBola: "39.4%", passesCertos: "212", chutesJogo: "5.0" },
+            { posicao: 19, clube: "Brusque FC", plantel: 30, idadeMedia: 29.5, estrangeiros: 1, valorMedio: "€ 330 mil", valorTotal: "€ 9.90 mi.", posseBola: "39.1%", passesCertos: "208", chutesJogo: "4.9" },
+            { posicao: 20, clube: "Ituano FC", plantel: 28, idadeMedia: 30.2, estrangeiros: 0, valorMedio: "€ 353 mil", valorTotal: "€ 9.884 mi.", posseBola: "38.7%", passesCertos: "205", chutesJogo: "4.7" }
         ];
 
         let currentTab = 'top100';
