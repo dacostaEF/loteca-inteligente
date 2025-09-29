@@ -338,21 +338,32 @@
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            font-size: 10px;
+            font-size: 12px;
             color: #00E38C;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 2px 4px;
-            border-radius: 2px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3px 5px;
+            border-radius: 3px;
             transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid #00E38C;
+            min-width: 20px;
+            text-align: center;
         }
 
         .cell-lock.locked {
             color: #ef4444;
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
         }
 
         .cell-lock:hover {
-            background: rgba(0, 0, 0, 0.9);
-            transform: translateY(-50%) scale(1.1);
+            background: rgba(0, 0, 0, 0.95);
+            transform: translateY(-50%) scale(1.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .cell-lock.locked:hover {
+            background: rgba(239, 68, 68, 0.4);
         }
 
         .edit-btn {
@@ -751,17 +762,31 @@
                 lockIcon.className = 'cell-lock';
                 lockIcon.innerHTML = '🔓';
                 lockIcon.title = 'Clique para travar este campo';
-                lockIcon.style.zIndex = '999';
+                lockIcon.style.zIndex = '1000';
+                lockIcon.style.position = 'absolute';
+                lockIcon.style.right = '2px';
+                lockIcon.style.top = '50%';
+                lockIcon.style.transform = 'translateY(-50%)';
+                lockIcon.style.cursor = 'pointer';
                 
-                // Usar addEventListener para melhor compatibilidade
+                // Event listener robusto
                 lockIcon.addEventListener('click', function(e) {
                     e.stopPropagation();
                     e.preventDefault();
-                    console.log('🖱️ [LOCK] Click no cadeado aberto detectado!');
+                    console.log('🖱️ [LOCK] Click no cadeado ABERTO detectado!');
+                    console.log('🖱️ [LOCK] Célula alvo:', cell.textContent.trim());
                     toggleCellLock(cell);
-                });
+                }, true); // Usar capture = true
+                
+                // Backup com mousedown
+                lockIcon.addEventListener('mousedown', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log('🖱️ [LOCK] MouseDown no cadeado detectado!');
+                }, true);
                 
                 cell.appendChild(lockIcon);
+                console.log('🔓 [LOCK] Cadeado ABERTO adicionado à célula');
             }
             
             cell.focus();
@@ -792,41 +817,75 @@
 
         // Função para alternar trava da célula
         function toggleCellLock(cell) {
-            console.log('🔄 [LOCK] Toggle chamado para:', cell.textContent.trim());
+            console.log('🔄 [LOCK] === TOGGLE INICIADO ===');
+            console.log('🔄 [LOCK] Célula:', cell.textContent.trim());
+            console.log('🔄 [LOCK] Classes atuais:', cell.className);
+            
             const lockIcon = cell.querySelector('.cell-lock');
             
             if (!lockIcon) {
                 console.error('❌ [LOCK] Ícone de cadeado não encontrado!');
-                return;
+                return false;
             }
             
-            if (cell.classList.contains('locked')) {
-                // Desbloquear
-                console.log('🔓 [LOCK] Desbloqueando célula...');
+            const isCurrentlyLocked = cell.classList.contains('locked');
+            console.log('🔄 [LOCK] Estado atual - Travado:', isCurrentlyLocked);
+            
+            if (isCurrentlyLocked) {
+                // DESBLOQUEAR
+                console.log('🔓 [LOCK] DESBLOQUEANDO célula...');
+                
+                // Remover classes de travado
                 cell.classList.remove('locked');
+                lockIcon.classList.remove('locked');
+                
+                // Adicionar classes de editável
                 cell.classList.add('editable');
                 cell.contentEditable = true;
+                
+                // Atualizar visual do cadeado
                 lockIcon.innerHTML = '🔓';
                 lockIcon.title = 'Clique para travar este campo';
-                lockIcon.classList.remove('locked');
+                lockIcon.style.color = '#00E38C';
+                lockIcon.style.borderColor = '#00E38C';
                 
                 // Remover do localStorage
                 removeCellLockState(cell);
-                console.log('✅ [LOCK] Campo desbloqueado:', cell.textContent.trim());
+                
+                console.log('✅ [LOCK] DESBLOQUEADO com sucesso!');
+                alert('🔓 Campo desbloqueado! Agora você pode editar.');
+                
             } else {
-                // Bloquear
-                console.log('🔒 [LOCK] Bloqueando célula...');
+                // BLOQUEAR
+                console.log('🔒 [LOCK] BLOQUEANDO célula...');
+                
+                // Remover classes de editável
                 cell.classList.remove('editable');
+                
+                // Adicionar classes de travado
                 cell.classList.add('locked');
+                lockIcon.classList.add('locked');
                 cell.contentEditable = false;
+                
+                // Atualizar visual do cadeado
                 lockIcon.innerHTML = '🔒';
                 lockIcon.title = 'Clique para destravar este campo';
-                lockIcon.classList.add('locked');
+                lockIcon.style.color = '#ef4444';
+                lockIcon.style.borderColor = '#ef4444';
                 
                 // Salvar no localStorage
                 saveCellLockState(cell);
-                console.log('✅ [LOCK] Campo travado:', cell.textContent.trim());
+                
+                console.log('✅ [LOCK] BLOQUEADO com sucesso!');
+                alert('🔒 Campo travado! Protegido contra edição.');
             }
+            
+            // Verificar estado final
+            console.log('🔄 [LOCK] Estado final - Classes:', cell.className);
+            console.log('🔄 [LOCK] Estado final - Editável:', cell.contentEditable);
+            console.log('🔄 [LOCK] === TOGGLE CONCLUÍDO ===');
+            
+            return true;
         }
 
         // Função para remover estado do cadeado
@@ -906,15 +965,30 @@
                             lockIcon.className = 'cell-lock locked';
                             lockIcon.innerHTML = '🔒';
                             lockIcon.title = 'Clique para destravar este campo';
-                            lockIcon.style.zIndex = '999';
+                            lockIcon.style.zIndex = '1000';
+                            lockIcon.style.position = 'absolute';
+                            lockIcon.style.right = '2px';
+                            lockIcon.style.top = '50%';
+                            lockIcon.style.transform = 'translateY(-50%)';
+                            lockIcon.style.cursor = 'pointer';
+                            lockIcon.style.color = '#ef4444';
+                            lockIcon.style.borderColor = '#ef4444';
                             
-                            // Função de click com referência correta
+                            // Event listener robusto para cadeado FECHADO
                             lockIcon.addEventListener('click', function(e) {
                                 e.stopPropagation();
                                 e.preventDefault();
-                                console.log('🖱️ [LOCK] Click no cadeado detectado!');
+                                console.log('🖱️ [LOCK] Click no cadeado FECHADO detectado!');
+                                console.log('🖱️ [LOCK] Célula alvo:', cell.textContent.trim());
                                 toggleCellLock(cell);
-                            });
+                            }, true); // Usar capture = true
+                            
+                            // Backup com mousedown
+                            lockIcon.addEventListener('mousedown', function(e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                console.log('🖱️ [LOCK] MouseDown no cadeado FECHADO detectado!');
+                            }, true);
                             
                             cell.appendChild(lockIcon);
                             console.log('✅ [RESTORE] Cadeado restaurado com sucesso');
@@ -1086,9 +1160,37 @@
             alert('🧹 Todos os cadeados foram limpos! Recarregue a página para testar.');
         }
 
-        // Tornar função disponível globalmente para debug
+        // Função de debug para testar um cadeado específico
+        function testarCadeado() {
+            console.log('🧪 [TEST] Iniciando teste de cadeado...');
+            
+            // Encontrar primeira célula editável
+            const cell = document.querySelector('td:nth-child(3)'); // Coluna "Plantel"
+            if (cell) {
+                console.log('🎯 [TEST] Célula encontrada:', cell.textContent.trim());
+                
+                // Tornar editável primeiro
+                makeEditable(cell, cell.textContent);
+                
+                setTimeout(() => {
+                    console.log('🔒 [TEST] Tentando travar célula...');
+                    toggleCellLock(cell);
+                    
+                    setTimeout(() => {
+                        console.log('🔓 [TEST] Tentando destravar célula...');
+                        toggleCellLock(cell);
+                    }, 2000);
+                }, 1000);
+                
+            } else {
+                console.error('❌ [TEST] Nenhuma célula encontrada para teste');
+            }
+        }
+
+        // Tornar funções disponíveis globalmente para debug
         window.limparTodosCadeados = limparTodosCadeados;
         window.toggleCellLock = toggleCellLock;
+        window.testarCadeado = testarCadeado;
 
         // Inicializar tabelas
         document.addEventListener('DOMContentLoaded', function() {
@@ -1102,7 +1204,10 @@
             }, 1000); // Aumentei para 1 segundo para garantir
             
             // Debug: mostrar info no console
-            console.log('🔧 [DEBUG] Para limpar todos os cadeados, digite: limparTodosCadeados()');
+            console.log('🔧 [DEBUG] Comandos disponíveis:');
+            console.log('🔧 [DEBUG] - limparTodosCadeados() : Remove todos os cadeados');
+            console.log('🔧 [DEBUG] - testarCadeado() : Testa automaticamente um cadeado');
+            console.log('🔧 [DEBUG] - toggleCellLock(celula) : Alterna estado de uma célula');
         });
     </script>
 </body>
