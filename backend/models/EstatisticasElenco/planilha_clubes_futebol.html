@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raio-X da Loteca - Planilha dos Clubes de Futebol</title>
+    <title>Planilha dos Clubes de Futebol</title>
     <style>
         * {
             margin: 0;
@@ -12,123 +12,282 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Roboto', 'Open Sans', sans-serif;
+            background: #0f0f0f;
+            color: #ffffff;
             min-height: 100vh;
-            color: #333;
+            padding: 20px;
+            margin: 0;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #333;
         }
 
-        header {
+        /* Cabeçalho */
+        .header {
             text-align: center;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #3a364f;
+            margin-bottom: 2rem;
+            
+            /* BRILHO NEON NO HEADER */
+            background: linear-gradient(135deg, 
+                rgba(168, 85, 247, 0.05) 0%, 
+                transparent 50%, 
+                rgba(0, 227, 140, 0.05) 100%);
             border-radius: 15px;
             position: relative;
         }
-
-        .logo {
+        
+        .header::before {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: 20px;
-            height: 60px;
-            width: auto;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(168, 85, 247, 0.1) 25%, 
+                transparent 50%, 
+                rgba(0, 227, 140, 0.1) 75%, 
+                transparent 100%);
+            border-radius: 15px;
+            animation: headerShimmer 4s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes headerShimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
 
-        h1 {
+        .header .logo-link {
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .header .logo-link:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .header img.logo {
+            max-width: 250px;
+            height: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            color: #A855F7;
+            margin: 0;
         }
 
-        header p {
+        .header p {
             font-size: 1.1rem;
-            opacity: 0.9;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0.5rem auto 0;
         }
 
         .tabs {
             display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            gap: 10px;
+            border-bottom: 1px solid #333;
+            background: #2a2a2a;
         }
 
         .tab {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
             border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 500;
+            color: #adb5bd;
+            border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
         .tab:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            background: #333;
+            color: #ffffff;
         }
 
         .tab.active {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+            color: #6f42c1;
+            border-bottom-color: #6f42c1;
+            background: #1a1a1a;
         }
 
-        .tab.serie-a {
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+        .tab.active.serie-a {
+            color: #00E38C;
+            border-bottom-color: #00E38C;
         }
 
-        .tab.serie-b {
-            background: linear-gradient(135deg, #ffd700, #ffb347);
+        .tab.active.serie-b {
+            color: #fbbf24;
+            border-bottom-color: #fbbf24;
         }
 
         .export-section {
-            text-align: center;
-            margin-bottom: 30px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #333;
         }
 
         .export-btn {
-            background: linear-gradient(135deg, #48c6ef, #6f86d6);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #6f42c1;
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(72, 198, 239, 0.4);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            margin-right: 10px;
         }
 
         .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(72, 198, 239, 0.6);
+            background: #5a2d91;
         }
 
         .export-btn.serie-a {
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            background: #00E38C;
+        }
+
+        .export-btn.serie-a:hover {
+            background: #00B377;
         }
 
         .export-btn.serie-b {
-            background: linear-gradient(135deg, #ffd700, #ffb347);
+            background: #fbbf24;
+        }
+
+        .export-btn.serie-b:hover {
+            background: #f59e0b;
+        }
+
+        .content {
+            padding: 30px;
+            background: #1a1a1a;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(111, 66, 193, 0.3);
+        }
+
+        .info-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #333;
+        }
+
+        .info-box.blue {
+            background: #1e3a8a;
+            color: #bfdbfe;
+            border-color: #3b82f6;
+        }
+
+        .info-box.yellow {
+            background: #92400e;
+            color: #fde68a;
+            border-color: #f59e0b;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 600px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #2a2a2a;
+        }
+
+        /* Scrollbar específica para Série B com mais altura */
+        .table-container.serie-b-scroll {
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2a2a2a;
+        }
+
+        th {
+            background: #6f42c1;
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .serie-a th {
+            background: #00E38C;
+        }
+
+        .serie-b th {
+            background: #fbbf24;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #333;
+            font-size: 0.9rem;
+            color: #ffffff;
+            background: #2a2a2a;
+        }
+
+        tr:nth-child(even) td {
+            background: #1e1e1e;
+        }
+
+        tr:hover td {
+            background: #333 !important;
+        }
+
+        .valor-cell {
+            font-weight: 600;
+            color: #00E38C;
+        }
+
+        .percentual-positivo {
+            color: #00E38C;
+            font-weight: 600;
+        }
+
+        .percentual-negativo {
+            color: #ef4444;
+            font-weight: 600;
         }
 
         .tab-content {
@@ -139,97 +298,28 @@
             display: block;
         }
 
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            text-align: center;
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        .footer {
+            background: #2a2a2a;
             padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
             text-align: center;
-        }
-
-        .info-box.blue {
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-        }
-
-        .info-box.yellow {
-            background: linear-gradient(135deg, #ffd700, #ffb347);
-            color: #333;
-        }
-
-        .table-container {
-            overflow-x: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .table-container.serie-b-scroll {
-            max-height: 500px;
-            overflow-y: scroll;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            font-size: 0.9rem;
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 10px;
-            text-align: left;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        table.serie-a th {
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-        }
-
-        table.serie-b th {
-            background: linear-gradient(135deg, #ffd700, #ffb347);
-            color: #333;
-        }
-
-        td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        tr:hover {
-            background-color: #f8f9ff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:nth-child(even):hover {
-            background-color: #f0f4ff;
+            border-top: 1px solid #333;
+            color: #adb5bd;
+            font-size: 0.8rem;
         }
 
         .editable {
-            background: rgba(72, 198, 239, 0.15) !important;
-            border: 1px solid #48c6ef !important;
+            background: rgba(0, 227, 140, 0.15) !important;
+            border: 1px dashed #00E38C !important;
             padding: 4px 8px;
             border-radius: 4px;
             cursor: text;
-            min-height: 20px;
+            color: #60a5fa !important;
             position: relative;
+        }
+
+        .editable:focus {
+            outline: 2px solid #00E38C !important;
+            background: rgba(0, 227, 140, 0.25) !important;
         }
 
         .locked {
@@ -284,83 +374,62 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.8rem;
-            transition: all 0.3s ease;
+            margin-left: 8px;
+            transition: background 0.3s ease;
         }
 
         .edit-btn:hover {
             background: #5a2d91;
-            transform: scale(1.05);
         }
 
         .save-btn {
-            background: linear-gradient(135deg, #48c6ef, #6f86d6);
+            background: #00E38C;
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
+            padding: 8px 16px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 20px auto;
-            display: block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(72, 198, 239, 0.4);
+            font-size: 0.9rem;
+            margin: 20px 0;
+            transition: background 0.3s ease;
         }
 
         .save-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(72, 198, 239, 0.6);
+            background: #00B377;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 2px solid #e0e0e0;
+        /* Scrollbar personalizada */
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 15px;
-            }
+        .table-container::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 4px;
+        }
 
-            h1 {
-                font-size: 1.8rem;
-            }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #6f42c1;
+            border-radius: 4px;
+        }
 
-            .tabs {
-                flex-direction: column;
-                align-items: center;
-            }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #5a2d91;
+        }
 
-            .tab {
-                margin-bottom: 10px;
-                width: 80%;
-            }
-
-            table {
-                font-size: 0.8rem;
-            }
-
-            th, td {
-                padding: 8px 5px;
-            }
-
-            .logo {
-                height: 40px;
-                top: 10px;
-                right: 10px;
-            }
+        .table-container::-webkit-scrollbar-corner {
+            background: #1a1a1a;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <img src="../../static/Logo_loteraisinteligente.png" alt="Logo Loterias Inteligente - Visite nosso site" class="logo">
+        <!-- Header -->
+        <header class="header">
+            <a href="https://www.loteriasinteligente.com.br/" target="_blank" rel="noopener noreferrer" class="logo-link">
+                <img src="../../static/Logo_loteraisinteligente.png" alt="Logo Loterias Inteligente - Visite nosso site" class="logo">
+            </a>
             <h1>Raio-X da Loteca</h1>
             <p>Planilha dos Clubes de Futebol<br>
             Dados atualizados - Observatório do Futebol e Transfermarkt</p>
@@ -368,13 +437,13 @@
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="tab active" onclick="showTab('top100', event)">
+            <button class="tab active" onclick="showTab('top100')">
                 Top 100 Clubes Mais Valiosos
             </button>
-            <button class="tab" onclick="showTab('serieA', event)">
+            <button class="tab" onclick="showTab('serieA')">
                 Série A Brasileirão
             </button>
-            <button class="tab" onclick="showTab('serieB', event)">
+            <button class="tab" onclick="showTab('serieB')">
                 Série B Brasileirão
             </button>
         </div>
@@ -383,6 +452,9 @@
         <div class="export-section">
             <button class="export-btn" id="exportBtn" onclick="exportCurrentTab()">
                 📥 Baixar Dados (CSV)
+            </button>
+            <button class="save-btn" onclick="saveChanges()">
+                💾 Salvar Alterações
             </button>
         </div>
 
@@ -478,11 +550,6 @@
             </div>
         </div>
 
-        <!-- Save Button -->
-        <button class="save-btn" onclick="saveChanges()">
-            💾 Salvar Alterações
-        </button>
-
         <!-- Footer -->
         <div class="footer">
             <p>Dados compilados do Observatório do Futebol (17/09/2025) e Transfermarkt.com.br</p>
@@ -491,548 +558,657 @@
     </div>
 
     <script>
-/* === Dados (mesmos objetos que você já tinha) === */
-const top100Clubs = [
-    { posicao: 1, clube: "Real Madrid", pais: "Espanha", valor: "€ 1.726 M" },
-    { posicao: 2, clube: "Manchester City", pais: "Inglaterra", valor: "€ 1.538 M" },
-    { posicao: 3, clube: "Barcelona FC", pais: "Espanha", valor: "€ 1.508 M" },
-    { posicao: 4, clube: "Manchester United", pais: "Inglaterra", valor: "€ 1.394 M" },
-    { posicao: 5, clube: "Liverpool FC", pais: "Inglaterra", valor: "€ 1.363 M" },
-    { posicao: 6, clube: "Arsenal FC", pais: "Inglaterra", valor: "€ 1.262 M" },
-    { posicao: 7, clube: "Chelsea FC", pais: "Inglaterra", valor: "€ 1.174 M" },
-    { posicao: 8, clube: "PSG", pais: "França", valor: "€ 1.137 M" },
-    { posicao: 9, clube: "Tottenham", pais: "Inglaterra", valor: "€ 1.108 M" },
-    { posicao: 10, clube: "Bayern Munich", pais: "Alemanha", valor: "€ 1.074 M" },
-    { posicao: 11, clube: "Newcastle United", pais: "Inglaterra", valor: "€ 945 M" },
-    { posicao: 12, clube: "Atletico Madrid", pais: "Espanha", valor: "€ 939 M" },
-    { posicao: 13, clube: "Juventus FC", pais: "Itália", valor: "€ 936 M" },
-    { posicao: 14, clube: "Borussia Dortmund", pais: "Alemanha", valor: "€ 913 M" },
-    { posicao: 15, clube: "AC Milan", pais: "Itália", valor: "€ 893 M" },
-    { posicao: 16, clube: "West Ham United", pais: "Inglaterra", valor: "€ 859 M" },
-    { posicao: 17, clube: "Brighton & Hove Albion", pais: "Inglaterra", valor: "€ 849 M" },
-    { posicao: 18, clube: "Aston Villa", pais: "Inglaterra", valor: "€ 838 M" },
-    { posicao: 19, clube: "Napoli", pais: "Itália", valor: "€ 831 M" },
-    { posicao: 20, clube: "Inter Milan", pais: "Itália", valor: "€ 818 M" },
-    { posicao: 21, clube: "Bayer Leverkusen", pais: "Alemanha", valor: "€ 803 M" },
-    { posicao: 22, clube: "Crystal Palace", pais: "Inglaterra", valor: "€ 743 M" },
-    { posicao: 23, clube: "RB Leipzig", pais: "Alemanha", valor: "€ 733 M" },
-    { posicao: 24, clube: "Fulham FC", pais: "Inglaterra", valor: "€ 712 M" },
-    { posicao: 25, clube: "Wolverhampton", pais: "Inglaterra", valor: "€ 706 M" },
-    { posicao: 26, clube: "AS Roma", pais: "Itália", valor: "€ 700 M" },
-    { posicao: 27, clube: "Everton FC", pais: "Inglaterra", valor: "€ 697 M" },
-    { posicao: 28, clube: "Brentford FC", pais: "Inglaterra", valor: "€ 694 M" },
-    { posicao: 29, clube: "Leicester City", pais: "Inglaterra", valor: "€ 664 M" },
-    { posicao: 30, clube: "Valencia CF", pais: "Espanha", valor: "€ 647 M" },
-    { posicao: 31, clube: "Sevilla FC", pais: "Espanha", valor: "€ 639 M" },
-    { posicao: 32, clube: "Brighton & Hove Albion", pais: "Inglaterra", valor: "€ 637 M" },
-    { posicao: 33, clube: "Leeds United", pais: "Inglaterra", valor: "€ 632 M" },
-    { posicao: 34, clube: "AFC Bournemouth", pais: "Inglaterra", valor: "€ 630 M" },
-    { posicao: 35, clube: "Lazio", pais: "Itália", valor: "€ 627 M" },
-    { posicao: 36, clube: "Eintracht Frankfurt", pais: "Alemanha", valor: "€ 623 M" },
-    { posicao: 37, clube: "Atalanta BC", pais: "Itália", valor: "€ 618 M" },
-    { posicao: 38, clube: "Nottingham Forest", pais: "Inglaterra", valor: "€ 606 M" },
-    { posicao: 39, clube: "Sheffield United", pais: "Inglaterra", valor: "€ 594 M" },
-    { posicao: 40, clube: "Burnley FC", pais: "Inglaterra", valor: "€ 584 M" },
-    { posicao: 41, clube: "Fiorentina", pais: "Itália", valor: "€ 575 M" },
-    { posicao: 42, clube: "Real Sociedad", pais: "Espanha", valor: "€ 569 M" },
-    { posicao: 43, clube: "Luton Town", pais: "Inglaterra", valor: "€ 564 M" },
-    { posicao: 44, clube: "FC Porto", pais: "Portugal", valor: "€ 558 M" },
-    { posicao: 45, clube: "Southampton FC", pais: "Inglaterra", valor: "€ 554 M" },
-    { posicao: 46, clube: "Olympique Marseille", pais: "França", valor: "€ 547 M" },
-    { posicao: 47, clube: "Athletic Bilbao", pais: "Espanha", valor: "€ 531 M" },
-    { posicao: 48, clube: "AS Monaco", pais: "França", valor: "€ 527 M" },
-    { posicao: 49, clube: "VfL Wolfsburg", pais: "Alemanha", valor: "€ 524 M" },
-    { posicao: 50, clube: "Real Betis", pais: "Espanha", valor: "€ 519 M" },
-    { posicao: 51, clube: "Olympique Lyon", pais: "França", valor: "€ 514 M" },
-    { posicao: 52, clube: "Villarreal CF", pais: "Espanha", valor: "€ 508 M" },
-    { posicao: 53, clube: "FC Salzburg", pais: "Áustria", valor: "€ 503 M" },
-    { posicao: 54, clube: "Union Berlin", pais: "Alemanha", valor: "€ 501 M" },
-    { posicao: 55, clube: "Sporting CP", pais: "Portugal", valor: "€ 497 M" },
-    { posicao: 56, clube: "Ajax Amsterdam", pais: "Holanda", valor: "€ 487 M" },
-    { posicao: 57, clube: "FC Copenhagen", pais: "Dinamarca", valor: "€ 484 M" },
-    { posicao: 58, clube: "Celta Vigo", pais: "Espanha", valor: "€ 473 M" },
-    { posicao: 59, clube: "Girona FC", pais: "Espanha", valor: "€ 470 M" },
-    { posicao: 60, clube: "Getafe CF", pais: "Espanha", valor: "€ 465 M" },
-    { posicao: 61, clube: "FC Twente", pais: "Holanda", valor: "€ 462 M" },
-    { posicao: 62, clube: "Hertha BSC", pais: "Alemanha", valor: "€ 456 M" },
-    { posicao: 63, clube: "Schalke 04", pais: "Alemanha", valor: "€ 453 M" },
-    { posicao: 64, clube: "FC Koln", pais: "Alemanha", valor: "€ 447 M" },
-    { posicao: 65, clube: "VfB Stuttgart", pais: "Alemanha", valor: "€ 441 M" },
-    { posicao: 66, clube: "SC Freiburg", pais: "Alemanha", valor: "€ 438 M" },
-    { posicao: 67, clube: "TSG Hoffenheim", pais: "Alemanha", valor: "€ 435 M" },
-    { posicao: 68, clube: "Borussia M'gladbach", pais: "Alemanha", valor: "€ 432 M" },
-    { posicao: 69, clube: "FSV Mainz 05", pais: "Alemanha", valor: "€ 429 M" },
-    { posicao: 70, clube: "FC Augsburg", pais: "Alemanha", valor: "€ 423 M" },
-    { posicao: 71, clube: "SV Werder Bremen", pais: "Alemanha", valor: "€ 420 M" },
-    { posicao: 72, clube: "FC St. Pauli", pais: "Alemanha", valor: "€ 416 M" },
-    { posicao: 73, clube: "Hamburger SV", pais: "Alemanha", valor: "€ 413 M" },
-    { posicao: 74, clube: "Hannover 96", pais: "Alemanha", valor: "€ 410 M" },
-    { posicao: 75, clube: "Fortuna Düsseldorf", pais: "Alemanha", valor: "€ 407 M" },
-    { posicao: 76, clube: "1. FC Nürnberg", pais: "Alemanha", valor: "€ 404 M" },
-    { posicao: 77, clube: "Karlsruher SC", pais: "Alemanha", valor: "€ 401 M" },
-    { posicao: 78, clube: "SV Darmstadt 98", pais: "Alemanha", valor: "€ 398 M" },
-    { posicao: 79, clube: "Eintracht Braunschweig", pais: "Alemanha", valor: "€ 395 M" },
-    { posicao: 80, clube: "FC Hansa Rostock", pais: "Alemanha", valor: "€ 392 M" },
-    { posicao: 81, clube: "1. FC Magdeburg", pais: "Alemanha", valor: "€ 389 M" },
-    { posicao: 82, clube: "SC Paderborn 07", pais: "Alemanha", valor: "€ 386 M" },
-    { posicao: 83, clube: "SpVgg Greuther Fürth", pais: "Alemanha", valor: "€ 383 M" },
-    { posicao: 84, clube: "SSV Jahn Regensburg", pais: "Alemanha", valor: "€ 380 M" },
-    { posicao: 85, clube: "SV Sandhausen", pais: "Alemanha", valor: "€ 377 M" },
-    { posicao: 86, clube: "Dynamo Dresden", pais: "Alemanha", valor: "€ 374 M" },
-    { posicao: 87, clube: "FC Erzgebirge Aue", pais: "Alemanha", valor: "€ 371 M" },
-    { posicao: 88, clube: "1. FC Heidenheim", pais: "Alemanha", valor: "€ 368 M" },
-    { posicao: 89, clube: "SV Wehen Wiesbaden", pais: "Alemanha", valor: "€ 365 M" },
-    { posicao: 90, clube: "TSV 1860 München", pais: "Alemanha", valor: "€ 362 M" },
-    { posicao: 91, clube: "FC Ingolstadt 04", pais: "Alemanha", valor: "€ 359 M" },
-    { posicao: 92, clube: "MSV Duisburg", pais: "Alemanha", valor: "€ 356 M" },
-    { posicao: 93, clube: "Würzburger Kickers", pais: "Alemanha", valor: "€ 353 M" },
-    { posicao: 94, clube: "KFC Uerdingen 05", pais: "Alemanha", valor: "€ 350 M" },
-    { posicao: 95, clube: "Viktoria Köln", pais: "Alemanha", valor: "€ 347 M" },
-    { posicao: 96, clube: "SC Verl", pais: "Alemanha", valor: "€ 344 M" },
-    { posicao: 97, clube: "FC Bayern München II", pais: "Alemanha", valor: "€ 341 M" },
-    { posicao: 98, clube: "FC Schalke 04 II", pais: "Alemanha", valor: "€ 338 M" },
-    { posicao: 99, clube: "Borussia Dortmund II", pais: "Alemanha", valor: "€ 335 M" },
-    { posicao: 100, clube: "Dynamo Dresden", pais: "Alemanha", valor: "€ 332 M" }
-];
+        // Dados dos clubes
+        const top100Clubs = [
+            { posicao: 1, clube: "Real Madrid", pais: "Espanha", valor: "€ 1.726 M" },
+            { posicao: 2, clube: "Manchester City", pais: "Inglaterra", valor: "€ 1.538 M" },
+            { posicao: 3, clube: "Barcelona FC", pais: "Espanha", valor: "€ 1.508 M" },
+            { posicao: 4, clube: "Manchester United", pais: "Inglaterra", valor: "€ 1.394 M" },
+            { posicao: 5, clube: "Liverpool FC", pais: "Inglaterra", valor: "€ 1.363 M" },
+            { posicao: 6, clube: "Arsenal FC", pais: "Inglaterra", valor: "€ 1.262 M" },
+            { posicao: 7, clube: "Chelsea FC", pais: "Inglaterra", valor: "€ 1.174 M" },
+            { posicao: 8, clube: "PSG", pais: "França", valor: "€ 1.137 M" },
+            { posicao: 9, clube: "Tottenham", pais: "Inglaterra", valor: "€ 1.108 M" },
+            { posicao: 10, clube: "Bayern Munich", pais: "Alemanha", valor: "€ 1.074 M" },
+            { posicao: 11, clube: "Newcastle United", pais: "Inglaterra", valor: "€ 945 M" },
+            { posicao: 12, clube: "Atletico Madrid", pais: "Espanha", valor: "€ 939 M" },
+            { posicao: 13, clube: "Juventus FC", pais: "Itália", valor: "€ 936 M" },
+            { posicao: 14, clube: "Borussia Dortmund", pais: "Alemanha", valor: "€ 913 M" },
+            { posicao: 15, clube: "AC Milan", pais: "Itália", valor: "€ 893 M" },
+            { posicao: 16, clube: "West Ham United", pais: "Inglaterra", valor: "€ 859 M" },
+            { posicao: 17, clube: "Brighton & Hove Albion", pais: "Inglaterra", valor: "€ 849 M" },
+            { posicao: 18, clube: "Aston Villa", pais: "Inglaterra", valor: "€ 838 M" },
+            { posicao: 19, clube: "Napoli", pais: "Itália", valor: "€ 831 M" },
+            { posicao: 20, clube: "Inter Milan", pais: "Itália", valor: "€ 818 M" },
+            { posicao: 21, clube: "Bayer Leverkusen", pais: "Alemanha", valor: "€ 803 M" },
+            { posicao: 22, clube: "Crystal Palace", pais: "Inglaterra", valor: "€ 743 M" },
+            { posicao: 23, clube: "RB Leipzig", pais: "Alemanha", valor: "€ 733 M" },
+            { posicao: 24, clube: "Fulham FC", pais: "Inglaterra", valor: "€ 712 M" },
+            { posicao: 25, clube: "Wolverhampton", pais: "Inglaterra", valor: "€ 706 M" },
+            { posicao: 26, clube: "AS Roma", pais: "Itália", valor: "€ 700 M" },
+            { posicao: 27, clube: "Everton FC", pais: "Inglaterra", valor: "€ 697 M" },
+            { posicao: 28, clube: "Brentford FC", pais: "Inglaterra", valor: "€ 694 M" },
+            { posicao: 29, clube: "Leicester City", pais: "Inglaterra", valor: "€ 664 M" },
+            { posicao: 30, clube: "Valencia CF", pais: "Espanha", valor: "€ 647 M" },
+            { posicao: 31, clube: "Sevilla FC", pais: "Espanha", valor: "€ 639 M" },
+            { posicao: 32, clube: "Brighton & Hove Albion", pais: "Inglaterra", valor: "€ 637 M" },
+            { posicao: 33, clube: "Leeds United", pais: "Inglaterra", valor: "€ 632 M" },
+            { posicao: 34, clube: "AFC Bournemouth", pais: "Inglaterra", valor: "€ 630 M" },
+            { posicao: 35, clube: "Lazio", pais: "Itália", valor: "€ 627 M" },
+            { posicao: 36, clube: "Eintracht Frankfurt", pais: "Alemanha", valor: "€ 623 M" },
+            { posicao: 37, clube: "Atalanta BC", pais: "Itália", valor: "€ 618 M" },
+            { posicao: 38, clube: "Nottingham Forest", pais: "Inglaterra", valor: "€ 606 M" },
+            { posicao: 39, clube: "Sheffield United", pais: "Inglaterra", valor: "€ 594 M" },
+            { posicao: 40, clube: "Burnley FC", pais: "Inglaterra", valor: "€ 584 M" },
+            { posicao: 41, clube: "Fiorentina", pais: "Itália", valor: "€ 575 M" },
+            { posicao: 42, clube: "Real Sociedad", pais: "Espanha", valor: "€ 569 M" },
+            { posicao: 43, clube: "Luton Town", pais: "Inglaterra", valor: "€ 564 M" },
+            { posicao: 44, clube: "FC Porto", pais: "Portugal", valor: "€ 558 M" },
+            { posicao: 45, clube: "Southampton FC", pais: "Inglaterra", valor: "€ 554 M" },
+            { posicao: 46, clube: "Olympique Marseille", pais: "França", valor: "€ 547 M" },
+            { posicao: 47, clube: "Athletic Bilbao", pais: "Espanha", valor: "€ 531 M" },
+            { posicao: 48, clube: "AS Monaco", pais: "França", valor: "€ 527 M" },
+            { posicao: 49, clube: "VfL Wolfsburg", pais: "Alemanha", valor: "€ 524 M" },
+            { posicao: 50, clube: "Real Betis", pais: "Espanha", valor: "€ 519 M" },
+            { posicao: 51, clube: "Olympique Lyon", pais: "França", valor: "€ 514 M" },
+            { posicao: 52, clube: "Villarreal CF", pais: "Espanha", valor: "€ 508 M" },
+            { posicao: 53, clube: "FC Salzburg", pais: "Áustria", valor: "€ 503 M" },
+            { posicao: 54, clube: "Union Berlin", pais: "Alemanha", valor: "€ 501 M" },
+            { posicao: 55, clube: "Sporting CP", pais: "Portugal", valor: "€ 497 M" },
+            { posicao: 56, clube: "Ajax Amsterdam", pais: "Holanda", valor: "€ 487 M" },
+            { posicao: 57, clube: "FC Copenhagen", pais: "Dinamarca", valor: "€ 484 M" },
+            { posicao: 58, clube: "Celta Vigo", pais: "Espanha", valor: "€ 473 M" },
+            { posicao: 59, clube: "Girona FC", pais: "Espanha", valor: "€ 470 M" },
+            { posicao: 60, clube: "Getafe CF", pais: "Espanha", valor: "€ 465 M" },
+            { posicao: 61, clube: "FC Twente", pais: "Holanda", valor: "€ 462 M" },
+            { posicao: 62, clube: "Hertha BSC", pais: "Alemanha", valor: "€ 456 M" },
+            { posicao: 63, clube: "Schalke 04", pais: "Alemanha", valor: "€ 453 M" },
+            { posicao: 64, clube: "FC Koln", pais: "Alemanha", valor: "€ 447 M" },
+            { posicao: 65, clube: "VfB Stuttgart", pais: "Alemanha", valor: "€ 441 M" },
+            { posicao: 66, clube: "SC Freiburg", pais: "Alemanha", valor: "€ 438 M" },
+            { posicao: 67, clube: "TSG Hoffenheim", pais: "Alemanha", valor: "€ 435 M" },
+            { posicao: 68, clube: "Borussia M'gladbach", pais: "Alemanha", valor: "€ 432 M" },
+            { posicao: 69, clube: "FSV Mainz 05", pais: "Alemanha", valor: "€ 429 M" },
+            { posicao: 70, clube: "FC Augsburg", pais: "Alemanha", valor: "€ 423 M" },
+            { posicao: 71, clube: "SV Werder Bremen", pais: "Alemanha", valor: "€ 420 M" },
+            { posicao: 72, clube: "FC St. Pauli", pais: "Alemanha", valor: "€ 416 M" },
+            { posicao: 73, clube: "Hamburger SV", pais: "Alemanha", valor: "€ 413 M" },
+            { posicao: 74, clube: "Hannover 96", pais: "Alemanha", valor: "€ 410 M" },
+            { posicao: 75, clube: "Fortuna Düsseldorf", pais: "Alemanha", valor: "€ 407 M" },
+            { posicao: 76, clube: "1. FC Nürnberg", pais: "Alemanha", valor: "€ 404 M" },
+            { posicao: 77, clube: "Karlsruher SC", pais: "Alemanha", valor: "€ 401 M" },
+            { posicao: 78, clube: "SV Darmstadt 98", pais: "Alemanha", valor: "€ 398 M" },
+            { posicao: 79, clube: "Eintracht Braunschweig", pais: "Alemanha", valor: "€ 395 M" },
+            { posicao: 80, clube: "FC Hansa Rostock", pais: "Alemanha", valor: "€ 392 M" },
+            { posicao: 81, clube: "1. FC Magdeburg", pais: "Alemanha", valor: "€ 389 M" },
+            { posicao: 82, clube: "SC Paderborn 07", pais: "Alemanha", valor: "€ 386 M" },
+            { posicao: 83, clube: "SpVgg Greuther Fürth", pais: "Alemanha", valor: "€ 383 M" },
+            { posicao: 84, clube: "SSV Jahn Regensburg", pais: "Alemanha", valor: "€ 380 M" },
+            { posicao: 85, clube: "SV Sandhausen", pais: "Alemanha", valor: "€ 377 M" },
+            { posicao: 86, clube: "Dynamo Dresden", pais: "Alemanha", valor: "€ 374 M" },
+            { posicao: 87, clube: "FC Erzgebirge Aue", pais: "Alemanha", valor: "€ 371 M" },
+            { posicao: 88, clube: "1. FC Heidenheim", pais: "Alemanha", valor: "€ 368 M" },
+            { posicao: 89, clube: "SV Wehen Wiesbaden", pais: "Alemanha", valor: "€ 365 M" },
+            { posicao: 90, clube: "TSV 1860 München", pais: "Alemanha", valor: "€ 362 M" },
+            { posicao: 91, clube: "FC Ingolstadt 04", pais: "Alemanha", valor: "€ 359 M" },
+            { posicao: 92, clube: "MSV Duisburg", pais: "Alemanha", valor: "€ 356 M" },
+            { posicao: 93, clube: "Würzburger Kickers", pais: "Alemanha", valor: "€ 353 M" },
+            { posicao: 94, clube: "KFC Uerdingen 05", pais: "Alemanha", valor: "€ 350 M" },
+            { posicao: 95, clube: "Viktoria Köln", pais: "Alemanha", valor: "€ 347 M" },
+            { posicao: 96, clube: "SC Verl", pais: "Alemanha", valor: "€ 344 M" },
+            { posicao: 97, clube: "FC Bayern München II", pais: "Alemanha", valor: "€ 341 M" },
+            { posicao: 98, clube: "SV Meppen", pais: "Alemanha", valor: "€ 338 M" },
+            { posicao: 99, clube: "Chemnitzer FC", pais: "Alemanha", valor: "€ 335 M" },
+            { posicao: 100, clube: "VfL Osnabrück", pais: "Alemanha", valor: "€ 332 M" }
+        ];
 
-const serieAClubs = [
-    { posicao: 1, clube: "SE Palmeiras", plantel: 29, idadeMedia: 26.3, estrangeiros: 8, valorMedio: "€ 7.32 mi.", valorTotal: "€ 212.15 mi.", posseBola: "58.2%", passesCertos: "385", chutesJogo: "13.4" },
-    { posicao: 2, clube: "CR Flamengo", plantel: 31, idadeMedia: 28.4, estrangeiros: 10, valorMedio: "€ 6.32 mi.", valorTotal: "€ 195.90 mi.", posseBola: "59.8%", passesCertos: "412", chutesJogo: "14.7" },
-    { posicao: 3, clube: "Botafogo FR", plantel: 31, idadeMedia: 27.4, estrangeiros: 11, valorMedio: "€ 4.46 mi.", valorTotal: "€ 138.35 mi.", posseBola: "56.1%", passesCertos: "368", chutesJogo: "12.9" },
-    { posicao: 4, clube: "Cruzeiro EC", plantel: 31, idadeMedia: 26.6, estrangeiros: 6, valorMedio: "€ 4.05 mi.", valorTotal: "€ 125.65 mi.", posseBola: "55.3%", passesCertos: "354", chutesJogo: "11.8" },
-    { posicao: 5, clube: "SC Corinthians", plantel: 32, idadeMedia: 26.3, estrangeiros: 8, valorMedio: "€ 3.45 mi.", valorTotal: "€ 110.45 mi.", posseBola: "53.7%", passesCertos: "342", chutesJogo: "10.9" },
-    { posicao: 6, clube: "CR Vasco da Gama", plantel: 36, idadeMedia: 26.5, estrangeiros: 9, valorMedio: "€ 3.00 mi.", valorTotal: "€ 108.15 mi.", posseBola: "54.2%", passesCertos: "348", chutesJogo: "11.3" },
-    { posicao: 7, clube: "EC Bahia", plantel: 29, idadeMedia: 27.6, estrangeiros: 5, valorMedio: "€ 3.50 mi.", valorTotal: "€ 101.50 mi.", posseBola: "52.8%", passesCertos: "335", chutesJogo: "10.4" },
-    { posicao: 8, clube: "Atlético Mineiro", plantel: 32, idadeMedia: 26.8, estrangeiros: 6, valorMedio: "€ 3.04 mi.", valorTotal: "€ 97.40 mi.", posseBola: "57.1%", passesCertos: "378", chutesJogo: "12.1" },
-    { posicao: 9, clube: "Fluminense FC", plantel: 34, idadeMedia: 28.9, estrangeiros: 11, valorMedio: "€ 2.77 mi.", valorTotal: "€ 94.10 mi.", posseBola: "56.4%", passesCertos: "371", chutesJogo: "11.7" },
-    { posicao: 10, clube: "RB Bragantino", plantel: 36, idadeMedia: 25.1, estrangeiros: 8, valorMedio: "€ 2.52 mi.", valorTotal: "€ 90.70 mi.", posseBola: "54.8%", passesCertos: "356", chutesJogo: "11.2" },
-    { posicao: 11, clube: "São Paulo FC", plantel: 34, idadeMedia: 27.9, estrangeiros: 11, valorMedio: "€ 2.64 mi.", valorTotal: "€ 89.85 mi.", posseBola: "55.6%", passesCertos: "362", chutesJogo: "11.5" },
-    { posicao: 12, clube: "Grêmio FBPA", plantel: 38, idadeMedia: 27.7, estrangeiros: 12, valorMedio: "€ 2.28 mi.", valorTotal: "€ 86.45 mi.", posseBola: "53.2%", passesCertos: "339", chutesJogo: "10.6" },
-    { posicao: 13, clube: "SC Internacional", plantel: 29, idadeMedia: 27.0, estrangeiros: 9, valorMedio: "€ 2.97 mi.", valorTotal: "€ 86.00 mi.", posseBola: "52.5%", passesCertos: "331", chutesJogo: "10.2" },
-    { posicao: 14, clube: "Santos FC", plantel: 33, idadeMedia: 26.6, estrangeiros: 9, valorMedio: "€ 2.51 mi.", valorTotal: "€ 82.80 mi.", posseBola: "51.9%", passesCertos: "326", chutesJogo: "9.8" },
-    { posicao: 15, clube: "Fortaleza EC", plantel: 37, idadeMedia: 29.2, estrangeiros: 10, valorMedio: "€ 1.28 mi.", valorTotal: "€ 47.18 mi.", posseBola: "49.3%", passesCertos: "298", chutesJogo: "8.7" },
-    { posicao: 16, clube: "Sport Recife", plantel: 31, idadeMedia: 29.1, estrangeiros: 6, valorMedio: "€ 1.27 mi.", valorTotal: "€ 39.25 mi.", posseBola: "48.1%", passesCertos: "287", chutesJogo: "8.2" },
-    { posicao: 17, clube: "EC Vitória", plantel: 34, idadeMedia: 28.2, estrangeiros: 6, valorMedio: "€ 985 mil", valorTotal: "€ 33.50 mi.", posseBola: "47.6%", passesCertos: "282", chutesJogo: "7.9" },
-    { posicao: 18, clube: "Ceará SC", plantel: 32, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 1.03 mi.", valorTotal: "€ 32.85 mi.", posseBola: "46.8%", passesCertos: "276", chutesJogo: "7.6" },
-    { posicao: 19, clube: "EC Juventude", plantel: 36, idadeMedia: 28.1, estrangeiros: 5, valorMedio: "€ 644 mil", valorTotal: "€ 23.20 mi.", posseBola: "45.2%", passesCertos: "268", chutesJogo: "7.1" },
-    { posicao: 20, clube: "Mirassol FC", plantel: 33, idadeMedia: 29.2, estrangeiros: 1, valorMedio: "€ 683 mil", valorTotal: "€ 22.53 mi.", posseBola: "44.7%", passesCertos: "264", chutesJogo: "6.8" }
-];
+        const serieAClubs = [
+            { posicao: 1, clube: "SE Palmeiras", plantel: 29, idadeMedia: 26.3, estrangeiros: 8, valorMedio: "€ 7.32 mi.", valorTotal: "€ 212.15 mi.", posseBola: "58.2%", passesCertos: "385", chutesJogo: "13.4" },
+            { posicao: 2, clube: "CR Flamengo", plantel: 31, idadeMedia: 28.4, estrangeiros: 10, valorMedio: "€ 6.32 mi.", valorTotal: "€ 195.90 mi.", posseBola: "59.8%", passesCertos: "412", chutesJogo: "14.7" },
+            { posicao: 3, clube: "Botafogo FR", plantel: 31, idadeMedia: 27.4, estrangeiros: 11, valorMedio: "€ 4.46 mi.", valorTotal: "€ 138.35 mi.", posseBola: "56.1%", passesCertos: "368", chutesJogo: "12.9" },
+            { posicao: 4, clube: "Cruzeiro EC", plantel: 31, idadeMedia: 26.6, estrangeiros: 6, valorMedio: "€ 4.05 mi.", valorTotal: "€ 125.65 mi.", posseBola: "55.3%", passesCertos: "354", chutesJogo: "11.8" },
+            { posicao: 5, clube: "SC Corinthians", plantel: 32, idadeMedia: 26.3, estrangeiros: 8, valorMedio: "€ 3.45 mi.", valorTotal: "€ 110.45 mi.", posseBola: "53.7%", passesCertos: "342", chutesJogo: "10.9" },
+            { posicao: 6, clube: "CR Vasco da Gama", plantel: 36, idadeMedia: 26.5, estrangeiros: 9, valorMedio: "€ 3.00 mi.", valorTotal: "€ 108.15 mi.", posseBola: "54.2%", passesCertos: "348", chutesJogo: "11.3" },
+            { posicao: 7, clube: "EC Bahia", plantel: 29, idadeMedia: 27.6, estrangeiros: 5, valorMedio: "€ 3.50 mi.", valorTotal: "€ 101.50 mi.", posseBola: "52.8%", passesCertos: "335", chutesJogo: "10.4" },
+            { posicao: 8, clube: "Atlético Mineiro", plantel: 32, idadeMedia: 26.8, estrangeiros: 6, valorMedio: "€ 3.04 mi.", valorTotal: "€ 97.40 mi.", posseBola: "57.1%", passesCertos: "378", chutesJogo: "12.1" },
+            { posicao: 9, clube: "Fluminense FC", plantel: 34, idadeMedia: 28.9, estrangeiros: 11, valorMedio: "€ 2.77 mi.", valorTotal: "€ 94.10 mi.", posseBola: "56.4%", passesCertos: "371", chutesJogo: "11.7" },
+            { posicao: 10, clube: "RB Bragantino", plantel: 36, idadeMedia: 25.1, estrangeiros: 8, valorMedio: "€ 2.52 mi.", valorTotal: "€ 90.70 mi.", posseBola: "54.8%", passesCertos: "356", chutesJogo: "11.2" },
+            { posicao: 11, clube: "São Paulo FC", plantel: 34, idadeMedia: 27.9, estrangeiros: 11, valorMedio: "€ 2.64 mi.", valorTotal: "€ 89.85 mi.", posseBola: "55.6%", passesCertos: "362", chutesJogo: "11.5" },
+            { posicao: 12, clube: "Grêmio FBPA", plantel: 38, idadeMedia: 27.7, estrangeiros: 12, valorMedio: "€ 2.28 mi.", valorTotal: "€ 86.45 mi.", posseBola: "53.2%", passesCertos: "339", chutesJogo: "10.6" },
+            { posicao: 13, clube: "SC Internacional", plantel: 29, idadeMedia: 27.0, estrangeiros: 9, valorMedio: "€ 2.97 mi.", valorTotal: "€ 86.00 mi.", posseBola: "52.5%", passesCertos: "331", chutesJogo: "10.2" },
+            { posicao: 14, clube: "Santos FC", plantel: 33, idadeMedia: 26.6, estrangeiros: 9, valorMedio: "€ 2.51 mi.", valorTotal: "€ 82.80 mi.", posseBola: "51.9%", passesCertos: "326", chutesJogo: "9.8" },
+            { posicao: 15, clube: "Fortaleza EC", plantel: 37, idadeMedia: 29.2, estrangeiros: 10, valorMedio: "€ 1.28 mi.", valorTotal: "€ 47.18 mi.", posseBola: "49.3%", passesCertos: "298", chutesJogo: "8.7" },
+            { posicao: 16, clube: "Sport Recife", plantel: 31, idadeMedia: 29.1, estrangeiros: 6, valorMedio: "€ 1.27 mi.", valorTotal: "€ 39.25 mi.", posseBola: "48.1%", passesCertos: "287", chutesJogo: "8.2" },
+            { posicao: 17, clube: "EC Vitória", plantel: 34, idadeMedia: 28.2, estrangeiros: 6, valorMedio: "€ 985 mil", valorTotal: "€ 33.50 mi.", posseBola: "47.6%", passesCertos: "282", chutesJogo: "7.9" },
+            { posicao: 18, clube: "Ceará SC", plantel: 32, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 1.03 mi.", valorTotal: "€ 32.85 mi.", posseBola: "46.8%", passesCertos: "276", chutesJogo: "7.6" },
+            { posicao: 19, clube: "EC Juventude", plantel: 36, idadeMedia: 28.1, estrangeiros: 5, valorMedio: "€ 644 mil", valorTotal: "€ 23.20 mi.", posseBola: "45.2%", passesCertos: "268", chutesJogo: "7.1" },
+            { posicao: 20, clube: "Mirassol FC", plantel: 33, idadeMedia: 29.2, estrangeiros: 1, valorMedio: "€ 683 mil", valorTotal: "€ 22.53 mi.", posseBola: "44.7%", passesCertos: "264", chutesJogo: "6.8" }
+        ];
 
-const serieBClubs = [
-    { posicao: 1, clube: "Athletico Paranaense", plantel: 33, idadeMedia: 26.5, estrangeiros: 10, valorMedio: "€ 1.17 mi.", valorTotal: "€ 38.48 mi.", posseBola: "54.8%", passesCertos: "356", chutesJogo: "11.2" },
-    { posicao: 2, clube: "Clube do Remo", plantel: 40, idadeMedia: 27.4, estrangeiros: 7, valorMedio: "€ 408 mil", valorTotal: "€ 16.30 mi.", posseBola: "48.3%", passesCertos: "289", chutesJogo: "8.4" },
-    { posicao: 3, clube: "Coritiba FC", plantel: 30, idadeMedia: 28.9, estrangeiros: 4, valorMedio: "€ 529 mil", valorTotal: "€ 15.88 mi.", posseBola: "49.7%", passesCertos: "302", chutesJogo: "8.9" },
-    { posicao: 4, clube: "América Mineiro", plantel: 38, idadeMedia: 27.5, estrangeiros: 4, valorMedio: "€ 382 mil", valorTotal: "€ 14.53 mi.", posseBola: "47.2%", passesCertos: "278", chutesJogo: "7.8" },
-    { posicao: 5, clube: "Cuiabá EC", plantel: 31, idadeMedia: 26.6, estrangeiros: 3, valorMedio: "€ 445 mil", valorTotal: "€ 13.80 mi.", posseBola: "48.6%", passesCertos: "294", chutesJogo: "8.3" },
-    { posicao: 6, clube: "Atlético Goianiense", plantel: 34, idadeMedia: 27.2, estrangeiros: 4, valorMedio: "€ 382 mil", valorTotal: "€ 12.98 mi.", posseBola: "46.8%", passesCertos: "275", chutesJogo: "7.5" },
-    { posicao: 7, clube: "Grêmio Novorizontino", plantel: 30, idadeMedia: 29.9, estrangeiros: 1, valorMedio: "€ 423 mil", valorTotal: "€ 12.70 mi.", posseBola: "45.1%", passesCertos: "265", chutesJogo: "7.0" },
-    { posicao: 8, clube: "Goiás EC", plantel: 29, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 417 mil", valorTotal: "€ 12.10 mi.", posseBola: "44.9%", passesCertos: "262", chutesJogo: "6.9" },
-    { posicao: 9, clube: "Criciúma EC", plantel: 49, idadeMedia: 26.4, estrangeiros: 1, valorMedio: "€ 227 mil", valorTotal: "€ 11.10 mi.", posseBola: "42.6%", passesCertos: "241", chutesJogo: "6.2" },
-    { posicao: 10, clube: "CRB", plantel: 28, idadeMedia: 28.0, estrangeiros: 2, valorMedio: "€ 369 mil", valorTotal: "€ 10.33 mi.", posseBola: "43.8%", passesCertos: "248", chutesJogo: "6.5" },
-    { posicao: 11, clube: "Ponte Preta", plantel: 35, idadeMedia: 27.8, estrangeiros: 3, valorMedio: "€ 295 mil", valorTotal: "€ 10.33 mi.", posseBola: "42.1%", passesCertos: "235", chutesJogo: "6.1" },
-    { posicao: 12, clube: "Avaí FC", plantel: 32, idadeMedia: 28.5, estrangeiros: 2, valorMedio: "€ 321 mil", valorTotal: "€ 10.27 mi.", posseBola: "41.8%", passesCertos: "232", chutesJogo: "5.9" },
-    { posicao: 13, clube: "Operário PR", plantel: 30, idadeMedia: 29.0, estrangeiros: 1, valorMedio: "€ 342 mil", valorTotal: "€ 10.26 mi.", posseBola: "41.5%", passesCertos: "228", chutesJogo: "5.8" },
-    { posicao: 14, clube: "Guarani FC", plantel: 33, idadeMedia: 28.7, estrangeiros: 2, valorMedio: "€ 306 mil", valorTotal: "€ 10.10 mi.", posseBola: "40.9%", passesCertos: "225", chutesJogo: "5.6" },
-    { posicao: 15, clube: "Paysandu SC", plantel: 31, idadeMedia: 27.9, estrangeiros: 1, valorMedio: "€ 325 mil", valorTotal: "€ 10.08 mi.", posseBola: "40.6%", passesCertos: "222", chutesJogo: "5.5" },
-    { posicao: 16, clube: "Vila Nova FC", plantel: 29, idadeMedia: 28.3, estrangeiros: 2, valorMedio: "€ 345 mil", valorTotal: "€ 10.01 mi.", posseBola: "40.2%", passesCertos: "218", chutesJogo: "5.3" },
-    { posicao: 17, clube: "Londrina EC", plantel: 34, idadeMedia: 29.1, estrangeiros: 1, valorMedio: "€ 294 mil", valorTotal: "€ 9.996 mi.", posseBola: "39.8%", passesCertos: "215", chutesJogo: "5.2" },
-    { posicao: 18, clube: "Chapecoense", plantel: 32, idadeMedia: 28.8, estrangeiros: 0, valorMedio: "€ 312 mil", valorTotal: "€ 9.984 mi.", posseBola: "39.4%", passesCertos: "212", chutesJogo: "5.0" },
-    { posicao: 19, clube: "Brusque FC", plantel: 30, idadeMedia: 29.5, estrangeiros: 1, valorMedio: "€ 330 mil", valorTotal: "€ 9.90 mi.", posseBola: "39.1%", passesCertos: "208", chutesJogo: "4.9" },
-    { posicao: 20, clube: "Ituano FC", plantel: 28, idadeMedia: 30.2, estrangeiros: 0, valorMedio: "€ 353 mil", valorTotal: "€ 9.884 mi.", posseBola: "38.7%", passesCertos: "205", chutesJogo: "4.7" }
-];
+        const serieBClubs = [
+            { posicao: 1, clube: "Athletico Paranaense", plantel: 33, idadeMedia: 26.5, estrangeiros: 10, valorMedio: "€ 1.17 mi.", valorTotal: "€ 38.48 mi.", posseBola: "54.8%", passesCertos: "356", chutesJogo: "11.2" },
+            { posicao: 2, clube: "Clube do Remo", plantel: 40, idadeMedia: 27.4, estrangeiros: 7, valorMedio: "€ 408 mil", valorTotal: "€ 16.30 mi.", posseBola: "48.3%", passesCertos: "289", chutesJogo: "8.4" },
+            { posicao: 3, clube: "Coritiba FC", plantel: 30, idadeMedia: 28.9, estrangeiros: 4, valorMedio: "€ 529 mil", valorTotal: "€ 15.88 mi.", posseBola: "49.7%", passesCertos: "302", chutesJogo: "8.9" },
+            { posicao: 4, clube: "América Mineiro", plantel: 38, idadeMedia: 27.5, estrangeiros: 4, valorMedio: "€ 382 mil", valorTotal: "€ 14.53 mi.", posseBola: "47.2%", passesCertos: "278", chutesJogo: "7.8" },
+            { posicao: 5, clube: "Cuiabá EC", plantel: 31, idadeMedia: 26.6, estrangeiros: 3, valorMedio: "€ 445 mil", valorTotal: "€ 13.80 mi.", posseBola: "48.6%", passesCertos: "294", chutesJogo: "8.3" },
+            { posicao: 6, clube: "Atlético Goianiense", plantel: 34, idadeMedia: 27.2, estrangeiros: 4, valorMedio: "€ 382 mil", valorTotal: "€ 12.98 mi.", posseBola: "46.8%", passesCertos: "275", chutesJogo: "7.5" },
+            { posicao: 7, clube: "Grêmio Novorizontino", plantel: 30, idadeMedia: 29.9, estrangeiros: 1, valorMedio: "€ 423 mil", valorTotal: "€ 12.70 mi.", posseBola: "45.1%", passesCertos: "265", chutesJogo: "7.0" },
+            { posicao: 8, clube: "Goiás EC", plantel: 29, idadeMedia: 29.2, estrangeiros: 3, valorMedio: "€ 417 mil", valorTotal: "€ 12.10 mi.", posseBola: "44.9%", passesCertos: "262", chutesJogo: "6.9" },
+            { posicao: 9, clube: "Criciúma EC", plantel: 49, idadeMedia: 26.4, estrangeiros: 1, valorMedio: "€ 227 mil", valorTotal: "€ 11.10 mi.", posseBola: "42.6%", passesCertos: "241", chutesJogo: "6.2" },
+            { posicao: 10, clube: "CRB", plantel: 28, idadeMedia: 28.0, estrangeiros: 2, valorMedio: "€ 369 mil", valorTotal: "€ 10.33 mi.", posseBola: "43.8%", passesCertos: "248", chutesJogo: "6.5" },
+            { posicao: 11, clube: "Ponte Preta", plantel: 35, idadeMedia: 27.8, estrangeiros: 3, valorMedio: "€ 295 mil", valorTotal: "€ 10.33 mi.", posseBola: "42.1%", passesCertos: "235", chutesJogo: "6.1" },
+            { posicao: 12, clube: "Avaí FC", plantel: 32, idadeMedia: 28.5, estrangeiros: 2, valorMedio: "€ 321 mil", valorTotal: "€ 10.27 mi.", posseBola: "41.8%", passesCertos: "232", chutesJogo: "5.9" },
+            { posicao: 13, clube: "Operário PR", plantel: 30, idadeMedia: 29.0, estrangeiros: 1, valorMedio: "€ 342 mil", valorTotal: "€ 10.26 mi.", posseBola: "41.5%", passesCertos: "228", chutesJogo: "5.8" },
+            { posicao: 14, clube: "Guarani FC", plantel: 33, idadeMedia: 28.7, estrangeiros: 2, valorMedio: "€ 306 mil", valorTotal: "€ 10.10 mi.", posseBola: "40.9%", passesCertos: "225", chutesJogo: "5.6" },
+            { posicao: 15, clube: "Paysandu SC", plantel: 31, idadeMedia: 27.9, estrangeiros: 1, valorMedio: "€ 325 mil", valorTotal: "€ 10.08 mi.", posseBola: "40.6%", passesCertos: "222", chutesJogo: "5.5" },
+            { posicao: 16, clube: "Vila Nova FC", plantel: 29, idadeMedia: 28.3, estrangeiros: 2, valorMedio: "€ 345 mil", valorTotal: "€ 10.01 mi.", posseBola: "40.2%", passesCertos: "218", chutesJogo: "5.3" },
+            { posicao: 17, clube: "Londrina EC", plantel: 34, idadeMedia: 29.1, estrangeiros: 1, valorMedio: "€ 294 mil", valorTotal: "€ 9.996 mi.", posseBola: "39.8%", passesCertos: "215", chutesJogo: "5.2" },
+            { posicao: 18, clube: "Chapecoense", plantel: 32, idadeMedia: 28.8, estrangeiros: 0, valorMedio: "€ 312 mil", valorTotal: "€ 9.984 mi.", posseBola: "39.4%", passesCertos: "212", chutesJogo: "5.0" },
+            { posicao: 19, clube: "Brusque FC", plantel: 30, idadeMedia: 29.5, estrangeiros: 1, valorMedio: "€ 330 mil", valorTotal: "€ 9.90 mi.", posseBola: "39.1%", passesCertos: "208", chutesJogo: "4.9" },
+            { posicao: 20, clube: "Ituano FC", plantel: 28, idadeMedia: 30.2, estrangeiros: 0, valorMedio: "€ 353 mil", valorTotal: "€ 9.884 mi.", posseBola: "38.7%", passesCertos: "205", chutesJogo: "4.7" }
+        ];
 
-let currentTab = 'top100';
+        let currentTab = 'top100';
 
-/* === Utilidade: chave para localStorage === */
-function cellKey(tableId, row, col) {
-    return `${tableId}::r${row}::c${col}`;
-}
-
-/* === showTab (corrigido para receber event) === */
-function showTab(tabName, ev) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active','serie-a','serie-b'));
-    document.getElementById(tabName).classList.add('active');
-
-    if (ev && ev.currentTarget) {
-        const activeBtn = ev.currentTarget;
-        activeBtn.classList.add('active');
-        if (tabName === 'serieA') {
-            activeBtn.classList.add('serie-a');
-            document.getElementById('exportBtn').className = 'export-btn serie-a';
-        } else if (tabName === 'serieB') {
-            activeBtn.classList.add('serie-b');
-            document.getElementById('exportBtn').className = 'export-btn serie-b';
-        } else {
-            document.getElementById('exportBtn').className = 'export-btn';
-        }
-    }
-    currentTab = tabName;
-}
-
-/* === Cria célula de cadeado (reutilizável) === */
-function createLockIcon(isLocked) {
-    const span = document.createElement('span');
-    span.className = 'cell-lock' + (isLocked ? ' locked' : '');
-    span.innerHTML = isLocked ? '🔒' : '🔓';
-    span.title = isLocked ? 'Clique para destravar este campo' : 'Clique para travar este campo';
-    // estilo inline pequeno para garantir posicionamento (o CSS já cobre a maior parte)
-    span.style.zIndex = '1000';
-    span.style.position = 'absolute';
-    span.style.right = '4px';
-    span.style.top = '50%';
-    span.style.transform = 'translateY(-50%)';
-    span.style.cursor = 'pointer';
-    return span;
-}
-
-/* === Toggle lock: usa data-row/data-col para persistência === */
-function toggleCellLockByElement(cell) {
-    if (!cell) return;
-    const table = cell.closest('table');
-    const tableId = table.id;
-    const row = parseInt(cell.dataset.row, 10);
-    const col = cell.dataset.col;
-
-    const key = cellKey(tableId, row, col);
-    const isLocked = cell.classList.contains('locked');
-
-    if (isLocked) {
-        // desbloquear
-        cell.classList.remove('locked');
-        cell.classList.add('editable');
-        cell.contentEditable = "true";
-        const lock = cell.querySelector('.cell-lock');
-        if (lock) {
-            lock.classList.remove('locked');
-            lock.innerHTML = '🔓';
-            lock.title = 'Clique para travar este campo';
-            lock.style.color = '#00E38C';
-            lock.style.borderColor = '#00E38C';
-        }
-        localStorage.removeItem(key);
-        alert('🔓 Campo desbloqueado! Agora você pode editar.');
-    } else {
-        // bloquear
-        cell.classList.remove('editable');
-        cell.classList.add('locked');
-        cell.contentEditable = "false";
-        const lock = cell.querySelector('.cell-lock');
-        if (lock) {
-            lock.classList.add('locked');
-            lock.innerHTML = '🔒';
-            lock.title = 'Clique para destravar este campo';
-            lock.style.color = '#ef4444';
-            lock.style.borderColor = '#ef4444';
-        }
-        // salvar estado
-        const payload = {
-            tableId, row, col,
-            value: cell.textContent.trim(),
-            ts: new Date().toISOString()
-        };
-        localStorage.setItem(key, JSON.stringify(payload));
-        alert('🔒 Campo travado! Protegido contra edição.');
-    }
-}
-
-/* === Delegation: handler para cliques nas tabelas === */
-function onTableBodyClick(e) {
-    // Se clicou no ícone do cadeado
-    const lock = e.target.closest('.cell-lock');
-    if (lock) {
-        // impedir que o click "abra" a célula
-        e.stopPropagation();
-        const cell = lock.closest('td');
-        toggleCellLockByElement(cell);
-        return;
-    }
-
-    // se clicou numa célula (td) válida
-    const cell = e.target.closest('td');
-    if (!cell) return;
-    // Não habilitar o td da última coluna de Ações
-    if (cell.closest('tr').querySelector('td:last-child') === cell) return;
-
-    // Não editar a coluna 'posicao' (manter comportamento anterior)
-    if (cell.dataset.col === 'posicao') {
-        return;
-    }
-
-    // Se está travado, alerta
-    if (cell.classList.contains('locked')) {
-        alert('🔒 Esta célula está travada! Clique no cadeado para desbloquear.');
-        return;
-    }
-
-    // Tornar editável
-    if (!cell.classList.contains('editable')) {
-        cell.classList.add('editable');
-        cell.contentEditable = "true";
-        // adicionar icon se não existir
-        if (!cell.querySelector('.cell-lock')) {
-            const lk = createLockIcon(false);
-            // listener no lock icon (não delegado para evitar duplicidade)
-            lk.addEventListener('click', function(ev){
-                ev.stopPropagation();
-                toggleCellLockByElement(cell);
-            }, true);
-            cell.style.position = 'relative';
-            cell.appendChild(lk);
-        }
-        // foco e seleção
-        cell.focus();
-        const range = document.createRange();
-        range.selectNodeContents(cell);
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-    }
-}
-
-/* === Salvar edição: Enter ou blur === */
-function attachEditSavingHandlers(tbody) {
-    // delegação de keydown via document (mais simples)
-    tbody.addEventListener('keydown', function(e){
-        const cell = document.activeElement.closest && document.activeElement.closest('td');
-        if (!cell) return;
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            cell.blur();
-        } else if (e.key === 'Escape') {
-            // desfazer edição: aqui apenas removemos a classe editável (não restaura valor antigo)
-            cell.blur();
-        }
-    });
-
-    // blur: remove classe editable (se ainda não foi bloqueado)
-    tbody.addEventListener('focusout', function(e){
-        const cell = e.target.closest && e.target.closest('td');
-        if (!cell) return;
-        // se não está locked, desligar edição
-        if (!cell.classList.contains('locked')) {
-            cell.contentEditable = "false";
-            cell.classList.remove('editable');
-        }
-    }, true);
-}
-
-/* === Save / export / coletar dados (mantive sua lógica com pequenas adaptações) === */
-function saveChanges() {
-    const lockedCells = document.querySelectorAll('.locked');
-    let lockedCount = lockedCells.length;
-    let unlockedCount = 0;
-
-    document.querySelectorAll('td').forEach(cell => {
-        if (!cell.classList.contains('locked')) {
-            if (cell.classList.contains('editable') || cell.contentEditable === "true") unlockedCount++;
-        }
-    });
-
-    const plantelData = {
-        timestamp: new Date().toISOString(),
-        usuario: 'admin',
-        dadosEditados: {},
-        celulasProtegidas: lockedCount
-    };
-
-    ['serieATable', 'serieBTable'].forEach(tableId => {
-        const table = document.getElementById(tableId);
-        if (table && table.closest('.tab-content').classList.contains('active')) {
-            const dados = [];
-            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-            for (let r = 0; r < rows.length; r++) {
-                const cells = rows[r].getElementsByTagName('td');
-                const clubeData = {
-                    clube: cells[1]?.textContent || '',
-                    plantel: cells[2]?.textContent || '',
-                    valorTotal: cells[6]?.textContent || '',
-                    posseBola: cells[7]?.textContent || '',
-                    passesCertos: cells[8]?.textContent || '',
-                    chutesJogo: cells[9]?.textContent || '',
-                    protegido: !!rows[r].querySelector('.locked')
-                };
-                dados.push(clubeData);
-            }
-            plantelData.dadosEditados[tableId] = dados;
-        }
-    });
-
-    localStorage.setItem('estatisticasPlantel', JSON.stringify(plantelData));
-    alert(`💾 Alterações salvas com sucesso!\n\n📊 Dados protegidos: ${lockedCount} campos\n🔓 Dados editáveis: ${unlockedCount} campos\n\n✅ Dados sincronizados com a Central Admin!`);
-    console.log('📊 Dados salvos para Central Admin:', plantelData);
-}
-
-/* === Funções para persistir/restaurar cadeados por key estável === */
-function persistLockState(cell) {
-    const table = cell.closest('table');
-    const key = cellKey(table.id, parseInt(cell.dataset.row,10), cell.dataset.col);
-    const payload = { val: cell.textContent.trim(), ts: new Date().toISOString() };
-    localStorage.setItem(key, JSON.stringify(payload));
-}
-function restoreLocksForTable(tableId) {
-    const table = document.getElementById(tableId);
-    if (!table) return;
-    const tbody = table.querySelector('tbody');
-    const rows = tbody.rows;
-    for (let r=0; r<rows.length; r++) {
-        const cells = rows[r].cells;
-        for (let c=0; c<cells.length-1; c++) { // -1 para pular coluna de Ações
-            const cell = cells[c];
-            const key = cellKey(tableId, r, cell.dataset.col);
-            const stored = localStorage.getItem(key);
-            if (stored) {
-                // restaurar lock
-                cell.classList.add('locked');
-                cell.contentEditable = "false";
-                cell.style.position = 'relative';
-                // remover lock antigo se houver
-                const existing = cell.querySelector('.cell-lock');
-                if (existing) existing.remove();
-                const lk = createLockIcon(true);
-                lk.addEventListener('click', function(ev){ ev.stopPropagation(); toggleCellLockByElement(cell); }, true);
-                cell.appendChild(lk);
+        // Função para mostrar tabs
+        function showTab(tabName) {
+            // Esconder todas as tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os botões
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.classList.remove('active', 'serie-a', 'serie-b');
+            });
+            
+            // Mostrar tab selecionada
+            document.getElementById(tabName).classList.add('active');
+            
+            // Ativar botão correspondente
+            const activeBtn = event.target;
+            activeBtn.classList.add('active');
+            
+            if (tabName === 'serieA') {
+                activeBtn.classList.add('serie-a');
+                document.getElementById('exportBtn').className = 'export-btn serie-a';
+            } else if (tabName === 'serieB') {
+                activeBtn.classList.add('serie-b');
+                document.getElementById('exportBtn').className = 'export-btn serie-b';
             } else {
-                // adicionar lock icon aberto para UX (opcional)
-                if (!cell.querySelector('.cell-lock')) {
-                    const lk = createLockIcon(false);
-                    lk.addEventListener('click', function(ev){ ev.stopPropagation(); toggleCellLockByElement(cell); }, true);
-                    cell.appendChild(lk);
-                }
+                document.getElementById('exportBtn').className = 'export-btn';
             }
+            
+            currentTab = tabName;
         }
-    }
-}
 
-/* === Popula tabelas — adiciona data attributes nas células === */
-function populateTable(tablePrefix, data, columns) {
-    const tbody = document.getElementById(tablePrefix + 'Body');
-    tbody.innerHTML = '';
-    data.forEach((item, rowIndex) => {
-        const row = document.createElement('tr');
-        columns.forEach((col, colIndex) => {
-            const cell = document.createElement('td');
-            // valor de exibição (mesma chave do objeto)
-            cell.textContent = item[col];
-            // identificadores
-            cell.dataset.row = rowIndex;
-            // use a chave 'col' como identificador (por ex.: 'posicao','clube','plantel'...)
-            cell.dataset.col = col;
+        // Função para tornar célula editável
+        function makeEditable(cell, originalValue) {
+            // Verificar se a célula está travada
+            if (cell.classList.contains('locked')) {
+                alert('🔒 Esta célula está travada! Clique no cadeado para desbloquear.');
+                return;
+            }
+            
+            if (cell.classList.contains('editable')) return;
+            
+            cell.classList.add('editable');
+            cell.contentEditable = true;
             cell.style.position = 'relative';
-            row.appendChild(cell);
-        });
-
-        // Ações: botão editar (mantive sua ideia, mas agora delegamos clicks nas células)
-        const actionCell = document.createElement('td');
-        const editBtn = document.createElement('button');
-        editBtn.textContent = '✏️ Editar';
-        editBtn.className = 'edit-btn';
-        editBtn.addEventListener('click', function(){
-            // ao clicar no botão, abrimos edição na primeira célula editável da linha (exceto posição)
-            const cells = row.querySelectorAll('td:not(:last-child)');
-            for (let i=0;i<cells.length;i++) {
-                const c = cells[i];
-                if (c.dataset.col !== 'posicao' && !c.classList.contains('locked')) {
-                    // simula clique para entrar em edição
-                    c.click();
-                    break;
-                }
+            
+            // Adicionar cadeado se não existir
+            if (!cell.querySelector('.cell-lock')) {
+                const lockIcon = document.createElement('span');
+                lockIcon.className = 'cell-lock';
+                lockIcon.innerHTML = '🔓';
+                lockIcon.title = 'Clique para travar este campo';
+                lockIcon.style.zIndex = '1000';
+                lockIcon.style.position = 'absolute';
+                lockIcon.style.right = '2px';
+                lockIcon.style.top = '50%';
+                lockIcon.style.transform = 'translateY(-50%)';
+                lockIcon.style.cursor = 'pointer';
+                
+                // Event listener robusto
+                lockIcon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log('🖱️ [LOCK] Click no cadeado ABERTO detectado!');
+                    console.log('🖱️ [LOCK] Célula alvo:', cell.textContent.trim());
+                    toggleCellLock(cell);
+                }, true); // Usar capture = true
+                
+                // Backup com mousedown
+                lockIcon.addEventListener('mousedown', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log('🖱️ [LOCK] MouseDown no cadeado detectado!');
+                }, true);
+                
+                cell.appendChild(lockIcon);
+                console.log('🔓 [LOCK] Cadeado ABERTO adicionado à célula');
             }
-        });
-        actionCell.appendChild(editBtn);
-        row.appendChild(actionCell);
-
-        tbody.appendChild(row);
-    });
-
-    // Anexar delegação local ao tbody
-    // remover listeners duplicados, se houver
-    tbody.removeEventListener('click', onTableBodyClick);
-    tbody.addEventListener('click', onTableBodyClick);
-    attachEditSavingHandlers(tbody);
-}
-
-/* === Export CSV (mantive sua lógica, mas você pode adaptar) === */
-function exportCurrentTab() {
-    let data, filename, headers;
-    if (currentTab === 'top100') {
-        data = top100Clubs;
-        filename = 'top_100_clubes_mais_valiosos.csv';
-        headers = ['Posição','Clube','País','Valor'];
-    } else if (currentTab === 'serieA') {
-        data = serieAClubs;
-        filename = 'serie_a_brasileirao.csv';
-        headers = ['Posição','Clube','Plantel','Idade Média','Estrangeiros','Valor Médio','Valor Total','Posse Bola (%)','Passes Certos','Chutes/Jogo'];
-    } else {
-        data = serieBClubs;
-        filename = 'serie_b_brasileirao.csv';
-        headers = ['Posição','Clube','Plantel','Idade Média','Estrangeiros','Valor Médio','Valor Total','Posse Bola (%)','Passes Certos','Chutes/Jogo'];
-    }
-    const csvContent = [
-        headers.join(','),
-        ...data.map(row => headers.map(header => {
-            const key = header.toLowerCase().replace(/\s+/g,'').replace(/[çã]/g,'a').replace('ç','c');
-            const value = row[Object.keys(row).find(k => k.toLowerCase().replace(/\s+/g,'').includes(key.substring(0,5))) || Object.keys(row)[headers.indexOf(header)]];
-            return `"${value || ''}"`;
-        }).join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-/* === Debug helpers === */
-function limparTodosCadeados() {
-    // limpa chaves armazenadas relacionadas a tabelas
-    Object.keys(localStorage).forEach(k => {
-        if (k.includes('serieATable::') || k.includes('serieBTable::') || k.includes('top100Table::')) {
-            localStorage.removeItem(k);
+            
+            cell.focus();
+            
+            // Selecionar todo o texto
+            const range = document.createRange();
+            range.selectNodeContents(cell);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            // Salvar ao perder foco
+            cell.addEventListener('blur', function() {
+                if (!cell.classList.contains('locked')) {
+                    cell.contentEditable = false;
+                    cell.classList.remove('editable');
+                }
+            });
+            
+            // Salvar ao pressionar Enter
+            cell.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    cell.blur();
+                }
+            });
         }
-    });
-    // remover icons e classes
-    document.querySelectorAll('.cell-lock').forEach(l => l.remove());
-    document.querySelectorAll('.locked').forEach(c => c.classList.remove('locked'));
-    document.querySelectorAll('.editable').forEach(c => c.classList.remove('editable'));
-    document.querySelectorAll('td').forEach(td => td.contentEditable = "false");
-    alert('🧹 Todos os cadeados foram limpos! Recarregue a página para testar.');
-}
 
-function testarCadeado() {
-    const cell = document.querySelector('#serieATable tbody tr td[data-col="plantel"]');
-    if (!cell) { console.error('❌ [TEST] célula não encontrada'); return; }
-    cell.click(); // entra em edição
-    setTimeout(() => toggleCellLockByElement(cell), 800);
-    setTimeout(() => toggleCellLockByElement(cell), 2000);
-}
+        // Função para alternar trava da célula
+        function toggleCellLock(cell) {
+            console.log('🔄 [LOCK] === TOGGLE INICIADO ===');
+            console.log('🔄 [LOCK] Célula:', cell.textContent.trim());
+            console.log('🔄 [LOCK] Classes atuais:', cell.className);
+            
+            const lockIcon = cell.querySelector('.cell-lock');
+            
+            if (!lockIcon) {
+                console.error('❌ [LOCK] Ícone de cadeado não encontrado!');
+                return false;
+            }
+            
+            const isCurrentlyLocked = cell.classList.contains('locked');
+            console.log('🔄 [LOCK] Estado atual - Travado:', isCurrentlyLocked);
+            
+            if (isCurrentlyLocked) {
+                // DESBLOQUEAR
+                console.log('🔓 [LOCK] DESBLOQUEANDO célula...');
+                
+                // Remover classes de travado
+                cell.classList.remove('locked');
+                lockIcon.classList.remove('locked');
+                
+                // Adicionar classes de editável
+                cell.classList.add('editable');
+                cell.contentEditable = true;
+                
+                // Atualizar visual do cadeado
+                lockIcon.innerHTML = '🔓';
+                lockIcon.title = 'Clique para travar este campo';
+                lockIcon.style.color = '#00E38C';
+                lockIcon.style.borderColor = '#00E38C';
+                
+                // Remover do localStorage
+                removeCellLockState(cell);
+                
+                console.log('✅ [LOCK] DESBLOQUEADO com sucesso!');
+                alert('🔓 Campo desbloqueado! Agora você pode editar.');
+                
+            } else {
+                // BLOQUEAR
+                console.log('🔒 [LOCK] BLOQUEANDO célula...');
+                
+                // Remover classes de editável
+                cell.classList.remove('editable');
+                
+                // Adicionar classes de travado
+                cell.classList.add('locked');
+                lockIcon.classList.add('locked');
+                cell.contentEditable = false;
+                
+                // Atualizar visual do cadeado
+                lockIcon.innerHTML = '🔒';
+                lockIcon.title = 'Clique para destravar este campo';
+                lockIcon.style.color = '#ef4444';
+                lockIcon.style.borderColor = '#ef4444';
+                
+                // Salvar no localStorage
+                saveCellLockState(cell);
+                
+                console.log('✅ [LOCK] BLOQUEADO com sucesso!');
+                alert('🔒 Campo travado! Protegido contra edição.');
+            }
+            
+            // Verificar estado final
+            console.log('🔄 [LOCK] Estado final - Classes:', cell.className);
+            console.log('🔄 [LOCK] Estado final - Editável:', cell.contentEditable);
+            console.log('🔄 [LOCK] === TOGGLE CONCLUÍDO ===');
+            
+            return true;
+        }
 
-/* === Inicialização (DOMContentLoaded) === */
-document.addEventListener('DOMContentLoaded', function() {
-    // Atualize os nomes das colunas conforme os seus arrays
-    populateTable('top100', top100Clubs, ['posicao','clube','pais','valor']);
-    populateTable('serieA', serieAClubs, ['posicao','clube','plantel','idadeMedia','estrangeiros','valorMedio','valorTotal','posseBola','passesCertos','chutesJogo']);
-    populateTable('serieB', serieBClubs, ['posicao','clube','plantel','idadeMedia','estrangeiros','valorMedio','valorTotal','posseBola','passesCertos','chutesJogo']);
+        // Função para remover estado do cadeado
+        function removeCellLockState(cell) {
+            const row = cell.closest('tr');
+            const table = cell.closest('table');
+            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+            const cellIndex = Array.from(row.children).indexOf(cell);
+            const tableId = table.id;
+            
+            const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            const filteredLocks = locks.filter(lock => 
+                !(lock.tableId === tableId && lock.rowIndex === rowIndex && lock.cellIndex === cellIndex)
+            );
+            
+            localStorage.setItem('cellLocks', JSON.stringify(filteredLocks));
+            console.log('🗑️ [LOCK] Estado removido do localStorage');
+        }
 
-    // Restaurar locks
-    restoreLocksForTable('top100Table');
-    restoreLocksForTable('serieATable');
-    restoreLocksForTable('serieBTable');
+        // Função para salvar estado do cadeado
+        function saveCellLockState(cell) {
+            const row = cell.closest('tr');
+            const table = cell.closest('table');
+            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+            const cellIndex = Array.from(row.children).indexOf(cell);
+            const tableId = table.id;
+            
+            const lockData = {
+                tableId: tableId,
+                rowIndex: rowIndex,
+                cellIndex: cellIndex,
+                value: cell.textContent.trim(),
+                timestamp: new Date().toISOString()
+            };
+            
+            const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            
+            // Remover lock existente para esta célula
+            const filteredLocks = locks.filter(lock => 
+                !(lock.tableId === tableId && lock.rowIndex === rowIndex && lock.cellIndex === cellIndex)
+            );
+            
+            // Adicionar novo lock
+            filteredLocks.push(lockData);
+            localStorage.setItem('cellLocks', JSON.stringify(filteredLocks));
+        }
 
-    // Expor funções para debug global
-    window.limparTodosCadeados = limparTodosCadeados;
-    window.toggleCellLockByElement = toggleCellLockByElement;
-    window.testarCadeado = testarCadeado;
-    window.exportCurrentTab = exportCurrentTab;
-    window.saveChanges = saveChanges;
+        // Função para restaurar cadeados salvos
+        function restoreCellLocks() {
+            const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            console.log(`🔄 [RESTORE] Restaurando ${locks.length} cadeados...`);
+            
+            locks.forEach((lock, index) => {
+                const table = document.getElementById(lock.tableId);
+                if (table) {
+                    const tbody = table.getElementsByTagName('tbody')[0];
+                    if (tbody && tbody.rows[lock.rowIndex]) {
+                        const row = tbody.rows[lock.rowIndex];
+                        const cell = row.cells[lock.cellIndex];
+                        
+                        if (cell && cell.textContent.trim() === lock.value) {
+                            console.log(`🔒 [RESTORE] Restaurando cadeado ${index + 1}:`, cell.textContent.trim());
+                            
+                            // Restaurar estado travado
+                            cell.classList.add('locked');
+                            cell.contentEditable = false;
+                            cell.style.position = 'relative';
+                            
+                            // Remover cadeado existente se houver
+                            const existingLock = cell.querySelector('.cell-lock');
+                            if (existingLock) {
+                                existingLock.remove();
+                            }
+                            
+                            // Criar novo ícone de cadeado
+                            const lockIcon = document.createElement('span');
+                            lockIcon.className = 'cell-lock locked';
+                            lockIcon.innerHTML = '🔒';
+                            lockIcon.title = 'Clique para destravar este campo';
+                            lockIcon.style.zIndex = '1000';
+                            lockIcon.style.position = 'absolute';
+                            lockIcon.style.right = '2px';
+                            lockIcon.style.top = '50%';
+                            lockIcon.style.transform = 'translateY(-50%)';
+                            lockIcon.style.cursor = 'pointer';
+                            lockIcon.style.color = '#ef4444';
+                            lockIcon.style.borderColor = '#ef4444';
+                            
+                            // Event listener robusto para cadeado FECHADO
+                            lockIcon.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                console.log('🖱️ [LOCK] Click no cadeado FECHADO detectado!');
+                                console.log('🖱️ [LOCK] Célula alvo:', cell.textContent.trim());
+                                toggleCellLock(cell);
+                            }, true); // Usar capture = true
+                            
+                            // Backup com mousedown
+                            lockIcon.addEventListener('mousedown', function(e) {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                console.log('🖱️ [LOCK] MouseDown no cadeado FECHADO detectado!');
+                            }, true);
+                            
+                            cell.appendChild(lockIcon);
+                            console.log('✅ [RESTORE] Cadeado restaurado com sucesso');
+                        } else {
+                            console.warn('⚠️ [RESTORE] Célula não encontrada ou valor diferente:', {
+                                expected: lock.value,
+                                found: cell ? cell.textContent.trim() : 'null'
+                            });
+                        }
+                    } else {
+                        console.warn('⚠️ [RESTORE] Linha não encontrada:', lock.rowIndex);
+                    }
+                } else {
+                    console.warn('⚠️ [RESTORE] Tabela não encontrada:', lock.tableId);
+                }
+            });
+            
+            console.log('🏁 [RESTORE] Restauração de cadeados concluída');
+        }
 
-    console.log('🔧 [DEBUG] Sistema de edição/travas inicializado.');
-});
+        // Função para popular tabelas
+        function populateTable(tableId, data, columns) {
+            const tbody = document.getElementById(tableId + 'Body');
+            tbody.innerHTML = '';
+            
+            data.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                columns.forEach(col => {
+                    const cell = document.createElement('td');
+                    cell.textContent = item[col];
+                    
+                    // Adicionar classes especiais
+                    if (col === 'valor' || col === 'valorAtual' || col === 'valorTotal') {
+                        cell.classList.add('valor-cell');
+                    }
+                    
+                    if (col === 'percentual') {
+                        cell.classList.add(item[col].includes('-') ? 'percentual-negativo' : 'percentual-positivo');
+                    }
+                    
+                    row.appendChild(cell);
+                });
+                
+                // Adicionar botão de edição
+                const actionCell = document.createElement('td');
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '✏️ Editar';
+                editBtn.className = 'edit-btn';
+                editBtn.onclick = function() {
+                    const cells = row.querySelectorAll('td:not(:last-child)');
+                    cells.forEach(cell => {
+                        if (!cell.textContent.match(/^\d+$/)) { // Não editar posição
+                            makeEditable(cell, cell.textContent);
+                        }
+                    });
+                };
+                actionCell.appendChild(editBtn);
+                row.appendChild(actionCell);
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Função para exportar CSV
+        function exportCurrentTab() {
+            let data, filename, headers;
+            
+            if (currentTab === 'top100') {
+                data = top100Clubs;
+                filename = 'top_100_clubes_mais_valiosos.csv';
+                headers = ['Posição', 'Clube', 'País', 'Valor'];
+            } else if (currentTab === 'serieA') {
+                data = serieAClubs;
+                filename = 'serie_a_brasileirao.csv';
+                headers = ['Posição', 'Clube', 'Plantel', 'Idade Média', 'Estrangeiros', 'Valor Médio', 'Valor Total', 'Posse Bola (%)', 'Passes Certos', 'Chutes/Jogo'];
+            } else if (currentTab === 'serieB') {
+                data = serieBClubs;
+                filename = 'serie_b_brasileirao.csv';
+                headers = ['Posição', 'Clube', 'Plantel', 'Idade Média', 'Estrangeiros', 'Valor Médio', 'Valor Total', 'Posse Bola (%)', 'Passes Certos', 'Chutes/Jogo'];
+            }
+            
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row => headers.map(header => {
+                    const key = header.toLowerCase().replace(/\s+/g, '').replace(/[çã]/g, 'a').replace('ç', 'c');
+                    const value = row[Object.keys(row).find(k => k.toLowerCase().replace(/\s+/g, '').includes(key.substring(0, 5))) || Object.keys(row)[headers.indexOf(header)]];
+                    return `"${value || ''}"`;
+                }).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Função para salvar alterações
+        function saveChanges() {
+            const lockedCells = document.querySelectorAll('.locked');
+            let lockedCount = 0;
+            let unlockedCount = 0;
+            
+            // Contar células travadas e destravadas
+            document.querySelectorAll('td').forEach(cell => {
+                if (cell.classList.contains('locked')) {
+                    lockedCount++;
+                } else if (cell.contentEditable === 'true' || cell.classList.contains('editable')) {
+                    unlockedCount++;
+                }
+            });
+            
+            // Preparar dados para enviar à Central Admin
+            const plantelData = {
+                timestamp: new Date().toISOString(),
+                usuario: 'admin',
+                dadosEditados: {},
+                celulasProtegidas: lockedCount
+            };
+            
+            // Coletar dados das tabelas
+            ['serieATable', 'serieBTable'].forEach(tableId => {
+                const table = document.getElementById(tableId);
+                if (table && table.closest('.tab-content').classList.contains('active')) {
+                    const dados = [];
+                    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+                    
+                    for (let row of rows) {
+                        const cells = row.getElementsByTagName('td');
+                        const clubeData = {
+                            clube: cells[1]?.textContent || '',
+                            plantel: cells[2]?.textContent || '',
+                            valorTotal: cells[6]?.textContent || '',
+                            posseBola: cells[7]?.textContent || '',
+                            passesCertos: cells[8]?.textContent || '',
+                            chutesJogo: cells[9]?.textContent || '',
+                            protegido: row.querySelector('.locked') ? true : false
+                        };
+                        dados.push(clubeData);
+                    }
+                    
+                    plantelData.dadosEditados[tableId] = dados;
+                }
+            });
+            
+            // Salvar no localStorage para integração com Central Admin
+            localStorage.setItem('estatisticasPlantel', JSON.stringify(plantelData));
+            
+            alert(`💾 Alterações salvas com sucesso!\n\n📊 Dados protegidos: ${lockedCount} campos\n🔓 Dados editáveis: ${unlockedCount} campos\n\n✅ Dados sincronizados com a Central Admin!`);
+            
+            // Log para debug
+            console.log('📊 Dados salvos para Central Admin:', plantelData);
+        }
+
+        // Função de debug para limpar todos os cadeados
+        function limparTodosCadeados() {
+            localStorage.removeItem('cellLocks');
+            document.querySelectorAll('.cell-lock').forEach(lock => lock.remove());
+            document.querySelectorAll('.locked').forEach(cell => {
+                cell.classList.remove('locked');
+                cell.contentEditable = true;
+            });
+            console.log('🧹 [DEBUG] Todos os cadeados foram removidos!');
+            alert('🧹 Todos os cadeados foram limpos! Recarregue a página para testar.');
+        }
+
+        // Função de debug para testar um cadeado específico
+        function testarCadeado() {
+            console.log('🧪 [TEST] Iniciando teste de cadeado...');
+            
+            // Encontrar primeira célula editável
+            const cell = document.querySelector('td:nth-child(3)'); // Coluna "Plantel"
+            if (cell) {
+                console.log('🎯 [TEST] Célula encontrada:', cell.textContent.trim());
+                
+                // Tornar editável primeiro
+                makeEditable(cell, cell.textContent);
+                
+                setTimeout(() => {
+                    console.log('🔒 [TEST] Tentando travar célula...');
+                    toggleCellLock(cell);
+                    
+                    setTimeout(() => {
+                        console.log('🔓 [TEST] Tentando destravar célula...');
+                        toggleCellLock(cell);
+                    }, 2000);
+                }, 1000);
+                
+            } else {
+                console.error('❌ [TEST] Nenhuma célula encontrada para teste');
+            }
+        }
+
+        // Tornar funções disponíveis globalmente para debug
+        window.limparTodosCadeados = limparTodosCadeados;
+        window.toggleCellLock = toggleCellLock;
+        window.testarCadeado = testarCadeado;
+
+        // Inicializar tabelas
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTable('top100', top100Clubs, ['posicao', 'clube', 'pais', 'valor']);
+            populateTable('serieA', serieAClubs, ['posicao', 'clube', 'plantel', 'idadeMedia', 'estrangeiros', 'valorMedio', 'valorTotal', 'posseBola', 'passesCertos', 'chutesJogo']);
+            populateTable('serieB', serieBClubs, ['posicao', 'clube', 'plantel', 'idadeMedia', 'estrangeiros', 'valorMedio', 'valorTotal', 'posseBola', 'passesCertos', 'chutesJogo']);
+            
+            // Restaurar cadeados após carregar tabelas
+            setTimeout(() => {
+                restoreCellLocks();
+            }, 1000); // Aumentei para 1 segundo para garantir
+            
+            // Debug: mostrar info no console
+            console.log('🔧 [DEBUG] Comandos disponíveis:');
+            console.log('🔧 [DEBUG] - limparTodosCadeados() : Remove todos os cadeados');
+            console.log('🔧 [DEBUG] - testarCadeado() : Testa automaticamente um cadeado');
+            console.log('🔧 [DEBUG] - toggleCellLock(celula) : Alterna estado de uma célula');
+        });
     </script>
 </body>
 </html>
