@@ -751,10 +751,16 @@
                 lockIcon.className = 'cell-lock';
                 lockIcon.innerHTML = '🔓';
                 lockIcon.title = 'Clique para travar este campo';
-                lockIcon.onclick = function(e) {
+                lockIcon.style.zIndex = '999';
+                
+                // Usar addEventListener para melhor compatibilidade
+                lockIcon.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    e.preventDefault();
+                    console.log('🖱️ [LOCK] Click no cadeado aberto detectado!');
                     toggleCellLock(cell);
-                };
+                });
+                
                 cell.appendChild(lockIcon);
             }
             
@@ -786,30 +792,58 @@
 
         // Função para alternar trava da célula
         function toggleCellLock(cell) {
+            console.log('🔄 [LOCK] Toggle chamado para:', cell.textContent.trim());
             const lockIcon = cell.querySelector('.cell-lock');
+            
+            if (!lockIcon) {
+                console.error('❌ [LOCK] Ícone de cadeado não encontrado!');
+                return;
+            }
             
             if (cell.classList.contains('locked')) {
                 // Desbloquear
+                console.log('🔓 [LOCK] Desbloqueando célula...');
                 cell.classList.remove('locked');
                 cell.classList.add('editable');
                 cell.contentEditable = true;
                 lockIcon.innerHTML = '🔓';
                 lockIcon.title = 'Clique para travar este campo';
                 lockIcon.classList.remove('locked');
-                console.log('🔓 Campo desbloqueado:', cell.textContent);
+                
+                // Remover do localStorage
+                removeCellLockState(cell);
+                console.log('✅ [LOCK] Campo desbloqueado:', cell.textContent.trim());
             } else {
                 // Bloquear
+                console.log('🔒 [LOCK] Bloqueando célula...');
                 cell.classList.remove('editable');
                 cell.classList.add('locked');
                 cell.contentEditable = false;
                 lockIcon.innerHTML = '🔒';
                 lockIcon.title = 'Clique para destravar este campo';
                 lockIcon.classList.add('locked');
-                console.log('🔒 Campo travado:', cell.textContent);
                 
                 // Salvar no localStorage
                 saveCellLockState(cell);
+                console.log('✅ [LOCK] Campo travado:', cell.textContent.trim());
             }
+        }
+
+        // Função para remover estado do cadeado
+        function removeCellLockState(cell) {
+            const row = cell.closest('tr');
+            const table = cell.closest('table');
+            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+            const cellIndex = Array.from(row.children).indexOf(cell);
+            const tableId = table.id;
+            
+            const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            const filteredLocks = locks.filter(lock => 
+                !(lock.tableId === tableId && lock.rowIndex === rowIndex && lock.cellIndex === cellIndex)
+            );
+            
+            localStorage.setItem('cellLocks', JSON.stringify(filteredLocks));
+            console.log('🗑️ [LOCK] Estado removido do localStorage');
         }
 
         // Função para salvar estado do cadeado
@@ -843,32 +877,62 @@
         // Função para restaurar cadeados salvos
         function restoreCellLocks() {
             const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            console.log(`🔄 [RESTORE] Restaurando ${locks.length} cadeados...`);
             
-            locks.forEach(lock => {
+            locks.forEach((lock, index) => {
                 const table = document.getElementById(lock.tableId);
                 if (table) {
-                    const row = table.rows[lock.rowIndex + 1]; // +1 por causa do header
-                    if (row) {
+                    const tbody = table.getElementsByTagName('tbody')[0];
+                    if (tbody && tbody.rows[lock.rowIndex]) {
+                        const row = tbody.rows[lock.rowIndex];
                         const cell = row.cells[lock.cellIndex];
+                        
                         if (cell && cell.textContent.trim() === lock.value) {
+                            console.log(`🔒 [RESTORE] Restaurando cadeado ${index + 1}:`, cell.textContent.trim());
+                            
                             // Restaurar estado travado
                             cell.classList.add('locked');
                             cell.contentEditable = false;
                             cell.style.position = 'relative';
                             
+                            // Remover cadeado existente se houver
+                            const existingLock = cell.querySelector('.cell-lock');
+                            if (existingLock) {
+                                existingLock.remove();
+                            }
+                            
+                            // Criar novo ícone de cadeado
                             const lockIcon = document.createElement('span');
                             lockIcon.className = 'cell-lock locked';
                             lockIcon.innerHTML = '🔒';
                             lockIcon.title = 'Clique para destravar este campo';
-                            lockIcon.onclick = function(e) {
+                            lockIcon.style.zIndex = '999';
+                            
+                            // Função de click com referência correta
+                            lockIcon.addEventListener('click', function(e) {
                                 e.stopPropagation();
+                                e.preventDefault();
+                                console.log('🖱️ [LOCK] Click no cadeado detectado!');
                                 toggleCellLock(cell);
-                            };
+                            });
+                            
                             cell.appendChild(lockIcon);
+                            console.log('✅ [RESTORE] Cadeado restaurado com sucesso');
+                        } else {
+                            console.warn('⚠️ [RESTORE] Célula não encontrada ou valor diferente:', {
+                                expected: lock.value,
+                                found: cell ? cell.textContent.trim() : 'null'
+                            });
                         }
+                    } else {
+                        console.warn('⚠️ [RESTORE] Linha não encontrada:', lock.rowIndex);
                     }
+                } else {
+                    console.warn('⚠️ [RESTORE] Tabela não encontrada:', lock.tableId);
                 }
             });
+            
+            console.log('🏁 [RESTORE] Restauração de cadeados concluída');
         }
 
         // Função para popular tabelas
@@ -1010,6 +1074,22 @@
             console.log('📊 Dados salvos para Central Admin:', plantelData);
         }
 
+        // Função de debug para limpar todos os cadeados
+        function limparTodosCadeados() {
+            localStorage.removeItem('cellLocks');
+            document.querySelectorAll('.cell-lock').forEach(lock => lock.remove());
+            document.querySelectorAll('.locked').forEach(cell => {
+                cell.classList.remove('locked');
+                cell.contentEditable = true;
+            });
+            console.log('🧹 [DEBUG] Todos os cadeados foram removidos!');
+            alert('🧹 Todos os cadeados foram limpos! Recarregue a página para testar.');
+        }
+
+        // Tornar função disponível globalmente para debug
+        window.limparTodosCadeados = limparTodosCadeados;
+        window.toggleCellLock = toggleCellLock;
+
         // Inicializar tabelas
         document.addEventListener('DOMContentLoaded', function() {
             populateTable('top100', top100Clubs, ['posicao', 'clube', 'pais', 'valor']);
@@ -1019,7 +1099,10 @@
             // Restaurar cadeados após carregar tabelas
             setTimeout(() => {
                 restoreCellLocks();
-            }, 500);
+            }, 1000); // Aumentei para 1 segundo para garantir
+            
+            // Debug: mostrar info no console
+            console.log('🔧 [DEBUG] Para limpar todos os cadeados, digite: limparTodosCadeados()');
         });
     </script>
 </body>
