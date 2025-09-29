@@ -981,16 +981,21 @@
         
         /* Campos calculados automaticamente */
         .campo-calculado {
-            background: #1a1a1a !important;
-            border: 1px solid #404040 !important;
+            background: #2d3748 !important; /* Fundo mais claro */
+            border: 2px solid #60a5fa !important; /* Borda azul para destaque */
             padding: 10px 12px !important;
             border-radius: 4px !important;
-            color: #ffffff !important;
+            color: #ffffff !important; /* Texto branco forte */
             font-weight: 700 !important;
-            font-size: 16px !important;
+            font-size: 18px !important; /* Fonte maior */
             width: 100% !important;
-            text-align: right !important;
+            text-align: center !important; /* Centralizado para melhor visibilidade */
             font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            cursor: not-allowed;
+            user-select: none;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.3) !important; /* Brilho azul */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important; /* Sombra no texto */
         }
         
         /* Campos editáveis */
@@ -1019,6 +1024,62 @@
             outline: none !important;
             border-color: #0056b3 !important;
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25) !important;
+        }
+
+        /* === CAMPOS QUE PRECISAM SER PREENCHIDOS - Destaque Visual === */
+        .campo-pendente {
+            background: rgba(0, 227, 140, 0.15) !important; /* Verde transparente */
+            border: 1px solid rgba(0, 227, 140, 0.4) !important;
+            padding: 10px 12px !important;
+            border-radius: 4px !important;
+            color: #60a5fa !important; /* Azul ciano para números */
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            width: 100% !important;
+            text-align: right !important;
+            font-family: 'Roboto', 'Open Sans', sans-serif !important;
+            box-shadow: 0 0 8px rgba(0, 227, 140, 0.2) !important;
+            cursor: text;
+            user-select: text;
+            pointer-events: auto;
+        }
+
+        .campo-pendente:focus {
+            background: rgba(0, 227, 140, 0.25) !important;
+            border-color: #00E38C !important;
+            box-shadow: 0 0 12px rgba(0, 227, 140, 0.4) !important;
+            outline: none !important;
+        }
+
+        .campo-pendente::placeholder {
+            color: rgba(96, 165, 250, 0.7) !important;
+            font-style: italic !important;
+            font-weight: normal !important;
+        }
+
+        /* === SISTEMA DE CADEADO MANUAL === */
+        .campo-lock-toggle {
+            transition: all 0.3s ease !important;
+            z-index: 10;
+        }
+
+        .campo-lock-toggle:hover {
+            color: #1d4ed8 !important;
+            transform: translateY(-50%) scale(1.1) !important;
+        }
+
+        .campo-bloqueado-manual {
+            background: #374151 !important; /* Fundo cinza escuro */
+            border: 2px solid #1e40af !important; /* Borda azul navy */
+            color: #ffffff !important;
+            cursor: not-allowed !important;
+            user-select: none !important;
+            pointer-events: none !important;
+        }
+
+        .campo-bloqueado-manual:focus {
+            outline: none !important;
+            box-shadow: 0 0 8px rgba(30, 64, 175, 0.5) !important;
         }
     </style>
 </head>
@@ -1351,8 +1412,8 @@
                         <tr>
                             <td><strong>Jogos Disputados</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="number" id="jogosDisputados" placeholder="Ex: 28" readonly class="campo-bloqueado"></td>
-                            <td><strong>PPG</strong><span class="help-icon" onclick="mostrarAjuda('ppg')" title="Clique para saber mais sobre PPG">?</span></td>
-                            <td><input type="text" id="ppg" readonly class="campo-calculado"></td>
+                            <td><strong>PPG</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i><span class="help-icon" onclick="mostrarAjuda('ppg')" title="Clique para saber mais sobre PPG">?</span></td>
+                            <td><input type="text" id="ppg" readonly class="campo-bloqueado"></td>
                         </tr>
                         
                         <!-- PERFORMANCE GERAL -->
@@ -1453,15 +1514,27 @@
                         </tr>
                         <tr>
                             <td><strong>✏️ Elenco Total</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="number" id="elencoTotal" placeholder="Ex: 40" class="campo-editavel"></td>
+                            <td style="position: relative;">
+                                <input type="number" id="elencoTotal" placeholder="Ex: 40" class="campo-editavel">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="elencoTotal" onclick="toggleLock('elencoTotal')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
                             <td><strong>✏️ % Prováveis</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="number" step="0.1" id="pctProvaveis" placeholder="Ex: 42.5" class="campo-editavel"></td>
+                            <td style="position: relative;">
+                                <input type="number" step="0.1" id="pctProvaveis" placeholder="Ex: 42.5" class="campo-editavel">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="pctProvaveis" onclick="toggleLock('pctProvaveis')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Valor Elenco (C$)</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="number" step="0.1" id="valorElenco" placeholder="Ex: 272.0" class="campo-editavel"></td>
+                            <td><strong>✏️ Valor Elenco (€)</strong> <i class="fas fa-exclamation-triangle" style="color: #fbbf24;" title="Campo precisa ser atualizado com dados reais"></i></td>
+                            <td style="position: relative;">
+                                <input type="number" step="0.1" id="valorElenco" placeholder="Ex: 85.0" class="campo-pendente">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="valorElenco" onclick="toggleLock('valorElenco')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
                             <td><strong>✏️ Rating Médio</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td><input type="number" step="0.1" id="ratingMedio" placeholder="Ex: 4.6" class="campo-editavel"></td>
+                            <td style="position: relative;">
+                                <input type="number" step="0.1" id="ratingMedio" placeholder="Ex: 4.6" class="campo-editavel">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="ratingMedio" onclick="toggleLock('ratingMedio')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
                         </tr>
 
                         <!-- CONTEXTO ATUAL -->
@@ -1488,15 +1561,6 @@
                     <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                         <button class="btn-primary" onclick="salvarEstatisticas()" style="background: linear-gradient(135deg, #00E38C, #00B377);">
                             <i class="fas fa-save"></i> Salvar Estatísticas
-                        </button>
-                        <button class="btn-primary" onclick="limparFormulario()" style="background: linear-gradient(135deg, #6c757d, #495057);">
-                            <i class="fas fa-eraser"></i> Limpar Formulário
-                        </button>
-                        <button class="btn-primary" onclick="previewEstatisticas()" style="background: linear-gradient(135deg, #17a2b8, #138496);">
-                            <i class="fas fa-eye"></i> Preview
-                        </button>
-                        <button class="btn-primary" onclick="verHistorico()" style="background: linear-gradient(135deg, #ffc107, #e0a800);">
-                            <i class="fas fa-history"></i> Ver Histórico
                         </button>
                     </div>
                 </div>
@@ -1560,9 +1624,6 @@
 
             <button class="btn-primary" onclick="salvarEstatisticas()">
                 <i class="fas fa-save"></i> Salvar Estatísticas
-            </button>
-            <button class="btn-secondary" onclick="limparFormEstatisticas()" style="margin-left: 10px;">
-                <i class="fas fa-eraser"></i> Limpar
             </button>
 
             <!-- Lista de Estatísticas -->
@@ -2168,7 +2229,6 @@
                 
                 if (result.success) {
                     mostrarSucesso('Estatísticas salvas com sucesso!');
-                    limparFormEstatisticas();
                     carregarEstatisticas();
                     carregarDashboard(); // Atualizar dashboard
                 } else {
@@ -2180,15 +2240,7 @@
             }
         }
 
-        function limparFormEstatisticas() {
-            document.getElementById('clubeEstatisticas').value = '';
-            document.getElementById('totalAtletas').value = '';
-            document.getElementById('pctProvaveis').value = '';
-            document.getElementById('mediaPontos').value = '';
-            document.getElementById('precoMedio').value = '';
-            document.getElementById('rating').value = '';
-            document.getElementById('fonte').value = 'MANUAL';
-        }
+        // Função limparFormEstatisticas removida - não é mais necessária
 
         function editarEstatisticas(clubeId) {
             const stat = estatisticasData.find(s => s.clube_id === clubeId);
@@ -3003,8 +3055,9 @@
                 formulario.style.display = 'block';
                 mensagem.style.display = 'none';
                 
-                // Mostrar botão "Tabela de Jogos" apenas para Flamengo (por enquanto)
-                if (clubeSelecionado.toLowerCase().includes('flamengo')) {
+                // Mostrar botão "Tabela de Jogos" para clubes com dados de jogos
+                if (clubeSelecionado.toLowerCase().includes('flamengo') || 
+                    clubeSelecionado.toLowerCase().includes('corinthians')) {
                     btnTabelaJogos.style.display = 'inline-flex';
                 } else {
                     btnTabelaJogos.style.display = 'none';
@@ -3017,6 +3070,11 @@
                 
                 // Carregar dados dos jogos (se disponível)
                 await carregarDadosJogosClube(clubeSelecionado);
+                
+                // Carregar dados editáveis salvos (se disponível)
+                await carregarDadosEditaveisSalvos(clubeSelecionado);
+                
+                // Valor do elenco agora é campo editável manual
             } else {
                 formulario.style.display = 'none';
                 mensagem.style.display = 'block';
@@ -3052,25 +3110,101 @@
                         preencherDadosReais(clube);
                     } else {
                         console.warn(`❌ Clube ${nomeClube} não encontrado na classificação`);
-                        preencherDadosFlamengo(); // Fallback para dados de exemplo
+                        // Fallback para dados de exemplo específicos por clube
+                        if (nomeClube.toLowerCase().includes('corinthians')) {
+                            preencherDadosCorinthians();
+                        } else {
+                            preencherDadosFlamengo();
+                        }
                     }
                 } else {
                     console.error('❌ Erro ao carregar classificação:', result.message);
-                    preencherDadosFlamengo(); // Fallback para dados de exemplo
+                    // Fallback para dados de exemplo específicos por clube
+                    if (nomeClube.toLowerCase().includes('corinthians')) {
+                        preencherDadosCorinthians();
+                    } else {
+                        preencherDadosFlamengo();
+                    }
                 }
             } catch (error) {
                 console.error('❌ Erro na requisição:', error);
-                preencherDadosFlamengo(); // Fallback para dados de exemplo
+                // Fallback para dados de exemplo específicos por clube
+                if (nomeClube.toLowerCase().includes('corinthians')) {
+                    preencherDadosCorinthians();
+                } else {
+                    preencherDadosFlamengo();
+                }
             }
         }
 
         // Carregar dados dos jogos do clube (se disponível)
+        // Carregar dados editáveis salvos do clube
+        async function carregarDadosEditaveisSalvos(nomeClube) {
+            try {
+                const response = await fetch(`/api/admin/estatisticas-editaveis/${nomeClube}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('admin_key')}`
+                    }
+                });
+                
+                const result = await response.json();
+                if (result.success && result.data) {
+                    const dados = result.data;
+                    
+                    // Preencher campos editáveis com dados salvos
+                    if (dados.elencoTotal) {
+                        document.getElementById('elencoTotal').value = dados.elencoTotal;
+                        mostrarCadeadoSePreenchido('elencoTotal');
+                    }
+                    if (dados.pctProvaveis) {
+                        document.getElementById('pctProvaveis').value = dados.pctProvaveis;
+                        mostrarCadeadoSePreenchido('pctProvaveis');
+                    }
+                    if (dados.valorElenco) {
+                        document.getElementById('valorElenco').value = dados.valorElenco;
+                        mostrarCadeadoSePreenchido('valorElenco');
+                    }
+                    if (dados.ratingMedio) {
+                        document.getElementById('ratingMedio').value = dados.ratingMedio;
+                        mostrarCadeadoSePreenchido('ratingMedio');
+                    }
+                    if (dados.chutesPorJogo) {
+                        document.getElementById('chutesPorJogo').value = dados.chutesPorJogo;
+                    }
+                    if (dados.posseBola) {
+                        document.getElementById('posseBola').value = dados.posseBola;
+                    }
+                    if (dados.tendencia) {
+                        document.getElementById('tendencia').value = dados.tendencia;
+                    }
+                    if (dados.desfalques) {
+                        document.getElementById('desfalques').value = dados.desfalques;
+                    }
+                    if (dados.motivacao) {
+                        document.getElementById('motivacao').value = dados.motivacao;
+                    }
+                    if (dados.proximosJogos) {
+                        document.getElementById('proximosJogos').value = dados.proximosJogos;
+                    }
+                    
+                    console.log(`✅ Dados editáveis de ${nomeClube} carregados com sucesso!`);
+                } else {
+                    console.log(`ℹ️ Sem dados editáveis salvos para ${nomeClube}`);
+                }
+                
+            } catch (error) {
+                console.log(`ℹ️ Erro ao carregar dados editáveis: ${error.message}`);
+            }
+        }
+
         async function carregarDadosJogosClube(nomeClube) {
             try {
                 // Mapear nome do clube para o formato usado nos arquivos
                 let clubeArquivo = nomeClube.toLowerCase();
                 if (clubeArquivo.includes('flamengo')) {
                     clubeArquivo = 'flamengo';
+                } else if (clubeArquivo.includes('corinthians')) {
+                    clubeArquivo = 'corinthians';
                 }
                 
                 console.log(`📊 [JOGOS] Tentando carregar estatísticas de jogos para: ${clubeArquivo}`);
@@ -3139,7 +3273,7 @@
             }
             
             if (estatisticas.pct_clean_sheets) {
-                document.getElementById('percentualCleanSheets').value = estatisticas.pct_clean_sheets;
+                document.getElementById('percentualCleanSheets').value = estatisticas.pct_clean_sheets + '%';
                 marcarCampoComoJogos('percentualCleanSheets');
             }
             
@@ -3152,13 +3286,19 @@
                 document.getElementById('sequenciaAtual').value = estatisticas.sequencia_atual;
                 marcarCampoComoJogos('sequenciaAtual');
             }
+            
+            // ✅ ADICIONAR - Forma recente (últimos 5 resultados)
+            if (estatisticas.ultimos_5_resultados) {
+                document.getElementById('formaUltimos5').value = estatisticas.ultimos_5_resultados;
+                marcarCampoComoJogos('formaUltimos5');
+            }
         }
 
         // Marcar campo como derivado da tabela de jogos (cadeado verde)
         function marcarCampoComoJogos(fieldId) {
             const field = document.getElementById(fieldId);
             if (field) {
-                field.classList.remove('campo-editavel', 'campo-calculado');
+                field.classList.remove('campo-editavel', 'campo-calculado', 'campo-pendente');
                 field.classList.add('campo-bloqueado');
                 field.readOnly = true;
                 
@@ -3179,6 +3319,115 @@
                 }
                 
                 console.log(`🔒 [JOGOS] Campo ${fieldId} bloqueado para edição`);
+            }
+        }
+
+        // Marcar campo como pendente de atualização
+        function marcarCampoPendente(fieldId, valor) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                // Preencher com valor padrão/exemplo
+                field.value = valor;
+                
+                // Aplicar estilo visual de campo pendente
+                field.classList.remove('campo-editavel', 'campo-bloqueado', 'campo-calculado');
+                field.classList.add('campo-pendente');
+                field.readOnly = false;
+                
+                // Atualizar ícone para indicar que precisa ser preenchido
+                const label = field.closest('.campo-grupo')?.querySelector('label');
+                if (label) {
+                    const icon = label.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-exclamation-triangle';
+                        icon.style.color = '#fbbf24'; // Amarelo de alerta
+                        icon.title = 'Campo precisa ser atualizado com dados reais';
+                    }
+                }
+                
+                console.log(`⚠️ [PENDENTE] Campo ${fieldId} marcado para atualização`);
+            }
+        }
+
+        // Carregar valor do elenco de dados reais
+        async function carregarValorElenco(nomeClube) {
+            console.log(`🔍 [DEBUG] Iniciando carregarValorElenco para: ${nomeClube}`);
+            
+            try {
+                const response = await fetch('./static/valor_elenco/mapeamento_clubes.json');
+                console.log(`🔍 [DEBUG] Response status: ${response.status}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log(`🔍 [DEBUG] Dados carregados:`, data);
+                
+                // Normalizar nome do clube para busca
+                const clubeNormalizado = nomeClube.toLowerCase().replace(/\s+/g, '_');
+                console.log(`🔍 [DEBUG] Clube normalizado: ${clubeNormalizado}`);
+                
+                // Buscar no mapeamento
+                let clubeEncontrado = null;
+                for (const [key, clube] of Object.entries(data.mapeamento)) {
+                    console.log(`🔍 [DEBUG] Testando key: ${key} vs ${clubeNormalizado}`);
+                    if (key === clubeNormalizado || 
+                        clube.nomes_alternativos.some(alt => 
+                            alt.toLowerCase().includes(nomeClube.toLowerCase()) ||
+                            nomeClube.toLowerCase().includes(alt.toLowerCase())
+                        )) {
+                        clubeEncontrado = clube;
+                        console.log(`✅ [DEBUG] Clube encontrado:`, clubeEncontrado);
+                        break;
+                    }
+                }
+                
+                if (clubeEncontrado) {
+                    // Preencher campo com valor real
+                    const field = document.getElementById('valorElenco');
+                    console.log(`🔍 [DEBUG] Campo valorElenco encontrado:`, field);
+                    
+                    if (field) {
+                        field.value = clubeEncontrado.valor_elenco_euros;
+                        field.classList.remove('campo-pendente', 'campo-editavel');
+                        field.classList.add('campo-calculado');
+                        field.readOnly = true;
+                        
+                        // Atualizar ícone para calculadora
+                        const label = field.closest('tr')?.querySelector('td strong');
+                        if (label) {
+                            const icon = label.querySelector('i');
+                            if (icon) {
+                                icon.className = 'fas fa-calculator';
+                                icon.style.color = '#60a5fa'; // Azul
+                                icon.title = `Valor real do elenco: €${clubeEncontrado.valor_elenco_euros}M (Posição mundial: ${clubeEncontrado.posicao_mundial}º)`;
+                            }
+                        }
+                        
+                        console.log(`💰 [VALOR ELENCO] ${clubeEncontrado.nome_oficial}: €${clubeEncontrado.valor_elenco_euros} milhões (${clubeEncontrado.posicao_mundial}º mundial)`);
+                        
+                        // Verificação final
+                        setTimeout(() => {
+                            const finalCheck = document.getElementById('valorElenco');
+                            console.log(`🔍 [DEBUG] Verificação final - Campo valorElenco:`, {
+                                element: finalCheck,
+                                value: finalCheck?.value,
+                                classList: finalCheck?.classList.toString(),
+                                style: finalCheck?.style.cssText,
+                                visible: finalCheck?.offsetHeight > 0
+                            });
+                        }, 100);
+                        
+                    } else {
+                        console.error(`❌ [DEBUG] Campo valorElenco não encontrado!`);
+                    }
+                } else {
+                    console.log(`ℹ️ [VALOR ELENCO] Clube ${nomeClube} não encontrado na base de dados mundial`);
+                }
+                
+            } catch (error) {
+                console.error(`❌ [VALOR ELENCO] Erro ao carregar dados: ${error.message}`);
             }
         }
 
@@ -3234,39 +3483,21 @@
             });
             
             // CAMPOS EDITÁVEIS - Dados complementares (valores padrão)
-            document.getElementById('chutesPorJogo').value = 14.2;
-            document.getElementById('posseBola').value = 58.3;
-            // cleanSheets será preenchido pelos jogos se disponível
-            if (!document.getElementById('cleanSheets').classList.contains('campo-bloqueado')) {
-                document.getElementById('cleanSheets').value = Math.floor((dadosClube.jogos || 0) * 0.4); // Estimativa
-            }
-            // PPG campos serão preenchidos pelos jogos se disponível
-            if (!document.getElementById('ppgCasa').classList.contains('campo-bloqueado')) {
-                document.getElementById('ppgCasa').value = 2.31;
-            }
-            if (!document.getElementById('ppgFora').classList.contains('campo-bloqueado')) {
-                document.getElementById('ppgFora').value = 1.83;
-            }
-            if (!document.getElementById('aproveitamentoCasa').classList.contains('campo-bloqueado')) {
-                document.getElementById('aproveitamentoCasa').value = 77.0;
-            }
-            if (!document.getElementById('aproveitamentoFora').classList.contains('campo-bloqueado')) {
-                document.getElementById('aproveitamentoFora').value = 61.0;
-            }
-            if (!document.getElementById('pontosUltimos5').classList.contains('campo-bloqueado')) {
-                document.getElementById('pontosUltimos5').value = 8;
-            }
-            if (!document.getElementById('sequenciaAtual').classList.contains('campo-bloqueado')) {
-                document.getElementById('sequenciaAtual').value = '2 empates seguidos';
-            }
-            document.getElementById('tendencia').value = 'Estável';
-            document.getElementById('elencoTotal').value = 40;
-            document.getElementById('pctProvaveis').value = 42.5;
-            document.getElementById('valorElenco').value = 272.0;
-            document.getElementById('ratingMedio').value = 4.6;
-            document.getElementById('desfalques').value = 'Nenhum desfalque importante';
-            document.getElementById('motivacao').value = `${dadosClube.zona || 'Meio da tabela'} - Posição ${dadosClube.posicao}`;
-            document.getElementById('proximosJogos').value = 'A definir';
+            // Marcar campos que precisam ser atualizados com dados reais
+            marcarCampoPendente('chutesPorJogo', 14.2);
+            marcarCampoPendente('posseBola', 58.3);
+            // ✅ REMOVIDO - Esses campos serão preenchidos AUTOMATICAMENTE pelos dados dos jogos
+            // Clean Sheets, PPG Casa/Fora, Aproveitamento, Pontos Últimos 5, Sequência
+            // serão calculados pela função carregarDadosJogosClube() se houver dados disponíveis
+            // Marcar campos críticos que precisam ser atualizados
+            marcarCampoPendente('tendencia', 'Estável');
+            marcarCampoPendente('elencoTotal', 40);
+            marcarCampoPendente('pctProvaveis', 42.5);
+            marcarCampoPendente('valorElenco', 85.0);
+            marcarCampoPendente('ratingMedio', 4.6);
+            marcarCampoPendente('desfalques', 'Nenhum desfalque importante');
+            marcarCampoPendente('motivacao', `${dadosClube.zona || 'Meio da tabela'} - Posição ${dadosClube.posicao}`);
+            marcarCampoPendente('proximosJogos', 'A definir');
             
             // Calcular campos automáticos
             calcularPPG();
@@ -3275,6 +3506,36 @@
             calcularCleanSheets();
             
             console.log(`✅ Dados de ${dadosClube.time} carregados com sucesso!`);
+        }
+
+        // Preencher dados de exemplo do Corinthians
+        function preencherDadosCorinthians() {
+            document.getElementById('posicaoAtual').value = 10;
+            document.getElementById('pontosTotal').value = 29;
+            document.getElementById('jogosDisputados').value = 24;
+            document.getElementById('vitorias').value = 7;
+            document.getElementById('empates').value = 8;
+            document.getElementById('derrotas').value = 9;
+            document.getElementById('golsMarcados').value = 28;
+            document.getElementById('golsSofridos').value = 28;
+            
+            // Marcar campos que precisam ser atualizados com dados reais
+            marcarCampoPendente('chutesPorJogo', 13.8);
+            marcarCampoPendente('posseBola', 55.2);
+            marcarCampoPendente('tendencia', 'Irregular');
+            marcarCampoPendente('elencoTotal', 32);
+            marcarCampoPendente('pctProvaveis', 38.5);
+            marcarCampoPendente('valorElenco', 110.45);
+            marcarCampoPendente('ratingMedio', 3.8);
+            marcarCampoPendente('desfalques', 'Yuri Alberto (suspenso)');
+            marcarCampoPendente('motivacao', 'Luta contra rebaixamento - situação delicada');
+            marcarCampoPendente('proximosJogos', 'FLA(f), PAL(c), BOT(f)');
+            
+            // Calcular campos automáticos
+            calcularPPG();
+            calcularPercentuais();
+            calcularMedias();
+            calcularCleanSheets();
         }
 
         // Preencher dados de exemplo do Flamengo
@@ -3287,24 +3548,20 @@
             document.getElementById('derrotas').value = 4;
             document.getElementById('golsMarcados').value = 52;
             document.getElementById('golsSofridos').value = 32;
-            document.getElementById('chutesPorJogo').value = 14.2;
-            document.getElementById('posseBola').value = 58.3;
-            document.getElementById('cleanSheets').value = 12;
-            document.getElementById('ppgCasa').value = 2.31;
-            document.getElementById('ppgFora').value = 1.83;
-            document.getElementById('aproveitamentoCasa').value = 77.0;
-            document.getElementById('aproveitamentoFora').value = 61.0;
-            document.getElementById('formaUltimos5').value = 'V-V-E-E-D';
-            document.getElementById('pontosUltimos5').value = 8;
-            document.getElementById('sequenciaAtual').value = '2 empates seguidos';
-            document.getElementById('tendencia').value = 'Estável';
-            document.getElementById('elencoTotal').value = 40;
-            document.getElementById('pctProvaveis').value = 42.5;
-            document.getElementById('valorElenco').value = 272.0;
-            document.getElementById('ratingMedio').value = 4.6;
-            document.getElementById('desfalques').value = 'Arrascaeta (lesão), Viña (suspenso)';
-            document.getElementById('motivacao').value = 'Briga pelo título - 6 pts do líder';
-            document.getElementById('proximosJogos').value = 'COR(f), PAL(c), BOT(f)';
+            // Marcar campos que precisam ser atualizados com dados reais
+            marcarCampoPendente('chutesPorJogo', 14.2);
+            marcarCampoPendente('posseBola', 58.3);
+            // ✅ REMOVIDO - Esses campos vêm dos DADOS REAIS dos jogos:
+            // cleanSheets, ppgCasa, ppgFora, aproveitamentoCasa, aproveitamentoFora
+            // formaUltimos5, pontosUltimos5, sequenciaAtual
+            marcarCampoPendente('tendencia', 'Estável');
+            marcarCampoPendente('elencoTotal', 40);
+            marcarCampoPendente('pctProvaveis', 42.5);
+            marcarCampoPendente('valorElenco', 85.0);
+            marcarCampoPendente('ratingMedio', 4.6);
+            marcarCampoPendente('desfalques', 'Arrascaeta (lesão), Viña (suspenso)');
+            marcarCampoPendente('motivacao', 'Briga pelo título - 6 pts do líder');
+            marcarCampoPendente('proximosJogos', 'COR(f), PAL(c), BOT(f)');
             
             // Calcular campos automáticos
             calcularPPG();
@@ -3335,9 +3592,9 @@
             
             if (total > 0) {
                 const pctVitorias = ((vitorias / total) * 100).toFixed(1);
-                document.getElementById('pctVitorias').value = pctVitorias + '%';
+                document.getElementById('percentualVitorias').value = pctVitorias + '%';
             } else {
-                document.getElementById('pctVitorias').value = '';
+                document.getElementById('percentualVitorias').value = '';
             }
         }
 
@@ -3351,11 +3608,11 @@
                 const mediaGolsMarcados = (golsMarcados / jogos).toFixed(2);
                 const mediaGolsSofridos = (golsSofridos / jogos).toFixed(2);
                 
-                document.getElementById('mediaGolsMarcados').value = mediaGolsMarcados;
-                document.getElementById('mediaGolsSofridos').value = mediaGolsSofridos;
+                document.getElementById('mediaGols').value = mediaGolsMarcados;
+                document.getElementById('mediaSofridos').value = mediaGolsSofridos;
             } else {
-                document.getElementById('mediaGolsMarcados').value = '';
-                document.getElementById('mediaGolsSofridos').value = '';
+                document.getElementById('mediaGols').value = '';
+                document.getElementById('mediaSofridos').value = '';
             }
         }
 
@@ -3366,14 +3623,14 @@
             
             if (jogos > 0) {
                 const pctCleanSheets = ((cleanSheets / jogos) * 100).toFixed(1);
-                document.getElementById('pctCleanSheets').value = pctCleanSheets + '%';
+                document.getElementById('percentualCleanSheets').value = pctCleanSheets + '%';
             } else {
-                document.getElementById('pctCleanSheets').value = '';
+                document.getElementById('percentualCleanSheets').value = '';
             }
         }
 
-        // Salvar estatísticas
-        function salvarEstatisticas() {
+        // Salvar estatísticas (incluindo campos editáveis)
+        async function salvarEstatisticas() {
             const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
             
             if (!clubeSelecionado) {
@@ -3381,49 +3638,48 @@
                 return;
             }
 
-            console.log('Salvando estatísticas do clube:', clubeSelecionado);
-            mostrarSucesso(`Estatísticas do ${clubeSelecionado} salvas com sucesso!`);
-        }
-
-        // Limpar formulário
-        function limparFormulario() {
-            document.getElementById('formularioEstatisticas').querySelectorAll('input, select').forEach(campo => {
-                if (!campo.readOnly) {
-                    campo.value = '';
+            // Coletar dados dos campos editáveis
+            const dadosEditaveis = {
+                clube: clubeSelecionado,
+                elencoTotal: document.getElementById('elencoTotal').value,
+                pctProvaveis: document.getElementById('pctProvaveis').value,
+                valorElenco: document.getElementById('valorElenco').value,
+                ratingMedio: document.getElementById('ratingMedio').value,
+                chutesPorJogo: document.getElementById('chutesPorJogo').value,
+                posseBola: document.getElementById('posseBola').value,
+                tendencia: document.getElementById('tendencia').value,
+                desfalques: document.getElementById('desfalques').value,
+                motivacao: document.getElementById('motivacao').value,
+                proximosJogos: document.getElementById('proximosJogos').value
+            };
+            
+            try {
+                const response = await fetch('/api/admin/estatisticas-editaveis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        admin_key: localStorage.getItem('admin_key'),
+                        dados: dadosEditaveis
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    mostrarSucesso(`Estatísticas do ${clubeSelecionado} salvas com sucesso!`);
+                    console.log('📊 Estatísticas salvas para:', clubeSelecionado);
+                } else {
+                    mostrarErro('Erro ao salvar: ' + result.message);
                 }
-            });
-            
-            // Limpar campos calculados
-            document.getElementById('ppg').value = '';
-            document.getElementById('pctVitorias').value = '';
-            document.getElementById('mediaGolsMarcados').value = '';
-            document.getElementById('mediaGolsSofridos').value = '';
-            document.getElementById('pctCleanSheets').value = '';
-        }
-
-        // Preview das estatísticas
-        function previewEstatisticas() {
-            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
-            
-            if (!clubeSelecionado) {
-                mostrarErro('Selecione um clube primeiro!');
-                return;
+            } catch (error) {
+                console.error('Erro ao salvar estatísticas:', error);
+                mostrarErro('Erro ao salvar estatísticas');
             }
-
-            alert(`Preview das estatísticas de ${clubeSelecionado} será implementado em breve!`);
         }
 
-        // Ver histórico
-        function verHistorico() {
-            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
-            
-            if (!clubeSelecionado) {
-                mostrarErro('Selecione um clube primeiro!');
-                return;
-            }
-
-            alert(`Histórico de ${clubeSelecionado} será implementado em breve!`);
-        }
+        // Funções removidas: limparFormulario, previewEstatisticas, verHistorico
+        // Mantida apenas a função salvarEstatisticas por ser útil
 
         // === SISTEMA DE AJUDA EDUCATIVO ===
         const helpContent = {
@@ -3597,8 +3853,21 @@
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
             
-            // Carregar jogos da API
-            await carregarJogosDoClube('flamengo');
+            // Obter clube selecionado
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            let clubeArquivo = clubeSelecionado.toLowerCase();
+            
+            // Mapear nome do clube para o formato usado nos arquivos
+            if (clubeArquivo.includes('flamengo')) {
+                clubeArquivo = 'flamengo';
+            } else if (clubeArquivo.includes('corinthians')) {
+                clubeArquivo = 'corinthians';
+            }
+            
+            console.log(`📊 [MODAL] Abrindo tabela de jogos para: ${clubeArquivo}`);
+            
+            // Carregar jogos da API do clube selecionado
+            await carregarJogosDoClube(clubeArquivo);
         }
 
         function fecharTabelaJogos() {
@@ -3623,10 +3892,16 @@
                     clubeAtual = clube;
                     console.log(`✅ [JOGOS] ${jogosCarregados.length} jogos carregados para ${clube}`);
                     
-                    // Atualizar título do modal
+                    // Atualizar título do modal com nome amigável
                     const tituloModal = document.querySelector('#jogosModal h3');
                     if (tituloModal) {
-                        tituloModal.textContent = `Tabela de Jogos - ${clube.toUpperCase()}`;
+                        let nomeAmigavel = clube.toUpperCase();
+                        if (clube === 'flamengo') {
+                            nomeAmigavel = '🔥 FLAMENGO';
+                        } else if (clube === 'corinthians') {
+                            nomeAmigavel = '⚫ CORINTHIANS';
+                        }
+                        tituloModal.textContent = `Tabela de Jogos - ${nomeAmigavel}`;
                     }
                     
                     carregarJogosNaTabela();
@@ -3792,10 +4067,76 @@
             }
         }
 
+        // === SISTEMA DE CADEADO MANUAL ===
+        function toggleLock(fieldId) {
+            const field = document.getElementById(fieldId);
+            const lockIcon = document.querySelector(`[data-field="${fieldId}"]`);
+            
+            if (!field || !lockIcon) return;
+            
+            if (field.readOnly) {
+                // Desbloquear campo
+                field.readOnly = false;
+                field.classList.remove('campo-bloqueado-manual');
+                field.classList.add('campo-editavel');
+                lockIcon.className = 'fas fa-unlock campo-lock-toggle';
+                lockIcon.title = 'Clique para bloquear campo';
+                lockIcon.style.color = '#1e40af';
+                console.log(`🔓 Campo ${fieldId} desbloqueado`);
+            } else {
+                // Bloquear campo (só se tiver valor)
+                if (field.value && field.value.trim() !== '') {
+                    field.readOnly = true;
+                    field.classList.remove('campo-editavel', 'campo-pendente');
+                    field.classList.add('campo-bloqueado-manual');
+                    lockIcon.className = 'fas fa-lock campo-lock-toggle';
+                    lockIcon.title = 'Clique para desbloquear campo';
+                    lockIcon.style.color = '#1e40af';
+                    console.log(`🔒 Campo ${fieldId} bloqueado com valor: ${field.value}`);
+                } else {
+                    alert('⚠️ Preencha o campo antes de bloquear!');
+                }
+            }
+        }
+
+        // Mostrar cadeado quando campo for preenchido
+        function mostrarCadeadoSePreenchido(fieldId) {
+            const field = document.getElementById(fieldId);
+            const lockIcon = document.querySelector(`[data-field="${fieldId}"]`);
+            
+            if (field && lockIcon) {
+                if (field.value && field.value.trim() !== '' && !field.readOnly) {
+                    lockIcon.style.display = 'block';
+                } else if (!field.value || field.value.trim() === '') {
+                    lockIcon.style.display = 'none';
+                }
+            }
+        }
+
+        // Adicionar listeners para mostrar cadeado
+        function adicionarListenersCadeado() {
+            const camposComCadeado = ['elencoTotal', 'pctProvaveis', 'valorElenco', 'ratingMedio'];
+            
+            camposComCadeado.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('input', () => mostrarCadeadoSePreenchido(fieldId));
+                    field.addEventListener('blur', () => mostrarCadeadoSePreenchido(fieldId));
+                    // Verificar no carregamento
+                    mostrarCadeadoSePreenchido(fieldId);
+                }
+            });
+        }
+
         // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔐 Central Admin - Loteca Inteligente carregada');
             console.log('💡 Chave padrão:', ADMIN_KEY);
+            
+            // Inicializar sistema de cadeados
+            setTimeout(() => {
+                adicionarListenersCadeado();
+            }, 500);
             
             // Atualizar dashboard na inicialização (com delay para garantir que a página carregou)
             setTimeout(() => {
