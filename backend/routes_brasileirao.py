@@ -3,6 +3,8 @@ from flask_cors import cross_origin
 from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
 from services.loteca_provider_new import get_current_loteca_matches
 from models.classificacao_db import classificacao_db
+from models.jogos_manager import JogosManager
+from datetime import datetime
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
@@ -519,6 +521,168 @@ def api_atualizar_classificacao():
             "success": False,
             "error": f"Erro ao atualizar classificação: {str(e)}"
         }), 500
+
+@bp_br.route("/estatisticas/<clube>", methods=["GET"])
+@cross_origin()
+def api_estatisticas_clube(clube):
+    """
+    Endpoint para estatísticas detalhadas de um clube específico
+    GET /api/br/estatisticas/{clube}
+    """
+    try:
+        jm = JogosManager()
+        stats = jm.calcular_estatisticas(clube)
+        
+        return jsonify({
+            "success": True,
+            "clube": clube,
+            "pontos_total": stats.get('pontos_total', 0),
+            "total_jogos": stats.get('total_jogos', 0),
+            "ppg_casa": stats.get('ppg_casa', 0),
+            "ppg_fora": stats.get('ppg_fora', 0),
+            "aproveitamento_casa": stats.get('aproveitamento_casa', 0),
+            "aproveitamento_fora": stats.get('aproveitamento_fora', 0),
+            "vitorias": stats.get('vitorias', 0),
+            "empates": stats.get('empates', 0),
+            "derrotas": stats.get('derrotas', 0),
+            "gols_marcados": stats.get('gols_marcados', 0),
+            "gols_sofridos": stats.get('gols_sofridos', 0),
+            "saldo_gols": stats.get('saldo_gols', 0),
+            "clean_sheets": stats.get('clean_sheets', 0),
+            "jogos_casa": stats.get('jogos_casa', 0),
+            "jogos_fora": stats.get('jogos_fora', 0),
+            "pontos_casa": stats.get('pontos_casa', 0),
+            "pontos_fora": stats.get('pontos_fora', 0)
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao carregar estatísticas de {clube}: {str(e)}",
+            "clube": clube
+        }), 500
+
+@bp_br.route("/ranking-completo", methods=["GET"])
+@cross_origin()
+def api_ranking_completo():
+    """
+    Endpoint para ranking completo de todos os clubes
+    GET /api/br/ranking-completo
+    """
+    try:
+        jm = JogosManager()
+        
+        clubes = [
+            'flamengo', 'palmeiras', 'cruzeiro', 'mirassol', 'bahia',
+            'botafogo', 'fluminense', 'sao-paulo', 'gremio', 'red-bull-bragantino',
+            'atletico-mg', 'ceara', 'corinthians', 'vasco', 'internacional',
+            'santos', 'juventude', 'vitoria', 'fortaleza', 'sport-recife'
+        ]
+        
+        ranking = []
+        
+        for clube in clubes:
+            try:
+                stats = jm.calcular_estatisticas(clube)
+                ppg_total = stats['pontos_total'] / stats['total_jogos'] if stats['total_jogos'] > 0 else 0
+                
+                ranking.append({
+                    'clube': clube,
+                    'nome_display': formatar_nome_clube(clube),
+                    'pontos': stats['pontos_total'],
+                    'jogos': stats['total_jogos'],
+                    'ppg_total': round(ppg_total, 2),
+                    'ppg_casa': stats['ppg_casa'],
+                    'ppg_fora': stats['ppg_fora'],
+                    'aproveitamento_casa': stats['aproveitamento_casa'],
+                    'aproveitamento_fora': stats['aproveitamento_fora'],
+                    'vitorias': stats['vitorias'],
+                    'empates': stats['empates'],
+                    'derrotas': stats['derrotas'],
+                    'gols_marcados': stats.get('gols_marcados', 0),
+                    'gols_sofridos': stats.get('gols_sofridos', 0),
+                    'saldo_gols': stats.get('saldo_gols', 0)
+                })
+            except Exception as e:
+                print(f"Erro ao processar {clube}: {e}")
+                # Adicionar dados padrão em caso de erro
+                ranking.append({
+                    'clube': clube,
+                    'nome_display': formatar_nome_clube(clube),
+                    'pontos': 0,
+                    'jogos': 0,
+                    'ppg_total': 0,
+                    'ppg_casa': 0,
+                    'ppg_fora': 0,
+                    'aproveitamento_casa': 0,
+                    'aproveitamento_fora': 0,
+                    'vitorias': 0,
+                    'empates': 0,
+                    'derrotas': 0,
+                    'gols_marcados': 0,
+                    'gols_sofridos': 0,
+                    'saldo_gols': 0
+                })
+        
+        # Ordenar por PPG Total
+        ranking.sort(key=lambda x: x['ppg_total'], reverse=True)
+        
+        # Adicionar posições e status
+        for i, clube in enumerate(ranking):
+            clube['posicao'] = i + 1
+            clube['status'] = determinar_status_clube(clube['ppg_total'])
+        
+        return jsonify({
+            'success': True,
+            'ranking': ranking,
+            'total_clubes': len(ranking),
+            'ultima_atualizacao': datetime.now().isoformat(),
+            'lider': ranking[0]['nome_display'] if ranking else 'N/A',
+            'zona_rebaixamento': len([c for c in ranking if c['status']['codigo'] == 'ZONA'])
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': f"Erro ao gerar ranking: {str(e)}"
+        }), 500
+
+def formatar_nome_clube(clube):
+    """Formatar nome do clube para exibição"""
+    nomes = {
+        'flamengo': 'CR Flamengo',
+        'palmeiras': 'SE Palmeiras', 
+        'cruzeiro': 'Cruzeiro EC',
+        'mirassol': 'Mirassol FC',
+        'bahia': 'EC Bahia',
+        'botafogo': 'Botafogo FR',
+        'fluminense': 'Fluminense FC',
+        'sao-paulo': 'São Paulo FC',
+        'gremio': 'Grêmio FBPA',
+        'red-bull-bragantino': 'RB Bragantino',
+        'atletico-mg': 'Atlético Mineiro',
+        'ceara': 'Ceará SC',
+        'corinthians': 'SC Corinthians',
+        'vasco': 'CR Vasco da Gama',
+        'internacional': 'SC Internacional',
+        'santos': 'Santos FC',
+        'juventude': 'EC Juventude',
+        'vitoria': 'EC Vitória',
+        'fortaleza': 'Fortaleza EC',
+        'sport-recife': 'Sport Recife'
+    }
+    return nomes.get(clube, clube.title())
+
+def determinar_status_clube(ppg):
+    """Determina status do clube baseado no PPG"""
+    if ppg >= 1.60:
+        return {'codigo': 'G5', 'descricao': 'Libertadores', 'cor': '#28a745'}
+    elif ppg >= 1.20:
+        return {'codigo': 'MEIO', 'descricao': 'Meio de Tabela', 'cor': '#ffc107'}
+    elif ppg >= 0.90:
+        return {'codigo': 'RISCO', 'descricao': 'Zona de Risco', 'cor': '#fd7e14'}
+    else:
+        return {'codigo': 'ZONA', 'descricao': 'Rebaixamento', 'cor': '#dc3545'}
 
 # Função para registrar o blueprint (será chamada em app.py)
 def register_routes(app):

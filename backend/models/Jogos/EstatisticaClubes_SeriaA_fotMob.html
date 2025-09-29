@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Estudos Estatísticos – Série A</title>
+<style>
+:root{
+  --bg:#0b0f14; --card:#121825; --text:#e6edf3; --muted:#9aa4b2;
+  --brand:#7c5cff; --ok:#00e38c; --danger:#ef4444; --border:rgba(255,255,255,.08);
+  --radius:14px;
+}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,'Noto Sans',sans-serif;line-height:1.45}
+
+.container{max-width:1200px;margin:0 auto;padding:clamp(12px,3vw,24px)}
+h1{font-size:clamp(18px,3.5vw,28px);margin:0 0 8px}
+.caption{color:var(--muted);font-size:14px;margin-bottom:14px}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.input{background:var(--card);border:1px solid var(--border);color:var(--text);
+  border-radius:12px;padding:10px 12px;flex:1 1 260px;min-width:220px}
+.btn{background:var(--brand);border:none;color:#fff;border-radius:12px;
+  padding:10px 14px;font-weight:600;cursor:pointer}
+.btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
+
+.table-wrap{background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:880px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:clamp(12px,2.5vw,14px)}
+thead th{position:sticky;top:0;z-index:1;background:linear-gradient(180deg,rgba(10,14,20,.96),rgba(10,14,20,.92));backdrop-filter:blur(6px);cursor:pointer;user-select:none}
+thead th .sort{opacity:.6;margin-left:6px}
+tr:hover td{background:rgba(255,255,255,.02)}
+
+td.editable{outline:2px dashed var(--ok)}
+td.locked{background:rgba(239,68,68,.06)}
+td .lock{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:16px;line-height:1;
+  border:1px solid var(--ok);color:var(--ok);border-radius:8px;padding:2px 4px;cursor:pointer}
+td .lock::after{content:'';position:absolute;inset:-10px}
+td .lock.locked{border-color:var(--danger);color:var(--danger)}
+td{position:relative}
+
+/* ≤ 768px: botões em pilha e scroll */
+@media (max-width:768px){
+  .toolbar{flex-direction:column}
+  .btn{width:100%}
+  table{min-width:720px}
+}
+
+/* ≤ 520px: modo “cartões” */
+@media (max-width:520px){
+  thead{display:none}
+  table, tbody, tr, td{display:block;width:100%}
+  tr{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:8px;margin:10px 0}
+  td{border:none;padding:8px 8px 8px 120px;min-height:36px}
+  td::before{content:attr(data-label);position:absolute;left:10px;top:8px;width:100px;color:var(--muted);font-size:12px;font-weight:600}
+  td:last-child{padding-left:8px;padding-top:12px}
+  td .lock{right:8px;top:10px;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Estudos Estatísticos – Série A</h1>
+  <div class="caption">Tabela dinâmica com métricas por clube. Clique no cabeçalho para ordenar, pesquise por nome, edite valores e trave/destrave com o cadeado.</div>
+
+  <div class="toolbar">
+    <input id="q" class="input" placeholder="Pesquisar clube..." />
+    <button id="exportCsv" class="btn">Exportar CSV</button>
+    <button id="clearLocks" class="btn secondary">Limpar cadeados</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead><tr id="thead-row"></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// ========= CONFIG =========
+const DATA_URL = './serie_a_stats.json'; // ajuste se quiser outro caminho
+// coluna -> rótulo e formatação
+const COLUMNS = [
+  { key:'team',  label:'Clube', width:200 },
+  { key:'goals_per_match', label:'Gols/jogo', digits:2 },
+  { key:'goals_conceded_per_match', label:'Gols sofridos/jogo', digits:2 },
+  { key:'possession_pct', label:'Posse (%)', digits:1 },
+  { key:'xg', label:'xG', digits:1 },
+  { key:'shots_on_target_per_game', label:'Chutes a gol/jogo', digits:1 },
+  { key:'big_chances', label:'Grandes chances' },
+  { key:'passes_completed_per_game', label:'Passes certos/jogo', digits:1 },
+  { key:'corners', label:'Escanteios' }
+];
+
+// fallback mínimo (demonstração)
+const SAMPLE = [
+  { team:'Flamengo', goals_per_match:2.1, goals_conceded_per_match:0.5, possession_pct:62.6, xg:37.3, shots_on_target_per_game:5.7, big_chances:60, passes_completed_per_game:508.7, corners:154 },
+  { team:'Corinthians', goals_per_match:1.3, goals_conceded_per_match:0.9, possession_pct:56.2, xg:29.4, shots_on_target_per_game:4.6, big_chances:44, passes_completed_per_game:452.6, corners:121 },
+  { team:'Fluminense', goals_per_match:1.2, goals_conceded_per_match:1.3, possession_pct:54.3, xg:22.8, shots_on_target_per_game:3.6, big_chances:35, passes_completed_per_game:419.5, corners:100 }
+];
+
+// ========= STATE =========
+let DATA = [];
+let sortBy = 'team';
+let sortDir = 'asc';
+
+// ========= HELPERS =========
+const fmt = (v, d) => (v==null || v==='') ? '' : (typeof v==='number' && Number.isFinite(v) ? (d!=null? v.toFixed(d) : v) : v);
+const keyFor = (team, col) => `LOCK::${team}::${col}`;
+
+// ========= RENDER HEAD =========
+function renderHead(){
+  const tr = document.getElementById('thead-row');
+  tr.innerHTML = '';
+  COLUMNS.forEach(col=>{
+    const th = document.createElement('th');
+    th.textContent = col.label;
+    if (col.width) th.style.minWidth = col.width+'px';
+    const s = document.createElement('span'); s.className='sort'; s.textContent = sortBy===col.key ? (sortDir==='asc'?'▲':'▼') : '↕';
+    th.appendChild(s);
+    th.addEventListener('click', ()=>{
+      if (sortBy===col.key){ sortDir = (sortDir==='asc'?'desc':'asc'); }
+      else { sortBy = col.key; sortDir = 'asc'; }
+      renderHead(); renderBody();
+    });
+    tr.appendChild(th);
+  });
+}
+
+// ========= RENDER BODY =========
+function renderBody(){
+  const q = document.getElementById('q').value?.toLowerCase().trim() || '';
+  let rows = [...DATA];
+  if (q) rows = rows.filter(r => (r.team||'').toLowerCase().includes(q));
+
+  rows.sort((a,b)=>{
+    const va = (a[sortBy] ?? '');
+    const vb = (b[sortBy] ?? '');
+    if (typeof va === 'number' && typeof vb === 'number'){
+      return sortDir==='asc'? va - vb : vb - va;
+    }
+    return sortDir==='asc'? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
+  });
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  rows.forEach((row, rIndex)=>{
+    const tr = document.createElement('tr');
+    COLUMNS.forEach(col=>{
+      const td = document.createElement('td');
+      td.dataset.label = col.label;
+      td.dataset.col = col.key;
+      td.dataset.row = rIndex;
+      const value = row[col.key];
+      td.textContent = fmt(value, col.digits);
+
+      // aplicar estado de lock persistido
+      const lkKey = keyFor(row.team, col.key);
+      const isLocked = !!localStorage.getItem(lkKey);
+      if (isLocked){
+        td.classList.add('locked'); td.contentEditable = 'false';
+      }
+
+      // cadeado
+      const lock = document.createElement('span');
+      lock.className = 'lock' + (isLocked ? ' locked' : '');
+      lock.textContent = isLocked ? '🔒' : '🔓';
+      lock.title = isLocked ? 'Destravar' : 'Travar';
+      lock.addEventListener('click', (ev)=>{
+        ev.stopPropagation();
+        if (td.classList.contains('locked')){
+          td.classList.remove('locked'); td.contentEditable = 'true';
+          localStorage.removeItem(lkKey);
+          lock.classList.remove('locked'); lock.textContent = '🔓'; lock.title='Travar';
+        } else {
+          td.classList.remove('editable'); td.classList.add('locked'); td.contentEditable = 'false';
+          localStorage.setItem(lkKey, '1');
+          lock.classList.add('locked'); lock.textContent = '🔒'; lock.title='Destravar';
+        }
+      }, true);
+      td.appendChild(lock);
+
+      // entrar em edição ao clicar (se não estiver travado)
+      td.addEventListener('click', ()=>{
+        if (td.classList.contains('locked')) return;
+        td.classList.add('editable'); td.contentEditable = 'true'; td.focus();
+        // selecionar texto
+        const range = document.createRange(); range.selectNodeContents(td);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      });
+
+      // salvar na saída e sair do modo edição
+      td.addEventListener('blur', ()=>{
+        if (td.classList.contains('locked')) return;
+        td.contentEditable = 'false'; td.classList.remove('editable');
+        const raw = td.textContent.trim().replace(',', '.');
+        const num = Number(raw);
+        DATA[rIndex][col.key] = (col.key==='team' || Number.isNaN(num)) ? td.textContent.trim() : num;
+      });
+      td.addEventListener('keydown', (e)=>{
+        if (e.key==='Enter'){ e.preventDefault(); td.blur(); }
+        if (e.key==='Escape'){ e.preventDefault(); td.blur(); }
+      });
+
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+// ========= LOAD =========
+async function loadData(){
+  try{
+    const res = await fetch(DATA_URL, {cache:'no-store'});
+    if (!res.ok) throw new Error('sem json');
+    const payload = await res.json();
+    // espera-se { data: [ {team:..., goals_per_match:...}, ... ] } ou array direto
+    DATA = Array.isArray(payload) ? payload : (payload.data || SAMPLE);
+  }catch(e){
+    console.warn('Usando SAMPLE por ausência de serie_a_stats.json', e);
+    DATA = SAMPLE;
+  }
+  renderHead(); renderBody();
+}
+
+// ========= EXPORT CSV =========
+function exportCsv(){
+  const headers = COLUMNS.map(c=>c.label);
+  const rows = [headers.join(',')];
+  const data = [...DATA];
+  data.forEach(r=>{
+    const line = COLUMNS.map(c=>{
+      const v = r[c.key];
+      const s = (v==null) ? '' : (typeof v==='number' ? String(v) : String(v));
+      return `"${s.replace(/"/g,'""')}"`;
+    }).join(',');
+    rows.push(line);
+  });
+  const blob = new Blob([rows.join('\n')], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='serie_a_estudos.csv';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+// ========= CLEAR LOCKS =========
+function clearLocks(){
+  Object.keys(localStorage).forEach(k=>{ if (k.startsWith('LOCK::')) localStorage.removeItem(k); });
+  renderBody();
+}
+
+// ========= INIT =========
+document.getElementById('exportCsv').addEventListener('click', exportCsv);
+document.getElementById('clearLocks').addEventListener('click', clearLocks);
+document.getElementById('q').addEventListener('input', renderBody);
+loadData();
+</script>
+</body>
+</html>
