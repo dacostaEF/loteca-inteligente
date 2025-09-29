@@ -10,6 +10,33 @@ class JogosManager:
     def __init__(self):
         self.base_path = os.path.join(os.path.dirname(__file__), 'Jogos')
         self.ensure_base_directory()
+        
+        # Mapeamento de nomes de clubes para abreviações usadas nos CSVs
+        self.clube_para_abrev = {
+            'flamengo': 'Fla',
+            'corinthians': 'Cor',
+            'palmeiras': 'Pal',
+            'santos': 'San',
+            'sao paulo': 'São',
+            'vasco': 'Vas',
+            'botafogo': 'Bot',
+            'fluminense': 'Flu',
+            'gremio': 'Grê',
+            'internacional': 'Int',
+            'atletico-mg': 'Atl',
+            'cruzeiro': 'Cru',
+            'bahia': 'Bah',
+            'vitoria': 'Vit',
+            'fortaleza': 'For',
+            'ceara': 'Cea',
+            'juventude': 'Juv',
+            'mirassol': 'Mir',
+            'bragantino': 'Red'
+        }
+    
+    def get_abreviacao_clube(self, clube: str) -> str:
+        """Retorna a abreviação do clube usada nos CSVs"""
+        return self.clube_para_abrev.get(clube.lower(), clube.title()[:3])
     
     def ensure_base_directory(self):
         """Garante que o diretório base existe"""
@@ -151,9 +178,10 @@ class JogosManager:
         derrotas = len([j for j in jogos if j['resultado'] == 'Derrota'])
         pontos_total = sum(j['pontos'] for j in jogos)
         
-        # Separar jogos casa e fora
-        jogos_casa = [j for j in jogos if j['time_casa'].lower() == clube.lower()]
-        jogos_fora = [j for j in jogos if j['time_casa'].lower() != clube.lower()]
+        # Separar jogos casa e fora usando abreviação
+        abrev_clube = self.get_abreviacao_clube(clube)
+        jogos_casa = [j for j in jogos if j['time_casa'] == abrev_clube]
+        jogos_fora = [j for j in jogos if j['time_casa'] != abrev_clube]
         
         # Calcular gols e clean sheets
         gols_marcados = 0
@@ -161,7 +189,7 @@ class JogosManager:
         clean_sheets = 0
         
         for jogo in jogos:
-            if jogo['time_casa'].lower() == clube.lower():
+            if jogo['time_casa'] == abrev_clube:
                 # Clube jogando em casa
                 gols_marcados += jogo['gols_casa']
                 gols_sofridos += jogo['gols_visitante']
