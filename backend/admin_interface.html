@@ -1503,7 +1503,12 @@
 
                         <!-- ESTATÍSTICA PLANTEL -->
                         <tr style="background: #333333;">
-                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Estatística Plantel</td>
+                            <td colspan="3" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Estatística Plantel</td>
+                            <td style="text-align: center; padding: 8px;">
+                                <button onclick="abrirPlanilhaClubes()" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease;" title="Abrir Planilha de Clubes">
+                                    📊 Planilha
+                                </button>
+                            </td>
                         </tr>
                         <tr>
                             <td><strong>✏️ Elenco Total</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
@@ -3624,6 +3629,107 @@
 
         // Funções removidas: limparFormulario, previewEstatisticas, verHistorico
         // Mantida apenas a função salvarEstatisticas por ser útil
+
+        // === INTEGRAÇÃO COM PLANILHA DE CLUBES ===
+        function abrirPlanilhaClubes() {
+            // Abrir planilha em nova aba
+            const planilhaUrl = './models/EstatisticasElenco/planilha_clubes_futebol.html';
+            const planilhaWindow = window.open(planilhaUrl, '_blank', 'width=1400,height=900,scrollbars=yes,resizable=yes');
+            
+            if (planilhaWindow) {
+                console.log('📊 [PLANILHA] Abrindo planilha de clubes...');
+                
+                // Verificar se há dados salvos da planilha
+                const dadosPlantel = localStorage.getItem('estatisticasPlantel');
+                if (dadosPlantel) {
+                    try {
+                        const dados = JSON.parse(dadosPlantel);
+                        console.log('📊 [PLANILHA] Dados encontrados:', dados);
+                        
+                        // Mostrar notificação
+                        mostrarSucesso(`📊 Planilha aberta! Dados disponíveis: ${dados.celulasProtegidas || 0} campos protegidos`);
+                        
+                        // Opcional: Preencher campos da Central Admin com dados da planilha
+                        preencherDadosPlanilha(dados);
+                        
+                    } catch (error) {
+                        console.error('❌ [PLANILHA] Erro ao processar dados:', error);
+                    }
+                } else {
+                    mostrarInfo('📊 Planilha aberta! Edite os dados e salve para sincronizar com a Central Admin.');
+                }
+            } else {
+                mostrarErro('❌ Não foi possível abrir a planilha. Verifique se o pop-up foi bloqueado.');
+            }
+        }
+
+        // Função para preencher dados da planilha na Central Admin
+        function preencherDadosPlanilha(dados) {
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            
+            if (!clubeSelecionado) {
+                mostrarInfo('💡 Selecione um clube para sincronizar os dados da planilha.');
+                return;
+            }
+            
+            // Procurar dados do clube selecionado na planilha
+            let clubeEncontrado = null;
+            Object.values(dados.dadosEditados || {}).forEach(tabela => {
+                const clube = tabela.find(c => 
+                    c.clube.toLowerCase().includes(clubeSelecionado.toLowerCase()) ||
+                    clubeSelecionado.toLowerCase().includes(c.clube.toLowerCase())
+                );
+                if (clube && !clubeEncontrado) {
+                    clubeEncontrado = clube;
+                }
+            });
+            
+            if (clubeEncontrado) {
+                console.log('📊 [SYNC] Sincronizando dados do clube:', clubeEncontrado);
+                
+                // Preencher campos se disponíveis
+                if (clubeEncontrado.plantel) {
+                    const field = document.getElementById('elencoTotal');
+                    if (field && !field.readOnly) {
+                        field.value = clubeEncontrado.plantel;
+                        marcarCampoComoJogos('elencoTotal');
+                    }
+                }
+                
+                if (clubeEncontrado.posseBola) {
+                    const field = document.getElementById('posseBola');
+                    if (field && !field.readOnly) {
+                        field.value = clubeEncontrado.posseBola.replace('%', '');
+                        marcarCampoComoJogos('posseBola');
+                    }
+                }
+                
+                mostrarSucesso(`✅ Dados sincronizados da planilha para ${clubeEncontrado.clube}!`);
+            } else {
+                mostrarInfo(`ℹ️ Clube "${clubeSelecionado}" não encontrado na planilha editada.`);
+            }
+        }
+
+        // Função para verificar dados da planilha automaticamente
+        function verificarDadosPlanilha() {
+            const dados = localStorage.getItem('estatisticasPlantel');
+            if (dados) {
+                try {
+                    const plantelData = JSON.parse(dados);
+                    const timestamp = new Date(plantelData.timestamp);
+                    const agora = new Date();
+                    const diffMinutos = Math.floor((agora - timestamp) / (1000 * 60));
+                    
+                    if (diffMinutos < 60) { // Dados recentes (menos de 1 hora)
+                        console.log(`📊 [PLANILHA] Dados disponíveis (${diffMinutos}min atrás):`, plantelData);
+                        return plantelData;
+                    }
+                } catch (error) {
+                    console.error('❌ [PLANILHA] Erro ao verificar dados:', error);
+                }
+            }
+            return null;
+        }
 
         // === SISTEMA DE AJUDA EDUCATIVO ===
         const helpContent = {

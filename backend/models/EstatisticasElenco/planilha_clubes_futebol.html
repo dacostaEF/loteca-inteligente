@@ -314,11 +314,45 @@
             border-radius: 4px;
             cursor: text;
             color: #60a5fa !important;
+            position: relative;
         }
 
         .editable:focus {
             outline: 2px solid #00E38C !important;
             background: rgba(0, 227, 140, 0.25) !important;
+        }
+
+        .locked {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border: 1px solid #ef4444 !important;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: not-allowed;
+            color: #fca5a5 !important;
+            position: relative;
+        }
+
+        .cell-lock {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 10px;
+            color: #00E38C;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 4px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cell-lock.locked {
+            color: #ef4444;
+        }
+
+        .cell-lock:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-50%) scale(1.1);
         }
 
         .edit-btn {
@@ -699,10 +733,31 @@
 
         // Função para tornar célula editável
         function makeEditable(cell, originalValue) {
+            // Verificar se a célula está travada
+            if (cell.classList.contains('locked')) {
+                alert('🔒 Esta célula está travada! Clique no cadeado para desbloquear.');
+                return;
+            }
+            
             if (cell.classList.contains('editable')) return;
             
             cell.classList.add('editable');
             cell.contentEditable = true;
+            cell.style.position = 'relative';
+            
+            // Adicionar cadeado se não existir
+            if (!cell.querySelector('.cell-lock')) {
+                const lockIcon = document.createElement('span');
+                lockIcon.className = 'cell-lock';
+                lockIcon.innerHTML = '🔓';
+                lockIcon.title = 'Clique para travar este campo';
+                lockIcon.onclick = function(e) {
+                    e.stopPropagation();
+                    toggleCellLock(cell);
+                };
+                cell.appendChild(lockIcon);
+            }
+            
             cell.focus();
             
             // Selecionar todo o texto
@@ -714,8 +769,10 @@
             
             // Salvar ao perder foco
             cell.addEventListener('blur', function() {
-                cell.contentEditable = false;
-                cell.classList.remove('editable');
+                if (!cell.classList.contains('locked')) {
+                    cell.contentEditable = false;
+                    cell.classList.remove('editable');
+                }
             });
             
             // Salvar ao pressionar Enter
@@ -723,6 +780,93 @@
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     cell.blur();
+                }
+            });
+        }
+
+        // Função para alternar trava da célula
+        function toggleCellLock(cell) {
+            const lockIcon = cell.querySelector('.cell-lock');
+            
+            if (cell.classList.contains('locked')) {
+                // Desbloquear
+                cell.classList.remove('locked');
+                cell.classList.add('editable');
+                cell.contentEditable = true;
+                lockIcon.innerHTML = '🔓';
+                lockIcon.title = 'Clique para travar este campo';
+                lockIcon.classList.remove('locked');
+                console.log('🔓 Campo desbloqueado:', cell.textContent);
+            } else {
+                // Bloquear
+                cell.classList.remove('editable');
+                cell.classList.add('locked');
+                cell.contentEditable = false;
+                lockIcon.innerHTML = '🔒';
+                lockIcon.title = 'Clique para destravar este campo';
+                lockIcon.classList.add('locked');
+                console.log('🔒 Campo travado:', cell.textContent);
+                
+                // Salvar no localStorage
+                saveCellLockState(cell);
+            }
+        }
+
+        // Função para salvar estado do cadeado
+        function saveCellLockState(cell) {
+            const row = cell.closest('tr');
+            const table = cell.closest('table');
+            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+            const cellIndex = Array.from(row.children).indexOf(cell);
+            const tableId = table.id;
+            
+            const lockData = {
+                tableId: tableId,
+                rowIndex: rowIndex,
+                cellIndex: cellIndex,
+                value: cell.textContent.trim(),
+                timestamp: new Date().toISOString()
+            };
+            
+            const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            
+            // Remover lock existente para esta célula
+            const filteredLocks = locks.filter(lock => 
+                !(lock.tableId === tableId && lock.rowIndex === rowIndex && lock.cellIndex === cellIndex)
+            );
+            
+            // Adicionar novo lock
+            filteredLocks.push(lockData);
+            localStorage.setItem('cellLocks', JSON.stringify(filteredLocks));
+        }
+
+        // Função para restaurar cadeados salvos
+        function restoreCellLocks() {
+            const locks = JSON.parse(localStorage.getItem('cellLocks') || '[]');
+            
+            locks.forEach(lock => {
+                const table = document.getElementById(lock.tableId);
+                if (table) {
+                    const row = table.rows[lock.rowIndex + 1]; // +1 por causa do header
+                    if (row) {
+                        const cell = row.cells[lock.cellIndex];
+                        if (cell && cell.textContent.trim() === lock.value) {
+                            // Restaurar estado travado
+                            cell.classList.add('locked');
+                            cell.contentEditable = false;
+                            cell.style.position = 'relative';
+                            
+                            const lockIcon = document.createElement('span');
+                            lockIcon.className = 'cell-lock locked';
+                            lockIcon.innerHTML = '🔒';
+                            lockIcon.title = 'Clique para destravar este campo';
+                            lockIcon.onclick = function(e) {
+                                e.stopPropagation();
+                                toggleCellLock(cell);
+                            };
+                            cell.appendChild(lockIcon);
+                        }
+                    }
                 }
             });
         }
@@ -811,7 +955,59 @@
 
         // Função para salvar alterações
         function saveChanges() {
-            alert('💾 Alterações salvas com sucesso!\n\nNota: Em uma versão completa, os dados seriam salvos em um banco de dados.');
+            const lockedCells = document.querySelectorAll('.locked');
+            let lockedCount = 0;
+            let unlockedCount = 0;
+            
+            // Contar células travadas e destravadas
+            document.querySelectorAll('td').forEach(cell => {
+                if (cell.classList.contains('locked')) {
+                    lockedCount++;
+                } else if (cell.contentEditable === 'true' || cell.classList.contains('editable')) {
+                    unlockedCount++;
+                }
+            });
+            
+            // Preparar dados para enviar à Central Admin
+            const plantelData = {
+                timestamp: new Date().toISOString(),
+                usuario: 'admin',
+                dadosEditados: {},
+                celulasProtegidas: lockedCount
+            };
+            
+            // Coletar dados das tabelas
+            ['serieATable', 'serieBTable'].forEach(tableId => {
+                const table = document.getElementById(tableId);
+                if (table && table.closest('.tab-content').classList.contains('active')) {
+                    const dados = [];
+                    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+                    
+                    for (let row of rows) {
+                        const cells = row.getElementsByTagName('td');
+                        const clubeData = {
+                            clube: cells[1]?.textContent || '',
+                            plantel: cells[2]?.textContent || '',
+                            valorTotal: cells[6]?.textContent || '',
+                            posseBola: cells[7]?.textContent || '',
+                            passesCertos: cells[8]?.textContent || '',
+                            chutesJogo: cells[9]?.textContent || '',
+                            protegido: row.querySelector('.locked') ? true : false
+                        };
+                        dados.push(clubeData);
+                    }
+                    
+                    plantelData.dadosEditados[tableId] = dados;
+                }
+            });
+            
+            // Salvar no localStorage para integração com Central Admin
+            localStorage.setItem('estatisticasPlantel', JSON.stringify(plantelData));
+            
+            alert(`💾 Alterações salvas com sucesso!\n\n📊 Dados protegidos: ${lockedCount} campos\n🔓 Dados editáveis: ${unlockedCount} campos\n\n✅ Dados sincronizados com a Central Admin!`);
+            
+            // Log para debug
+            console.log('📊 Dados salvos para Central Admin:', plantelData);
         }
 
         // Inicializar tabelas
@@ -819,6 +1015,11 @@
             populateTable('top100', top100Clubs, ['posicao', 'clube', 'pais', 'valor']);
             populateTable('serieA', serieAClubs, ['posicao', 'clube', 'plantel', 'idadeMedia', 'estrangeiros', 'valorMedio', 'valorTotal', 'posseBola', 'passesCertos', 'chutesJogo']);
             populateTable('serieB', serieBClubs, ['posicao', 'clube', 'plantel', 'idadeMedia', 'estrangeiros', 'valorMedio', 'valorTotal', 'posseBola', 'passesCertos', 'chutesJogo']);
+            
+            // Restaurar cadeados após carregar tabelas
+            setTimeout(() => {
+                restoreCellLocks();
+            }, 500);
         });
     </script>
 </body>
