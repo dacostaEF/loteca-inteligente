@@ -1149,12 +1149,7 @@
             </div>
         </div>
         
-        <!-- Botão de Debug Dashboard -->
-        <div style="text-align: center; margin: 20px 0;">
-            <button onclick="atualizarDashboard()" style="background: #a855f7; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-                🔄 Atualizar Dashboard (Debug)
-            </button>
-        </div>
+        <!-- Botão Debug removido - função desnecessária -->
 
         <!-- Mensagens -->
         <div class="success-message" id="successMessage">
@@ -1251,9 +1246,7 @@
                 <button class="btn-success" onclick="salvarClassificacao()">
                     <i class="fas fa-save"></i> Salvar Alterações
                 </button>
-                <button class="btn-warning" onclick="testeManual()" style="background: #ff6600; color: white;">
-                    <i class="fas fa-bug"></i> 🧪 TESTE DEBUG
-                </button>
+                <!-- Botão TESTE DEBUG removido - função desnecessária -->
             </div>
         </div>
 
@@ -2821,56 +2814,7 @@
             }
         }
         
-        // === FUNÇÃO DE TESTE DEBUG ===
-        function testeManual() {
-            console.log('🧪 [TESTE] === INICIANDO TESTE MANUAL ===');
-            
-            // Verificar elementos DOM
-            const elementos = {
-                'campeonatoSelect': document.getElementById('campeonatoSelect'),
-                'loadingClassificacao': document.getElementById('loadingClassificacao'),
-                'classificacaoBody': document.getElementById('classificacaoBody'),
-                'tabelaClassificacao': document.getElementById('tabelaClassificacao')
-            };
-            
-            console.log('🎯 [TESTE] Elementos DOM:');
-            Object.entries(elementos).forEach(([nome, elemento]) => {
-                console.log(`   - ${nome}:`, elemento ? 'OK' : 'MISSING');
-                if (elemento) {
-                    console.log(`     * ID: ${elemento.id}`);
-                    console.log(`     * Classes: ${elemento.className}`);
-                    console.log(`     * Visível: ${elemento.style.display !== 'none'}`);
-                }
-            });
-            
-            // Verificar localStorage
-            const adminKey = localStorage.getItem('admin_key');
-            console.log('🔑 [TESTE] Admin Key:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
-            
-            // Teste com dados específicos por campeonato
-            const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
-            console.log(`🎨 [TESTE] Testando renderização para: ${campeonato}`);
-            
-            let dadosMock = [];
-            
-            if (campeonato === 'serie-a') {
-                dadosMock = [
-                    {id: 1, time: 'Flamengo', pontos: 51, jogos: 25, vitorias: 15, empates: 6, derrotas: 4, gols_pro: 45, gols_contra: 20, saldo_gols: 25, aproveitamento: 68, posicao: 1, ultimos_jogos: 'VVEVV'},
-                    {id: 2, time: 'Palmeiras', pontos: 49, jogos: 25, vitorias: 14, empates: 7, derrotas: 4, gols_pro: 40, gols_contra: 18, saldo_gols: 22, aproveitamento: 65, posicao: 2, ultimos_jogos: 'VEVVD'},
-                    {id: 3, time: 'Botafogo', pontos: 47, jogos: 24, vitorias: 13, empates: 8, derrotas: 3, gols_pro: 38, gols_contra: 16, saldo_gols: 22, aproveitamento: 65, posicao: 3, ultimos_jogos: 'VVVEV'}
-                ];
-            } else {
-                dadosMock = [
-                    {id: 1, time: 'Santos', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 1, ultimos_jogos: 'NNNNN'},
-                    {id: 2, time: 'Novorizontino', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 2, ultimos_jogos: 'NNNNN'},
-                    {id: 3, time: 'Sport', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 3, ultimos_jogos: 'NNNNN'}
-                ];
-            }
-            
-            renderizarClassificacao(dadosMock);
-            
-            console.log('🧪 [TESTE] === TESTE MANUAL CONCLUÍDO ===');
-        }
+        // === FUNÇÃO DE TESTE DEBUG REMOVIDA ===
         
         // === FUNÇÕES DAS BOLINHAS DOS ÚLTIMOS JOGOS ===
         function getCorResultado(resultado) {
@@ -4004,7 +3948,7 @@
             }
         }
 
-        // === FUNÇÃO PARA ATUALIZAR DASHBOARD ===
+        // === FUNÇÃO PARA ATUALIZAR DASHBOARD (uso interno apenas) ===
         async function atualizarDashboard() {
             try {
                 console.log('📊 [DASHBOARD] Atualizando estatísticas...');
