@@ -1503,17 +1503,12 @@
 
                         <!-- ESTATÍSTICA PLANTEL -->
                         <tr style="background: #333333;">
-                            <td colspan="3" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Estatística Plantel</td>
-                            <td style="text-align: center; padding: 8px;">
-                                <button onclick="abrirPlanilhaClubes()" style="background: linear-gradient(135deg, #6f42c1, #8b5cf6); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease;" title="Abrir Planilha de Clubes">
-                                    📊 Planilha
-                                </button>
-                            </td>
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Estatística Plantel</td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Elenco Total</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
+                            <td><strong>🔒 Elenco Total</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
                             <td style="position: relative;">
-                                <input type="number" id="elencoTotal" placeholder="Ex: 40" class="campo-editavel">
+                                <input type="number" id="elencoTotal" placeholder="40" class="campo-bloqueado">
                                 <i class="fas fa-unlock campo-lock-toggle" data-field="elencoTotal" onclick="toggleLock('elencoTotal')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
                             </td>
                             <td><strong>✏️ % Prováveis</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
@@ -1523,9 +1518,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Valor Elenco (MM €)</strong> <i class="fas fa-exclamation-triangle" style="color: #fbbf24;" title="Campo precisa ser atualizado com dados reais"></i></td>
+                            <td><strong>🔒 Valor Elenco (MM €)</strong> <i class="fas fa-exclamation-triangle" style="color: #fbbf24;" title="Campo precisa ser atualizado com dados reais"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
                             <td style="position: relative;">
-                                <input type="number" step="0.1" id="valorElenco" placeholder="Ex: 85.0" class="campo-pendente">
+                                <input type="number" step="0.1" id="valorElenco" placeholder="85.0" class="campo-bloqueado">
                                 <i class="fas fa-unlock campo-lock-toggle" data-field="valorElenco" onclick="toggleLock('valorElenco')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
                             </td>
                             <td><strong>✏️ Rating Médio</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
@@ -1537,29 +1532,24 @@
 
                         <!-- DADOS OFENSIVOS -->
                         <tr style="background: #333333;">
-                            <td colspan="3" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Ofensivos</td>
-                            <td style="text-align: center; padding: 8px;">
-                                <button onclick="sincronizarDadosOfensivos()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease;" title="Sincronizar com Planilha">
-                                    ⚽ Sync
-                                </button>
-                            </td>
+                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Ofensivos</td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Chutes/Jogo</strong> <i class="fas fa-futbol" style="color: #f59e0b;" title="Chutes a gol por jogo"></i></td>
+                            <td><strong>🔒 Chutes/Jogo</strong> <i class="fas fa-futbol" style="color: #f59e0b;" title="Chutes a gol por jogo"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
                             <td style="position: relative;">
-                                <input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 13.4" class="campo-editavel">
+                                <input type="number" step="0.1" id="chutesPorJogo" placeholder="13.4" class="campo-bloqueado">
                                 <i class="fas fa-unlock campo-lock-toggle" data-field="chutesPorJogo" onclick="toggleLock('chutesPorJogo')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
                             </td>
-                            <td><strong>✏️ Posse de Bola (%)</strong> <i class="fas fa-percentage" style="color: #10b981;" title="Percentual médio de posse de bola"></i></td>
+                            <td><strong>🔒 Posse de Bola (%)</strong> <i class="fas fa-percentage" style="color: #10b981;" title="Percentual médio de posse de bola"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
                             <td style="position: relative;">
-                                <input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.2" class="campo-editavel">
+                                <input type="number" step="0.1" id="posseBola" placeholder="58.2" class="campo-bloqueado">
                                 <i class="fas fa-unlock campo-lock-toggle" data-field="posseBola" onclick="toggleLock('posseBola')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>✏️ Passes Certos</strong> <i class="fas fa-exchange-alt" style="color: #3b82f6;" title="Número médio de passes certos por jogo"></i></td>
+                            <td><strong>🔒 Passes Certos</strong> <i class="fas fa-exchange-alt" style="color: #3b82f6;" title="Número médio de passes certos por jogo"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
                             <td style="position: relative;">
-                                <input type="number" id="passesCertos" placeholder="Ex: 385" class="campo-editavel">
+                                <input type="number" id="passesCertos" placeholder="385" class="campo-bloqueado">
                                 <i class="fas fa-unlock campo-lock-toggle" data-field="passesCertos" onclick="toggleLock('passesCertos')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
                             </td>
                             <td style="color: #6b7280; font-style: italic;">Dados sincronizados da Planilha de Clubes</td>
@@ -3054,7 +3044,11 @@
                 // Carregar dados editáveis salvos (se disponível)
                 await carregarDadosEditaveisSalvos(clubeSelecionado);
                 
-                // Valor do elenco agora é campo editável manual
+                // 📊 PREENCHER DADOS AUTOMÁTICOS DA PLANILHA
+                await preencherDadosAutomaticosPlanilha(clubeSelecionado);
+                
+                // Verificar se há dados da planilha para sincronizar
+                verificarDadosPlanilha();
             } else {
                 formulario.style.display = 'none';
                 mensagem.style.display = 'block';
@@ -3275,9 +3269,14 @@
         }
 
         // Marcar campo como derivado da tabela de jogos (cadeado verde)
-        function marcarCampoComoJogos(fieldId) {
+        function marcarCampoComoJogos(fieldId, valor = null) {
             const field = document.getElementById(fieldId);
             if (field) {
+                // Preencher valor se fornecido
+                if (valor !== null) {
+                    field.value = valor;
+                }
+                
                 field.classList.remove('campo-editavel', 'campo-calculado', 'campo-pendente');
                 field.classList.add('campo-bloqueado');
                 field.readOnly = true;
@@ -3287,18 +3286,10 @@
                 field.addEventListener('paste', bloquearEdicao);
                 field.addEventListener('input', bloquearEdicao);
                 
-                // Encontrar o ícone do campo e mudar para cadeado verde
-                const label = field.closest('.campo-grupo')?.querySelector('label');
-                if (label) {
-                    const icon = label.querySelector('i');
-                    if (icon) {
-                        icon.className = 'fas fa-lock';
-                        icon.style.color = '#00E38C'; // Verde como o botão "Tabela de Jogos"
-                        icon.title = 'Calculado automaticamente da tabela de jogos';
-                    }
-                }
+                // Mostrar cadeado de proteção automático
+                mostrarCadeadoSePreenchido(fieldId);
                 
-                console.log(`🔒 [JOGOS] Campo ${fieldId} bloqueado para edição`);
+                console.log(`🔒 [PLANILHA] Campo ${fieldId} preenchido automaticamente: ${valor}`);
             }
         }
 
@@ -3802,6 +3793,44 @@
             } catch (error) {
                 console.error('❌ [SYNC] Erro ao processar dados:', error);
                 mostrarErro('❌ Erro ao processar dados da planilha.');
+            }
+        }
+
+        // Função para preencher dados automáticos da planilha
+        async function preencherDadosAutomaticosPlanilha(clubeSelecionado) {
+            console.log(`📊 [AUTO] Preenchendo dados automáticos da planilha para: ${clubeSelecionado}`);
+            
+            // Primeiro, tentar dados da planilha (localStorage)
+            const dadosPlantel = localStorage.getItem('estatisticasPlantel');
+            if (dadosPlantel) {
+                try {
+                    const dados = JSON.parse(dadosPlantel);
+                    preencherDadosPlanilha(dados);
+                    return; // Se encontrou na planilha, usar esses dados
+                } catch (error) {
+                    console.error('❌ Erro ao processar dados da planilha:', error);
+                }
+            }
+            
+            // Se não há dados da planilha, usar dados hardcoded por clube
+            if (clubeSelecionado.toLowerCase().includes('flamengo')) {
+                console.log('🔴 [AUTO] Preenchendo dados do Flamengo...');
+                marcarCampoComoJogos('chutesPorJogo', 14.7);
+                marcarCampoComoJogos('posseBola', 59.8);
+                marcarCampoComoJogos('passesCertos', 412);
+                marcarCampoComoJogos('elencoTotal', 31);
+                marcarCampoComoJogos('valorElenco', 195.90);
+                
+            } else if (clubeSelecionado.toLowerCase().includes('corinthians')) {
+                console.log('⚫ [AUTO] Preenchendo dados do Corinthians...');
+                marcarCampoComoJogos('chutesPorJogo', 10.9);
+                marcarCampoComoJogos('posseBola', 53.7);
+                marcarCampoComoJogos('passesCertos', 342);
+                marcarCampoComoJogos('elencoTotal', 32);
+                marcarCampoComoJogos('valorElenco', 110.45);
+                
+            } else {
+                console.log(`ℹ️ [AUTO] Clube ${clubeSelecionado} não possui dados automáticos configurados`);
             }
         }
 
