@@ -1535,6 +1535,37 @@
                             </td>
                         </tr>
 
+                        <!-- DADOS OFENSIVOS -->
+                        <tr style="background: #333333;">
+                            <td colspan="3" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Ofensivos</td>
+                            <td style="text-align: center; padding: 8px;">
+                                <button onclick="sincronizarDadosOfensivos()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease;" title="Sincronizar com Planilha">
+                                    ⚽ Sync
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Chutes/Jogo</strong> <i class="fas fa-futbol" style="color: #f59e0b;" title="Chutes a gol por jogo"></i></td>
+                            <td style="position: relative;">
+                                <input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 13.4" class="campo-editavel">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="chutesPorJogo" onclick="toggleLock('chutesPorJogo')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
+                            <td><strong>✏️ Posse de Bola (%)</strong> <i class="fas fa-percentage" style="color: #10b981;" title="Percentual médio de posse de bola"></i></td>
+                            <td style="position: relative;">
+                                <input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.2" class="campo-editavel">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="posseBola" onclick="toggleLock('posseBola')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>✏️ Passes Certos</strong> <i class="fas fa-exchange-alt" style="color: #3b82f6;" title="Número médio de passes certos por jogo"></i></td>
+                            <td style="position: relative;">
+                                <input type="number" id="passesCertos" placeholder="Ex: 385" class="campo-editavel">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="passesCertos" onclick="toggleLock('passesCertos')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
+                            <td style="color: #6b7280; font-style: italic;">Dados sincronizados da Planilha de Clubes</td>
+                            <td></td>
+                        </tr>
+
                         <!-- CONTEXTO ATUAL -->
                         <tr style="background: #333333;">
                             <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Contexto Atual</td>
@@ -3469,8 +3500,10 @@
             document.getElementById('golsSofridos').value = 28;
             
             // Marcar campos que precisam ser atualizados com dados reais
-            marcarCampoPendente('chutesPorJogo', 13.8);
-            marcarCampoPendente('posseBola', 55.2);
+            // Dados ofensivos específicos do Corinthians (da planilha)
+            marcarCampoComoJogos('chutesPorJogo', 10.9);
+            marcarCampoComoJogos('posseBola', 53.7);
+            marcarCampoComoJogos('passesCertos', 342);
             marcarCampoPendente('tendencia', 'Irregular');
             marcarCampoPendente('elencoTotal', 32);
             marcarCampoPendente('pctProvaveis', 38.5);
@@ -3497,12 +3530,10 @@
             document.getElementById('derrotas').value = 4;
             document.getElementById('golsMarcados').value = 52;
             document.getElementById('golsSofridos').value = 32;
-            // Marcar campos que precisam ser atualizados com dados reais
-            marcarCampoPendente('chutesPorJogo', 14.2);
-            marcarCampoPendente('posseBola', 58.3);
-            // ✅ REMOVIDO - Esses campos vêm dos DADOS REAIS dos jogos:
-            // cleanSheets, ppgCasa, ppgFora, aproveitamentoCasa, aproveitamentoFora
-            // formaUltimos5, pontosUltimos5, sequenciaAtual
+            // Dados ofensivos específicos do Flamengo (da planilha)
+            marcarCampoComoJogos('chutesPorJogo', 14.7);
+            marcarCampoComoJogos('posseBola', 59.8);
+            marcarCampoComoJogos('passesCertos', 412);
             marcarCampoPendente('tendencia', 'Estável');
             marcarCampoPendente('elencoTotal', 40);
             marcarCampoPendente('pctProvaveis', 42.5);
@@ -3707,6 +3738,109 @@
                 mostrarSucesso(`✅ Dados sincronizados da planilha para ${clubeEncontrado.clube}!`);
             } else {
                 mostrarInfo(`ℹ️ Clube "${clubeSelecionado}" não encontrado na planilha editada.`);
+            }
+        }
+
+        // Função para sincronizar dados ofensivos da planilha
+        function sincronizarDadosOfensivos() {
+            console.log('⚽ [SYNC] Iniciando sincronização de dados ofensivos...');
+            
+            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            if (!clubeSelecionado) {
+                mostrarErro('⚠️ Selecione um clube primeiro para sincronizar os dados ofensivos!');
+                return;
+            }
+            
+            // Buscar dados salvos da planilha
+            const dadosPlantel = localStorage.getItem('estatisticasPlantel');
+            if (!dadosPlantel) {
+                mostrarInfo('📊 Abra a planilha primeiro e salve os dados para sincronizar.');
+                return;
+            }
+            
+            try {
+                const dados = JSON.parse(dadosPlantel);
+                console.log('⚽ [SYNC] Dados da planilha encontrados:', dados);
+                
+                // Procurar dados do clube selecionado
+                let clubeEncontrado = null;
+                Object.values(dados.dadosEditados || {}).forEach(tabela => {
+                    const clube = tabela.find(c => 
+                        c.clube.toLowerCase().includes(clubeSelecionado.toLowerCase()) ||
+                        clubeSelecionado.toLowerCase().includes(c.clube.toLowerCase())
+                    );
+                    if (clube && !clubeEncontrado) {
+                        clubeEncontrado = clube;
+                    }
+                });
+                
+                if (clubeEncontrado) {
+                    console.log('⚽ [SYNC] Clube encontrado na planilha:', clubeEncontrado);
+                    
+                    // Sincronizar Chutes/Jogo
+                    if (clubeEncontrado.chutesJogo) {
+                        const fieldChutes = document.getElementById('chutesPorJogo');
+                        if (fieldChutes && !fieldChutes.readOnly) {
+                            fieldChutes.value = clubeEncontrado.chutesJogo;
+                            marcarCampoComoJogos('chutesPorJogo');
+                            mostrarCadeadoSePreenchido('chutesPorJogo');
+                        }
+                    }
+                    
+                    // Sincronizar Posse de Bola
+                    if (clubeEncontrado.posseBola) {
+                        const fieldPosse = document.getElementById('posseBola');
+                        if (fieldPosse && !fieldPosse.readOnly) {
+                            fieldPosse.value = clubeEncontrado.posseBola.replace('%', '');
+                            marcarCampoComoJogos('posseBola');
+                            mostrarCadeadoSePreenchido('posseBola');
+                        }
+                    }
+                    
+                    // Sincronizar Passes Certos
+                    if (clubeEncontrado.passesCertos) {
+                        const fieldPasses = document.getElementById('passesCertos');
+                        if (fieldPasses && !fieldPasses.readOnly) {
+                            fieldPasses.value = clubeEncontrado.passesCertos;
+                            marcarCampoComoJogos('passesCertos');
+                            mostrarCadeadoSePreenchido('passesCertos');
+                        }
+                    }
+                    
+                    // Sincronizar Valor do Elenco se disponível
+                    if (clubeEncontrado.valorTotal) {
+                        const fieldValor = document.getElementById('valorElenco');
+                        if (fieldValor && !fieldValor.readOnly) {
+                            // Extrair número do valor (ex: "€ 195.90 mi." -> 195.90)
+                            const valorNumerico = clubeEncontrado.valorTotal
+                                .replace(/[€\s]/g, '')
+                                .replace('mi.', '')
+                                .replace(',', '.');
+                            fieldValor.value = valorNumerico;
+                            marcarCampoComoJogos('valorElenco');
+                            mostrarCadeadoSePreenchido('valorElenco');
+                        }
+                    }
+                    
+                    // Sincronizar Plantel Total se disponível
+                    if (clubeEncontrado.plantel) {
+                        const fieldPlantel = document.getElementById('elencoTotal');
+                        if (fieldPlantel && !fieldPlantel.readOnly) {
+                            fieldPlantel.value = clubeEncontrado.plantel;
+                            marcarCampoComoJogos('elencoTotal');
+                            mostrarCadeadoSePreenchido('elencoTotal');
+                        }
+                    }
+                    
+                    mostrarSucesso(`⚽ Dados ofensivos sincronizados com sucesso para ${clubeEncontrado.clube}!\n\n📊 Sincronizados:\n- Chutes/Jogo: ${clubeEncontrado.chutesJogo || 'N/A'}\n- Posse de Bola: ${clubeEncontrado.posseBola || 'N/A'}\n- Passes Certos: ${clubeEncontrado.passesCertos || 'N/A'}`);
+                    
+                } else {
+                    mostrarInfo(`ℹ️ Clube "${clubeSelecionado}" não encontrado na planilha.\n\nCertifique-se de que:\n1. O clube está na Série A ou B\n2. Os dados foram salvos na planilha`);
+                }
+                
+            } catch (error) {
+                console.error('❌ [SYNC] Erro ao processar dados:', error);
+                mostrarErro('❌ Erro ao processar dados da planilha.');
             }
         }
 
