@@ -3718,12 +3718,37 @@
             if (clubeEncontrado) {
                 console.log('📊 [SYNC] Sincronizando dados do clube:', clubeEncontrado);
                 
-                // Preencher campos se disponíveis
+                // === SINCRONIZAÇÃO AUTOMÁTICA - ESTATÍSTICA PLANTEL ===
                 if (clubeEncontrado.plantel) {
                     const field = document.getElementById('elencoTotal');
                     if (field && !field.readOnly) {
                         field.value = clubeEncontrado.plantel;
                         marcarCampoComoJogos('elencoTotal');
+                        mostrarCadeadoSePreenchido('elencoTotal');
+                    }
+                }
+                
+                if (clubeEncontrado.valorTotal) {
+                    const field = document.getElementById('valorElenco');
+                    if (field && !field.readOnly) {
+                        // Extrair número do valor (ex: "€ 195.90 mi." -> 195.90)
+                        const valorNumerico = clubeEncontrado.valorTotal
+                            .replace(/[€\s]/g, '')
+                            .replace('mi.', '')
+                            .replace(',', '.');
+                        field.value = valorNumerico;
+                        marcarCampoComoJogos('valorElenco');
+                        mostrarCadeadoSePreenchido('valorElenco');
+                    }
+                }
+                
+                // === SINCRONIZAÇÃO AUTOMÁTICA - DADOS OFENSIVOS ===
+                if (clubeEncontrado.chutesJogo) {
+                    const field = document.getElementById('chutesPorJogo');
+                    if (field && !field.readOnly) {
+                        field.value = clubeEncontrado.chutesJogo;
+                        marcarCampoComoJogos('chutesPorJogo');
+                        mostrarCadeadoSePreenchido('chutesPorJogo');
                     }
                 }
                 
@@ -3732,10 +3757,28 @@
                     if (field && !field.readOnly) {
                         field.value = clubeEncontrado.posseBola.replace('%', '');
                         marcarCampoComoJogos('posseBola');
+                        mostrarCadeadoSePreenchido('posseBola');
                     }
                 }
                 
-                mostrarSucesso(`✅ Dados sincronizados da planilha para ${clubeEncontrado.clube}!`);
+                if (clubeEncontrado.passesCertos) {
+                    const field = document.getElementById('passesCertos');
+                    if (field && !field.readOnly) {
+                        field.value = clubeEncontrado.passesCertos;
+                        marcarCampoComoJogos('passesCertos');
+                        mostrarCadeadoSePreenchido('passesCertos');
+                    }
+                }
+                
+                // Mostrar resumo da sincronização
+                const dadosSincronizados = [];
+                if (clubeEncontrado.plantel) dadosSincronizados.push(`📊 Plantel: ${clubeEncontrado.plantel}`);
+                if (clubeEncontrado.valorTotal) dadosSincronizados.push(`💰 Valor: ${clubeEncontrado.valorTotal}`);
+                if (clubeEncontrado.chutesJogo) dadosSincronizados.push(`⚽ Chutes: ${clubeEncontrado.chutesJogo}/jogo`);
+                if (clubeEncontrado.posseBola) dadosSincronizados.push(`📊 Posse: ${clubeEncontrado.posseBola}`);
+                if (clubeEncontrado.passesCertos) dadosSincronizados.push(`🔄 Passes: ${clubeEncontrado.passesCertos}`);
+                
+                mostrarSucesso(`✅ ${clubeEncontrado.clube} - Dados sincronizados automaticamente!\n\n${dadosSincronizados.join('\n')}\n\n🔒 Campos protegidos com cadeados`);
             } else {
                 mostrarInfo(`ℹ️ Clube "${clubeSelecionado}" não encontrado na planilha editada.`);
             }
@@ -3743,101 +3786,19 @@
 
         // Função para sincronizar dados ofensivos da planilha
         function sincronizarDadosOfensivos() {
-            console.log('⚽ [SYNC] Iniciando sincronização de dados ofensivos...');
+            console.log('⚽ [SYNC] Botão Dados Ofensivos clicado - Usando sincronização principal...');
             
-            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
-            if (!clubeSelecionado) {
-                mostrarErro('⚠️ Selecione um clube primeiro para sincronizar os dados ofensivos!');
-                return;
-            }
-            
-            // Buscar dados salvos da planilha
+            // Verificar se há dados da planilha
             const dadosPlantel = localStorage.getItem('estatisticasPlantel');
             if (!dadosPlantel) {
-                mostrarInfo('📊 Abra a planilha primeiro e salve os dados para sincronizar.');
+                mostrarInfo('📊 Dados não encontrados!\n\n💡 Para sincronizar:\n1. Abra a planilha (botão "📊 Planilha")\n2. Edite os dados do clube\n3. Salve na planilha\n4. Tente novamente');
                 return;
             }
             
             try {
                 const dados = JSON.parse(dadosPlantel);
-                console.log('⚽ [SYNC] Dados da planilha encontrados:', dados);
-                
-                // Procurar dados do clube selecionado
-                let clubeEncontrado = null;
-                Object.values(dados.dadosEditados || {}).forEach(tabela => {
-                    const clube = tabela.find(c => 
-                        c.clube.toLowerCase().includes(clubeSelecionado.toLowerCase()) ||
-                        clubeSelecionado.toLowerCase().includes(c.clube.toLowerCase())
-                    );
-                    if (clube && !clubeEncontrado) {
-                        clubeEncontrado = clube;
-                    }
-                });
-                
-                if (clubeEncontrado) {
-                    console.log('⚽ [SYNC] Clube encontrado na planilha:', clubeEncontrado);
-                    
-                    // Sincronizar Chutes/Jogo
-                    if (clubeEncontrado.chutesJogo) {
-                        const fieldChutes = document.getElementById('chutesPorJogo');
-                        if (fieldChutes && !fieldChutes.readOnly) {
-                            fieldChutes.value = clubeEncontrado.chutesJogo;
-                            marcarCampoComoJogos('chutesPorJogo');
-                            mostrarCadeadoSePreenchido('chutesPorJogo');
-                        }
-                    }
-                    
-                    // Sincronizar Posse de Bola
-                    if (clubeEncontrado.posseBola) {
-                        const fieldPosse = document.getElementById('posseBola');
-                        if (fieldPosse && !fieldPosse.readOnly) {
-                            fieldPosse.value = clubeEncontrado.posseBola.replace('%', '');
-                            marcarCampoComoJogos('posseBola');
-                            mostrarCadeadoSePreenchido('posseBola');
-                        }
-                    }
-                    
-                    // Sincronizar Passes Certos
-                    if (clubeEncontrado.passesCertos) {
-                        const fieldPasses = document.getElementById('passesCertos');
-                        if (fieldPasses && !fieldPasses.readOnly) {
-                            fieldPasses.value = clubeEncontrado.passesCertos;
-                            marcarCampoComoJogos('passesCertos');
-                            mostrarCadeadoSePreenchido('passesCertos');
-                        }
-                    }
-                    
-                    // Sincronizar Valor do Elenco se disponível
-                    if (clubeEncontrado.valorTotal) {
-                        const fieldValor = document.getElementById('valorElenco');
-                        if (fieldValor && !fieldValor.readOnly) {
-                            // Extrair número do valor (ex: "€ 195.90 mi." -> 195.90)
-                            const valorNumerico = clubeEncontrado.valorTotal
-                                .replace(/[€\s]/g, '')
-                                .replace('mi.', '')
-                                .replace(',', '.');
-                            fieldValor.value = valorNumerico;
-                            marcarCampoComoJogos('valorElenco');
-                            mostrarCadeadoSePreenchido('valorElenco');
-                        }
-                    }
-                    
-                    // Sincronizar Plantel Total se disponível
-                    if (clubeEncontrado.plantel) {
-                        const fieldPlantel = document.getElementById('elencoTotal');
-                        if (fieldPlantel && !fieldPlantel.readOnly) {
-                            fieldPlantel.value = clubeEncontrado.plantel;
-                            marcarCampoComoJogos('elencoTotal');
-                            mostrarCadeadoSePreenchido('elencoTotal');
-                        }
-                    }
-                    
-                    mostrarSucesso(`⚽ Dados ofensivos sincronizados com sucesso para ${clubeEncontrado.clube}!\n\n📊 Sincronizados:\n- Chutes/Jogo: ${clubeEncontrado.chutesJogo || 'N/A'}\n- Posse de Bola: ${clubeEncontrado.posseBola || 'N/A'}\n- Passes Certos: ${clubeEncontrado.passesCertos || 'N/A'}`);
-                    
-                } else {
-                    mostrarInfo(`ℹ️ Clube "${clubeSelecionado}" não encontrado na planilha.\n\nCertifique-se de que:\n1. O clube está na Série A ou B\n2. Os dados foram salvos na planilha`);
-                }
-                
+                // Usar a função principal que já faz tudo
+                preencherDadosPlanilha(dados);
             } catch (error) {
                 console.error('❌ [SYNC] Erro ao processar dados:', error);
                 mostrarErro('❌ Erro ao processar dados da planilha.');
