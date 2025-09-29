@@ -945,5 +945,85 @@ def get_estatisticas_jogos_clube(clube):
             'error': str(e)
         }), 500
 
+@bp_admin.route('/api/admin/estatisticas-editaveis', methods=['POST'])
+@cross_origin()
+def salvar_estatisticas_editaveis():
+    """Salvar estatísticas editáveis de um clube"""
+    try:
+        data = request.get_json()
+        admin_key = data.get('admin_key')
+        dados = data.get('dados')
+        
+        if not admin_key or admin_key != ADMIN_KEY:
+            return jsonify({
+                'success': False,
+                'error': 'Chave de administrador inválida'
+            }), 401
+            
+        if not dados or not dados.get('clube'):
+            return jsonify({
+                'success': False,
+                'error': 'Dados inválidos'
+            }), 400
+        
+        # Salvar em arquivo JSON
+        import os
+        import json
+        
+        dados_dir = "backend/models/estatisticas_editaveis"
+        os.makedirs(dados_dir, exist_ok=True)
+        
+        clube_nome = dados['clube'].lower().replace(' ', '_')
+        arquivo_path = os.path.join(dados_dir, f"{clube_nome}.json")
+        
+        with open(arquivo_path, 'w', encoding='utf-8') as f:
+            json.dump(dados, f, ensure_ascii=False, indent=2)
+        
+        return jsonify({
+            'success': True,
+            'message': f'Estatísticas editáveis de {dados["clube"]} salvas com sucesso'
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao salvar estatísticas editáveis: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/estatisticas-editaveis/<clube>', methods=['GET'])
+@cross_origin()
+def carregar_estatisticas_editaveis(clube):
+    """Carregar estatísticas editáveis salvas de um clube"""
+    try:
+        import os
+        import json
+        
+        dados_dir = "backend/models/estatisticas_editaveis"
+        clube_nome = clube.lower().replace(' ', '_')
+        arquivo_path = os.path.join(dados_dir, f"{clube_nome}.json")
+        
+        if not os.path.exists(arquivo_path):
+            return jsonify({
+                'success': True,
+                'data': None,
+                'message': 'Nenhum dado editável salvo para este clube'
+            })
+        
+        with open(arquivo_path, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+        
+        return jsonify({
+            'success': True,
+            'data': dados
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro ao carregar estatísticas editáveis de {clube}: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 # Blueprint integrado ao app principal
 # Acesse via: http://localhost:5000/admin

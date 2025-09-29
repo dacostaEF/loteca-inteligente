@@ -1,0 +1,94 @@
+{
+  "mapeamento": {
+    "flamengo": {
+      "nome_oficial": "Flamengo",
+      "nomes_alternativos": ["fla", "mengão", "clube de regatas do flamengo"],
+      "valor_elenco_euros": 85.0,
+      "valor_elenco_reais": 533.80,
+      "posicao_mundial": 50,
+      "liga": "Brasileirão Série A"
+    },
+    "palmeiras": {
+      "nome_oficial": "Palmeiras", 
+      "nomes_alternativos": ["verdão", "sociedade esportiva palmeiras"],
+      "valor_elenco_euros": 65.0,
+      "valor_elenco_reais": 408.20,
+      "posicao_mundial": 65,
+      "liga": "Brasileirão Série A"
+    },
+    "sao_paulo": {
+      "nome_oficial": "São Paulo",
+      "nomes_alternativos": ["spfc", "tricolor", "são paulo fc"],
+      "valor_elenco_euros": 52.0,
+      "valor_elenco_reais": 326.56,
+      "posicao_mundial": 78,
+      "liga": "Brasileirão Série A"
+    },
+    "corinthians": {
+      "nome_oficial": "Corinthians",
+      "nomes_alternativos": ["timão", "sport club corinthians paulista"],
+      "valor_elenco_euros": 45.0,
+      "valor_elenco_reais": 280.00,
+      "posicao_mundial": 85,
+      "liga": "Brasileirão Série A",
+      "observacao": "Estimativa baseada em clubes similares"
+    },
+    "santos": {
+      "nome_oficial": "Santos",
+      "nomes_alternativos": ["peixe", "santos fc"],
+      "valor_elenco_euros": 29.0,
+      "valor_elenco_reais": 180.00,
+      "posicao_mundial": 120,
+      "liga": "Brasileirão Série B",
+      "observacao": "Estimativa baseada em clubes similares"
+    },
+    "chelsea": {
+      "nome_oficial": "Chelsea FC",
+      "nomes_alternativos": ["chelsea", "blues"],
+      "valor_elenco_euros": 1314.0,
+      "valor_elenco_reais": 8251.52,
+      "posicao_mundial": 1,
+      "liga": "Premier League"
+    },
+    "manchester_city": {
+      "nome_oficial": "Manchester City",
+      "nomes_alternativos": ["city", "man city"],
+      "valor_elenco_euros": 1128.0,
+      "valor_elenco_reais": 7083.48,
+      "posicao_mundial": 2,
+      "liga": "Premier League"
+    },
+    "manchester_united": {
+      "nome_oficial": "Manchester United",
+      "nomes_alternativos": ["united", "man united"],
+      "valor_elenco_euros": 1100.0,
+      "valor_elenco_reais": 6908.00,
+      "posicao_mundial": 3,
+      "liga": "Premier League"
+    },
+    "psg": {
+      "nome_oficial": "Paris Saint-Germain",
+      "nomes_alternativos": ["paris", "psg"],
+      "valor_elenco_euros": 1050.0,
+      "valor_elenco_reais": 6594.00,
+      "posicao_mundial": 4,
+      "liga": "Ligue 1"
+    },
+    "real_madrid": {
+      "nome_oficial": "Real Madrid",
+      "nomes_alternativos": ["madrid", "real"],
+      "valor_elenco_euros": 950.0,
+      "valor_elenco_reais": 5966.00,
+      "posicao_mundial": 6,
+      "liga": "La Liga"
+    },
+    "barcelona": {
+      "nome_oficial": "Barcelona",
+      "nomes_alternativos": ["barça", "barca", "fc barcelona"],
+      "valor_elenco_euros": 920.0,
+      "valor_elenco_reais": 5777.60,
+      "posicao_mundial": 7,
+      "liga": "La Liga"
+    }
+  }
+}
