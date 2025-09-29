@@ -8,7 +8,7 @@ class JogosManager:
     """Gerenciador de jogos dos clubes"""
     
     def __init__(self):
-        self.base_path = os.path.join(os.path.dirname(__file__), 'jogos')
+        self.base_path = os.path.join(os.path.dirname(__file__), 'Jogos')
         self.ensure_base_directory()
     
     def ensure_base_directory(self):
@@ -40,11 +40,21 @@ class JogosManager:
             with open(jogos_file, 'r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    # Converter tipos
-                    row['gols_casa'] = int(row['gols_casa'])
-                    row['gols_visitante'] = int(row['gols_visitante'])
-                    row['pontos'] = int(row['pontos'])
-                    jogos.append(row)
+                    # Mapear headers do arquivo para formato esperado
+                    jogo_normalizado = {
+                        'data': row.get('Data', ''),
+                        'time_casa': row.get('Time_Casa', ''),
+                        'gols_casa': int(row.get('Gols_Casa', 0)),
+                        'gols_visitante': int(row.get('Gols_Visitante', 0)),
+                        'time_visitante': row.get('Time_Visitante', ''),
+                        'local': row.get('Local', ''),
+                        'resultado': row.get(f'Resultado_{clube.title()[:3]}', 
+                                           row.get('Resultado_Fla', 
+                                                  row.get('Resultado_Cor', 
+                                                         row.get('resultado', '')))),
+                        'pontos': int(row.get('Pontos_Ganhos', row.get('pontos', 0)))
+                    }
+                    jogos.append(jogo_normalizado)
             
             return jogos
             
