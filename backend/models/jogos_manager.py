@@ -89,7 +89,7 @@ class JogosManager:
                         'gols_visitante': int(row.get('Gols_Visitante', 0)),
                         'time_visitante': row.get('Time_Visitante', ''),
                         'local': row.get('Local', ''),
-                        'resultado': row.get(f'Resultado_{clube.title()[:3]}', 
+                        'resultado': row.get(f'Resultado_{self.get_abreviacao_clube(clube)}', 
                                            row.get('Resultado_Fla', 
                                                   row.get('Resultado_Cor', 
                                                          row.get('resultado', '')))),
@@ -186,10 +186,10 @@ class JogosManager:
                 'ultimos_5_resultados': ''
             }
         
-        # Estatísticas básicas
-        vitorias = len([j for j in jogos if j['resultado'] == 'Vitória'])
-        empates = len([j for j in jogos if j['resultado'] == 'Empate'])
-        derrotas = len([j for j in jogos if j['resultado'] == 'Derrota'])
+        # Estatísticas básicas - aceitar ambos os formatos
+        vitorias = len([j for j in jogos if j['resultado'] in ['V', 'Vitória']])
+        empates = len([j for j in jogos if j['resultado'] in ['E', 'Empate']])
+        derrotas = len([j for j in jogos if j['resultado'] in ['D', 'Derrota']])
         pontos_total = sum(j['pontos'] for j in jogos)
         
         # Separar jogos casa e fora usando abreviação

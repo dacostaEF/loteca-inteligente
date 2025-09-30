@@ -224,8 +224,8 @@
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            justify-content: space-between;
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -238,6 +238,9 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             text-align: center;
             transition: transform 0.3s;
+            flex: 1;
+            min-width: 200px;
+            max-width: 280px;
         }
 
         .stat-card:hover {
@@ -1116,7 +1119,7 @@
             margin-bottom: 25px;
         }
 
-        .stat-card {
+        .ranking-stat-card {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             padding: 20px;
             border-radius: 12px;
@@ -1126,7 +1129,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .stat-card:hover {
+        .ranking-stat-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
@@ -1620,7 +1623,23 @@
                         <option value="flamengo">🔥 Flamengo</option>
                         <option value="corinthians">⚫ Corinthians</option>
                         <option value="palmeiras">🟢 Palmeiras</option>
+                        <option value="cruzeiro">🔵 Cruzeiro</option>
+                        <option value="mirassol">🟡 Mirassol</option>
+                        <option value="bahia">🔴 Bahia</option>
+                        <option value="botafogo">⚫ Botafogo</option>
+                        <option value="fluminense">🔴 Fluminense</option>
+                        <option value="sao-paulo">🔴 São Paulo</option>
+                        <option value="gremio">🔵 Grêmio</option>
+                        <option value="red-bull-bragantino">🔴 RB Bragantino</option>
+                        <option value="atletico-mg">⚫ Atlético-MG</option>
+                        <option value="ceara">⚫ Ceará</option>
+                        <option value="vasco">⚫ Vasco</option>
+                        <option value="internacional">🔴 Internacional</option>
                         <option value="santos">⚪ Santos</option>
+                        <option value="juventude">🟢 Juventude</option>
+                        <option value="vitoria">🔴 Vitória</option>
+                        <option value="fortaleza">🔴 Fortaleza</option>
+                        <option value="sport-recife">🔴 Sport Recife</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -1874,19 +1893,19 @@
             </div>
             
             <div class="ranking-stats">
-                <div class="stat-card">
+                <div class="ranking-stat-card">
                     <div class="stat-number" id="totalClubes">22</div>
                     <div class="stat-label">Clubes Analisados</div>
                 </div>
-                <div class="stat-card">
+                <div class="ranking-stat-card">
                     <div class="stat-number" id="ultimaAtualizacao">--:--</div>
                     <div class="stat-label">Última Atualização</div>
                 </div>
-                <div class="stat-card">
+                <div class="ranking-stat-card">
                     <div class="stat-number" id="liderAtual">--</div>
                     <div class="stat-label">Líder Técnico</div>
                 </div>
-                <div class="stat-card">
+                <div class="ranking-stat-card">
                     <div class="stat-number" id="zonaRebaixamento">4</div>
                     <div class="stat-label">Zona Rebaixamento</div>
                 </div>
@@ -2948,6 +2967,13 @@
             console.log(`🎉 [ADMIN] === RENDERIZAÇÃO CONCLUÍDA ===`);
             console.log(`📊 [ADMIN] Total de times renderizados: ${classificacao.length}`);
             console.log(`🎯 [ADMIN] Filhos na tabela:`, bodyEl.children.length);
+            
+            // Atualizar contador de clubes no header
+            const totalClubesEl = document.getElementById('totalClubes');
+            if (totalClubesEl) {
+                totalClubesEl.textContent = classificacao.length;
+                console.log(`📊 [ADMIN] Total de clubes atualizado no header: ${classificacao.length}`);
+            }
         }
         
         function adicionarEventosEdicao() {
@@ -3376,8 +3402,12 @@
                 mensagem.style.display = 'none';
                 
                 // Mostrar botão "Tabela de Jogos" para clubes com dados de jogos
-                if (clubeSelecionado.toLowerCase().includes('flamengo') || 
-                    clubeSelecionado.toLowerCase().includes('corinthians')) {
+                const clubesComJogos = ['flamengo', 'corinthians', 'palmeiras', 'cruzeiro', 'mirassol', 'bahia',
+                    'botafogo', 'fluminense', 'sao-paulo', 'gremio', 'red-bull-bragantino',
+                    'atletico-mg', 'ceara', 'vasco', 'internacional', 'santos', 'juventude', 
+                    'vitoria', 'fortaleza', 'sport-recife'];
+                
+                if (clubesComJogos.includes(clubeSelecionado.toLowerCase())) {
                     btnTabelaJogos.style.display = 'inline-flex';
                 } else {
                     btnTabelaJogos.style.display = 'none';
@@ -3525,22 +3555,29 @@
             try {
                 // Mapear nome do clube para o formato usado nos arquivos
                 let clubeArquivo = nomeClube.toLowerCase();
-                if (clubeArquivo.includes('flamengo')) {
-                    clubeArquivo = 'flamengo';
-                } else if (clubeArquivo.includes('corinthians')) {
-                    clubeArquivo = 'corinthians';
+                
+                // Lista de clubes com dados de jogos disponíveis
+                const clubesDisponiveis = ['flamengo', 'corinthians', 'palmeiras', 'cruzeiro', 'mirassol', 'bahia',
+                    'botafogo', 'fluminense', 'sao-paulo', 'gremio', 'red-bull-bragantino',
+                    'atletico-mg', 'ceara', 'vasco', 'internacional', 'santos', 'juventude', 
+                    'vitoria', 'fortaleza', 'sport-recife'];
+                
+                if (!clubesDisponiveis.includes(clubeArquivo)) {
+                    console.log(`ℹ️ [JOGOS] Clube ${clubeArquivo} não tem dados de jogos disponíveis`);
+                    return;
                 }
                 
-                console.log(`📊 [JOGOS] Tentando carregar estatísticas de jogos para: ${clubeArquivo}`);
+                console.log(`📊 [JOGOS] Carregando estatísticas de jogos para: ${clubeArquivo}`);
                 
-                const response = await fetch(`/api/admin/estatisticas-jogos/${clubeArquivo}`);
+                // Usar a nova API de estatísticas
+                const response = await fetch(`/api/br/estatisticas/${clubeArquivo}`);
                 const data = await response.json();
                 
                 if (data.success) {
-                    console.log(`✅ [JOGOS] Estatísticas carregadas:`, data.data);
-                    preencherDadosJogos(data.data);
+                    console.log(`✅ [JOGOS] Estatísticas carregadas:`, data);
+                    preencherDadosJogosNovo(data);
                 } else {
-                    console.log(`ℹ️ [JOGOS] Sem dados de jogos para ${clubeArquivo}: ${data.error}`);
+                    console.log(`ℹ️ [JOGOS] Erro ao carregar dados para ${clubeArquivo}: ${data.error}`);
                 }
                 
             } catch (error) {
@@ -3548,7 +3585,49 @@
             }
         }
 
-        // Preencher campos com dados calculados dos jogos
+        // Preencher campos com dados calculados dos jogos (NOVA API)
+        function preencherDadosJogosNovo(data) {
+            console.log('🔄 [JOGOS] Preenchendo campos com dados da nova API:', data);
+            
+            // CAMPOS BLOQUEADOS VERDES - Dados calculados dos jogos
+            if (data.total_jogos > 0) {
+                // PPG e Aproveitamento
+                preencherCampo('ppgCasa', data.ppg_casa.toFixed(2));
+                preencherCampo('ppgFora', data.ppg_fora.toFixed(2));
+                preencherCampo('aproveitamentoCasa', data.aproveitamento_casa.toFixed(1) + '%');
+                preencherCampo('aproveitamentoFora', data.aproveitamento_fora.toFixed(1) + '%');
+                
+                // Resultados
+                preencherCampo('vitorias', data.vitorias);
+                preencherCampo('empates', data.empates);
+                preencherCampo('derrotas', data.derrotas);
+                
+                // Gols
+                preencherCampo('golsMarcados', data.gols_marcados || 0);
+                preencherCampo('golsSofridos', data.gols_sofridos || 0);
+                preencherCampo('saldoGols', data.saldo_gols || 0);
+                
+                // Clean Sheets
+                preencherCampo('cleanSheets', data.clean_sheets || 0);
+                
+                // Marcar campos como dados de jogos (verde)
+                marcarCampoComoJogos('ppgCasa', data.ppg_casa.toFixed(2));
+                marcarCampoComoJogos('ppgFora', data.ppg_fora.toFixed(2));
+                marcarCampoComoJogos('aproveitamentoCasa', data.aproveitamento_casa.toFixed(1) + '%');
+                marcarCampoComoJogos('aproveitamentoFora', data.aproveitamento_fora.toFixed(1) + '%');
+                marcarCampoComoJogos('vitorias', data.vitorias);
+                marcarCampoComoJogos('empates', data.empates);
+                marcarCampoComoJogos('derrotas', data.derrotas);
+                marcarCampoComoJogos('golsMarcados', data.gols_marcados || 0);
+                marcarCampoComoJogos('golsSofridos', data.gols_sofridos || 0);
+                marcarCampoComoJogos('saldoGols', data.saldo_gols || 0);
+                marcarCampoComoJogos('cleanSheets', data.clean_sheets || 0);
+                
+                console.log(`✅ [JOGOS] Dados preenchidos para clube com ${data.total_jogos} jogos`);
+            }
+        }
+
+        // Preencher campos com dados calculados dos jogos (API ANTIGA - MANTER COMPATIBILIDADE)
         function preencherDadosJogos(estatisticas) {
             // CAMPOS BLOQUEADOS VERDES - Dados calculados dos jogos
             if (estatisticas.ppg) {
