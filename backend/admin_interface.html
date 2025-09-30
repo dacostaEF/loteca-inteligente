@@ -1710,10 +1710,20 @@
                             <td><input type="text" id="mediaGols" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>Chutes por Jogo</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
-                            <td><input type="number" step="0.1" id="chutesPorJogo" placeholder="Ex: 14.2" class="campo-editavel"></td>
-                            <td><strong>Posse de Bola (%)</strong> <i class="fas fa-edit" style="color: #60a5fa; margin-left: 8px;" title="Campo editável"></i></td>
-                            <td><input type="number" step="0.1" id="posseBola" placeholder="Ex: 58.3" class="campo-editavel"></td>
+                            <td><strong>🔒 Chutes por Jogo</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Dados FootMob 2025 - Fonte Oficial"></i></td>
+                            <td><input type="number" step="0.1" id="chutesPorJogo" placeholder="5.7" readonly class="campo-bloqueado"></td>
+                            <td><strong>🔒 Posse de Bola (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Dados FootMob 2025 - Fonte Oficial"></i></td>
+                            <td><input type="number" step="0.1" id="posseBola" placeholder="62.2" readonly class="campo-bloqueado"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔒 Passes Certos</strong> <i class="fas fa-exchange-alt" style="color: #3b82f6;" title="Número médio de passes certos por jogo"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
+                            <td style="position: relative;">
+                                <input type="number" id="passesCertos" placeholder="385" class="campo-bloqueado">
+                                <i class="fas fa-unlock campo-lock-toggle" data-field="passesCertos" onclick="toggleLock('passesCertos')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
+                            </td>
+                            <td colspan="2" style="color: #6b7280; font-style: italic; text-align: center; padding: 12px;">
+                                📊 Dados FootMob 2025 - Fonte Oficial
+                            </td>
                         </tr>
 
                         <!-- DADOS DEFENSIVOS -->
@@ -1796,31 +1806,6 @@
                             </td>
                         </tr>
 
-                        <!-- DADOS OFENSIVOS -->
-                        <tr style="background: #333333;">
-                            <td colspan="4" style="text-align: left; font-weight: 400; color: #ffffff; padding: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Dados Ofensivos</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🔒 Chutes/Jogo</strong> <i class="fas fa-futbol" style="color: #f59e0b;" title="Chutes a gol por jogo"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
-                            <td style="position: relative;">
-                                <input type="number" step="0.1" id="chutesPorJogo" placeholder="13.4" class="campo-bloqueado">
-                                <i class="fas fa-unlock campo-lock-toggle" data-field="chutesPorJogo" onclick="toggleLock('chutesPorJogo')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
-                            </td>
-                            <td><strong>🔒 Posse de Bola (%)</strong> <i class="fas fa-percentage" style="color: #10b981;" title="Percentual médio de posse de bola"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
-                            <td style="position: relative;">
-                                <input type="number" step="0.1" id="posseBola" placeholder="58.2" class="campo-bloqueado">
-                                <i class="fas fa-unlock campo-lock-toggle" data-field="posseBola" onclick="toggleLock('posseBola')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>🔒 Passes Certos</strong> <i class="fas fa-exchange-alt" style="color: #3b82f6;" title="Número médio de passes certos por jogo"></i> <i class="fas fa-lock" style="color: #ef4444; font-size: 0.8rem;" title="Campo preenchido automaticamente da planilha"></i></td>
-                            <td style="position: relative;">
-                                <input type="number" id="passesCertos" placeholder="385" class="campo-bloqueado">
-                                <i class="fas fa-unlock campo-lock-toggle" data-field="passesCertos" onclick="toggleLock('passesCertos')" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #1e40af; cursor: pointer; display: none;" title="Clique para bloquear campo"></i>
-                            </td>
-                            <td style="color: #6b7280; font-style: italic;">Dados sincronizados da Planilha de Clubes</td>
-                            <td></td>
-                        </tr>
 
                         <!-- CONTEXTO ATUAL -->
                         <tr style="background: #333333;">
