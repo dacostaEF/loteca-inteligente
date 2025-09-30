@@ -186,10 +186,31 @@ class JogosManager:
                 'ultimos_5_resultados': ''
             }
         
-        # Estatísticas básicas - aceitar ambos os formatos
-        vitorias = len([j for j in jogos if j['resultado'] in ['V', 'Vitória']])
-        empates = len([j for j in jogos if j['resultado'] in ['E', 'Empate']])
-        derrotas = len([j for j in jogos if j['resultado'] in ['D', 'Derrota']])
+        # Estatísticas básicas - normalizar todos os formatos de resultado
+        def normalizar_resultado(resultado):
+            """Normaliza diferentes formatos de resultado para V/E/D"""
+            if not resultado:
+                return '?'
+            resultado = str(resultado).strip().upper()
+            
+            # Mapeamento de todos os formatos possíveis
+            if resultado in ['V', 'VITORIA', 'VITÓRIA', 'WIN', 'VICTORY']:
+                return 'V'
+            elif resultado in ['E', 'EMPATE', 'DRAW', 'TIE']:
+                return 'E'
+            elif resultado in ['D', 'DERROTA', 'LOSS', 'DEFEAT']:
+                return 'D'
+            else:
+                return '?'
+        
+        # Normalizar todos os resultados
+        for jogo in jogos:
+            jogo['resultado_normalizado'] = normalizar_resultado(jogo['resultado'])
+        
+        # Contar com resultados normalizados
+        vitorias = len([j for j in jogos if j['resultado_normalizado'] == 'V'])
+        empates = len([j for j in jogos if j['resultado_normalizado'] == 'E'])
+        derrotas = len([j for j in jogos if j['resultado_normalizado'] == 'D'])
         pontos_total = sum(j['pontos'] for j in jogos)
         
         # Separar jogos casa e fora usando abreviação
@@ -232,34 +253,24 @@ class JogosManager:
         ultimos_5 = jogos[-5:] if len(jogos) >= 5 else jogos
         pontos_ultimos_5 = sum(j['pontos'] for j in ultimos_5)
         
-        # Sequência dos últimos 5 (V, E, D)
+        # Sequência dos últimos 5 (V, E, D) - usar resultados normalizados
         resultados_ultimos_5 = []
         for jogo in ultimos_5:
-            if jogo['resultado'] == 'Vitória':
-                resultados_ultimos_5.append('V')
-            elif jogo['resultado'] == 'Empate':
-                resultados_ultimos_5.append('E')
-            else:
-                resultados_ultimos_5.append('D')
+            resultados_ultimos_5.append(jogo['resultado_normalizado'])
         
         ultimos_5_resultados = ''.join(resultados_ultimos_5)
         
-        # Sequência atual (quantos jogos consecutivos do mesmo resultado)
+        # Sequência atual (quantos jogos consecutivos do mesmo resultado) - usar resultados normalizados
         if jogos:
-            ultimo_resultado = jogos[-1]['resultado']
+            ultimo_resultado_norm = jogos[-1]['resultado_normalizado']
             sequencia_count = 1
             for i in range(len(jogos) - 2, -1, -1):
-                if jogos[i]['resultado'] == ultimo_resultado:
+                if jogos[i]['resultado_normalizado'] == ultimo_resultado_norm:
                     sequencia_count += 1
                 else:
                     break
             
-            if ultimo_resultado == 'Vitória':
-                sequencia_atual = f"{sequencia_count}V"
-            elif ultimo_resultado == 'Empate':
-                sequencia_atual = f"{sequencia_count}E"
-            else:
-                sequencia_atual = f"{sequencia_count}D"
+            sequencia_atual = f"{sequencia_count}{ultimo_resultado_norm}"
         else:
             sequencia_atual = ''
         

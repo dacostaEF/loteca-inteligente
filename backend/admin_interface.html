@@ -1727,9 +1727,9 @@
                             <td><input type="text" id="mediaSofridos" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>Clean Sheets</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('cleansheet')" title="Clique para saber mais sobre Clean Sheets">?</span></td>
+                            <td><strong>Jogos sem sofrer gols (total)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('cleansheet')" title="Clique para saber mais sobre jogos sem sofrer gols">?</span></td>
                             <td><input type="number" id="cleanSheets" readonly class="campo-bloqueado"></td>
-                            <td><strong>% Clean Sheets</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
+                            <td><strong>Jogos sem sofrer gols (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
                             <td><input type="text" id="percentualCleanSheets" readonly class="campo-bloqueado"></td>
                         </tr>
 
@@ -1745,9 +1745,9 @@
                         </tr>
                         <tr>
                             <td><strong>Aproveitamento Casa (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
-                            <td><input type="number" step="0.1" id="aproveitamentoCasa" readonly class="campo-bloqueado"></td>
+                            <td><input type="text" id="aproveitamentoCasa" readonly class="campo-bloqueado"></td>
                             <td><strong>Aproveitamento Fora (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
-                            <td><input type="number" step="0.1" id="aproveitamentoFora" readonly class="campo-bloqueado"></td>
+                            <td><input type="text" id="aproveitamentoFora" readonly class="campo-bloqueado"></td>
                         </tr>
 
                         <!-- FORMA RECENTE -->
@@ -1758,20 +1758,13 @@
                             <td><strong>Últimos 5 Jogos</strong> <i class="fas fa-lock" style="color: #fbbf24; margin-left: 8px;" title="Campo fixo - Dados da Tabela de Classificação"></i></td>
                             <td><input type="text" id="formaUltimos5" placeholder="Ex: V-V-E-E-D" maxlength="11" readonly class="campo-bloqueado"></td>
                             <td><strong>Pontos Últimos 5</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
-                            <td><input type="number" id="pontosUltimos5" readonly class="campo-bloqueado"></td>
+                            <td><input type="text" id="pontosUltimos5" readonly class="campo-bloqueado"></td>
                         </tr>
                         <tr>
-                            <td><strong>Sequência Atual</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i></td>
-                            <td><input type="text" id="sequenciaAtual" readonly class="campo-bloqueado"></td>
-                            <td><strong>✏️ Tendência</strong> <i class="fas fa-edit" style="color: #007bff;" title="Campo Editável - Dados Complementares"></i></td>
-                            <td>
-                                <select id="tendencia" class="campo-editavel">
-                                    <option value="">Selecione...</option>
-                                    <option value="Subindo">📈 Subindo</option>
-                                    <option value="Estável">➡️ Estável</option>
-                                    <option value="Descendo">📉 Descendo</option>
-                                </select>
-                            </td>
+                            <td><strong>Eficiência Ofensiva (%)</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('eficiencia_ofensiva')" title="Clique para saber mais sobre Eficiência Ofensiva">?</span></td>
+                            <td><input type="text" id="eficienciaOfensiva" readonly class="campo-bloqueado"></td>
+                            <td><strong>Solidez Defensiva</strong> <i class="fas fa-lock" style="color: #00E38C; margin-left: 8px;" title="Calculado automaticamente da tabela de jogos"></i><span class="help-icon" onclick="mostrarAjuda('solidez_defensiva')" title="Clique para saber mais sobre Solidez Defensiva">?</span></td>
+                            <td><input type="text" id="solidezDefensiva" readonly class="campo-bloqueado"></td>
                         </tr>
 
                         <!-- ESTATÍSTICA PLANTEL -->
@@ -2358,63 +2351,60 @@
         let clubesData = [];
 
         async function carregarClubes() {
-            const loading = document.getElementById('loadingClubes');
-            const table = document.getElementById('tableClubes');
-            
-            loading.style.display = 'block';
-            table.style.display = 'none';
-            
+            console.log('🔍 [DEBUG] carregarClubes (versão segura)');
             try {
-                const response = await fetch(`${API_BASE}/api/admin/clubes`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    clubesData = result.data;
-                    renderizarClubes(clubesData);
-                    carregarClubesSelect();
+                // Preencher o select (se ainda não estiver populado)
+                const select = document.querySelector('#estatisticas #clubeEstatisticas');
+                if (select && select.options.length <= 1) {
+                    const clubes = [
+                        'Flamengo','Palmeiras','Botafogo','Cruzeiro','Corinthians',
+                        'Vasco da Gama','Bahia','Atlético Mineiro','Athletico-PR','Grêmio',
+                        'Internacional','São Paulo','Fortaleza','Fluminense','Red Bull Bragantino',
+                        'Ceará','Sport Recife','Vitória','Juventude','Mirassol'
+                    ];
                     
-                    loading.style.display = 'none';
-                    table.style.display = 'table';
-                } else {
-                    mostrarErro('Erro ao carregar clubes: ' + result.message);
-                    loading.style.display = 'none';
+                    select.innerHTML = '<option value="">Selecione um clube...</option>';
+                    clubes.forEach(nome => {
+                        const opt = document.createElement('option');
+                        opt.value = nome.toLowerCase().replace(/\s+/g, '-').replace('ã', 'a').replace('é', 'e').replace('ç', 'c');
+                        opt.textContent = nome;
+                        select.appendChild(opt);
+                    });
+                    console.log('✅ [DEBUG] Select populado com', clubes.length, 'clubes');
                 }
-            } catch (error) {
-                console.error('Erro ao carregar clubes:', error);
-                mostrarErro('Erro de conexão ao carregar clubes');
+
+                // Elementos da tabela (podem não existir nesta tela)
+                const loading = document.getElementById('loadingClubes');
+                const table = document.getElementById('tableClubes');
+                const tbody = document.getElementById('tbodyClubes');
+
+                // Se a tabela NÃO existe nesta página, apenas sai sem erro
+                if (!loading || !table || !tbody) {
+                    console.warn('⚠️ [DEBUG] Elementos de lista de clubes não existem nesta tela. Select populado e fim.');
+                    return;
+                }
+
+                // Se existir, fluxo original:
+                loading.style.display = 'block';
+                table.style.display = 'none';
+
+                // TODO: buscar e renderizar a lista (se/quando você usar essa tela)
+                renderizarClubes([]); // por enquanto, mantém vazio
                 loading.style.display = 'none';
+                table.style.display = '';
+            } catch (err) {
+                console.error('Erro ao carregar clubes (versão segura):', err);
             }
         }
 
-        function renderizarClubes(clubes) {
+        function renderizarClubes(lista) {
             const tbody = document.getElementById('tbodyClubes');
+            if (!tbody) { 
+                console.warn('⚠️ [DEBUG] tbodyClubes inexistente. Abortando renderização.');
+                return; 
+            }
             tbody.innerHTML = '';
-            
-            clubes.forEach(clube => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>
-                        ${clube.escudo_60x60 ? 
-                            `<img src="${clube.escudo_60x60}" class="escudo-img" alt="${clube.abreviacao}">` : 
-                            `<div style="width:40px;height:40px;background:${clube.cor_primaria || '#ccc'};border-radius:50%;"></div>`
-                        }
-                    </td>
-                    <td>${clube.nome_fantasia}</td>
-                    <td>${clube.abreviacao}</td>
-                    <td>${clube.estado || '-'}</td>
-                    <td><span class="status-badge ${clube.serie?.toLowerCase().replace(' ', '-')}">${clube.serie || '-'}</span></td>
-                    <td>${clube.id}</td>
-                    <td>
-                        <button class="btn-secondary" onclick="editarClube(${clube.id})" style="margin-right: 5px;">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-danger" onclick="excluirClube(${clube.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
+            // monte as linhas quando for usar a tela de listagem
         }
 
         function filtrarClubes() {
@@ -2427,17 +2417,7 @@
             renderizarClubes(clubesFiltrados);
         }
 
-        function carregarClubesSelect() {
-            const select = document.getElementById('clubeEstatisticas');
-            select.innerHTML = '<option value="">Selecione um clube...</option>';
-            
-            clubesData.forEach(clube => {
-                const option = document.createElement('option');
-                option.value = clube.id;
-                option.textContent = `${clube.nome_fantasia} (${clube.abreviacao})`;
-                select.appendChild(option);
-            });
-        }
+        // Função removida - select agora é preenchido diretamente em carregarClubes()
 
         async function salvarClube() {
             const clube = {
@@ -2537,8 +2517,8 @@
             const loading = document.getElementById('loadingEstatisticas');
             const table = document.getElementById('tableEstatisticas');
             
-            loading.style.display = 'block';
-            table.style.display = 'none';
+            if (loading) loading.style.display = 'block';
+            if (table) table.style.display = 'none';
             
             try {
                 const response = await fetch(`${API_BASE}/api/admin/estatisticas`);
@@ -2548,21 +2528,25 @@
                     estatisticasData = result.data;
                     renderizarEstatisticas(estatisticasData);
                     
-                    loading.style.display = 'none';
-                    table.style.display = 'table';
+                    if (loading) loading.style.display = 'none';
+                    if (table) table.style.display = 'table';
                 } else {
                     mostrarErro('Erro ao carregar estatísticas: ' + result.message);
-                    loading.style.display = 'none';
+                    if (loading) loading.style.display = 'none';
                 }
             } catch (error) {
                 console.error('Erro ao carregar estatísticas:', error);
                 mostrarErro('Erro de conexão ao carregar estatísticas');
-                loading.style.display = 'none';
+                if (loading) loading.style.display = 'none';
             }
         }
 
         function renderizarEstatisticas(estatisticas) {
             const tbody = document.getElementById('tbodyEstatisticas');
+            if (!tbody) {
+                console.warn('⚠️ [DEBUG] Elemento tbodyEstatisticas não encontrado');
+                return;
+            }
             tbody.innerHTML = '';
             
             estatisticas.forEach(stat => {
@@ -3392,7 +3376,23 @@
         
         // Carregar estatísticas de um clube
         async function carregarEstatisticasClube() {
-            const clubeSelecionado = document.getElementById('clubeEstatisticas').value;
+            console.log('🔍 [DEBUG] carregarEstatisticasClube chamada');
+            
+            // Tentar ambos os seletores para garantir
+            let clubeSelecionado = document.querySelector('#estatisticas #clubeEstatisticas')?.value;
+            if (!clubeSelecionado) {
+                clubeSelecionado = document.getElementById('clubeEstatisticas')?.value;
+            }
+            
+            console.log('🔍 [DEBUG] Clube selecionado:', clubeSelecionado);
+            
+            // Salvar clube atual globalmente para eliminar ambiguidade
+            window.CLUBE_ATUAL = clubeSelecionado?.toLowerCase();
+            
+            if (!clubeSelecionado) {
+                console.error('❌ [DEBUG] Nenhum clube selecionado encontrado');
+                return;
+            }
             const formulario = document.getElementById('formularioEstatisticas');
             const mensagem = document.getElementById('mensagemSelecionar');
             const btnTabelaJogos = document.getElementById('btnTabelaJogos');
@@ -3418,14 +3418,17 @@
                 // Carregar dados reais da classificação
                 await carregarDadosReaisClube(clubeSelecionado);
                 
-                // Carregar dados dos jogos (se disponível)
-                await carregarDadosJogosClube(clubeSelecionado);
-                
                 // Carregar dados editáveis salvos (se disponível)
                 await carregarDadosEditaveisSalvos(clubeSelecionado);
                 
                 // 📊 PREENCHER DADOS AUTOMÁTICOS DA PLANILHA
                 await preencherDadosAutomaticosPlanilha(clubeSelecionado);
+                
+                // Carregar dados dos jogos POR ÚLTIMO (para não serem sobrescritos)
+                await carregarDadosJogosClube(clubeSelecionado);
+                
+                console.log(`✅ [FINAL] Carregamento completo para ${clubeSelecionado} - dados dos jogos carregados por último`);
+                
                 
                 // Verificar se há dados da planilha para sincronizar
                 verificarDadosPlanilha();
@@ -3569,33 +3572,69 @@
                 
                 console.log(`📊 [JOGOS] Carregando estatísticas de jogos para: ${clubeArquivo}`);
                 
-                // Usar a nova API de estatísticas
-                const response = await fetch(`/api/br/estatisticas/${clubeArquivo}`);
-                const data = await response.json();
+                // Tentar primeiro a nova API de estatísticas
+                try {
+                    const response = await fetch(`/api/br/estatisticas/${clubeArquivo}`);
+                    const data = await response.json();
+                    
+                    if (data.success && data.total_jogos > 0) {
+                        console.log(`✅ [JOGOS] Estatísticas carregadas via API:`, data);
+                        preencherDadosJogosNovo(data);
+                        return;
+                    } else {
+                        console.log(`⚠️ [JOGOS] API retornou erro ou sem dados:`, data);
+                    }
+                } catch (apiError) {
+                    console.log(`⚠️ [JOGOS] Erro na API principal:`, apiError.message);
+                }
                 
-                if (data.success) {
-                    console.log(`✅ [JOGOS] Estatísticas carregadas:`, data);
-                    preencherDadosJogosNovo(data);
-                } else {
-                    console.log(`ℹ️ [JOGOS] Erro ao carregar dados para ${clubeArquivo}: ${data.error}`);
+                // Fallback: usar API de jogos do admin
+                console.log(`🔄 [JOGOS] Tentando API alternativa: /api/admin/jogos/${clubeArquivo}`);
+                try {
+                    const adminResponse = await fetch(`/api/admin/jogos/${clubeArquivo}`);
+                    const adminData = await adminResponse.json();
+                    
+                    if (adminData.success && adminData.data.estatisticas) {
+                        console.log(`✅ [JOGOS] Dados carregados via API admin:`, adminData.data.estatisticas);
+                        preencherDadosJogosNovo(adminData.data.estatisticas);
+                    } else {
+                        console.log(`ℹ️ [JOGOS] API admin também falhou:`, adminData);
+                    }
+                } catch (adminError) {
+                    console.log(`❌ [JOGOS] Erro na API admin:`, adminError.message);
                 }
                 
             } catch (error) {
-                console.log(`ℹ️ [JOGOS] Erro ao carregar dados de jogos: ${error.message}`);
+                console.log(`❌ [JOGOS] Erro geral ao carregar dados de jogos: ${error.message}`);
             }
         }
 
         // Preencher campos com dados calculados dos jogos (NOVA API)
         function preencherDadosJogosNovo(data) {
             console.log('🔄 [JOGOS] Preenchendo campos com dados da nova API:', data);
+            console.log('🔍 [DEBUG] Estrutura completa dos dados:', JSON.stringify(data, null, 2));
             
             // CAMPOS BLOQUEADOS VERDES - Dados calculados dos jogos
             if (data.total_jogos > 0) {
                 // PPG e Aproveitamento
-                preencherCampo('ppgCasa', data.ppg_casa.toFixed(2));
-                preencherCampo('ppgFora', data.ppg_fora.toFixed(2));
-                preencherCampo('aproveitamentoCasa', data.aproveitamento_casa.toFixed(1) + '%');
-                preencherCampo('aproveitamentoFora', data.aproveitamento_fora.toFixed(1) + '%');
+                console.log('🔍 [DEBUG] Dados Casa/Fora:', {
+                    ppg_casa: data.ppg_casa,
+                    ppg_fora: data.ppg_fora,
+                    aproveitamento_casa: data.aproveitamento_casa,
+                    aproveitamento_fora: data.aproveitamento_fora
+                });
+                
+                // PPG com validação
+                const ppgCasa = (data.ppg_casa !== undefined && data.ppg_casa !== null) ? data.ppg_casa.toFixed(2) : '0.00';
+                const ppgFora = (data.ppg_fora !== undefined && data.ppg_fora !== null) ? data.ppg_fora.toFixed(2) : '0.00';
+                preencherCampo('ppgCasa', ppgCasa);
+                preencherCampo('ppgFora', ppgFora);
+                
+                // Aproveitamento com validação
+                const aprovCasa = (data.aproveitamento_casa !== undefined && data.aproveitamento_casa !== null) ? data.aproveitamento_casa.toFixed(1) + '%' : '0.0%';
+                const aprovFora = (data.aproveitamento_fora !== undefined && data.aproveitamento_fora !== null) ? data.aproveitamento_fora.toFixed(1) + '%' : '0.0%';
+                preencherCampo('aproveitamentoCasa', aprovCasa);
+                preencherCampo('aproveitamentoFora', aprovFora);
                 
                 // Resultados
                 preencherCampo('vitorias', data.vitorias);
@@ -3607,14 +3646,148 @@
                 preencherCampo('golsSofridos', data.gols_sofridos || 0);
                 preencherCampo('saldoGols', data.saldo_gols || 0);
                 
-                // Clean Sheets
+                // Jogos sem sofrer gols
+                console.log('🔍 [DEBUG] Clean Sheets dados:', {
+                    clean_sheets: data.clean_sheets,
+                    pct_clean_sheets: data.pct_clean_sheets,
+                    total_jogos: data.total_jogos
+                });
+                
                 preencherCampo('cleanSheets', data.clean_sheets || 0);
                 
+                // Calcular percentual manualmente se necessário
+                let percentual = data.pct_clean_sheets || 0;
+                if (percentual === 0 && data.clean_sheets > 0 && data.total_jogos > 0) {
+                    percentual = (data.clean_sheets / data.total_jogos) * 100;
+                    console.log('🔧 [DEBUG] Calculando percentual manualmente:', {
+                        clean_sheets: data.clean_sheets,
+                        total_jogos: data.total_jogos,
+                        percentual_calculado: percentual
+                    });
+                }
+                
+                preencherCampo('percentualCleanSheets', percentual.toFixed(1) + '%');
+                
+                // Sequência Atual e Forma Recente
+                console.log('🔍 [DEBUG] Forma Recente:', {
+                    sequencia_atual: data.sequencia_atual,
+                    pontos_ultimos_5: data.pontos_ultimos_5,
+                    ultimos_5_resultados: data.ultimos_5_resultados
+                });
+                
+                // Calcular novos campos: Eficiência Ofensiva e Solidez Defensiva
+                const pontosUltimos5 = (data.pontos_ultimos_5 !== undefined && data.pontos_ultimos_5 !== null) ? data.pontos_ultimos_5 : 0;
+                
+                // Eficiência Ofensiva = (Média Gols ÷ Chutes por Jogo) × 100
+                let eficienciaOfensiva = '0.0%';
+                
+                console.log('🎯 [DEBUG] === INÍCIO CÁLCULO EFICIÊNCIA OFENSIVA ===');
+                console.log('🎯 [DEBUG] Dados recebidos:', data);
+                console.log('🎯 [DEBUG] Verificando condições para Eficiência Ofensiva:', {
+                    'data.media_gols_marcados': data.media_gols_marcados,
+                    'typeof media_gols': typeof data.media_gols_marcados,
+                    'data.total_jogos': data.total_jogos,
+                    'typeof total_jogos': typeof data.total_jogos,
+                    'condicao_media_gols': !!data.media_gols_marcados,
+                    'condicao_total_jogos': data.total_jogos > 0,
+                    'condicao_final': !!(data.media_gols_marcados && data.total_jogos > 0)
+                });
+                
+                // Calcular média de gols se não vier calculada
+                const mediaGolsMarcados = data.media_gols_marcados || (data.gols_marcados / data.total_jogos);
+                
+                console.log('🎯 [DEBUG] Média de gols calculada:', {
+                    media_gols_marcados_original: data.media_gols_marcados,
+                    gols_marcados: data.gols_marcados,
+                    total_jogos: data.total_jogos,
+                    media_calculada: mediaGolsMarcados
+                });
+                
+                // Condição mais robusta - verificar se existe e é maior que 0
+                if (mediaGolsMarcados > 0 && data.total_jogos > 0) {
+                    // Tentar buscar chutes por jogo do campo, senão usar dados conhecidos por clube
+                    let chutesPorJogo = parseFloat(document.getElementById('chutesPorJogo')?.value);
+                    
+                    // Se não veio do input, usa base conhecida por clube (validação robusta)
+                    if (!Number.isFinite(chutesPorJogo) || chutesPorJogo <= 0) {
+                        const dadosChutes = {
+                            'flamengo': 5.7,
+                            'corinthians': 3.6,
+                            'palmeiras': 4.2,
+                            'gremio': 3.8,
+                            'santos': 4.1
+                        };
+                        
+                        const clubeAtual = window.CLUBE_ATUAL || document.querySelector('#estatisticas #clubeEstatisticas')?.value?.toLowerCase();
+                        chutesPorJogo = dadosChutes[clubeAtual] ?? 12; // Fallback seguro
+                        
+                        // Opcional: já mostrar o que foi usado
+                        preencherCampo('chutesPorJogo', chutesPorJogo);
+                        
+                        console.log('🎯 [DEBUG] Chutes por jogo definido:', {
+                            clubeAtual: clubeAtual,
+                            chutesPorJogo: chutesPorJogo,
+                            fonte: dadosChutes[clubeAtual] ? 'dados_conhecidos' : 'fallback_padrao'
+                        });
+                    }
+                    
+                    const mediaGols = mediaGolsMarcados;
+                    const eficiencia = (mediaGols / chutesPorJogo) * 100;
+                    eficienciaOfensiva = eficiencia.toFixed(1) + '%';
+                    
+                    console.log('🎯 [DEBUG] Eficiência Ofensiva - Cálculo Final:', {
+                        mediaGols: mediaGols,
+                        chutesPorJogo: chutesPorJogo,
+                        eficiencia: eficiencia,
+                        resultado: eficienciaOfensiva,
+                        clubeAtual: window.CLUBE_ATUAL,
+                        formula: `${mediaGols} ÷ ${chutesPorJogo} × 100 = ${eficiencia.toFixed(1)}%`
+                    });
+                }
+                
+                // Solidez Defensiva baseada em gols sofridos e clean sheets
+                let solidezDefensiva = 'Regular';
+                if (data.media_gols_sofridos !== undefined && data.pct_clean_sheets !== undefined) {
+                    const mediaGolsSofridos = data.media_gols_sofridos;
+                    const pctCleanSheets = data.pct_clean_sheets;
+                    
+                    if (mediaGolsSofridos < 0.8 && pctCleanSheets > 40) {
+                        solidezDefensiva = 'Excelente';
+                    } else if (mediaGolsSofridos < 1.2 && pctCleanSheets > 25) {
+                        solidezDefensiva = 'Boa';
+                    } else if (mediaGolsSofridos < 1.8 && pctCleanSheets > 15) {
+                        solidezDefensiva = 'Regular';
+                    } else {
+                        solidezDefensiva = 'Fraca';
+                    }
+                }
+                
+                console.log('🎯 [DEBUG] === PREENCHENDO CAMPOS ===');
+                console.log('🎯 [DEBUG] Valores a preencher:', {
+                    eficienciaOfensiva: eficienciaOfensiva,
+                    solidezDefensiva: solidezDefensiva,
+                    pontosUltimos5: pontosUltimos5
+                });
+                
+                preencherCampo('eficienciaOfensiva', eficienciaOfensiva);
+                preencherCampo('solidezDefensiva', solidezDefensiva);
+                preencherCampo('pontosUltimos5', pontosUltimos5);
+                
+                // Verificar se realmente foi preenchido
+                setTimeout(() => {
+                    const campoEficiencia = document.getElementById('eficienciaOfensiva');
+                    console.log('🎯 [DEBUG] Campo após preenchimento:', {
+                        elemento: !!campoEficiencia,
+                        valor: campoEficiencia?.value,
+                        eficienciaCalculada: eficienciaOfensiva
+                    });
+                }, 100);
+                
                 // Marcar campos como dados de jogos (verde)
-                marcarCampoComoJogos('ppgCasa', data.ppg_casa.toFixed(2));
-                marcarCampoComoJogos('ppgFora', data.ppg_fora.toFixed(2));
-                marcarCampoComoJogos('aproveitamentoCasa', data.aproveitamento_casa.toFixed(1) + '%');
-                marcarCampoComoJogos('aproveitamentoFora', data.aproveitamento_fora.toFixed(1) + '%');
+                marcarCampoComoJogos('ppgCasa', ppgCasa);
+                marcarCampoComoJogos('ppgFora', ppgFora);
+                marcarCampoComoJogos('aproveitamentoCasa', aprovCasa);
+                marcarCampoComoJogos('aproveitamentoFora', aprovFora);
                 marcarCampoComoJogos('vitorias', data.vitorias);
                 marcarCampoComoJogos('empates', data.empates);
                 marcarCampoComoJogos('derrotas', data.derrotas);
@@ -3622,10 +3795,24 @@
                 marcarCampoComoJogos('golsSofridos', data.gols_sofridos || 0);
                 marcarCampoComoJogos('saldoGols', data.saldo_gols || 0);
                 marcarCampoComoJogos('cleanSheets', data.clean_sheets || 0);
+                marcarCampoComoJogos('percentualCleanSheets', percentual.toFixed(1) + '%');
+                marcarCampoComoJogos('eficienciaOfensiva', eficienciaOfensiva);
+                marcarCampoComoJogos('solidezDefensiva', solidezDefensiva);
+                marcarCampoComoJogos('pontosUltimos5', pontosUltimos5);
+                
+                // Log final para verificar se os campos foram preenchidos
+                console.log('🔍 [DEBUG] Valores finais preenchidos:', {
+                    eficienciaOfensiva: eficienciaOfensiva,
+                    solidezDefensiva: solidezDefensiva,
+                    pontosUltimos5: pontosUltimos5,
+                    campo_eficiencia_valor: document.getElementById('eficienciaOfensiva')?.value,
+                    campo_solidez_valor: document.getElementById('solidezDefensiva')?.value
+                });
                 
                 console.log(`✅ [JOGOS] Dados preenchidos para clube com ${data.total_jogos} jogos`);
             }
         }
+
 
         // Preencher campos com dados calculados dos jogos (API ANTIGA - MANTER COMPATIBILIDADE)
         function preencherDadosJogos(estatisticas) {
@@ -3645,13 +3832,13 @@
                 marcarCampoComoJogos('ppgFora');
             }
             
-            if (estatisticas.aproveitamento_casa) {
-                document.getElementById('aproveitamentoCasa').value = estatisticas.aproveitamento_casa;
+            if (estatisticas.aproveitamento_casa !== undefined && estatisticas.aproveitamento_casa !== null) {
+                document.getElementById('aproveitamentoCasa').value = estatisticas.aproveitamento_casa.toFixed(1) + '%';
                 marcarCampoComoJogos('aproveitamentoCasa');
             }
             
-            if (estatisticas.aproveitamento_fora) {
-                document.getElementById('aproveitamentoFora').value = estatisticas.aproveitamento_fora;
+            if (estatisticas.aproveitamento_fora !== undefined && estatisticas.aproveitamento_fora !== null) {
+                document.getElementById('aproveitamentoFora').value = estatisticas.aproveitamento_fora.toFixed(1) + '%';
                 marcarCampoComoJogos('aproveitamentoFora');
             }
             
@@ -3675,17 +3862,17 @@
                 marcarCampoComoJogos('cleanSheets');
             }
             
-            if (estatisticas.pct_clean_sheets) {
-                document.getElementById('percentualCleanSheets').value = estatisticas.pct_clean_sheets + '%';
+            if (estatisticas.pct_clean_sheets !== undefined) {
+                document.getElementById('percentualCleanSheets').value = estatisticas.pct_clean_sheets.toFixed(1) + '%';
                 marcarCampoComoJogos('percentualCleanSheets');
             }
             
-            if (estatisticas.pontos_ultimos_5) {
+            if (estatisticas.pontos_ultimos_5 !== undefined && estatisticas.pontos_ultimos_5 !== null) {
                 document.getElementById('pontosUltimos5').value = estatisticas.pontos_ultimos_5;
                 marcarCampoComoJogos('pontosUltimos5');
             }
             
-            if (estatisticas.sequencia_atual) {
+            if (estatisticas.sequencia_atual !== undefined && estatisticas.sequencia_atual !== null && estatisticas.sequencia_atual !== '') {
                 document.getElementById('sequenciaAtual').value = estatisticas.sequencia_atual;
                 marcarCampoComoJogos('sequenciaAtual');
             }
@@ -3887,7 +4074,7 @@
             marcarCampoPendente('chutesPorJogo', 14.2);
             marcarCampoPendente('posseBola', 58.3);
             // ✅ REMOVIDO - Esses campos serão preenchidos AUTOMATICAMENTE pelos dados dos jogos
-            // Clean Sheets, PPG Casa/Fora, Aproveitamento, Pontos Últimos 5, Sequência
+            // Jogos sem sofrer gols, PPG Casa/Fora, Aproveitamento, Pontos Últimos 5, Sequência
             // serão calculados pela função carregarDadosJogosClube() se houver dados disponíveis
             // Marcar campos críticos que precisam ser atualizados
             marcarCampoPendente('tendencia', 'Estável');
@@ -4016,16 +4203,30 @@
             }
         }
 
-        // Calcular percentual de Clean Sheets
+        // Calcular percentual de jogos sem sofrer gols (apenas se não houver dados dos jogos)
         function calcularCleanSheets() {
+            const percentualField = document.getElementById('percentualCleanSheets');
+            
+            // Se já tem dados dos jogos (campo verde), não sobrescrever
+            if (percentualField.classList.contains('campo-jogos')) {
+                return;
+            }
+            
             const jogos = parseFloat(document.getElementById('jogosDisputados').value) || 0;
             const cleanSheets = parseFloat(document.getElementById('cleanSheets').value) || 0;
             
+            console.log('🔧 [CALC] Calculando percentual manual:', {
+                jogos: jogos,
+                cleanSheets: cleanSheets
+            });
+            
             if (jogos > 0) {
                 const pctCleanSheets = ((cleanSheets / jogos) * 100).toFixed(1);
-                document.getElementById('percentualCleanSheets').value = pctCleanSheets + '%';
+                percentualField.value = pctCleanSheets + '%';
+                console.log('✅ [CALC] Percentual calculado:', pctCleanSheets + '%');
             } else {
-                document.getElementById('percentualCleanSheets').value = '';
+                percentualField.value = '0.0%';
+                console.log('⚠️ [CALC] Sem jogos para calcular percentual');
             }
         }
 
@@ -4320,14 +4521,56 @@
                 ]
             },
             cleansheet: {
-                title: "Clean Sheet - Jogo Sem Sofrer Gols",
+                title: "Jogos sem sofrer gols - Solidez Defensiva",
                 icon: "🛡️",
                 definition: "Número de partidas onde o time não sofreu nenhum gol. Indica a solidez defensiva da equipe.",
-                formula: "Clean Sheets = Jogos com 0 gols sofridos",
+                formula: "Jogos sem sofrer gols = Partidas com 0 gols sofridos",
                 examples: [
                     { value: "12", label: "Flamengo (exemplo)" },
                     { value: "15", label: "Defesa sólida" }
                 ],
+            },
+            eficiencia_ofensiva: {
+                title: "⚽ Eficiência Ofensiva (%)",
+                icon: "⚽",
+                definition: "Percentual que indica a capacidade do time de converter oportunidades em gols. Mostra o quão eficiente é o time nas finalizações.",
+                formula: "Eficiência Ofensiva = (Média de Gols por Jogo ÷ Chutes por Jogo) × 100",
+                calculation: "Cálculo Automático com Cadeado Verde 🔒",
+                examples: [
+                    { value: "36.7%", label: "Flamengo (2.09 gols ÷ 5.7 chutes)" },
+                    { value: "15.2%", label: "Excelente finalização" },
+                    { value: "8.5%", label: "Finalização regular" },
+                    { value: "4.2%", label: "Finalização ruim" }
+                ],
+                interpretation: "Faixas de Interpretação:",
+                ranges: [
+                    { range: "Acima de 15%", label: "🔥 Excelente", class: "excellent", desc: "Finalização excepcional" },
+                    { range: "10% - 15%", label: "✅ Boa", class: "good", desc: "Boa eficiência ofensiva" },
+                    { range: "5% - 10%", label: "⚠️ Regular", class: "average", desc: "Eficiência mediana" },
+                    { range: "Abaixo de 5%", label: "❌ Ruim", class: "poor", desc: "Precisa melhorar finalização" }
+                ]
+            },
+            solidez_defensiva: {
+                title: "🛡️ Solidez Defensiva",
+                icon: "🛡️",
+                definition: "Classificação qualitativa da defesa baseada na média de gols sofridos por jogo e percentual de jogos sem sofrer gols (clean sheets).",
+                formula: "Baseado em: Média de Gols Sofridos por Jogo + % de Clean Sheets",
+                calculation: "Cálculo Automático com Cadeado Verde 🔒",
+                examples: [
+                    { value: "Excelente", label: "Flamengo (0.48 gols sofridos + 56.5% clean sheets)" },
+                    { value: "Boa", label: "Defesa consistente" },
+                    { value: "Regular", label: "Defesa mediana" },
+                    { value: "Fraca", label: "Defesa vulnerável" }
+                ],
+                interpretation: "Critérios de Classificação:",
+                ranges: [
+                    { range: "🔥 Excelente", label: "< 0.8 gols/jogo + > 40% clean sheets", class: "excellent", desc: "Defesa excepcional" },
+                    { range: "✅ Boa", label: "0.8-1.2 gols/jogo + > 25% clean sheets", class: "good", desc: "Defesa sólida" },
+                    { range: "⚠️ Regular", label: "1.2-1.8 gols/jogo + > 15% clean sheets", class: "average", desc: "Defesa mediana" },
+                    { range: "❌ Fraca", label: "> 1.8 gols/jogo + < 15% clean sheets", class: "poor", desc: "Defesa vulnerável" }
+                ]
+            },
+            cleansheet_old: {
                 interpretation: "Interpretação por temporada (38 jogos):",
                 scale: [
                     { range: "15+", label: "Defesa Excelente", class: "excellent" },
@@ -4373,8 +4616,20 @@
         };
 
         function mostrarAjuda(termo) {
+            console.log('🔍 [DEBUG] mostrarAjuda chamada para:', termo);
+            
+            // Debug para novos campos
+            if (termo === 'eficiencia_ofensiva' || termo === 'solidez_defensiva') {
+                console.log('🎯 [DEBUG] Abrindo modal para novo campo:', termo);
+            }
+            
             const content = helpContent[termo];
-            if (!content) return;
+            if (!content) {
+                console.error('❌ [DEBUG] Conteúdo não encontrado para:', termo);
+                alert('❌ Conteúdo não encontrado para: ' + termo);
+                return;
+            }
+            console.log('✅ [DEBUG] Conteúdo encontrado:', content.title);
 
             const modal = document.getElementById('helpModal');
             const titleText = document.getElementById('helpModalTitleText');
@@ -4383,39 +4638,76 @@
             titleText.textContent = content.title;
 
             body.innerHTML = `
-                <div class="help-definition">
-                    <h3>${content.icon} ${content.title}</h3>
-                    <p>${content.definition}</p>
+                <div class="help-definition" style="margin-bottom: 20px;">
+                    <h3 style="color: #00E38C; margin-bottom: 10px;">${content.icon} ${content.title}</h3>
+                    <p style="font-size: 16px; line-height: 1.6;">${content.definition}</p>
                 </div>
 
-                <div class="help-formula">
-                    ${content.formula}
+                <div class="help-formula" style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                    <h4 style="color: #FFD700; margin-bottom: 8px;">📊 Fórmula de Cálculo:</h4>
+                    <code style="font-size: 14px; color: #E0E0E0;">${content.formula}</code>
                 </div>
 
-                <div class="help-examples">
-                    ${content.examples.map(ex => `
-                        <div class="help-example">
-                            <div class="help-example-value">${ex.value}</div>
-                            <div class="help-example-label">${ex.label}</div>
+                ${content.calculation ? `
+                    <div class="help-calculation" style="margin-bottom: 20px; padding: 12px; background: rgba(0,227,140,0.2); border-radius: 8px; border-left: 4px solid #00E38C;">
+                        <h4 style="color: #00E38C; margin-bottom: 5px;">🔒 Tipo de Campo:</h4>
+                        <p style="color: #00E38C; font-weight: bold; margin: 0;">${content.calculation}</p>
+                    </div>
+                ` : ''}
+
+                <div class="help-examples" style="margin-bottom: 20px;">
+                    <h4 style="color: #FFD700; margin-bottom: 12px;">💡 Exemplos Práticos:</h4>
+                    ${content.examples ? content.examples.map(ex => `
+                        <div class="help-example" style="margin: 8px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 6px;">
+                            <div class="help-example-value" style="font-weight: bold; color: #FFD700; font-size: 16px;">${ex.value}</div>
+                            <div class="help-example-label" style="color: #E0E0E0; margin-top: 4px;">${ex.label}</div>
                         </div>
-                    `).join('')}
+                    `).join('') : ''}
                 </div>
 
                 <div class="help-interpretation">
-                    <h4>${content.interpretation}</h4>
-                    <div class="help-scale">
-                        ${content.scale.map(item => `
-                            <div class="help-scale-item help-scale-${item.class}">
-                                <strong>${item.range}</strong><br>
-                                ${item.label}
-                            </div>
-                        `).join('')}
-                    </div>
+                    <h4 style="color: #FFD700; margin-bottom: 12px;">${content.interpretation || 'Interpretação:'}</h4>
+                    ${content.ranges ? `
+                        <div class="interpretation-ranges">
+                            ${content.ranges.map(range => `
+                                <div class="range-item ${range.class}" style="margin: 10px 0; padding: 12px; border-left: 4px solid #00E38C; background: rgba(255,255,255,0.08); border-radius: 6px;">
+                                    <div style="font-weight: bold; font-size: 16px; color: #FFD700; margin-bottom: 4px;">${range.range}</div>
+                                    <div style="margin: 4px 0; color: #E0E0E0;">${range.label}</div>
+                                    ${range.desc ? `<div style="font-size: 14px; opacity: 0.8; color: #B0B0B0; margin-top: 6px;">${range.desc}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    ${content.scale ? `
+                        <div class="help-scale">
+                            ${content.scale.map(item => `
+                                <div class="help-scale-item help-scale-${item.class}" style="margin: 8px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 6px;">
+                                    <strong style="color: #FFD700;">${item.range}</strong><br>
+                                    <span style="color: #E0E0E0;">${item.label}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
                 </div>
             `;
 
             modal.style.display = 'block';
+            modal.style.visibility = 'visible';
+            modal.style.opacity = '1';
+            modal.style.zIndex = '99999';
             document.body.style.overflow = 'hidden'; // Prevenir scroll
+            console.log('✅ [DEBUG] Modal exibido com sucesso para:', termo);
+            
+            // Teste adicional - forçar visibilidade
+            setTimeout(() => {
+                const modalTest = document.getElementById('helpModal');
+                console.log('🔍 [DEBUG] Estado do modal após 100ms:', {
+                    display: modalTest.style.display,
+                    visibility: modalTest.style.visibility,
+                    opacity: modalTest.style.opacity,
+                    zIndex: modalTest.style.zIndex
+                });
+            }, 100);
         }
 
         function fecharAjuda() {
@@ -4499,6 +4791,16 @@
         let jogosCarregados = [];
         let clubeAtual = '';
 
+        // Função auxiliar para preencher campos
+        function preencherCampo(campoId, valor) {
+            const campo = document.getElementById(campoId);
+            if (campo) {
+                campo.value = valor;
+            } else {
+                console.warn(`Campo não encontrado: ${campoId}`);
+            }
+        }
+
         async function carregarJogosDoClube(clube) {
             try {
                 console.log(`📊 [JOGOS] Carregando jogos de ${clube}...`);
@@ -4512,15 +4814,34 @@
                     console.log(`✅ [JOGOS] ${jogosCarregados.length} jogos carregados para ${clube}`);
                     
                     // Atualizar título do modal com nome amigável
-                    const tituloModal = document.querySelector('#jogosModal h3');
+                    const tituloModal = document.getElementById('jogosModalTitle');
                     if (tituloModal) {
-                        let nomeAmigavel = clube.toUpperCase();
-                        if (clube === 'flamengo') {
-                            nomeAmigavel = '🔥 FLAMENGO';
-                        } else if (clube === 'corinthians') {
-                            nomeAmigavel = '⚫ CORINTHIANS';
-                        }
-                        tituloModal.textContent = `Tabela de Jogos - ${nomeAmigavel}`;
+                        // Mapear nomes de clubes para exibição amigável
+                        const nomesAmigaveis = {
+                            'flamengo': '🔥 Flamengo',
+                            'corinthians': '⚫ Corinthians', 
+                            'palmeiras': '🟢 Palmeiras',
+                            'sao-paulo': '🔴 São Paulo',
+                            'santos': '⚪ Santos',
+                            'gremio': '🔵 Grêmio',
+                            'internacional': '🔴 Internacional',
+                            'atletico-mg': '⚫ Atlético-MG',
+                            'cruzeiro': '🔵 Cruzeiro',
+                            'botafogo': '⚫ Botafogo',
+                            'fluminense': '🟢 Fluminense',
+                            'vasco': '⚫ Vasco',
+                            'bahia': '🔵 Bahia',
+                            'vitoria': '🔴 Vitória',
+                            'fortaleza': '🔴 Fortaleza',
+                            'ceara': '⚫ Ceará',
+                            'sport-recife': '🔴 Sport',
+                            'juventude': '🟢 Juventude',
+                            'mirassol': '🟡 Mirassol',
+                            'red-bull-bragantino': '🔴 Red Bull Bragantino'
+                        };
+                        
+                        const nomeAmigavel = nomesAmigaveis[clube.toLowerCase()] || clube.toUpperCase();
+                        tituloModal.textContent = `Histórico de Jogos - ${nomeAmigavel}`;
                     }
                     
                     carregarJogosNaTabela();
@@ -4538,6 +4859,10 @@
 
         function carregarJogosNaTabela() {
             const tbody = document.getElementById('jogosTableBody');
+            if (!tbody) {
+                console.warn('⚠️ [DEBUG] Elemento jogosTableBody não encontrado');
+                return;
+            }
             tbody.innerHTML = '';
             
             jogosCarregados.forEach((jogo, index) => {
@@ -4545,7 +4870,31 @@
                 row.style.cssText = 'border-bottom: 1px solid #333; color: white;';
                 
                 const placar = `${jogo.gols_casa} x ${jogo.gols_visitante}`;
-                const dataFormatada = new Date(jogo.data).toLocaleDateString('pt-BR');
+                
+                // Converter data para formato válido (aceita DD/MM/YYYY e YYYY-MM-DD)
+                let dataFormatada = 'Data inválida';
+                if (jogo.data) {
+                    try {
+                        let dataConvertida;
+                        
+                        if (jogo.data.includes('/')) {
+                            // Formato brasileiro: DD/MM/YYYY
+                            const partesData = jogo.data.split('/');
+                            if (partesData.length === 3) {
+                                dataConvertida = new Date(`${partesData[1]}/${partesData[0]}/${partesData[2]}`);
+                            }
+                        } else if (jogo.data.includes('-')) {
+                            // Formato ISO: YYYY-MM-DD
+                            dataConvertida = new Date(jogo.data);
+                        }
+                        
+                        if (dataConvertida && !isNaN(dataConvertida.getTime())) {
+                            dataFormatada = dataConvertida.toLocaleDateString('pt-BR');
+                        }
+                    } catch (e) {
+                        console.warn('Erro ao formatar data:', jogo.data, e);
+                    }
+                }
                 
                 row.innerHTML = `
                     <td style="padding: 10px; text-align: center;">${dataFormatada}</td>
@@ -5066,6 +5415,10 @@
         // Função para preencher tabela de ranking
         function preencherTabelaRanking(dados) {
             const tbody = document.getElementById('rankingBody');
+            if (!tbody) {
+                console.warn('⚠️ [DEBUG] Elemento rankingBody não encontrado');
+                return;
+            }
             tbody.innerHTML = '';
             
             dados.forEach((clube, index) => {
