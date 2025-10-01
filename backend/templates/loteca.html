@@ -3824,7 +3824,7 @@
                 </div>
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista (IA)</h4>
-                    <p>Apesar do Flamengo estar melhor posicionado na tabela, o Corinthians tem a vantagem por jogar em casa e apresentar uma forma recente ligeiramente superior. O equilíbrio no confronto direto sugere que o empate é uma possibilidade real, mas a força do Corinthians em seus domínios o coloca como favorito estatístico.</p>
+                    <p>A análise estatística aponta superioridade clara do Flamengo: melhor posicionamento (1º vs 10º), ataque superior (2.09 vs 1.00 gols/jogo) e defesa sólida (0.48 vs 1.21 gols sofridos). Porém, o Corinthians é historicamente uma "pedra no sapato" no confronto direto e joga em casa, fatores que elevam significativamente as chances de empate (30%). O Flamengo permanece favorito (48%), mas este é um clássico onde surpresas acontecem. Recomendação: Coluna 2 (Flamengo), mas considerar Dupla X2 pela imprevisibilidade do confronto.</p>
                 </div>
             </div>
         </div>
@@ -9639,9 +9639,9 @@
             const probCol2 = document.getElementById('prob-col2');
             const recomendacao = document.getElementById('recomendacao-jogo-1');
             
-            if (probCol1) probCol1.textContent = '32%';  // Corinthians (dados reais)
-            if (probColX) probColX.textContent = '20%';  // Empate
-            if (probCol2) probCol2.textContent = '48%';  // Flamengo (dados reais)
+            if (probCol1) probCol1.textContent = '22%';  // Corinthians (ponderado)
+            if (probColX) probColX.textContent = '30%';  // Empate (ponderado)
+            if (probCol2) probCol2.textContent = '48%';  // Flamengo (ponderado)
             if (recomendacao) {
                 recomendacao.innerHTML = '<strong>Recomendação Estatística: Coluna 2 (Flamengo)</strong> - Risco Baixo';
             }
