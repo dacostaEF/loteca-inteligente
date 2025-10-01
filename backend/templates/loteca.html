@@ -1556,25 +1556,6 @@
             box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
         }
 
-        .resumo-times-loteca {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--cor-borda);
-        }
-
-        .resumo-card {
-            background: var(--cor-fundo-card);
-            border: 1px solid var(--cor-borda);
-            border-radius: 12px;
-            padding: 2rem;
-        }
-
-        .resumo-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
 
         .stat-item {
             display: flex;
@@ -1612,9 +1593,6 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .resumo-stats {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* ANÁLISE DETALHADA */
@@ -4245,30 +4223,6 @@
                             <!-- Os jogos serão carregados dinamicamente aqui -->
                         </div>
 
-                        <!-- RESUMO ESTATÍSTICO -->
-                        <div class="resumo-times-loteca">
-                            <div class="resumo-card">
-                                <h3>📊 Resumo Estatístico</h3>
-                                <div class="resumo-stats">
-                                    <div class="summary-item">
-                                        <span class="summary-label">Times Brasileiros:</span>
-                                        <span class="summary-value" id="total-brasileiros">-</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <span class="summary-label">Times Internacionais:</span>
-                                        <span class="summary-value" id="total-internacionais">-</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <span class="summary-label">Força Média Geral:</span>
-                                        <span class="summary-value" id="forca-media-geral">-</span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <span class="summary-label">Preço Médio (C$):</span>
-                                        <span class="summary-value" id="preco-medio-geral">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                 </div> <!-- Fim da seção Times Loteca -->
 
             </div>
@@ -6348,9 +6302,6 @@
                 // Renderizar jogos
                 renderizarTimesLotecaJogos(dadosCompletos);
                 
-                // Atualizar resumo estatístico
-                atualizarResumoEstatistico(dadosCompletos);
-                
                 console.log('✅ [TIMES-LOTECA] Dados carregados com sucesso!');
                 
             } catch (error) {
@@ -6609,48 +6560,6 @@
             `;
         }
 
-        // ATUALIZAR RESUMO ESTATÍSTICO
-        function atualizarResumoEstatistico(dadosCompletos) {
-            console.log('📊 [TIMES-LOTECA] Atualizando resumo estatístico...');
-            
-            let totalBrasileiros = 0;
-            let totalInternacionais = 0;
-            let somaForca = 0;
-            let somaPreco = 0;
-            let totalTimes = 0;
-            
-            dadosCompletos.forEach(jogo => {
-                [jogo.casa, jogo.visitante].forEach(time => {
-                    if (time.brasileiro) {
-                        totalBrasileiros++;
-                    } else {
-                        totalInternacionais++;
-                    }
-                    
-                    somaForca += time.forca_elenco || 0;
-                    somaPreco += time.preco_medio || 0;
-                    totalTimes++;
-                });
-            });
-            
-            const forcaMedia = totalTimes > 0 ? (somaForca / totalTimes).toFixed(1) : '0.0';
-            const precoMedio = totalTimes > 0 ? (somaPreco / totalTimes).toFixed(1) : '0.0';
-            
-            // Atualizar elementos do DOM
-            const elementos = {
-                'total-brasileiros': totalBrasileiros,
-                'total-internacionais': totalInternacionais,
-                'forca-media-geral': forcaMedia,
-                'preco-medio-geral': `C$ ${precoMedio}`
-            };
-            
-            Object.entries(elementos).forEach(([id, valor]) => {
-                const elemento = document.getElementById(id);
-                if (elemento) {
-                    elemento.textContent = valor;
-                }
-            });
-        }
 
         // VER DETALHES DE UM TIME
         function verDetalhesTime(nomeTime) {
