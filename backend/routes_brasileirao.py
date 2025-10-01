@@ -5,6 +5,7 @@ from services.loteca_provider_new import get_current_loteca_matches
 from models.classificacao_db import classificacao_db
 from models.jogos_manager import JogosManager
 from datetime import datetime
+from services.elenco_provider import get_elenco_data, get_all_elenco_data
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
@@ -1033,7 +1034,7 @@ def api_confronto_historico_modal(clube_casa, clube_fora):
                     "mandante": row.get('mandante', ''),
                     "visitante": row.get('visitante', ''),
                     "placar": row.get('placar', ''),
-                    "resultado": resultado_casa,
+                    "resultado_corinthians": resultado_casa,
                     "competicao": row.get('competicao', '')
                 })
         
@@ -1042,7 +1043,7 @@ def api_confronto_historico_modal(clube_casa, clube_fora):
             "confronto": f"{clube_casa} vs {clube_fora}",
             "arquivo_usado": arquivo_encontrado.name,
             "total_confrontos": len(confrontos),
-            "confrontos": confrontos[:10],  # Últimos 10 confrontos
+            "confrontos": confrontos,  # TODOS os confrontos do CSV
             "timestamp": datetime.now().isoformat()
         })
         
@@ -1051,6 +1052,59 @@ def api_confronto_historico_modal(clube_casa, clube_fora):
             "success": False,
             "error": str(e),
             "confronto": f"{clube_casa} vs {clube_fora}"
+        }), 500
+
+@bp_br.route("/elenco/<clube_nome>", methods=["GET"])
+@cross_origin()
+def api_elenco_clube(clube_nome):
+    """
+    Endpoint para obter dados de elenco de um clube específico
+    GET /api/br/elenco/{clube_nome}
+    
+    Retorna dados da planilha de estatísticas de elenco
+    """
+    try:
+        # Obter dados do clube
+        dados_elenco = get_elenco_data(clube_nome)
+        
+        return jsonify({
+            "success": True,
+            "clube": clube_nome,
+            "dados": dados_elenco,
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e),
+            "clube": clube_nome
+        }), 500
+
+@bp_br.route("/elenco", methods=["GET"])
+@cross_origin()
+def api_todos_elencos():
+    """
+    Endpoint para obter dados de elenco de todos os clubes
+    GET /api/br/elenco
+    
+    Retorna todos os dados da planilha de estatísticas de elenco
+    """
+    try:
+        # Obter todos os dados
+        todos_dados = get_all_elenco_data()
+        
+        return jsonify({
+            "success": True,
+            "total_clubes": len(todos_dados),
+            "dados": todos_dados,
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
         }), 500
 
 # Função para registrar o blueprint (será chamada em app.py)

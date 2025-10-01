@@ -684,6 +684,97 @@
             padding: 0;
         }
 
+        /* Modal de Estatísticas Detalhadas */
+        .estatisticas-modal-content {
+            background: linear-gradient(135deg, #1e1b29, #2a2340);
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-grid-modal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .stat-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-section h4 {
+            color: var(--cor-destaque-primaria);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-name {
+            color: var(--cor-texto-secundario);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: var(--cor-texto-principal);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .stat-value.destaque {
+            color: var(--cor-destaque-secundaria);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .forma-visual {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* Responsividade do Modal */
+        @media (max-width: 768px) {
+            .stats-grid-modal {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+            
+            .stat-section {
+                padding: 1rem;
+            }
+            
+            .estatisticas-modal-content {
+                max-width: 95%;
+                max-height: 90vh;
+            }
+        }
+
         .confronto-result {
             width: 24px;
             height: 24px;
@@ -1712,7 +1803,7 @@
             color: white;
         }
 
-        /* HISTÓRICO H2H */
+        /* HISTÓRICO CONFRONTO DIRETO */
         .h2h-section {
             margin-bottom: 2rem;
         }
@@ -1820,6 +1911,62 @@
         .confidence-level.high {
             background-color: rgba(0, 227, 140, 0.2);
             color: var(--cor-destaque-secundaria);
+        }
+
+        .confidence-level.medium {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #3B82F6;
+        }
+
+        .confidence-level.low {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+
+        /* BOTÃO CONFRONTOS DIRETOS */
+        .confrontos-diretos-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #32CD32, #00FF00);
+            color: #000;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(50, 205, 50, 0.3);
+            z-index: 100;
+        }
+
+        .confrontos-diretos-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(50, 205, 50, 0.4);
+        }
+
+        /* BOTÃO CONFRONTOS DIRETOS CENTRALIZADO */
+        .confrontos-diretos-button-center {
+            background: linear-gradient(135deg, #32CD32, #00FF00);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(50, 205, 50, 0.3);
+            margin-bottom: 0.5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .confrontos-diretos-button-center:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(50, 205, 50, 0.4);
         }
 
         .recommended-bet {
@@ -3205,7 +3352,7 @@
                     <tbody>
                         <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais"></div></td><td id="forma-analise"><span class="status-icon equilibrio">▬</span>Baseado nos últimos 10 jogos</td></tr>
                         <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa">5º</td><td class="team-header" id="posicao-fora">2º</td><td id="posicao-analise"><span class="status-icon desvantagem">▼</span>Vantagem Flamengo</td></tr>
-                        <tr><td><strong>Confronto Direto (H2H)</strong></td><td class="team-header" id="h2h-casa">2V-1E-2D</td><td class="team-header" id="h2h-fora">2V-1E-2D</td><td id="h2h-analise"><span class="status-icon equilibrio">▬</span>Equilíbrio</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td class="team-header" id="h2h-casa">2V-1E-2D</td><td class="team-header" id="h2h-fora">2V-1E-2D</td><td id="h2h-analise"><span class="status-icon equilibrio">▬</span>Equilíbrio</td></tr>
                         <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa">80% aprov.</td><td class="team-header" id="fator-fora">-</td><td id="fator-analise"><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td></tr>
                     </tbody>
                 </table>
@@ -3233,7 +3380,7 @@
                         </div>
                     </div>
                     <div class="analysis-mobile-item">
-                        <div class="analysis-mobile-label">H2H</div>
+                        <div class="analysis-mobile-label">Confronto Direto</div>
                         <div class="analysis-mobile-teams">
                             <span>COR: 2V-1E-2D</span>
                             <span>FLA: 2V-1E-2D</span>
@@ -3915,14 +4062,19 @@
                 <div id="detailed-analysis" class="detailed-analysis" style="display: none;">
                     
                     <!-- CABEÇALHO DO CONFRONTO -->
-                    <div class="match-header">
+                    <div class="match-header" style="position: relative;">
+                        
                         <div class="team-info">
                             <div class="team-home">
                                 <img src="{{ url_for('static', filename='placeholder-team-logo.svg') }}" alt="Time Casa" class="team-logo">
                                 <h3 id="team-home-name">Time Casa</h3>
-                                <span class="team-position">5º Posição</span>
+                                <span class="team-position" data-position="home">5º Posição</span>
                             </div>
                             <div class="vs-separator">
+                                <!-- BOTÃO CONFRONTOS DIRETOS CENTRALIZADO -->
+                                <button id="confrontos-diretos-btn" class="confrontos-diretos-button-center" onclick="abrirModalConfrontosDiretos()">
+                                    ⚔️ Últimos Confrontos
+                                </button>
                                 <span class="vs-text">VS</span>
                                 <div class="match-info">
                                     <span class="stadium">Arena - Local</span>
@@ -3932,7 +4084,7 @@
                             <div class="team-away">
                                 <img src="{{ url_for('static', filename='placeholder-team-logo.svg') }}" alt="Time Visitante" class="team-logo">
                                 <h3 id="team-away-name">Time Visitante</h3>
-                                <span class="team-position">2º Posição</span>
+                                <span class="team-position" data-position="away">2º Posição</span>
                             </div>
                         </div>
                     </div>
@@ -3946,15 +4098,15 @@
                             <div class="stat-row">
                                 <div class="stat-label">Gols marcados p/jogo</div>
                                 <div class="stat-home">
-                                    <div class="stat-value">1.00</div>
+                                    <div class="stat-value">...</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 40%"></div>
+                                        <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
-                                    <div class="stat-value">2.09</div>
+                                    <div class="stat-value">...</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 84%"></div>
+                                        <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -3963,15 +4115,15 @@
                             <div class="stat-row">
                                 <div class="stat-label">Gols sofridos p/jogo</div>
                                 <div class="stat-home">
-                                    <div class="stat-value">1.21</div>
-                                    <div class="stat-bar defensive">
-                                        <div class="stat-fill" style="width: 60%"></div>
+                                    <div class="stat-value">...</div>
+                                    <div class="stat-bar">
+                                        <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
-                                    <div class="stat-value">0.48</div>
-                                    <div class="stat-bar defensive">
-                                        <div class="stat-fill" style="width: 24%"></div>
+                                    <div class="stat-value">...</div>
+                                    <div class="stat-bar">
+                                        <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -3980,22 +4132,22 @@
                             <div class="stat-row">
                                 <div class="stat-label">Aproveitamento (%)</div>
                                 <div class="stat-home">
-                                    <div class="stat-value">48.5%</div>
+                                    <div class="stat-value">...</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 48.5%"></div>
+                                        <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
-                                    <div class="stat-value">66.7%</div>
+                                    <div class="stat-value">...</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 66.7%"></div>
+                                        <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- HISTÓRICO H2H -->
+                    <!-- HISTÓRICO CONFRONTO DIRETO -->
                     <div class="h2h-section">
                         <h4>⚔️ Histórico de Confrontos (Últimos 10)</h4>
                         
@@ -4047,12 +4199,12 @@
                                 <span class="recommended-bet">Duplo X2</span>
                             </div>
                             <div class="recommendation-reasoning">
-                                <p><strong>Análise:</strong> Com base nos dados estatísticos, o time visitante apresenta números superiores ofensivos (2.1 gols/jogo vs 1.8) e melhor defesa (1.0 vs 1.2 gols sofridos). O histórico H2H está equilibrado, tornando o empate uma possibilidade real. A recomendação é cobrir visitante e empate.</p>
+                                <p><strong>Análise:</strong> Com base nos dados estatísticos, o time visitante apresenta números superiores ofensivos (2.1 gols/jogo vs 1.8) e melhor defesa (1.0 vs 1.2 gols sofridos). O histórico de confronto direto está equilibrado, tornando o empate uma possibilidade real. A recomendação é cobrir visitante e empate.</p>
                             </div>
                             <div class="recommendation-factors">
                                 <div class="factor positive">✅ Melhor ataque visitante</div>
                                 <div class="factor positive">✅ Melhor defesa visitante</div>
-                                <div class="factor neutral">⚖️ H2H equilibrado</div>
+                                <div class="factor neutral">⚖️ Confronto direto equilibrado</div>
                                 <div class="factor negative">❌ Fator casa</div>
                             </div>
                         </div>
@@ -5953,7 +6105,7 @@
                     factors: [
                         { type: "positive", text: "✅ Melhor ataque visitante" },
                         { type: "positive", text: "✅ Melhor defesa visitante" },
-                        { type: "neutral", text: "⚖️ H2H equilibrado" },
+                        { type: "neutral", text: "⚖️ Confronto direto equilibrado" },
                         { type: "negative", text: "❌ Fator casa" }
                     ]
                 }
@@ -6118,7 +6270,7 @@
                     };
                 }
                 
-                // H2H básico (placeholder)
+                // Confronto direto básico (placeholder)
                 if (!advancedStatsData[jogo.numero].h2h) {
                     advancedStatsData[jogo.numero].h2h = {
                         homeWins: 4,
@@ -6141,7 +6293,7 @@
                         factors: [
                             { text: 'Melhor ataque visitante', positive: true },
                             { text: 'Melhor defesa visitante', positive: true },
-                            { text: 'H2H equilibrado', neutral: true },
+                            { text: 'Confronto direto equilibrado', neutral: true },
                             { text: 'Fator casa', negative: true }
                         ]
                     };
@@ -6259,28 +6411,71 @@
 
         // BUSCAR DADOS DE UM TIME ESPECÍFICO
         async function buscarDadosTime(nomeTime) {
+            console.log(`📊 [ELENCO] Buscando dados para: ${nomeTime}`);
+            
             // Verificar se é time brasileiro
             const isBrazilian = isBrazilianTeam(nomeTime);
             
             if (isBrazilian) {
-                // Buscar via Cartola FC
-                const clubeId = cartolaProvider.getClubIdByName(nomeTime);
-                if (clubeId) {
-                    const stats = await cartolaProvider.getEstatisticasClube(clubeId);
-                    const clubeInfo = await cartolaProvider.getClubeInfo(clubeId);
+                try {
+                    // NOVA API: Buscar dados de elenco da planilha
+                    console.log(`🔍 [ELENCO] Buscando dados de elenco via API...`);
+                    const elencoResponse = await fetch(`/api/br/elenco/${nomeTime}`);
                     
-                    return {
-                        nome: nomeTime,
-                        abrev: clubeInfo?.abreviacao || nomeTime.substring(0, 3).toUpperCase(),
-                        total_atletas: stats.total_atletas || 0,
-                        pct_provaveis: stats.pct_provaveis || 0,
-                        forca_elenco: stats.media_pontos_elenco || 0,
-                        preco_medio: stats.preco_medio || 0,
-                        rating: stats.rating || 0,
-                        badge: gerarBadgeTime(stats.rating || 0),
-                        fonte: 'cartola',
-                        brasileiro: true
-                    };
+                    if (elencoResponse.ok) {
+                        const elencoData = await elencoResponse.json();
+                        
+                        if (elencoData.success && elencoData.dados) {
+                            const dados = elencoData.dados;
+                            console.log(`✅ [ELENCO] Dados encontrados:`, dados);
+                            
+                            const nacionais = dados.plantel - dados.estrangeiros;
+                            
+                            return {
+                                nome: nomeTime,
+                                abrev: nomeTime.substring(0, 3).toUpperCase(),
+                                total_atletas: dados.plantel || 30,
+                                pct_provaveis: `${nacionais}/${dados.estrangeiros}`,
+                                forca_elenco: dados.forca_elenco || 5.0,
+                                preco_medio: dados.valor_mm_formatado || '€ 50.0MM',
+                                rating: dados.rating || 0.5,
+                                badge: gerarBadgeTime(dados.rating || 0.5),
+                                fonte: 'elenco_real',
+                                brasileiro: true,
+                                // Dados extras da planilha
+                                valor_mm_euros: dados.valor_mm_euros,
+                                idade_media: dados.idade_media,
+                                estrangeiros: dados.estrangeiros,
+                                serie: dados.serie,
+                                nacionais: nacionais
+                            };
+                        }
+                    }
+                    
+                    console.log(`⚠️ [ELENCO] API de elenco falhou, tentando Cartola...`);
+                    
+                    // Fallback: Buscar via Cartola FC
+                    const clubeId = cartolaProvider.getClubIdByName(nomeTime);
+                    if (clubeId) {
+                        const stats = await cartolaProvider.getEstatisticasClube(clubeId);
+                        const clubeInfo = await cartolaProvider.getClubeInfo(clubeId);
+                        
+                        return {
+                            nome: nomeTime,
+                            abrev: clubeInfo?.abreviacao || nomeTime.substring(0, 3).toUpperCase(),
+                            total_atletas: stats.total_atletas || 0,
+                            pct_provaveis: stats.pct_provaveis || 0,
+                            forca_elenco: stats.media_pontos_elenco || 0,
+                            preco_medio: stats.preco_medio || 0,
+                            rating: stats.rating || 0,
+                            badge: gerarBadgeTime(stats.rating || 0),
+                            fonte: 'cartola',
+                            brasileiro: true
+                        };
+                    }
+                    
+                } catch (error) {
+                    console.error(`❌ [ELENCO] Erro ao buscar dados:`, error);
                 }
             }
             
@@ -6359,8 +6554,19 @@
         // RENDERIZAR CONTAINER DE UM TIME
         function renderizarTimeContainer(dadosTime, tipo) {
             const forcaPercentual = Math.round(dadosTime.rating * 100);
-            const fonteIcon = dadosTime.fonte === 'cartola' ? '🔥' : '🎲';
-            const fonteText = dadosTime.fonte === 'cartola' ? 'Dados reais' : 'Simulado';
+            
+            // Determinar ícone e texto baseado na fonte
+            let fonteIcon, fonteText;
+            if (dadosTime.fonte === 'elenco_real') {
+                fonteIcon = '📊';
+                fonteText = 'Planilha Real';
+            } else if (dadosTime.fonte === 'cartola') {
+                fonteIcon = '🔥';
+                fonteText = 'Dados reais';
+            } else {
+                fonteIcon = '🎲';
+                fonteText = 'Simulado';
+            }
             
             return `
                 <div class="time-container">
@@ -6373,7 +6579,7 @@
                         <div class="stat-group">
                             <span class="stat-label">Elenco</span>
                             <div class="stat-value">Total: ${dadosTime.total_atletas}</div>
-                            <div class="stat-subvalue">Prováveis: ${dadosTime.pct_provaveis}%</div>
+                            <div class="stat-subvalue">Nacionais/Estrangeiros: ${dadosTime.pct_provaveis}</div>
                         </div>
                         
                         <div class="stat-group">
@@ -6386,7 +6592,7 @@
                         
                         <div class="stat-group">
                             <span class="stat-label">Mercado</span>
-                            <div class="stat-value">Preço: C$</div>
+                            <div class="stat-value">Valor Plantel</div>
                             <div class="stat-subvalue">${dadosTime.preco_medio}</div>
                         </div>
                     </div>
@@ -6395,13 +6601,10 @@
                         ${dadosTime.badge.text}
                     </div>
                     
-                    <button class="ver-detalhes-btn" onclick="verDetalhesTime('${dadosTime.nome}')">
-                        📊 Ver Detalhes
+                    <button class="ver-detalhes-btn" onclick="abrirEstatisticasDesempenho('${dadosTime.nome}')">
+                        📈 Estatística Desempenho
                     </button>
                     
-                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--cor-texto-secundario); text-align: center;">
-                        ${fonteIcon} ${fonteText}
-                    </div>
                 </div>
             `;
         }
@@ -6495,7 +6698,7 @@
                 loadSimulatedData(data);
             }
 
-            // Atualizar H2H (mantém simulado por enquanto)
+            // Atualizar confronto direto (mantém simulado por enquanto)
             updateH2H(data.h2h);
 
             // Atualizar recomendação
@@ -6636,8 +6839,8 @@
 
                 console.log('[Cartola] Dados carregados:', { homeStats, awayStats });
 
-                // Atualizar interface com dados reais
-                updateRealStats(homeStats, awayStats);
+                // Atualizar interface com dados reais (aguardar carregamento)
+                await updateRealStats(homeStats, awayStats);
                 
                 // Dados reais carregados (sem botão duplicado)
 
@@ -6667,8 +6870,32 @@
             showDataSource('Dados Simulados');
         }
 
+        // MOSTRAR LOADING NAS ESTATÍSTICAS
+        function showStatsLoading() {
+            console.log('⏳ [LOADING] Mostrando loading nas estatísticas...');
+            
+            const statRows = document.querySelectorAll('.stat-row');
+            statRows.forEach(row => {
+                const values = row.querySelectorAll('.stat-value');
+                const fills = row.querySelectorAll('.stat-fill');
+                
+                values.forEach(value => {
+                    value.textContent = '...';
+                });
+                
+                fills.forEach(fill => {
+                    fill.style.width = '0%';
+                    fill.className = 'stat-fill'; // Remove classes de cor
+                });
+            });
+        }
+
         // Atualizar interface com dados reais do dashboard admin
-        function updateRealStats(homeStats, awayStats) {
+        async function updateRealStats(homeStats, awayStats) {
+            console.log('🔄 [UPDATE-STATS] Iniciando atualização com dados reais...');
+            
+            // AGUARDAR UM POUCO PARA GARANTIR QUE O LOADING SEJA VISÍVEL
+            await new Promise(resolve => setTimeout(resolve, 300));
             // Forma recente baseada no rating (simulada por enquanto)
             const homeForm = generateFormFromRating(homeStats.rating);
             const awayForm = generateFormFromRating(awayStats.rating);
@@ -6693,6 +6920,38 @@
 
             // Atualizar labels das estatísticas
             updateStatLabels();
+            
+            // BUSCAR DADOS DE CLASSIFICAÇÃO REAIS DA CENTRAL ADMIN
+            const classificationData = await getClassificationData();
+            
+            // Obter posições reais dos times
+            const homeClassification = classificationData['CORINTHIANS'] || { position: 5 };
+            const awayClassification = classificationData['FLAMENGO'] || { position: 2 };
+            
+            // ATUALIZAR POSIÇÕES NA INTERFACE
+            updatePositionDisplay(homeClassification, awayClassification);
+            
+            // GERAR RECOMENDAÇÃO AUTOMÁTICA COM DADOS REAIS DE CLASSIFICAÇÃO
+            await generateAutoRecommendation({
+                home: {
+                    name: 'CORINTHIANS',
+                    position: homeClassification.position,
+                    points: homeClassification.points,
+                    golsMarcados: homeGolsMarcados,
+                    golsSofridos: homeGolsSofridos,
+                    aproveitamento: homeAproveitamento
+                },
+                away: {
+                    name: 'FLAMENGO', 
+                    position: awayClassification.position,
+                    points: awayClassification.points,
+                    golsMarcados: awayGolsMarcados,
+                    golsSofridos: awayGolsSofridos,
+                    aproveitamento: awayAproveitamento
+                }
+            });
+            
+            console.log('✅ [UPDATE-STATS] Atualização completa com dados reais!');
         }
 
         // Atualizar estatística com barras inteligentes (LÓGICA SIMPLES)
@@ -6746,6 +7005,365 @@
             if (awayFill) {
                 awayFill.style.width = awayPercentage + '%';
                 awayFill.className = `stat-fill ${awayClass}`;
+            }
+        }
+
+        // BUSCAR DADOS DE CLASSIFICAÇÃO DA CENTRAL ADMIN
+        async function getClassificationData() {
+            try {
+                console.log('📊 [CLASSIFICATION] Buscando dados de classificação da Central Admin...');
+                
+                const response = await fetch('/api/br/classificacao/serie-a');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [CLASSIFICATION] Dados recebidos:', data);
+                
+                // Criar mapa de posições por time
+                const positionsMap = {};
+                if (data.classificacao) {
+                    data.classificacao.forEach((team, index) => {
+                        const teamName = team.clube.toUpperCase();
+                        positionsMap[teamName] = {
+                            position: index + 1,
+                            points: team.pontos,
+                            games: team.jogos,
+                            wins: team.vitorias,
+                            draws: team.empates,
+                            losses: team.derrotas,
+                            goalsFor: team.gols_marcados,
+                            goalsAgainst: team.gols_sofridos,
+                            goalDifference: team.saldo_gols
+                        };
+                    });
+                }
+                
+                console.log('🎯 [CLASSIFICATION] Mapa de posições criado:', positionsMap);
+                return positionsMap;
+                
+            } catch (error) {
+                console.error('❌ [CLASSIFICATION] Erro ao buscar classificação:', error);
+                // Retornar dados padrão em caso de erro
+                return {
+                    'CORINTHIANS': { position: 5, points: 47, games: 23 },
+                    'FLAMENGO': { position: 2, points: 51, games: 23 }
+                };
+            }
+        }
+
+        // SISTEMA DE RECOMENDAÇÃO AUTOMÁTICA BASEADO EM DADOS REAIS
+        async function generateAutoRecommendation(teams) {
+            console.log('🎯 [AUTO-REC] Gerando recomendação automática com dados reais...', teams);
+            
+            const home = teams.home;
+            const away = teams.away;
+            
+            // CALCULAR PONTUAÇÃO DE SUPERIORIDADE PARA CADA TIME
+            let homeScore = 0;
+            let awayScore = 0;
+            let factors = [];
+            
+            // 1. ANÁLISE DE POSIÇÃO NA TABELA (peso: 2)
+            const positionDiff = home.position - away.position;
+            if (positionDiff > 3) {
+                awayScore += 2;
+                factors.push({ type: 'positive', text: `✅ ${away.name} muito melhor posicionado (${away.position}º vs ${home.position}º)` });
+            } else if (positionDiff > 0) {
+                awayScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${away.name} melhor posicionado (${away.position}º vs ${home.position}º)` });
+            } else if (positionDiff < -3) {
+                homeScore += 2;
+                factors.push({ type: 'positive', text: `✅ ${home.name} muito melhor posicionado (${home.position}º vs ${away.position}º)` });
+            } else if (positionDiff < 0) {
+                homeScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${home.name} melhor posicionado (${home.position}º vs ${away.position}º)` });
+            } else {
+                factors.push({ type: 'neutral', text: `⚖️ Posições similares na tabela` });
+            }
+            
+            // 2. ANÁLISE DE ATAQUE - GOLS MARCADOS (peso: 2)
+            const attackDiff = away.golsMarcados - home.golsMarcados;
+            if (attackDiff > 0.5) {
+                awayScore += 2;
+                factors.push({ type: 'positive', text: `✅ ${away.name} ataque muito superior (${away.golsMarcados.toFixed(2)} vs ${home.golsMarcados.toFixed(2)} gols/jogo)` });
+            } else if (attackDiff > 0.2) {
+                awayScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${away.name} ataque superior (${away.golsMarcados.toFixed(2)} vs ${home.golsMarcados.toFixed(2)} gols/jogo)` });
+            } else if (attackDiff < -0.5) {
+                homeScore += 2;
+                factors.push({ type: 'positive', text: `✅ ${home.name} ataque muito superior (${home.golsMarcados.toFixed(2)} vs ${away.golsMarcados.toFixed(2)} gols/jogo)` });
+            } else if (attackDiff < -0.2) {
+                homeScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${home.name} ataque superior (${home.golsMarcados.toFixed(2)} vs ${away.golsMarcados.toFixed(2)} gols/jogo)` });
+            } else {
+                factors.push({ type: 'neutral', text: `⚖️ Ataques equilibrados` });
+            }
+            
+            // 3. ANÁLISE DE DEFESA - GOLS SOFRIDOS (peso: 2)
+            const defenseDiff = home.golsSofridos - away.golsSofridos;
+            if (defenseDiff > 0.5) {
+                awayScore += 2;
+                factors.push({ type: 'positive', text: `✅ ${away.name} defesa muito superior (${away.golsSofridos.toFixed(2)} vs ${home.golsSofridos.toFixed(2)} gols sofridos/jogo)` });
+            } else if (defenseDiff > 0.2) {
+                awayScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${away.name} defesa superior (${away.golsSofridos.toFixed(2)} vs ${home.golsSofridos.toFixed(2)} gols sofridos/jogo)` });
+            } else if (defenseDiff < -0.5) {
+                homeScore += 2;
+                factors.push({ type: 'positive', text: `✅ ${home.name} defesa muito superior (${home.golsSofridos.toFixed(2)} vs ${away.golsSofridos.toFixed(2)} gols sofridos/jogo)` });
+            } else if (defenseDiff < -0.2) {
+                homeScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${home.name} defesa superior (${home.golsSofridos.toFixed(2)} vs ${away.golsSofridos.toFixed(2)} gols sofridos/jogo)` });
+            } else {
+                factors.push({ type: 'neutral', text: `⚖️ Defesas equilibradas` });
+            }
+            
+            // 4. ANÁLISE DE APROVEITAMENTO (peso: 1)
+            const aprovDiff = away.aproveitamento - home.aproveitamento;
+            if (aprovDiff > 15) {
+                awayScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${away.name} aproveitamento muito superior (${away.aproveitamento.toFixed(1)}% vs ${home.aproveitamento.toFixed(1)}%)` });
+            } else if (aprovDiff > 5) {
+                awayScore += 0.5;
+                factors.push({ type: 'positive', text: `✅ ${away.name} aproveitamento superior (${away.aproveitamento.toFixed(1)}% vs ${home.aproveitamento.toFixed(1)}%)` });
+            } else if (aprovDiff < -15) {
+                homeScore += 1;
+                factors.push({ type: 'positive', text: `✅ ${home.name} aproveitamento muito superior (${home.aproveitamento.toFixed(1)}% vs ${away.aproveitamento.toFixed(1)}%)` });
+            } else if (aprovDiff < -5) {
+                homeScore += 0.5;
+                factors.push({ type: 'positive', text: `✅ ${home.name} aproveitamento superior (${home.aproveitamento.toFixed(1)}% vs ${away.aproveitamento.toFixed(1)}%)` });
+            } else {
+                factors.push({ type: 'neutral', text: `⚖️ Aproveitamento equilibrado` });
+            }
+            
+            // 5. FATOR CASA (peso: 1)
+            homeScore += 1;
+            factors.push({ type: 'positive', text: `✅ ${home.name} joga em casa` });
+            
+            // DETERMINAR RECOMENDAÇÃO BASEADA NAS PONTUAÇÕES
+            const scoreDiff = Math.abs(homeScore - awayScore);
+            let recommendation = {};
+            
+            if (scoreDiff >= 4) {
+                // SUPERIORIDADE CLARA - APOSTA SIMPLES
+                if (homeScore > awayScore) {
+                    recommendation = {
+                        bet: 'Coluna 1',
+                        confidence: 'alta',
+                        reasoning: `${home.name} apresenta superioridade clara em múltiplos aspectos estatísticos.`
+                    };
+                } else {
+                    recommendation = {
+                        bet: 'Coluna 2', 
+                        confidence: 'alta',
+                        reasoning: `${away.name} apresenta superioridade clara em múltiplos aspectos estatísticos.`
+                    };
+                }
+            } else if (scoreDiff >= 2) {
+                // VANTAGEM MODERADA - APOSTA DUPLA
+                if (homeScore > awayScore) {
+                    recommendation = {
+                        bet: 'Dupla 1X',
+                        confidence: 'média',
+                        reasoning: `${home.name} tem vantagem moderada, mas empate é possível. Cobertura recomendada.`
+                    };
+                } else {
+                    recommendation = {
+                        bet: 'Dupla X2',
+                        confidence: 'média', 
+                        reasoning: `${away.name} tem vantagem moderada, mas empate é possível. Cobertura recomendada.`
+                    };
+                }
+            } else {
+                // EQUILÍBRIO TOTAL - APOSTA TRIPLA
+                recommendation = {
+                    bet: 'Tripla 1X2',
+                    confidence: 'baixa',
+                    reasoning: 'Confronto equilibrado com múltiplos cenários possíveis. Jogo imprevisível.'
+                };
+            }
+            
+            // APLICAR RECOMENDAÇÃO NA INTERFACE
+            updateRecommendationUI(recommendation, factors);
+            
+            console.log('✅ [AUTO-REC] Recomendação gerada:', recommendation);
+        }
+        
+        // ATUALIZAR EXIBIÇÃO DAS POSIÇÕES NA TABELA
+        function updatePositionDisplay(homeClassification, awayClassification) {
+            console.log('📊 [POSITION] Atualizando posições na interface...', { homeClassification, awayClassification });
+            
+            // Atualizar posições na tabela principal (Aba 1 - Análise Rápida)
+            const posicaoCasa = document.getElementById('posicao-casa');
+            const posicaoFora = document.getElementById('posicao-fora');
+            const posicaoAnalise = document.getElementById('posicao-analise');
+            
+            if (posicaoCasa) {
+                posicaoCasa.textContent = `${homeClassification.position}º`;
+            }
+            if (posicaoFora) {
+                posicaoFora.textContent = `${awayClassification.position}º`;
+            }
+            if (posicaoAnalise) {
+                const positionDiff = homeClassification.position - awayClassification.position;
+                if (positionDiff > 0) {
+                    posicaoAnalise.innerHTML = '<span class="status-icon desvantagem">▼</span>Vantagem Flamengo';
+                } else if (positionDiff < 0) {
+                    posicaoAnalise.innerHTML = '<span class="status-icon vantagem">▲</span>Vantagem Corinthians';
+                } else {
+                    posicaoAnalise.innerHTML = '<span class="status-icon equilibrio">▬</span>Posições iguais';
+                }
+            }
+            
+            // Atualizar posições na Aba 2 (Dados Avançados) - se existir
+            const homePositionElements = document.querySelectorAll('[data-position="home"]');
+            const awayPositionElements = document.querySelectorAll('[data-position="away"]');
+            
+            homePositionElements.forEach(element => {
+                element.textContent = `${homeClassification.position}º`;
+            });
+            
+            awayPositionElements.forEach(element => {
+                element.textContent = `${awayClassification.position}º`;
+            });
+            
+            console.log('✅ [POSITION] Posições atualizadas na interface');
+        }
+
+        // ABRIR MODAL DE CONFRONTOS DIRETOS (ABA 2)
+        async function abrirModalConfrontosDiretos() {
+            console.log('⚔️ [CONFRONTOS-DIRETOS] Abrindo modal de confrontos diretos...');
+            
+            try {
+                // Buscar dados dos confrontos da API
+                const response = await fetch('/api/br/loteca/confronto-modal/CORINTHIANS/FLAMENGO');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [CONFRONTOS-DIRETOS] Dados recebidos:', data);
+                
+                // Extrair array de confrontos da resposta
+                const confrontos = data.confrontos || [];
+                console.log('📊 [CONFRONTOS-DIRETOS] Total de confrontos:', confrontos.length);
+                
+                // Mostrar modal com os dados
+                mostrarModalConfrontosDiretos(confrontos);
+                
+            } catch (error) {
+                console.error('❌ [CONFRONTOS-DIRETOS] Erro ao carregar confrontos:', error);
+                
+                // Dados de exemplo em caso de erro
+                const confrontosExemplo = [
+                    { data: '2025-09-28', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-2', resultado_corinthians: 'D', competicao: 'Brasileirão 2025' },
+                    { data: '2025-04-27', mandante: 'Flamengo', visitante: 'Corinthians', placar: '4-0', resultado_corinthians: 'D', competicao: 'Brasileirão 2025' },
+                    { data: '2024-10-20', mandante: 'Corinthians', visitante: 'Flamengo', placar: '0-0', resultado_corinthians: 'E', competicao: 'Copa do Brasil 2024' },
+                    { data: '2024-10-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado_corinthians: 'D', competicao: 'Copa do Brasil 2024' },
+                    { data: '2024-09-01', mandante: 'Corinthians', visitante: 'Flamengo', placar: '2-1', resultado_corinthians: 'V', competicao: 'Brasileirão 2024' }
+                ];
+                
+                mostrarModalConfrontosDiretos(confrontosExemplo);
+            }
+        }
+
+        // MOSTRAR MODAL COM LISTA DE CONFRONTOS
+        function mostrarModalConfrontosDiretos(confrontos) {
+            console.log('🎨 [CONFRONTOS-DIRETOS] Renderizando modal...', confrontos);
+            
+            // Criar modal se não existir
+            let modal = document.getElementById('confrontos-diretos-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'confrontos-diretos-modal';
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+                    <div class="modal-content confrontos-modal-content">
+                        <div class="modal-header">
+                            <h3>⚔️ Confrontos Diretos - Corinthians vs Flamengo</h3>
+                            <button class="modal-close" onclick="fecharModalConfrontosDiretos()">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="confrontos-diretos-lista" class="confrontos-lista">
+                                <!-- Lista será inserida aqui -->
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            
+            // Renderizar lista de confrontos (TODOS os jogos do CSV)
+            const lista = document.getElementById('confrontos-diretos-lista');
+            lista.innerHTML = confrontos.map((confronto, index) => {
+                const resultado = confronto.resultado_corinthians === 'V' ? 'Vitória Corinthians' :
+                                confronto.resultado_corinthians === 'D' ? 'Vitória Flamengo' : 'Empate';
+                
+                const resultadoClass = confronto.resultado_corinthians === 'V' ? 'v' :
+                                     confronto.resultado_corinthians === 'D' ? 'd' : 'e';
+                
+                return `
+                    <div class="confronto-item">
+                        <div class="confronto-data">${confronto.data}</div>
+                        <div class="confronto-detalhes">
+                            <span class="confronto-mandante">${confronto.mandante}</span>
+                            <span class="confronto-placar">${confronto.placar}</span>
+                            <span class="confronto-visitante">${confronto.visitante}</span>
+                        </div>
+                        <div class="confronto-resultado ${resultadoClass}">${resultado}</div>
+                        <div class="confronto-competicao">${confronto.competicao}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Mostrar modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            console.log('✅ [CONFRONTOS-DIRETOS] Modal exibido com sucesso');
+        }
+
+        // FECHAR MODAL DE CONFRONTOS DIRETOS
+        function fecharModalConfrontosDiretos() {
+            const modal = document.getElementById('confrontos-diretos-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // ATUALIZAR INTERFACE COM RECOMENDAÇÃO AUTOMÁTICA
+        function updateRecommendationUI(recommendation, factors) {
+            // Atualizar nível de confiança
+            const confidenceElement = document.querySelector('.confidence-level');
+            if (confidenceElement) {
+                confidenceElement.className = `confidence-level ${recommendation.confidence === 'alta' ? 'high' : recommendation.confidence === 'média' ? 'medium' : 'low'}`;
+                confidenceElement.textContent = recommendation.confidence === 'alta' ? 'Alta Confiança' : 
+                                               recommendation.confidence === 'média' ? 'Média Confiança' : 'Baixa Confiança';
+            }
+            
+            // Atualizar aposta recomendada
+            const betElement = document.querySelector('.recommended-bet');
+            if (betElement) {
+                betElement.textContent = recommendation.bet;
+            }
+            
+            // Atualizar texto de análise
+            const reasoningElement = document.querySelector('.recommendation-reasoning p');
+            if (reasoningElement) {
+                reasoningElement.innerHTML = `<strong>Análise:</strong> ${recommendation.reasoning}`;
+            }
+            
+            // Atualizar fatores
+            const factorsContainer = document.querySelector('.recommendation-factors');
+            if (factorsContainer) {
+                factorsContainer.innerHTML = factors.map(factor => {
+                    const className = factor.type === 'positive' ? 'positive' : 
+                                     factor.type === 'negative' ? 'negative' : 'neutral';
+                    return `<div class="factor ${className}">${factor.text}</div>`;
+                }).join('');
             }
         }
 
@@ -8324,7 +8942,7 @@
                 formaAnalise.innerHTML = '<span class="status-icon desvantagem">▼</span>Vantagem Flamengo';
             }
             
-            // Atualizar confronto direto (H2H) com dados reais
+            // Atualizar confronto direto com dados reais
             const h2hCasa = document.getElementById('h2h-casa');
             const h2hFora = document.getElementById('h2h-fora');
             const h2hAnalise = document.getElementById('h2h-analise');
@@ -8367,6 +8985,174 @@
         }
 
         // LOG DE BOAS-VINDAS MOVIDO PARA DENTRO DO DOMContentLoaded
+        // FUNÇÃO PARA ABRIR MODAL DE ESTATÍSTICAS DETALHADAS
+        async function abrirEstatisticasDesempenho(nomeClube) {
+            console.log(`📈 [STATS] Abrindo estatísticas detalhadas para: ${nomeClube}`);
+            
+            try {
+                // Buscar dados detalhados do clube via API do admin
+                const response = await fetch(`/api/br/estatisticas/${nomeClube}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [STATS] Dados recebidos:', data);
+                
+                // Mostrar modal com os dados
+                mostrarModalEstatisticas(nomeClube, data);
+                
+            } catch (error) {
+                console.error('❌ [STATS] Erro ao carregar estatísticas:', error);
+                
+                // Dados de exemplo em caso de erro
+                const dadosExemplo = {
+                    success: true,
+                    dados: {
+                        eficiencia_ofensiva: '36.6%',
+                        solidez_defensiva: 'Boa',
+                        pontos_ultimos_5: 11,
+                        forma_recente: 'V-V-E-V-E',
+                        aproveitamento_casa: '79.5%',
+                        aproveitamento_fora: '66.7%',
+                        media_gols_marcados: 2.09,
+                        media_gols_sofridos: 0.48,
+                        clean_sheets: 13,
+                        pct_clean_sheets: 56.5,
+                        total_jogos: 23,
+                        vitorias: 15,
+                        empates: 6,
+                        derrotas: 2
+                    }
+                };
+                
+                mostrarModalEstatisticas(nomeClube, dadosExemplo);
+            }
+        }
+
+        // MOSTRAR MODAL COM ESTATÍSTICAS DETALHADAS
+        function mostrarModalEstatisticas(nomeClube, data) {
+            console.log('🎨 [STATS] Renderizando modal de estatísticas...', data);
+            
+            // Criar modal se não existir
+            let modal = document.getElementById('estatisticas-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'estatisticas-modal';
+                modal.className = 'modal-overlay';
+                document.body.appendChild(modal);
+            }
+            
+            const dados = data.dados || data;
+            
+            modal.innerHTML = `
+                <div class="modal-content estatisticas-modal-content">
+                    <div class="modal-header">
+                        <h3>📈 Estatísticas Detalhadas - ${nomeClube}</h3>
+                        <button class="modal-close" onclick="fecharModalEstatisticas()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="stats-grid-modal">
+                            <!-- DESEMPENHO GERAL -->
+                            <div class="stat-section">
+                                <h4>⚽ Desempenho Geral</h4>
+                                <div class="stat-item">
+                                    <span class="stat-name">Total de Jogos:</span>
+                                    <span class="stat-value">${dados.total_jogos || '23'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Vitórias:</span>
+                                    <span class="stat-value">${dados.vitorias || '15'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Empates:</span>
+                                    <span class="stat-value">${dados.empates || '6'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Derrotas:</span>
+                                    <span class="stat-value">${dados.derrotas || '2'}</span>
+                                </div>
+                            </div>
+
+                            <!-- FORMA RECENTE -->
+                            <div class="stat-section">
+                                <h4>📊 Forma Recente</h4>
+                                <div class="stat-item">
+                                    <span class="stat-name">Últimos 5 Jogos:</span>
+                                    <span class="stat-value forma-visual">${dados.forma_recente || 'V-V-E-V-E'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Pontos Últimos 5:</span>
+                                    <span class="stat-value">${dados.pontos_ultimos_5 || '11'} pts</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Aproveitamento Casa:</span>
+                                    <span class="stat-value">${dados.aproveitamento_casa || '79.5%'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Aproveitamento Fora:</span>
+                                    <span class="stat-value">${dados.aproveitamento_fora || '66.7%'}</span>
+                                </div>
+                            </div>
+
+                            <!-- ESTATÍSTICAS OFENSIVAS -->
+                            <div class="stat-section">
+                                <h4>⚽ Estatísticas Ofensivas</h4>
+                                <div class="stat-item">
+                                    <span class="stat-name">Eficiência Ofensiva:</span>
+                                    <span class="stat-value destaque">${dados.eficiencia_ofensiva || '36.6%'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Média Gols/Jogo:</span>
+                                    <span class="stat-value">${dados.media_gols_marcados || '2.09'}</span>
+                                </div>
+                            </div>
+
+                            <!-- ESTATÍSTICAS DEFENSIVAS -->
+                            <div class="stat-section">
+                                <h4>🛡️ Estatísticas Defensivas</h4>
+                                <div class="stat-item">
+                                    <span class="stat-name">Solidez Defensiva:</span>
+                                    <span class="stat-value destaque">${dados.solidez_defensiva || 'Boa'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Média Gols Sofridos:</span>
+                                    <span class="stat-value">${dados.media_gols_sofridos || '0.48'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-name">Clean Sheets:</span>
+                                    <span class="stat-value">${dados.clean_sheets || '13'} (${dados.pct_clean_sheets || '56.5'}%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Mostrar modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            console.log('✅ [STATS] Modal de estatísticas exibido com sucesso');
+        }
+
+        // FECHAR MODAL DE ESTATÍSTICAS
+        function fecharModalEstatisticas() {
+            const modal = document.getElementById('estatisticas-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Fechar modal ao clicar fora
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('estatisticas-modal');
+            if (modal && event.target === modal) {
+                fecharModalEstatisticas();
+            }
+        });
     </script>
 
 </body>
