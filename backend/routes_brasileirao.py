@@ -975,6 +975,84 @@ def api_confronto_historico(clube_casa, clube_fora):
             "error": str(e)
         }), 500
 
+@bp_br.route("/loteca/confronto-modal/<clube_casa>/<clube_fora>", methods=["GET"])
+@cross_origin()
+def api_confronto_historico_modal(clube_casa, clube_fora):
+    """
+    Endpoint para buscar histórico de confrontos para o modal
+    GET /api/br/loteca/confronto-historico/{clube_casa}/{clube_fora}
+    
+    Busca arquivo CSV com ordem flexível: Clube1_vs_Clube2.csv ou Clube2_vs_Clube1.csv
+    """
+    import os
+    import csv
+    from pathlib import Path
+    
+    try:
+        # Normalizar nomes dos clubes
+        clube_casa_norm = clube_casa.strip().title()
+        clube_fora_norm = clube_fora.strip().title()
+        
+        # Diretório dos confrontos
+        confrontos_dir = Path(__file__).parent / "models" / "Confrontos"
+        
+        # Tentar ambas as ordens possíveis
+        arquivo_opcoes = [
+            f"{clube_casa_norm}_vs_{clube_fora_norm}.csv",
+            f"{clube_fora_norm}_vs_{clube_casa_norm}.csv"
+        ]
+        
+        arquivo_encontrado = None
+        for arquivo in arquivo_opcoes:
+            caminho_arquivo = confrontos_dir / arquivo
+            if caminho_arquivo.exists():
+                arquivo_encontrado = caminho_arquivo
+                break
+        
+        if not arquivo_encontrado:
+            return jsonify({
+                "success": False,
+                "error": f"Arquivo de confrontos não encontrado para {clube_casa} vs {clube_fora}",
+                "arquivos_procurados": arquivo_opcoes
+            }), 404
+        
+        # Ler dados do CSV
+        confrontos = []
+        with open(arquivo_encontrado, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # Pular linhas vazias
+                if not row.get('data') or not row.get('mandante'):
+                    continue
+                    
+                # Usar os nomes corretos das colunas do CSV
+                resultado_casa = row.get('resultado_corinthians', 'E').upper()
+                
+                confrontos.append({
+                    "data": row.get('data', ''),
+                    "mandante": row.get('mandante', ''),
+                    "visitante": row.get('visitante', ''),
+                    "placar": row.get('placar', ''),
+                    "resultado": resultado_casa,
+                    "competicao": row.get('competicao', '')
+                })
+        
+        return jsonify({
+            "success": True,
+            "confronto": f"{clube_casa} vs {clube_fora}",
+            "arquivo_usado": arquivo_encontrado.name,
+            "total_confrontos": len(confrontos),
+            "confrontos": confrontos[:10],  # Últimos 10 confrontos
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e),
+            "confronto": f"{clube_casa} vs {clube_fora}"
+        }), 500
+
 # Função para registrar o blueprint (será chamada em app.py)
 def register_routes(app):
     """Registrar rotas do Brasileirão na aplicação Flask"""

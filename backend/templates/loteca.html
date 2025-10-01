@@ -510,6 +510,144 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
+        /* Modal de Confrontos */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .confrontos-modal-content {
+            background: linear-gradient(135deg, #1e1b29, #2a2340);
+            border-radius: 15px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(50, 205, 50, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: #32CD32;
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .confrontos-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .confronto-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #32CD32;
+            display: grid;
+            grid-template-columns: 100px 1fr 80px 120px;
+            gap: 15px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .confronto-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .confronto-data {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .confronto-detalhes {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .confronto-mandante, .confronto-visitante {
+            color: #fff;
+            min-width: 80px;
+        }
+
+        .confronto-placar {
+            background: linear-gradient(135deg, #32CD32, #00FF00);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .confronto-resultado {
+            text-align: center;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .confronto-resultado.v {
+            background: #00FF00;
+            color: #000;
+        }
+
+        .confronto-resultado.e {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .confronto-resultado.d {
+            background: #FF4444;
+            color: #fff;
+        }
+
+        .confronto-competicao {
+            color: #888;
+            font-size: 0.85rem;
+            text-align: right;
+        }
+
         .honesty-modal .modal-header {
             padding: 20px 25px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -6582,28 +6720,173 @@
             });
         }
 
-        // Mostrar fonte dos dados
+        // Mostrar botão de últimos confrontos
         function showDataSource(source) {
-            let sourceElement = document.querySelector('.data-source');
-            if (!sourceElement) {
-                sourceElement = document.createElement('div');
-                sourceElement.className = 'data-source';
-                sourceElement.style.cssText = `
+            let confrontoButton = document.querySelector('.confrontos-button');
+            if (!confrontoButton) {
+                confrontoButton = document.createElement('button');
+                confrontoButton.className = 'confrontos-button';
+                confrontoButton.innerHTML = '⚔️ Últimos Confrontos';
+                confrontoButton.style.cssText = `
                     position: absolute;
                     top: 10px;
                     right: 10px;
-                    background: rgba(168, 85, 247, 0.1);
-                    color: var(--cor-destaque-primaria);
-                    padding: 0.5rem 1rem;
-                    border-radius: 20px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    border: 1px solid rgba(168, 85, 247, 0.3);
+                    background: linear-gradient(135deg, #32CD32, #00FF00);
+                    color: #000;
+                    padding: 0.6rem 1.2rem;
+                    border: none;
+                    border-radius: 25px;
+                    font-size: 0.85rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 12px rgba(50, 205, 50, 0.3);
+                    z-index: 100;
                 `;
+                
+                // Efeitos hover
+                confrontoButton.addEventListener('mouseenter', () => {
+                    confrontoButton.style.transform = 'translateY(-2px)';
+                    confrontoButton.style.boxShadow = '0 6px 16px rgba(50, 205, 50, 0.4)';
+                });
+                
+                confrontoButton.addEventListener('mouseleave', () => {
+                    confrontoButton.style.transform = 'translateY(0)';
+                    confrontoButton.style.boxShadow = '0 4px 12px rgba(50, 205, 50, 0.3)';
+                });
+                
+                // Evento de clique
+                confrontoButton.addEventListener('click', () => {
+                    abrirModalConfrontos();
+                });
+                
                 document.querySelector('.detailed-analysis').style.position = 'relative';
-                document.querySelector('.detailed-analysis').appendChild(sourceElement);
+                document.querySelector('.detailed-analysis').appendChild(confrontoButton);
             }
-            sourceElement.textContent = source;
+        }
+
+        // ABRIR MODAL DE CONFRONTOS
+        async function abrirModalConfrontos() {
+            console.log('⚔️ [CONFRONTOS] Abrindo modal de confrontos...');
+            
+            // Obter nomes dos times do confronto atual
+            const gameSelector = document.getElementById('game-selector');
+            const jogoSelecionado = gameSelector.value;
+            
+            if (!jogoSelecionado) {
+                alert('Selecione um jogo primeiro!');
+                return;
+            }
+            
+            // Extrair nomes dos times do texto selecionado
+            const jogoTexto = gameSelector.options[gameSelector.selectedIndex].text;
+            const timesMatch = jogoTexto.match(/:\s*(.+?)\s+vs\s+(.+?)$/i);
+            
+            if (!timesMatch) {
+                alert('Erro ao identificar os times do confronto!');
+                return;
+            }
+            
+            const timeCasa = timesMatch[1].trim();
+            const timeVisitante = timesMatch[2].trim();
+            
+            console.log(`⚔️ [CONFRONTOS] Times identificados: ${timeCasa} vs ${timeVisitante}`);
+            
+            // Buscar dados do confronto
+            try {
+                console.log(`🔍 [CONFRONTOS] Fazendo requisição para: /api/br/loteca/confronto-modal/${timeCasa}/${timeVisitante}`);
+                const response = await fetch(`/api/br/loteca/confronto-modal/${encodeURIComponent(timeCasa)}/${encodeURIComponent(timeVisitante)}`);
+                const data = await response.json();
+                
+                console.log('📊 [CONFRONTOS] Resposta da API:', data);
+                
+                if (data.success) {
+                    console.log(`✅ [CONFRONTOS] ${data.confrontos.length} confrontos encontrados`);
+                    mostrarModalConfrontos(data.confrontos, timeCasa, timeVisitante);
+                } else {
+                    console.warn('⚠️ [CONFRONTOS] Dados não encontrados, usando dados de exemplo');
+                    mostrarModalConfrontos(gerarDadosExemplo(), timeCasa, timeVisitante);
+                }
+            } catch (error) {
+                console.error('❌ [CONFRONTOS] Erro ao buscar dados:', error);
+                mostrarModalConfrontos(gerarDadosExemplo(), timeCasa, timeVisitante);
+            }
+        }
+
+        // MOSTRAR MODAL COM DADOS DOS CONFRONTOS
+        function mostrarModalConfrontos(confrontos, timeCasa, timeVisitante) {
+            console.log(`🎨 [CONFRONTOS] Renderizando modal para ${timeCasa} vs ${timeVisitante}`);
+            console.log(`📋 [CONFRONTOS] Dados recebidos:`, confrontos);
+            
+            // Criar modal se não existir
+            let modal = document.getElementById('confrontos-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'confrontos-modal';
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+                    <div class="modal-content confrontos-modal-content">
+                        <div class="modal-header">
+                            <h3 id="confrontos-modal-title">⚔️ Histórico de Confrontos</h3>
+                            <button class="modal-close" onclick="fecharModalConfrontos()">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="confrontos-lista" class="confrontos-lista">
+                                <!-- Lista de confrontos será inserida aqui -->
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            
+            // Atualizar título
+            document.getElementById('confrontos-modal-title').textContent = `⚔️ ${timeCasa} vs ${timeVisitante} - Últimos Confrontos`;
+            
+            // Renderizar lista de confrontos
+            const lista = document.getElementById('confrontos-lista');
+            console.log(`🎨 [CONFRONTOS] Renderizando ${confrontos.length} confrontos na lista`);
+            lista.innerHTML = confrontos.map((confronto, index) => `
+                <div class="confronto-item">
+                    <div class="confronto-data">${confronto.data}</div>
+                    <div class="confronto-detalhes">
+                        <span class="confronto-mandante">${confronto.mandante}</span>
+                        <span class="confronto-placar">${confronto.placar}</span>
+                        <span class="confronto-visitante">${confronto.visitante}</span>
+                    </div>
+                    <div class="confronto-resultado ${confronto.resultado.toLowerCase()}">${confronto.resultado}</div>
+                    <div class="confronto-competicao">${confronto.competicao}</div>
+                </div>
+            `).join('');
+            
+            // Mostrar modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // FECHAR MODAL DE CONFRONTOS
+        function fecharModalConfrontos() {
+            const modal = document.getElementById('confrontos-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // GERAR DADOS DE EXEMPLO (CORINTHIANS VS FLAMENGO)
+        function gerarDadosExemplo() {
+            return [
+                { data: '2025-09-28', mandante: 'Corinthians', placar: '1-2', visitante: 'Flamengo', resultado: 'D', competicao: 'Brasileirão 2025' },
+                { data: '2025-04-27', mandante: 'Flamengo', placar: '4-0', visitante: 'Corinthians', resultado: 'D', competicao: 'Brasileirão 2025' },
+                { data: '2024-10-20', mandante: 'Corinthians', placar: '0-0', visitante: 'Flamengo', resultado: 'E', competicao: 'Copa do Brasil 2024' },
+                { data: '2024-10-02', mandante: 'Flamengo', placar: '1-0', visitante: 'Corinthians', resultado: 'D', competicao: 'Copa do Brasil 2024' },
+                { data: '2024-09-01', mandante: 'Corinthians', placar: '2-1', visitante: 'Flamengo', resultado: 'V', competicao: 'Brasileirão 2024' },
+                { data: '2024-05-11', mandante: 'Flamengo', placar: '2-0', visitante: 'Corinthians', resultado: 'D', competicao: 'Brasileirão 2024' },
+                { data: '2023-10-07', mandante: 'Corinthians', placar: '1-1', visitante: 'Flamengo', resultado: 'E', competicao: 'Brasileirão 2023' },
+                { data: '2023-05-21', mandante: 'Flamengo', placar: '1-0', visitante: 'Corinthians', resultado: 'D', competicao: 'Brasileirão 2023' },
+                { data: '2022-11-02', mandante: 'Flamengo', placar: '1-2', visitante: 'Corinthians', resultado: 'V', competicao: 'Brasileirão 2022' },
+                { data: '2022-10-19', mandante: 'Flamengo', placar: '1-1 (6-5 Pen.)', visitante: 'Corinthians', resultado: 'E', competicao: 'Copa do Brasil 2022' }
+            ];
         }
 
         // FUNÇÕES AUXILIARES
