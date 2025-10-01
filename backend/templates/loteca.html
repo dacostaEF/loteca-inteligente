@@ -3873,11 +3873,8 @@
                 <div class="times-loteca-section">
                         <div class="section-header">
                             <h2>⚽ Times Loteca Jogos - Comparação Direta</h2>
-                            <p>Análise lado a lado dos 14 confrontos com dados reais do Cartola FC para facilitar suas apostas</p>
-                            <button id="atualizar-times-loteca" class="refresh-btn">
-                                <span class="refresh-icon">🔄</span>
-                                Atualizar Dados dos Times
-                            </button>
+                            <p>Análise lado a lado com dados reais do Cartola FC - Carregamento automático ativo</p>
+                            <!-- Botão removido: carregamento automático ativo -->
                         </div>
 
                         <!-- LOADING -->
@@ -6303,21 +6300,12 @@
             alert(`Detalhes de ${nomeTime} serão implementados em breve!`);
         }
 
-        // INICIALIZAR SUB-ABA TIMES LOTECA JOGOS
+        // INICIALIZAR SUB-ABA TIMES LOTECA JOGOS (CARREGAMENTO AUTOMÁTICO)
         function initTimesLotecaJogos() {
-            console.log('🚀 [TIMES-LOTECA] Inicializando sub-aba...');
+            console.log('🚀 [TIMES-LOTECA] Inicializando com carregamento automático...');
             
-            // Adicionar event listener para o botão de atualizar
-            const btnAtualizar = document.getElementById('atualizar-times-loteca');
-            if (btnAtualizar) {
-                btnAtualizar.addEventListener('click', () => {
-                    console.log('🔄 [TIMES-LOTECA] Botão atualizar clicado');
-                    carregarTimesLotecaJogos();
-                });
-                console.log('✅ [TIMES-LOTECA] Event listener do botão configurado');
-            } else {
-                console.warn('⚠️ [TIMES-LOTECA] Botão atualizar não encontrado');
-            }
+            // Não há mais botão de atualizar - carregamento é automático
+            console.log('✅ [TIMES-LOTECA] Carregamento automático ativo');
         }
 
         // MOSTRAR ANÁLISE DETALHADA COM DADOS REAIS DO CARTOLA
@@ -6815,20 +6803,37 @@
 
         // GERENCIAR SUB-ABAS DA ABA 2: DADOS AVANÇADOS
         function initializeTimesLotecaSection() {
-            console.log('🔧 [DEBUG] Inicializando seção Times Loteca Jogos (simplificada)...');
+            console.log('🔧 [DEBUG] Inicializando seção Times Loteca Jogos (carregamento automático)...');
             
-            // Carregar dados automaticamente quando a aba for acessada
+            // 1. PRÉ-SELECIONAR JOGO 1 NO DROPDOWN
+            const gameSelector = document.getElementById('game-selector');
+            if (gameSelector) {
+                // Sincronizar jogos primeiro
+                sincronizarJogosEntreAbas();
+                
+                setTimeout(() => {
+                    // Selecionar JOGO 1 automaticamente
+                    if (gameSelector.options.length > 1) {
+                        gameSelector.selectedIndex = 1; // Primeira opção real (índice 0 é "Escolha um jogo...")
+                        console.log('✅ [AUTO] JOGO 1 pré-selecionado no dropdown');
+                        
+                        // Disparar evento de mudança para carregar tudo automaticamente
+                        const event = new Event('change', { bubbles: true });
+                        gameSelector.dispatchEvent(event);
+                    }
+                }, 1000);
+            }
+            
+            // 2. CARREGAR DADOS DOS TIMES AUTOMATICAMENTE
             const container = document.getElementById('jogos-loteca-container');
-            if (container && container.innerHTML.trim() === '') {
-                console.log('⚽ [TIMES-LOTECA] Carregando dados dos times...');
+            if (container) {
+                console.log('⚽ [AUTO] Carregando dados dos times automaticamente...');
                 setTimeout(() => {
                     carregarTimesLotecaJogos();
-                }, 500);
-            } else {
-                console.log('✅ [TIMES-LOTECA] Dados já disponíveis');
+                }, 1500);
             }
 
-            console.log('✅ Seção Times Loteca Jogos inicializada');
+            console.log('✅ Seção Times Loteca Jogos inicializada com carregamento automático');
         }
 
         // CARREGAR DADOS DA SÉRIE B (estrutura completa como Série A) - DESABILITADA
