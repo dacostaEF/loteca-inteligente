@@ -3891,10 +3891,6 @@
                             <option value="">Escolha um jogo...</option>
                             <!-- Jogos serão carregados dinamicamente da Aba 1 -->
                         </select>
-                        <button id="sync-games-btn" onclick="sincronizarJogosEntreAbas()" 
-                                style="padding: 1rem 1.5rem; background: var(--cor-destaque-primaria); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
-                            🔄 Sincronizar
-                        </button>
                     </div>
                     <p style="margin-top: 1rem; color: var(--cor-texto-secundario); font-size: 0.9rem; text-align: center;">
                         💡 Os jogos são automaticamente sincronizados com a Aba "Análise Rápida"
@@ -5981,54 +5977,7 @@
             }
         };
 
-        // SINCRONIZAR JOGOS ENTRE ABA 1 E ABA 2
-        function sincronizarJogosEntreAbas() {
-            console.log('🔄 [SYNC] Sincronizando jogos entre Aba 1 e Aba 2...');
-            
-            const gameSelector = document.getElementById('game-selector');
-            const syncBtn = document.getElementById('sync-games-btn');
-            
-            if (!gameSelector) {
-                console.error('❌ [SYNC] Seletor de jogos não encontrado!');
-                return;
-            }
-            
-            // Feedback visual no botão
-            if (syncBtn) {
-                syncBtn.innerHTML = '⏳ Sincronizando...';
-                syncBtn.disabled = true;
-            }
-            
-            try {
-                // Extrair jogos da Aba 1 (Análise Rápida)
-                const jogosAba1 = extrairJogosDaAba1();
-                
-                // Atualizar dropdown da Aba 2
-                atualizarDropdownAba2(gameSelector, jogosAba1);
-                
-                // Feedback de sucesso
-                if (syncBtn) {
-                    syncBtn.innerHTML = '✅ Sincronizado!';
-                    setTimeout(() => {
-                        syncBtn.innerHTML = '🔄 Sincronizar';
-                        syncBtn.disabled = false;
-                    }, 2000);
-                }
-                
-                console.log('✅ [SYNC] Sincronização concluída!');
-                
-            } catch (error) {
-                console.error('❌ [SYNC] Erro na sincronização:', error);
-                
-                if (syncBtn) {
-                    syncBtn.innerHTML = '❌ Erro';
-                    setTimeout(() => {
-                        syncBtn.innerHTML = '🔄 Sincronizar';
-                        syncBtn.disabled = false;
-                    }, 2000);
-                }
-            }
-        }
+        // Função removida - sincronização automática
         
         // EXTRAIR JOGOS DA ABA 1 (ANÁLISE RÁPIDA) - APENAS JOGO 1
         function extrairJogosDaAba1() {
@@ -6211,8 +6160,7 @@
                 });
             }
             
-            // Sincronizar jogos na inicialização
-            sincronizarJogosEntreAbas();
+            // Carregamento automático - sem botão de sincronização
         }
 
         // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS
@@ -7231,8 +7179,9 @@
             // 1. PRÉ-SELECIONAR JOGO 1 NO DROPDOWN
             const gameSelector = document.getElementById('game-selector');
             if (gameSelector) {
-                // Sincronizar jogos primeiro
-                sincronizarJogosEntreAbas();
+                // Carregar jogos automaticamente
+                const jogosAba1 = extrairJogosDaAba1();
+                atualizarDropdownAba2(gameSelector, jogosAba1);
                 
                 setTimeout(() => {
                     // Selecionar JOGO 1 automaticamente
@@ -7518,10 +7467,14 @@
             
             loadRealLotecaData(); // ← CARREGAR DADOS REAIS PRIMEIRO!
             
-            // SINCRONIZAR JOGOS ENTRE ABAS (após carregar dados)
+            // CARREGAMENTO AUTOMÁTICO (após carregar dados)
             setTimeout(() => {
-                sincronizarJogosEntreAbas();
-                console.log('✅ [DEBUG] Sincronização de jogos inicializada');
+                const gameSelector = document.getElementById('game-selector');
+                if (gameSelector) {
+                    const jogosAba1 = extrairJogosDaAba1();
+                    atualizarDropdownAba2(gameSelector, jogosAba1);
+                }
+                console.log('✅ [DEBUG] Carregamento automático inicializado');
             }, 500);
             initializeBudgetSelector();
             initializeOptimizationTable();
