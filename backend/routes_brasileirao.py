@@ -684,6 +684,297 @@ def determinar_status_clube(ppg):
     else:
         return {'codigo': 'ZONA', 'descricao': 'Rebaixamento', 'cor': '#dc3545'}
 
+@bp_br.route("/loteca/clube/<string:clube_slug>/dados", methods=["GET"])
+@cross_origin()
+def api_dados_clube_loteca(clube_slug):
+    """
+    Endpoint público para buscar dados de um clube para a página da Loteca
+    GET /api/br/loteca/clube/{clube_slug}/dados
+    
+    Retorna dados consolidados do dashboard admin para uso na análise rápida
+    """
+    try:
+        # Inicializar o JogosManager
+        jogos_manager = JogosManager()
+        
+        # Buscar estatísticas dos jogos (dados mais confiáveis)
+        estatisticas_jogos = jogos_manager.calcular_estatisticas(clube_slug)
+        
+        if not estatisticas_jogos or estatisticas_jogos.get('total_jogos', 0) == 0:
+            return jsonify({
+                "success": False,
+                "error": f"Dados não encontrados para o clube: {clube_slug}",
+                "clube": clube_slug,
+                "dados": {}
+            }), 404
+        
+        # Mapear dados para o formato esperado pela página da Loteca
+        dados_loteca = {
+            # Forma recente (últimos 5 jogos)
+            "forma_recente": estatisticas_jogos.get('ultimos_5_resultados', 'N-N-N-N-N'),
+            
+            # Posição na tabela (buscar da classificação se disponível)
+            "posicao_tabela": "N/A",  # Será implementado depois
+            
+            # Aproveitamento em casa
+            "aproveitamento_casa": f"{estatisticas_jogos.get('aproveitamento_casa', 0):.0f}%",
+            
+            # Aproveitamento fora
+            "aproveitamento_fora": f"{estatisticas_jogos.get('aproveitamento_fora', 0):.0f}%",
+            
+            # Dados adicionais para análises
+            "total_jogos": estatisticas_jogos.get('total_jogos', 0),
+            "vitorias": estatisticas_jogos.get('vitorias', 0),
+            "empates": estatisticas_jogos.get('empates', 0),
+            "derrotas": estatisticas_jogos.get('derrotas', 0),
+            "gols_marcados": estatisticas_jogos.get('gols_marcados', 0),
+            "gols_sofridos": estatisticas_jogos.get('gols_sofridos', 0),
+            "media_gols_marcados": round(estatisticas_jogos.get('media_gols_marcados', 0), 2),
+            "media_gols_sofridos": round(estatisticas_jogos.get('media_gols_sofridos', 0), 2),
+            "clean_sheets": estatisticas_jogos.get('clean_sheets', 0),
+            "pct_clean_sheets": round(estatisticas_jogos.get('pct_clean_sheets', 0), 1),
+            "sequencia_atual": estatisticas_jogos.get('sequencia_atual', ''),
+            "pontos_ultimos_5": estatisticas_jogos.get('pontos_ultimos_5', 0),
+            
+            # Dados de casa/fora
+            "jogos_casa": estatisticas_jogos.get('jogos_casa', 0),
+            "vitorias_casa": estatisticas_jogos.get('vitorias_casa', 0),
+            "empates_casa": estatisticas_jogos.get('empates_casa', 0),
+            "derrotas_casa": estatisticas_jogos.get('derrotas_casa', 0),
+            "jogos_fora": estatisticas_jogos.get('jogos_fora', 0),
+            "vitorias_fora": estatisticas_jogos.get('vitorias_fora', 0),
+            "empates_fora": estatisticas_jogos.get('empates_fora', 0),
+            "derrotas_fora": estatisticas_jogos.get('derrotas_fora', 0)
+        }
+        
+        return jsonify({
+            "success": True,
+            "clube": clube_slug,
+            "nome_formatado": formatar_nome_clube(clube_slug),
+            "dados": dados_loteca,
+            "fonte": "dashboard_admin",
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "clube": clube_slug,
+            "error": str(e),
+            "dados": {}
+        }), 500
+
+@bp_br.route("/loteca/confronto/<string:clube_casa>/<string:clube_fora>", methods=["GET"])
+@cross_origin()
+def api_confronto_loteca(clube_casa, clube_fora):
+    """
+    Endpoint público para comparar dois clubes para a página da Loteca
+    GET /api/br/loteca/confronto/{clube_casa}/{clube_fora}
+    
+    Retorna dados comparativos dos dois clubes para análise rápida
+    """
+    try:
+        # Buscar dados dos dois clubes diretamente
+        jogos_manager = JogosManager()
+        
+        # Buscar estatísticas dos dois clubes
+        stats_casa = jogos_manager.calcular_estatisticas(clube_casa)
+        stats_fora = jogos_manager.calcular_estatisticas(clube_fora)
+        
+        if not stats_casa or stats_casa.get('total_jogos', 0) == 0:
+            return jsonify({
+                "success": False,
+                "error": f"Dados do clube da casa não encontrados: {clube_casa}"
+            }), 404
+            
+        if not stats_fora or stats_fora.get('total_jogos', 0) == 0:
+            return jsonify({
+                "success": False,
+                "error": f"Dados do clube visitante não encontrados: {clube_fora}"
+            }), 404
+        
+        # Preparar dados dos clubes
+        casa_dados = {
+            "forma_recente": stats_casa.get('ultimos_5_resultados', 'N-N-N-N-N'),
+            "aproveitamento_casa": f"{stats_casa.get('aproveitamento_casa', 0):.0f}%",
+            "aproveitamento_fora": f"{stats_casa.get('aproveitamento_fora', 0):.0f}%",
+            "pontos_ultimos_5": stats_casa.get('pontos_ultimos_5', 0)
+        }
+        
+        fora_dados = {
+            "forma_recente": stats_fora.get('ultimos_5_resultados', 'N-N-N-N-N'),
+            "aproveitamento_casa": f"{stats_fora.get('aproveitamento_casa', 0):.0f}%",
+            "aproveitamento_fora": f"{stats_fora.get('aproveitamento_fora', 0):.0f}%",
+            "pontos_ultimos_5": stats_fora.get('pontos_ultimos_5', 0)
+        }
+        
+        # Análise comparativa
+        analise = {
+            "forma_recente": {
+                "casa": casa_dados['forma_recente'],
+                "fora": fora_dados['forma_recente'],
+                "vantagem": analisar_forma_recente(casa_dados['pontos_ultimos_5'], fora_dados['pontos_ultimos_5'])
+            },
+            "fator_casa": {
+                "casa": casa_dados['aproveitamento_casa'],
+                "fora": fora_dados['aproveitamento_fora'],  # VISITANTE FORA DE CASA
+                "vantagem": analisar_fator_casa(
+                    float(casa_dados['aproveitamento_casa'].replace('%', '')),
+                    float(fora_dados['aproveitamento_fora'].replace('%', ''))
+                )
+            },
+            "confronto_direto": {
+                "casa": "N/A",  # Será implementado depois
+                "fora": "N/A",
+                "vantagem": "equilibrio"
+            }
+        }
+        
+        return jsonify({
+            "success": True,
+            "confronto": f"{clube_casa} vs {clube_fora}",
+            "casa": {
+                "clube": clube_casa,
+                "nome": formatar_nome_clube(clube_casa),
+                "dados": casa_dados
+            },
+            "fora": {
+                "clube": clube_fora,
+                "nome": formatar_nome_clube(clube_fora),
+                "dados": fora_dados
+            },
+            "analise": analise,
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "confronto": f"{clube_casa} vs {clube_fora}",
+            "error": str(e)
+        }), 500
+
+def analisar_forma_recente(pontos_casa, pontos_fora):
+    """Analisa qual time tem melhor forma recente baseado nos pontos dos últimos 5 jogos"""
+    if pontos_casa > pontos_fora:
+        return "casa"
+    elif pontos_fora > pontos_casa:
+        return "fora"
+    else:
+        return "equilibrio"
+
+def analisar_fator_casa(aproveitamento_casa, aproveitamento_fora):
+    """
+    Analisa o fator casa: aproveitamento do mandante em casa vs aproveitamento do visitante fora
+    
+    Args:
+        aproveitamento_casa (float): % de aproveitamento do time da casa jogando em casa
+        aproveitamento_fora (float): % de aproveitamento do time visitante jogando fora
+    
+    Returns:
+        str: 'casa', 'fora' ou 'equilibrio'
+    """
+    margem_equilibrio = 5.0  # Margem de 5% para considerar equilíbrio
+    
+    if aproveitamento_casa > aproveitamento_fora + margem_equilibrio:
+        return "casa"
+    elif aproveitamento_fora > aproveitamento_casa + margem_equilibrio:
+        return "fora"
+    else:
+        return "equilibrio"
+
+@bp_br.route("/loteca/confronto-historico/<string:clube_casa>/<string:clube_fora>", methods=["GET"])
+@cross_origin()
+def api_confronto_historico(clube_casa, clube_fora):
+    """
+    Endpoint para obter histórico de confrontos entre dois clubes
+    GET /api/br/loteca/confronto-historico/{clube_casa}/{clube_fora}
+    
+    Retorna os últimos confrontos para a seção "Cartola FC - Dados Reais"
+    """
+    try:
+        import csv
+        import os
+        
+        # Caminho do arquivo de confronto (tentar ambas as ordens)
+        confrontos_path = os.path.join(os.path.dirname(__file__), 'models', 'Confrontos')
+        
+        # Tentar primeira ordem
+        arquivo_confronto = os.path.join(confrontos_path, f"{clube_casa.title()}_vs_{clube_fora.title()}.csv")
+        
+        # Se não existir, tentar ordem inversa
+        if not os.path.exists(arquivo_confronto):
+            arquivo_confronto = os.path.join(confrontos_path, f"{clube_fora.title()}_vs_{clube_casa.title()}.csv")
+        
+        if not os.path.exists(arquivo_confronto):
+            return jsonify({
+                "success": False,
+                "error": f"Histórico de confrontos não encontrado: {clube_casa} vs {clube_fora}"
+            }), 404
+        
+        # Carregar confrontos
+        confrontos = []
+        with open(arquivo_confronto, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                confrontos.append(row)
+        
+        # Pegar os últimos 5 confrontos
+        ultimos_5 = confrontos[:5]
+        
+        # Analisar estatísticas dos últimos 10
+        ultimos_10 = confrontos[:10]
+        vitorias_casa = 0
+        empates = 0
+        vitorias_fora = 0
+        
+        for jogo in ultimos_10:
+            resultado = jogo['resultado_corinthians'].upper()
+            if clube_casa.lower() == 'corinthians':
+                if resultado == 'V':
+                    vitorias_casa += 1
+                elif resultado == 'E':
+                    empates += 1
+                else:
+                    vitorias_fora += 1
+            else:  # clube_casa é Flamengo
+                if resultado == 'V':
+                    vitorias_fora += 1
+                elif resultado == 'E':
+                    empates += 1
+                else:
+                    vitorias_casa += 1
+        
+        # Determinar tendência
+        if vitorias_casa > vitorias_fora:
+            tendencia = f"Vantagem {clube_casa}"
+        elif vitorias_fora > vitorias_casa:
+            tendencia = f"Vantagem {clube_fora}"
+        else:
+            tendencia = "Equilíbrio"
+        
+        return jsonify({
+            "success": True,
+            "confronto": f"{clube_casa} vs {clube_fora}",
+            "ultimos_5_jogos": ultimos_5,
+            "estatisticas_ultimos_10": {
+                "total_jogos": len(ultimos_10),
+                "vitorias_casa": vitorias_casa,
+                "empates": empates,
+                "vitorias_fora": vitorias_fora,
+                "resumo_h2h": f"{vitorias_casa}V-{empates}E-{vitorias_fora}D",
+                "tendencia": tendencia
+            },
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "confronto": f"{clube_casa} vs {clube_fora}",
+            "error": str(e)
+        }), 500
+
 # Função para registrar o blueprint (será chamada em app.py)
 def register_routes(app):
     """Registrar rotas do Brasileirão na aplicação Flask"""
