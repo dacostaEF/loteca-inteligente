@@ -1656,12 +1656,26 @@
 
         .stat-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--cor-destaque-secundaria), #00B377);
             border-radius: 3px;
             transition: width 0.3s ease;
         }
 
-        .stat-bar.defensive .stat-fill {
+        /* Barra verde - cenário favorável */
+        .stat-fill.favorable {
+            background: linear-gradient(90deg, #32CD32, #00FF00);
+        }
+
+        /* Barra vermelha - cenário desfavorável */
+        .stat-fill.unfavorable {
+            background: linear-gradient(90deg, #FF6B6B, #FF4444);
+        }
+
+        /* Barra padrão (compatibilidade) */
+        .stat-fill:not(.favorable):not(.unfavorable) {
+            background: linear-gradient(90deg, var(--cor-destaque-secundaria), #00B377);
+        }
+
+        .stat-bar.defensive .stat-fill:not(.favorable):not(.unfavorable) {
             background: linear-gradient(90deg, var(--cor-desvantagem), #DC2626);
         }
 
@@ -6662,26 +6676,77 @@
             updateFormSequence('.stat-home .form-sequence', homeForm);
             updateFormSequence('.stat-away .form-sequence', awayForm);
 
-            // Gols marcados p/jogo
+            // Gols marcados p/jogo (MAIS É MELHOR)
             const homeGolsMarcados = homeStats.media_gols_marcados || 1.00;
             const awayGolsMarcados = awayStats.media_gols_marcados || 2.09;
-            updateStat('.stat-home', 0, homeGolsMarcados.toFixed(2), (homeGolsMarcados / 2.5 * 100));
-            updateStat('.stat-away', 0, awayGolsMarcados.toFixed(2), (awayGolsMarcados / 2.5 * 100));
+            updateSmartStat(0, homeGolsMarcados, awayGolsMarcados, 'higher_better');
             
-            // Gols sofridos p/jogo
+            // Gols sofridos p/jogo (MENOS É MELHOR)
             const homeGolsSofridos = homeStats.media_gols_sofridos || 1.21;
             const awayGolsSofridos = awayStats.media_gols_sofridos || 0.48;
-            updateStat('.stat-home', 1, homeGolsSofridos.toFixed(2), (homeGolsSofridos / 2.0 * 100));
-            updateStat('.stat-away', 1, awayGolsSofridos.toFixed(2), (awayGolsSofridos / 2.0 * 100));
+            updateSmartStat(1, homeGolsSofridos, awayGolsSofridos, 'lower_better');
             
-            // Aproveitamento (%)
+            // Aproveitamento (%) (MAIS É MELHOR)
             const homeAproveitamento = homeStats.aproveitamento_casa || 48.5;
             const awayAproveitamento = awayStats.aproveitamento_fora || 66.7;
-            updateStat('.stat-home', 2, homeAproveitamento.toFixed(1) + '%', homeAproveitamento);
-            updateStat('.stat-away', 2, awayAproveitamento.toFixed(1) + '%', awayAproveitamento);
+            updateSmartStat(2, homeAproveitamento, awayAproveitamento, 'higher_better', '%');
 
             // Atualizar labels das estatísticas
             updateStatLabels();
+        }
+
+        // Atualizar estatística com barras inteligentes (LÓGICA SIMPLES)
+        function updateSmartStat(rowIndex, homeValue, awayValue, type, suffix = '') {
+            const statRows = document.querySelectorAll('.stat-row');
+            if (!statRows[rowIndex]) return;
+            
+            const homeElement = statRows[rowIndex].querySelector('.stat-home');
+            const awayElement = statRows[rowIndex].querySelector('.stat-away');
+            
+            if (!homeElement || !awayElement) return;
+            
+            // Atualizar valores
+            const homeValueElement = homeElement.querySelector('.stat-value');
+            const awayValueElement = awayElement.querySelector('.stat-value');
+            
+            if (homeValueElement) {
+                homeValueElement.textContent = homeValue.toFixed(2) + suffix;
+            }
+            if (awayValueElement) {
+                awayValueElement.textContent = awayValue.toFixed(2) + suffix;
+            }
+            
+            // LÓGICA SIMPLES: VALOR MAIOR = BARRA MAIOR
+            const maxValue = Math.max(homeValue, awayValue);
+            let homePercentage = (homeValue / maxValue) * 100;
+            let awayPercentage = (awayValue / maxValue) * 100;
+            
+            // CORES: MAIOR VALOR = VERDE, MENOR VALOR = VERMELHO
+            let homeClass, awayClass;
+            
+            if (type === 'higher_better') {
+                // Mais é melhor: maior valor = verde
+                homeClass = homeValue >= awayValue ? 'favorable' : 'unfavorable';
+                awayClass = awayValue >= homeValue ? 'favorable' : 'unfavorable';
+                
+            } else if (type === 'lower_better') {
+                // Menos é melhor: menor valor = verde (MAS BARRA AINDA PROPORCIONAL AO VALOR)
+                homeClass = homeValue <= awayValue ? 'favorable' : 'unfavorable';
+                awayClass = awayValue <= homeValue ? 'favorable' : 'unfavorable';
+            }
+            
+            // Aplicar barras e cores
+            const homeFill = homeElement.querySelector('.stat-fill');
+            const awayFill = awayElement.querySelector('.stat-fill');
+            
+            if (homeFill) {
+                homeFill.style.width = homePercentage + '%';
+                homeFill.className = `stat-fill ${homeClass}`;
+            }
+            if (awayFill) {
+                awayFill.style.width = awayPercentage + '%';
+                awayFill.className = `stat-fill ${awayClass}`;
+            }
         }
 
         // Gerar forma baseada no rating
