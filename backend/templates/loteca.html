@@ -3508,6 +3508,169 @@
             }
         }
 
+        /* Recomendação Baseada em Estatísticas - Nova Estrutura */
+        .analise-section {
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid;
+            text-align: center;
+        }
+
+        .section-title.forca {
+            color: #22c55e;
+            border-bottom-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .section-title.risco {
+            color: #f59e0b;
+            border-bottom-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .campos-analise {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .campo-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .campo-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .campo-item.forca {
+            border-left-color: #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .campo-item.risco {
+            border-left-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .campo-header {
+            margin-bottom: 1rem;
+        }
+
+        .campo-nome {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--cor-texto-principal);
+            display: block;
+        }
+
+        .campo-explicacao, .campo-importancia {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .campo-explicacao {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: var(--cor-texto-principal);
+        }
+
+        .campo-importancia {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: var(--cor-texto-principal);
+        }
+
+        .campo-explicacao strong, .campo-importancia strong {
+            color: var(--cor-destaque-primaria);
+            font-weight: 600;
+        }
+
+        /* Conclusão Final */
+        .conclusao-final {
+            margin-top: 2rem;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 12px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            padding: 2rem;
+        }
+
+        .conclusao-header h5 {
+            color: var(--cor-destaque-primaria);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .conclusao-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--cor-texto-principal);
+            text-align: center;
+        }
+
+        .palpite-recomendado-final {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
+        .palpite-recomendado-final .palpite-label {
+            font-size: 0.9rem;
+            color: var(--cor-texto-secundario);
+            font-weight: 500;
+        }
+
+        .palpite-recomendado-final .palpite-valor {
+            font-size: 1.1rem;
+            color: var(--cor-destaque-primaria);
+            font-weight: 700;
+        }
+
+        /* Responsividade da Nova Recomendação */
+        @media (max-width: 768px) {
+            .analise-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .campo-item {
+                padding: 1rem;
+            }
+            
+            .conclusao-final {
+                padding: 1rem;
+            }
+            
+            .palpite-recomendado-final {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -4526,22 +4689,114 @@
                         
                     </div>
 
-                    <!-- RECOMENDAÇÃO BASEADA EM DADOS -->
+                    <!-- RECOMENDAÇÃO BASEADA EM ESTATÍSTICAS -->
                     <div class="data-recommendation">
                         <h4>🎯 Recomendação Baseada em Estatísticas</h4>
                         <div class="recommendation-card">
                             <div class="recommendation-header">
                                 <span class="confidence-level high">Alta Confiança</span>
-                                <span class="recommended-bet">Duplo X2</span>
+                                <span class="recommended-bet">Coluna 2</span>
                             </div>
                             <div class="recommendation-reasoning">
-                                <p><strong>Análise:</strong> Com base nos dados estatísticos, o time visitante apresenta números superiores ofensivos (2.1 gols/jogo vs 1.8) e melhor defesa (1.0 vs 1.2 gols sofridos). O histórico de confronto direto está equilibrado, tornando o empate uma possibilidade real. A recomendação é cobrir visitante e empate.</p>
+                                <p><strong>Análise:</strong> FLAMENGO apresenta superioridade clara em múltiplos aspectos estatísticos.</p>
                             </div>
-                            <div class="recommendation-factors">
-                                <div class="factor positive">✅ Melhor ataque visitante</div>
-                                <div class="factor positive">✅ Melhor defesa visitante</div>
-                                <div class="factor neutral">⚖️ Confronto direto equilibrado</div>
-                                <div class="factor negative">❌ Fator casa</div>
+                            
+                            <!-- CAMPOS DE FORÇA (A FAVOR DO FLAMENGO) -->
+                            <div class="analise-section">
+                                <h5 class="section-title forca">🔥 Campos de FORÇA (A favor do Flamengo)</h5>
+                                <div class="campos-analise">
+                                    <div class="campo-item forca">
+                                        <div class="campo-header">
+                                            <span class="campo-nome">✅ FLAMENGO melhor posicionado (2º vs 5º)</span>
+                                        </div>
+                                        <div class="campo-explicacao">
+                                            <strong>O que significa:</strong> Flamengo está na 2ª posição com 51 pontos, enquanto Corinthians está na 13ª com apenas 29 pontos.
+                                        </div>
+                                        <div class="campo-importancia">
+                                            <strong>Por que é crucial:</strong> A diferença de 22 pontos na tabela reflete superioridade técnica e consistência ao longo do campeonato.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="campo-item forca">
+                                        <div class="campo-header">
+                                            <span class="campo-nome">✅ FLAMENGO ataque muito superior (2.09 vs 1.00 gols/jogo)</span>
+                                        </div>
+                                        <div class="campo-explicacao">
+                                            <strong>O que significa:</strong> O Flamengo tem uma média de 2.09 Gols Marcados/Jogo, mais que o dobro da média do Corinthians (1.00).
+                                        </div>
+                                        <div class="campo-importancia">
+                                            <strong>Por que é crucial:</strong> Isso sugere que o Flamengo tem poder de fogo para furar a defesa do Corinthians e garantir a vitória.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="campo-item forca">
+                                        <div class="campo-header">
+                                            <span class="campo-nome">✅ FLAMENGO defesa muito superior (0.48 vs 1.21 gols/jogo)</span>
+                                        </div>
+                                        <div class="campo-explicacao">
+                                            <strong>O que significa:</strong> O Flamengo tem uma média de apenas 0.48 Gols Sofridos/Jogo contra 1.21 do Corinthians.
+                                        </div>
+                                        <div class="campo-importancia">
+                                            <strong>Por que é crucial:</strong> Enfrentando um ataque fraco (1.00 gol/jogo), a chance de o Flamengo não sofrer gols (Clean Sheet) é muito alta.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="campo-item forca">
+                                        <div class="campo-header">
+                                            <span class="campo-nome">✅ FLAMENGO aproveitamento muito superior (66.7% vs 48.5%)</span>
+                                        </div>
+                                        <div class="campo-explicacao">
+                                            <strong>O que significa:</strong> O Flamengo tem 66.7% de aproveitamento geral contra 48.5% do Corinthians.
+                                        </div>
+                                        <div class="campo-importancia">
+                                            <strong>Por que é crucial:</strong> A diferença de quase 18 pontos percentuais é gigantesca e indica que o Flamengo é mais provável de vencer, mesmo jogando fora.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- CAMPOS DE RISCO (A FAVOR DO CORINTHIANS) -->
+                            <div class="analise-section">
+                                <h5 class="section-title risco">⚠️ Campos de RISCO (A favor do Corinthians)</h5>
+                                <div class="campos-analise">
+                                    <div class="campo-item risco">
+                                        <div class="campo-header">
+                                            <span class="campo-nome">❌ CORINTHIANS joga em casa</span>
+                                        </div>
+                                        <div class="campo-explicacao">
+                                            <strong>O que significa:</strong> O jogo ocorre na Arena, campo do Corinthians, com apoio da torcida.
+                                        </div>
+                                        <div class="campo-importancia">
+                                            <strong>Por que é crucial:</strong> O "caldeirão" do mando de campo é um fator psicológico que pode compensar a inferioridade técnica, fortalecendo chances de empate.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="campo-item risco">
+                                        <div class="campo-header">
+                                            <span class="campo-nome">⚖️ Confronto direto equilibrado (4V-2E-4V)</span>
+                                        </div>
+                                        <div class="campo-explicacao">
+                                            <strong>O que significa:</strong> O Histórico de Confrontos Diretos mostra 4 Vitórias para cada lado e 2 Empates nos últimos 10 jogos.
+                                        </div>
+                                        <div class="campo-importancia">
+                                            <strong>Por que é crucial:</strong> Esta é a principal ressalva. O confronto direto anula a superioridade estatística. Mesmo com números piores, o Corinthians historicamente se iguala ao Flamengo.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- CONCLUSÃO FINAL -->
+                            <div class="conclusao-final">
+                                <div class="conclusao-header">
+                                    <h5>🎯 Conclusão Final</h5>
+                                </div>
+                                <div class="conclusao-content">
+                                    <p><strong>O quadro usa a comparação estatística (Gols, Aproveitamento) para justificar o palpite. A sua principal força é a clareza ao traduzir números complexos em argumentos de aposta.</strong></p>
+                                    <div class="palpite-recomendado-final">
+                                        <span class="palpite-label">Recomendação:</span>
+                                        <span class="palpite-valor">Coluna 2 (Flamengo) com cautela para fatores de risco</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
