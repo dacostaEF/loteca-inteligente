@@ -3928,27 +3928,17 @@
                         <h4>📊 Comparação Estatística</h4>
                         
                         <div class="stats-grid">
-                            <!-- ÚLTIMOS CONFRONTOS -->
-                            <div class="stat-row">
-                                <div class="stat-label">Últimos Confrontos</div>
-                                <div class="stat-full" style="grid-column: 2 / 4; display: flex; justify-content: center;">
-                                    <div class="confrontos-sequence" id="confrontos-modal-principais">
-                                        <!-- Bolinhas serão inseridas dinamicamente -->
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- GOLS MARCADOS -->
                             <div class="stat-row">
-                                <div class="stat-label">Gols por Jogo</div>
+                                <div class="stat-label">Gols marcados p/jogo</div>
                                 <div class="stat-home">
-                                    <div class="stat-value">1.8</div>
+                                    <div class="stat-value">1.00</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 72%"></div>
+                                        <div class="stat-fill" style="width: 40%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
-                                    <div class="stat-value">2.1</div>
+                                    <div class="stat-value">2.09</div>
                                     <div class="stat-bar">
                                         <div class="stat-fill" style="width: 84%"></div>
                                     </div>
@@ -3957,34 +3947,34 @@
 
                             <!-- GOLS SOFRIDOS -->
                             <div class="stat-row">
-                                <div class="stat-label">Gols Sofridos</div>
+                                <div class="stat-label">Gols sofridos p/jogo</div>
                                 <div class="stat-home">
-                                    <div class="stat-value">1.2</div>
+                                    <div class="stat-value">1.21</div>
                                     <div class="stat-bar defensive">
-                                        <div class="stat-fill" style="width: 48%"></div>
+                                        <div class="stat-fill" style="width: 60%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
-                                    <div class="stat-value">1.0</div>
+                                    <div class="stat-value">0.48</div>
                                     <div class="stat-bar defensive">
-                                        <div class="stat-fill" style="width: 40%"></div>
+                                        <div class="stat-fill" style="width: 24%"></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- POSSE DE BOLA -->
+                            <!-- APROVEITAMENTO -->
                             <div class="stat-row">
-                                <div class="stat-label">Posse Média (%)</div>
+                                <div class="stat-label">Aproveitamento (%)</div>
                                 <div class="stat-home">
-                                    <div class="stat-value">58.5%</div>
+                                    <div class="stat-value">48.5%</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 58.5%"></div>
+                                        <div class="stat-fill" style="width: 48.5%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
-                                    <div class="stat-value">62.3%</div>
+                                    <div class="stat-value">66.7%</div>
                                     <div class="stat-bar">
-                                        <div class="stat-fill" style="width: 62.3%"></div>
+                                        <div class="stat-fill" style="width: 66.7%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -3994,6 +3984,14 @@
                     <!-- HISTÓRICO H2H -->
                     <div class="h2h-section">
                         <h4>⚔️ Histórico de Confrontos (Últimos 10)</h4>
+                        
+                        <!-- ÚLTIMOS CONFRONTOS - BOLINHAS -->
+                        <div class="confrontos-visual-section" style="margin: 1rem 0; text-align: center;">
+                            <div class="confrontos-sequence" id="confrontos-modal-principais">
+                                <!-- Bolinhas serão inseridas dinamicamente -->
+                            </div>
+                        </div>
+                        
                         <div class="h2h-grid">
                             <div class="h2h-summary">
                                 <div class="h2h-stat">
@@ -6655,7 +6653,7 @@
             showDataSource('Dados Simulados');
         }
 
-        // Atualizar interface com dados reais do Cartola
+        // Atualizar interface com dados reais do dashboard admin
         function updateRealStats(homeStats, awayStats) {
             // Forma recente baseada no rating (simulada por enquanto)
             const homeForm = generateFormFromRating(homeStats.rating);
@@ -6664,21 +6662,23 @@
             updateFormSequence('.stat-home .form-sequence', homeForm);
             updateFormSequence('.stat-away .form-sequence', awayForm);
 
-            // Saúde do Elenco (% Prováveis)
-            updateStat('.stat-home', 1, homeStats.pct_provaveis + '%', homeStats.pct_provaveis);
-            updateStat('.stat-away', 1, awayStats.pct_provaveis + '%', awayStats.pct_provaveis);
+            // Gols marcados p/jogo
+            const homeGolsMarcados = homeStats.media_gols_marcados || 1.00;
+            const awayGolsMarcados = awayStats.media_gols_marcados || 2.09;
+            updateStat('.stat-home', 0, homeGolsMarcados.toFixed(2), (homeGolsMarcados / 2.5 * 100));
+            updateStat('.stat-away', 0, awayGolsMarcados.toFixed(2), (awayGolsMarcados / 2.5 * 100));
             
-            // Força do Elenco (Média de Pontos)
-            const homeMedia = homeStats.media_pontos_elenco || 0;
-            const awayMedia = awayStats.media_pontos_elenco || 0;
-            updateStat('.stat-home', 2, homeMedia.toFixed(1), (homeMedia / 10 * 100));
-            updateStat('.stat-away', 2, awayMedia.toFixed(1), (awayMedia / 10 * 100));
+            // Gols sofridos p/jogo
+            const homeGolsSofridos = homeStats.media_gols_sofridos || 1.21;
+            const awayGolsSofridos = awayStats.media_gols_sofridos || 0.48;
+            updateStat('.stat-home', 1, homeGolsSofridos.toFixed(2), (homeGolsSofridos / 2.0 * 100));
+            updateStat('.stat-away', 1, awayGolsSofridos.toFixed(2), (awayGolsSofridos / 2.0 * 100));
             
-            // Valorização (Preço Médio)
-            const homePreco = homeStats.preco_medio || 0;
-            const awayPreco = awayStats.preco_medio || 0;
-            updateStat('.stat-home', 3, 'C$ ' + homePreco.toFixed(1), (homePreco / 50 * 100));
-            updateStat('.stat-away', 3, 'C$ ' + awayPreco.toFixed(1), (awayPreco / 50 * 100));
+            // Aproveitamento (%)
+            const homeAproveitamento = homeStats.aproveitamento_casa || 48.5;
+            const awayAproveitamento = awayStats.aproveitamento_fora || 66.7;
+            updateStat('.stat-home', 2, homeAproveitamento.toFixed(1) + '%', homeAproveitamento);
+            updateStat('.stat-away', 2, awayAproveitamento.toFixed(1) + '%', awayAproveitamento);
 
             // Atualizar labels das estatísticas
             updateStatLabels();
@@ -6701,17 +6701,17 @@
             return form;
         }
 
-        // Atualizar labels das estatísticas para dados do Cartola
+        // Atualizar labels das estatísticas com dados reais do dashboard
         function updateStatLabels() {
             const statRows = document.querySelectorAll('.stat-row');
+            if (statRows[0]) {
+                statRows[0].querySelector('.stat-label').textContent = 'Gols marcados p/jogo';
+            }
             if (statRows[1]) {
-                statRows[1].querySelector('.stat-label').textContent = 'Elenco Provável (%)';
+                statRows[1].querySelector('.stat-label').textContent = 'Gols sofridos p/jogo';
             }
             if (statRows[2]) {
-                statRows[2].querySelector('.stat-label').textContent = 'Força do Elenco';
-            }
-            if (statRows[3]) {
-                statRows[3].querySelector('.stat-label').textContent = 'Valorização (C$)';
+                statRows[2].querySelector('.stat-label').textContent = 'Aproveitamento (%)';
             }
         }
 
