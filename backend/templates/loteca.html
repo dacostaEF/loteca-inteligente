@@ -3262,6 +3262,252 @@
             }
         }
 
+        /* Análise de Desempenho Recente (4 Pilares) */
+        .analise-desempenho-container {
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            padding: 2rem;
+        }
+
+        .pilares-analise {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pilar-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pilar-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
+        }
+
+        .pilar-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+            padding-bottom: 1rem;
+        }
+
+        .pilar-header h5 {
+            color: var(--cor-destaque-primaria);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .pilar-subtitle {
+            color: var(--cor-texto-secundario);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .pilar-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .analise-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 3px solid var(--cor-destaque-primaria);
+        }
+
+        .analise-label {
+            font-size: 0.85rem;
+            color: var(--cor-texto-secundario);
+            font-weight: 500;
+        }
+
+        .analise-valor {
+            font-size: 0.95rem;
+            color: var(--cor-texto-principal);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .analise-resultado {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .analise-resultado.vantagem-alta {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .analise-resultado.vantagem-media {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .analise-resultado.vantagem-baixa {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .analise-resultado.equilibrado {
+            background: rgba(156, 163, 175, 0.2);
+            color: #9ca3af;
+            border: 1px solid rgba(156, 163, 175, 0.3);
+        }
+
+        .analise-resultado.atencao {
+            background: rgba(245, 101, 101, 0.2);
+            color: #f56565;
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+
+        .pilar-conclusao {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            font-size: 0.9rem;
+            color: var(--cor-texto-principal);
+            text-align: center;
+        }
+
+        /* Decisão Final */
+        .decisao-final-container {
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 12px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .decisao-final-container h5 {
+            color: var(--cor-destaque-primaria);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .resumo-pilares {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .resumo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pilar-nome {
+            font-size: 0.85rem;
+            color: var(--cor-texto-secundario);
+            font-weight: 500;
+        }
+
+        .vantagem {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .palpite-final {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
+        .palpite-recomendado, .confianca-nivel {
+            text-align: center;
+        }
+
+        .palpite-label, .confianca-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--cor-texto-secundario);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .palpite-valor {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--cor-destaque-primaria);
+            font-weight: 700;
+        }
+
+        .confianca-valor {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .confianca-valor.alta {
+            color: #22c55e;
+        }
+
+        .confianca-valor.media {
+            color: #fbbf24;
+        }
+
+        .confianca-valor.baixa {
+            color: #ef4444;
+        }
+
+        /* Responsividade da Análise */
+        @media (max-width: 768px) {
+            .pilares-analise {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .resumo-pilares {
+                grid-template-columns: 1fr;
+            }
+            
+            .palpite-final {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .analise-desempenho-container {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -4137,6 +4383,146 @@
                         </div>
                         
                         <h4>📈 Histórico Desempenho Recentes</h4>
+                        
+                        <!-- ANÁLISE DE DESEMPENHO RECENTE (4 PILARES) -->
+                        <div class="analise-desempenho-container">
+                            <div class="pilares-analise">
+                                
+                                <!-- PILAR 1: FORÇA OFENSIVA RELATIVA -->
+                                <div class="pilar-card">
+                                    <div class="pilar-header">
+                                        <h5>⚔️ Força Ofensiva Relativa</h5>
+                                        <span class="pilar-subtitle">Ataque x Defesa</span>
+                                    </div>
+                                    <div class="pilar-content">
+                                        <div class="confronto-ofensivo">
+                                            <div class="analise-item">
+                                                <span class="analise-label">FLA Ataque vs COR Defesa:</span>
+                                                <span class="analise-valor" id="fla-ataque-cor-defesa">2.09 vs 1.21</span>
+                                                <span class="analise-resultado vantagem-alta" id="resultado-fla-ataque">Vantagem Alta</span>
+                                            </div>
+                                            <div class="analise-item">
+                                                <span class="analise-label">COR Ataque vs FLA Defesa:</span>
+                                                <span class="analise-valor" id="cor-ataque-fla-defesa">1.00 vs 0.48</span>
+                                                <span class="analise-resultado vantagem-baixa" id="resultado-cor-ataque">Dificuldade Alta</span>
+                                            </div>
+                                        </div>
+                                        <div class="pilar-conclusao" id="conclusao-pilar1">
+                                            <strong>Conclusão:</strong> Flamengo deve dominar o placar
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PILAR 2: EFICIÊNCIA POR LOCAL -->
+                                <div class="pilar-card">
+                                    <div class="pilar-header">
+                                        <h5>🏠 Eficiência por Local</h5>
+                                        <span class="pilar-subtitle">Fator Casa</span>
+                                    </div>
+                                    <div class="pilar-content">
+                                        <div class="confronto-local">
+                                            <div class="analise-item">
+                                                <span class="analise-label">Aproveitamento:</span>
+                                                <span class="analise-valor" id="aproveitamento-local">Casa 79.5% vs Fora 48.5%</span>
+                                                <span class="analise-resultado vantagem-alta" id="resultado-aproveitamento">Vantagem Casa</span>
+                                            </div>
+                                            <div class="analise-item">
+                                                <span class="analise-label">PPG Comparativo:</span>
+                                                <span class="analise-valor" id="ppg-comparativo">2.38 vs 1.00</span>
+                                                <span class="analise-resultado vantagem-alta" id="resultado-ppg">Superioridade</span>
+                                            </div>
+                                        </div>
+                                        <div class="pilar-conclusao" id="conclusao-pilar2">
+                                            <strong>Conclusão:</strong> Fator casa decisivo para o mandante
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PILAR 3: FORMA RECENTE -->
+                                <div class="pilar-card">
+                                    <div class="pilar-header">
+                                        <h5>📈 Forma Recente</h5>
+                                        <span class="pilar-subtitle">Momento Atual</span>
+                                    </div>
+                                    <div class="pilar-content">
+                                        <div class="confronto-forma">
+                                            <div class="analise-item">
+                                                <span class="analise-label">Últimos 5 Jogos:</span>
+                                                <span class="analise-valor" id="forma-ultimos5">V-V-E-V-E vs D-V-E-V-D</span>
+                                                <span class="analise-resultado vantagem-media" id="resultado-forma">Leve Vantagem</span>
+                                            </div>
+                                            <div class="analise-item">
+                                                <span class="analise-label">Pontos Conquistados:</span>
+                                                <span class="analise-valor" id="pontos-forma">11 pts vs 7 pts</span>
+                                                <span class="analise-resultado vantagem-media" id="resultado-pontos">Melhor Momento</span>
+                                            </div>
+                                        </div>
+                                        <div class="pilar-conclusao" id="conclusao-pilar3">
+                                            <strong>Conclusão:</strong> Visitante em melhor fase recente
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PILAR 4: H2H (CONFRONTO DIRETO) -->
+                                <div class="pilar-card">
+                                    <div class="pilar-header">
+                                        <h5>⚔️ Confronto Direto</h5>
+                                        <span class="pilar-subtitle">Histórico H2H</span>
+                                    </div>
+                                    <div class="pilar-content">
+                                        <div class="confronto-h2h">
+                                            <div class="analise-item">
+                                                <span class="analise-label">Últimos 10 Jogos:</span>
+                                                <span class="analise-valor" id="h2h-historico">4V Casa - 2E - 4V Visitante</span>
+                                                <span class="analise-resultado equilibrado" id="resultado-h2h">Equilibrado</span>
+                                            </div>
+                                            <div class="analise-item">
+                                                <span class="analise-label">Fator Surpresa:</span>
+                                                <span class="analise-valor" id="fator-surpresa">Pedra no Sapato</span>
+                                                <span class="analise-resultado atencao" id="resultado-surpresa">Atenção</span>
+                                            </div>
+                                        </div>
+                                        <div class="pilar-conclusao" id="conclusao-pilar4">
+                                            <strong>Conclusão:</strong> Histórico anula vantagem estatística
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- DECISÃO FINAL -->
+                            <div class="decisao-final-container">
+                                <h5>🎯 Decisão Final para Loteca</h5>
+                                <div class="resumo-pilares">
+                                    <div class="resumo-item">
+                                        <span class="pilar-nome">Pilar 1 (Ataque x Defesa):</span>
+                                        <span class="vantagem vantagem-alta" id="resumo-pilar1">FLA Absoluta</span>
+                                    </div>
+                                    <div class="resumo-item">
+                                        <span class="pilar-nome">Pilar 2 (Fator Casa):</span>
+                                        <span class="vantagem vantagem-alta" id="resumo-pilar2">FLA Forte</span>
+                                    </div>
+                                    <div class="resumo-item">
+                                        <span class="pilar-nome">Pilar 3 (Forma Recente):</span>
+                                        <span class="vantagem vantagem-media" id="resumo-pilar3">FLA Forte</span>
+                                    </div>
+                                    <div class="resumo-item">
+                                        <span class="pilar-nome">Pilar 4 (H2H):</span>
+                                        <span class="vantagem atencao" id="resumo-pilar4">COR (Fator Curinga)</span>
+                                    </div>
+                                </div>
+                                <div class="palpite-final">
+                                    <div class="palpite-recomendado">
+                                        <span class="palpite-label">Palpite Recomendado:</span>
+                                        <span class="palpite-valor" id="palpite-final">Coluna 2 (Visitante) com cautela para X</span>
+                                    </div>
+                                    <div class="confianca-nivel">
+                                        <span class="confianca-label">Nível de Confiança:</span>
+                                        <span class="confianca-valor alta" id="confianca-final">75% - Alta</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="h2h-grid">
                             <div class="h2h-summary">
