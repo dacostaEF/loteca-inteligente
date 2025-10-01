@@ -3869,23 +3869,8 @@
                     </div>
                 </div>
 
-                <!-- SEÇÃO REORGANIZADA: SUB-ABAS PARA TIMES LOTECA + SÉRIES A e B -->
-                <div class="dados-avancados-container">
-                    <!-- Sub-abas navegação -->
-                    <div class="sub-tabs-nav">
-                        <button class="sub-tab-btn active" data-target="times-loteca-dados">
-                            ⚽ Times Loteca Jogos
-                        </button>
-                        <button class="sub-tab-btn" data-target="serie-a-dados">
-                            🏆 Brasileirão Série A
-                        </button>
-                        <button class="sub-tab-btn" data-target="serie-b-dados">
-                            🥈 Brasileirão Série B
-                        </button>
-                    </div>
-
-                    <!-- Conteúdo Times Loteca Jogos -->
-                    <div id="times-loteca-dados" class="sub-tab-content dados-avancados-content active">
+                <!-- SEÇÃO SIMPLIFICADA: APENAS TIMES LOTECA JOGOS -->
+                <div class="times-loteca-section">
                         <div class="section-header">
                             <h2>⚽ Times Loteca Jogos - Comparação Direta</h2>
                             <p>Análise lado a lado dos 14 confrontos com dados reais do Cartola FC para facilitar suas apostas</p>
@@ -3930,85 +3915,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Fim da seção Times Loteca -->
-
-                    <!-- Conteúdo Série A -->
-                    <div id="serie-a-dados" class="sub-tab-content dados-avancados-content">
-                        <div class="section-header">
-                            <h2>🏆 Brasileirão Série A - Dados Reais do Cartola FC</h2>
-                            <p>Análise completa dos elencos da elite do futebol brasileiro</p>
-                            <button id="refresh-serie-a-btn" class="refresh-btn">
-                                <span class="refresh-icon">🔄</span>
-                                Atualizar Série A
-                            </button>
-                        </div>
-                        
-                        <div class="clubes-brasileirao-section">
-                            <div class="loading-clubes" id="loading-clubes">
-                                <div class="loading-spinner"></div>
-                                <p>Carregando dados dos clubes...</p>
-                            </div>
-                            
-                            <div class="clubes-container" id="clubes-container">
-                                <!-- Os cards dos clubes serão inseridos aqui -->
-                            </div>
-                            
-                            <div class="clubes-stats-summary" id="clubes-summary">
-                                <div class="summary-item">
-                                    <span class="summary-label">Total de Clubes:</span>
-                                    <span class="summary-value" id="total-clubes">-</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Última Atualização:</span>
-                                    <span class="summary-value" id="last-update">-</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Fonte:</span>
-                                    <span class="summary-value" id="data-source">-</span>
-                                </div>
-                            </div>
-                        </div> <!-- Fim da seção clubes Série A -->
-                    </div> <!-- Fim da sub-aba Série A -->
-                    
-                    <!-- Conteúdo Série B -->
-                    <div id="serie-b-dados" class="sub-tab-content dados-avancados-content">
-                        <div class="section-header">
-                            <h2>🥈 Brasileirão Série B - Dados Reais do Cartola FC</h2>
-                            <p>Análise completa dos clubes da segunda divisão</p>
-                            <button id="refresh-serie-b-btn" class="refresh-btn">
-                                <span class="refresh-icon">🔄</span>
-                                Atualizar Série B
-                            </button>
-                        </div>
-                        
-                        <div class="clubes-brasileirao-section">
-                            <div class="loading-clubes" id="loading-clubes-b">
-                                <div class="loading-spinner"></div>
-                                <p>Carregando dados dos clubes da Série B...</p>
-                            </div>
-
-                            <div class="clubes-container" id="clubes-container-b">
-                                <!-- Os cards dos clubes da Série B serão inseridos aqui -->
-                            </div>
-                            
-                            <div class="clubes-stats-summary" id="clubes-summary-b">
-                                <div class="summary-item">
-                                    <span class="summary-label">Total de Clubes:</span>
-                                    <span class="summary-value" id="total-clubes-b">-</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Última Atualização:</span>
-                                    <span class="summary-value" id="last-update-b">-</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Fonte:</span>
-                                    <span class="summary-value" id="data-source-b">-</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- Fim da seção Série B -->
-                    
-                </div> <!-- Fim do container dados avançados -->
+                </div> <!-- Fim da seção Times Loteca -->
 
             </div>
         </div> <!-- FIM DA ABA 2: DADOS AVANÇADOS -->
@@ -5929,43 +5836,44 @@
             }
         }
         
-        // EXTRAIR JOGOS DA ABA 1 (ANÁLISE RÁPIDA)
+        // EXTRAIR JOGOS DA ABA 1 (ANÁLISE RÁPIDA) - APENAS JOGO 1
         function extrairJogosDaAba1() {
-            console.log('📊 [SYNC] Extraindo jogos da Aba 1...');
+            console.log('📊 [SYNC] Extraindo apenas JOGO 1 da Aba 1...');
             
             const jogos = [];
-            const gameCards = document.querySelectorAll('#analise-rapida .game-card');
             
-            gameCards.forEach((card, index) => {
+            // Buscar apenas o primeiro game-card (JOGO 1)
+            const primeiroCard = document.querySelector('#analise-rapida .game-card:first-child');
+            
+            if (primeiroCard) {
                 try {
-                    // Método 1: Buscar pelo span com "JOGO X:"
-                    const jogoSpan = card.querySelector('.confronto-visual span[style*="font-size: 18px"]');
-                    const timeInfos = card.querySelectorAll('.time-info span');
+                    // Método 1: Buscar pelo span com "JOGO 1:"
+                    const jogoSpan = primeiroCard.querySelector('.confronto-visual span[style*="font-size: 18px"]');
+                    const timeInfos = primeiroCard.querySelectorAll('.time-info span');
                     
                     if (jogoSpan && timeInfos.length >= 2) {
-                        const jogoNumero = index + 1;
                         const timeCasa = timeInfos[0].textContent.trim();
                         const timeVisitante = timeInfos[1].textContent.trim();
                         
                         // Validar se os nomes não estão vazios
                         if (timeCasa && timeVisitante && timeCasa !== timeVisitante) {
                             const jogo = {
-                                numero: jogoNumero,
+                                numero: 1,
                                 timeCasa: timeCasa,
                                 timeVisitante: timeVisitante,
-                                descricao: `Jogo ${jogoNumero}: ${timeCasa} vs ${timeVisitante}`
+                                descricao: `Jogo 1: ${timeCasa} vs ${timeVisitante}`
                             };
                             
                             jogos.push(jogo);
-                            console.log(`✅ [SYNC] Jogo ${jogoNumero}: ${timeCasa} vs ${timeVisitante}`);
+                            console.log(`✅ [SYNC] JOGO 1: ${timeCasa} vs ${timeVisitante}`);
                         } else {
-                            console.warn(`⚠️ [SYNC] Jogo ${index + 1}: Nomes inválidos - Casa: "${timeCasa}", Visitante: "${timeVisitante}"`);
+                            console.warn(`⚠️ [SYNC] JOGO 1: Nomes inválidos - Casa: "${timeCasa}", Visitante: "${timeVisitante}"`);
                         }
                     } else {
                         // Método 2: Fallback - buscar por qualquer estrutura de confronto
-                        console.warn(`⚠️ [SYNC] Jogo ${index + 1}: Estrutura não encontrada, tentando método alternativo...`);
+                        console.warn(`⚠️ [SYNC] JOGO 1: Estrutura não encontrada, tentando método alternativo...`);
                         
-                        const allSpans = card.querySelectorAll('span');
+                        const allSpans = primeiroCard.querySelectorAll('span');
                         const teamNames = [];
                         
                         allSpans.forEach(span => {
@@ -5978,22 +5886,24 @@
                         
                         if (teamNames.length >= 2) {
                             const jogo = {
-                                numero: index + 1,
+                                numero: 1,
                                 timeCasa: teamNames[0],
                                 timeVisitante: teamNames[1],
-                                descricao: `Jogo ${index + 1}: ${teamNames[0]} vs ${teamNames[1]}`
+                                descricao: `Jogo 1: ${teamNames[0]} vs ${teamNames[1]}`
                             };
                             
                             jogos.push(jogo);
-                            console.log(`✅ [SYNC] Jogo ${index + 1} (fallback): ${teamNames[0]} vs ${teamNames[1]}`);
+                            console.log(`✅ [SYNC] JOGO 1 (fallback): ${teamNames[0]} vs ${teamNames[1]}`);
                         }
                     }
                 } catch (error) {
-                    console.error(`❌ [SYNC] Erro ao extrair jogo ${index + 1}:`, error);
+                    console.error('❌ [SYNC] Erro ao extrair JOGO 1:', error);
                 }
-            });
+            } else {
+                console.error('❌ [SYNC] Primeiro game-card não encontrado!');
+            }
             
-            console.log(`📋 [SYNC] Total de jogos extraídos: ${jogos.length}`);
+            console.log(`📋 [SYNC] Total de jogos extraídos: ${jogos.length} (apenas JOGO 1)`);
             return jogos;
         }
         
@@ -6904,118 +6814,24 @@
         }
 
         // GERENCIAR SUB-ABAS DA ABA 2: DADOS AVANÇADOS
-        function initializeSubTabsDadosAvancados() {
-            console.log('🔧 [DEBUG] Inicializando sub-abas Dados Avançados...');
+        function initializeTimesLotecaSection() {
+            console.log('🔧 [DEBUG] Inicializando seção Times Loteca Jogos (simplificada)...');
             
-            // Buscar APENAS os elementos da aba "Dados Avançados" (aba 2)
-            const dadosAvancadosSection = document.getElementById('dados-avancados');
-            const subTabButtons = dadosAvancadosSection.querySelectorAll('.sub-tab-btn');
-            const subTabContents = dadosAvancadosSection.querySelectorAll('.dados-avancados-content');
-
-            console.log('🔧 [DEBUG] Sub-abas encontradas:', {
-                'seção': !!dadosAvancadosSection,
-                'botões': subTabButtons.length,
-                'conteúdos': subTabContents.length
-            });
-
-            if (!dadosAvancadosSection) {
-                console.error('❌ [DEBUG] Seção dados-avancados não encontrada!');
-                return;
+            // Carregar dados automaticamente quando a aba for acessada
+            const container = document.getElementById('jogos-loteca-container');
+            if (container && container.innerHTML.trim() === '') {
+                console.log('⚽ [TIMES-LOTECA] Carregando dados dos times...');
+                setTimeout(() => {
+                    carregarTimesLotecaJogos();
+                }, 500);
+            } else {
+                console.log('✅ [TIMES-LOTECA] Dados já disponíveis');
             }
 
-            subTabButtons.forEach((button, index) => {
-                const targetId = button.getAttribute('data-target');
-                console.log(`🔧 [DEBUG] Sub-botão ${index}: ${targetId}`);
-                
-                button.addEventListener('click', () => {
-                    console.log(`🔧 [DEBUG] Clique em sub-aba: ${targetId}`);
-                    
-                    // Remover classe active de todos os botões e conteúdos
-                    subTabButtons.forEach(btn => btn.classList.remove('active'));
-                    subTabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Adicionar classe active ao botão clicado e seu conteúdo
-                    button.classList.add('active');
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        targetElement.classList.add('active');
-                        console.log(`✅ [DEBUG] Sub-aba ${targetId} ativada`);
-                    } else {
-                        console.error(`❌ [DEBUG] Elemento ${targetId} não encontrado!`);
-                    }
-                    
-                    // Aguardar um pouco para o CSS aplicar e então carregar dados
-                    setTimeout(() => {
-                        if (targetId === 'times-loteca-dados') {
-                            console.log('⚽ [TIMES-LOTECA] Processando Times Loteca...');
-                            
-                            const container = document.getElementById('jogos-loteca-container');
-                            if (container && container.innerHTML.trim() === '') {
-                                console.log('⚽ [TIMES-LOTECA] Carregando dados dos times...');
-                                carregarTimesLotecaJogos();
-                            } else {
-                                console.log('✅ [TIMES-LOTECA] Dados já disponíveis');
-                            }
-                            
-                        } else if (targetId === 'serie-a-dados') {
-                            console.log('🏆 Processando Série A...');
-                            
-                            const containerA = document.getElementById('clubes-container');
-                            const conteudoA = containerA?.innerHTML.trim() || '';
-                            const temCardsA = containerA?.querySelectorAll('.clube-card').length > 0;
-                            
-                            console.log('🏆 [DEBUG] Análise do container A:');
-                            console.log('  - Container encontrado:', !!containerA);
-                            console.log('  - Conteúdo length:', conteudoA.length);
-                            console.log('  - Tem cards:', temCardsA);
-                            
-                            if (containerA && (conteudoA === '' || !temCardsA)) {
-                                console.log('🏆 Carregando dados da Série A...');
-                                carregarEstatisticasClubes();
-                            } else {
-                                console.log('✅ Dados da Série A já disponíveis');
-                            }
-                            
-                        } else if (targetId === 'serie-b-dados') {
-                            console.log('🥈 Processando Série B...');
-                            
-                            const containerB = document.getElementById('clubes-container-b');
-                            console.log('🥈 Container B encontrado:', !!containerB);
-                            
-                            if (containerB) {
-                                // SEMPRE carregar dados da Série B para garantir renderização correta
-                                console.log('🥈 [DEBUG] Forçando carregamento da Série B...');
-                                carregarDadosSerieB();
-                            } else {
-                                console.error('❌ Container Série B não encontrado!');
-                            }
-                        }
-                    }, 100); // Pequeno delay para CSS aplicar
-                });
-            });
-
-            // Configurar botões de refresh específicos
-            const refreshSerieABtn = document.getElementById('refresh-serie-a-btn');
-            const refreshSerieBBtn = document.getElementById('refresh-serie-b-btn');
-
-            if (refreshSerieABtn) {
-                refreshSerieABtn.addEventListener('click', () => {
-                    console.log('🔄 Atualizando Série A...');
-                    carregarEstatisticasClubes();
-                });
-            }
-
-            if (refreshSerieBBtn) {
-                refreshSerieBBtn.addEventListener('click', () => {
-                    console.log('🔄 Atualizando Série B...');
-                    carregarDadosSerieB();
-                });
-            }
-
-            console.log('✅ Sub-abas Dados Avançados inicializadas');
+            console.log('✅ Seção Times Loteca Jogos inicializada');
         }
 
-        // CARREGAR DADOS DA SÉRIE B (estrutura completa como Série A)
+        // CARREGAR DADOS DA SÉRIE B (estrutura completa como Série A) - DESABILITADA
         async function carregarDadosSerieB() {
             console.log('🥈 [DEBUG] carregarDadosSerieB iniciada');
             
@@ -7260,24 +7076,11 @@
             initializeTabs();
             console.log('✅ [DEBUG] Abas principais inicializadas');
             
-            // DEPOIS: Inicializar sub-abas (dentro da aba Dados Avançados)
+            // DEPOIS: Inicializar seção Times Loteca Jogos
             setTimeout(() => {
-                initializeSubTabsDadosAvancados(); // Sub-abas Série A/B
-                console.log('✅ [DEBUG] Sub-abas inicializadas');
+                initializeTimesLotecaSection(); // Seção simplificada
+                console.log('✅ [DEBUG] Seção Times Loteca inicializada');
                 
-                // Verificar se elementos da Série B existem
-                setTimeout(() => {
-                    console.log('🔍 [DEBUG] Verificando elementos Série B...');
-                    const containerB = document.getElementById('clubes-container-b');
-                    const loadingB = document.getElementById('loading-clubes-b');
-                    const summaryB = document.getElementById('clubes-summary-b');
-                    
-                    console.log('🔍 [DEBUG] Série B elementos:', {containerB, loadingB, summaryB});
-                    
-                    if (!containerB) {
-                        console.error('❌ [DEBUG] Container Série B não encontrado!');
-                    }
-                }, 200);
             }, 100);
             
             loadRealLotecaData(); // ← CARREGAR DADOS REAIS PRIMEIRO!
