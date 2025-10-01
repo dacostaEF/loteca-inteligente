@@ -648,6 +648,78 @@
             text-align: right;
         }
 
+        /* Bolinhas dos Últimos Confrontos */
+        .confrontos-sequence {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .confronto-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .confronto-data {
+            font-size: 0.65rem;
+            color: #888;
+            font-weight: 600;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .confronto-placar {
+            font-size: 0.6rem;
+            font-weight: 700;
+            white-space: nowrap;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 2px;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .confronto-result {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .confronto-result:hover {
+            transform: scale(1.15);
+            filter: brightness(1.1);
+        }
+
+        /* Escudo direto sem círculo */
+        .confronto-escudo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 4px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Empate - Círculo amarelo simples */
+        .confronto-result.empate {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #FFD700;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #000;
+            border: 2px solid #FFA500;
+        }
+
         .honesty-modal .modal-header {
             padding: 20px 25px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -3117,7 +3189,7 @@
                 <table class="analysis-table" id="analise-jogo-1">
                     <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome">Corinthians</th><th class="team-header" id="time-fora-nome">Flamengo</th><th>Análise</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Forma (Últimos 5)</strong></td><td class="team-header" id="forma-casa">V-E-V-D-V</td><td class="team-header" id="forma-fora">V-V-E-E-D</td><td id="forma-analise"><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td></tr>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais"></div></td><td id="forma-analise"><span class="status-icon equilibrio">▬</span>Baseado nos últimos 10 jogos</td></tr>
                         <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa">5º</td><td class="team-header" id="posicao-fora">2º</td><td id="posicao-analise"><span class="status-icon desvantagem">▼</span>Vantagem Flamengo</td></tr>
                         <tr><td><strong>Confronto Direto (H2H)</strong></td><td class="team-header" id="h2h-casa">2V-1E-2D</td><td class="team-header" id="h2h-fora">2V-1E-2D</td><td id="h2h-analise"><span class="status-icon equilibrio">▬</span>Equilíbrio</td></tr>
                         <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa">80% aprov.</td><td class="team-header" id="fator-fora">-</td><td id="fator-analise"><span class="status-icon vantagem">▲</span>Vantagem Corinthians</td></tr>
@@ -3860,25 +3932,12 @@
                         <h4>📊 Comparação Estatística</h4>
                         
                         <div class="stats-grid">
-                            <!-- FORMA RECENTE -->
+                            <!-- ÚLTIMOS CONFRONTOS -->
                             <div class="stat-row">
-                                <div class="stat-label">Forma (Últimos 5)</div>
-                                <div class="stat-home">
-                                    <div class="form-sequence">
-                                        <span class="result win">V</span>
-                                        <span class="result draw">E</span>
-                                        <span class="result win">V</span>
-                                        <span class="result loss">D</span>
-                                        <span class="result win">V</span>
-                                    </div>
-                                </div>
-                                <div class="stat-away">
-                                    <div class="form-sequence">
-                                        <span class="result win">V</span>
-                                        <span class="result win">V</span>
-                                        <span class="result draw">E</span>
-                                        <span class="result draw">E</span>
-                                        <span class="result loss">D</span>
+                                <div class="stat-label">Últimos Confrontos</div>
+                                <div class="stat-full" style="grid-column: 2 / 4; display: flex; justify-content: center;">
+                                    <div class="confrontos-sequence" id="confrontos-modal-principais">
+                                        <!-- Bolinhas serão inseridas dinamicamente -->
                                     </div>
                                 </div>
                             </div>
@@ -6620,13 +6679,12 @@
                 // Atualizar interface com dados reais
                 updateRealStats(homeStats, awayStats);
                 
-                // Mostrar indicador de dados reais
-                showDataSource('Cartola FC - Dados Reais');
+                // Dados reais carregados (sem botão duplicado)
 
             } catch (error) {
                 console.error('[Cartola] Erro ao carregar dados:', error);
                 loadSimulatedData(data);
-                showDataSource('Dados Simulados (Erro na API)');
+                // Dados simulados (sem botão duplicado)
             }
         }
 
@@ -6720,50 +6778,7 @@
             });
         }
 
-        // Mostrar botão de últimos confrontos
-        function showDataSource(source) {
-            let confrontoButton = document.querySelector('.confrontos-button');
-            if (!confrontoButton) {
-                confrontoButton = document.createElement('button');
-                confrontoButton.className = 'confrontos-button';
-                confrontoButton.innerHTML = '⚔️ Últimos Confrontos';
-                confrontoButton.style.cssText = `
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: linear-gradient(135deg, #32CD32, #00FF00);
-                    color: #000;
-                    padding: 0.6rem 1.2rem;
-                    border: none;
-                    border-radius: 25px;
-                    font-size: 0.85rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 4px 12px rgba(50, 205, 50, 0.3);
-                    z-index: 100;
-                `;
-                
-                // Efeitos hover
-                confrontoButton.addEventListener('mouseenter', () => {
-                    confrontoButton.style.transform = 'translateY(-2px)';
-                    confrontoButton.style.boxShadow = '0 6px 16px rgba(50, 205, 50, 0.4)';
-                });
-                
-                confrontoButton.addEventListener('mouseleave', () => {
-                    confrontoButton.style.transform = 'translateY(0)';
-                    confrontoButton.style.boxShadow = '0 4px 12px rgba(50, 205, 50, 0.3)';
-                });
-                
-                // Evento de clique
-                confrontoButton.addEventListener('click', () => {
-                    abrirModalConfrontos();
-                });
-                
-                document.querySelector('.detailed-analysis').style.position = 'relative';
-                document.querySelector('.detailed-analysis').appendChild(confrontoButton);
-            }
-        }
+        // Função removida - confrontos agora apenas na Aba 1
 
         // ABRIR MODAL DE CONFRONTOS
         async function abrirModalConfrontos() {
@@ -6887,6 +6902,131 @@
                 { data: '2022-11-02', mandante: 'Flamengo', placar: '1-2', visitante: 'Corinthians', resultado: 'V', competicao: 'Brasileirão 2022' },
                 { data: '2022-10-19', mandante: 'Flamengo', placar: '1-1 (6-5 Pen.)', visitante: 'Corinthians', resultado: 'E', competicao: 'Copa do Brasil 2022' }
             ];
+        }
+
+        // CARREGAR E RENDERIZAR BOLINHAS DOS CONFRONTOS
+        async function carregarConfrontosBolinhas() {
+            console.log('🔴 [CONFRONTOS] Carregando bolinhas dos confrontos...');
+            
+            try {
+                const response = await fetch('/api/br/loteca/confronto-modal/CORINTHIANS/FLAMENGO');
+                const data = await response.json();
+                
+                let confrontos = [];
+                if (data.success && data.confrontos) {
+                    confrontos = data.confrontos;
+                    console.log(`✅ [CONFRONTOS] ${confrontos.length} confrontos carregados da API`);
+                } else {
+                    confrontos = gerarDadosExemplo();
+                    console.log('⚠️ [CONFRONTOS] Usando dados de exemplo');
+                }
+                
+                // Renderizar bolinhas na tabela principal
+                renderizarBolinhasTabela(confrontos);
+                
+                // Renderizar bolinhas no modal de comparação
+                renderizarBolinhasModal(confrontos);
+                
+            } catch (error) {
+                console.error('❌ [CONFRONTOS] Erro ao carregar confrontos:', error);
+                const confrontos = gerarDadosExemplo();
+                renderizarBolinhasTabela(confrontos);
+                renderizarBolinhasModal(confrontos);
+            }
+        }
+
+        // RENDERIZAR BOLINHAS NA TABELA PRINCIPAL
+        function renderizarBolinhasTabela(confrontos) {
+            const container = document.getElementById('confrontos-principais');
+            
+            if (!container) return;
+            
+            // Pegar os últimos 10 confrontos
+            const ultimos10 = confrontos.slice(0, 10);
+            
+            // Renderizar bolinhas em uma única linha com data
+            const bolinhasHtml = ultimos10.map(confronto => {
+                const resultado = confronto.resultado.toUpperCase();
+                let classe, conteudo;
+                
+                if (resultado === 'V') {
+                    classe = 'corinthians';
+                    conteudo = '<img src="https://logodetimes.com/times/corinthians/logo-corinthians-256.png" alt="Corinthians" class="confronto-escudo" onerror="this.outerHTML=\'Cor\'">';
+                } else if (resultado === 'D') {
+                    classe = 'flamengo';
+                    conteudo = '<img src="https://logodetimes.com/times/flamengo/logo-flamengo-256.png" alt="Flamengo" class="confronto-escudo" onerror="this.outerHTML=\'Fla\'">';
+                } else {
+                    classe = 'empate';
+                    conteudo = 'E';
+                }
+                
+                // Formatar data (DD/MM/AA) - apenas dezena do ano
+                let dataFormatada = '';
+                if (confronto.data) {
+                    const [ano, mes, dia] = confronto.data.split('-');
+                    const anoAbrev = ano.substring(2); // Pega apenas os 2 últimos dígitos
+                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                }
+                
+                return `
+                    <div class="confronto-item">
+                        <div class="confronto-data">${dataFormatada}</div>
+                        <div class="confronto-placar">${confronto.placar}</div>
+                        <div class="confronto-result ${classe}" title="${confronto.data}: ${confronto.mandante} ${confronto.placar} ${confronto.visitante}">${conteudo}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = bolinhasHtml;
+            
+            console.log(`🔴 [CONFRONTOS] ${ultimos10.length} bolinhas renderizadas na tabela (linha única)`);
+        }
+
+        // RENDERIZAR BOLINHAS NO MODAL DE COMPARAÇÃO
+        function renderizarBolinhasModal(confrontos) {
+            const container = document.getElementById('confrontos-modal-principais');
+            
+            if (!container) return;
+            
+            // Pegar os últimos 10 confrontos
+            const ultimos10 = confrontos.slice(0, 10);
+            
+            // Renderizar bolinhas em uma única linha centralizada com data
+            const bolinhasHtml = ultimos10.map(confronto => {
+                const resultado = confronto.resultado.toUpperCase();
+                let classe, conteudo;
+                
+                if (resultado === 'V') {
+                    classe = 'corinthians';
+                    conteudo = '<img src="https://logodetimes.com/times/corinthians/logo-corinthians-256.png" alt="Corinthians" class="confronto-escudo" onerror="this.outerHTML=\'Cor\'">';
+                } else if (resultado === 'D') {
+                    classe = 'flamengo';
+                    conteudo = '<img src="https://logodetimes.com/times/flamengo/logo-flamengo-256.png" alt="Flamengo" class="confronto-escudo" onerror="this.outerHTML=\'Fla\'">';
+                } else {
+                    classe = 'empate';
+                    conteudo = 'E';
+                }
+                
+                // Formatar data (DD/MM/AA) - apenas dezena do ano
+                let dataFormatada = '';
+                if (confronto.data) {
+                    const [ano, mes, dia] = confronto.data.split('-');
+                    const anoAbrev = ano.substring(2); // Pega apenas os 2 últimos dígitos
+                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                }
+                
+                return `
+                    <div class="confronto-item">
+                        <div class="confronto-data">${dataFormatada}</div>
+                        <div class="confronto-placar">${confronto.placar}</div>
+                        <div class="confronto-result ${classe}" title="${confronto.data}: ${confronto.mandante} ${confronto.placar} ${confronto.visitante}">${conteudo}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = bolinhasHtml;
+            
+            console.log(`🔴 [CONFRONTOS] ${ultimos10.length} bolinhas renderizadas no modal (linha única)`);
         }
 
         // FUNÇÕES AUXILIARES
@@ -7115,6 +7255,11 @@
                     carregarTimesLotecaJogos();
                 }, 1500);
             }
+            
+            // 3. CARREGAR BOLINHAS DOS CONFRONTOS
+            setTimeout(() => {
+                carregarConfrontosBolinhas();
+            }, 2000);
 
             console.log('✅ Seção Times Loteca Jogos inicializada com carregamento automático');
         }
