@@ -1482,7 +1482,7 @@
         .stat-label {
             font-size: 0.8rem;
             color: var(--cor-texto-secundario);
-            text-transform: uppercase;
+            text-transform: none;
             margin-bottom: 0.3rem;
             display: block;
         }
@@ -2851,42 +2851,168 @@
                 padding: 1rem 0;
             }
 
+            /* ABA 2 - DADOS AVANÇADOS - RESPONSIVIDADE */
             .game-selector {
-                padding: 1.5rem;
+                padding: 1rem;
             }
 
             .game-selector h3 {
-                font-size: 1.2rem;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .game-select {
+                font-size: 0.7rem;
+                padding: 0.5rem;
+                max-width: 100%;
             }
 
             .team-info {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr auto 1fr;
                 gap: 1rem;
                 text-align: center;
             }
 
+            .team-logo {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 0.5rem;
+            }
+
+            .team-home h3, .team-away h3 {
+                font-size: 0.75rem;
+                margin: 0.3rem 0;
+            }
+
+            .team-position {
+                font-size: 0.7rem;
+            }
+
             .vs-separator {
-                order: -1;
+                order: 0;
+                margin-bottom: 0;
+            }
+
+            .confrontos-diretos-button-center {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .vs-text {
+                font-size: 1.2rem;
+            }
+
+            .match-info {
+                font-size: 0.6rem;
+            }
+
+            /* Títulos das seções - mesmo padrão da Aba 1 */
+            .stats-comparison h4 {
+                font-size: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .analyst-conclusion h4 {
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .h2h-section h4 {
+                font-size: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .data-recommendation h4 {
+                font-size: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .no-selection-content h3 {
+                font-size: 0.75rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .game-selector h3 {
+                font-size: 0.75rem;
                 margin-bottom: 1rem;
             }
 
             .stat-row {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 0.3rem;
                 text-align: center;
+                padding: 0.8rem;
+                align-items: stretch;
             }
 
             .stat-label {
-                font-weight: 700;
-                color: var(--cor-destaque-primaria);
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: var(--cor-texto-secundario);
                 margin-bottom: 0.5rem;
+                grid-column: 1 / -1;
+                text-transform: none;
+            }
+
+            .stat-value {
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: var(--cor-texto-principal);
+            }
+
+            .stat-bar {
+                height: 12px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
+                overflow: hidden;
+                width: 100%;
+                min-width: 100px;
+                position: relative;
+            }
+
+            .stat-fill {
+                height: 100%;
+                border-radius: 4px;
+                transition: width 0.3s ease;
+                min-width: 2px;
+                background: linear-gradient(90deg, var(--cor-destaque-secundaria), #00B377);
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            .stat-fill.favorable {
+                background: linear-gradient(90deg, #32CD32, #00FF00);
+            }
+
+            .stat-fill.unfavorable {
+                background: linear-gradient(90deg, #FF6B6B, #FF4444);
+            }
+
+            .vs-text {
+                font-size: 0.8rem;
+            }
+
+            .team-position {
+                font-size: 0.7rem;
+            }
+
+            .match-info {
+                font-size: 0.6rem;
+            }
+
+            .confrontos-diretos-button-center {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.6rem;
             }
 
             .stat-home, .stat-away {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-                align-items: center;
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+                align-items: stretch;
+                min-width: 0;
+                flex: 1;
             }
 
             .h2h-grid {
@@ -3073,7 +3199,7 @@
         .stat-label {
             color: var(--cor-texto-secundario);
             font-size: 0.75rem;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
             margin-bottom: 0.5rem;
             display: block;
@@ -4781,7 +4907,7 @@ Equilíbrio
                         <div class="stats-grid">
                             <!-- GOLS MARCADOS -->
                             <div class="stat-row">
-                                <div class="stat-label">Gols marcados p/jogo</div>
+                                <div class="stat-label">Gols Marcados P/Jogo</div>
                                 <div class="stat-home">
                                     <div class="stat-value">...</div>
                                     <div class="stat-bar">
@@ -4798,7 +4924,7 @@ Equilíbrio
 
                             <!-- GOLS SOFRIDOS -->
                             <div class="stat-row">
-                                <div class="stat-label">Gols sofridos p/jogo</div>
+                                <div class="stat-label">Gols Sofridos P/Jogo</div>
                                 <div class="stat-home">
                                     <div class="stat-value">...</div>
                                     <div class="stat-bar">
@@ -7713,6 +7839,8 @@ Equilíbrio
         // Atualizar interface com dados reais do dashboard admin
         async function updateRealStats(homeStats, awayStats) {
             console.log('🔄 [UPDATE-STATS] Iniciando atualização com dados reais...');
+            console.log('🏠 [UPDATE-STATS] Home Stats:', homeStats);
+            console.log('✈️ [UPDATE-STATS] Away Stats:', awayStats);
             
             // AGUARDAR UM POUCO PARA GARANTIR QUE O LOADING SEJA VISÍVEL
             await new Promise(resolve => setTimeout(resolve, 300));
@@ -7776,13 +7904,21 @@ Equilíbrio
 
         // Atualizar estatística com barras inteligentes (LÓGICA SIMPLES)
         function updateSmartStat(rowIndex, homeValue, awayValue, type, suffix = '') {
+            console.log(`📊 [UPDATE-SMART-STAT] Row ${rowIndex}: Home=${homeValue}, Away=${awayValue}, Type=${type}`);
+            
             const statRows = document.querySelectorAll('.stat-row');
-            if (!statRows[rowIndex]) return;
+            if (!statRows[rowIndex]) {
+                console.error(`❌ [UPDATE-SMART-STAT] Row ${rowIndex} não encontrada!`);
+                return;
+            }
             
             const homeElement = statRows[rowIndex].querySelector('.stat-home');
             const awayElement = statRows[rowIndex].querySelector('.stat-away');
             
-            if (!homeElement || !awayElement) return;
+            if (!homeElement || !awayElement) {
+                console.error(`❌ [UPDATE-SMART-STAT] Elementos não encontrados!`);
+                return;
+            }
             
             // Atualizar valores
             const homeValueElement = homeElement.querySelector('.stat-value');
@@ -7790,9 +7926,11 @@ Equilíbrio
             
             if (homeValueElement) {
                 homeValueElement.textContent = homeValue.toFixed(2) + suffix;
+                console.log(`✅ [UPDATE-SMART-STAT] Home value atualizado: ${homeValue.toFixed(2)}${suffix}`);
             }
             if (awayValueElement) {
                 awayValueElement.textContent = awayValue.toFixed(2) + suffix;
+                console.log(`✅ [UPDATE-SMART-STAT] Away value atualizado: ${awayValue.toFixed(2)}${suffix}`);
             }
             
             // LÓGICA SIMPLES: VALOR MAIOR = BARRA MAIOR
@@ -7814,17 +7952,19 @@ Equilíbrio
                 awayClass = awayValue <= homeValue ? 'favorable' : 'unfavorable';
             }
             
-            // Aplicar barras e cores
+            // Aplicar barras e cores - VOLTAR PARA WIDTH
             const homeFill = homeElement.querySelector('.stat-fill');
             const awayFill = awayElement.querySelector('.stat-fill');
             
             if (homeFill) {
                 homeFill.style.width = homePercentage + '%';
                 homeFill.className = `stat-fill ${homeClass}`;
+                console.log(`✅ [UPDATE-SMART-STAT] Home barra atualizada: ${homePercentage}% (${homeClass})`);
             }
             if (awayFill) {
                 awayFill.style.width = awayPercentage + '%';
                 awayFill.className = `stat-fill ${awayClass}`;
+                console.log(`✅ [UPDATE-SMART-STAT] Away barra atualizada: ${awayPercentage}% (${awayClass})`);
             }
         }
 
@@ -8213,10 +8353,10 @@ Equilíbrio
         function updateStatLabels() {
             const statRows = document.querySelectorAll('.stat-row');
             if (statRows[0]) {
-                statRows[0].querySelector('.stat-label').textContent = 'Gols marcados p/jogo';
+                statRows[0].querySelector('.stat-label').textContent = 'Gols Marcados P/Jogo';
             }
             if (statRows[1]) {
-                statRows[1].querySelector('.stat-label').textContent = 'Gols sofridos p/jogo';
+                statRows[1].querySelector('.stat-label').textContent = 'Gols Sofridos P/Jogo';
             }
             if (statRows[2]) {
                 statRows[2].querySelector('.stat-label').textContent = 'Aproveitamento (%)';
