@@ -3450,28 +3450,38 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 4px;
+                gap: 2px; /* reduzido de 4px para 2px */
             }
             
             /* o trilho da barra ocupa 100% da sua coluna */
             [data-rx="aba2"] .grid-3cols.barras .progress.dual{
                 width: 100%;
-                height: clamp(8px,1.7vw,10px);
+                height: clamp(4px,0.85vw,5px); /* reduzido pela metade */
             }
             
             /* valores ficam acima das barras */
             [data-rx="aba2"] .grid-3cols.barras .stat-value {
                 font-size: 0.7rem;
                 font-weight: 600;
-                margin-bottom: 2px;
+                margin-bottom: 1px; /* reduzido de 2px para 1px */
             }
             
             /* label fica centralizado acima das duas colunas */
             [data-rx="aba2"] .grid-3cols.barras .stat-label {
                 grid-column: 1 / -1;
                 text-align: center;
-                margin-bottom: 8px;
+                margin-bottom: 4px; /* reduzido de 8px para 4px */
                 font-size: 0.7rem;
+            }
+            
+            /* reduzir espaçamento entre as linhas das estatísticas */
+            [data-rx="aba2"] .stat-row {
+                margin: 1px 0; /* reduzido em 80% - de 4px para 1px */
+            }
+            
+            /* reduzir espaçamento entre containers de estatísticas */
+            [data-rx="aba2"] .stats-grid {
+                gap: 2px; /* reduzido drasticamente o gap entre containers */
             }
         }
 
