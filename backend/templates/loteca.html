@@ -286,6 +286,23 @@
         .prob-item.colX .value { color: var(--cor-equilibrio); }
         .prob-item.col2 .value { color: var(--cor-destaque-primaria); }
 
+        /* Loading State para Probabilidades */
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .prob-item .value.loading {
+            color: var(--cor-texto-secundario);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
         /* Recomendação */
         .recommendation {
             background-color: rgba(0, 227, 140, 0.1);
@@ -3763,11 +3780,11 @@
             </div>
             <div class="game-card-body">
                 <div class="probabilities" id="probabilidades-jogo-1">
-                    <div class="prob-item col1"><div class="label">Coluna 1 (Corinthians)</div><div class="value" id="prob-col1">45%</div></div>
-                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value" id="prob-colX">30%</div></div>
-                    <div class="prob-item col2"><div class="label">Coluna 2 (Flamengo)</div><div class="value" id="prob-col2">25%</div></div>
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Corinthians)</div><div class="value loading" id="prob-col1"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Flamengo)</div><div class="value loading" id="prob-col2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
-                <div class="recommendation" id="recomendacao-jogo-1"><strong>Recomendação Estatística: Coluna 1 (Corinthians)</strong> - Risco Médio</div>
+                <div class="recommendation" id="recomendacao-jogo-1"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
                 <table class="analysis-table" id="analise-jogo-1">
                     <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome">Corinthians</th><th class="team-header" id="time-fora-nome">Flamengo</th><th>Análise</th></tr></thead>
@@ -9639,9 +9656,19 @@
             const probCol2 = document.getElementById('prob-col2');
             const recomendacao = document.getElementById('recomendacao-jogo-1');
             
-            if (probCol1) probCol1.textContent = '22%';  // Corinthians (ponderado)
-            if (probColX) probColX.textContent = '30%';  // Empate (ponderado)
-            if (probCol2) probCol2.textContent = '48%';  // Flamengo (ponderado)
+            // Transição suave: remover loading e inserir dados reais
+            if (probCol1) {
+                probCol1.classList.remove('loading');
+                probCol1.innerHTML = '22%';  // Corinthians (ponderado)
+            }
+            if (probColX) {
+                probColX.classList.remove('loading');
+                probColX.innerHTML = '30%';  // Empate (ponderado)
+            }
+            if (probCol2) {
+                probCol2.classList.remove('loading');
+                probCol2.innerHTML = '48%';  // Flamengo (ponderado)
+            }
             if (recomendacao) {
                 recomendacao.innerHTML = '<strong>Recomendação Estatística: Coluna 2 (Flamengo)</strong> - Risco Baixo';
             }
