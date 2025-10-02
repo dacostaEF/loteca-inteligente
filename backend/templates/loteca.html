@@ -2557,35 +2557,55 @@
 
             /* Probabilidades - Stack Vertical no Mobile */
             .probabilities {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
                 margin-bottom: 1.5rem;
             }
 
             .prob-item {
-                padding: 1.2rem 1rem;
+                padding: 0.6rem 0.4rem;
                 text-align: center;
             }
 
             .prob-item .label {
-                font-size: 0.85rem;
-                margin-bottom: 0.5rem;
+                font-size: 0.7rem;
+                margin-bottom: 0.2rem;
                 display: block;
             }
 
             .prob-item .value {
-                font-size: 2.5rem;
+                font-size: 1.1rem;
                 font-weight: 900;
             }
 
-            /* Tabela de Análise - Mobile Cards */
+            /* Tabela de Análise - Responsiva no mobile */
             .analysis-table {
-                display: none; /* Esconder tabela no mobile */
+                display: table;
+                width: 100%;
+                font-size: 0.8rem;
             }
 
-            /* Nova estrutura mobile para análise */
+            .analysis-table th,
+            .analysis-table td {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .analysis-table .confrontos-sequence {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.3rem;
+                justify-content: center;
+            }
+
+            .analysis-table .confronto-item {
+                font-size: 0.7rem;
+                padding: 0.2rem;
+            }
+
+            /* Nova estrutura mobile para análise - Esconder */
             .analysis-mobile {
-                display: block;
+                display: none;
                 background-color: rgba(0,0,0,0.1);
                 border-radius: 8px;
                 padding: 1rem;
@@ -2627,9 +2647,15 @@
 
             /* Recomendação Mobile */
             .recommendation {
-                padding: 1.2rem;
-                font-size: 0.95rem;
+                padding: 0.8rem;
+                font-size: 0.75rem;
                 margin-bottom: 1.5rem;
+                line-height: 1.3;
+            }
+
+            .recommendation strong {
+                font-size: 0.75rem;
+                font-weight: 700;
             }
 
             /* Conclusão Mobile */
@@ -3197,9 +3223,6 @@
                 padding: 1rem 0.8rem;
             }
 
-            .prob-item .value {
-                font-size: 2.2rem;
-            }
 
             .recommendation {
                 padding: 1rem;
@@ -3270,9 +3293,7 @@
 
         /* OCULTAR ELEMENTOS DESKTOP NO MOBILE */
         @media (max-width: 768px) {
-            .analysis-table {
-                display: none !important;
-            }
+            /* Removido: .analysis-table { display: none !important; } */
         }
 
         /* MOSTRAR ELEMENTOS MOBILE APENAS NO MOBILE */
@@ -3282,7 +3303,7 @@
 
         @media (max-width: 768px) {
             .analysis-mobile {
-                display: block !important;
+                display: none !important;
             }
         }
 
@@ -3808,8 +3829,8 @@
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Forma Recente</div>
                         <div class="analysis-mobile-teams">
-                            <span>COR: V-E-V-D-V</span>
-                            <span>FLA: V-V-E-E-D</span>
+                            <span><img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
                         </div>
                         <div class="analysis-mobile-result">
 COR
@@ -3818,8 +3839,8 @@ COR
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Posição</div>
                         <div class="analysis-mobile-teams">
-                            <span>COR: 5º</span>
-                            <span>FLA: 2º</span>
+                            <span><img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px; margin-right: 5px;">5º</span>
+                            <span><img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" style="width: 20px; height: 20px; margin-right: 5px;">2º</span>
                         </div>
                         <div class="analysis-mobile-result">
 FLA
@@ -3828,8 +3849,8 @@ FLA
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Confronto Direto</div>
                         <div class="analysis-mobile-teams">
-                            <span>COR: 2V-1E-2D</span>
-                            <span>FLA: 2V-1E-2D</span>
+                            <span><img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
+                            <span><img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
                         </div>
                         <div class="analysis-mobile-result">
 Equal
