@@ -3433,6 +3433,48 @@
             }
         }
 
+        /* MOBILE ONLY: não afeta desktop */
+        @media (max-width:520px){
+            /* container que hoje tem 3 colunas (e uma delas está vazia) */
+            [data-rx="aba2"] .grid-3cols.barras{
+                display:grid;
+                /* duas colunas: uma para cada time */
+                grid-template-columns: 1fr 1fr;
+                gap: 12px; /* espaço entre as duas barras */
+                align-items: center;
+            }
+            
+            /* cada barra ocupa sua própria coluna */
+            [data-rx="aba2"] .grid-3cols.barras .stat-home,
+            [data-rx="aba2"] .grid-3cols.barras .stat-away {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+            
+            /* o trilho da barra ocupa 100% da sua coluna */
+            [data-rx="aba2"] .grid-3cols.barras .progress.dual{
+                width: 100%;
+                height: clamp(8px,1.7vw,10px);
+            }
+            
+            /* valores ficam acima das barras */
+            [data-rx="aba2"] .grid-3cols.barras .stat-value {
+                font-size: 0.7rem;
+                font-weight: 600;
+                margin-bottom: 2px;
+            }
+            
+            /* label fica centralizado acima das duas colunas */
+            [data-rx="aba2"] .grid-3cols.barras .stat-label {
+                grid-column: 1 / -1;
+                text-align: center;
+                margin-bottom: 8px;
+                font-size: 0.7rem;
+            }
+        }
+
         /* Análise de Desempenho Recente (4 Pilares) */
         .analise-desempenho-container {
             margin: 2rem 0;
@@ -4852,7 +4894,7 @@ Equilíbrio
         </div> <!-- FIM DA ABA 1: ANÁLISE RÁPIDA -->
 
         <!-- ABA 2: DADOS AVANÇADOS -->
-        <div class="tab-content" id="dados-avancados" style="display: none;">
+        <div class="tab-content" id="dados-avancados" style="display: none;" data-rx="aba2">
             <div class="advanced-stats-container">
                 
                 <!-- SELETOR DE CONFRONTO -->
@@ -4906,51 +4948,51 @@ Equilíbrio
                         
                         <div class="stats-grid">
                             <!-- GOLS MARCADOS -->
-                            <div class="stat-row">
+                            <div class="stat-row grid-3cols barras">
                                 <div class="stat-label">Gols Marcados P/Jogo</div>
                                 <div class="stat-home">
                                     <div class="stat-value">...</div>
-                                    <div class="stat-bar">
+                                    <div class="stat-bar progress dual">
                                         <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
                                     <div class="stat-value">...</div>
-                                    <div class="stat-bar">
+                                    <div class="stat-bar progress dual">
                                         <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- GOLS SOFRIDOS -->
-                            <div class="stat-row">
+                            <div class="stat-row grid-3cols barras">
                                 <div class="stat-label">Gols Sofridos P/Jogo</div>
                                 <div class="stat-home">
                                     <div class="stat-value">...</div>
-                                    <div class="stat-bar">
+                                    <div class="stat-bar progress dual">
                                         <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
                                     <div class="stat-value">...</div>
-                                    <div class="stat-bar">
+                                    <div class="stat-bar progress dual">
                                         <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- APROVEITAMENTO -->
-                            <div class="stat-row">
+                            <div class="stat-row grid-3cols barras">
                                 <div class="stat-label">Aproveitamento (%)</div>
                                 <div class="stat-home">
                                     <div class="stat-value">...</div>
-                                    <div class="stat-bar">
+                                    <div class="stat-bar progress dual">
                                         <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <div class="stat-away">
                                     <div class="stat-value">...</div>
-                                    <div class="stat-bar">
+                                    <div class="stat-bar progress dual">
                                         <div class="stat-fill" style="width: 0%"></div>
                                     </div>
                                 </div>
