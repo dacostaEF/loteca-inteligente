@@ -2803,14 +2803,21 @@
             /* Responsividade das Abas */
             .tabs-nav {
                 padding: 0.3rem;
-                flex-direction: column;
-                gap: 0.5rem;
+                flex-direction: row;
+                gap: 0.2rem;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .tab-btn {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.6rem 0.5rem;
+                font-size: 0.75rem;
                 max-width: none;
+                flex: 1;
+                min-width: 0;
+                white-space: normal;
+                line-height: 1.2;
+                text-align: center;
             }
 
             /* Aba 2 Mobile */
