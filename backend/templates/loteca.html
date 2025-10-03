@@ -346,6 +346,54 @@
             text-align: center;
         }
 
+        /* Ajuste dos chips para mobile - Últimos Confrontos */
+        @media (max-width: 768px) {
+            .analysis-table .confrontos-sequence {
+                transform-origin: left center;
+                display: grid !important;
+                grid-template-columns: repeat(5, 1fr) !important;
+                grid-template-rows: repeat(2, 1fr) !important;
+                gap: 4px !important;
+                justify-items: start !important;
+                align-items: center !important;
+            }
+
+            /* Ajustar o conteúdo do chip */
+            .confrontos-sequence .confronto-item {
+                gap: 0px !important;
+                padding: 1px !important;
+                font-size: 0.45rem !important;
+            }
+            
+            .confrontos-sequence .confronto-data {
+                font-size: 0.4rem !important;
+                line-height: 1 !important;
+            }
+            
+            .confrontos-sequence .confronto-placar {
+                font-size: 0.45rem !important;
+                line-height: 1 !important;
+                font-weight: 600 !important;
+            }
+            
+            .confrontos-sequence .confronto-result {
+                width: 12px !important;
+                height: 12px !important;
+            }
+            
+            .confrontos-sequence .confronto-escudo {
+                width: 12px !important;
+                height: 12px !important;
+            }
+            
+            .confrontos-sequence .confronto-result.empate {
+                width: 12px !important;
+                height: 12px !important;
+                font-size: 0.45rem !important;
+                line-height: 1 !important;
+            }
+        }
+
         .status-icon {
             font-size: 1.2rem;
             margin-right: 0.5rem;
