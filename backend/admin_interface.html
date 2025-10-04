@@ -1335,6 +1335,273 @@
                 font-size: 1.8em;
             }
         }
+
+        /* ESTILOS PARA ABA CARTOLA */
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary, .btn-danger {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A855F7, #9333EA);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4B5563;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+            transform: translateY(-2px);
+        }
+
+        .status-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .status-item {
+            background: #F8FAFC;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #A855F7;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #374151;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .status-value {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .classifications-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .classification-card {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .classification-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #A855F7, #9333EA);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .status-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body p {
+            margin: 8px 0;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .comparison-container {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-placeholder {
+            text-align: center;
+            color: #6B7280;
+            padding: 40px;
+        }
+
+        .logs-container {
+            background: #1F2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-item {
+            display: flex;
+            gap: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid #374151;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .log-time {
+            color: #9CA3AF;
+            min-width: 80px;
+        }
+
+        .log-message {
+            color: #E5E7EB;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: #6B7280;
+            padding: 40px;
+            background: #F8FAFC;
+            border-radius: 12px;
+            border: 2px dashed #D1D5DB;
+        }
+
+        /* ESTILOS PARA TABELAS CARTOLA */
+        .classification-table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .table th {
+            background-color: #F8FAFC;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .table-striped tbody tr:nth-child(odd) {
+            background-color: #F9FAFB;
+        }
+
+        .error-message {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 20px;
+            color: #DC2626;
+            text-align: center;
+        }
+
+        .info-message {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 8px;
+            padding: 20px;
+            color: #1D4ED8;
+            text-align: center;
+        }
+
+        .text-muted {
+            color: #6B7280;
+            font-size: 14px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        /* ESTILOS PARA DROPDOWN */
+        .championship-selector {
+            margin: 20px 0;
+        }
+
+        .form-select {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:hover {
+            border-color: #A855F7;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #A855F7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -1430,8 +1697,8 @@
             <button class="tab" onclick="showTab('estatisticas')">
                 <i class="fas fa-chart-bar"></i> Estatísticas
             </button>
-            <button class="tab" onclick="showTab('campeonatos')">
-                <i class="fas fa-medal"></i> Campeonatos
+            <button class="tab" onclick="showTab('cartola')">
+                <i class="fas fa-chart-line"></i> Cartola
             </button>
             <button class="tab" onclick="showTab('dashboard')">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -2017,15 +2284,41 @@
             </table>
         </div>
 
-        <!-- === ABA CAMPEONATOS === -->
-        <div class="tab-content" id="campeonatos">
+        <!-- === ABA CARTOLA === -->
+        <div class="tab-content" id="cartola">
             <h2 style="margin-bottom: 25px; color: #333;">
-                <i class="fas fa-trophy"></i> Gestão de Campeonatos
+                <i class="fas fa-chart-line"></i> Classificações Cartola FC
             </h2>
-            <p style="padding: 50px; text-align: center; color: #666;">
-                <i class="fas fa-construction" style="font-size: 40px; margin-bottom: 15px;"></i><br>
-                Funcionalidade em desenvolvimento...
-            </p>
+            
+            <!-- CONTROLES -->
+            <div class="admin-section">
+                <div class="control-buttons">
+                    <button id="btn-carregar-cartola" class="btn-primary" onclick="carregarCartolaFC()">
+                        <i class="fas fa-download"></i> Carregar Classificações do Cartola FC
+                    </button>
+                </div>
+            </div>
+
+            <!-- SELETOR DE CAMPEONATO -->
+            <div class="admin-section">
+                <h3>📊 Selecione o Campeonato</h3>
+                <div class="championship-selector">
+                    <select id="cartola-championship-select" class="form-select">
+                        <option value="serie-a">🏆 Brasileirão Série A</option>
+                        <option value="serie-b">🥈 Brasileirão Série B</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- CLASSIFICAÇÃO -->
+            <div class="admin-section">
+                <h3 id="cartola-championship-title">🏆 Brasileirão Série A - Cartola FC</h3>
+                <div id="cartola-classification" class="classification-table-container">
+                    <div class="loading-message">
+                        <p><i class="fas fa-info-circle"></i> Clique em "Carregar Classificações" para ver os dados do Cartola FC</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- === ABA DASHBOARD === -->
@@ -2224,6 +2517,232 @@
             document.getElementById('adminContainer').style.display = 'none';
             document.getElementById('adminKey').value = '';
         }
+
+        // === FUNÇÕES CARTOLA FC SIMPLES ===
+        
+        // FUNÇÃO PARA CARREGAR CLASSIFICAÇÕES DO CARTOLA FC
+        async function carregarCartolaFC() {
+            try {
+                const btn = document.getElementById('btn-carregar-cartola');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando...';
+                
+                const campeonato = document.getElementById('cartola-championship-select').value;
+                console.log(`🔍 Carregando classificação ${campeonato} do Cartola FC...`);
+                
+                // Buscar dados do Cartola FC - endpoint de clubes
+                console.log('🔍 Tentando acessar API do Cartola FC...');
+                
+                // Tentar diferentes endpoints
+                let response;
+                try {
+                    response = await fetch('https://api.cartolafc.globo.com/clubes', {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+                } catch (corsError) {
+                    console.log('❌ Erro CORS:', corsError);
+                    // Se der erro CORS, mostrar dados simulados
+                    mostrarDadosSimulados(campeonato);
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Dados do Cartola FC recebidos:', data);
+                
+                // Mostrar classificação
+                mostrarClassificacaoCartola(data, campeonato);
+                
+                console.log('🎉 Classificação carregada com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar Cartola FC:', error);
+                
+                // Mostrar erro
+                document.getElementById('cartola-classification').innerHTML = `
+                    <div class="error-message">
+                        <p><i class="fas fa-exclamation-triangle"></i> Erro ao carregar dados do Cartola FC: ${error.message}</p>
+                    </div>
+                `;
+                
+            } finally {
+                const btn = document.getElementById('btn-carregar-cartola');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-download"></i> Carregar Classificações do Cartola FC';
+            }
+        }
+        
+        // MOSTRAR CLASSIFICAÇÃO DO CARTOLA FC
+        function mostrarClassificacaoCartola(data, campeonato) {
+            const container = document.getElementById('cartola-classification');
+            const title = document.getElementById('cartola-championship-title');
+            
+            // Atualizar título
+            if (campeonato === 'serie-a') {
+                title.textContent = '🏆 Brasileirão Série A - Cartola FC';
+            } else {
+                title.textContent = '🥈 Brasileirão Série B - Cartola FC';
+            }
+            
+            if (!data || !data.clubes) {
+                container.innerHTML = '<div class="error-message"><p>Dados não disponíveis</p></div>';
+                return;
+            }
+            
+            // Converter clubes em array
+            const clubes = Object.values(data.clubes);
+            
+            // Criar tabela de classificação
+            let html = `
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Time</th>
+                                <th>ID</th>
+                                <th>Nome Fantasia</th>
+                                <th>Escudo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            // Mostrar clubes disponíveis
+            clubes.forEach((clube, index) => {
+                const pos = index + 1;
+                html += `
+                    <tr>
+                        <td><strong>${pos}</strong></td>
+                        <td><strong>${clube.nome || '-'}</strong></td>
+                        <td>${clube.id || '-'}</td>
+                        <td>${clube.nome_fantasia || '-'}</td>
+                        <td><img src="${clube.escudo || ''}" alt="${clube.nome}" style="width: 30px; height: 30px;" onerror="this.style.display='none'"></td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-muted">Dados do Cartola FC - ${clubes.length} clubes encontrados</p>
+                <div class="info-message">
+                    <p><i class="fas fa-info-circle"></i> Esta é a lista de clubes disponíveis no Cartola FC</p>
+                    <p>Para ver classificações completas, seria necessário calcular com base nas partidas</p>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        // MOSTRAR DADOS SIMULADOS QUANDO API NÃO FUNCIONAR
+        function mostrarDadosSimulados(campeonato) {
+            const container = document.getElementById('cartola-classification');
+            const title = document.getElementById('cartola-championship-title');
+            
+            // Atualizar título
+            if (campeonato === 'serie-a') {
+                title.textContent = '🏆 Brasileirão Série A - Cartola FC (Dados Simulados)';
+            } else {
+                title.textContent = '🥈 Brasileirão Série B - Cartola FC (Dados Simulados)';
+            }
+            
+            // Dados simulados da Série A
+            const clubesSerieA = [
+                { nome: 'Flamengo', pontos: 51, jogos: 23, vitorias: 15, empates: 6, derrotas: 2, gols_pro: 48, gols_contra: 11, saldo_gols: 37 },
+                { nome: 'Cruzeiro', pontos: 50, jogos: 24, vitorias: 15, empates: 5, derrotas: 4, gols_pro: 39, gols_contra: 17, saldo_gols: 22 },
+                { nome: 'Palmeiras', pontos: 49, jogos: 22, vitorias: 15, empates: 4, derrotas: 3, gols_pro: 36, gols_contra: 18, saldo_gols: 18 },
+                { nome: 'Mirassol', pontos: 42, jogos: 23, vitorias: 11, empates: 9, derrotas: 3, gols_pro: 41, gols_contra: 23, saldo_gols: 18 },
+                { nome: 'Botafogo', pontos: 40, jogos: 24, vitorias: 11, empates: 7, derrotas: 6, gols_pro: 35, gols_contra: 18, saldo_gols: 17 }
+            ];
+            
+            // Dados simulados da Série B
+            const clubesSerieB = [
+                { nome: 'Vitória', pontos: 45, jogos: 22, vitorias: 13, empates: 6, derrotas: 3, gols_pro: 38, gols_contra: 15, saldo_gols: 23 },
+                { nome: 'Goiás', pontos: 42, jogos: 23, vitorias: 12, empates: 6, derrotas: 5, gols_pro: 35, gols_contra: 20, saldo_gols: 15 },
+                { nome: 'Criciúma', pontos: 40, jogos: 22, vitorias: 11, empates: 7, derrotas: 4, gols_pro: 32, gols_contra: 18, saldo_gols: 14 },
+                { nome: 'Paysandu', pontos: 38, jogos: 23, vitorias: 10, empates: 8, derrotas: 5, gols_pro: 30, gols_contra: 22, saldo_gols: 8 },
+                { nome: 'Novorizontino', pontos: 36, jogos: 22, vitorias: 10, empates: 6, derrotas: 6, gols_pro: 28, gols_contra: 25, saldo_gols: 3 }
+            ];
+            
+            const clubes = campeonato === 'serie-a' ? clubesSerieA : clubesSerieB;
+            
+            // Criar tabela de classificação
+            let html = `
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Time</th>
+                                <th>Pts</th>
+                                <th>J</th>
+                                <th>V</th>
+                                <th>E</th>
+                                <th>D</th>
+                                <th>GP</th>
+                                <th>GC</th>
+                                <th>SG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            // Mostrar classificação
+            clubes.forEach((clube, index) => {
+                const pos = index + 1;
+                html += `
+                    <tr>
+                        <td><strong>${pos}</strong></td>
+                        <td><strong>${clube.nome}</strong></td>
+                        <td>${clube.pontos}</td>
+                        <td>${clube.jogos}</td>
+                        <td>${clube.vitorias}</td>
+                        <td>${clube.empates}</td>
+                        <td>${clube.derrotas}</td>
+                        <td>${clube.gols_pro}</td>
+                        <td>${clube.gols_contra}</td>
+                        <td>${clube.saldo_gols}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+                <div class="info-message">
+                    <p><i class="fas fa-info-circle"></i> Dados simulados - API do Cartola FC bloqueada por CORS</p>
+                    <p>Em produção, seria necessário um proxy para acessar a API</p>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+        
+        // EVENT LISTENER PARA DROPDOWN
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('cartola-championship-select');
+            if (select) {
+                select.addEventListener('change', function() {
+                    // Atualizar título quando mudar seleção
+                    const title = document.getElementById('cartola-championship-title');
+                    if (this.value === 'serie-a') {
+                        title.textContent = '🏆 Brasileirão Série A - Cartola FC';
+                    } else {
+                        title.textContent = '🥈 Brasileirão Série B - Cartola FC';
+                    }
+                });
+            }
+        });
 
         // === SISTEMA DE ABAS ===
         function showTab(tabName) {

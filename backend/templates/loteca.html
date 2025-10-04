@@ -5345,7 +5345,7 @@ Equilíbrio
                 <div class="times-loteca-section">
                         <div class="section-header">
                             <h2>⚽ Times Loteca Jogos - Comparação Direta</h2>
-                            <p>Análise lado a lado com dados reais do Cartola FC - Carregamento automático ativo</p>
+                            <p>Análise lado a lado com dados da Central Admin - Carregamento automático ativo</p>
                             <!-- Botão removido: carregamento automático ativo -->
                         </div>
 
@@ -6759,7 +6759,7 @@ Equilíbrio
             try {
                 console.log(`🔍 Verificando últimos jogos reais de: ${nomeTime}`);
                 
-                // FUTURO: Integrar com API real do Cartola FC ou Globo Esporte
+                // FUTURO: Integrar com API da Central Admin
                 // const response = await fetch(`/api/br/time/${nomeTime}/ultimos-jogos`);
                 // const jogos = await response.json();
                 
@@ -6785,8 +6785,162 @@ Equilíbrio
             verificarTime: (nome) => verificarUltimosJogosReais(nome)
         };
 
-        // PROVIDER CARTOLA FC - DADOS REAIS VIA BACKEND FLASK
-        class CartolaProvider {
+        // PROVIDER CARTOLA FC - APENAS PARA VERIFICAÇÃO E COMPARAÇÃO
+        class CartolaVerificationProvider {
+            constructor() {
+                this.API_BASE = 'https://api.cartolafc.globo.com';
+                this.cache = new Map();
+                this.CACHE_TTL = 30 * 60 * 1000; // 30 minutos
+            }
+
+            async _get(endpoint) {
+                const url = `${this.API_BASE}${endpoint}`;
+                const cacheKey = url;
+                
+                // Verificar cache
+                const cached = this.cache.get(cacheKey);
+                if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
+                    console.log(`[CartolaVerification] Cache hit: ${endpoint}`);
+                    return cached.data;
+                }
+
+                try {
+                    console.log(`[CartolaVerification] Buscando: ${url}`);
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    // Armazenar no cache
+                    this.cache.set(cacheKey, {
+                        data: data,
+                        timestamp: Date.now()
+                    });
+
+                    console.log(`[CartolaVerification] ✅ Dados obtidos: ${endpoint}`);
+                    return data;
+                    
+                } catch (error) {
+                    console.warn(`[CartolaVerification] ❌ Erro ao buscar ${endpoint}:`, error.message);
+                    throw error;
+                }
+            }
+
+            // BUSCAR TODAS AS CLASSIFICAÇÕES DISPONÍVEIS
+            async getAvailableClassifications() {
+                try {
+                    console.log('[CartolaVerification] 🔍 Buscando classificações disponíveis...');
+                    
+                    // Buscar dados da rodada atual para ver quais campeonatos estão disponíveis
+                    const rodadaData = await this._get('/rodadas');
+                    const clubesData = await this._get('/clubes');
+                    
+                    const classifications = [];
+                    
+                    // Mapear campeonatos disponíveis
+                    if (rodadaData && rodadaData.length > 0) {
+                        classifications.push({
+                            id: 'brasileirao_serie_a',
+                            name: 'Brasileirão Série A',
+                            type: 'nacional',
+                            available: true,
+                            lastUpdate: new Date().toISOString()
+                        });
+                    }
+                    
+                    // Verificar se há dados de clubes para outros campeonatos
+                    if (clubesData && Object.keys(clubesData).length > 0) {
+                        classifications.push({
+                            id: 'brasileirao_serie_b',
+                            name: 'Brasileirão Série B',
+                            type: 'nacional',
+                            available: true,
+                            lastUpdate: new Date().toISOString()
+                        });
+                    }
+                    
+                    console.log(`[CartolaVerification] ✅ ${classifications.length} classificações encontradas`);
+                    return classifications;
+                    
+                } catch (error) {
+                    console.error('[CartolaVerification] ❌ Erro ao buscar classificações:', error);
+                    return [];
+                }
+            }
+
+            // BUSCAR CLASSIFICAÇÃO ESPECÍFICA
+            async getClassification(campeonato) {
+                try {
+                    console.log(`[CartolaVerification] 📊 Buscando classificação: ${campeonato}`);
+                    
+                    let endpoint = '';
+                    switch(campeonato) {
+                        case 'brasileirao_serie_a':
+                            endpoint = '/partidas';
+                            break;
+                        case 'brasileirao_serie_b':
+                            endpoint = '/clubes';
+                            break;
+                        default:
+                            throw new Error(`Campeonato não suportado: ${campeonato}`);
+                    }
+                    
+                    const data = await this._get(endpoint);
+                    return this._formatClassificationData(data, campeonato);
+                    
+                } catch (error) {
+                    console.error(`[CartolaVerification] ❌ Erro ao buscar ${campeonato}:`, error);
+                    return null;
+                }
+            }
+
+            // FORMATAR DADOS DE CLASSIFICAÇÃO
+            _formatClassificationData(data, campeonato) {
+                if (campeonato === 'brasileirao_serie_a') {
+                    // Processar dados de partidas para criar classificação
+                    return this._processPartidasToClassification(data);
+                } else if (campeonato === 'brasileirao_serie_b') {
+                    // Processar dados de clubes
+                    return this._processClubesToClassification(data);
+                }
+                return data;
+            }
+
+            // PROCESSAR PARTIDAS PARA CLASSIFICAÇÃO
+            _processPartidasToClassification(partidasData) {
+                // Implementar lógica para converter partidas em classificação
+                console.log('[CartolaVerification] 📊 Processando partidas para classificação...');
+                return {
+                    campeonato: 'Brasileirão Série A',
+                    rodada: partidasData.length > 0 ? partidasData[0].rodada : 0,
+                    classificacao: [], // Será preenchido com lógica de cálculo
+                    lastUpdate: new Date().toISOString()
+                };
+            }
+
+            // PROCESSAR CLUBES PARA CLASSIFICAÇÃO
+            _processClubesToClassification(clubesData) {
+                console.log('[CartolaVerification] 📊 Processando clubes para classificação...');
+                return {
+                    campeonato: 'Brasileirão Série B',
+                    total_clubes: Object.keys(clubesData).length,
+                    clubes: Object.values(clubesData),
+                    lastUpdate: new Date().toISOString()
+                };
+            }
+        }
+
+        // PROVIDER CENTRAL ADMIN - DADOS DA CENTRAL ADMIN
+        class CentralAdminProvider {
             constructor() {
                 // Detecção automática de ambiente
                 const isLocal = ['localhost', '127.0.0.1'].some(host => location.hostname.includes(host));
@@ -6795,13 +6949,13 @@ Equilíbrio
                     ? 'http://127.0.0.1:5000/api/br'     // Desenvolvimento
                     : `${location.origin}/api/br`;       // Produção = mesmo domínio
                     
-                this.FALLBACK_API = 'https://api.cartolafc.globo.com'; // Fallback direto
+                this.FALLBACK_API = '/api/admin'; // Central Admin como fallback
                 this.cache = new Map();
                 this.CACHE_TTL = 10 * 60 * 1000; // 10 minutos
                 this.useBackend = true; // Flag para controlar uso do backend
                 
-                console.log(`[Cartola] Ambiente: ${isLocal ? 'LOCAL' : 'PRODUÇÃO'}`);
-                console.log(`[Cartola] Backend: ${this.API_BASE}`);
+                console.log(`[CentralAdmin] Ambiente: ${isLocal ? 'LOCAL' : 'PRODUÇÃO'}`);
+                console.log(`[CentralAdmin] Backend: ${this.API_BASE}`);
             }
 
             async _get(endpoint, useBackend = true) {
@@ -6812,12 +6966,12 @@ Equilíbrio
                 // Verificar cache
                 const cached = this.cache.get(cacheKey);
                 if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
-                    console.log(`[Cartola] Cache hit: ${endpoint}`);
+                    console.log(`[CentralAdmin] Cache hit: ${endpoint}`);
                     return cached.data;
                 }
 
                 try {
-                    console.log(`[Cartola] Buscando: ${url}`);
+                    console.log(`[CentralAdmin] Buscando: ${url}`);
                     const response = await fetch(url, {
                         method: 'GET',
                         mode: 'cors',
@@ -6841,7 +6995,7 @@ Equilíbrio
                         timestamp: Date.now()
                     });
 
-                    console.log(`[Cartola] ✅ Dados obtidos via ${useBackend ? 'Backend' : 'API Direta'}`);
+                    console.log(`[CentralAdmin] ✅ Dados obtidos via ${useBackend ? 'Backend' : 'API Direta'}`);
                     return processedData;
                     
                 } catch (error) {
@@ -6851,25 +7005,25 @@ Equilíbrio
                         useBackend: useBackend,
                         hasCache: !!cached
                     };
-                    console.warn(`[Cartola] ❌ Erro ao buscar ${endpoint}:`, errorDetails);
+                    console.warn(`[CentralAdmin] ❌ Erro ao buscar ${endpoint}:`, errorDetails);
                     
                     // Se falhou com backend, tentar API direta
                     if (useBackend && this.useBackend) {
-                        console.log('[Cartola] 🔄 Backend falhou, tentando API direta...');
+                        console.log('[CentralAdmin] 🔄 Backend falhou, tentando API direta...');
                         try {
                             return await this._get(endpoint.replace('/br', ''), false);
                         } catch (fallbackError) {
-                            console.warn('[Cartola] ❌ Fallback API também falhou:', fallbackError.message);
+                            console.warn('[CentralAdmin] ❌ Fallback API também falhou:', fallbackError.message);
                         }
                     }
                     
                     // Retornar cache expirado se existir
                     if (cached) {
-                        console.log('[Cartola] 📦 Usando cache expirado como último recurso');
+                        console.log('[CentralAdmin] 📦 Usando cache expirado como último recurso');
                         return cached.data;
                     }
                     
-                    console.error(`[Cartola] 💥 Falha total para ${endpoint}. Verificar se backend está rodando.`);
+                    console.error(`[CentralAdmin] 💥 Falha total para ${endpoint}. Verificar se backend está rodando.`);
                     throw error;
                 }
             }
@@ -7167,8 +7321,52 @@ Equilíbrio
         }
 
         // Instâncias globais dos providers
-        const cartolaProvider = new CartolaProvider();
+        const centralAdminProvider = new CentralAdminProvider();
+        const cartolaVerificationProvider = new CartolaVerificationProvider();
         const internationalProvider = new InternationalProvider();
+
+        // FUNÇÃO PARA IMPORTAR CLASSIFICAÇÕES DO CARTOLA FC
+        async function importarClassificacoesCartola() {
+            try {
+                console.log('🔍 [IMPORT] Iniciando importação das classificações do Cartola FC...');
+                
+                // Buscar classificações disponíveis
+                const classifications = await cartolaVerificationProvider.getAvailableClassifications();
+                
+                console.log(`📊 [IMPORT] ${classifications.length} classificações encontradas:`, classifications);
+                
+                // Importar cada classificação
+                for (const classification of classifications) {
+                    console.log(`📥 [IMPORT] Importando: ${classification.name}...`);
+                    
+                    const data = await cartolaVerificationProvider.getClassification(classification.id);
+                    
+                    if (data) {
+                        console.log(`✅ [IMPORT] ${classification.name} importada com sucesso:`, data);
+                        
+                        // Armazenar dados importados (você pode salvar em localStorage ou enviar para backend)
+                        localStorage.setItem(`cartola_${classification.id}`, JSON.stringify(data));
+                    } else {
+                        console.warn(`⚠️ [IMPORT] Falha ao importar ${classification.name}`);
+                    }
+                }
+                
+                console.log('🎉 [IMPORT] Importação concluída!');
+                return classifications;
+                
+            } catch (error) {
+                console.error('❌ [IMPORT] Erro na importação:', error);
+                return [];
+            }
+        }
+
+        // FUNÇÃO PARA TESTAR IMPORTAÇÃO (CHAMAR NO CONSOLE)
+        window.testarImportacaoCartola = async function() {
+            console.log('🧪 [TEST] Testando importação das classificações do Cartola FC...');
+            const result = await importarClassificacoesCartola();
+            console.log('📊 [TEST] Resultado:', result);
+            return result;
+        };
 
         // DADOS SIMULADOS PARA ESTATÍSTICAS AVANÇADAS (FALLBACK)
         const advancedStatsData = {
@@ -7540,13 +7738,13 @@ Equilíbrio
                         }
                     }
                     
-                    console.log(`⚠️ [ELENCO] API de elenco falhou, tentando Cartola...`);
+                    console.log(`⚠️ [ELENCO] API de elenco falhou, tentando Central Admin...`);
                     
-                    // Fallback: Buscar via Cartola FC
-                    const clubeId = cartolaProvider.getClubIdByName(nomeTime);
+                    // Fallback: Buscar via Central Admin
+                    const clubeId = centralAdminProvider.getClubIdByName(nomeTime);
                     if (clubeId) {
-                        const stats = await cartolaProvider.getEstatisticasClube(clubeId);
-                        const clubeInfo = await cartolaProvider.getClubeInfo(clubeId);
+                        const stats = await centralAdminProvider.getEstatisticasClube(clubeId);
+                        const clubeInfo = await centralAdminProvider.getClubeInfo(clubeId);
                         
                         return {
                             nome: nomeTime,
@@ -7557,7 +7755,7 @@ Equilíbrio
                             preco_medio: stats.preco_medio || 0,
                             rating: stats.rating || 0,
                             badge: gerarBadgeTime(stats.rating || 0),
-                            fonte: 'cartola',
+                            fonte: 'central_admin',
                             brasileiro: true
                         };
                     }
@@ -7648,9 +7846,9 @@ Equilíbrio
             if (dadosTime.fonte === 'elenco_real') {
                 fonteIcon = '📊';
                 fonteText = 'Planilha Real';
-            } else if (dadosTime.fonte === 'cartola') {
-                fonteIcon = '🔥';
-                fonteText = 'Dados reais';
+            } else if (dadosTime.fonte === 'central_admin') {
+                fonteIcon = '📝';
+                fonteText = 'Central Admin';
             } else {
                 fonteIcon = '🎲';
                 fonteText = 'Simulado';
@@ -7861,15 +8059,15 @@ Equilíbrio
             return brazilianTeams.includes(homeNormalized) && brazilianTeams.includes(awayNormalized);
         }
 
-        // Carregar dados reais do Cartola FC
+        // Carregar dados reais da Central Admin
         async function loadCartolaData(data) {
             try {
                 // Mostrar loading
                 showLoadingStats();
                 
                 // Buscar dados dos clubes
-                const homeId = cartolaProvider.getClubIdByName(data.home.name);
-                const awayId = cartolaProvider.getClubIdByName(data.away.name);
+                const homeId = centralAdminProvider.getClubIdByName(data.home.name);
+                const awayId = centralAdminProvider.getClubIdByName(data.away.name);
                 
                 if (!homeId || !awayId) {
                     console.warn('[Cartola] IDs de clube não encontrados, usando dados simulados');
@@ -7879,11 +8077,11 @@ Equilíbrio
 
                 // Buscar estatísticas reais
                 const [homeStats, awayStats] = await Promise.all([
-                    cartolaProvider.getEstatisticasClube(homeId),
-                    cartolaProvider.getEstatisticasClube(awayId)
+                    centralAdminProvider.getEstatisticasClube(homeId),
+                    centralAdminProvider.getEstatisticasClube(awayId)
                 ]);
 
-                console.log('[Cartola] Dados carregados:', { homeStats, awayStats });
+                console.log('[CentralAdmin] Dados carregados:', { homeStats, awayStats });
 
                 // Atualizar interface com dados reais (aguardar carregamento)
                 await updateRealStats(homeStats, awayStats);
@@ -7891,7 +8089,7 @@ Equilíbrio
                 // Dados reais carregados (sem botão duplicado)
 
             } catch (error) {
-                console.error('[Cartola] Erro ao carregar dados:', error);
+                console.error('[CentralAdmin] Erro ao carregar dados:', error);
                 loadSimulatedData(data);
                 // Dados simulados (sem botão duplicado)
             }
@@ -8852,7 +9050,7 @@ Equilíbrio
                 showLotecaLoading(true);
                 
                 // Buscar dados da API
-                const apiBase = cartolaProvider.API_BASE.replace('/api/br', ''); // Usar mesmo domínio
+                const apiBase = centralAdminProvider.API_BASE.replace('/api/br', ''); // Usar mesmo domínio
                 const response = await fetch(`${apiBase}/api/br/loteca/current`);
                 
                 if (!response.ok) {
@@ -9114,7 +9312,7 @@ Equilíbrio
                 console.log('[Clubes Série B] 🥈 Carregando dados dos clubes...');
                 
                 // 1) Buscar lista de clubes (MESMA API - pega todos os 68 clubes)
-                const clubesResponse = await cartolaProvider.getClubes();
+                const clubesResponse = await centralAdminProvider.getClubes();
                 const clubes = Object.values(clubesResponse || {});
 
                 console.log(`[Clubes Série B] ✅ ${clubes.length} clubes totais encontrados`);
@@ -9131,7 +9329,7 @@ Equilíbrio
                     try {
                         console.log(`[Clubes Série B] 📊 Processando ${clube.nome} (${processados + 1}/${clubes.length})`);
                         
-                        const stats = await cartolaProvider.getEstatisticasClube(clube.id);
+                        const stats = await centralAdminProvider.getEstatisticasClube(clube.id);
                         
                         clubesComStats.push({
                             ...clube,
@@ -9796,22 +9994,22 @@ Equilíbrio
                 try {
                     // Health check do backend
                     console.log('📡 Testando conexão com backend...');
-                    const health = await cartolaProvider.healthCheck();
+                    const health = await centralAdminProvider.healthCheck();
                     console.log('✅ Health Check:', health);
                     
-                    const status = await cartolaProvider.getMercadoStatus();
+                    const status = await centralAdminProvider.getMercadoStatus();
                     console.log('✅ Status do Mercado:', status);
                     
-                    const clubes = await cartolaProvider.getClubes();
+                    const clubes = await centralAdminProvider.getClubes();
                     console.log('✅ Clubes:', Object.keys(clubes).length, 'clubes encontrados');
                     
                     // Testar Corinthians (ID 8)
                     console.log('📊 Testando estatísticas via backend...');
-                    const corinthians = await cartolaProvider.getEstatisticasClube(8);
+                    const corinthians = await centralAdminProvider.getEstatisticasClube(8);
                     console.log('✅ Estatísticas Corinthians:', corinthians);
                     
                     // Testar Flamengo (ID 13)
-                    const flamengo = await cartolaProvider.getEstatisticasClube(13);
+                    const flamengo = await centralAdminProvider.getEstatisticasClube(13);
                     console.log('✅ Estatísticas Flamengo:', flamengo);
                     
                 } catch (error) {
@@ -9824,7 +10022,7 @@ Equilíbrio
                 
                 try {
                     // Usar o novo endpoint de confronto
-                    const confronto = await cartolaProvider.getConfrontoStats(team1, team2);
+                    const confronto = await centralAdminProvider.getConfrontoStats(team1, team2);
                     
                     if (confronto) {
                         console.log('🏆 Análise do confronto via Backend:', confronto);
@@ -9832,8 +10030,8 @@ Equilíbrio
                     }
                     
                     // Fallback manual
-                    const id1 = cartolaProvider.getClubIdByName(team1);
-                    const id2 = cartolaProvider.getClubIdByName(team2);
+                    const id1 = centralAdminProvider.getClubIdByName(team1);
+                    const id2 = centralAdminProvider.getClubIdByName(team2);
                     
                     if (!id1 || !id2) {
                         console.error('❌ Time(s) não encontrado(s)');
@@ -9841,8 +10039,8 @@ Equilíbrio
                     }
                     
                     const [stats1, stats2] = await Promise.all([
-                        cartolaProvider.getEstatisticasClube(id1),
-                        cartolaProvider.getEstatisticasClube(id2)
+                        centralAdminProvider.getEstatisticasClube(id1),
+                        centralAdminProvider.getEstatisticasClube(id2)
                     ]);
                     
                     console.log(`📊 ${team1}:`, stats1);
@@ -9860,7 +10058,7 @@ Equilíbrio
             async testBackend() {
                 console.log('🔧 Testando Backend Flask...');
                 try {
-                    const health = await cartolaProvider.healthCheck();
+                    const health = await centralAdminProvider.healthCheck();
                     console.log('📊 Status Backend:', health);
                     
                     if (health.status === 'ok') {
@@ -9878,19 +10076,19 @@ Equilíbrio
             },
             
             showMappings() {
-                console.log('🗺️ Mapeamento de times:', cartolaProvider.getClubeMappings());
+                console.log('🗺️ Mapeamento de times:', centralAdminProvider.getClubeMappings());
             },
             
             // Nova função para alternar entre backend e API direta
             toggleBackend(useBackend = null) {
                 if (useBackend === null) {
-                    cartolaProvider.useBackend = !cartolaProvider.useBackend;
+                    centralAdminProvider.useBackend = !centralAdminProvider.useBackend;
                 } else {
-                    cartolaProvider.useBackend = useBackend;
+                    centralAdminProvider.useBackend = useBackend;
                 }
                 
-                console.log(`🔄 Backend ${cartolaProvider.useBackend ? 'ATIVADO' : 'DESATIVADO'}`);
-                console.log(`📡 Usando: ${cartolaProvider.useBackend ? 'Flask Backend' : 'API Direta'}`);
+                console.log(`🔄 Backend ${centralAdminProvider.useBackend ? 'ATIVADO' : 'DESATIVADO'}`);
+                console.log(`📡 Usando: ${centralAdminProvider.useBackend ? 'Flask Backend' : 'API Direta'}`);
             },
 
             // DIAGNÓSTICO COMPLETO DO SISTEMA
@@ -9902,12 +10100,12 @@ Equilíbrio
                 const isLocal = ['localhost', '127.0.0.1'].some(host => location.hostname.includes(host));
                 console.log(`🌐 Ambiente: ${isLocal ? 'DESENVOLVIMENTO' : 'PRODUÇÃO'}`);
                 console.log(`📍 URL atual: ${location.origin}`);
-                console.log(`🔗 Backend configurado: ${cartolaProvider.API_BASE}`);
+                console.log(`🔗 Backend configurado: ${centralAdminProvider.API_BASE}`);
                 
                 // 2. Testar backend
                 console.log('\n🏥 TESTANDO BACKEND...');
                 try {
-                    const health = await cartolaProvider.healthCheck();
+                    const health = await centralAdminProvider.healthCheck();
                     if (health.status === 'ok') {
                         console.log('✅ Backend Flask: FUNCIONANDO');
                         console.log(`📊 Rodada: ${health.rodada_atual}`);
@@ -9925,9 +10123,9 @@ Equilíbrio
                 // 3. Testar endpoints críticos
                 console.log('\n🎯 TESTANDO ENDPOINTS CRÍTICOS...');
                 const endpoints = [
-                    { name: 'Clubes', func: () => cartolaProvider.getClubes() },
-                    { name: 'Mercado', func: () => cartolaProvider.getAtletasMercado() },
-                    { name: 'Stats Corinthians', func: () => cartolaProvider.getEstatisticasClube(8) }
+                    { name: 'Clubes', func: () => centralAdminProvider.getClubes() },
+                    { name: 'Mercado', func: () => centralAdminProvider.getAtletasMercado() },
+                    { name: 'Stats Corinthians', func: () => centralAdminProvider.getEstatisticasClube(8) }
                 ];
                 
                 for (const endpoint of endpoints) {
@@ -9948,7 +10146,7 @@ Equilíbrio
                 
                 // 4. Verificar cache
                 console.log('\n💾 STATUS DO CACHE...');
-                console.log(`📦 Itens em cache: ${cartolaProvider.cache.size}`);
+                console.log(`📦 Itens em cache: ${centralAdminProvider.cache.size}`);
                 
                 // 5. Conclusão
                 console.log('\n🎯 CONCLUSÃO:');
@@ -10049,7 +10247,7 @@ Equilíbrio
                 console.log('[Clubes] 🏆 Carregando dados dos clubes...');
                 
                 // 1) Buscar lista de clubes
-                const clubesResponse = await cartolaProvider.getClubes();
+                const clubesResponse = await centralAdminProvider.getClubes();
                 const clubes = Object.values(clubesResponse || {});
 
                 console.log(`[Clubes] ✅ ${clubes.length} clubes encontrados`);
@@ -10079,7 +10277,7 @@ Equilíbrio
                     try {
                         console.log(`[Clubes] 📊 Carregando stats: ${clube.nome || clube.abreviacao} (${processados + 1}/${clubesRelevantes.length})`);
                         
-                        const stats = await cartolaProvider.getEstatisticasClube(clube.id);
+                        const stats = await centralAdminProvider.getEstatisticasClube(clube.id);
                         clubesComStats.push({
                             ...clube,
                             stats: stats
