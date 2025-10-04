@@ -13,6 +13,7 @@ from datetime import datetime
 from models.central_dados import CentralDados
 from models.classificacao_db import classificacao_db
 from models.jogos_manager import jogos_manager
+from models.concurso_manager import concurso_manager
 
 # Configuração do logging
 logging.basicConfig(level=logging.INFO)
@@ -1023,6 +1024,149 @@ def carregar_estatisticas_editaveis(clube):
         return jsonify({
             'success': False,
             'error': str(e)
+        }), 500
+
+# === ENDPOINTS PARA CONCURSOS DA LOTECA ===
+
+@bp_admin.route('/api/admin/loteca/concursos', methods=['GET'])
+@cross_origin()
+def listar_concursos():
+    """Listar todos os concursos disponíveis"""
+    logger.info("📋 [LOTECA] Listando concursos...")
+    
+    try:
+        concursos = concurso_manager.listar_concursos()
+        
+        return jsonify({
+            'success': True,
+            'concursos': concursos,
+            'total': len(concursos)
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"💥 [LOTECA] Erro ao listar concursos: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao listar concursos: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/loteca/concurso/<numero>', methods=['GET'])
+@cross_origin()
+def carregar_concurso(numero):
+    """Carregar um concurso específico"""
+    logger.info(f"📂 [LOTECA] Carregando concurso {numero}...")
+    
+    try:
+        dados = concurso_manager.carregar_concurso(numero)
+        
+        if not dados:
+            return jsonify({
+                'success': False,
+                'message': f'Concurso {numero} não encontrado'
+            }), 404
+        
+        return jsonify({
+            'success': True,
+            'concurso': dados
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"💥 [LOTECA] Erro ao carregar concurso {numero}: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao carregar concurso: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/loteca/concurso', methods=['POST'])
+@cross_origin()
+def salvar_concurso():
+    """Salvar um concurso"""
+    logger.info("💾 [LOTECA] Salvando concurso...")
+    
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                'success': False,
+                'message': 'Dados não fornecidos'
+            }), 400
+        
+        numero = data.get('numero')
+        if not numero:
+            return jsonify({
+                'success': False,
+                'message': 'Número do concurso não fornecido'
+            }), 400
+        
+        # Salvar concurso
+        sucesso = concurso_manager.salvar_concurso(numero, data)
+        
+        if sucesso:
+            return jsonify({
+                'success': True,
+                'message': f'Concurso {numero} salvo com sucesso!',
+                'numero': numero
+            }), 200
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Erro ao salvar concurso'
+            }), 500
+        
+    except Exception as e:
+        logger.error(f"💥 [LOTECA] Erro ao salvar concurso: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao salvar concurso: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/loteca/ultimo', methods=['GET'])
+@cross_origin()
+def get_ultimo_concurso():
+    """Obter o último concurso"""
+    logger.info("🔍 [LOTECA] Buscando último concurso...")
+    
+    try:
+        dados = concurso_manager.get_ultimo_concurso()
+        
+        if not dados:
+            return jsonify({
+                'success': False,
+                'message': 'Nenhum concurso encontrado'
+            }), 404
+        
+        return jsonify({
+            'success': True,
+            'concurso': dados
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"💥 [LOTECA] Erro ao buscar último concurso: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao buscar último concurso: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/loteca/proximo-numero', methods=['GET'])
+@cross_origin()
+def get_proximo_numero():
+    """Obter o próximo número de concurso"""
+    logger.info("🔢 [LOTECA] Calculando próximo número...")
+    
+    try:
+        proximo = concurso_manager.get_proximo_numero()
+        
+        return jsonify({
+            'success': True,
+            'proximo_numero': proximo
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"💥 [LOTECA] Erro ao calcular próximo número: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao calcular próximo número: {str(e)}'
         }), 500
 
 # Blueprint integrado ao app principal

@@ -1780,6 +1780,28 @@
                 <i class="fas fa-gamepad"></i> Gestão de Jogos Loteca
             </h2>
             
+            <!-- SELEÇÃO DE CONCURSO -->
+            <div class="form-row" style="margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                <div class="form-group" style="flex: 2; margin-right: 15px;">
+                    <label><i class="fas fa-list"></i> Selecionar Concurso:</label>
+                    <select id="concursoSelect" class="form-control" onchange="carregarConcursoSelecionado()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: 2px solid #4c51bf; padding: 10px; border-radius: 8px; font-weight: bold;">
+                        <option value="">🔄 Carregando concursos...</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1; margin-right: 15px;">
+                    <label>&nbsp;</label>
+                    <button class="btn-primary" onclick="criarNovoConcurso()" style="width: 100%; padding: 10px;">
+                        <i class="fas fa-plus"></i> Novo Concurso
+                    </button>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>&nbsp;</label>
+                    <button class="btn-success" onclick="salvarJogosLoteca()" style="width: 100%; padding: 10px;">
+                        <i class="fas fa-save"></i> Salvar Concurso
+                    </button>
+                </div>
+            </div>
+
             <!-- INFORMAÇÕES DO CONCURSO -->
             <div class="form-row" style="margin-bottom: 30px;">
                 <div class="form-group" style="flex: 1; margin-right: 15px;">
@@ -2770,6 +2792,14 @@
             if (tabName === 'clubes') carregarClubes();
             if (tabName === 'estatisticas') carregarEstatisticas();
             if (tabName === 'dashboard') carregarDashboard();
+            if (tabName === 'jogos-loteca') {
+                console.log('🎮 [ADMIN] === ABA JOGOS LOTECA ATIVADA ===');
+                setTimeout(async () => {
+                    console.log('⏰ [ADMIN] Inicializando sistema de concursos...');
+                    await carregarListaConcursos();
+                    await carregarUltimoConcurso();
+                }, 200);
+            }
         }
 
         // === SISTEMA DE MENSAGENS ===
@@ -5801,17 +5831,54 @@
                 const dataSorteio = document.getElementById('dataSorteio').value;
                 const periodoApostas = document.getElementById('periodoApostas').value;
 
-                const concurso = {
+                if (!numeroConcurso) {
+                    mostrarNotificacao('❌ Número do concurso é obrigatório!', 'error');
+                    return;
+                }
+
+                const dadosConcurso = {
                     numero: numeroConcurso,
-                    data_sorteio: dataSorteio,
-                    periodo_apostas: periodoApostas,
-                    jogos: jogosAtuais
+                    concurso: {
+                        numero: numeroConcurso,
+                        data_sorteio: dataSorteio,
+                        periodo_apostas: periodoApostas,
+                        status: 'ativo'
+                    },
+                    jogos: jogosAtuais,
+                    estatisticas: {
+                        total_jogos: jogosAtuais.length,
+                        jogos_processados: 0,
+                        ultima_atualizacao: new Date().toISOString()
+                    }
                 };
 
-                // Aqui você pode implementar o salvamento no banco
-                console.log('📊 [LOTECA] Dados do concurso:', concurso);
-                
-                mostrarNotificacao('💾 Concurso salvo com sucesso!', 'success');
+                console.log('📊 [LOTECA] Enviando dados:', dadosConcurso);
+
+                // Salvar via API
+                const response = await fetch('/api/admin/loteca/concurso', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dadosConcurso)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log('✅ [LOTECA] Concurso salvo com sucesso!');
+                    mostrarNotificacao(`💾 Concurso ${numeroConcurso} salvo com sucesso!`, 'success');
+                    
+                    // Atualizar lista de concursos
+                    await carregarListaConcursos();
+                    
+                    // Atualizar dropdown para mostrar o concurso salvo
+                    document.getElementById('concursoSelect').value = numeroConcurso;
+                    
+                } else {
+                    console.error('❌ [LOTECA] Erro na API:', result.message);
+                    mostrarNotificacao(`❌ Erro ao salvar: ${result.message}`, 'error');
+                }
                 
             } catch (error) {
                 console.error('💥 [LOTECA] Erro ao salvar:', error);
@@ -5829,6 +5896,167 @@
             } catch (error) {
                 console.error('💥 [LOTECA] Erro ao gerar análises:', error);
                 mostrarNotificacao('❌ Erro ao gerar análises!', 'error');
+            }
+        }
+
+        // === FUNÇÕES PARA GERENCIAMENTO DE CONCURSOS ===
+
+        async function carregarListaConcursos() {
+            try {
+                console.log('📋 [LOTECA] Carregando lista de concursos...');
+                
+                const response = await fetch('/api/admin/loteca/concursos');
+                const result = await response.json();
+                
+                const select = document.getElementById('concursoSelect');
+                select.innerHTML = '<option value="">🔄 Carregando concursos...</option>';
+                
+                if (result.success && result.concursos.length > 0) {
+                    select.innerHTML = '<option value="">📋 Selecionar concurso...</option>';
+                    
+                    result.concursos.forEach(concurso => {
+                        const option = document.createElement('option');
+                        option.value = concurso.numero;
+                        option.textContent = `Concurso ${concurso.numero} - ${concurso.data_sorteio} (${concurso.total_jogos} jogos)`;
+                        select.appendChild(option);
+                    });
+                    
+                    console.log(`✅ [LOTECA] ${result.concursos.length} concursos carregados`);
+                } else {
+                    select.innerHTML = '<option value="">📭 Nenhum concurso encontrado</option>';
+                    console.log('📭 [LOTECA] Nenhum concurso encontrado');
+                }
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao carregar concursos:', error);
+                const select = document.getElementById('concursoSelect');
+                select.innerHTML = '<option value="">❌ Erro ao carregar concursos</option>';
+            }
+        }
+
+        async function carregarConcursoSelecionado() {
+            try {
+                const numeroConcurso = document.getElementById('concursoSelect').value;
+                
+                if (!numeroConcurso) {
+                    console.log('📭 [LOTECA] Nenhum concurso selecionado');
+                    return;
+                }
+                
+                console.log(`📂 [LOTECA] Carregando concurso ${numeroConcurso}...`);
+                
+                const response = await fetch(`/api/admin/loteca/concurso/${numeroConcurso}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const dados = result.concurso;
+                    
+                    // Atualizar campos do formulário
+                    document.getElementById('numeroConcurso').value = dados.concurso.numero || numeroConcurso;
+                    document.getElementById('dataSorteio').value = dados.concurso.data_sorteio || '';
+                    document.getElementById('periodoApostas').value = dados.concurso.periodo_apostas || '';
+                    
+                    // Atualizar jogos
+                    if (dados.jogos && dados.jogos.length > 0) {
+                        jogosAtuais = dados.jogos;
+                        carregarJogosAtuais();
+                    }
+                    
+                    // Atualizar display
+                    atualizarDisplayConcurso();
+                    
+                    console.log(`✅ [LOTECA] Concurso ${numeroConcurso} carregado com sucesso`);
+                    mostrarNotificacao(`📂 Concurso ${numeroConcurso} carregado!`, 'success');
+                    
+                } else {
+                    console.error('❌ [LOTECA] Erro ao carregar concurso:', result.message);
+                    mostrarNotificacao(`❌ Erro ao carregar concurso: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao carregar concurso:', error);
+                mostrarNotificacao('❌ Erro ao carregar concurso!', 'error');
+            }
+        }
+
+        async function criarNovoConcurso() {
+            try {
+                console.log('🆕 [LOTECA] Criando novo concurso...');
+                
+                // Buscar próximo número
+                const response = await fetch('/api/admin/loteca/proximo-numero');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const proximoNumero = result.proximo_numero;
+                    
+                    // Limpar formulário
+                    document.getElementById('numeroConcurso').value = proximoNumero;
+                    document.getElementById('dataSorteio').value = '';
+                    document.getElementById('periodoApostas').value = '';
+                    
+                    // Limpar jogos
+                    jogosAtuais = [];
+                    carregarJogosAtuais();
+                    
+                    // Atualizar dropdown
+                    document.getElementById('concursoSelect').value = '';
+                    
+                    // Atualizar display
+                    atualizarDisplayConcurso();
+                    
+                    console.log(`🆕 [LOTECA] Novo concurso ${proximoNumero} criado`);
+                    mostrarNotificacao(`🆕 Novo concurso ${proximoNumero} criado!`, 'success');
+                    
+                } else {
+                    console.error('❌ [LOTECA] Erro ao obter próximo número:', result.message);
+                    mostrarNotificacao(`❌ Erro ao criar novo concurso: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao criar novo concurso:', error);
+                mostrarNotificacao('❌ Erro ao criar novo concurso!', 'error');
+            }
+        }
+
+        async function carregarUltimoConcurso() {
+            try {
+                console.log('🔍 [LOTECA] Carregando último concurso...');
+                
+                const response = await fetch('/api/admin/loteca/ultimo');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const dados = result.concurso;
+                    const numeroConcurso = dados.concurso.numero;
+                    
+                    // Atualizar campos
+                    document.getElementById('numeroConcurso').value = numeroConcurso;
+                    document.getElementById('dataSorteio').value = dados.concurso.data_sorteio || '';
+                    document.getElementById('periodoApostas').value = dados.concurso.periodo_apostas || '';
+                    
+                    // Atualizar jogos
+                    if (dados.jogos && dados.jogos.length > 0) {
+                        jogosAtuais = dados.jogos;
+                        carregarJogosAtuais();
+                    }
+                    
+                    // Atualizar dropdown
+                    document.getElementById('concursoSelect').value = numeroConcurso;
+                    
+                    // Atualizar display
+                    atualizarDisplayConcurso();
+                    
+                    console.log(`✅ [LOTECA] Último concurso ${numeroConcurso} carregado`);
+                    
+                } else {
+                    console.log('📭 [LOTECA] Nenhum concurso encontrado, criando novo...');
+                    await criarNovoConcurso();
+                }
+                
+            } catch (error) {
+                console.error('💥 [LOTECA] Erro ao carregar último concurso:', error);
+                await criarNovoConcurso();
             }
         }
 

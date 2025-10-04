@@ -16,8 +16,25 @@ class ClassificacaoDB:
     Gerenciador do banco de dados de classificação
     """
     
-    def __init__(self, db_path: str = "models/tabelas_classificacao.db"):
-        self.db_path = db_path
+    def __init__(self, db_path: str = None):
+        if db_path is None:
+            # Tentar diferentes caminhos possíveis
+            possible_paths = [
+                "models/tabelas_classificacao.db",
+                "backend/models/tabelas_classificacao.db",
+                "tabelas_classificacao.db"
+            ]
+            
+            for path in possible_paths:
+                if os.path.exists(path):
+                    self.db_path = path
+                    break
+            else:
+                # Se nenhum caminho funcionar, usar o padrão
+                self.db_path = "models/tabelas_classificacao.db"
+        else:
+            self.db_path = db_path
+            
         self.ensure_db_exists()
     
     def ensure_db_exists(self):
