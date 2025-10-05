@@ -1,27 +1,27 @@
 Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Bot,Pontos_Ganhos,Pontos_Acumulados
-01/10/2025,Bot,2,1,Bah,Nilton Santos,V,3,3
-28/09/2025,Flu,2,0,Bot,Maracanã,D,0,3
-20/09/2025,Bot,1,0,Atl,Nilton Santos,V,3,3
-14/09/2025,São,1,0,Bot,Morumbi,D,0,3
-30/08/2025,Bot,4,1,Red,Nilton Santos,V,3,6
-24/08/2025,Juv,1,3,Bot,Alfredo Jaconi,V,3,9
-17/08/2025,Bot,0,1,Pal,Nilton Santos,D,0,9
-09/08/2025,For,0,5,Bot,Arena Castelão,V,3,12
-03/08/2025,Bot,0,2,Cru,Nilton Santos,D,0,12
-26/07/2025,Bot,1,1,Cor,Nilton Santos,E,1,13
-24/09/2025,Grê,1,1,Bot,Arena do Grêmio,E,1,14
-20/07/2025,Spo,0,1,Bot,Ilha do Retiro,V,3,17
-16/07/2025,Bot,0,0,Vit,Nilton Santos,E,1,18
-12/07/2025,Vas,0,2,Bot,Mané Garrincha,V,3,21
-17/09/2025,Bot,3,3,Mir,Nilton Santos,E,1,22
-01/06/2025,San,0,1,Bot,Vila Belmiro,V,3,25
-04/06/2025,Bot,3,2,Cea,Nilton Santos,V,3,28
-18/05/2025,Fla,0,0,Bot,Maracanã,E,1,29
-11/05/2025,Bot,4,0,Int,Nilton Santos,V,3,32
-03/05/2025,Bah,1,0,Bot,Arena Fonte Nova,D,0,32
-26/04/2025,Bot,2,0,Flu,Nilton Santos,V,3,35
-20/04/2025,Atl,1,0,Bot,Mineirão,D,0,35
-16/04/2025,Bot,2,2,São,Nilton Santos,E,1,36
-12/04/2025,Red,1,0,Bot,Nabi Abi Chedid,D,0,36
-05/04/2025,Bot,2,0,Juv,Nilton Santos,V,3,39
-30/03/2025,Pal,0,0,Bot,Allianz Parque,E,1,40
+01/10/2025,Bot,2,1,Bah,Nilton Santos,Vitoria,3,3
+28/09/2025,Flu,2,0,Bot,Maracana,Derrota,0,3
+20/09/2025,Bot,1,0,Atl,Nilton Santos,Vitoria,3,3
+14/09/2025,Sao,1,0,Bot,Morumbi,Derrota,0,3
+30/08/2025,Bot,4,1,Red,Nilton Santos,Empate,3,6
+24/08/2025,Juv,1,3,Bot,Alfredo Jaconi,Empate,3,9
+17/08/2025,Bot,0,1,Pal,Nilton Santos,Derrota,0,9
+09/08/2025,For,0,5,Bot,Arena Castelao,Empate,3,12
+03/08/2025,Bot,0,2,Cru,Nilton Santos,Derrota,0,12
+26/07/2025,Bot,1,1,Cor,Nilton Santos,Empate,1,13
+24/09/2025,Gre,1,1,Bot,Arena do Gremio,Empate,1,14
+20/07/2025,Spo,0,1,Bot,Ilha do Retiro,Empate,3,17
+16/07/2025,Bot,0,0,Vit,Nilton Santos,Empate,1,18
+12/07/2025,Vas,0,2,Bot,Mane Garrincha,Empate,3,21
+17/09/2025,Bot,3,3,Mir,Nilton Santos,Empate,1,22
+01/06/2025,San,0,1,Bot,Vila Belmiro,Empate,3,25
+04/06/2025,Bot,3,2,Cea,Nilton Santos,Empate,3,28
+18/05/2025,Fla,0,0,Bot,Maracana,Empate,1,29
+11/05/2025,Bot,4,0,Int,Nilton Santos,Empate,3,32
+03/05/2025,Bah,1,0,Bot,Arena Fonte Nova,Derrota,0,32
+26/04/2025,Bot,2,0,Flu,Nilton Santos,Empate,3,35
+20/04/2025,Atl,1,0,Bot,Mineirao,Derrota,0,35
+16/04/2025,Bot,2,2,Sao,Nilton Santos,Empate,1,36
+12/04/2025,Red,1,0,Bot,Nabi Abi Chedid,Derrota,0,36
+05/04/2025,Bot,2,0,Juv,Nilton Santos,Empate,3,39
+30/03/2025,Pal,0,0,Bot,Allianz Parque,Empate,1,40

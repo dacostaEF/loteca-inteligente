@@ -1,25 +1,25 @@
 Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Flu,Pontos_Ganhos,Pontos_Acumulados
 01/10/2025,Spo,2,2,Flu,Recife - PE,Empate,1,1
-28/09/2025,Flu,2,0,Bot,Maracanã,V,3,4
-20/09/2025,Vit,0,1,Flu,Manoel Barradas,V,3,6
-13/09/2025,Flu,0,1,Cor,Maracanã,D,0,6
-31/08/2025,San,0,0,Flu,Vila Belmiro,E,1,7
-23/08/2025,Red,4,2,Flu,Cícero de Souza Marques,D,0,7
-16/08/2025,Flu,2,1,For,Maracanã,V,3,10
-09/08/2025,Bah,3,3,Flu,Arena Fonte Nova,E,1,11
-02/08/2025,Flu,1,0,Grê,Maracanã,V,3,14
-27/07/2025,São,3,1,Flu,Morumbi,D,0,14
-23/07/2025,Flu,1,2,Pal,Maracanã,D,0,14
-20/07/2025,Fla,1,0,Flu,Maracanã,D,0,14
-17/07/2025,Flu,0,2,Cru,Maracanã,D,0,14
-01/06/2025,Int,0,2,Flu,Beira,V,3,17
-24/05/2025,Flu,2,1,Vas,Maracanã,V,3,20
-18/05/2025,Juv,1,1,Flu,Alfredo Jaconi,E,1,21
-11/05/2025,Atl,3,2,Flu,ARENA MRV,D,0,21
-03/05/2025,Flu,2,1,Spo,Maracanã,V,3,24
-26/04/2025,Bot,2,0,Flu,Nilton Santos,D,0,24
-20/04/2025,Flu,1,1,Vit,Maracanã,E,1,25
-16/04/2025,Cor,0,2,Flu,Neo Química Arena,V,3,28
-13/04/2025,Flu,1,0,San,Maracanã,V,3,31
-06/04/2025,Flu,2,1,Red,Maracanã,V,3,34
-29/03/2025,For,2,0,Flu,Arena Castelão,D,0,34
+28/09/2025,Flu,2,0,Bot,Maracana,Vitoria,3,4
+20/09/2025,Vit,0,1,Flu,Manoel Barradas,Vitoria,3,6
+13/09/2025,Flu,0,1,Cor,Maracana,Derrota,0,6
+31/08/2025,San,0,0,Flu,Vila Belmiro,Empate,1,7
+23/08/2025,Red,4,2,Flu,Cicero de Souza Marques,Derrota,0,7
+16/08/2025,Flu,2,1,For,Maracana,Empate,3,10
+09/08/2025,Bah,3,3,Flu,Arena Fonte Nova,Empate,1,11
+02/08/2025,Flu,1,0,Gre,Maracana,Empate,3,14
+27/07/2025,Sao,3,1,Flu,Morumbi,Derrota,0,14
+23/07/2025,Flu,1,2,Pal,Maracana,Derrota,0,14
+20/07/2025,Fla,1,0,Flu,Maracana,Derrota,0,14
+17/07/2025,Flu,0,2,Cru,Maracana,Derrota,0,14
+01/06/2025,Int,0,2,Flu,Beira,Empate,3,17
+24/05/2025,Flu,2,1,Vas,Maracana,Empate,3,20
+18/05/2025,Juv,1,1,Flu,Alfredo Jaconi,Empate,1,21
+11/05/2025,Atl,3,2,Flu,ARENA MRV,Derrota,0,21
+03/05/2025,Flu,2,1,Spo,Maracana,Empate,3,24
+26/04/2025,Bot,2,0,Flu,Nilton Santos,Derrota,0,24
+20/04/2025,Flu,1,1,Vit,Maracana,Empate,1,25
+16/04/2025,Cor,0,2,Flu,Neo Quimica Arena,Empate,3,28
+13/04/2025,Flu,1,0,San,Maracana,Empate,3,31
+06/04/2025,Flu,2,1,Red,Maracana,Empate,3,34
+29/03/2025,For,2,0,Flu,Arena Castelao,Derrota,0,34

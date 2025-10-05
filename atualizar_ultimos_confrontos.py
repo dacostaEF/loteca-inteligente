@@ -167,25 +167,8 @@ class AtualizadorUltimosConfrontos:
             elif not resultado and codigo_time == 'Vit':
                 resultado = jogo.get('Resultado_Vit', '')
             
-            # Verificar se o time jogou em casa ou fora
-            time_casa = jogo.get('Time_Casa', '')
-            time_visitante = jogo.get('Time_Visitante', '')
-            
-            # Determinar se o time jogou em casa
-            jogou_em_casa = (time_casa == codigo_time or 
-                           (codigo_time == 'Pal' and time_casa == 'Pal') or
-                           (codigo_time == 'Grê' and time_casa == 'Grê') or
-                           (codigo_time == 'São' and time_casa == 'São') or
-                           (codigo_time == 'Cea' and time_casa == 'Cea') or
-                           (codigo_time == 'Vit' and time_casa == 'Vit'))
-            
-            # Se jogou fora de casa, inverter o resultado
-            if not jogou_em_casa:
-                if resultado in ['Vitória', 'Vitoria', 'V']:
-                    resultado = 'Derrota'
-                elif resultado in ['Derrota', 'D']:
-                    resultado = 'Vitória'
-                # Empate continua empate
+            # O campo Resultado_Codigo já representa o resultado do ponto de vista do time
+            # Não precisa inverter baseado em casa/fora
             
             # Reconhece tanto nomes completos quanto abreviações
             if resultado in ['Vitória', 'Vitoria', 'V']:

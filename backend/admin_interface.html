@@ -3234,155 +3234,56 @@
             
             // Mostrar loading
             const loadingEl = document.getElementById('loadingClassificacao');
-            const bodyEl = document.getElementById('classificacaoBody');
-            
-            // Controle simples de carregamento
-            if (window.carregandoClassificacao) {
-                console.log('🔄 [ADMIN] Carregamento já em andamento, ignorando...');
-                return;
-            }
-            window.carregandoClassificacao = true;
-            console.log('🔄 [ADMIN] Iniciando carregamento...');
-            
-            console.log('🎯 [ADMIN] Elementos DOM encontrados:');
-            console.log('   - campeonatoSelect:', campeonatoSelect ? 'OK' : 'MISSING');
-            console.log('   - loadingEl:', loadingEl ? 'OK' : 'MISSING');
-            console.log('   - bodyEl:', bodyEl ? 'OK' : 'MISSING');
-            
-            const campeonato = campeonatoSelect ? campeonatoSelect.value : 'serie-a';
-            let adminKey = localStorage.getItem('admin_key');
-            
-            // FORÇAR admin key se não existir
-            if (!adminKey) {
-                console.warn('⚠️ [ADMIN] Admin key não encontrada no localStorage! Usando padrão...');
-                adminKey = 'loteca2024admin';
-                localStorage.setItem('admin_key', adminKey);
-            }
-            
-            console.log('🔑 [ADMIN] Configurações:');
-            console.log('   - campeonato:', campeonato);
-            console.log('   - adminKey:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
-            console.log('   - adminKey completa:', adminKey);
-            
-            // MOSTRAR LOADING SEMPRE
             if (loadingEl) {
                 loadingEl.style.display = 'block';
-                console.log('📊 [ADMIN] Loading exibido');
-            }
-            
-            if (bodyEl) {
-                bodyEl.innerHTML = '';
-                console.log('🧹 [ADMIN] Tabela limpa');
+                loadingEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 🔄 Atualizando últimos confrontos...';
             }
             
             try {
-                const requestData = {
-                    admin_key: adminKey,
-                    campeonato: campeonato
-                };
+                const adminKey = localStorage.getItem('admin_key') || 'loteca2024admin';
                 
-                console.log('📤 [ADMIN] Enviando requisição...');
-                console.log('   - URL: /api/admin/classificacao');
-                console.log('   - Method: POST');
-                console.log('   - Body:', JSON.stringify(requestData));
-                
-                const response = await fetch('/api/admin/classificacao', {
+                const response = await fetch('/api/admin/atualizar-ultimos-confrontos', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(requestData)
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        admin_key: adminKey
+                    })
                 });
                 
-                console.log('📥 [ADMIN] Resposta recebida:');
-                console.log('   - Status:', response.status);
-                console.log('   - OK:', response.ok);
-                console.log('   - StatusText:', response.statusText);
-                
-                if (loadingEl) {
-                    loadingEl.style.display = 'none';
-                    console.log('📊 [ADMIN] Loading escondido');
-                }
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                console.log('📋 [ADMIN] Dados JSON recebidos:');
-                console.log('   - Success:', data.success);
-                console.log('   - Total:', data.total);
-                console.log('   - Campeonato:', data.campeonato);
-                console.log('   - Classificação length:', data.classificacao ? data.classificacao.length : 'NULL');
-                
-                if (data.success && data.classificacao && data.classificacao.length > 0) {
-                    console.log('✅ [ADMIN] Sucesso! Renderizando tabela...');
-                    console.log('🏆 [ADMIN] Primeiros 3 times:');
-                    data.classificacao.slice(0, 3).forEach((time, i) => {
-                        console.log(`   ${i+1}. ${time.time} - ${time.pontos} pts`);
-                    });
-                    
-                    renderizarClassificacao(data.classificacao);
-                    console.log('🎨 [ADMIN] Renderização concluída!');
-                } else {
-                    console.warn('⚠️ [ADMIN] API retornou dados vazios. Usando dados mock...');
-                    
-                    // Se for Série B e API falhou, usar dados mock
-                    if (campeonato === 'serie-b') {
-                        console.log('🥈 [ADMIN] Carregando dados mock da Série B...');
-                        const dadosSerieB = [
-                            {id: 1, time: 'Santos', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 1, ultimos_jogos: 'NNNNN'},
-                            {id: 2, time: 'Novorizontino', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 2, ultimos_jogos: 'NNNNN'},
-                            {id: 3, time: 'Sport', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 3, ultimos_jogos: 'NNNNN'},
-                            {id: 4, time: 'Mirassol', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 4, ultimos_jogos: 'NNNNN'},
-                            {id: 5, time: 'Ceará', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 5, ultimos_jogos: 'NNNNN'},
-                            {id: 6, time: 'Vila Nova', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 6, ultimos_jogos: 'NNNNN'},
-                            {id: 7, time: 'América-MG', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 7, ultimos_jogos: 'NNNNN'},
-                            {id: 8, time: 'Operário', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 8, ultimos_jogos: 'NNNNN'},
-                            {id: 9, time: 'Goiás', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 9, ultimos_jogos: 'NNNNN'},
-                            {id: 10, time: 'Avaí', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 10, ultimos_jogos: 'NNNNN'},
-                            {id: 11, time: 'Paysandu', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 11, ultimos_jogos: 'NNNNN'},
-                            {id: 12, time: 'Coritiba', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 12, ultimos_jogos: 'NNNNN'},
-                            {id: 13, time: 'Amazonas', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 13, ultimos_jogos: 'NNNNN'},
-                            {id: 14, time: 'Chapecoense', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 14, ultimos_jogos: 'NNNNN'},
-                            {id: 15, time: 'CRB', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 15, ultimos_jogos: 'NNNNN'},
-                            {id: 16, time: 'Ponte Preta', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 16, ultimos_jogos: 'NNNNN'},
-                            {id: 17, time: 'Ituano', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 17, ultimos_jogos: 'NNNNN'},
-                            {id: 18, time: 'Botafogo-SP', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 18, ultimos_jogos: 'NNNNN'},
-                            {id: 19, time: 'Brusque', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 19, ultimos_jogos: 'NNNNN'},
-                            {id: 20, time: 'Guarani', pontos: 0, jogos: 0, vitorias: 0, empates: 0, derrotas: 0, gols_pro: 0, gols_contra: 0, saldo_gols: 0, aproveitamento: 0, posicao: 20, ultimos_jogos: 'NNNNN'}
-                        ];
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        console.log('✅ [MANUAL-UPDATE] Últimos confrontos atualizados com sucesso!');
+                        mostrarSucesso('Últimos confrontos atualizados com sucesso!');
                         
-                        renderizarClassificacao(dadosSerieB);
-                        console.log('🎨 [ADMIN] Série B renderizada com dados mock!');
-                        mostrarNotificacao('📋 Série B carregada! Edite os dados conforme necessário.', 'info');
+                        // Recarregar a classificação para mostrar os dados atualizados
+                        setTimeout(() => {
+                            carregarClassificacao();
+                        }, 1000);
                     } else {
-                        console.error('❌ [ADMIN] Erro no response:', data.message || 'Dados inválidos');
-                        mostrarErro('Erro ao carregar classificação: ' + (data.message || 'Dados inválidos'));
+                        console.error('❌ [MANUAL-UPDATE] Erro na atualização:', data.message);
+                        mostrarErro('Erro ao atualizar: ' + data.message);
                     }
+                } else {
+                    console.error('❌ [MANUAL-UPDATE] Erro HTTP:', response.status);
+                    mostrarErro('Erro HTTP: ' + response.status);
                 }
             } catch (error) {
+                console.error('💥 [MANUAL-UPDATE] Erro na requisição:', error);
+                mostrarErro('Erro na requisição: ' + error.message);
+            } finally {
+                // Esconder loading
                 if (loadingEl) {
                     loadingEl.style.display = 'none';
                 }
-                console.error('💥 [ADMIN] Erro na requisição:', error);
-                console.error('📄 [ADMIN] Error stack:', error.stack);
-                mostrarErro('Erro ao carregar classificação: ' + error.message);
             }
-            
-            console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
-            
-            // Limpar estado de carregamento
-            isClassificacaoLoading = false;
         }
-        
-                async function carregarClassificacao() {
+
+        // === FUNÇÃO PARA CARREGAR CLASSIFICAÇÃO ===
+        async function carregarClassificacao() {
             console.log('🔄 [ADMIN] === INICIANDO CARREGAMENTO DA CLASSIFICAÇÃO ===');
-            
-            // Controle de estado para evitar chamadas múltiplas
-            if (isClassificacaoLoading) {
-                console.log('🔄 [ADMIN] Carregamento já em andamento, ignorando...');
-                return;
-            }
-            isClassificacaoLoading = true;
             
             const campeonatoSelect = document.getElementById('campeonatoSelect');
             const loadingEl = document.getElementById('loadingClassificacao');
@@ -3477,9 +3378,6 @@
             }
             
             console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
-            
-            // Limpar estado de carregamento
-            isClassificacaoLoading = false;
         }
         
         function renderizarClassificacao(classificacao) {

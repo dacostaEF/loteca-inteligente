@@ -1,27 +1,27 @@
-Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_São,Pontos_Ganhos,Pontos_Acumulados
-02/10/2025,For,0,2,São,Fortaleza - CE,Vitória,3,3
-29/09/2025,São,0,1,Cea,Sao Paulo - SP,Derrota,0,3
-21/09/2025,San,1,0,São,Vila Belmiro,D,0,3
-14/09/2025,São,1,0,Bot,Morumbi,V,3,3
-30/08/2025,Cru,1,0,São,Mineirão,D,0,3
-24/08/2025,São,2,0,Atl,Morumbi,V,3,6
-16/08/2025,Spo,2,2,São,Ilha do Retiro,E,1,7
-09/08/2025,São,2,0,Vit,Morumbi,V,3,10
-03/08/2025,Int,1,2,São,Beira,V,3,13
-27/07/2025,São,3,1,Flu,Morumbi,V,3,16
-24/07/2025,Juv,0,1,São,Alfredo Jaconi,V,3,19
-19/07/2025,São,2,0,Cor,Morumbi,V,3,22
-16/07/2025,Red,2,2,São,Cícero de Souza Marques,E,1,23
-12/07/2025,Fla,2,0,São,Maracanã,D,0,23
-12/06/2025,São,1,3,Vas,Morumbi,D,0,23
-31/05/2025,Bah,2,1,São,Arena Fonte Nova,D,0,23
-24/05/2025,São,0,2,Mir,Morumbi,D,0,23
-17/05/2025,São,2,1,Grê,Morumbi,V,3,26
-11/05/2025,Pal,1,0,São,Arena Barueri,D,0,26
-02/05/2025,São,0,0,For,Morumbi,E,1,27
-26/04/2025,Cea,1,1,São,Arena Castelão,E,1,28
-20/04/2025,São,2,1,San,Morumbi,V,3,31
-16/04/2025,Bot,2,2,São,Nilton Santos,E,1,32
-13/04/2025,São,1,1,Cru,Morumbi,E,1,33
-06/04/2025,Atl,0,0,São,Mineirão,E,1,34
-29/03/2025,São,0,0,Spo,Morumbi,E,1,35
+Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Sao,Pontos_Ganhos,Pontos_Acumulados
+02/10/2025,For,0,2,Sao,Fortaleza - CE,Vitoria,3,3
+29/09/2025,Sao,0,1,Cea,Sao Paulo - SP,Derrota,0,3
+21/09/2025,San,1,0,Sao,Vila Belmiro,Derrota,0,3
+14/09/2025,Sao,1,0,Bot,Morumbi,Vitoria,3,3
+30/08/2025,Cru,1,0,Sao,Mineirao,Derrota,0,3
+24/08/2025,Sao,2,0,Atl,Morumbi,Empate,3,6
+16/08/2025,Spo,2,2,Sao,Ilha do Retiro,Empate,1,7
+09/08/2025,Sao,2,0,Vit,Morumbi,Empate,3,10
+03/08/2025,Int,1,2,Sao,Beira,Empate,3,13
+27/07/2025,Sao,3,1,Flu,Morumbi,Empate,3,16
+24/07/2025,Juv,0,1,Sao,Alfredo Jaconi,Empate,3,19
+19/07/2025,Sao,2,0,Cor,Morumbi,Empate,3,22
+16/07/2025,Red,2,2,Sao,Cicero de Souza Marques,Empate,1,23
+12/07/2025,Fla,2,0,Sao,Maracana,Derrota,0,23
+12/06/2025,Sao,1,3,Vas,Morumbi,Derrota,0,23
+31/05/2025,Bah,2,1,Sao,Arena Fonte Nova,Derrota,0,23
+24/05/2025,Sao,0,2,Mir,Morumbi,Derrota,0,23
+17/05/2025,Sao,2,1,Gre,Morumbi,Empate,3,26
+11/05/2025,Pal,1,0,Sao,Arena Barueri,Derrota,0,26
+02/05/2025,Sao,0,0,For,Morumbi,Empate,1,27
+26/04/2025,Cea,1,1,Sao,Arena Castelao,Empate,1,28
+20/04/2025,Sao,2,1,San,Morumbi,Empate,3,31
+16/04/2025,Bot,2,2,Sao,Nilton Santos,Empate,1,32
+13/04/2025,Sao,1,1,Cru,Morumbi,Empate,1,33
+06/04/2025,Atl,0,0,Sao,Mineirao,Empate,1,34
+29/03/2025,Sao,0,0,Spo,Morumbi,Empate,1,35
