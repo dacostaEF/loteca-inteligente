@@ -14,6 +14,8 @@ from models.central_dados import CentralDados
 from models.classificacao_db import classificacao_db
 from models.jogos_manager import jogos_manager
 from models.concurso_manager import concurso_manager
+import subprocess
+import sys
 
 # Configuração do logging
 logging.basicConfig(level=logging.INFO)
@@ -1167,6 +1169,94 @@ def get_proximo_numero():
         return jsonify({
             'success': False,
             'message': f'Erro ao calcular próximo número: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/atualizar-ultimos-confrontos', methods=['POST'])
+@cross_origin()
+def atualizar_ultimos_confrontos():
+    """Atualizar últimos confrontos usando arquivos JSON"""
+    logger.info("🔄 [JSON-UPDATE] Iniciando atualização via arquivos JSON...")
+    
+    try:
+        # Verificar autenticação
+        request_data = request.get_json() or {}
+        if not verificar_auth(request_data):
+            return jsonify({
+                'success': False,
+                'message': 'Acesso negado. Chave de administrador inválida.'
+            }), 401
+        
+        # Importar o leitor de JSON
+        from ler_ultimos_cinco import ler_ultimos_cinco_serie_a, ler_ultimos_cinco_serie_b
+        
+        # Ler dados dos arquivos JSON
+        serie_a_data = ler_ultimos_cinco_serie_a()
+        serie_b_data = ler_ultimos_cinco_serie_b()
+        
+        logger.info(f"📊 [JSON-UPDATE] Série A: {len(serie_a_data)} times")
+        logger.info(f"📊 [JSON-UPDATE] Série B: {len(serie_b_data)} times")
+        
+        # Atualizar banco de dados
+        from models.classificacao_db import ClassificacaoDB
+        db = ClassificacaoDB()
+        
+        # Atualizar Série A
+        updated_a = 0
+        for time_nome, ultimos in serie_a_data.items():
+            # Normalizar nome do time para o banco
+            time_banco = time_nome.replace('-', ' ').title()
+            if time_banco == 'Sao Paulo':
+                time_banco = 'São Paulo'
+            elif time_banco == 'Red Bull Bragantino':
+                time_banco = 'Bragantino'
+            elif time_banco == 'Sport Recife':
+                time_banco = 'Sport'
+            
+            # Atualizar no banco
+            success = db.atualizar_ultimos_confrontos_serie_a(time_banco, ultimos)
+            if success:
+                updated_a += 1
+                logger.info(f"✅ [JSON-UPDATE] {time_banco}: {ultimos}")
+        
+        # Atualizar Série B
+        updated_b = 0
+        for time_nome, ultimos in serie_b_data.items():
+            # Normalizar nome do time para o banco
+            time_banco = time_nome.replace('-', ' ').title()
+            if time_banco == 'Athletico Pr':
+                time_banco = 'Athletico-PR'
+            elif time_banco == 'America Mg':
+                time_banco = 'América-MG'
+            elif time_banco == 'Athletic Mg':
+                time_banco = 'Athletic'
+            elif time_banco == 'Botafogo Sp':
+                time_banco = 'Botafogo SP'
+            elif time_banco == 'Amazonas Fc':
+                time_banco = 'Amazonas FC'
+            elif time_banco == 'Volta Redonda':
+                time_banco = 'Volta Redonda'
+            
+            # Atualizar no banco
+            success = db.atualizar_ultimos_confrontos_serie_b(time_banco, ultimos)
+            if success:
+                updated_b += 1
+                logger.info(f"✅ [JSON-UPDATE] {time_banco}: {ultimos}")
+        
+        logger.info(f"✅ [JSON-UPDATE] Atualização concluída! A: {updated_a}, B: {updated_b}")
+        
+        return jsonify({
+            'success': True,
+            'message': f'Últimos confrontos atualizados com sucesso! Série A: {updated_a} times, Série B: {updated_b} times',
+            'updated_at': datetime.now().isoformat(),
+            'serie_a_updated': updated_a,
+            'serie_b_updated': updated_b
+        }), 200
+            
+    except Exception as e:
+        logger.error(f"💥 [JSON-UPDATE] Erro geral: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao atualizar últimos confrontos: {str(e)}'
         }), 500
 
 # Blueprint integrado ao app principal

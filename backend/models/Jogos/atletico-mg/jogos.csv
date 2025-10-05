@@ -1,25 +1,25 @@
-Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Atl,Pontos_Ganhos,Pontos_Acumulados
-30/09/2025,Atl,0,0,Juv,ARENA MRV,E,1,1
-27/09/2025,Atl,1,0,Mir,ARENA MRV,V,3,4
-20/09/2025,Bot,1,0,Atl,Nilton Santos,D,0,3
-14/09/2025,Atl,1,1,San,ARENA MRV,E,1,4
-31/08/2025,Vit,1,0,Atl,Manoel Barradas,D,0,4
-24/08/2025,São,2,0,Atl,Morumbi,D,0,4
-17/08/2025,Atl,1,3,Grê,ARENA MRV,D,0,4
-10/08/2025,Vas,1,1,Atl,São Januário,E,1,5
-03/08/2025,Atl,2,1,Red,ARENA MRV,V,3,8
-27/07/2025,Fla,1,0,Atl,Maracanã,D,0,8
-20/07/2025,Pal,3,2,Atl,Allianz Parque,D,0,8
-12/07/2025,Bah,2,1,Atl,Arena Fonte Nova,D,0,8
-12/06/2025,Atl,2,0,Int,ARENA MRV,V,3,11
-01/06/2025,Cea,0,1,Atl,Arena Castelão,V,3,14
-24/05/2025,Atl,0,0,Cor,ARENA MRV,E,1,15
-18/05/2025,Cru,0,0,Atl,Mineirão,E,1,16
-11/05/2025,Atl,3,2,Flu,ARENA MRV,V,3,19
-05/05/2025,Juv,0,1,Atl,Alfredo Jaconi,V,3,22
-26/04/2025,Mir,2,2,Atl,José Maria de Campos Maia,E,1,23
-20/04/2025,Atl,1,0,Bot,Mineirão,V,3,26
-16/04/2025,San,2,0,Atl,Vila Belmiro,D,0,26
-13/04/2025,Atl,2,2,Vit,Mineirão,E,1,27
-06/04/2025,Atl,0,0,São,Mineirão,E,1,28
-29/03/2025,Grê,2,1,Atl,Arena do Grêmio,D,0,28
+Data,Adversario,Resultado,Placar,Local,Competicao
+30/09/2025,Juventude,Empate,0 x 0,Casa,Brasileirao
+27/09/2025,Mirassol,Vitoria,1 x 0,Casa,Brasileirao
+20/09/2025,Botafogo,Derrota,1 x 0,Fora,Brasileirao
+14/09/2025,Santos,Empate,1 x 1,Casa,Brasileirao
+31/08/2025,Vitoria,Derrota,1 x 0,Fora,Brasileirao
+24/08/2025,Sao Paulo,Derrota,2 x 0,Fora,Brasileirao
+17/08/2025,Gremio,Derrota,1 x 3,Casa,Brasileirao
+10/08/2025,Vasco,Empate,1 x 1,Fora,Brasileirao
+03/08/2025,Red Bull Bragantino,Vitoria,2 x 1,Casa,Brasileirao
+27/07/2025,Flamengo,Derrota,1 x 0,Fora,Brasileirao
+20/07/2025,Palmeiras,Derrota,3 x 2,Fora,Brasileirao
+12/07/2025,Bahia,Derrota,2 x 1,Fora,Brasileirao
+12/06/2025,Internacional,Vitoria,2 x 0,Casa,Brasileirao
+01/06/2025,Ceara,Vitoria,0 x 1,Fora,Brasileirao
+24/05/2025,Corinthians,Empate,0 x 0,Casa,Brasileirao
+18/05/2025,Cruzeiro,Empate,0 x 0,Fora,Brasileirao
+11/05/2025,Fluminense,Vitoria,3 x 2,Casa,Brasileirao
+05/05/2025,Juventude,Vitoria,0 x 1,Fora,Brasileirao
+26/04/2025,Mirassol,Empate,2 x 2,Fora,Brasileirao
+20/04/2025,Botafogo,Vitoria,1 x 0,Casa,Brasileirao
+16/04/2025,Santos,Derrota,2 x 0,Fora,Brasileirao
+13/04/2025,Vitoria,Empate,2 x 2,Casa,Brasileirao
+06/04/2025,Sao Paulo,Empate,0 x 0,Casa,Brasileirao
+29/03/2025,Gremio,Derrota,2 x 1,Fora,Brasileirao

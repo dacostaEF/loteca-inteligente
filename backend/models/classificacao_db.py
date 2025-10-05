@@ -63,7 +63,7 @@ class ClassificacaoDB:
                     SELECT 
                         id, posicao, time, pontos, jogos, vitorias, empates, derrotas,
                         gols_pro, gols_contra, saldo_gols, aproveitamento,
-                        ultimos_jogos, zona, data_atualizacao, rodada, fonte
+                        ultimos_confrontos, zona, data_atualizacao, rodada, fonte
                     FROM classificacao_serie_a 
                     ORDER BY posicao ASC
                 """)
@@ -95,7 +95,7 @@ class ClassificacaoDB:
                     SELECT 
                         id, posicao, time, pontos, jogos, vitorias, empates, derrotas,
                         gols_pro, gols_contra, saldo_gols, aproveitamento,
-                        ultimos_jogos, zona, created_at, updated_at
+                        ultimos_confrontos, zona, created_at, updated_at
                     FROM classificacao_serie_b 
                     ORDER BY posicao ASC
                 """)
@@ -215,7 +215,7 @@ class ClassificacaoDB:
                 # Campos permitidos para atualização (incluindo Premier League)
                 campos_permitidos_brasileirao = [
                     'time', 'pontos', 'jogos', 'vitorias', 'empates', 'derrotas',
-                    'gols_pro', 'gols_contra', 'ultimos_jogos'
+                    'gols_pro', 'gols_contra', 'ultimos_confrontos'
                 ]
                 
                 campos_permitidos_premier = [
@@ -421,6 +421,54 @@ class ClassificacaoDB:
         except Exception as e:
             logger.error(f"Erro ao obter última atualização: {e}")
             return None
+
+    def atualizar_ultimos_confrontos_serie_a(self, time_nome, ultimos_confrontos):
+        """Atualizar últimos confrontos de um time da Série A"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                
+                # Atualizar o time específico
+                cursor.execute("""
+                    UPDATE classificacao_serie_a 
+                    SET ultimos_confrontos = ?, data_atualizacao = datetime('now')
+                    WHERE time = ?
+                """, (ultimos_confrontos, time_nome))
+                
+                if cursor.rowcount > 0:
+                    logger.info(f"✅ [DB] Atualizado {time_nome}: {ultimos_confrontos}")
+                    return True
+                else:
+                    logger.warning(f"⚠️ [DB] Time {time_nome} não encontrado na Série A")
+                    return False
+                    
+        except Exception as e:
+            logger.error(f"❌ [DB] Erro ao atualizar {time_nome}: {e}")
+            return False
+
+    def atualizar_ultimos_confrontos_serie_b(self, time_nome, ultimos_confrontos):
+        """Atualizar últimos confrontos de um time da Série B"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                
+                # Atualizar o time específico
+                cursor.execute("""
+                    UPDATE classificacao_serie_b 
+                    SET ultimos_confrontos = ?, updated_at = datetime('now')
+                    WHERE time = ?
+                """, (ultimos_confrontos, time_nome))
+                
+                if cursor.rowcount > 0:
+                    logger.info(f"✅ [DB] Atualizado {time_nome}: {ultimos_confrontos}")
+                    return True
+                else:
+                    logger.warning(f"⚠️ [DB] Time {time_nome} não encontrado na Série B")
+                    return False
+                    
+        except Exception as e:
+            logger.error(f"❌ [DB] Erro ao atualizar {time_nome}: {e}")
+            return False
 
 # Instância global
 classificacao_db = ClassificacaoDB()

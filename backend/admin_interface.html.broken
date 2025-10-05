@@ -2496,8 +2496,6 @@
         const ADMIN_KEY = 'loteca2024admin'; // Chave de acesso padrão
         const API_BASE = window.location.port === '5001' ? 'http://127.0.0.1:5001' : window.location.origin; // Base URL para APIs
 
-        // Controle de estado para evitar piscar
-        let isClassificacaoLoading = false;
         // === FUNÇÃO PARA MOSTRAR/OCULTAR SENHA ===
         function togglePasswordVisibility() {
             const passwordField = document.getElementById('adminKey');
@@ -2789,9 +2787,11 @@
             if (tabName === 'classificacao') {
                 console.log('🏆 [ADMIN] === ABA CLASSIFICAÇÃO ATIVADA ===');
                 console.log('🎯 [ADMIN] Elemento da aba ativo:', document.getElementById('classificacao'));
-                // Carregar diretamente sem setTimeout
+                // Carregar apenas se não estiver carregando
                 if (!window.carregandoClassificacao) {
-                    carregarClassificacao();
+                    setTimeout(() => {
+                        carregarClassificacao();
+                    }, 100);
                 }
             }
             if (tabName === 'clubes') carregarClubes();
@@ -2799,10 +2799,10 @@
             if (tabName === 'dashboard') carregarDashboard();
             if (tabName === 'jogos-loteca') {
                 console.log('🎮 [ADMIN] === ABA JOGOS LOTECA ATIVADA ===');
-                setTimeout(() => {
+                setTimeout(async () => {
                     console.log('⏰ [ADMIN] Inicializando sistema de concursos...');
-                    carregarListaConcursos();
-                    carregarUltimoConcurso();
+                    await carregarListaConcursos();
+                    await carregarUltimoConcurso();
                 }, 200);
             }
         }
@@ -3190,8 +3190,10 @@
                 bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666; font-style: italic;">🔄 Carregando nova classificação...</td></tr>';
             }
             
-            // Carregar nova classificação diretamente
-            carregarClassificacao();
+            // Carregar nova classificação
+            setTimeout(() => {
+                carregarClassificacao();
+            }, 300);
         }
         
         // FUNÇÃO PARA ATUALIZAR ÚLTIMOS CONFRONTOS AUTOMATICAMENTE
@@ -3233,6 +3235,154 @@
             console.log('🔄 [MANUAL-UPDATE] Atualizando últimos confrontos manualmente...');
             
             // Mostrar loading
+            const loadingEl = document.getElementById('loadingClassificacao');
+            if (loadingEl) {
+                loadingEl.style.display = 'block';
+                loadingEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 🔄 Atualizando últimos confrontos...';
+            }
+            
+            try {
+                const adminKey = localStorage.getItem('admin_key') || 'loteca2024admin';
+                
+                const response = await fetch('/api/admin/atualizar-ultimos-confrontos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        admin_key: adminKey
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        console.log('✅ [MANUAL-UPDATE] Últimos confrontos atualizados com sucesso!');
+                        mostrarSucesso('Últimos confrontos atualizados com sucesso!');
+                        
+                        // Recarregar a classificação para mostrar os dados atualizados
+                        setTimeout(() => {
+                            carregarClassificacao();
+                        }, 1000);
+                    } else {
+                        console.error('❌ [MANUAL-UPDATE] Erro na atualização:', data.message);
+                        mostrarErro('Erro ao atualizar: ' + data.message);
+                    }
+                } else {
+                    console.error('❌ [MANUAL-UPDATE] Erro HTTP:', response.status);
+                    mostrarErro('Erro HTTP: ' + response.status);
+                }
+            } catch (error) {
+                console.error('💥 [MANUAL-UPDATE] Erro na requisição:', error);
+                mostrarErro('Erro na requisição: ' + error.message);
+            } finally {
+                // Esconder loading
+                if (loadingEl) {
+                    loadingEl.style.display = 'none';
+                }
+            }
+        }
+        
+                async function carregarClassificacao() {
+            console.log('🔄 [ADMIN] === INICIANDO CARREGAMENTO DA CLASSIFICAÇÃO ===');
+            
+            const campeonatoSelect = document.getElementById('campeonatoSelect');
+            const loadingEl = document.getElementById('loadingClassificacao');
+            const bodyEl = document.getElementById('classificacaoBody');
+            
+            console.log('🎯 [ADMIN] Elementos DOM encontrados:');
+            console.log('   - campeonatoSelect:', campeonatoSelect ? 'OK' : 'MISSING');
+            console.log('   - loadingEl:', loadingEl ? 'OK' : 'MISSING');
+            console.log('   - bodyEl:', bodyEl ? 'OK' : 'MISSING');
+            
+            const campeonato = campeonatoSelect ? campeonatoSelect.value : 'serie-a';
+            let adminKey = localStorage.getItem('admin_key');
+            
+            // FORÇAR admin key se não existir
+            if (!adminKey) {
+                console.warn('⚠️ [ADMIN] Admin key não encontrada no localStorage! Usando padrão...');
+                adminKey = 'loteca2024admin';
+                localStorage.setItem('admin_key', adminKey);
+            }
+            
+            console.log('🔑 [ADMIN] Configurações:');
+            console.log('   - campeonato:', campeonato);
+            console.log('   - adminKey:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
+            
+            if (loadingEl) {
+                loadingEl.style.display = 'block';
+                console.log('📊 [ADMIN] Loading exibido');
+            }
+            
+            if (bodyEl) {
+                bodyEl.innerHTML = '';
+                console.log('🧹 [ADMIN] Tabela limpa');
+            }
+            
+            try {
+                const requestData = {
+                    admin_key: adminKey,
+                    campeonato: campeonato
+                };
+                
+                console.log('📤 [ADMIN] Enviando requisição...');
+                console.log('   - URL: /api/admin/classificacao');
+                console.log('   - Method: POST');
+                console.log('   - Body:', JSON.stringify(requestData));
+                
+                const response = await fetch('/api/admin/classificacao', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(requestData)
+                });
+                
+                console.log('📥 [ADMIN] Resposta recebida:');
+                console.log('   - Status:', response.status);
+                console.log('   - OK:', response.ok);
+                
+                if (loadingEl) {
+                    loadingEl.style.display = 'none';
+                    console.log('📊 [ADMIN] Loading escondido');
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('📋 [ADMIN] Dados JSON recebidos:');
+                console.log('   - success:', data.success);
+                console.log('   - total:', data.total);
+                console.log('   - campeonato:', data.campeonato);
+                
+                if (data.success && data.classificacao) {
+                    console.log('✅ [ADMIN] Dados válidos recebidos!');
+                    renderizarClassificacao(data.classificacao);
+                } else {
+                    console.warn('⚠️ [ADMIN] Dados inválidos ou vazios');
+                    if (bodyEl) {
+                        bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Erro ao carregar dados</td></tr>';
+                    }
+                }
+                
+            } catch (error) {
+                console.error('💥 [ADMIN] Erro na requisição:', error);
+                console.error('📄 [ADMIN] Error stack:', error.stack);
+                
+                if (loadingEl) {
+                    loadingEl.style.display = 'none';
+                }
+                
+                if (bodyEl) {
+                    bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Erro ao carregar dados</td></tr>';
+                }
+            }
+            
+            console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
+        }function carregarClassificacao() {
+            console.log('🔄 [ADMIN] === INICIANDO CARREGAMENTO DA CLASSIFICAÇÃO ===');
+            
+            const campeonatoSelect = document.getElementById('campeonatoSelect');
             const loadingEl = document.getElementById('loadingClassificacao');
             const bodyEl = document.getElementById('classificacaoBody');
             
@@ -3369,117 +3519,6 @@
             }
             
             console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
-            
-            // Limpar estado de carregamento
-            isClassificacaoLoading = false;
-        }
-        
-                async function carregarClassificacao() {
-            console.log('🔄 [ADMIN] === INICIANDO CARREGAMENTO DA CLASSIFICAÇÃO ===');
-            
-            // Controle de estado para evitar chamadas múltiplas
-            if (isClassificacaoLoading) {
-                console.log('🔄 [ADMIN] Carregamento já em andamento, ignorando...');
-                return;
-            }
-            isClassificacaoLoading = true;
-            
-            const campeonatoSelect = document.getElementById('campeonatoSelect');
-            const loadingEl = document.getElementById('loadingClassificacao');
-            const bodyEl = document.getElementById('classificacaoBody');
-            
-            console.log('🎯 [ADMIN] Elementos DOM encontrados:');
-            console.log('   - campeonatoSelect:', campeonatoSelect ? 'OK' : 'MISSING');
-            console.log('   - loadingEl:', loadingEl ? 'OK' : 'MISSING');
-            console.log('   - bodyEl:', bodyEl ? 'OK' : 'MISSING');
-            
-            const campeonato = campeonatoSelect ? campeonatoSelect.value : 'serie-a';
-            let adminKey = localStorage.getItem('admin_key');
-            
-            // FORÇAR admin key se não existir
-            if (!adminKey) {
-                console.warn('⚠️ [ADMIN] Admin key não encontrada no localStorage! Usando padrão...');
-                adminKey = 'loteca2024admin';
-                localStorage.setItem('admin_key', adminKey);
-            }
-            
-            console.log('🔑 [ADMIN] Configurações:');
-            console.log('   - campeonato:', campeonato);
-            console.log('   - adminKey:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
-            
-            if (loadingEl) {
-                loadingEl.style.display = 'block';
-                console.log('📊 [ADMIN] Loading exibido');
-            }
-            
-            if (bodyEl) {
-                bodyEl.innerHTML = '';
-                console.log('🧹 [ADMIN] Tabela limpa');
-            }
-            
-            try {
-                const requestData = {
-                    admin_key: adminKey,
-                    campeonato: campeonato
-                };
-                
-                console.log('📤 [ADMIN] Enviando requisição...');
-                console.log('   - URL: /api/admin/classificacao');
-                console.log('   - Method: POST');
-                console.log('   - Body:', JSON.stringify(requestData));
-                
-                const response = await fetch('/api/admin/classificacao', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(requestData)
-                });
-                
-                console.log('📥 [ADMIN] Resposta recebida:');
-                console.log('   - Status:', response.status);
-                console.log('   - OK:', response.ok);
-                
-                if (loadingEl) {
-                    loadingEl.style.display = 'none';
-                    console.log('📊 [ADMIN] Loading escondido');
-                }
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                console.log('📋 [ADMIN] Dados JSON recebidos:');
-                console.log('   - success:', data.success);
-                console.log('   - total:', data.total);
-                console.log('   - campeonato:', data.campeonato);
-                
-                if (data.success && data.classificacao) {
-                    console.log('✅ [ADMIN] Dados válidos recebidos!');
-                    renderizarClassificacao(data.classificacao);
-                } else {
-                    console.warn('⚠️ [ADMIN] Dados inválidos ou vazios');
-                    if (bodyEl) {
-                        bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Erro ao carregar dados</td></tr>';
-                    }
-                }
-                
-            } catch (error) {
-                console.error('💥 [ADMIN] Erro na requisição:', error);
-                console.error('📄 [ADMIN] Error stack:', error.stack);
-                
-                if (loadingEl) {
-                    loadingEl.style.display = 'none';
-                }
-                
-                if (bodyEl) {
-                    bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Erro ao carregar dados</td></tr>';
-                }
-            }
-            
-            console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
-            
-            // Limpar estado de carregamento
-            isClassificacaoLoading = false;
         }
         
         function renderizarClassificacao(classificacao) {
@@ -4117,7 +4156,7 @@
                 await preencherDadosAutomaticosPlanilha(clubeSelecionado);
                 
                 // Carregar dados dos jogos POR ÚLTIMO (para não serem sobrescritos)
-                carregarDadosJogosClube(clubeSelecionado);
+                await carregarDadosJogosClube(clubeSelecionado);
                 
                 console.log(`✅ [FINAL] Carregamento completo para ${clubeSelecionado} - dados dos jogos carregados por último`);
                 
