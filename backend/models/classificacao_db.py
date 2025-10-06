@@ -202,6 +202,38 @@ class ClassificacaoDB:
         except Exception as e:
             logger.error(f"Erro ao obter classificação Ligue 1: {e}")
             return []
+
+    def get_classificacao_champions_league(self) -> List[Dict]:
+        """Obter classificação da Champions League"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Verificar se existe tabela da Champions League
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='classificacao_champions_league'
+                """)
+                
+                if not cursor.fetchone():
+                    logger.info("Tabela classificacao_champions_league não existe")
+                    return []
+                
+                cursor.execute("""
+                    SELECT 
+                        id, posicao, clube, pais, pts, pj, vit, e, der,
+                        gm, gc, sg, ultimas_5, mudanca, zona,
+                        created_at, updated_at
+                    FROM classificacao_champions_league 
+                    ORDER BY posicao ASC
+                """)
+                
+                rows = cursor.fetchall()
+                return [dict(row) for row in rows]
+                
+        except Exception as e:
+            logger.error(f"Erro ao obter classificação Champions League: {e}")
+            return []
     
     def update_time_stats(self, time_id: int, campo: str, valor: str, serie: str = 'a') -> bool:
         """Atualizar estatística específica de um time"""

@@ -672,6 +672,10 @@ def get_classificacao():
             logger.info("📊 [API] Buscando dados da Ligue 1...")
             classificacao = classificacao_db.get_classificacao_frances()
             logger.info(f"📋 [API] Ligue 1 retornou {len(classificacao)} registros")
+        elif campeonato == 'champions-league':
+            logger.info("📊 [API] Buscando dados da Champions League...")
+            classificacao = classificacao_db.get_classificacao_champions_league()
+            logger.info(f"📋 [API] Champions League retornou {len(classificacao)} registros")
         else:
             logger.warning(f"❌ [API] Campeonato inválido: {campeonato}")
             return jsonify({

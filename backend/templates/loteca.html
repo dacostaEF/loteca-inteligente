@@ -1529,9 +1529,8 @@ Equilíbrio
 
                         <!-- TABELA CHAMPIONS LEAGUE -->
                         <div id="tabela-champions-league" class="classification-table">
-                            <div class="coming-soon">
-                                <h4>🏆 Champions League</h4>
-                                <p>Em breve: Classificação da Champions League!</p>
+                            <div class="table-loading">
+                                <p>🔄 Carregando classificação da Champions League...</p>
                             </div>
                         </div>
 
@@ -2278,7 +2277,7 @@ Equilíbrio
                         'premier-league': '⚽ Premier League - Classificação',
                         'la-liga': '🇪🇸 La Liga - Classificação',
                         'ligue1': '🇫🇷 França (Ligue 1) - Classificação',
-                        'champions-league': '🏆 Champions League - Em Breve'
+                        'champions-league': '🏆 Champions League - Classificação'
                     };
                     
                     if (titleElement && titles[championship]) {
@@ -2292,8 +2291,9 @@ Equilíbrio
                         carregarTabelaLaLiga();
                     } else if (championship === 'ligue1') {
                         carregarTabelaLigue1();
+                    } else if (championship === 'champions-league') {
+                        carregarTabelaChampionsLeague();
                     }
-                    // Champions League não tem dados ainda
                 });
             });
 
@@ -2310,6 +2310,8 @@ Equilíbrio
                             carregarTabelaLaLiga();
                         } else if (championship === 'ligue1') {
                             carregarTabelaLigue1();
+                        } else if (championship === 'champions-league') {
+                            carregarTabelaChampionsLeague();
                         }
                     }
                 });
@@ -2523,6 +2525,76 @@ Equilíbrio
             } catch (error) {
                 console.error('❌ [França] Erro ao carregar:', error);
                 container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar França</p></div>';
+            }
+        }
+
+        // CARREGAR DADOS DA CHAMPIONS LEAGUE
+        async function carregarTabelaChampionsLeague() {
+            const container = document.getElementById('tabela-champions-league');
+            if (!container) return;
+
+            container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Champions League...</p></div>';
+
+            try {
+                console.log('🏆 [Champions League] Carregando dados do banco...');
+                
+                const response = await fetch('/api/admin/classificacao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        campeonato: 'champions-league',
+                        admin_key: 'loteca2024admin'
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('🏆 [Champions League] Dados recebidos:', data);
+                
+                const dadosArray = data.classificacao || data.data || [];
+                
+                if (data.success && dadosArray && dadosArray.length > 0) {
+                    // Formatar dados para o renderizador
+                    const dadosFormatados = dadosArray.map(item => ({
+                        pos: item.posicao,
+                        time: item.clube,
+                        pais: item.pais,
+                        p: item.pts,
+                        j: item.pj,
+                        v: item.vit,
+                        e: item.e,
+                        d: item.der,
+                        gp: item.gm,
+                        gc: item.gc,
+                        sg: item.sg,
+                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
+                        ultimos: item.ultimas_5 || "-----",
+                        zona: item.zona || "",
+                        mudanca: item.mudanca || 0
+                    }));
+                    
+                    console.log('🏆 [Champions League] Dados formatados:', dadosFormatados.length, 'times');
+                    console.log('🏆 [Champions League] Primeiro time formatado:', dadosFormatados[0]);
+                    
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    
+                    // Atualizar informações
+                    const fonteEl = document.getElementById('fonte-internacional');
+                    if (fonteEl) {
+                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
+                    }
+                } else {
+                    throw new Error('Dados inválidos recebidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [Champions League] Erro ao carregar:', error);
+                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar Champions League</p></div>';
             }
         }
 

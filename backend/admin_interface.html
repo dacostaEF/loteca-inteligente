@@ -1724,6 +1724,7 @@
                         <option value="premier-league" style="background: #1e40af; color: white;">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</option>
                         <option value="la-liga" style="background: #dc2626; color: white;">🇪🇸 La Liga</option>
                         <option value="ligue1" style="background: #0f172a; color: white;">🇫🇷 Ligue 1</option>
+                        <option value="champions-league" style="background: #fbbf24; color: white;">🏆 Champions League</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -3379,7 +3380,7 @@
             
             console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
         }
-        
+
         function renderizarClassificacao(classificacao) {
             console.log('🎨 [ADMIN] === INICIANDO RENDERIZAÇÃO ===');
             console.log('📊 [ADMIN] Dados recebidos:', classificacao);
@@ -3409,12 +3410,14 @@
             const isPremierLeague = campeonato === 'premier-league';
             const isLaLiga = campeonato === 'la-liga';
             const isLigue1 = campeonato === 'ligue1';
-            const isInternacional = isPremierLeague || isLaLiga || isLigue1;
+            const isChampionsLeague = campeonato === 'champions-league';
+            const isInternacional = isPremierLeague || isLaLiga || isLigue1 || isChampionsLeague;
             
             console.log('✅ [ADMIN] Renderizando', classificacao.length, 'times...');
             console.log('🏴󠁧󠁢󠁥󠁮󠁧󠁿 [ADMIN] Premier League:', isPremierLeague);
             console.log('🇪🇸 [ADMIN] La Liga:', isLaLiga);
             console.log('🇫🇷 [ADMIN] Ligue 1:', isLigue1);
+            console.log('🏆 [ADMIN] Champions League:', isChampionsLeague);
             console.log('🌍 [ADMIN] Internacional:', isInternacional);
             
             classificacao.forEach((time, index) => {

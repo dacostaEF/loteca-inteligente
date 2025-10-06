@@ -1,9 +1,9 @@
 Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Bot,Pontos_Ganhos,Pontos_Acumulados
-03/10/2025,Cor,2,0,Bot,Curitiba - PR,Empate,0,0
-28/09/2025,Bot,1,2,Fer,Ribeirao Preto - SP,Empate,0,0
-24/09/2025,Crb,3,2,Bot,Maceio - AL,Empate,0,0
+03/10/2025,Cor,2,0,Bot,Curitiba - PR,Derrota,0,0
+28/09/2025,Bot,1,2,Fer,Ribeirao Preto - SP,Derrota,0,0
+24/09/2025,Crb,3,2,Bot,Maceio - AL,Derrota,0,0
 18/09/2025,Bot,1,1,Ope,Ribeirao Preto - SP,Empate,1,1
-14/09/2025,Ath,2,0,Bot,Sao Joao del Rei - MG,Empate,0,1
+14/09/2025,Ath,2,0,Bot,Sao Joao del Rei - MG,Derrota,0,1
 06/09/2025,Bot,1,3,Ath,Ribeirao Preto - SP,Empate,0,1
 30/08/2025,Goi,2,3,Bot,Goiania - GO,Vitoria,3,4
 25/08/2025,Bot,2,0,Vil,Ribeirao Preto - SP,Vitoria,3,7
