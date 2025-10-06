@@ -10,7 +10,7 @@ import os
 
 def ler_ultimos_cinco_serie_a():
     """Lê os últimos 5 resultados da Série A"""
-    serie_a_path = "backend/models/Jogos/_serie_a_cinco.json"
+    serie_a_path = "models/Jogos/_serie_a_cinco.json"
     
     if os.path.exists(serie_a_path):
         with open(serie_a_path, 'r', encoding='utf-8') as f:
@@ -19,7 +19,7 @@ def ler_ultimos_cinco_serie_a():
 
 def ler_ultimos_cinco_serie_b():
     """Lê os últimos 5 resultados da Série B"""
-    serie_b_path = "backend/models/Jogos/_serie_b_cinco.json"
+    serie_b_path = "models/Jogos/_serie_b_cinco.json"
     
     if os.path.exists(serie_b_path):
         with open(serie_b_path, 'r', encoding='utf-8') as f:

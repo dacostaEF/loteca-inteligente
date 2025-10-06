@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Jogos do São Paulo (Clube Principal)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        h1, h2 { color: #800000; border-bottom: 2px solid #800000; padding-bottom: 5px; margin-top: 30px; }
+        .form-cadastro, .relatorios { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background-color: #fafafa; }
+        .form-cadastro label { display: block; margin-top: 10px; font-weight: bold; }
+        .form-cadastro input[type="text"], .form-cadastro input[type="date"], .form-cadastro input[type="number"] { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; }
+        .form-cadastro button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; font-size: 16px; transition: background-color 0.3s; }
+        .form-cadastro button:hover { background-color: #0056b3; }
+        #tabelaJogos, .tabela-relatorio { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        #tabelaJogos th, #tabelaJogos td, .tabela-relatorio th, .tabela-relatorio td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        #tabelaJogos th, .tabela-relatorio th { background-color: #d6eaff; color: #333; }
+        .download-btn { background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 18px; margin-top: 20px; display: block; width: 100%; transition: background-color 0.3s; }
+        .download-btn:hover { background-color: #1e7e34; }
+        .vitoria { background-color: #d4edda; color: #155724; }
+        .empate { background-color: #fff3cd; color: #856404; }
+        .derrota { background-color: #f8d7da; color: #721c24; }
+        
+        /* Estilos para a tabela de classificação */
+        .tabela-classificacao { margin: 20px 0; overflow-x: auto; }
+        #tabelaClassificacao { width: 100%; border-collapse: collapse; font-size: 12px; }
+        #tabelaClassificacao th { background-color: #6c5ce7; color: white; padding: 8px; text-align: center; font-weight: bold; }
+        #tabelaClassificacao td { padding: 6px; text-align: center; border: 1px solid #ddd; }
+        #tabelaClassificacao tr:nth-child(even) { background-color: #f8f9fa; }
+        #tabelaClassificacao tr:nth-child(odd) { background-color: white; }
+        
+        /* Zonas de classificação */
+        .libertadores { background-color: #00b894 !important; color: white; font-weight: bold; }
+        .sul-americana { background-color: #fdcb6e !important; color: #2d3436; font-weight: bold; }
+        .meio-tabela { background-color: #74b9ff !important; color: white; font-weight: bold; }
+        .rebaixamento { background-color: #e17055 !important; color: white; font-weight: bold; }
+        
+        /* Botões */
+        .btn-secondary { background-color: #6c757d; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        
+        /* Bolinhas dos últimos jogos */
+        .ultimos-jogos { display: flex; gap: 2px; justify-content: center; }
+        .bolinha { width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: white; }
+        .bolinha.v { background-color: #00b894; }
+        .bolinha.e { background-color: #636e72; }
+        .bolinha.d { background-color: #e17055; }
+        
+        /* Status badges */
+        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; }
+        .status-badge.libertadores { background-color: #00b894; color: white; }
+        .status-badge.sul-americana { background-color: #fdcb6e; color: #2d3436; }
+        .status-badge.meio-tabela { background-color: #74b9ff; color: white; }
+        .status-badge.rebaixamento { background-color: #e17055; color: white; }
+        
+        /* Botão de ação */
+        .btn-acao { background: none; border: none; font-size: 16px; cursor: pointer; padding: 4px; border-radius: 4px; }
+        .btn-acao:hover { background-color: #f1f2f6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h1 style="margin: 0;">🏆 Gerenciador de Jogos e Classificações</h1>
+                <p style="margin: 5px 0 0 0;">Selecione um time para gerenciar seus jogos e visualizar a classificação em tempo real.</p>
+            </div>
+            <div>
+                <img src="../../static/Logo_loteraisinteligente_preto.png" alt="Loterias Inteligente" style="height: 40px; opacity: 0.8;">
+            </div>
+        </div>
+
+        <!-- === 1. SELEÇÃO DE TIME === -->
+        <div class="form-cadastro">
+            <h2>⚽ 1. Selecionar Time</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seletorTime">Escolha o Time:</label>
+                    <select id="seletorTime" onchange="trocarTime()">
+                        <option value="">-- Selecione um time --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="mostrarListaPastas()" class="btn-secondary" style="margin-top: 25px; padding: 8px 15px;">
+                        📁 Ver Pastas Disponíveis
+                    </button>
+                    <button type="button" onclick="alert('Teste funcionando!')" class="btn-secondary" style="margin-top: 25px; padding: 8px 15px; margin-left: 10px;">
+                        🧪 Teste
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- === 2. CADASTRAR/ATUALIZAR RESULTADO === -->
+        <div class="form-cadastro">
+            <h2>📝 2. Cadastrar/Atualizar Resultado</h2>
+            <form id="formNovoJogo">
+                <!-- Primeira linha: Data e Local -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dataJogo">Data (DD/MM/AAAA):</label>
+                        <input type="date" id="dataJogo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="localJogo">Local:</label>
+                        <input type="text" id="localJogo" value="Morumbi" required>
+                    </div>
+                </div>
+
+                <!-- Segunda linha: Times e Gols -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="timeCasa">Time Casa:</label>
+                        <input type="text" id="timeCasa" value="Sao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="golsCasa">Gols Casa:</label>
+                        <input type="number" id="golsCasa" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="golsVisitante">Gols Visitante:</label>
+                        <input type="number" id="golsVisitante" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeVisitante">Time Visitante:</label>
+                        <input type="text" id="timeVisitante" required>
+                    </div>
+                </div>
+
+                <button type="submit">Adicionar/Atualizar Jogo</button>
+            </form>
+        </div>
+
+        <!-- === 3. TABELAS DE JOGOS (PARA EDIÇÃO) === -->
+        <div class="form-cadastro">
+            <h2>📊 3. Tabela de Jogos (Para Edição)</h2>
+            <button onclick="salvarAlteracoes()" class="btn-primary" style="margin-bottom: 15px; background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+                💾 Salvar Alterações no CSV
+            </button>
+            <table id="tabelaJogos">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Time Casa</th>
+                        <th>GC</th>
+                        <th>GV</th>
+                        <th>Time Visitante</th>
+                        <th>Local</th>
+                        <th>Resultado Sao</th>
+                        <th>Pts Ganhos</th>
+                        <th>Pts Acumulados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- === 4. BAIXAR CSV ATUALIZADO === -->
+        <div class="form-cadastro">
+            <h2>💾 4. Baixar CSV Atualizado</h2>
+            <button id="downloadCsv" class="download-btn">Baixar CSV Atualizado (Ordenado por Data)</button>
+        </div>
+
+        <!-- === 5. CLASSIFICAÇÃO SÉRIE A === -->
+        <div class="form-cadastro">
+            <h2>🏆 5. Classificação do Brasileirão Série A</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <button type="button" onclick="gerarTabelaClassificacao()" class="btn-secondary">
+                        📊 Atualizar Classificação
+                    </button>
+                </div>
+            </div>
+            <div class="tabela-classificacao">
+                <table id="tabelaClassificacao">
+                    <thead>
+                        <tr>
+                            <th>POS</th>
+                            <th>CLUBE</th>
+                            <th>PTS</th>
+                            <th>J</th>
+                            <th>V</th>
+                            <th>E</th>
+                            <th>D</th>
+                            <th>GP</th>
+                            <th>GC</th>
+                            <th>SG</th>
+                            <th>%</th>
+                            <th>Últimos 5</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Será preenchida dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- === 6. CLASSIFICAÇÃO AVANÇADA === -->
+        <div class="form-cadastro">
+            <h2>📊 6. Classificação Avançada (Detalhada)</h2>
+            <div class="tabela-classificacao">
+                <table id="tabelaClassificacaoAvancada">
+                    <thead>
+                        <tr>
+                            <th>POS</th>
+                            <th>CLUBE</th>
+                            <th>PTS</th>
+                            <th>JOGOS</th>
+                            <th>PPG TOTAL</th>
+                            <th>PPG CASA</th>
+                            <th>PPG FORA</th>
+                            <th>CASA %</th>
+                            <th>FORA %</th>
+                            <th>STATUS</th>
+                            <th>AÇÕES</th>
+                            <th>Últimos 5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Será preenchida dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- === RELATÓRIOS AUTOMÁTICOS === -->
+        <div class="relatorios">
+            <h2>📊 Relatórios Automáticos do São Paulo (Sao)</h2>
+
+            <h3>Relatório 1: Resumo Geral (V-E-D)</h3>
+            <table class="tabela-relatorio" id="relatorioVED">
+                <thead>
+                    <tr><th>Tipo</th><th>Total</th><th>Pontos</th><th>Aproveitamento</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <h3>Relatório 2: Desempenho como Mandante vs. Visitante</h3>
+            <table class="tabela-relatorio" id="relatorioLocal">
+                <thead>
+                    <tr><th>Local</th><th>Jogos</th><th>Vitórias</th><th>Empates</th><th>Derrotas</th><th>Pontos</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 1. Dados Iniciais do CSV fornecido pelo usuário
+        const CSV_INICIAL = `Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Sao,Pontos_Ganhos,Pontos_Acumulados
+6/10/2025,Sao,2,3,Pal,Morumbi,Derrota,0,38
+2/10/2025,For,0,2,Sao,Fortaleza - CE,Vitoria,3,38
+29/09/2025,Sao,0,1,Cea,Sao Paulo - SP,Derrota,0,35
+21/09/2025,San,1,0,Sao,Vila Belmiro,Derrota,0,35
+14/09/2025,Sao,1,0,Bot,Morumbi,Vitoria,3,35
+30/08/2025,Cru,1,0,Sao,Mineirao,Derrota,0,32
+24/08/2025,Sao,2,0,Atl,Morumbi,Empate,3,32
+16/08/2025,Spo,2,2,Sao,Ilha do Retiro,Empate,1,29
+9/8/2025,Sao,2,0,Vit,Morumbi,Empate,3,28
+3/8/2025,Int,1,2,Sao,Beira,Empate,3,25
+27/07/2025,Sao,3,1,Flu,Morumbi,Empate,3,22
+24/07/2025,Juv,0,1,Sao,Alfredo Jaconi,Empate,3,19
+19/07/2025,Sao,2,0,Cor,Morumbi,Empate,3,16
+16/07/2025,Red,2,2,Sao,Cicero de Souza Marques,Empate,1,13
+12/7/2025,Fla,2,0,Sao,Maracana,Derrota,0,12
+12/6/2025,Sao,1,3,Vas,Morumbi,Derrota,0,12
+31/05/2025,Bah,2,1,Sao,Arena Fonte Nova,Derrota,0,12
+24/05/2025,Sao,0,2,Mir,Morumbi,Derrota,0,12
+17/05/2025,Sao,2,1,Gre,Morumbi,Empate,3,12
+11/5/2025,Pal,1,0,Sao,Arena Barueri,Derrota,0,9
+2/5/2025,Sao,0,0,For,Morumbi,Empate,1,9
+26/04/2025,Cea,1,1,Sao,Arena Castelao,Empate,1,8
+20/04/2025,Sao,2,1,San,Morumbi,Empate,3,7
+16/04/2025,Bot,2,2,Sao,Nilton Santos,Empate,1,4
+13/04/2025,Sao,1,1,Cru,Morumbi,Empate,1,3
+6/4/2025,Atl,0,0,Sao,Mineirao,Empate,1,2
+29/03/2025,Sao,0,0,Spo,Morumbi,Empate,1,1
+`;
+        
+        const CLUBE_PRINCIPAL = 'Sao';
+        let dadosJogos = [];
+        let classificacaoGeral = {};
+        let timeAtual = 'sao-paulo';
+        
+        // Mapeamento de times para abreviações
+        const MAPEAMENTO_TIMES = {
+            'sao-paulo': 'Sao',
+            'flamengo': 'Fla',
+            'palmeiras': 'Pal',
+            'cruzeiro': 'Cru',
+            'botafogo': 'Bot',
+            'atletico-mg': 'Atl',
+            'bahia': 'Bah',
+            'fluminense': 'Flu',
+            'bragantino': 'Red',
+            'gremio': 'Gre',
+            'ceara': 'Cea',
+            'vasco': 'Vas',
+            'corinthians': 'Cor',
+            'internacional': 'Int',
+            'santos': 'San',
+            'vitoria': 'Vit',
+            'juventude': 'Juv',
+            'fortaleza': 'For',
+            'sport': 'Spo',
+            'mirassol': 'Mir'
+        };
+        
+        // Nomes completos dos times
+        const NOMES_TIMES = {
+            'sao-paulo': 'São Paulo',
+            'flamengo': 'Flamengo',
+            'palmeiras': 'Palmeiras',
+            'cruzeiro': 'Cruzeiro',
+            'botafogo': 'Botafogo',
+            'atletico-mg': 'Atlético-MG',
+            'bahia': 'Bahia',
+            'fluminense': 'Fluminense',
+            'bragantino': 'Bragantino',
+            'gremio': 'Grêmio',
+            'ceara': 'Ceará',
+            'vasco': 'Vasco',
+            'corinthians': 'Corinthians',
+            'internacional': 'Internacional',
+            'santos': 'Santos',
+            'vitoria': 'Vitória',
+            'juventude': 'Juventude',
+            'fortaleza': 'Fortaleza',
+            'sport': 'Sport',
+            'mirassol': 'Mirassol'
+        };
+
+        // 2. Funções de Cálculo e Atualização
+
+        // Função para mostrar lista de pastas (debug)
+        function mostrarListaPastas() {
+            console.log('🔍 Função mostrarListaPastas chamada!');
+            
+            try {
+                const pastasConhecidas = [
+                    'sao-paulo', 'flamengo', 'palmeiras', 'cruzeiro', 'botafogo',
+                    'atletico-mg', 'bahia', 'fluminense', 'bragantino', 'gremio',
+                    'ceara', 'vasco', 'corinthians', 'internacional', 'santos',
+                    'vitoria', 'juventude', 'fortaleza', 'sport', 'mirassol',
+                    'amazonas-fc', 'america-mg', 'athletic-mg', 'athletico-pr',
+                    'atletico-go', 'avai', 'botafogo-sp', 'chapecoense', 'coritiba',
+                    'crb', 'criciuma', 'cuiaba', 'ferroviaria', 'goias',
+                    'novohorizontino', 'operario-pr', 'paysandu', 'remo',
+                    'vila-nova', 'volta-redonda'
+                ];
+                
+                console.log('📁 Pastas encontradas:', pastasConhecidas.length);
+                
+                // Versão simplificada
+                const lista = pastasConhecidas.join('\n');
+                
+                console.log('📁 Lista de pastas:', lista);
+                alert(`📁 Pastas Disponíveis (${pastasConhecidas.length}):\n\n${lista}`);
+                
+            } catch (error) {
+                console.error('❌ Erro na função:', error);
+                alert('❌ Erro: ' + error.message);
+            }
+        }
+
+        /** Troca o time selecionado */
+        function trocarTime() {
+            timeAtual = document.getElementById('seletorTime').value;
+            
+            if (timeAtual) {
+                // Atualizar CLUBE_PRINCIPAL baseado no time selecionado
+                CLUBE_PRINCIPAL = MAPEAMENTO_TIMES[timeAtual] || timeAtual.replace('-', ' ').toUpperCase();
+                
+                // Atualiza o valor padrão do time casa
+                document.getElementById('timeCasa').value = CLUBE_PRINCIPAL;
+                
+                // Carrega CSV da pasta selecionada
+                carregarCsvDaPasta(timeAtual);
+            }
+        }
+
+        /** Carrega dados de um time específico */
+        function carregarDadosTime(timeSlug) {
+            // Por enquanto, vamos usar dados simulados
+            // Em uma implementação real, você carregaria do CSV do time
+            dadosJogos = [];
+            reprocessarDados();
+            gerarTabelaClassificacao();
+        }
+
+        /** Gera a tabela de classificação completa */
+        function gerarTabelaClassificacao() {
+            // Inicializa dados vazios para todos os times
+            const times = Object.keys(NOMES_TIMES);
+            
+            classificacaoGeral = {};
+            
+            times.forEach(timeSlug => {
+                const abrev = MAPEAMENTO_TIMES[timeSlug];
+                classificacaoGeral[timeSlug] = {
+                    nome: NOMES_TIMES[timeSlug],
+                    abrev: abrev,
+                    pontos: 0,
+                    jogos: 0,
+                    vitorias: 0,
+                    empates: 0,
+                    derrotas: 0,
+                    golsPro: 0,
+                    golsContra: 0,
+                    saldoGols: 0,
+                    aproveitamento: 0,
+                    ultimos5: '-----',
+                    status: 'meio-tabela',
+                    ppgTotal: 0,
+                    ppgCasa: 0,
+                    ppgFora: 0,
+                    aproveitamentoCasa: 0,
+                    aproveitamentoFora: 0
+                };
+            });
+            
+            // Se temos dados do time atual, aplica eles
+            if (dadosJogos.length > 0) {
+                const stats = calcularEstatisticasTime(dadosJogos);
+                classificacaoGeral[timeAtual] = {
+                    ...classificacaoGeral[timeAtual],
+                    ...stats
+                };
+            }
+            
+            renderizarTabelaClassificacao();
+            renderizarTabelaClassificacaoAvancada();
+        }
+
+        /** Calcula estatísticas de um time */
+        function calcularEstatisticasTime(jogos) {
+            if (!jogos || jogos.length === 0) {
+                return {
+                    pontos: 0,
+                    jogos: 0,
+                    vitorias: 0,
+                    empates: 0,
+                    derrotas: 0,
+                    golsPro: 0,
+                    golsContra: 0,
+                    saldoGols: 0,
+                    aproveitamento: 0,
+                    ultimos5: '-----'
+                };
+            }
+
+            let pontos = 0;
+            let vitorias = 0;
+            let empates = 0;
+            let derrotas = 0;
+            let golsPro = 0;
+            let golsContra = 0;
+
+            jogos.forEach(jogo => {
+                const resultado = jogo.Resultado_Sao;
+                const pontosJogo = jogo.Pontos_Ganhos;
+                
+                pontos += pontosJogo;
+                
+                if (resultado === 'Vitoria') vitorias++;
+                else if (resultado === 'Empate') empates++;
+                else if (resultado === 'Derrota') derrotas++;
+
+                // Calcular gols
+                if (jogo.Time_Casa === CLUBE_PRINCIPAL) {
+                    golsPro += jogo.Gols_Casa;
+                    golsContra += jogo.Gols_Visitante;
+                } else {
+                    golsPro += jogo.Gols_Visitante;
+                    golsContra += jogo.Gols_Casa;
+                }
+            });
+
+            const saldoGols = golsPro - golsContra;
+            const aproveitamento = jogos.length > 0 ? ((pontos / (jogos.length * 3)) * 100).toFixed(1) : 0;
+            
+            // Últimos 5 jogos
+            const ultimos5 = jogos.slice(-5).map(j => {
+                const resultado = j.Resultado_Sao;
+                if (resultado === 'Vitoria') return 'V';
+                if (resultado === 'Empate') return 'E';
+                if (resultado === 'Derrota') return 'D';
+                return '-';
+            }).join('').padStart(5, '-');
+
+            return {
+                pontos,
+                jogos: jogos.length,
+                vitorias,
+                empates,
+                derrotas,
+                golsPro,
+                golsContra,
+                saldoGols,
+                aproveitamento: parseFloat(aproveitamento),
+                ultimos5
+            };
+        }
+
+        /** Renderiza a tabela de classificação */
+        function renderizarTabelaClassificacao() {
+            const tbody = document.getElementById('tabelaClassificacao').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+
+            // Converte para array e ordena por pontos
+            const timesArray = Object.entries(classificacaoGeral)
+                .map(([slug, dados]) => ({ slug, ...dados }))
+                .sort((a, b) => {
+                    if (b.pontos !== a.pontos) return b.pontos - a.pontos;
+                    return b.saldoGols - a.saldoGols;
+                });
+
+            timesArray.forEach((time, index) => {
+                const pos = index + 1;
+                const status = determinarStatus(pos);
+                
+                const tr = tbody.insertRow();
+                tr.className = status;
+                
+                // POS
+                tr.insertCell().innerText = pos + 'º';
+                
+                // CLUBE
+                const tdClube = tr.insertCell();
+                tdClube.innerHTML = `<strong>${time.nome}</strong>`;
+                
+                // PTS
+                tr.insertCell().innerText = time.pontos;
+                
+                // J
+                tr.insertCell().innerText = time.jogos;
+                
+                // V
+                tr.insertCell().innerText = time.vitorias;
+                
+                // E
+                tr.insertCell().innerText = time.empates;
+                
+                // D
+                tr.insertCell().innerText = time.derrotas;
+                
+                // GP
+                tr.insertCell().innerText = time.golsPro;
+                
+                // GC
+                tr.insertCell().innerText = time.golsContra;
+                
+                // SG
+                const saldo = time.saldoGols >= 0 ? `+${time.saldoGols}` : time.saldoGols;
+                tr.insertCell().innerText = saldo;
+                
+                // %
+                tr.insertCell().innerText = time.aproveitamento + '%';
+                
+                // Últimos 5
+                const tdUltimos = tr.insertCell();
+                tdUltimos.innerHTML = gerarBolinhasUltimos5(time.ultimos5);
+                
+                // STATUS
+                const tdStatus = tr.insertCell();
+                tdStatus.innerHTML = `<span class="status-badge ${status}">${status.toUpperCase()}</span>`;
+            });
+        }
+
+        /** Determina o status baseado na posição */
+        function determinarStatus(posicao) {
+            if (posicao <= 4) return 'libertadores';
+            if (posicao <= 8) return 'sul-americana';
+            if (posicao <= 12) return 'meio-tabela';
+            return 'rebaixamento';
+        }
+
+        /** Gera as bolinhas dos últimos 5 jogos */
+        function gerarBolinhasUltimos5(ultimos) {
+            let html = '<div class="ultimos-jogos">';
+            for (let i = 0; i < 5; i++) {
+                const resultado = ultimos[i] || '-';
+                const classe = resultado.toLowerCase();
+                html += `<span class="bolinha ${classe}">${resultado}</span>`;
+            }
+            html += '</div>';
+            return html;
+        }
+
+        /** Renderiza a tabela de classificação avançada */
+        function renderizarTabelaClassificacaoAvancada() {
+            const tbody = document.getElementById('tabelaClassificacaoAvancada').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+
+            // Converte para array e ordena por pontos
+            const timesArray = Object.entries(classificacaoGeral)
+                .map(([slug, dados]) => ({ slug, ...dados }))
+                .sort((a, b) => {
+                    if (b.pontos !== a.pontos) return b.pontos - a.pontos;
+                    return b.saldoGols - a.saldoGols;
+                });
+
+            timesArray.forEach((time, index) => {
+                const pos = index + 1;
+                const status = determinarStatus(pos);
+                
+                const tr = tbody.insertRow();
+                tr.className = status;
+                
+                // POS
+                tr.insertCell().innerText = pos + 'º';
+                
+                // CLUBE
+                const tdClube = tr.insertCell();
+                tdClube.innerHTML = `<strong>${time.nome}</strong>`;
+                
+                // PTS
+                tr.insertCell().innerText = time.pontos;
+                
+                // JOGOS
+                tr.insertCell().innerText = time.jogos;
+                
+                // PPG TOTAL
+                const ppgTotal = time.jogos > 0 ? (time.pontos / time.jogos).toFixed(2) : '0.00';
+                tr.insertCell().innerText = ppgTotal;
+                
+                // PPG CASA
+                const ppgCasa = time.jogos > 0 ? (time.pontos / time.jogos).toFixed(2) : '0.00';
+                tr.insertCell().innerText = ppgCasa;
+                
+                // PPG FORA
+                const ppgFora = time.jogos > 0 ? (time.pontos / time.jogos).toFixed(2) : '0.00';
+                tr.insertCell().innerText = ppgFora;
+                
+                // CASA %
+                const casaPercent = time.jogos > 0 ? ((time.pontos / (time.jogos * 3)) * 100).toFixed(1) : '0.0';
+                tr.insertCell().innerText = casaPercent + '%';
+                
+                // FORA %
+                const foraPercent = time.jogos > 0 ? ((time.pontos / (time.jogos * 3)) * 100).toFixed(1) : '0.0';
+                tr.insertCell().innerText = foraPercent + '%';
+                
+                // STATUS
+                const tdStatus = tr.insertCell();
+                tdStatus.innerHTML = `<span class="status-badge ${status}">${status.toUpperCase()}</span>`;
+                
+                // AÇÕES
+                const tdAcoes = tr.insertCell();
+                tdAcoes.innerHTML = '<button class="btn-acao" onclick="verDetalhes(\'' + time.slug + '\')">👁️</button>';
+                
+                // Últimos 5
+                const tdUltimos = tr.insertCell();
+                tdUltimos.innerHTML = gerarBolinhasUltimos5(time.ultimos5);
+            });
+        }
+
+        /** Função para ver detalhes de um time */
+        function verDetalhes(timeSlug) {
+            alert(`Detalhes do ${NOMES_TIMES[timeSlug]} - Em desenvolvimento!`);
+        }
+
+        /** Converte um objeto de jogo para uma linha CSV */
+        function toCsvRow(jogo) {
+            return `${jogo.Data},${jogo.Time_Casa},${jogo.Gols_Casa},${jogo.Gols_Visitante},${jogo.Time_Visitante},${jogo.Local},${jogo.Resultado_Sao},${jogo.Pontos_Ganhos},${jogo.Pontos_Acumulados}`;
+        }
+
+        /** Converte a data (DD/MM/AAAA) para um objeto Date para ordenação */
+        function parseDate(dateStr) {
+            const [day, month, year] = dateStr.split('/').map(Number);
+            // Mês em JavaScript é 0-indexado (0 = Janeiro, 11 = Dezembro)
+            return new Date(year, month - 1, day); 
+        }
+
+        /** Determina o resultado (V, E, D) e os pontos para o CLUBE_PRINCIPAL */
+        function calcularResultado(jogo, pontosAcumuladosAnterior = 0) {
+            let resultado = '';
+            let pontosGanhos = 0;
+            let golsCasa = parseInt(jogo.Gols_Casa);
+            let golsVisitante = parseInt(jogo.Gols_Visitante);
+
+            // A lógica de pontuação deve ser baseada nos gols de quem é o CLUBE_PRINCIPAL
+            let golsDoClube;
+            let golsDoOponente;
+
+            if (jogo.Time_Casa === CLUBE_PRINCIPAL) {
+                golsDoClube = golsCasa;
+                golsDoOponente = golsVisitante;
+            } else { // Time Visitante
+                golsDoClube = golsVisitante;
+                golsDoOponente = golsCasa;
+            }
+
+            if (golsDoClube > golsDoOponente) {
+                resultado = 'Vitoria';
+                pontosGanhos = 3;
+            } else if (golsDoClube < golsDoOponente) {
+                resultado = 'Derrota';
+                pontosGanhos = 0;
+            } else {
+                resultado = 'Empate';
+                pontosGanhos = 1;
+            }
+
+            return {
+                Resultado_Sao: resultado,
+                Pontos_Ganhos: pontosGanhos,
+                Pontos_Acumulados: pontosAcumuladosAnterior + pontosGanhos
+            };
+        }
+        
+        /** Processa todos os jogos e recalcula os pontos acumulados e resultados */
+        function reprocessarDados() {
+            // 1. Ordena os jogos por data (do mais antigo para o mais novo)
+            dadosJogos.sort((a, b) => parseDate(a.Data) - parseDate(b.Data));
+
+            let pontosAcumulados = 0;
+            
+            // 2. Recalcula os pontos acumulados e resultados
+            dadosJogos.forEach(jogo => {
+                // Se o jogo já tem Pontos_Ganhos, usa eles para começar (evita recálculo se o jogo não mudou)
+                // Vamos forçar o recálculo para garantir a consistência
+                const resultadosCalc = calcularResultado(jogo, pontosAcumulados);
+                
+                jogo.Resultado_Sao = resultadosCalc.Resultado_Sao;
+                jogo.Pontos_Ganhos = resultadosCalc.Pontos_Ganhos;
+                jogo.Pontos_Acumulados = resultadosCalc.Pontos_Acumulados;
+                
+                pontosAcumulados = jogo.Pontos_Acumulados; // Atualiza o acumulado para o próximo jogo
+            });
+
+            // 3. Re-ordena do mais novo para o mais antigo para exibição na tabela (Padrão do CSV do usuário)
+            dadosJogos.sort((a, b) => parseDate(b.Data) - parseDate(a.Data));
+            
+            renderTabelaJogos();
+            renderRelatorios();
+        }
+
+
+        /** Carrega os dados do CSV inicial */
+        function carregarDadosIniciais() {
+            const [headerLine, ...dataLines] = CSV_INICIAL.trim().split('\n');
+            const headers = headerLine.split(',');
+            
+            dadosJogos = dataLines.map(line => {
+                const values = line.split(',');
+                const jogo = {};
+                headers.forEach((header, i) => {
+                    // Trata números como números
+                    jogo[header] = ['Gols_Casa', 'Gols_Visitante', 'Pontos_Ganhos', 'Pontos_Acumulados'].includes(header) 
+                        ? parseInt(values[i]) 
+                        : values[i].trim();
+                });
+                return jogo;
+            });
+            
+            reprocessarDados(); // Garante que os pontos acumulados estão corretos
+        }
+
+
+        // 3. Funções de Renderização (HTML)
+
+        /** Renderiza a tabela principal de jogos */
+        function renderTabelaJogos() {
+            const tbody = document.getElementById('tabelaJogos').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            
+            dadosJogos.forEach((jogo, index) => {
+                const tr = tbody.insertRow();
+                tr.className = jogo.Resultado_Sao.toLowerCase(); // Para aplicar a cor de V, E, D
+                
+                // Campos que o usuário pode editar (Gols e Data)
+                const camposEditaveis = ['Data', 'Gols_Casa', 'Gols_Visitante'];
+
+                Object.keys(jogo).forEach(key => {
+                    const td = tr.insertCell();
+                    
+                    if (camposEditaveis.includes(key)) {
+                        td.contentEditable = true;
+                        td.addEventListener('input', () => {
+                            // Salva a alteração no array de dados e recalcula
+                            jogo[key] = td.innerText.trim(); 
+                            reprocessarDados();
+                        });
+                    }
+                    
+                    td.innerText = jogo[key];
+                });
+            });
+        }
+        
+        /** Renderiza os relatórios de estatísticas */
+        function renderRelatorios() {
+            // Inicializa contadores
+            const stats = {
+                Vitoria: { total: 0, pontos: 0 },
+                Empate: { total: 0, pontos: 0 },
+                Derrota: { total: 0, pontos: 0 },
+                Total: { total: 0, pontos: 0 },
+                Casa: { jogos: 0, vitorias: 0, empates: 0, derrotas: 0, pontos: 0 },
+                Fora: { jogos: 0, vitorias: 0, empates: 0, derrotas: 0, pontos: 0 },
+            };
+
+            dadosJogos.forEach(jogo => {
+                const resultado = jogo.Resultado_Sao;
+                const pontos = jogo.Pontos_Ganhos;
+
+                // 1. Resumo V-E-D
+                stats[resultado].total++;
+                stats[resultado].pontos += pontos;
+                stats.Total.total++;
+                stats.Total.pontos += pontos;
+
+                // 2. Desempenho Casa vs. Fora
+                const local = jogo.Time_Casa === CLUBE_PRINCIPAL ? 'Casa' : 'Fora';
+                stats[local].jogos++;
+                stats[local].pontos += pontos;
+                
+                if (resultado === 'Vitoria') {
+                    stats[local].vitorias++;
+                } else if (resultado === 'Empate') {
+                    stats[local].empates++;
+                } else if (resultado === 'Derrota') {
+                    stats[local].derrotas++;
+                }
+            });
+
+            // --- Relatório 1: V-E-D ---
+            const tbodyVED = document.getElementById('relatorioVED').getElementsByTagName('tbody')[0];
+            tbodyVED.innerHTML = '';
+            
+            ['Vitoria', 'Empate', 'Derrota', 'Total'].forEach(tipo => {
+                const tr = tbodyVED.insertRow();
+                const totalJogos = stats.Total.total;
+                const totalPontosPossiveis = totalJogos * 3;
+                const aproveitamento = totalJogos > 0 && tipo === 'Total' 
+                    ? ((stats.Total.pontos / totalPontosPossiveis) * 100).toFixed(2) + '%' 
+                    : (tipo === 'Total' ? '' : '');
+
+                tr.insertCell().innerText = tipo;
+                tr.insertCell().innerText = stats[tipo].total;
+                tr.insertCell().innerText = stats[tipo].pontos;
+                tr.insertCell().innerText = aproveitamento;
+            });
+            
+            // --- Relatório 2: Local ---
+            const tbodyLocal = document.getElementById('relatorioLocal').getElementsByTagName('tbody')[0];
+            tbodyLocal.innerHTML = '';
+            
+            ['Casa', 'Fora'].forEach(local => {
+                const tr = tbodyLocal.insertRow();
+                tr.insertCell().innerText = local;
+                tr.insertCell().innerText = stats[local].jogos;
+                tr.insertCell().innerText = stats[local].vitorias;
+                tr.insertCell().innerText = stats[local].empates;
+                tr.insertCell().innerText = stats[local].derrotas;
+                tr.insertCell().innerText = stats[local].pontos;
+            });
+        }
+
+
+        // 4. Manipulação de Eventos
+
+        /** Adiciona ou atualiza um jogo */
+        document.getElementById('formNovoJogo').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Pega a data e formata para o padrão DD/MM/AAAA
+            const dataInput = document.getElementById('dataJogo').value;
+            const dataObj = new Date(dataInput + 'T00:00:00'); // Adiciona T00:00:00 para evitar problemas de fuso horário
+            const dataFormatada = `${String(dataObj.getDate()).padStart(2, '0')}/${String(dataObj.getMonth() + 1).padStart(2, '0')}/${dataObj.getFullYear()}`;
+
+
+            const novoJogo = {
+                Data: dataFormatada,
+                Time_Casa: document.getElementById('timeCasa').value.trim(),
+                Gols_Casa: parseInt(document.getElementById('golsCasa').value),
+                Gols_Visitante: parseInt(document.getElementById('golsVisitante').value),
+                Time_Visitante: document.getElementById('timeVisitante').value.trim(),
+                Local: document.getElementById('localJogo').value.trim(),
+                Resultado_Sao: '', 
+                Pontos_Ganhos: 0,
+                Pontos_Acumulados: 0 
+            };
+            
+            // Lógica para adicionar ou atualizar
+            let jogoExistente = false;
+            // Verifica se o jogo já existe (pela data e times)
+            dadosJogos.forEach(jogo => {
+                if (jogo.Data === novoJogo.Data && 
+                    ((jogo.Time_Casa === novoJogo.Time_Casa && jogo.Time_Visitante === novoJogo.Time_Visitante) ||
+                     (jogo.Time_Casa === novoJogo.Time_Visitante && jogo.Time_Visitante === novoJogo.Time_Casa))) {
+                    
+                    // Atualiza o jogo existente com os novos dados
+                    jogo.Gols_Casa = novoJogo.Gols_Casa;
+                    jogo.Gols_Visitante = novoJogo.Gols_Visitante;
+                    jogoExistente = true;
+                    alert(`Jogo de ${novoJogo.Data} atualizado com sucesso!`);
+                }
+            });
+
+            if (!jogoExistente) {
+                dadosJogos.push(novoJogo);
+                alert(`Novo jogo de ${novoJogo.Data} adicionado!`);
+            }
+
+            reprocessarDados();
+            this.reset(); // Limpa o formulário após a submissão
+        });
+        
+        /** Função de download do CSV */
+        document.getElementById('downloadCsv').addEventListener('click', function() {
+            // 1. Garante que os dados estão na ordem correta (mais novo para mais antigo)
+            dadosJogos.sort((a, b) => parseDate(b.Data) - parseDate(a.Data));
+            
+            // 2. Cria o conteúdo do CSV
+            const header = 'Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Sao,Pontos_Ganhos,Pontos_Acumulados\n';
+            const csvContent = dadosJogos.map(toCsvRow).join('\n');
+            const finalCsv = header + csvContent;
+
+            // 3. Cria um link de download
+            const blob = new Blob([finalCsv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `jogos_${CLUBE_PRINCIPAL.toLowerCase()}_atualizado.csv`);
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            alert(`O arquivo CSV foi gerado e baixado como jogos_${CLUBE_PRINCIPAL.toLowerCase()}_atualizado.csv!`);
+        });
+
+        // Função para salvar alterações no CSV do servidor
+        function salvarAlteracoes() {
+            if (!timeAtual) {
+                alert('Por favor, selecione um time primeiro!');
+                return;
+            }
+
+            if (dadosJogos.length === 0) {
+                alert('Não há dados para salvar!');
+                return;
+            }
+
+            // Confirmar antes de salvar
+            if (!confirm(`Deseja salvar as alterações no arquivo CSV do ${MAPEAMENTO_TIMES[timeAtual]}?`)) {
+                return;
+            }
+
+            // Gerar CSV dos dados atuais
+            const header = 'Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Sao,Pontos_Ganhos,Pontos_Acumulados\n';
+            const csvContent = dadosJogos.map(jogo => 
+                `${jogo.data},${jogo.timeCasa},${jogo.golsCasa},${jogo.golsVisitante},${jogo.timeVisitante},${jogo.local},${jogo.resultadoSao},${jogo.pontosGanhos},${jogo.pontosAcumulados}`
+            ).join('\n');
+            const finalCsv = header + csvContent;
+
+            // Salvar CSV diretamente no arquivo local
+            try {
+                // Tentar salvar via File System Access API (Chrome/Edge)
+                if ('showSaveFilePicker' in window) {
+                    const fileHandle = await window.showSaveFilePicker({
+                        suggestedName: 'jogos.csv',
+                        types: [{
+                            description: 'CSV files',
+                            accept: { 'text/csv': ['.csv'] }
+                        }]
+                    });
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(finalCsv);
+                    await writable.close();
+                    alert(`✅ Arquivo salvo com sucesso!\n\n📁 Local: ${fileHandle.name}\n\n💡 Renomeie para 'jogos.csv' e coloque na pasta do time.`);
+                } else {
+                    // Fallback: download tradicional
+                    const blob = new Blob([finalCsv], { type: 'text/csv;charset=utf-8;' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.setAttribute('href', url);
+                    a.setAttribute('download', 'jogos.csv');
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    alert(`✅ CSV baixado!\n\n📁 Arquivo: jogos.csv\n\n💡 IMPORTANTE: Substitua o arquivo em:\nbackend/models/Jogos/${timeAtual}/jogos.csv`);
+                }
+            } catch (error) {
+                console.error('Erro ao salvar:', error);
+                alert(`❌ Erro ao salvar: ${error.message}\n\n💡 Use o botão de download tradicional.`);
+            }
+        }
+
+        // Função para carregar pastas disponíveis do JSON
+        async function carregarPastasDisponiveis() {
+            try {
+                console.log('🔄 Carregando pastas do JSON...');
+                
+                const response = await fetch('pastas.json');
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar pastas.json: ${response.status}`);
+                }
+                
+                const pastasConhecidas = await response.json();
+                console.log('📁 Pastas carregadas do JSON:', pastasConhecidas.length);
+                
+                // Preencher dropdown com pastas disponíveis
+                const select = document.getElementById('seletorTime');
+                select.innerHTML = '<option value="">-- Selecione um time --</option>';
+                
+                pastasConhecidas.forEach(pasta => {
+                    const option = document.createElement('option');
+                    option.value = pasta;
+                    // Formatar nome para exibição
+                    const nomeFormatado = pasta
+                        .split('-')
+                        .map(parte => parte.charAt(0).toUpperCase() + parte.slice(1))
+                        .join(' ');
+                    option.textContent = nomeFormatado;
+                    select.appendChild(option);
+                });
+                
+                console.log('✅ Dropdown preenchido com', pastasConhecidas.length, 'times');
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar pastas:', error);
+                alert('❌ Erro ao carregar lista de times: ' + error.message);
+            }
+        }
+
+        // Função para carregar CSV da pasta selecionada
+        async function carregarCsvDaPasta(pasta) {
+            try {
+                const response = await fetch(`${pasta}/jogos.csv`);
+                if (!response.ok) {
+                    throw new Error(`Arquivo não encontrado: ${pasta}/jogos.csv`);
+                }
+                
+                const csvText = await response.text();
+                const linhas = csvText.split('\n');
+                const header = linhas[0].split(',');
+                
+                // Limpar dados anteriores
+                dadosJogos = [];
+                
+                // Processar cada linha (pular header)
+                for (let i = 1; i < linhas.length; i++) {
+                    const linha = linhas[i].trim();
+                    if (linha) {
+                        const valores = linha.split(',');
+                        if (valores.length >= 9) {
+                            const jogo = {
+                                data: valores[0],
+                                timeCasa: valores[1],
+                                golsCasa: parseInt(valores[2]) || 0,
+                                golsVisitante: parseInt(valores[3]) || 0,
+                                timeVisitante: valores[4],
+                                local: valores[5],
+                                resultadoSao: valores[6],
+                                pontosGanhos: parseInt(valores[7]) || 0,
+                                pontosAcumulados: parseInt(valores[8]) || 0
+                            };
+                            dadosJogos.push(jogo);
+                        }
+                    }
+                }
+                
+                // Ordenar por data (mais recente primeiro)
+                dadosJogos.sort((a, b) => {
+                    const dataA = new Date(a.data.split('/').reverse().join('-'));
+                    const dataB = new Date(b.data.split('/').reverse().join('-'));
+                    return dataB - dataA;
+                });
+                
+                // Atualizar tabela
+                reprocessarDados();
+                
+                console.log(`✅ CSV carregado de ${pasta}: ${dadosJogos.length} jogos`);
+                alert(`✅ Dados carregados de ${pasta}!\n\n📊 ${dadosJogos.length} jogos encontrados`);
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar CSV:', error);
+                alert(`❌ Erro ao carregar dados de ${pasta}:\n${error.message}`);
+            }
+        }
+
+        // 5. Inicialização
+        document.addEventListener('DOMContentLoaded', async function() {
+            await carregarPastasDisponiveis();
+            carregarDadosIniciais();
+            gerarTabelaClassificacao(); // Gera as tabelas em branco inicialmente
+        });
+    </script>
+</body>
+</html>

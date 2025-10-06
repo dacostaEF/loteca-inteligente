@@ -1259,5 +1259,85 @@ def atualizar_ultimos_confrontos():
             'message': f'Erro ao atualizar últimos confrontos: {str(e)}'
         }), 500
 
+@bp_admin.route('/api/admin/salvar-csv-jogos', methods=['POST'])
+@cross_origin()
+def salvar_csv_jogos():
+    """Salvar CSV de jogos no servidor"""
+    try:
+        # Verificar autenticação (aceitar tanto form quanto JSON)
+        auth_data = request.form if request.form else request.get_json() or {}
+        if not verificar_auth(auth_data):
+            return jsonify({
+                'success': False,
+                'message': 'Acesso negado. Chave de administrador inválida.'
+            }), 401
+        
+        # Obter dados (aceitar tanto form quanto JSON)
+        time = request.form.get('time') or (request.get_json() or {}).get('time')
+        csv_data = request.form.get('csv_data') or (request.get_json() or {}).get('csv_data')
+        
+        if not time or not csv_data:
+            return jsonify({
+                'success': False,
+                'message': 'Dados inválidos: time ou csv_data não fornecidos'
+            }), 400
+        
+        # Mapear nome do time para diretório
+        time_dirs = {
+            'sao-paulo': 'sao-paulo',
+            'flamengo': 'flamengo',
+            'palmeiras': 'palmeiras',
+            'cruzeiro': 'cruzeiro',
+            'botafogo': 'botafogo',
+            'atletico-mg': 'atletico-mg',
+            'bahia': 'bahia',
+            'fluminense': 'fluminense',
+            'bragantino': 'bragantino',
+            'gremio': 'gremio',
+            'ceara': 'ceara',
+            'vasco': 'vasco',
+            'corinthians': 'corinthians',
+            'internacional': 'internacional',
+            'santos': 'santos',
+            'vitoria': 'vitoria',
+            'juventude': 'juventude',
+            'fortaleza': 'fortaleza',
+            'sport': 'sport',
+            'mirassol': 'mirassol'
+        }
+        
+        time_dir = time_dirs.get(time)
+        if not time_dir:
+            return jsonify({
+                'success': False,
+                'message': f'Time não reconhecido: {time}'
+            }), 400
+        
+        # Caminho do arquivo CSV
+        csv_path = os.path.join('backend', 'models', 'Jogos', time_dir, 'jogos.csv')
+        
+        # Criar diretório se não existir
+        os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+        
+        # Salvar arquivo CSV
+        with open(csv_path, 'w', encoding='utf-8') as f:
+            f.write(csv_data)
+        
+        logger.info(f"✅ [CSV-SAVE] Arquivo salvo: {csv_path}")
+        
+        return jsonify({
+            'success': True,
+            'message': f'CSV salvo com sucesso para {time_dir}',
+            'file_path': csv_path,
+            'saved_at': datetime.now().isoformat()
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"💥 [CSV-SAVE] Erro ao salvar CSV: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao salvar CSV: {str(e)}'
+        }), 500
+
 # Blueprint integrado ao app principal
 # Acesse via: http://localhost:5000/admin

@@ -1,25 +1,27 @@
 Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Cor,Pontos_Ganhos,Pontos_Acumulados
-30/03/2025,Bah,1,1,Cor,Salvador - BA,Empate,1,1
-05/04/2025,Cor,3,0,Vas,Sao Paulo - SP,Vitoria,3,4
-12/04/2025,Pal,2,0,Cor,Barueri - SP,Empate,0,4
-16/04/2025,Cor,0,2,Flu,Sao Paulo - SP,Empate,0,4
-19/04/2025,Cor,2,1,Spo,Sao Paulo - SP,Vitoria,3,7
-27/04/2025,Fla,4,0,Cor,Rio de Janeiro - RJ,Empate,0,7
-03/05/2025,Cor,4,2,Int,Sao Paulo - SP,Vitoria,3,10
-10/05/2025,Mir,2,1,Cor,Mirassol - SP,Empate,0,10
-18/05/2025,Cor,1,0,San,Sao Paulo - SP,Vitoria,3,13
-24/05/2025,Atl,0,0,Cor,Belo Horizonte - MG,Empate,1,14
-01/06/2025,Cor,0,0,Vit,Sao Paulo - SP,Empate,1,15
-12/06/2025,Gre,1,1,Cor,Porto Alegre - RS,Empate,1,16
-13/07/2025,Cor,1,2,Red,Sao Paulo - SP,Empate,0,16
-16/07/2025,Cea,0,1,Cor,Fortaleza - CE,Vitoria,3,19
-19/07/2025,Sao,2,0,Cor,Sao Paulo - SP,Empate,0,19
-23/07/2025,Cor,0,0,Cru,Sao Paulo - SP,Empate,1,20
-26/07/2025,Bot,1,1,Cor,Rio de Janeiro - RJ,Empate,1,21
-03/08/2025,Cor,1,1,For,Sao Paulo - SP,Empate,1,22
-11/08/2025,Juv,2,1,Cor,Caxias do Sul - RS,Empate,0,22
-16/08/2025,Cor,1,2,Bah,Sao Paulo - SP,Derrota,0,22
-24/08/2025,Vas,2,3,Cor,Rio de Janeiro - RJ,Vitoria,3,25
-31/08/2025,Cor,1,1,Pal,Sao Paulo - SP,Empate,1,26
-13/09/2025,Flu,0,1,Cor,Rio de Janeiro - RJ,Vitoria,3,29
-21/09/2025,Spo,1,0,Cor,Recife - PE,Derrota,0,29
+01/10/2025,Int,1,1,Cor,Rio - Porto Alegre,Empate,1,1
+28/09/2025,Cor,1,2,Fla,Sao Paulo - SP,Derrota,0,1
+21/09/2025,Spo,1,0,Cor,Recife - PE,Derrota,0,1
+13/09/2025,Flu,0,1,Cor,Rio de Janeiro - RJ,Vitória,3,4
+31/08/2025,Cor,1,1,Pal,Sao Paulo - SP,Empate,1,5
+24/08/2025,Vas,2,3,Cor,Rio de Janeiro - RJ,Vitória,3,8
+16/08/2025,Cor,1,2,Bah,Sao Paulo - SP,Derrota,0,8
+11/08/2025,Juv,2,1,Cor,Caxias do Sul - RS,Derrota,0,8
+03/08/2025,Cor,1,1,For,Sao Paulo - SP,Empate,1,9
+26/07/2025,Bot,1,1,Cor,Rio de Janeiro - RJ,Empate,1,10
+23/07/2025,Cor,0,0,Cru,Sao Paulo - SP,Empate,1,11
+19/07/2025,São,2,0,Cor,Sao Paulo - SP,Derrota,0,11
+16/07/2025,Cea,0,1,Cor,Fortaleza - CE,Vitória,3,14
+13/07/2025,Cor,1,2,Red,Sao Paulo - SP,Derrota,0,14
+12/06/2025,Grê,1,1,Cor,Porto Alegre - RS,Empate,1,15
+01/06/2025,Cor,0,0,Vit,Sao Paulo - SP,Empate,1,16
+24/05/2025,Atl,0,0,Cor,Belo Horizonte - MG,Empate,1,17
+18/05/2025,Cor,1,0,San,Sao Paulo - SP,Vitória,3,20
+10/05/2025,Mir,2,1,Cor,Mirassol - SP,Derrota,0,20
+03/05/2025,Cor,4,2,Int,Sao Paulo - SP,Vitória,3,23
+27/04/2025,Fla,4,0,Cor,Rio de Janeiro - RJ,Derrota,0,23
+19/04/2025,Cor,2,1,Spo,Sao Paulo - SP,Vitória,3,26
+16/04/2025,Cor,0,2,Flu,Sao Paulo - SP,Derrota,0,26
+12/04/2025,Pal,2,0,Cor,Barueri - SP,Derrota,0,26
+05/04/2025,Cor,3,0,Vas,Sao Paulo - SP,Vitória,3,29
+30/03/2025,Bah,1,1,Cor,Salvador - BA,Empate,1,30
