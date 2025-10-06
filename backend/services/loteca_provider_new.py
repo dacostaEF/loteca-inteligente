@@ -55,7 +55,7 @@ class LotecaProviderNew:
             return cached_data
         
         try:
-            print("[Loteca-NEW] 🎯 Buscando jogos REAIS da rodada atual...")
+            # Buscando jogos REAIS da rodada atual...
             
             # PRIORIDADE 1: API oficial da Caixa (implementar no futuro)
             matches = self._try_caixa_official_api()
@@ -88,7 +88,7 @@ class LotecaProviderNew:
         FUTURO: Integrar com API oficial da Caixa
         """
         # TODO: Implementar quando API oficial estiver disponível
-        print("[Loteca-NEW] 🔮 API oficial da Caixa não implementada ainda")
+        # API oficial da Caixa não implementada ainda
         return None
     
     def _try_web_scraping(self) -> Optional[List[Dict[str, Any]]]:
@@ -96,7 +96,7 @@ class LotecaProviderNew:
         FUTURO: Web scraping de fontes confiáveis (Globo Esporte, etc.)
         """
         # TODO: Implementar web scraping responsável
-        print("[Loteca-NEW] 🕷️ Web scraping não implementado ainda")
+        # Web scraping não implementado ainda
         return None
     
     def _get_intelligent_fallback(self) -> List[Dict[str, Any]]:
@@ -104,7 +104,7 @@ class LotecaProviderNew:
         Fallback INTELIGENTE baseado em dados REAIS do Cartola FC
         Substitui os dados hardcoded por lógica baseada em dados reais
         """
-        print("[Loteca-NEW] 🧠 Usando fallback inteligente com dados REAIS...")
+        # Usando fallback inteligente com dados REAIS...
         
         try:
             # SOLUÇÃO DO ESPECIALISTA: Usar API /partidas do Cartola para dados REAIS
@@ -113,7 +113,7 @@ class LotecaProviderNew:
             # Prioridade 1: Buscar partidas REAIS da rodada atual
             partidas_reais = partidas()
             if partidas_reais:
-                print(f"[Loteca-NEW] 🎯 Usando {len(partidas_reais)} partidas REAIS do Cartola!")
+                # Usando {len(partidas_reais)} partidas REAIS do Cartola!
                 return self._convert_cartola_partidas_to_loteca(partidas_reais)
             
             # Fallback: Buscar clubes para gerar confrontos realistas
@@ -124,7 +124,7 @@ class LotecaProviderNew:
             
             # Extrair nomes de clubes reais
             real_clubs = [club.get('nome', '') for club in cartola_clubes if club.get('nome')]
-            print(f"[Loteca-NEW] ✅ Encontrados {len(real_clubs)} clubes reais no Cartola")
+            # Encontrados {len(real_clubs)} clubes reais no Cartola
             
             # Criar confrontos realistas baseados em dados reais
             brazilian_matches = self._generate_realistic_brazilian_matches(real_clubs[:10])
@@ -139,11 +139,11 @@ class LotecaProviderNew:
                 enriched_match = self._enrich_match_with_real_data(match, i + 1)
                 enriched_matches.append(enriched_match)
             
-            print(f"[Loteca-NEW] ✅ Gerados {len(enriched_matches)} confrontos com dados REAIS")
+            # Gerados {len(enriched_matches)} confrontos com dados REAIS
             return enriched_matches
             
         except Exception as e:
-            print(f"[Loteca-NEW] ⚠️ Erro no fallback inteligente: {e}")
+            # Erro no fallback inteligente: {e}
             return self._get_emergency_fallback()
     
     def _generate_realistic_brazilian_matches(self, real_clubs: List[str]) -> List[Dict[str, Any]]:
@@ -237,14 +237,14 @@ class LotecaProviderNew:
                     '_is_real_data': True
                 })
                 
-                print(f"[Loteca-NEW] ✅ {match['home']} vs {match['away']} - Dados REAIS do Cartola")
+                # {match['home']} vs {match['away']} - Dados REAIS do Cartola
             else:
                 # Clube não encontrado no Cartola, usar estimativa
                 match.update(self._add_estimated_probabilities(match))
                 match['_cartola_mapping_error'] = f"Clubes não encontrados: {match['home']}, {match['away']}"
                 
         except Exception as e:
-            print(f"[Loteca-NEW] ⚠️ Erro ao buscar dados do Cartola para {match['home']} vs {match['away']}: {e}")
+            # Erro ao buscar dados do Cartola para {match['home']} vs {match['away']}: {e}
             match.update(self._add_estimated_probabilities(match))
             match['_cartola_error'] = str(e)
         
@@ -263,7 +263,7 @@ class LotecaProviderNew:
             '_warning': 'Dados estimados - Configure API_FOOTBALL_KEY para dados reais'
         })
         
-        print(f"[Loteca-NEW] ⚠️ {match['home']} vs {match['away']} - Dados ESTIMADOS (configure API-Football)")
+        # {match['home']} vs {match['away']} - Dados ESTIMADOS (configure API-Football)
         return match
     
     def _calculate_real_probabilities(self, home_stats: Dict, away_stats: Dict) -> Dict[str, float]:
@@ -299,7 +299,7 @@ class LotecaProviderNew:
             }
             
         except Exception as e:
-            print(f"[Loteca-NEW] ⚠️ Erro no cálculo de probabilidades reais: {e}")
+            # Erro no cálculo de probabilidades reais: {e}
             return self._get_default_probabilities()
     
     def _add_estimated_probabilities(self, match: Dict[str, Any]) -> Dict[str, Any]:
@@ -358,7 +358,7 @@ class LotecaProviderNew:
         NOVA FUNÇÃO: Converte partidas do Cartola FC para formato Loteca
         Implementa solução sugerida pelo especialista
         """
-        print("[Loteca-NEW] 🔄 Convertendo partidas do Cartola para formato Loteca...")
+        # Convertendo partidas do Cartola para formato Loteca...
         
         loteca_matches = []
         
@@ -388,13 +388,13 @@ class LotecaProviderNew:
                 enriched_match = self._add_real_cartola_data(loteca_match)
                 loteca_matches.append(enriched_match)
                 
-                print(f"[Loteca-NEW] ✅ Convertida: {time_casa} vs {time_fora}")
+                # Convertida: {time_casa} vs {time_fora}
                 
             except Exception as e:
-                print(f"[Loteca-NEW] ⚠️ Erro ao converter partida {i+1}: {e}")
+                # Erro ao converter partida {i+1}: {e}
                 continue
         
-        print(f"[Loteca-NEW] ✅ Convertidas {len(loteca_matches)} partidas REAIS do Cartola!")
+        # Convertidas {len(loteca_matches)} partidas REAIS do Cartola!
         return loteca_matches
     
     def _format_cartola_date(self, partida: Dict) -> str:
@@ -421,7 +421,7 @@ class LotecaProviderNew:
         """
         Fallback de emergência quando tudo falha
         """
-        print("[Loteca-NEW] 🚨 Usando fallback de emergência")
+        # Usando fallback de emergência
         
         return [
             {

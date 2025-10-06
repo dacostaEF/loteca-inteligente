@@ -202,7 +202,7 @@ class ClubesUnificados:
     
     def __init__(self):
         self.clubes = CLUBES_BRASILEIRAO_SERIE_A
-        logger.info(f"✅ ClubesUnificados inicializado com {len(self.clubes)} clubes")
+        # ClubesUnificados inicializado com {len(self.clubes)} clubes
     
     def get_clube_por_nome(self, nome: str) -> Optional[Dict[str, Any]]:
         """
@@ -227,7 +227,9 @@ class ClubesUnificados:
                 nome_lower in [alt.lower() for alt in clube['nomes_alternativos']]):
                 return clube
         
-        logger.warning(f"⚠️ Clube não encontrado: {nome}")
+        # Silenciar avisos para nomes genéricos (Casa 1, Fora 1, etc)
+        if not (nome.lower().startswith('casa ') or nome.lower().startswith('fora ')):
+            logger.warning(f"⚠️ Clube não encontrado: {nome}")
         return None
     
     def get_id_cartola(self, nome: str) -> Optional[int]:

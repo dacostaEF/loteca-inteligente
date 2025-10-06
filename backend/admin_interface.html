@@ -2788,8 +2788,7 @@
             
             // Carregar dados específicos da aba
             if (tabName === 'classificacao') {
-                console.log('🏆 [ADMIN] === ABA CLASSIFICAÇÃO ATIVADA ===');
-                console.log('🎯 [ADMIN] Elemento da aba ativo:', document.getElementById('classificacao'));
+            // Aba classificação ativada
                 // Carregar diretamente sem setTimeout
                 if (!window.carregandoClassificacao) {
                     carregarClassificacao();
@@ -2799,9 +2798,9 @@
             if (tabName === 'estatisticas') carregarEstatisticas();
             if (tabName === 'dashboard') carregarDashboard();
             if (tabName === 'jogos-loteca') {
-                console.log('🎮 [ADMIN] === ABA JOGOS LOTECA ATIVADA ===');
+                // Aba jogos loteca ativada
                 setTimeout(() => {
-                    console.log('⏰ [ADMIN] Inicializando sistema de concursos...');
+                    // Inicializando sistema de concursos...
                     carregarListaConcursos();
                     carregarUltimoConcurso();
                 }, 200);
@@ -2891,7 +2890,7 @@
         let clubesData = [];
 
         async function carregarClubes() {
-            console.log('🔍 [DEBUG] carregarClubes (versão segura)');
+            // Carregando clubes...
             try {
                 // Preencher o select (se ainda não estiver populado)
                 const select = document.querySelector('#estatisticas #clubeEstatisticas');
@@ -2910,7 +2909,7 @@
                         opt.textContent = nome;
                         select.appendChild(opt);
                     });
-                    console.log('✅ [DEBUG] Select populado com', clubes.length, 'clubes');
+                    // Select populado com clubes
                 }
 
                 // Elementos da tabela (podem não existir nesta tela)
@@ -2920,7 +2919,7 @@
 
                 // Se a tabela NÃO existe nesta página, apenas sai sem erro
                 if (!loading || !table || !tbody) {
-                    console.warn('⚠️ [DEBUG] Elementos de lista de clubes não existem nesta tela. Select populado e fim.');
+                    // Elementos de lista de clubes não existem nesta tela
                     return;
                 }
 
@@ -2940,7 +2939,7 @@
         function renderizarClubes(lista) {
             const tbody = document.getElementById('tbodyClubes');
             if (!tbody) { 
-                console.warn('⚠️ [DEBUG] tbodyClubes inexistente. Abortando renderização.');
+                // tbodyClubes inexistente. Abortando renderização
                 return; 
             }
             tbody.innerHTML = '';
@@ -3084,7 +3083,7 @@
         function renderizarEstatisticas(estatisticas) {
             const tbody = document.getElementById('tbodyEstatisticas');
             if (!tbody) {
-                console.warn('⚠️ [DEBUG] Elemento tbodyEstatisticas não encontrado');
+                // Elemento tbodyEstatisticas não encontrado
                 return;
             }
             tbody.innerHTML = '';
@@ -3183,7 +3182,7 @@
         // === FUNÇÕES DA ABA CLASSIFICAÇÃO ===
         function alterarCampeonato() {
             const campeonato = document.getElementById('campeonatoSelect').value;
-            console.log(`🔄 [ADMIN] Alterando para: ${campeonato}`);
+            // Alterando para: ${campeonato}
             
             // Limpar tabela atual
             const bodyEl = document.getElementById('classificacaoBody');
@@ -3197,7 +3196,7 @@
         
         // FUNÇÃO PARA ATUALIZAR ÚLTIMOS CONFRONTOS AUTOMATICAMENTE
         async function atualizarUltimosConfrontosAutomatico() {
-            console.log('🔄 [AUTO-UPDATE] Atualizando últimos confrontos automaticamente...');
+            // Atualizando últimos confrontos automaticamente...
             
             try {
                 const adminKey = localStorage.getItem('admin_key') || 'loteca2024admin';
@@ -3215,23 +3214,22 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data.success) {
-                        console.log('✅ [AUTO-UPDATE] Últimos confrontos atualizados com sucesso!');
-                        console.log('📊 [AUTO-UPDATE] Output:', data.output);
+                        // Últimos confrontos atualizados com sucesso!
                     } else {
-                        console.warn('⚠️ [AUTO-UPDATE] Erro na atualização:', data.message);
+                        // Erro na atualização: {data.message}
                     }
                 } else {
-                    console.warn('⚠️ [AUTO-UPDATE] Erro HTTP:', response.status);
+                    // Erro HTTP: {response.status}
                 }
             } catch (error) {
-                console.warn('⚠️ [AUTO-UPDATE] Erro na requisição:', error);
+                // Erro na requisição: {error}
                 // Não bloquear o carregamento se a atualização falhar
             }
         }
         
         // FUNÇÃO PARA ATUALIZAR ÚLTIMOS CONFRONTOS MANUALMENTE (BOTÃO)
         async function atualizarUltimosConfrontosManual() {
-            console.log('🔄 [MANUAL-UPDATE] Atualizando últimos confrontos manualmente...');
+            // Atualizando últimos confrontos manualmente...
             
             // Mostrar loading
             const loadingEl = document.getElementById('loadingClassificacao');
@@ -3284,39 +3282,34 @@
 
         // === FUNÇÃO PARA CARREGAR CLASSIFICAÇÃO ===
         async function carregarClassificacao() {
-            console.log('🔄 [ADMIN] === INICIANDO CARREGAMENTO DA CLASSIFICAÇÃO ===');
+            // Iniciando carregamento da classificação...
             
             const campeonatoSelect = document.getElementById('campeonatoSelect');
             const loadingEl = document.getElementById('loadingClassificacao');
             const bodyEl = document.getElementById('classificacaoBody');
             
-            console.log('🎯 [ADMIN] Elementos DOM encontrados:');
-            console.log('   - campeonatoSelect:', campeonatoSelect ? 'OK' : 'MISSING');
-            console.log('   - loadingEl:', loadingEl ? 'OK' : 'MISSING');
-            console.log('   - bodyEl:', bodyEl ? 'OK' : 'MISSING');
+            // Elementos DOM encontrados
             
             const campeonato = campeonatoSelect ? campeonatoSelect.value : 'serie-a';
             let adminKey = localStorage.getItem('admin_key');
             
             // FORÇAR admin key se não existir
             if (!adminKey) {
-                console.warn('⚠️ [ADMIN] Admin key não encontrada no localStorage! Usando padrão...');
+                // Admin key não encontrada no localStorage! Usando padrão...
                 adminKey = 'loteca2024admin';
                 localStorage.setItem('admin_key', adminKey);
             }
             
-            console.log('🔑 [ADMIN] Configurações:');
-            console.log('   - campeonato:', campeonato);
-            console.log('   - adminKey:', adminKey ? 'OK (***' + adminKey.slice(-4) + ')' : 'MISSING');
+            // Configurações carregadas
             
             if (loadingEl) {
                 loadingEl.style.display = 'block';
-                console.log('📊 [ADMIN] Loading exibido');
+                // Loading exibido
             }
             
             if (bodyEl) {
                 bodyEl.innerHTML = '';
-                console.log('🧹 [ADMIN] Tabela limpa');
+                // Tabela limpa
             }
             
             try {
@@ -3325,10 +3318,7 @@
                     campeonato: campeonato
                 };
                 
-                console.log('📤 [ADMIN] Enviando requisição...');
-                console.log('   - URL: /api/admin/classificacao');
-                console.log('   - Method: POST');
-                console.log('   - Body:', JSON.stringify(requestData));
+                // Enviando requisição...
                 
                 const response = await fetch('/api/admin/classificacao', {
                     method: 'POST',
@@ -3336,13 +3326,11 @@
                     body: JSON.stringify(requestData)
                 });
                 
-                console.log('📥 [ADMIN] Resposta recebida:');
-                console.log('   - Status:', response.status);
-                console.log('   - OK:', response.ok);
+                // Resposta recebida
                 
                 if (loadingEl) {
                     loadingEl.style.display = 'none';
-                    console.log('📊 [ADMIN] Loading escondido');
+                    // Loading escondido
                 }
                 
                 if (!response.ok) {
@@ -3350,24 +3338,20 @@
                 }
                 
                 const data = await response.json();
-                console.log('📋 [ADMIN] Dados JSON recebidos:');
-                console.log('   - success:', data.success);
-                console.log('   - total:', data.total);
-                console.log('   - campeonato:', data.campeonato);
+                // Dados JSON recebidos
                 
                 if (data.success && data.classificacao) {
-                    console.log('✅ [ADMIN] Dados válidos recebidos!');
+                    // Dados válidos recebidos!
                     renderizarClassificacao(data.classificacao);
                 } else {
-                    console.warn('⚠️ [ADMIN] Dados inválidos ou vazios');
+                    // Dados inválidos ou vazios
                     if (bodyEl) {
                         bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Erro ao carregar dados</td></tr>';
                     }
                 }
                 
             } catch (error) {
-                console.error('💥 [ADMIN] Erro na requisição:', error);
-                console.error('📄 [ADMIN] Error stack:', error.stack);
+                // Erro na requisição: {error}
                 
                 if (loadingEl) {
                     loadingEl.style.display = 'none';
@@ -3378,29 +3362,25 @@
                 }
             }
             
-            console.log('🏁 [ADMIN] === CARREGAMENTO FINALIZADO ===');
+            // Carregamento finalizado
         }
 
         function renderizarClassificacao(classificacao) {
-            console.log('🎨 [ADMIN] === INICIANDO RENDERIZAÇÃO ===');
-            console.log('📊 [ADMIN] Dados recebidos:', classificacao);
-            console.log('📊 [ADMIN] Tipo:', typeof classificacao);
-            console.log('📊 [ADMIN] É array:', Array.isArray(classificacao));
-            console.log('📊 [ADMIN] Length:', classificacao ? classificacao.length : 'N/A');
+            // Iniciando renderização...
             
             const bodyEl = document.getElementById('classificacaoBody');
-            console.log('🎯 [ADMIN] Body element:', bodyEl ? 'OK' : 'MISSING');
+            // Body element encontrado
             
             if (!bodyEl) {
-                console.error('❌ [ADMIN] Element classificacaoBody não encontrado!');
+                // Element classificacaoBody não encontrado!
                 return;
             }
             
             bodyEl.innerHTML = '';
-            console.log('🧹 [ADMIN] Tbody limpo');
+            // Tbody limpo
             
             if (!classificacao || classificacao.length === 0) {
-                console.warn('⚠️ [ADMIN] Nenhum dado para renderizar');
+                // Nenhum dado para renderizar
                 bodyEl.innerHTML = '<tr><td colspan="12" style="text-align: center; padding: 20px; color: #666;">Nenhum dado encontrado</td></tr>';
                 return;
             }
@@ -3413,15 +3393,10 @@
             const isChampionsLeague = campeonato === 'champions-league';
             const isInternacional = isPremierLeague || isLaLiga || isLigue1 || isChampionsLeague;
             
-            console.log('✅ [ADMIN] Renderizando', classificacao.length, 'times...');
-            console.log('🏴󠁧󠁢󠁥󠁮󠁧󠁿 [ADMIN] Premier League:', isPremierLeague);
-            console.log('🇪🇸 [ADMIN] La Liga:', isLaLiga);
-            console.log('🇫🇷 [ADMIN] Ligue 1:', isLigue1);
-            console.log('🏆 [ADMIN] Champions League:', isChampionsLeague);
-            console.log('🌍 [ADMIN] Internacional:', isInternacional);
+            // Renderizando {classificacao.length} times...
             
             classificacao.forEach((time, index) => {
-                console.log(`🏆 [ADMIN] Renderizando time ${index + 1}:`, time);
+                // Renderizando time {index + 1}
                 const row = document.createElement('tr');
                 
                 // Determinar zona (libertadores, sul-americana, rebaixamento)
@@ -3535,26 +3510,24 @@
                 }
                 
                 bodyEl.appendChild(row);
-                console.log(`✅ [ADMIN] Time ${index + 1} adicionado ao DOM`);
+                // Time {index + 1} adicionado ao DOM
             });
             
             // Adicionar eventos de edição
             adicionarEventosEdicao();
             
-            console.log(`🎉 [ADMIN] === RENDERIZAÇÃO CONCLUÍDA ===`);
-            console.log(`📊 [ADMIN] Total de times renderizados: ${classificacao.length}`);
-            console.log(`🎯 [ADMIN] Filhos na tabela:`, bodyEl.children.length);
+            // Renderização concluída
             
             // Atualizar contador de clubes no header
             const totalClubesEl = document.getElementById('totalClubes');
             if (totalClubesEl) {
                 totalClubesEl.textContent = classificacao.length;
-                console.log(`📊 [ADMIN] Total de clubes atualizado no header: ${classificacao.length}`);
+                // Total de clubes atualizado no header
             }
         }
         
         function adicionarEventosEdicao() {
-            console.log('🎮 [ADMIN] Adicionando eventos de edição...');
+            // Adicionando eventos de edição...
             
             const editableCells = document.querySelectorAll('.editable');
             
@@ -3564,7 +3537,7 @@
                     this.style.background = '#ffffcc';
                     this.style.boxShadow = '0 0 5px #ffd700';
                     this.style.border = '2px solid #ffd700';
-                    console.log(`✏️ [ADMIN] Editando ${this.dataset.field} do time ID ${this.dataset.id}`);
+                    // Editando {this.dataset.field} do time ID {this.dataset.id}
                 });
                 
                 // Evento ao sair do foco (finalizar edição)
@@ -3577,7 +3550,7 @@
                         this.style.background = '#d4edda'; // Verde claro
                         this.style.border = '2px solid #28a745';
                         this.classList.add('modified');
-                        console.log(`💾 [ADMIN] Modificado: ${this.dataset.field} = ${newValue} (era ${originalValue})`);
+                        // Modificado: {this.dataset.field} = {newValue} (era {originalValue})
                         
                         // Marcar para salvamento
                         marcarParaSalvamento(this);
@@ -3599,7 +3572,7 @@
                 });
             });
             
-            console.log(`✅ [ADMIN] Eventos adicionados a ${editableCells.length} células`);
+            // Eventos adicionados a {editableCells.length} células
         }
         
         function restaurarEstiloOriginal(cell) {
@@ -3699,7 +3672,7 @@
         }
         
         async function salvarAlteracaoImediata(cell) {
-            console.log('💾 [ADMIN] Salvamento imediato ativado!');
+            // Salvamento imediato ativado!
             
             const campeonato = document.getElementById('campeonatoSelect').value || 'serie-a';
             const updates = [{
@@ -3708,7 +3681,7 @@
                 value: cell.textContent.trim()
             }];
             
-            console.log(`🎯 [ADMIN] Salvando na ${campeonato}: ${cell.dataset.field} = ${cell.textContent.trim()}`);
+            // Salvando na {campeonato}: {cell.dataset.field} = {cell.textContent.trim()}
             
             try {
                 const response = await fetch('/api/admin/classificacao/salvar', {
@@ -3735,7 +3708,7 @@
                         atualizarContadorModificacoes();
                     }
                     
-                    console.log('✅ [ADMIN] Salvo com sucesso!');
+                    // Salvo com sucesso!
                     mostrarNotificacao('✅ Alteração salva!', 'success');
                 } else {
                     console.error('❌ [ADMIN] Erro ao salvar:', data.message);
@@ -3766,7 +3739,7 @@
                 }
             });
             
-            console.log(`💾 [ADMIN] Salvando ${updates.length} alterações na ${campeonato}`);
+            // Salvando {updates.length} alterações na {campeonato}
             
             try {
                 const response = await fetch('/api/admin/classificacao/salvar', {
@@ -3831,7 +3804,7 @@
                 default: novoResultado = 'V';
             }
             
-            console.log(`🎮 [ADMIN] Alterando jogo ${jogoIndex + 1} do time ID ${timeId}: ${resultadoAtual} → ${novoResultado}`);
+            // Alterando jogo {jogoIndex + 1} do time ID {timeId}: {resultadoAtual} → {novoResultado}
             
             // Atualizar visualmente
             bolinha.dataset.resultado = novoResultado;
@@ -3852,7 +3825,7 @@
                 novosUltimosJogos += b.dataset.resultado;
             });
             
-            console.log(`📊 [ADMIN] Novos últimos jogos para time ${timeId}: ${novosUltimosJogos}`);
+            // Novos últimos jogos para time {timeId}: {novosUltimosJogos}
             
             // Salvar no banco
             salvarUltimosJogos(timeId, novosUltimosJogos);
@@ -3881,7 +3854,7 @@
                 
                 const data = await response.json();
                 if (data.success) {
-                    console.log('✅ [ADMIN] Últimos jogos salvos com sucesso!');
+                    // Últimos jogos salvos com sucesso!
                     mostrarNotificacao('🎮 Resultado atualizado!', 'success');
                 } else {
                     console.error('❌ [ADMIN] Erro ao salvar:', data.message);
@@ -5760,7 +5733,7 @@
             const campeonatoSelect = document.getElementById('campeonatoSelect');
             if (campeonatoSelect) {
                 campeonatoSelect.addEventListener('change', function() {
-                    console.log(`🔄 [ADMIN] Campeonato alterado para: ${this.value}`);
+                    // Campeonato alterado para: {this.value}
                     carregarClassificacao();
                 });
             }

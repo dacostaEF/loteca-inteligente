@@ -31,12 +31,8 @@ central_dados = CentralDados()
 def verificar_auth(request_data):
     """Verificar autenticação do administrador"""
     auth_key = request_data.get('admin_key') or request.headers.get('X-Admin-Key')
-    logger.info(f"🔐 [AUTH] Key recebida: '{auth_key}'")
-    logger.info(f"🔐 [AUTH] Key esperada: '{ADMIN_KEY}'")
-    logger.info(f"🔐 [AUTH] Tipo recebido: {type(auth_key)}")
-    logger.info(f"🔐 [AUTH] Request data: {request_data}")
+    # Verificando autenticação
     resultado = auth_key == ADMIN_KEY
-    logger.info(f"🔐 [AUTH] Resultado: {resultado}")
     return resultado
 
 @bp_admin.route('/admin')
@@ -586,7 +582,7 @@ def get_dashboard_stats():
 @cross_origin()
 def get_classificacao():
     """Obter classificação de um campeonato"""
-    logger.info("🔄 [API] === INICIANDO get_classificacao ===")
+    # Iniciando get_classificacao
     
     # Suportar tanto GET quanto POST
     if request.method == 'GET':
@@ -596,20 +592,20 @@ def get_classificacao():
         
         # Verificar auth para GET
         if admin_key != 'loteca2024admin':
-            logger.warning("🚫 [API] Auth falhou (GET)")
+            # Auth falhou (GET)
             return jsonify({
                 'success': False,
                 'message': 'Acesso negado'
             }), 401
             
-        logger.info(f"📥 [API] GET - campeonato: {campeonato}")
+        # GET - campeonato: {campeonato}
     else:
         # POST - dados via JSON
         data = request.get_json()
-        logger.info(f"📥 [API] POST - Dados recebidos: {data}")
+        # POST - dados recebidos
         
         if not verificar_auth(data):
-            logger.warning("🚫 [API] Auth falhou (POST)")
+            # Auth falhou (POST)
             return jsonify({
                 'success': False,
                 'message': 'Acesso negado'
@@ -617,17 +613,17 @@ def get_classificacao():
             
         campeonato = data.get('campeonato', 'serie-a')
     
-    logger.info("✅ [API] Auth OK")
+    # Auth OK
     
     try:
-        logger.info(f"🏆 [API] Campeonato solicitado: {campeonato}")
+        # Campeonato solicitado: {campeonato}
         
         if campeonato == 'serie-a' or campeonato == 'brasileirao-serie-a':
-            logger.info("📊 [API] Buscando dados da Série A...")
+            # Buscando dados da Série A...
             classificacao = classificacao_db.get_classificacao_serie_a()
-            logger.info(f"📋 [API] Série A retornou {len(classificacao)} registros")
+            # Série A retornou {len(classificacao)} registros
         elif campeonato == 'serie-b':
-            logger.info("📊 [API] Buscando dados da Série B...")
+            # Buscando dados da Série B...
             
             # FORÇAR nova instância para debug
             from models.classificacao_db import ClassificacaoDB
@@ -641,7 +637,7 @@ def get_classificacao():
             
             cursor.execute("SELECT COUNT(*) as total FROM classificacao_serie_b")
             count = cursor.fetchone()['total']
-            logger.info(f"🔍 [API] Contagem direta: {count}")
+            # Contagem direta: {count}
             
             cursor.execute("""
                 SELECT id, posicao, time, pontos, jogos, vitorias, empates, derrotas,
@@ -654,37 +650,39 @@ def get_classificacao():
             rows = cursor.fetchall()
             classificacao = [dict(row) for row in rows]
             
-            logger.info(f"📋 [API] Query direta retornou: {len(classificacao)} registros")
+            # Query direta retornou: {len(classificacao)} registros
             
             if classificacao:
-                logger.info(f"🏆 [API] Primeiro time: {classificacao[0]['time']}")
+                # Primeiro time: {classificacao[0]['time']}
+                pass
             
             conn.close()
         elif campeonato == 'premier-league':
-            logger.info("📊 [API] Buscando dados da Premier League...")
+            # Buscando dados da Premier League...
             classificacao = classificacao_db.get_classificacao_premier_league()
-            logger.info(f"📋 [API] Premier League retornou {len(classificacao)} registros")
+            # Premier League retornou {len(classificacao)} registros
         elif campeonato == 'la-liga':
-            logger.info("📊 [API] Buscando dados da La Liga...")
+            # Buscando dados da La Liga...
             classificacao = classificacao_db.get_classificacao_la_liga()
-            logger.info(f"📋 [API] La Liga retornou {len(classificacao)} registros")
+            # La Liga retornou {len(classificacao)} registros
         elif campeonato == 'ligue1':
-            logger.info("📊 [API] Buscando dados da Ligue 1...")
+            # Buscando dados da Ligue 1...
             classificacao = classificacao_db.get_classificacao_frances()
-            logger.info(f"📋 [API] Ligue 1 retornou {len(classificacao)} registros")
+            # Ligue 1 retornou {len(classificacao)} registros
         elif campeonato == 'champions-league':
-            logger.info("📊 [API] Buscando dados da Champions League...")
+            # Buscando dados da Champions League...
             classificacao = classificacao_db.get_classificacao_champions_league()
-            logger.info(f"📋 [API] Champions League retornou {len(classificacao)} registros")
+            # Champions League retornou {len(classificacao)} registros
         else:
-            logger.warning(f"❌ [API] Campeonato inválido: {campeonato}")
+            # Campeonato inválido: {campeonato}
             return jsonify({
                 'success': False,
                 'message': 'Campeonato inválido'
             }), 400
         
         if classificacao:
-            logger.info(f"🏆 [API] Primeiro time: {classificacao[0]}")
+            # Primeiro time: {classificacao[0]}
+            pass
         
         response_data = {
             'success': True,
@@ -693,13 +691,11 @@ def get_classificacao():
             'total': len(classificacao)
         }
         
-        logger.info(f"📤 [API] Retornando: success={response_data['success']}, total={response_data['total']}")
+        # Retornando: success={response_data['success']}, total={response_data['total']}
         return jsonify(response_data)
         
     except Exception as e:
-        logger.error(f"💥 [API] Erro ao carregar classificação: {e}")
-        import traceback
-        logger.error(f"📄 [API] Traceback: {traceback.format_exc()}")
+        # Erro ao carregar classificação: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao carregar classificação: {str(e)}'
@@ -744,21 +740,21 @@ def salvar_classificacao():
             campeonato_nome = "Ligue 1"
         else:
             campeonato_nome = f"Série {serie.upper()}"
-        logger.info(f"💾 [API] Salvando {len(updates)} alterações no {campeonato_nome}")
+        # Salvando {len(updates)} alterações no {campeonato_nome}
         
         for update in updates:
             time_id = update.get('id')
             campo = update.get('field')
             valor = update.get('value')
             
-            logger.info(f"📝 [API] Atualizando ID {time_id}: {campo} = {valor}")
+            # Atualizando ID {time_id}: {campo} = {valor}
             
             if classificacao_db.update_time_stats(time_id, campo, valor, serie):
                 sucesso += 1
-                logger.info(f"✅ [API] Sucesso: {campo} atualizado")
+                # Sucesso: {campo} atualizado
             else:
                 erros += 1
-                logger.error(f"❌ [API] Erro ao atualizar {campo}")
+                # Erro ao atualizar {campo}
         
         return jsonify({
             'success': True,
@@ -768,7 +764,7 @@ def salvar_classificacao():
         })
         
     except Exception as e:
-        logger.error(f"Erro ao salvar classificação: {e}")
+        # Erro ao salvar classificação: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao salvar classificação: {str(e)}'
@@ -1038,7 +1034,7 @@ def carregar_estatisticas_editaveis(clube):
 @cross_origin()
 def listar_concursos():
     """Listar todos os concursos disponíveis"""
-    logger.info("📋 [LOTECA] Listando concursos...")
+    # Listando concursos...
     
     try:
         concursos = concurso_manager.listar_concursos()
@@ -1050,7 +1046,7 @@ def listar_concursos():
         }), 200
         
     except Exception as e:
-        logger.error(f"💥 [LOTECA] Erro ao listar concursos: {e}")
+        # Erro ao listar concursos: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao listar concursos: {str(e)}'
@@ -1060,7 +1056,7 @@ def listar_concursos():
 @cross_origin()
 def carregar_concurso(numero):
     """Carregar um concurso específico"""
-    logger.info(f"📂 [LOTECA] Carregando concurso {numero}...")
+    # Carregando concurso {numero}...
     
     try:
         dados = concurso_manager.carregar_concurso(numero)
@@ -1077,7 +1073,7 @@ def carregar_concurso(numero):
         }), 200
         
     except Exception as e:
-        logger.error(f"💥 [LOTECA] Erro ao carregar concurso {numero}: {e}")
+        # Erro ao carregar concurso {numero}: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao carregar concurso: {str(e)}'
@@ -1087,7 +1083,7 @@ def carregar_concurso(numero):
 @cross_origin()
 def salvar_concurso():
     """Salvar um concurso"""
-    logger.info("💾 [LOTECA] Salvando concurso...")
+    # Salvando concurso...
     
     try:
         data = request.get_json()
@@ -1121,7 +1117,7 @@ def salvar_concurso():
             }), 500
         
     except Exception as e:
-        logger.error(f"💥 [LOTECA] Erro ao salvar concurso: {e}")
+        # Erro ao salvar concurso: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao salvar concurso: {str(e)}'
@@ -1131,7 +1127,7 @@ def salvar_concurso():
 @cross_origin()
 def get_ultimo_concurso():
     """Obter o último concurso"""
-    logger.info("🔍 [LOTECA] Buscando último concurso...")
+    # Buscando último concurso...
     
     try:
         dados = concurso_manager.get_ultimo_concurso()
@@ -1148,7 +1144,7 @@ def get_ultimo_concurso():
         }), 200
         
     except Exception as e:
-        logger.error(f"💥 [LOTECA] Erro ao buscar último concurso: {e}")
+        # Erro ao buscar último concurso: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao buscar último concurso: {str(e)}'
@@ -1158,7 +1154,7 @@ def get_ultimo_concurso():
 @cross_origin()
 def get_proximo_numero():
     """Obter o próximo número de concurso"""
-    logger.info("🔢 [LOTECA] Calculando próximo número...")
+    # Calculando próximo número...
     
     try:
         proximo = concurso_manager.get_proximo_numero()
@@ -1169,7 +1165,7 @@ def get_proximo_numero():
         }), 200
         
     except Exception as e:
-        logger.error(f"💥 [LOTECA] Erro ao calcular próximo número: {e}")
+        # Erro ao calcular próximo número: {e}
         return jsonify({
             'success': False,
             'message': f'Erro ao calcular próximo número: {str(e)}'
@@ -1179,7 +1175,7 @@ def get_proximo_numero():
 @cross_origin()
 def atualizar_ultimos_confrontos():
     """Atualizar últimos confrontos usando arquivos JSON"""
-    logger.info("🔄 [JSON-UPDATE] Iniciando atualização via arquivos JSON...")
+    # Iniciando atualização via arquivos JSON...
     
     try:
         # Verificar autenticação
@@ -1197,8 +1193,8 @@ def atualizar_ultimos_confrontos():
         serie_a_data = ler_ultimos_cinco_serie_a()
         serie_b_data = ler_ultimos_cinco_serie_b()
         
-        logger.info(f"📊 [JSON-UPDATE] Série A: {len(serie_a_data)} times")
-        logger.info(f"📊 [JSON-UPDATE] Série B: {len(serie_b_data)} times")
+        # Série A: {len(serie_a_data)} times
+        # Série B: {len(serie_b_data)} times
         
         # Atualizar banco de dados
         from models.classificacao_db import ClassificacaoDB
@@ -1220,7 +1216,7 @@ def atualizar_ultimos_confrontos():
             success = db.atualizar_ultimos_confrontos_serie_a(time_banco, ultimos)
             if success:
                 updated_a += 1
-                logger.info(f"✅ [JSON-UPDATE] {time_banco}: {ultimos}")
+                # {time_banco}: {ultimos}
         
         # Atualizar Série B
         updated_b = 0
@@ -1244,9 +1240,9 @@ def atualizar_ultimos_confrontos():
             success = db.atualizar_ultimos_confrontos_serie_b(time_banco, ultimos)
             if success:
                 updated_b += 1
-                logger.info(f"✅ [JSON-UPDATE] {time_banco}: {ultimos}")
+                # {time_banco}: {ultimos}
         
-        logger.info(f"✅ [JSON-UPDATE] Atualização concluída! A: {updated_a}, B: {updated_b}")
+        # Atualização concluída! A: {updated_a}, B: {updated_b}
         
         return jsonify({
             'success': True,
