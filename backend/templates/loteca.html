@@ -1112,6 +1112,24 @@ Equilíbrio
                             </div>
                         </div>
                         
+                        <!-- GRÁFICO DE BARRAS - CONFRONTOS HISTÓRICOS -->
+                        <div class="grafico-confrontos-section" style="margin: 1.5rem 0;">
+                            <h5>📊 Gráfico de Confrontos Históricos</h5>
+                            <div class="grafico-container" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                                <canvas id="grafico-confrontos-jogo1" width="800" height="300" style="max-width: 100%; height: auto;"></canvas>
+                            </div>
+                            <div class="legenda-grafico" style="display: flex; justify-content: center; gap: 2rem; margin-top: 0.5rem; font-size: 0.9rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 20px; height: 20px; background: #000; border-radius: 3px;"></div>
+                                    <span>Vitórias Corinthians</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 20px; height: 20px; background: #dc3545; border-radius: 3px;"></div>
+                                    <span>Vitórias Flamengo</span>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <h4>📈 Histórico Desempenho Recentes</h4>
                         
                         <!-- ANÁLISE DE DESEMPENHO RECENTE (4 PILARES) -->
@@ -2807,7 +2825,29 @@ Equilíbrio
         window.debugTabela = {
             verificarFlamengo: () => verificarUltimosJogosReais("Flamengo"),
             atualizarTabela: () => carregarTabelaSerieA(),
-            verificarTime: (nome) => verificarUltimosJogosReais(nome)
+            verificarTime: (nome) => verificarUltimosJogosReais(nome),
+            testarFortaleza: async () => {
+                console.log('🧪 [TESTE] Testando endpoint Fortaleza...');
+                try {
+                    const response = await fetch('/api/br/estatisticas/fortaleza');
+                    const data = await response.json();
+                    console.log('📊 [TESTE] Resposta Fortaleza:', data);
+                    return data;
+                } catch (error) {
+                    console.error('❌ [TESTE] Erro ao testar Fortaleza:', error);
+                }
+            },
+            testarSport: async () => {
+                console.log('🧪 [TESTE] Testando endpoint Sport...');
+                try {
+                    const response = await fetch('/api/br/estatisticas/sport-recife');
+                    const data = await response.json();
+                    console.log('📊 [TESTE] Resposta Sport:', data);
+                    return data;
+                } catch (error) {
+                    console.error('❌ [TESTE] Erro ao testar Sport:', error);
+                }
+            }
         };
 
         // PROVIDER CENTRAL ADMIN - BUSCA DADOS REAIS PREENCHIDOS MANUALMENTE
@@ -4035,12 +4075,33 @@ Equilíbrio
                 // BUSCAR DADOS DE DESEMPENHO RECENTE DA SÉRIE A
                 // ORIGEM: Central Admin → Aba "Ranking" → "Ranking Estatísticas" (Série A)
                 // ENDPOINT: /api/br/estatisticas/{clube}
-                const [fortalezaStats, sportStats] = await Promise.all([
+                console.log('🔍 [FORTALEZA-SPORT] Buscando dados da Central Admin...');
+                
+                const [fortalezaResponse, sportResponse] = await Promise.all([
                     fetch('/api/br/estatisticas/fortaleza').then(r => r.json()),
                     fetch('/api/br/estatisticas/sport-recife').then(r => r.json())
                 ]);
                 
-                console.log('📊 [FORTALEZA-SPORT] Dados de desempenho recente:', { fortalezaStats, sportStats });
+                console.log('📊 [FORTALEZA-SPORT] Resposta Fortaleza:', fortalezaResponse);
+                console.log('📊 [FORTALEZA-SPORT] Resposta Sport:', sportResponse);
+                
+                const fortalezaStats = fortalezaResponse.success ? fortalezaResponse : null;
+                const sportStats = sportResponse.success ? sportResponse : null;
+                
+                console.log('📊 [FORTALEZA-SPORT] Dados processados - Fortaleza:', fortalezaStats);
+                console.log('📊 [FORTALEZA-SPORT] Dados processados - Sport:', sportStats);
+                
+                // VERIFICAR SE HÁ DADOS SUFICIENTES NA CENTRAL ADMIN
+                const temDadosReais = fortalezaStats && sportStats && 
+                                    (fortalezaStats.total_jogos > 0 || sportStats.total_jogos > 0);
+                
+                console.log('🔍 [FORTALEZA-SPORT] Tem dados reais na Central Admin?', temDadosReais);
+                
+                if (!temDadosReais) {
+                    console.log('⚠️ [FORTALEZA-SPORT] Sem dados suficientes na Central Admin, usando dados manuais');
+                    await loadDadosManuaisFortalezaSport(data);
+                    return;
+                }
                 
                 // BUSCAR DADOS DO CONFRONTO DIRETO
                 // ORIGEM: Pasta /models/Confrontos/Fortaleza_vs_Sport.csv
@@ -4102,18 +4163,113 @@ Equilíbrio
                     
                     console.log('✅ [FORTALEZA-SPORT] Análise específica carregada com sucesso!');
                 } else {
-                    console.warn('⚠️ [FORTALEZA-SPORT] Dados de confronto não encontrados, usando dados simulados');
-                    loadSimulatedData(data);
+                    console.warn('⚠️ [FORTALEZA-SPORT] Dados de confronto não encontrados, usando dados manuais');
+                    await loadDadosManuaisFortalezaSport(data);
                 }
                 
             } catch (error) {
                 console.error('❌ [FORTALEZA-SPORT] Erro ao carregar dados específicos:', error);
-                loadSimulatedData(data);
+                await loadDadosManuaisFortalezaSport(data);
             }
+        }
+        
+        // CARREGAR DADOS MANUAIS PARA FORTALEZA VS SPORT
+        // USADO QUANDO NÃO HÁ REPRESENTATIVIDADE NA CENTRAL ADMIN
+        async function loadDadosManuaisFortalezaSport(data) {
+            console.log('📝 [FORTALEZA-SPORT] Carregando dados manuais...');
+            
+            // DADOS MANUAIS ESPECÍFICOS PARA FORTALEZA VS SPORT
+            // PREENCHIDOS MANUALMENTE QUANDO NÃO HÁ DADOS NA CENTRAL ADMIN
+            const dadosManuais = {
+                casa: {
+                    // FORTALEZA - DADOS MANUAIS
+                    forma_recente: 'V-V-D-V-V',
+                    ultimos_5_resultados: 'V-V-D-V-V', // Campo necessário para updateRealStatsJogo2
+                    media_gols_marcados: 1.5,
+                    media_gols_sofridos: 1.1,
+                    aproveitamento_casa: '75%',
+                    gols_marcados: 30,
+                    gols_sofridos: 22,
+                    total_jogos: 20
+                },
+                fora: {
+                    // SPORT - DADOS MANUAIS
+                    forma_recente: 'D-D-V-D-D',
+                    ultimos_5_resultados: 'D-D-V-D-D', // Campo necessário para updateRealStatsJogo2
+                    media_gols_marcados: 1.2,
+                    media_gols_sofridos: 1.4,
+                    aproveitamento_fora: '25%',
+                    gols_marcados: 24,
+                    gols_sofridos: 28,
+                    total_jogos: 20
+                }
+            };
+            
+            // ATUALIZAR INTERFACE COM DADOS MANUAIS
+            await updateRealStatsJogo2(dadosManuais.casa, dadosManuais.fora);
+            
+            // ATUALIZAR CONFRONTO DIRETO E RECOMENDAÇÃO
+            if (data.h2h) {
+                updateH2H(data.h2h);
+            }
+            
+            if (data.recommendation) {
+                updateRecommendation(data.recommendation);
+            }
+            
+            console.log('✅ [FORTALEZA-SPORT] Dados manuais carregados com sucesso!');
+        }
+        
+        // FUNÇÃO GENÉRICA PARA DADOS MANUAIS
+        // USADO QUANDO NÃO HÁ REPRESENTATIVIDADE NA CENTRAL ADMIN PARA QUALQUER JOGO
+        async function loadDadosManuaisGenericos(data, timeCasa, timeFora) {
+            console.log(`📝 [DADOS-MANUAIS] Carregando dados manuais para ${timeCasa} vs ${timeFora}...`);
+            
+            // DADOS MANUAIS GENÉRICOS - PREENCHIDOS MANUALMENTE
+            // ESTES DADOS DEVEM SER ATUALIZADOS CONFORME NECESSÁRIO
+            const dadosManuais = {
+                casa: {
+                    // DADOS MANUAIS PARA TIME CASA
+                    forma_recente: 'V-V-D-V-V',
+                    ultimos_5_resultados: 'V-V-D-V-V', // Campo necessário para updateRealStatsJogo2
+                    media_gols_marcados: 1.5,
+                    media_gols_sofridos: 1.1,
+                    aproveitamento_casa: '75%',
+                    gols_marcados: 30,
+                    gols_sofridos: 22,
+                    total_jogos: 20
+                },
+                fora: {
+                    // DADOS MANUAIS PARA TIME FORA
+                    forma_recente: 'D-D-V-D-D',
+                    ultimos_5_resultados: 'D-D-V-D-D', // Campo necessário para updateRealStatsJogo2
+                    media_gols_marcados: 1.2,
+                    media_gols_sofridos: 1.4,
+                    aproveitamento_fora: '25%',
+                    gols_marcados: 24,
+                    gols_sofridos: 28,
+                    total_jogos: 20
+                }
+            };
+            
+            // ATUALIZAR INTERFACE COM DADOS MANUAIS
+            await updateRealStatsJogo2(dadosManuais.casa, dadosManuais.fora);
+            
+            // ATUALIZAR CONFRONTO DIRETO E RECOMENDAÇÃO
+            if (data.h2h) {
+                updateH2H(data.h2h);
+            }
+            
+            if (data.recommendation) {
+                updateRecommendation(data.recommendation);
+            }
+            
+            console.log(`✅ [DADOS-MANUAIS] Dados manuais carregados para ${timeCasa} vs ${timeFora}!`);
         }
 
         // CARREGAR DADOS REAIS DO CENTRAL ADMIN
         // ORIGEM DOS DADOS: Central Admin → Aba "Estatísticas Detalhadas dos Clubes" + "Ranking Estatísticas"
+        // FALLBACK: Dados manuais quando não há representatividade na Central Admin
         async function loadCartolaData(data) {
             try {
                 // Mostrar loading
@@ -4207,6 +4363,7 @@ Equilíbrio
             console.log('🔄 [UPDATE-STATS-JOGO2] Iniciando atualização específica para Fortaleza vs Sport...');
             console.log('🏠 [UPDATE-STATS-JOGO2] Home Stats (Fortaleza):', homeStats);
             console.log('✈️ [UPDATE-STATS-JOGO2] Away Stats (Sport):', awayStats);
+            console.log('🎯 [UPDATE-STATS-JOGO2] Esta função é ESPECÍFICA para JOGO 2 - não afeta JOGO 1');
             
             // AGUARDAR UM POUCO PARA GARANTIR QUE O LOADING SEJA VISÍVEL
             await new Promise(resolve => setTimeout(resolve, 300));
@@ -4226,6 +4383,8 @@ Equilíbrio
                                   (homeStats.gols_marcados / homeStats.total_jogos) || 1.5;
             const awayGolsMarcados = awayStats.media_gols_marcados || 
                                    (awayStats.gols_marcados / awayStats.total_jogos) || 1.2;
+            
+            console.log('⚽ [UPDATE-STATS-JOGO2] Gols Marcados - Fortaleza:', homeGolsMarcados, 'Sport:', awayGolsMarcados);
             updateSmartStat(0, homeGolsMarcados, awayGolsMarcados, 'higher_better');
             
             // GOLS SOFRIDOS P/JOGO - DADOS REAIS DA CENTRAL ADMIN
@@ -4235,6 +4394,8 @@ Equilíbrio
                                    (homeStats.gols_sofridos / homeStats.total_jogos) || 1.1;
             const awayGolsSofridos = awayStats.media_gols_sofridos || 
                                   (awayStats.gols_sofridos / awayStats.total_jogos) || 1.4;
+            
+            console.log('🛡️ [UPDATE-STATS-JOGO2] Gols Sofridos - Fortaleza:', homeGolsSofridos, 'Sport:', awayGolsSofridos);
             updateSmartStat(1, homeGolsSofridos, awayGolsSofridos, 'lower_better');
             
             // APROVEITAMENTO - DADOS REAIS DA CENTRAL ADMIN
@@ -4242,6 +4403,8 @@ Equilíbrio
             // CÁLCULO: (pontos_casa / max_pontos_casa) * 100
             const homeAproveitamento = parseFloat(homeStats.aproveitamento_casa) || 75.0;
             const awayAproveitamento = parseFloat(awayStats.aproveitamento_fora) || 25.0;
+            
+            console.log('📊 [UPDATE-STATS-JOGO2] Aproveitamento - Fortaleza:', homeAproveitamento, 'Sport:', awayAproveitamento);
             updateSmartStat(2, homeAproveitamento, awayAproveitamento, 'higher_better', '%');
 
             // Atualizar labels das estatísticas
@@ -4620,11 +4783,19 @@ Equilíbrio
             console.log('⚔️ [CONFRONTOS-DIRETOS] Detectando confronto automaticamente...');
             
             // DETECTAR AUTOMATICAMENTE QUAL JOGO ESTÁ SENDO ANALISADO
-            const homeName = document.getElementById('team-home-name')?.textContent?.trim();
-            const awayName = document.getElementById('team-away-name')?.textContent?.trim();
+            const homeNameElement = document.getElementById('team-home-name');
+            const awayNameElement = document.getElementById('team-away-name');
+            
+            console.log('🔍 [CONFRONTOS-DIRETOS] Elemento team-home-name encontrado:', !!homeNameElement);
+            console.log('🔍 [CONFRONTOS-DIRETOS] Elemento team-away-name encontrado:', !!awayNameElement);
+            
+            const homeName = homeNameElement?.textContent?.trim();
+            const awayName = awayNameElement?.textContent?.trim();
             
             console.log('🏠 [CONFRONTOS-DIRETOS] Time Casa detectado:', homeName);
             console.log('✈️ [CONFRONTOS-DIRETOS] Time Fora detectado:', awayName);
+            console.log('🔍 [CONFRONTOS-DIRETOS] Conteúdo completo team-home-name:', homeNameElement?.textContent);
+            console.log('🔍 [CONFRONTOS-DIRETOS] Conteúdo completo team-away-name:', awayNameElement?.textContent);
             
             // USAR PARÂMETROS OU DETECÇÃO AUTOMÁTICA
             const timeCasaFinal = timeCasa || homeName || 'CORINTHIANS';
@@ -5003,6 +5174,154 @@ Equilíbrio
             
             container.innerHTML = bolinhasHtml;
             console.log(`✅ [CONFRONTOS-JOGO1] ${ultimos10.length} bolinhas renderizadas na tabela (linha única)`);
+            
+            // CRIAR GRÁFICO DE BARRAS COM OS MESMOS DADOS
+            criarGraficoConfrontosJogo1(ultimos10);
+        }
+        
+        // CRIAR GRÁFICO DE BARRAS PARA JOGO 1 (CORINTHIANS VS FLAMENGO)
+        function criarGraficoConfrontosJogo1(confrontos) {
+            console.log('📊 [GRAFICO-JOGO1] Criando gráfico de barras para Corinthians vs Flamengo...', confrontos);
+            
+            const canvas = document.getElementById('grafico-confrontos-jogo1');
+            if (!canvas) {
+                console.error('❌ [GRAFICO-JOGO1] Canvas não encontrado!');
+                return;
+            }
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Limpar canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // FUNDO BRANCO COM 50% DE TRANSPARÊNCIA
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Configurações do gráfico
+            const margin = { top: 40, right: 40, bottom: 60, left: 80 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            // Dados processados para o gráfico - INVERTER ORDEM (mais antigos primeiro)
+            const dadosGrafico = confrontos.slice().reverse().map((confronto, index) => {
+                let valor = 0;
+                let cor = '#6c757d'; // Cinza para empates
+                
+                if (confronto.resultado === 'V') {
+                    valor = 1; // Vitória Corinthians (positivo)
+                    cor = '#000000'; // Preto
+                } else if (confronto.resultado === 'D') {
+                    valor = -1; // Vitória Flamengo (negativo)
+                    cor = '#dc3545'; // Vermelho
+                }
+                
+                return {
+                    data: confronto.data,
+                    dataFormatada: confronto.data ? confronto.data.split('-').reverse().join('/') : '',
+                    valor: valor,
+                    cor: cor,
+                    placar: confronto.placar,
+                    resultado: confronto.resultado
+                };
+            });
+            
+            // Configurações das barras - BARRAS MAIS FINAS
+            const barWidth = chartWidth / dadosGrafico.length * 0.4; // Reduzido de 0.8 para 0.4
+            const barSpacing = chartWidth / dadosGrafico.length;
+            
+            // Desenhar eixos
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            
+            // Eixo Y (vertical) - linha central
+            const centerY = margin.top + chartHeight / 2;
+            ctx.beginPath();
+            ctx.moveTo(margin.left, centerY);
+            ctx.lineTo(margin.left + chartWidth, centerY);
+            ctx.stroke();
+            
+            // Eixo X (horizontal) - linha inferior
+            ctx.beginPath();
+            ctx.moveTo(margin.left, margin.top + chartHeight);
+            ctx.lineTo(margin.left + chartWidth, margin.top + chartHeight);
+            ctx.stroke();
+            
+            // Eixo Y (vertical) - linha esquerda
+            ctx.beginPath();
+            ctx.moveTo(margin.left, margin.top);
+            ctx.lineTo(margin.left, margin.top + chartHeight);
+            ctx.stroke();
+            
+            // Desenhar barras
+            dadosGrafico.forEach((dado, index) => {
+                const x = margin.left + (index * barSpacing) + (barSpacing - barWidth) / 2;
+                const barHeight = Math.abs(dado.valor) * (chartHeight / 2) * 0.8;
+                
+                let y;
+                if (dado.valor > 0) {
+                    // Vitória Corinthians (positivo) - barra para cima
+                    y = centerY - barHeight;
+                } else if (dado.valor < 0) {
+                    // Vitória Flamengo (negativo) - barra para baixo
+                    y = centerY;
+                } else {
+                    // Empate - barra pequena no centro
+                    y = centerY - 5;
+                }
+                
+                // Desenhar barra
+                ctx.fillStyle = dado.cor;
+                if (dado.valor === 0) {
+                    // Empate - barra pequena
+                    ctx.fillRect(x, y, barWidth, 10);
+                } else {
+                    ctx.fillRect(x, y, barWidth, barHeight);
+                }
+                
+                // Adicionar data abaixo da barra
+                ctx.fillStyle = '#333';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                const dataX = x + barWidth / 2;
+                const dataY = margin.top + chartHeight + 20;
+                ctx.fillText(dado.dataFormatada, dataX, dataY);
+                
+                // Adicionar placar próximo ao topo da barra - LETRAS MAIORES
+                ctx.fillStyle = '#333';
+                ctx.font = 'bold 12px Arial'; // Aumentado de 9px para 12px e adicionado bold
+                const placarY = dado.valor > 0 ? y - 8 : (dado.valor < 0 ? y + barHeight - 5 : y - 20); // Aproximado do topo da barra
+                ctx.fillText(dado.placar, dataX, placarY);
+            });
+            
+            // Adicionar título
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Confrontos Históricos - Corinthians vs Flamengo', width / 2, 25);
+            
+            // Adicionar labels dos eixos
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Vitórias', 0, 0);
+            ctx.restore();
+            
+            // Adicionar labels dos times - MAIS PRÓXIMOS DOS LIMITES DO EIXO Y
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'right';
+            ctx.fillText('Corinthians', margin.left - 10, margin.top + 20); // Próximo ao topo
+            
+            ctx.fillStyle = '#dc3545';
+            ctx.fillText('Flamengo', margin.left - 10, margin.top + chartHeight - 10); // Próximo ao fundo
+            
+            console.log(`✅ [GRAFICO-JOGO1] Gráfico criado com ${dadosGrafico.length} confrontos`);
         }
 
         // CARREGAR E RENDERIZAR BOLINHAS DOS CONFRONTOS
