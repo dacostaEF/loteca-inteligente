@@ -7,7 +7,7 @@ from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 import os
 from routes_brasileirao import bp_br
-from routes_internacional import bp_int
+# from routes_internacional import bp_int  # TESTE: Comentado para verificar se é usado
 from admin_api import bp_admin
 
 def create_app():
@@ -75,7 +75,7 @@ def create_app():
     
     # Registrar blueprints
     app.register_blueprint(bp_br)
-    app.register_blueprint(bp_int)
+    # app.register_blueprint(bp_int)  # TESTE: Comentado para verificar se é usado
     app.register_blueprint(bp_admin)
     
     # Error handlers

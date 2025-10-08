@@ -389,7 +389,7 @@ Equilíbrio
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 5:</span>
                     <div class="time-info">
-                        <img src="/static/escudos/CAP_Athlético-PR/Athletico_PR.png" 
+                        <img src="/static/escudos/Athlético-PR/Athletico_PR.png" 
                              alt="Athletico" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
                         <span>ATHLETICO</span>
                     </div>
@@ -647,7 +647,7 @@ Equilíbrio
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img src="/static/escudos/BOT_Botafogo-RJ/Botafogo_RJ.png" 
+                        <img src="/static/escudos/Botafogo-RJ/Botafogo_RJ.png" 
                              alt="Botafogo" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
                         <span>BOTAFOGO</span>
                     </div>
@@ -5356,7 +5356,7 @@ Equilíbrio
             'VASCO': 'VAS_Vasco',
             'VASCO DA GAMA': 'VAS_Vasco',
             'CRUZEIRO': 'CRU_Cruzeiro',
-            'ATHLETICO': 'CAP_Athlético-PR',
+            'ATHLETICO': 'Athlético-PR',
             'OPERARIO': 'OPE_Operário-PR',
             'ATLETICO': 'CAM_Atletico-MG', // ✅ CORRIGIDO: agora é o Atlético-MG real
             'ATLETICO/MG': 'CAM_Atletico-MG', // ✅ CORRIGIDO: Atlético-MG correto
@@ -5366,7 +5366,7 @@ Equilíbrio
             'BAHIA': 'BAH_Bahia',
             'PALMEIRAS': 'PAL_Palmeiras',
             'FLUMINENSE': 'FLU_Fluminense',
-            'BOTAFOGO': 'BOT_Botafogo-RJ', // ✅ CORRIGIDO: agora é o Botafogo-RJ
+            'BOTAFOGO': 'Botafogo-RJ', // ✅ CORRIGIDO: agora é o Botafogo-RJ
             'CRICIUMA': 'CRI_Criciúma',
             'PAYSANDU': 'PAY_Paysandu',
             'BRAGANTINO': 'RBB_Bragantino', // ✅ CORRIGIDO
@@ -7300,7 +7300,7 @@ Equilíbrio
             
             if (container) {
                 container.innerHTML = `
-                    <img src="/static/escudos/CAP_Athlético-PR/Athletico_PR.png" alt="Athletico" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>CAP</span>'">
+                    <img src="/static/escudos/Athlético-PR/Athletico_PR.png" alt="Athletico" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>CAP</span>'">
                     <span class="confronto-direto-count">6</span>
                     <span class="confronto-direto-separator">×</span>
                     <span class="confronto-direto-count">3E</span>
@@ -7497,7 +7497,7 @@ Equilíbrio
                     <span class="confronto-direto-count">1E</span>
                     <span class="confronto-direto-separator">×</span>
                     <span class="confronto-direto-count">8</span>
-                    <img src="/static/escudos/BOT_Botafogo-RJ/Botafogo_RJ.png" alt="Botafogo" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>BOT</span>'">
+                    <img src="/static/escudos/Botafogo-RJ/Botafogo_RJ.png" alt="Botafogo" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>BOT</span>'">
                 `;
                 console.log('✅ [FORCE-H2H-JOGO10] Confronto direto FORÇADO com sucesso!');
             } else {
@@ -7800,7 +7800,7 @@ Equilíbrio
                 
                 if (resultado === 'V') {
                     classe = 'athletico';
-                    conteudo = '<img src="/static/escudos/CAP_Athlético-PR/Athletico_PR.png" alt="Athletico" class="confronto-escudo" onerror="this.outerHTML=\'CAP\'">';
+                    conteudo = '<img src="/static/escudos/Athlético-PR/Athletico_PR.png" alt="Athletico" class="confronto-escudo" onerror="this.outerHTML=\'CAP\'">';
                 } else if (resultado === 'D') {
                     classe = 'operario';
                     conteudo = '<img src="/static/escudos/OPE_Operário-PR/Operario_PR.png" alt="Operário" class="confronto-escudo" onerror="this.outerHTML=\'OPE\'">';
@@ -8106,7 +8106,7 @@ Equilíbrio
                     conteudo = '<img src="/static/escudos/FLU_Fluminense/Fluminense.png" alt="Fluminense" class="confronto-escudo" onerror="this.outerHTML=\'FLU\'">';
                 } else if (resultado === 'D') {
                     classe = 'botafogo';
-                    conteudo = '<img src="/static/escudos/BOT_Botafogo-RJ/Botafogo_RJ.png" alt="Botafogo" class="confronto-escudo" onerror="this.outerHTML=\'BOT\'">';
+                    conteudo = '<img src="/static/escudos/Botafogo-RJ/Botafogo_RJ.png" alt="Botafogo" class="confronto-escudo" onerror="this.outerHTML=\'BOT\'">';
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
