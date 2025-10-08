@@ -1,0 +1,31 @@
+Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Sao,Pontos_Ganhos,Pontos_Acumulados
+3/10/2025,Crb,1,0,Ava,Maceio - AL,Derrota,0,40
+29/09/2025,Ava,0,2,Cor,Florianopolis - SC,Derrota,0,40
+25/09/2025,Cha,0,1,Ava,Chapeco - SC,Vitoria,3,40
+20/09/2025,Ava,2,2,Fer,Florianopolis - SC,Empate,1,37
+16/09/2025,Atl,2,1,Ava,Goiania - GO,Derrota,0,36
+7/9/2025,Ava,2,1,Goi,Florianopolis - SC,Vitoria,3,36
+2/9/2025,Ame,2,0,Ava,Belo Horizonte - MG,Derrota,0,33
+25/08/2025,Ava,1,2,Ama,Florianopolis - SC,Derrota,0,33
+19/08/2025,Ope,0,0,Ava,Ponta Grossa - PR,Empate,1,33
+10/8/2025,Ava,2,0,Cui,Florianopolis - SC,Vitoria,3,32
+3/8/2025,Gre,1,1,Ava,Novo Horizonte - SP,Empate,1,29
+28/07/2025,Ava,5,0,Bot,Florianopolis - SC,Vitoria,3,28
+24/07/2025,Rem,2,1,Ava,Belem - PA,Derrota,0,25
+19/07/2025,Ava,1,1,Vil,Florianopolis - SC,Empate,1,25
+14/07/2025,Ath-mg,4,0,Ava,Sao Joao del Rei - MG,Derrota,0,24
+5/7/2025,Ava,0,0,Pay,Florianopolis - SC,Empate,1,24
+27/06/2025,Cri,1,2,Ava,Criciuma - SC,Vitoria,3,23
+21/06/2025,Ava,1,2,Ath-pr,Florianopolis - SC,Derrota,0,20
+17/06/2025,Vol,1,1,Ava,Volta Redonda - RJ,Empate,1,20
+7/6/2025,Ava,1,0,Crb,Florianopolis - SC,Vitoria,3,19
+31/05/2025,Cor,2,1,Ava,Curitiba - PR,Derrota,0,16
+24/05/2025,Ava,2,1,Cha,Florianopolis - SC,Vitoria,3,16
+15/05/2025,Fer,1,1,Ava,Araraquara - SP,Empate,1,13
+10/5/2025,Ava,0,0,Atl,Florianopolis - SC,Empate,1,12
+5/5/2025,Goi,2,1,Ava,Goiania - GO,Derrota,0,11
+26/04/2025,Ava,3,0,Ame,Florianopolis - SC,Vitoria,3,11
+21/04/2025,Ama,0,2,Ava,Manaus - AM,Vitoria,3,8
+16/04/2025,Ava,1,0,Ope,Florianopolis - SC,Vitoria,3,5
+10/4/2025,Cui,2,2,Ava,Cuiaba - MT,Empate,1,2
+6/4/2025,Ava,1,1,Gre,Florianopolis - SC,Empate,1,1
