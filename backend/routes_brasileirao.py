@@ -1027,15 +1027,18 @@ def api_confronto_historico_modal(clube_casa, clube_fora):
                 if not row.get('data') or not row.get('mandante'):
                     continue
                     
-                # Usar os nomes corretos das colunas do CSV
-                resultado_casa = row.get('resultado_corinthians', 'E').upper()
+                # Usar os nomes corretos das colunas do CSV (genérico)
+                # Tentar diferentes nomes de colunas de resultado
+                resultado_casa = (row.get('resultado_corinthians') or 
+                                 row.get('resultado_fortaleza') or 
+                                 row.get('resultado') or 'E').upper()
                 
                 confrontos.append({
                     "data": row.get('data', ''),
                     "mandante": row.get('mandante', ''),
                     "visitante": row.get('visitante', ''),
                     "placar": row.get('placar', ''),
-                    "resultado_corinthians": resultado_casa,
+                    "resultado_corinthians": resultado_casa,  # Manter nome padrão para compatibilidade
                     "competicao": row.get('competicao', '')
                 })
         

@@ -4087,8 +4087,8 @@ Equilíbrio
                         }
                     };
                     
-                    // ATUALIZAR INTERFACE COM DADOS COMBINADOS
-                    await updateRealStats(dadosCombinados.casa.dados, dadosCombinados.fora.dados);
+                    // ATUALIZAR INTERFACE COM DADOS COMBINADOS (ESPECÍFICO PARA JOGO 2)
+                    await updateRealStatsJogo2(dadosCombinados.casa.dados, dadosCombinados.fora.dados);
                     
                     // ATUALIZAR CONFRONTO DIRETO COM DADOS REAIS
                     if (data.h2h) {
@@ -4200,7 +4200,45 @@ Equilíbrio
             });
         }
 
-        // Atualizar interface com dados reais do dashboard admin
+        // ATUALIZAR INTERFACE ESPECÍFICA PARA JOGO 2 (FORTALEZA VS SPORT)
+        // FUNÇÃO INDEPENDENTE - NÃO AFETA OUTROS JOGOS
+        async function updateRealStatsJogo2(homeStats, awayStats) {
+            console.log('🔄 [UPDATE-STATS-JOGO2] Iniciando atualização específica para Fortaleza vs Sport...');
+            console.log('🏠 [UPDATE-STATS-JOGO2] Home Stats (Fortaleza):', homeStats);
+            console.log('✈️ [UPDATE-STATS-JOGO2] Away Stats (Sport):', awayStats);
+            
+            // AGUARDAR UM POUCO PARA GARANTIR QUE O LOADING SEJA VISÍVEL
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // FORMA RECENTE ESPECÍFICA PARA FORTALEZA VS SPORT
+            const homeForm = homeStats.forma_recente || 'V-V-D-V-V'; // Fortaleza
+            const awayForm = awayStats.forma_recente || 'D-D-V-D-D'; // Sport
+            
+            updateFormSequence('.stat-home .form-sequence', homeForm);
+            updateFormSequence('.stat-away .form-sequence', awayForm);
+
+            // GOLS MARCADOS P/JOGO - DADOS ESPECÍFICOS FORTALEZA VS SPORT
+            const homeGolsMarcados = homeStats.media_gols_marcados || 1.5; // Fortaleza
+            const awayGolsMarcados = awayStats.media_gols_marcados || 1.2; // Sport
+            updateSmartStat(0, homeGolsMarcados, awayGolsMarcados, 'higher_better');
+            
+            // GOLS SOFRIDOS P/JOGO - DADOS ESPECÍFICOS FORTALEZA VS SPORT
+            const homeGolsSofridos = homeStats.media_gols_sofridos || 1.1; // Fortaleza
+            const awayGolsSofridos = awayStats.media_gols_sofridos || 1.4; // Sport
+            updateSmartStat(1, homeGolsSofridos, awayGolsSofridos, 'lower_better');
+            
+            // APROVEITAMENTO - DADOS ESPECÍFICOS FORTALEZA VS SPORT
+            const homeAproveitamento = parseFloat(homeStats.aproveitamento_casa) || 75.0; // Fortaleza
+            const awayAproveitamento = parseFloat(awayStats.aproveitamento_fora) || 25.0; // Sport
+            updateSmartStat(2, homeAproveitamento, awayAproveitamento, 'higher_better', '%');
+
+            // Atualizar labels das estatísticas
+            updateStatLabels();
+            
+            console.log('✅ [UPDATE-STATS-JOGO2] Análise específica Fortaleza vs Sport carregada!');
+        }
+
+        // Atualizar interface com dados reais do dashboard admin (JOGO 1 E OUTROS)
         async function updateRealStats(homeStats, awayStats) {
             console.log('🔄 [UPDATE-STATS] Iniciando atualização com dados reais...');
             console.log('🏠 [UPDATE-STATS] Home Stats:', homeStats);
@@ -4208,26 +4246,30 @@ Equilíbrio
             
             // AGUARDAR UM POUCO PARA GARANTIR QUE O LOADING SEJA VISÍVEL
             await new Promise(resolve => setTimeout(resolve, 300));
-            // Forma recente baseada no rating (simulada por enquanto)
-            const homeForm = generateFormFromRating(homeStats.rating);
-            const awayForm = generateFormFromRating(awayStats.rating);
+            
+            // FORMA RECENTE - USAR DADOS REAIS SE DISPONÍVEIS, SENÃO USAR RATING
+            const homeForm = homeStats.forma_recente || generateFormFromRating(homeStats.rating);
+            const awayForm = awayStats.forma_recente || generateFormFromRating(awayStats.rating);
             
             updateFormSequence('.stat-home .form-sequence', homeForm);
             updateFormSequence('.stat-away .form-sequence', awayForm);
 
-            // Gols marcados p/jogo (MAIS É MELHOR)
-            const homeGolsMarcados = homeStats.media_gols_marcados || 1.00;
-            const awayGolsMarcados = awayStats.media_gols_marcados || 2.09;
+            // GOLS MARCADOS P/JOGO (MAIS É MELHOR)
+            // USAR DADOS REAIS SE DISPONÍVEIS, SENÃO USAR DADOS PADRÃO
+            const homeGolsMarcados = homeStats.media_gols_marcados || (homeStats.gols_marcados / homeStats.total_jogos) || 1.00;
+            const awayGolsMarcados = awayStats.media_gols_marcados || (awayStats.gols_marcados / awayStats.total_jogos) || 2.09;
             updateSmartStat(0, homeGolsMarcados, awayGolsMarcados, 'higher_better');
             
-            // Gols sofridos p/jogo (MENOS É MELHOR)
-            const homeGolsSofridos = homeStats.media_gols_sofridos || 1.21;
-            const awayGolsSofridos = awayStats.media_gols_sofridos || 0.48;
+            // GOLS SOFRIDOS P/JOGO (MENOS É MELHOR)
+            // USAR DADOS REAIS SE DISPONÍVEIS, SENÃO USAR DADOS PADRÃO
+            const homeGolsSofridos = homeStats.media_gols_sofridos || (homeStats.gols_sofridos / homeStats.total_jogos) || 1.21;
+            const awayGolsSofridos = awayStats.media_gols_sofridos || (awayStats.gols_sofridos / awayStats.total_jogos) || 0.48;
             updateSmartStat(1, homeGolsSofridos, awayGolsSofridos, 'lower_better');
             
-            // Aproveitamento (%) (MAIS É MELHOR)
-            const homeAproveitamento = homeStats.aproveitamento_casa || 48.5;
-            const awayAproveitamento = awayStats.aproveitamento_fora || 66.7;
+            // APROVEITAMENTO (%) (MAIS É MELHOR)
+            // USAR DADOS REAIS SE DISPONÍVEIS, SENÃO USAR DADOS PADRÃO
+            const homeAproveitamento = parseFloat(homeStats.aproveitamento_casa) || 48.5;
+            const awayAproveitamento = parseFloat(awayStats.aproveitamento_fora) || 66.7;
             updateSmartStat(2, homeAproveitamento, awayAproveitamento, 'higher_better', '%');
 
             // Atualizar labels das estatísticas
@@ -4236,7 +4278,8 @@ Equilíbrio
             // BUSCAR DADOS DE CLASSIFICAÇÃO REAIS DA CENTRAL ADMIN
             const classificationData = await getClassificationData();
             
-            // Obter posições reais dos times
+            // OBTER POSIÇÕES REAIS DOS TIMES
+            // MANTER DADOS ORIGINAIS DO CORINTHIANS VS FLAMENGO
             const homeClassification = classificationData['CORINTHIANS'] || { position: 10, points: 32 };
             const awayClassification = classificationData['FLAMENGO'] || { position: 1, points: 51 };
             
@@ -4560,13 +4603,26 @@ Equilíbrio
             console.log('✅ [POSITION] Posições atualizadas na interface');
         }
 
-        // ABRIR MODAL DE CONFRONTOS DIRETOS (ABA 2)
-        async function abrirModalConfrontosDiretos(timeCasa = 'CORINTHIANS', timeFora = 'FLAMENGO') {
-            console.log(`⚔️ [CONFRONTOS-DIRETOS] Abrindo modal de confrontos diretos ${timeCasa} vs ${timeFora}...`);
+        // ABRIR MODAL DE CONFRONTOS DIRETOS (ABA 2) - DETECÇÃO AUTOMÁTICA
+        async function abrirModalConfrontosDiretos(timeCasa = null, timeFora = null) {
+            console.log('⚔️ [CONFRONTOS-DIRETOS] Detectando confronto automaticamente...');
+            
+            // DETECTAR AUTOMATICAMENTE QUAL JOGO ESTÁ SENDO ANALISADO
+            const homeName = document.getElementById('team-home-name')?.textContent?.trim();
+            const awayName = document.getElementById('team-away-name')?.textContent?.trim();
+            
+            console.log('🏠 [CONFRONTOS-DIRETOS] Time Casa detectado:', homeName);
+            console.log('✈️ [CONFRONTOS-DIRETOS] Time Fora detectado:', awayName);
+            
+            // USAR PARÂMETROS OU DETECÇÃO AUTOMÁTICA
+            const timeCasaFinal = timeCasa || homeName || 'CORINTHIANS';
+            const timeForaFinal = timeFora || awayName || 'FLAMENGO';
+            
+            console.log(`⚔️ [CONFRONTOS-DIRETOS] Abrindo modal de confrontos diretos ${timeCasaFinal} vs ${timeForaFinal}...`);
             
             try {
                 // Buscar dados dos confrontos da API
-                const response = await fetch(`/api/br/loteca/confronto-modal/${timeCasa}/${timeFora}`);
+                const response = await fetch(`/api/br/loteca/confronto-modal/${encodeURIComponent(timeCasaFinal)}/${encodeURIComponent(timeForaFinal)}`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -4580,7 +4636,7 @@ Equilíbrio
                 console.log('📊 [CONFRONTOS-DIRETOS] Total de confrontos:', confrontos.length);
                 
                 // Mostrar modal com os dados
-                mostrarModalConfrontosDiretos(confrontos);
+                mostrarModalConfrontosDiretos(confrontos, timeCasaFinal, timeForaFinal);
                 
             } catch (error) {
                 console.error('❌ [CONFRONTOS-DIRETOS] Erro ao carregar confrontos:', error);
@@ -4598,9 +4654,11 @@ Equilíbrio
             }
         }
 
-        // MOSTRAR MODAL COM LISTA DE CONFRONTOS
-        function mostrarModalConfrontosDiretos(confrontos) {
+        // MOSTRAR MODAL COM LISTA DE CONFRONTOS - DINÂMICO
+        function mostrarModalConfrontosDiretos(confrontos, timeCasa = 'Corinthians', timeFora = 'Flamengo') {
             console.log('🎨 [CONFRONTOS-DIRETOS] Renderizando modal...', confrontos);
+            console.log('🏠 [CONFRONTOS-DIRETOS] Time Casa:', timeCasa);
+            console.log('✈️ [CONFRONTOS-DIRETOS] Time Fora:', timeFora);
             
             // Criar modal se não existir
             let modal = document.getElementById('confrontos-diretos-modal');
@@ -4611,7 +4669,7 @@ Equilíbrio
                 modal.innerHTML = `
                     <div class="modal-content confrontos-modal-content">
                         <div class="modal-header">
-                            <h3>⚔️ Confrontos Diretos - Corinthians vs Flamengo</h3>
+                            <h3>⚔️ Confrontos Diretos - ${timeCasa} vs ${timeFora}</h3>
                             <button class="modal-close" onclick="fecharModalConfrontosDiretos()">×</button>
                         </div>
                         <div class="modal-body">
@@ -4622,16 +4680,35 @@ Equilíbrio
                     </div>
                 `;
                 document.body.appendChild(modal);
+            } else {
+                // Atualizar título do modal existente
+                const modalTitle = modal.querySelector('.modal-header h3');
+                if (modalTitle) {
+                    modalTitle.textContent = `⚔️ Confrontos Diretos - ${timeCasa} vs ${timeFora}`;
+                }
             }
             
             // Renderizar lista de confrontos (TODOS os jogos do CSV)
             const lista = document.getElementById('confrontos-diretos-lista');
             lista.innerHTML = confrontos.map((confronto, index) => {
-                const resultado = confronto.resultado_corinthians === 'V' ? 'Vitória Corinthians' :
-                                confronto.resultado_corinthians === 'D' ? 'Vitória Flamengo' : 'Empate';
+                // LÓGICA GENÉRICA PARA DETERMINAR RESULTADO
+                let resultado, resultadoClass;
                 
-                const resultadoClass = confronto.resultado_corinthians === 'V' ? 'v' :
-                                     confronto.resultado_corinthians === 'D' ? 'd' : 'e';
+                // Se o time casa (primeiro time) venceu
+                if (confronto.resultado_corinthians === 'V') {
+                    resultado = `Vitória ${timeCasa}`;
+                    resultadoClass = 'v';
+                }
+                // Se o time fora (segundo time) venceu  
+                else if (confronto.resultado_corinthians === 'D') {
+                    resultado = `Vitória ${timeFora}`;
+                    resultadoClass = 'd';
+                }
+                // Empate
+                else {
+                    resultado = 'Empate';
+                    resultadoClass = 'e';
+                }
                 
                 return `
                     <div class="confronto-item">
@@ -4642,7 +4719,7 @@ Equilíbrio
                             <span class="confronto-visitante">${confronto.visitante}</span>
                         </div>
                         <div class="confronto-resultado ${resultadoClass}">${resultado}</div>
-                        <div class="confronto-competicao">${confronto.competicao}</div>
+                        <div class="confronto-competicao">${confronto.competicao || 'Brasileirão'}</div>
                     </div>
                 `;
             }).join('');
