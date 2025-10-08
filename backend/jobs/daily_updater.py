@@ -113,10 +113,11 @@ def atualizar_loteca():
     try:
         logger.info("🎲 Iniciando atualização da Loteca...")
         
-        from services.loteca_provider_new import get_current_loteca_matches
+        # from services.loteca_provider_new import get_current_loteca_matches  # REMOVIDO: código morto
         
         # Buscar jogos atuais
-        loteca_data = get_current_loteca_matches()
+        # loteca_data = get_current_loteca_matches()  # REMOVIDO: código morto
+        loteca_data = {"success": False, "error": "Função removida - código morto"}
         
         if isinstance(loteca_data, dict) and loteca_data.get('success'):
             total_jogos = loteca_data.get('total', 0)

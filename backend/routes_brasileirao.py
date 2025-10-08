@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
-from services.loteca_provider_new import get_current_loteca_matches
+# from services.loteca_provider_new import get_current_loteca_matches  # REMOVIDO: código morto
 from models.classificacao_db import classificacao_db
 from models.jogos_manager import JogosManager
 from datetime import datetime
@@ -403,7 +403,8 @@ def current_loteca_matches():
     """
     try:
         # Usar provider CORRIGIDO que implementa as correções identificadas
-        result = get_current_loteca_matches()
+        # result = get_current_loteca_matches()  # REMOVIDO: código morto
+        result = {"success": False, "error": "Endpoint removido - código morto"}
         
         # O novo provider já retorna um dict completo
         if isinstance(result, dict):
