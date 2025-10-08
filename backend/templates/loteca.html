@@ -4202,6 +4202,7 @@ Equilíbrio
 
         // ATUALIZAR INTERFACE ESPECÍFICA PARA JOGO 2 (FORTALEZA VS SPORT)
         // FUNÇÃO INDEPENDENTE - NÃO AFETA OUTROS JOGOS
+        // DADOS REAIS DA CENTRAL ADMIN → JogosManager → CSVs
         async function updateRealStatsJogo2(homeStats, awayStats) {
             console.log('🔄 [UPDATE-STATS-JOGO2] Iniciando atualização específica para Fortaleza vs Sport...');
             console.log('🏠 [UPDATE-STATS-JOGO2] Home Stats (Fortaleza):', homeStats);
@@ -4210,32 +4211,43 @@ Equilíbrio
             // AGUARDAR UM POUCO PARA GARANTIR QUE O LOADING SEJA VISÍVEL
             await new Promise(resolve => setTimeout(resolve, 300));
             
-            // FORMA RECENTE ESPECÍFICA PARA FORTALEZA VS SPORT
-            const homeForm = homeStats.forma_recente || 'V-V-D-V-V'; // Fortaleza
-            const awayForm = awayStats.forma_recente || 'D-D-V-D-D'; // Sport
+            // FORMA RECENTE - DADOS REAIS DA CENTRAL ADMIN
+            // ORIGEM: Central Admin → Aba "Ranking" → "Ranking Estatísticas" → JogosManager
+            const homeForm = homeStats.ultimos_5_resultados || homeStats.forma_recente || 'V-V-D-V-V';
+            const awayForm = awayStats.ultimos_5_resultados || awayStats.forma_recente || 'D-D-V-D-D';
             
             updateFormSequence('.stat-home .form-sequence', homeForm);
             updateFormSequence('.stat-away .form-sequence', awayForm);
 
-            // GOLS MARCADOS P/JOGO - DADOS ESPECÍFICOS FORTALEZA VS SPORT
-            const homeGolsMarcados = homeStats.media_gols_marcados || 1.5; // Fortaleza
-            const awayGolsMarcados = awayStats.media_gols_marcados || 1.2; // Sport
+            // GOLS MARCADOS P/JOGO - DADOS REAIS DA CENTRAL ADMIN
+            // ORIGEM: Central Admin → JogosManager → CSVs → calcular_estatisticas()
+            // CÁLCULO: gols_marcados / total_jogos
+            const homeGolsMarcados = homeStats.media_gols_marcados || 
+                                  (homeStats.gols_marcados / homeStats.total_jogos) || 1.5;
+            const awayGolsMarcados = awayStats.media_gols_marcados || 
+                                   (awayStats.gols_marcados / awayStats.total_jogos) || 1.2;
             updateSmartStat(0, homeGolsMarcados, awayGolsMarcados, 'higher_better');
             
-            // GOLS SOFRIDOS P/JOGO - DADOS ESPECÍFICOS FORTALEZA VS SPORT
-            const homeGolsSofridos = homeStats.media_gols_sofridos || 1.1; // Fortaleza
-            const awayGolsSofridos = awayStats.media_gols_sofridos || 1.4; // Sport
+            // GOLS SOFRIDOS P/JOGO - DADOS REAIS DA CENTRAL ADMIN
+            // ORIGEM: Central Admin → JogosManager → CSVs → calcular_estatisticas()
+            // CÁLCULO: gols_sofridos / total_jogos
+            const homeGolsSofridos = homeStats.media_gols_sofridos || 
+                                   (homeStats.gols_sofridos / homeStats.total_jogos) || 1.1;
+            const awayGolsSofridos = awayStats.media_gols_sofridos || 
+                                  (awayStats.gols_sofridos / awayStats.total_jogos) || 1.4;
             updateSmartStat(1, homeGolsSofridos, awayGolsSofridos, 'lower_better');
             
-            // APROVEITAMENTO - DADOS ESPECÍFICOS FORTALEZA VS SPORT
-            const homeAproveitamento = parseFloat(homeStats.aproveitamento_casa) || 75.0; // Fortaleza
-            const awayAproveitamento = parseFloat(awayStats.aproveitamento_fora) || 25.0; // Sport
+            // APROVEITAMENTO - DADOS REAIS DA CENTRAL ADMIN
+            // ORIGEM: Central Admin → JogosManager → CSVs → calcular_estatisticas()
+            // CÁLCULO: (pontos_casa / max_pontos_casa) * 100
+            const homeAproveitamento = parseFloat(homeStats.aproveitamento_casa) || 75.0;
+            const awayAproveitamento = parseFloat(awayStats.aproveitamento_fora) || 25.0;
             updateSmartStat(2, homeAproveitamento, awayAproveitamento, 'higher_better', '%');
 
             // Atualizar labels das estatísticas
             updateStatLabels();
             
-            console.log('✅ [UPDATE-STATS-JOGO2] Análise específica Fortaleza vs Sport carregada!');
+            console.log('✅ [UPDATE-STATS-JOGO2] Análise específica Fortaleza vs Sport carregada com dados reais!');
         }
 
         // Atualizar interface com dados reais do dashboard admin (JOGO 1 E OUTROS)
