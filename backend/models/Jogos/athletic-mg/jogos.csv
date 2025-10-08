@@ -1,31 +1,31 @@
-Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Ath,Pontos_Ganhos,Pontos_Acumulados
-03/10/2025,Ath,2,2,Ama,Sao Joao del Rei - MG,Empate,1,1
-28/09/2025,Cui,2,1,Ath,Cuiaba - MT,Derrota,0,1
-24/09/2025,Ath,0,3,Ath,Sao Joao del Rei - MG,Derrota,0,1
-19/09/2025,Gre,1,0,Ath,Novo Horizonte - SP,Derrota,0,1
-14/09/2025,Ath,2,0,Bot,Sao Joao del Rei - MG,Vitoria,3,4
-08/09/2025,Vil,1,1,Ath,Goiania - GO,Empate,1,5
-31/08/2025,Vol,0,2,Ath,Volta Redonda - RJ,Vitoria,3,8
-22/08/2025,Ath,0,4,Cha,Sao Joao del Rei - MG,Empate,0,8
-18/08/2025,Ath,1,1,Cri,Sao Joao del Rei - MG,Empate,1,9
-12/08/2025,Crb,1,0,Ath,Maceio - AL,Empate,0,9
-04/08/2025,Ath,1,1,Atl,Sao Joao del Rei - MG,Empate,1,10
-28/07/2025,Pay,1,1,Ath,Belem - PA,Empate,1,11
-22/07/2025,Ath,1,1,Cor,Sao Joao del Rei - MG,Empate,1,12
-18/07/2025,Fer,1,2,Ath,Araraquara - SP,Vitoria,3,15
-14/07/2025,Ath,4,0,Ava,Sao Joao del Rei - MG,Vitoria,3,18
-07/07/2025,Ame,0,1,Ath,Belo Horizonte - MG,Vitoria,3,21
-29/06/2025,Ath,1,2,Rem,Sao Joao del Rei - MG,Empate,0,21
-23/06/2025,Goi,1,2,Ath,Goiania - GO,Vitoria,3,24
-14/06/2025,Ath,2,1,Ope,Sao Joao del Rei - MG,Vitoria,3,27
-09/06/2025,Ama,1,0,Ath,Manaus - AM,Empate,0,27
-31/05/2025,Ath,0,2,Cui,Belo Horizonte - MG,Empate,0,27
-24/05/2025,Ath,1,0,Ath,Curitiba - PR,Vitoria,3,30
-17/05/2025,Ath,0,2,Gre,Belo Horizonte - MG,Empate,0,30
-12/05/2025,Bot,0,3,Ath,Ribeirao Preto - SP,Vitoria,3,33
-06/05/2025,Ath,0,1,Vil,Belo Horizonte - MG,Empate,0,33
-27/04/2025,Ath,2,1,Vol,Belo Horizonte - MG,Vitoria,3,36
-20/04/2025,Cha,1,0,Ath,Chapeco - SC,Empate,0,36
-17/04/2025,Cri,4,0,Ath,Criciuma - SC,Empate,0,36
-13/04/2025,Ath,1,2,Crb,Belo Horizonte - MG,Empate,0,36
-07/04/2025,Atl,4,2,Ath,Goiania - GO,Empate,0,36
+Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Sao,Pontos_Ganhos,Pontos_Acumulados
+3/10/2025,Ath-mg,2,2,Ama,Sao Joao del Rei - MG,Empate,1,33
+28/09/2025,Cui,2,1,Ath-mg,Cuiaba - MT,Derrota,0,32
+24/09/2025,Ath-mg,0,3,Ath-pr,Sao Joao del Rei - MG,Derrota,0,32
+19/09/2025,Gre,1,0,Ath-mg,Novo Horizonte - SP,Derrota,0,32
+14/09/2025,Ath-mg,2,0,Bot,Sao Joao del Rei - MG,Vitoria,3,32
+8/9/2025,Vil,1,1,Ath-mg,Goiania - GO,Empate,1,29
+31/08/2025,Vol,0,2,Ath-mg,Volta Redonda - RJ,Vitoria,3,28
+22/08/2025,Ath-mg,0,4,Cha,Sao Joao del Rei - MG,Derrota,0,25
+18/08/2025,Ath-mg,1,1,Cri,Sao Joao del Rei - MG,Empate,1,25
+12/8/2025,Crb,1,0,Ath-mg,Maceio - AL,Derrota,0,24
+4/8/2025,Ath-mg,1,1,Atl,Sao Joao del Rei - MG,Empate,1,24
+28/07/2025,Pay,1,1,Ath-mg,Belem - PA,Empate,1,23
+22/07/2025,Ath-mg,1,1,Cor,Sao Joao del Rei - MG,Empate,1,22
+18/07/2025,Fer,1,2,Ath-mg,Araraquara - SP,Vitoria,3,21
+14/07/2025,Ath-mg,4,0,Ava,Sao Joao del Rei - MG,Vitoria,3,18
+7/7/2025,Ame,0,1,Ath-mg,Belo Horizonte - MG,Vitoria,3,15
+29/06/2025,Ath-mg,1,2,Rem,Sao Joao del Rei - MG,Derrota,0,12
+23/06/2025,Goi,1,2,Ath-mg,Goiania - GO,Vitoria,3,12
+14/06/2025,Ath-mg,2,1,Ope,Sao Joao del Rei - MG,Vitoria,3,9
+9/6/2025,Ama,1,0,Ath-mg,Manaus - AM,Derrota,0,6
+31/05/2025,Ath-mg,0,2,Cui,Belo Horizonte - MG,Derrota,0,6
+24/05/2025,Ath-pr,1,0,Ath-mg,Curitiba - PR,Derrota,0,6
+17/05/2025,Ath-mg,0,2,Gre,Belo Horizonte - MG,Derrota,0,6
+12/5/2025,Bot,0,3,Ath-mg,Ribeirao Preto - SP,Vitoria,3,6
+6/5/2025,Ath-mg,0,1,Vil,Belo Horizonte - MG,Derrota,0,3
+27/04/2025,Ath-mg,2,1,Vol,Belo Horizonte - MG,Vitoria,3,3
+20/04/2025,Cha,1,0,Ath-mg,Chapeco - SC,Derrota,0,0
+17/04/2025,Cri,4,0,Ath-mg,Criciuma - SC,Derrota,0,0
+13/04/2025,Ath-mg,1,2,Crb,Belo Horizonte - MG,Derrota,0,0
+7/4/2025,Atl,4,2,Ath-mg,Goiania - GO,Derrota,0,0
