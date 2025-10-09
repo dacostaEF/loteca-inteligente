@@ -1,0 +1,95 @@
+{
+  "metadados": {
+    "numero": "1215",
+    "salvo_em": "2025-10-09T10:12:31.848328",
+    "versao": "1.0"
+  },
+  "concurso": {},
+  "jogos": [
+    {
+      "numero": 1,
+      "time_casa": "PONTE PRETA/SP",
+      "time_fora": "GUARANI/RJ",
+      "data": "Sábado"
+    },
+    {
+      "numero": 2,
+      "time_casa": "FORTALEZA/CE",
+      "time_fora": "SPORT/PE",
+      "data": "Sábado"
+    },
+    {
+      "numero": 3,
+      "time_casa": "JUVENTUDE/RS",
+      "time_fora": "INTERNACIONAL/RS",
+      "data": "Sábado"
+    },
+    {
+      "numero": 4,
+      "time_casa": "VASCO DA GAMA/RJ",
+      "time_fora": "CRUZEIRO/MG",
+      "data": "Sábado"
+    },
+    {
+      "numero": 5,
+      "time_casa": "ATHLETICO/PR",
+      "time_fora": "OPERARIO/PR",
+      "data": "Sábado"
+    },
+    {
+      "numero": 6,
+      "time_casa": "ATLETICO/MG",
+      "time_fora": "MIRASSOL/SP",
+      "data": "Sábado"
+    },
+    {
+      "numero": 7,
+      "time_casa": "GREMIO/RS",
+      "time_fora": "VITORIA/BA",
+      "data": "Domingo"
+    },
+    {
+      "numero": 8,
+      "time_casa": "ASTON VILLA",
+      "time_fora": "FULHAM",
+      "data": "Domingo"
+    },
+    {
+      "numero": 9,
+      "time_casa": "BAHIA/BA",
+      "time_fora": "PALMEIRAS/SP",
+      "data": "Domingo"
+    },
+    {
+      "numero": 10,
+      "time_casa": "FLUMINENSE/RJ",
+      "time_fora": "BOTAFOGO/RJ",
+      "data": "Domingo"
+    },
+    {
+      "numero": 11,
+      "time_casa": "CRICIUMA/SC",
+      "time_fora": "PAYSANDU/PA",
+      "data": "Domingo"
+    },
+    {
+      "numero": 12,
+      "time_casa": "NEW CASTLE",
+      "time_fora": "ARSENAL",
+      "data": "Domingo"
+    },
+    {
+      "numero": 13,
+      "time_casa": "BRAGANTINO/SP",
+      "time_fora": "SANTOS/SP",
+      "data": "Domingo"
+    },
+    {
+      "numero": 14,
+      "time_casa": "BARCELONA",
+      "time_fora": "REAL SOCIEDAD",
+      "data": "Domingo"
+    }
+  ],
+  "estatisticas": {}
+}
