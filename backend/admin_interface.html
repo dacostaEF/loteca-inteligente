@@ -1682,11 +1682,11 @@
 
         <!-- Abas -->
         <div class="tabs">
-            <button class="tab active" onclick="showTab('classificacao')">
-                <i class="fas fa-table"></i> Classificação
-            </button>
-            <button class="tab" onclick="showTab('jogos-loteca')">
+            <button class="tab active" onclick="showTab('jogos-loteca')">
                 <i class="fas fa-gamepad"></i> Jogos Loteca
+            </button>
+            <button class="tab" onclick="showTab('classificacao')">
+                <i class="fas fa-table"></i> Classificação
             </button>
             <button class="tab" onclick="showTab('clubes')">
                 <i class="fas fa-users"></i> Clubes
@@ -1709,7 +1709,7 @@
         </div>
 
         <!-- === ABA CLASSIFICAÇÃO === -->
-        <div class="tab-content active" id="classificacao">
+        <div class="tab-content" id="classificacao">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-table"></i> Gestão de Classificação
             </h2>
@@ -1779,7 +1779,7 @@
         </div>
 
         <!-- === ABA JOGOS LOTECA === -->
-        <div class="tab-content" id="jogos-loteca">
+        <div class="tab-content active" id="jogos-loteca">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-gamepad"></i> Gestão de Jogos Loteca
             </h2>
@@ -5728,6 +5728,13 @@
                 console.log('⏰ [DASHBOARD] Iniciando atualização após delay...');
                 atualizarDashboard();
             }, 1000);
+            
+            // Carregar aba Jogos Loteca por padrão (com delay para garantir que a página carregou)
+            setTimeout(() => {
+                console.log('🎮 [LOTECA] Iniciando carregamento da aba Jogos Loteca...');
+                carregarListaConcursos();
+                carregarUltimoConcurso();
+            }, 1500);
             
             // Configurar listener para mudança de campeonato na aba Classificação
             const campeonatoSelect = document.getElementById('campeonatoSelect');

@@ -30,6 +30,7 @@
                 <img src="{{ url_for('static', filename='Logo_loteraisinteligente.png') }}" alt="Logo Loterias Inteligente - Visite nosso site" class="logo">
             </a>
             <h1>Raio-X da Loteca</h1>
+            <h1>Concurso 1215</h1>
             <p>Análise estatística completa dos 14 jogos para te ajudar a montar um palpite mais inteligente. Cruzamos dados de performance, histórico e momento para calcular as probabilidades de cada confronto.</p>
         </header>
 
@@ -1481,6 +1482,9 @@ Equilíbrio
                             <button class="champ-btn" data-championship="serie-b">
                                 Brasileirão Série B
                             </button>
+                            <button class="champ-btn" data-championship="serie-c">
+                                Brasileirão Série C
+                            </button>
                         </div>
                     </div>
 
@@ -1507,6 +1511,223 @@ Equilíbrio
                         <div id="tabela-serie-b" class="classification-table">
                             <div class="table-loading">
                                 <p>🔄 Carregando classificação da Série B...</p>
+                            </div>
+                        </div>
+
+                        <!-- TABELA BRASILEIRÃO SÉRIE C -->
+                        <div id="tabela-serie-c" class="classification-table">
+                            <div class="serie-c-container">
+                                <div class="serie-c-phase">
+                                    <h4>SEGUNDA FASE</h4>
+                                </div>
+                                
+                                <!-- GRUPO B -->
+                                <div class="grupo-container">
+                                    <h5>GRUPO B</h5>
+                                    <div class="grupo-table">
+                                        <div class="table-header-grupo">
+                                            <span>CLASSIFICAÇÃO</span>
+                                        </div>
+                                        <div class="grupo-table-content">
+                                            <div class="grupo-row header">
+                                                <span class="pos">P</span>
+                                                <span class="jogos">J</span>
+                                                <span class="vitorias">V</span>
+                                                <span class="empates">E</span>
+                                                <span class="derrotas">D</span>
+                                                <span class="gols-pro">GP</span>
+                                                <span class="gols-contra">GC</span>
+                                                <span class="saldo">SG</span>
+                                                <span class="percentual">%</span>
+                                                <span class="ultimos">ÚLT. JOGOS</span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">1</span>
+                                                <span class="time">Londrina</span>
+                                                <span class="pontos">9</span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">2</span>
+                                                <span class="empates">3</span>
+                                                <span class="derrotas">0</span>
+                                                <span class="gols-pro">5</span>
+                                                <span class="gols-contra">3</span>
+                                                <span class="saldo">2</span>
+                                                <span class="percentual">60%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot vitoria"></span>
+                                                </span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">2</span>
+                                                <span class="time">São Bernardo</span>
+                                                <span class="pontos">6 <span class="arrow-up">↗</span></span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">1</span>
+                                                <span class="empates">3</span>
+                                                <span class="derrotas">1</span>
+                                                <span class="gols-pro">3</span>
+                                                <span class="gols-contra">3</span>
+                                                <span class="saldo">0</span>
+                                                <span class="percentual">40%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">3</span>
+                                                <span class="time">Floresta</span>
+                                                <span class="pontos">6 <span class="arrow-down">↘</span></span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">1</span>
+                                                <span class="empates">3</span>
+                                                <span class="derrotas">1</span>
+                                                <span class="gols-pro">1</span>
+                                                <span class="gols-contra">1</span>
+                                                <span class="saldo">0</span>
+                                                <span class="percentual">40%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">4</span>
+                                                <span class="time">Caxias</span>
+                                                <span class="pontos">3</span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">0</span>
+                                                <span class="empates">3</span>
+                                                <span class="derrotas">2</span>
+                                                <span class="gols-pro">1</span>
+                                                <span class="gols-contra">3</span>
+                                                <span class="saldo">-2</span>
+                                                <span class="percentual">20%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- GRUPO C -->
+                                <div class="grupo-container">
+                                    <h5>GRUPO C</h5>
+                                    <div class="grupo-table">
+                                        <div class="table-header-grupo">
+                                            <span>CLASSIFICAÇÃO</span>
+                                        </div>
+                                        <div class="grupo-table-content">
+                                            <div class="grupo-row header">
+                                                <span class="pos">P</span>
+                                                <span class="jogos">J</span>
+                                                <span class="vitorias">V</span>
+                                                <span class="empates">E</span>
+                                                <span class="derrotas">D</span>
+                                                <span class="gols-pro">GP</span>
+                                                <span class="gols-contra">GC</span>
+                                                <span class="saldo">SG</span>
+                                                <span class="percentual">%</span>
+                                                <span class="ultimos">ÚLT. JOGOS</span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">1</span>
+                                                <span class="time">Ponte Preta</span>
+                                                <span class="pontos">10</span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">3</span>
+                                                <span class="empates">1</span>
+                                                <span class="derrotas">1</span>
+                                                <span class="gols-pro">5</span>
+                                                <span class="gols-contra">3</span>
+                                                <span class="saldo">2</span>
+                                                <span class="percentual">66%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">2</span>
+                                                <span class="time">Guarani</span>
+                                                <span class="pontos">7</span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">2</span>
+                                                <span class="empates">1</span>
+                                                <span class="derrotas">2</span>
+                                                <span class="gols-pro">6</span>
+                                                <span class="gols-contra">5</span>
+                                                <span class="saldo">1</span>
+                                                <span class="percentual">46%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">3</span>
+                                                <span class="time">Brusque</span>
+                                                <span class="pontos">6 <span class="arrow-up">↗</span></span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">2</span>
+                                                <span class="empates">0</span>
+                                                <span class="derrotas">3</span>
+                                                <span class="gols-pro">5</span>
+                                                <span class="gols-contra">6</span>
+                                                <span class="saldo">-1</span>
+                                                <span class="percentual">40%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                            <div class="grupo-row">
+                                                <span class="pos">4</span>
+                                                <span class="time">Náutico</span>
+                                                <span class="pontos">5 <span class="arrow-down">↘</span></span>
+                                                <span class="jogos">5</span>
+                                                <span class="vitorias">1</span>
+                                                <span class="empates">2</span>
+                                                <span class="derrotas">2</span>
+                                                <span class="gols-pro">3</span>
+                                                <span class="gols-contra">5</span>
+                                                <span class="saldo">-2</span>
+                                                <span class="percentual">33%</span>
+                                                <span class="ultimos">
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot vitoria"></span>
+                                                    <span class="resultado-dot empate"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                    <span class="resultado-dot derrota"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1870,7 +2091,8 @@ Equilíbrio
                     // Atualizar título
                     const titles = {
                         'serie-a': 'Brasileirão Série A - Classificação',
-                        'serie-b': 'Brasileirão Série B - Classificação'
+                        'serie-b': 'Brasileirão Série B - Classificação',
+                        'serie-c': 'Brasileirão Série C - Segunda Fase'
                     };
                     
                     if (titleElement && titles[championship]) {

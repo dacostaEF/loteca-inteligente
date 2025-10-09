@@ -3957,4 +3957,186 @@
             margin: 0 0.5rem;
         }
 
+        /* ESTILOS SÉRIE C - GRUPOS */
+        .serie-c-container {
+            width: 100%;
+        }
+
+        .serie-c-phase {
+            text-align: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .serie-c-phase h4 {
+            color: var(--cor-destaque-primaria);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .grupo-container {
+            background-color: var(--cor-fundo);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .grupo-container h5 {
+            color: var(--cor-destaque-secundaria);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table-header-grupo {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 227, 140, 0.1));
+            padding: 0.8rem;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+            font-weight: 700;
+            color: var(--cor-texto-principal);
+            font-size: 1.1rem;
+        }
+
+        .grupo-table-content {
+            background-color: var(--cor-fundo-card);
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        .grupo-row {
+            display: grid;
+            grid-template-columns: 30px 150px 40px 30px 30px 30px 30px 40px 40px 40px 50px 120px;
+            gap: 0.5rem;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--cor-borda);
+            align-items: center;
+        }
+
+        .grupo-row.header {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(0, 227, 140, 0.05));
+            font-weight: 700;
+            color: var(--cor-texto-secundario);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .grupo-row:last-child {
+            border-bottom: none;
+        }
+
+        .grupo-row .pos {
+            text-align: center;
+            font-weight: 700;
+            color: var(--cor-destaque-primaria);
+        }
+
+        .grupo-row .time {
+            font-weight: 600;
+            color: var(--cor-texto-principal);
+        }
+
+        .grupo-row .pontos {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--cor-destaque-secundaria);
+        }
+
+        .grupo-row .jogos,
+        .grupo-row .vitorias,
+        .grupo-row .empates,
+        .grupo-row .derrotas,
+        .grupo-row .gols-pro,
+        .grupo-row .gols-contra,
+        .grupo-row .saldo,
+        .grupo-row .percentual {
+            text-align: center;
+            color: var(--cor-texto-secundario);
+        }
+
+        .grupo-row .ultimos {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .resultado-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .resultado-dot.vitoria {
+            background-color: #00E38C;
+        }
+
+        .resultado-dot.empate {
+            background-color: #FBBF24;
+        }
+
+        .resultado-dot.derrota {
+            background-color: #F43F5E;
+        }
+
+        .arrow-up {
+            color: #00E38C;
+            font-size: 1rem;
+            margin-left: 0.25rem;
+        }
+
+        .arrow-down {
+            color: #F43F5E;
+            font-size: 1rem;
+            margin-left: 0.25rem;
+        }
+
+        /* Responsividade Série C */
+        @media (max-width: 1024px) {
+            .grupo-row {
+                grid-template-columns: 25px 120px 35px 25px 25px 25px 25px 35px 35px 35px 45px 100px;
+                gap: 0.3rem;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .resultado-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grupo-row {
+                grid-template-columns: 20px 100px 30px 20px 20px 20px 20px 30px 30px 30px 40px 80px;
+                gap: 0.2rem;
+                padding: 0.5rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .grupo-container {
+                padding: 1rem;
+            }
+
+            .resultado-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .serie-c-phase h4 {
+                font-size: 1.2rem;
+            }
+
+            .grupo-container h5 {
+                font-size: 1.1rem;
+            }
+        }
+
     
