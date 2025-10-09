@@ -1646,29 +1646,6 @@
             </button>
         </div>
 
-        <!-- Estatísticas -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fas fa-users icon" style="color: #3498db;"></i>
-                <div class="number" id="totalClubes">-</div>
-                <div class="label">Total de Clubes</div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-trophy icon" style="color: #f39c12;"></i>
-                <div class="number" id="serieAClubes">-</div>
-                <div class="label">Série A</div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-medal icon" style="color: #e67e22;"></i>
-                <div class="number" id="serieBClubes">-</div>
-                <div class="label">Série B</div>
-            </div>
-            <div class="stat-card">
-                <i class="fas fa-clock icon" style="color: #00E38C;"></i>
-                <div class="number" id="ultimaSync">-</div>
-                <div class="label">Última Sincronização</div>
-            </div>
-        </div>
         
         <!-- Botão Debug removido - função desnecessária -->
 
@@ -1780,31 +1757,10 @@
 
         <!-- === ABA JOGOS LOTECA === -->
         <div class="tab-content active" id="jogos-loteca">
-            <h2 style="margin-bottom: 25px; color: #333;">
+            <h2 style="margin-bottom: 25px; color: var(--cor-destaque-primaria); display: flex; align-items: center; gap: 15px; font-weight: 800;">
                 <i class="fas fa-gamepad"></i> Gestão de Jogos Loteca
             </h2>
             
-            <!-- SELEÇÃO DE CONCURSO -->
-            <div class="form-row" style="margin-bottom: 20px; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
-                <div class="form-group" style="flex: 2; margin-right: 15px;">
-                    <label><i class="fas fa-list"></i> Selecionar Concurso:</label>
-                    <select id="concursoSelect" class="form-control" onchange="carregarConcursoSelecionado()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: 2px solid #4c51bf; padding: 10px; border-radius: 8px; font-weight: bold;">
-                        <option value="">🔄 Carregando concursos...</option>
-                    </select>
-                </div>
-                <div class="form-group" style="flex: 1; margin-right: 15px;">
-                    <label>&nbsp;</label>
-                    <button class="btn-primary" onclick="criarNovoConcurso()" style="width: 100%; padding: 10px;">
-                        <i class="fas fa-plus"></i> Novo Concurso
-                    </button>
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>&nbsp;</label>
-                    <button class="btn-success" onclick="salvarJogosLoteca()" style="width: 100%; padding: 10px;">
-                        <i class="fas fa-save"></i> Salvar Concurso
-                    </button>
-                </div>
-            </div>
 
             <!-- INFORMAÇÕES DO CONCURSO -->
             <div class="form-row" style="margin-bottom: 30px;">
@@ -1813,12 +1769,18 @@
                     <input type="number" id="numeroConcurso" class="form-control" placeholder="1213" value="1213">
                 </div>
                 <div class="form-group" style="flex: 2; margin-right: 15px;">
-                    <label>Data do Sorteio:</label>
-                    <input type="date" id="dataSorteio" class="form-control" value="2025-09-27">
-                </div>
-                <div class="form-group" style="flex: 2;">
                     <label>Período de Apostas:</label>
                     <input type="text" id="periodoApostas" class="form-control" placeholder="24/09/2025 até 15h do dia 27/09/2025" value="24/09/2025 até 15h do dia 27/09/2025">
+                </div>
+                <div class="form-group" style="flex: 2; margin-right: 15px;">
+                    <label>Realização dos Jogos:</label>
+                    <input type="text" id="realizacaoJogos" class="form-control" placeholder="27/09/2025 a 28/09/2025" value="27/09/2025 a 28/09/2025">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>&nbsp;</label>
+                    <button class="btn-primary" onclick="atualizarInformacoesConcurso()" style="width: 100%; padding: 10px; background: var(--cor-destaque-primaria); border: none; color: white; border-radius: 8px; font-weight: bold;">
+                        <i class="fas fa-sync"></i> Atualizar
+                    </button>
                 </div>
             </div>
 
@@ -1826,7 +1788,7 @@
             <div class="loteca-volante" style="background: white; border: 2px solid #0066cc; border-radius: 10px; padding: 20px; margin-bottom: 30px;">
                 <div class="volante-header" style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #0066cc;">
                     <h3 style="color: #0066cc; margin: 0; font-weight: bold;">
-                        Concurso <span id="displayConcurso">1213</span> (<span id="displayData">27/09/2025, Sábado</span>)
+                        Concurso <span id="displayConcurso">1213</span>
                     </h3>
                     <p style="color: #666; margin: 5px 0 0 0; font-size: 14px;">
                         Período de apostas: <span id="displayPeriodo">24/09/2025 até as 15h do dia 27/09/2025</span>
@@ -5734,6 +5696,7 @@
                 console.log('🎮 [LOTECA] Iniciando carregamento da aba Jogos Loteca...');
                 carregarListaConcursos();
                 carregarUltimoConcurso();
+                carregarInformacoesConcursoSalvas();
             }, 1500);
             
             // Configurar listener para mudança de campeonato na aba Classificação
@@ -5859,6 +5822,104 @@
             if (jogo) {
                 jogo[campo] = valor;
                 console.log(`✅ [LOTECA] Jogo ${id} atualizado`);
+            }
+        }
+
+        // === FUNÇÃO PARA CARREGAR INFORMAÇÕES SALVAS DO CONCURSO ===
+        function carregarInformacoesConcursoSalvas() {
+            try {
+                console.log('📂 [LOTECA] Carregando informações salvas do concurso...');
+                
+                const infoSalva = localStorage.getItem('infoConcursoAtual');
+                if (infoSalva) {
+                    const info = JSON.parse(infoSalva);
+                    
+                    // Preencher campos
+                    const numeroConcurso = document.getElementById('numeroConcurso');
+                    const periodoApostas = document.getElementById('periodoApostas');
+                    const realizacaoJogos = document.getElementById('realizacaoJogos');
+                    
+                    if (numeroConcurso) numeroConcurso.value = info.numero || '1213';
+                    if (periodoApostas) periodoApostas.value = info.periodoApostas || '24/09/2025 até 15h do dia 27/09/2025';
+                    if (realizacaoJogos) realizacaoJogos.value = info.realizacaoJogos || '27/09/2025 a 28/09/2025';
+                    
+                    // Atualizar display
+                    const displayConcurso = document.getElementById('displayConcurso');
+                    const displayPeriodo = document.getElementById('displayPeriodo');
+                    const displayRealizacao = document.getElementById('displayRealizacao');
+                    
+                    if (displayConcurso) displayConcurso.textContent = info.numero || '1213';
+                    if (displayPeriodo) displayPeriodo.textContent = info.periodoApostas || '24/09/2025 até 15h do dia 27/09/2025';
+                    if (displayRealizacao) displayRealizacao.textContent = info.realizacaoJogos || '27/09/2025 a 28/09/2025';
+                    
+                    console.log('✅ [LOTECA] Informações do concurso carregadas:', info);
+                } else {
+                    console.log('ℹ️ [LOTECA] Nenhuma informação salva encontrada, usando valores padrão');
+                }
+            } catch (error) {
+                console.error('❌ [LOTECA] Erro ao carregar informações salvas:', error);
+            }
+        }
+
+        // === FUNÇÃO PARA ATUALIZAR INFORMAÇÕES DO CONCURSO ===
+        async function atualizarInformacoesConcurso() {
+            try {
+                console.log('🔄 [LOTECA] Atualizando informações do concurso...');
+                
+                const numeroConcurso = document.getElementById('numeroConcurso').value;
+                const periodoApostas = document.getElementById('periodoApostas').value;
+                const realizacaoJogos = document.getElementById('realizacaoJogos').value;
+
+                if (!numeroConcurso) {
+                    mostrarNotificacao('❌ Número do concurso é obrigatório!', 'error');
+                    return;
+                }
+
+                if (!periodoApostas) {
+                    mostrarNotificacao('❌ Período de apostas é obrigatório!', 'error');
+                    return;
+                }
+
+                if (!realizacaoJogos) {
+                    mostrarNotificacao('❌ Realização dos jogos é obrigatória!', 'error');
+                    return;
+                }
+
+                // Atualizar display do volante
+                const displayConcurso = document.getElementById('displayConcurso');
+                const displayPeriodo = document.getElementById('displayPeriodo');
+                const displayRealizacao = document.getElementById('displayRealizacao');
+
+                if (displayConcurso) {
+                    displayConcurso.textContent = numeroConcurso;
+                }
+
+                if (displayPeriodo) {
+                    displayPeriodo.textContent = periodoApostas;
+                }
+
+                if (displayRealizacao) {
+                    displayRealizacao.textContent = realizacaoJogos;
+                }
+
+                // Salvar no localStorage para persistência
+                const infoConcurso = {
+                    numero: numeroConcurso,
+                    periodoApostas: periodoApostas,
+                    realizacaoJogos: realizacaoJogos,
+                    timestamp: new Date().toISOString()
+                };
+
+                localStorage.setItem('infoConcursoAtual', JSON.stringify(infoConcurso));
+
+                // Mostrar sucesso
+                mostrarNotificacao(`✅ Informações do Concurso ${numeroConcurso} atualizadas com sucesso!`, 'success');
+
+                console.log('✅ [LOTECA] Informações do concurso atualizadas:', infoConcurso);
+
+            } catch (error) {
+                console.error('❌ [LOTECA] Erro ao atualizar informações:', error);
+                mostrarNotificacao('❌ Erro ao atualizar informações do concurso!', 'error');
             }
         }
 
