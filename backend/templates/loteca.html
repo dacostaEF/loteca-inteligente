@@ -63,17 +63,17 @@
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 1:</span>
                     <div class="time-info">
-                        <img src="/static/escudos/COR_Corinthians/Corinthians.png" 
-                             alt="Corinthians" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span>CORINTHIANS</span>
+                        <img id="escudo-casa-jogo1" src="/static/escudos/COR_Corinthians/Corinthians.png" 
+                             alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span id="time-casa-nome-jogo1">CORINTHIANS</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img src="/static/escudos/FLA_Flamengo/Flamengo.png" 
-                             alt="Flamengo" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span>FLAMENGO</span>
+                        <img id="escudo-fora-jogo1" src="/static/escudos/FLA_Flamengo/Flamengo.png" 
+                             alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span id="time-fora-nome-jogo1">FLAMENGO</span>
                     </div>
                 </div>
                 
@@ -5348,8 +5348,8 @@ Equilíbrio
         // MAPEAMENTO DE TIMES PARA DIRETÓRIOS DE ESCUDOS
 
         // FUNÇÃO PARA CARREGAR ÚLTIMOS CONFRONTOS DO JOGO 1
-        function carregarUltimosConfrontosJogo1() {
-            console.log('🎯 [CONFRONTOS-JOGO1] Carregando últimos confrontos Corinthians vs Flamengo...');
+        async function carregarUltimosConfrontosJogo1() {
+            console.log('🎯 [CONFRONTOS-JOGO1] Carregando últimos confrontos...');
             
             const container = document.getElementById('confrontos-principais');
             
@@ -5358,35 +5358,86 @@ Equilíbrio
                 return;
             }
             
-            // DADOS REAIS: Corinthians vs Flamengo - confrontos históricos (do arquivo CSV)
-            // Campo 'resultado' representa o resultado do Corinthians (V=Vitória Corinthians, D=Derrota Corinthians, E=Empate)
-            const confrontos = [
-                { data: '2025-09-28', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-2', resultado: 'D' }, // Flamengo venceu
-                { data: '2025-04-27', mandante: 'Flamengo', visitante: 'Corinthians', placar: '4-0', resultado: 'D' }, // Flamengo venceu
-                { data: '2024-10-20', mandante: 'Corinthians', visitante: 'Flamengo', placar: '0-0', resultado: 'E' }, // Empate
-                { data: '2024-10-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado: 'D' }, // Flamengo venceu
-                { data: '2024-09-01', mandante: 'Corinthians', visitante: 'Flamengo', placar: '2-1', resultado: 'V' }, // Corinthians venceu
-                { data: '2024-05-11', mandante: 'Flamengo', visitante: 'Corinthians', placar: '2-0', resultado: 'D' }, // Flamengo venceu
-                { data: '2023-10-07', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-1', resultado: 'E' }, // Empate
-                { data: '2023-05-21', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado: 'D' }, // Flamengo venceu
-                { data: '2022-11-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-2', resultado: 'V' }, // Corinthians venceu
+            // DADOS PADRÃO (fallback)
+            let confrontos = [
+                { data: '2025-09-28', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-2', resultado: 'D' },
+                { data: '2025-04-27', mandante: 'Flamengo', visitante: 'Corinthians', placar: '4-0', resultado: 'D' },
+                { data: '2024-10-20', mandante: 'Corinthians', visitante: 'Flamengo', placar: '0-0', resultado: 'E' },
+                { data: '2024-10-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado: 'D' },
+                { data: '2024-09-01', mandante: 'Corinthians', visitante: 'Flamengo', placar: '2-1', resultado: 'V' },
+                { data: '2024-05-11', mandante: 'Flamengo', visitante: 'Corinthians', placar: '2-0', resultado: 'D' },
+                { data: '2023-10-07', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-1', resultado: 'E' },
+                { data: '2023-05-21', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado: 'D' },
+                { data: '2022-11-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-2', resultado: 'V' },
                 { data: '2022-10-19', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-1 (6-5 Pen.)', resultado: 'E' } // Empate
             ];
             
+            // TENTAR CARREGAR DADOS DA CENTRAL ADMIN
+            try {
+                console.log('🔄 [CONFRONTOS-JOGO1] Buscando dados da Central Admin...');
+                const jogoResponse = await fetch('/api/analise/jogo/1');
+                
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados) {
+                        console.log('✅ [CONFRONTOS-JOGO1] Dados carregados da Central Admin:', jogoData.dados);
+                        
+                        // USAR DADOS DA CENTRAL ADMIN (se disponível)
+                        if (jogoData.dados.confrontos_sequence) {
+                            // Converter sequência em dados de confrontos
+                            const sequencia = jogoData.dados.confrontos_sequence.split('-');
+                            confrontos = sequencia.map((resultado, index) => ({
+                                data: `2025-${String(12-index).padStart(2, '0')}-${String(15-index).padStart(2, '0')}`,
+                                mandante: jogoData.dados.time_casa || 'Time Casa',
+                                visitante: jogoData.dados.time_fora || 'Time Fora',
+                                placar: resultado === 'V' ? '2-1' : resultado === 'D' ? '1-2' : '1-1',
+                                resultado: resultado
+                            }));
+                            
+                            console.log('🎯 [CONFRONTOS-JOGO1] Usando dados da Central Admin!');
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ [CONFRONTOS-JOGO1] Usando dados padrão (fallback):', error);
+            }
+            
             // Pegar os últimos 10 confrontos
             const ultimos10 = confrontos.slice(0, 10);
+            
+            // Buscar escudos da Central Admin uma única vez
+            let escudoCasa = '/static/escudos/COR_Corinthians/Corinthians.png';
+            let escudoFora = '/static/escudos/FLA_Flamengo/Flamengo.png';
+            
+            try {
+                const jogoResponse = await fetch('/api/analise/jogo/1');
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados) {
+                        escudoCasa = jogoData.dados.escudo_casa || escudoCasa;
+                        escudoFora = jogoData.dados.escudo_fora || escudoFora;
+                        console.log('🖼️ [CONFRONTOS] Escudos da Central Admin:', escudoCasa, escudoFora);
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ [CONFRONTOS] Usando escudos padrão:', error);
+            }
             
             // Renderizar bolinhas em uma única linha com data (igual ao Jogo 2)
             const bolinhasHtml = ultimos10.map(confronto => {
                 const resultado = confronto.resultado.toUpperCase();
                 let classe, conteudo;
                 
+                // USAR DADOS DINÂMICOS DOS TIMES COM ESCUDOS DA CENTRAL ADMIN
+                const timeCasa = confronto.mandante || 'Corinthians';
+                const timeFora = confronto.visitante || 'Flamengo';
+                
                 if (resultado === 'V') {
-                    classe = 'corinthians';
-                    conteudo = '<img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" class="confronto-escudo" onerror="this.outerHTML=\'COR\'">';
+                    classe = 'time-casa';
+                    conteudo = `<img src="${escudoCasa}" alt="${timeCasa}" class="confronto-escudo" onerror="this.outerHTML='${timeCasa.substring(0,3).toUpperCase()}'">`;
                 } else if (resultado === 'D') {
-                    classe = 'flamengo';
-                    conteudo = '<img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" class="confronto-escudo" onerror="this.outerHTML=\'FLA\'">';
+                    classe = 'time-fora';
+                    conteudo = `<img src="${escudoFora}" alt="${timeFora}" class="confronto-escudo" onerror="this.outerHTML='${timeFora.substring(0,3).toUpperCase()}'">`;
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -5413,11 +5464,11 @@ Equilíbrio
             console.log(`✅ [CONFRONTOS-JOGO1] ${ultimos10.length} bolinhas renderizadas na tabela (linha única)`);
             
             // CRIAR GRÁFICO DE BARRAS COM OS MESMOS DADOS
-            criarGraficoConfrontosJogo1(ultimos10);
+            await criarGraficoConfrontosJogo1(ultimos10);
         }
         
         // CRIAR GRÁFICO DE BARRAS PARA JOGO 1 (CORINTHIANS VS FLAMENGO)
-        function criarGraficoConfrontosJogo1(confrontos) {
+        async function criarGraficoConfrontosJogo1(confrontos) {
             console.log('📊 [GRAFICO-JOGO1] Criando gráfico de barras para Corinthians vs Flamengo...', confrontos);
             
             const canvas = document.getElementById('grafico-confrontos-jogo1');
@@ -5533,11 +5584,26 @@ Equilíbrio
                 ctx.fillText(dado.placar, dataX, placarY);
             });
             
-            // Adicionar título
+            // Adicionar título dinâmico
             ctx.fillStyle = '#333';
             ctx.font = 'bold 14px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Confrontos Históricos - Corinthians vs Flamengo', width / 2, 25);
+            
+            // Buscar nomes dos times dinamicamente
+            let tituloTimes = 'Corinthians vs Flamengo';
+            try {
+                const jogoResponse = await fetch('/api/analise/jogo/1');
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados) {
+                        tituloTimes = `${jogoData.dados.time_casa || 'Time Casa'} vs ${jogoData.dados.time_fora || 'Time Fora'}`;
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ [GRAFICO] Usando título padrão:', error);
+            }
+            
+            ctx.fillText(`Confrontos Históricos - ${tituloTimes}`, width / 2, 25);
             
             // Adicionar labels dos eixos
             ctx.fillStyle = '#666';
@@ -5549,24 +5615,57 @@ Equilíbrio
             ctx.fillText('Vitórias', 0, 0);
             ctx.restore();
             
-            // Adicionar labels dos times - MAIS PRÓXIMOS DOS LIMITES DO EIXO Y
+            // Adicionar labels dos times dinâmicos - MAIS PRÓXIMOS DOS LIMITES DO EIXO Y
             ctx.fillStyle = '#000';
             ctx.font = 'bold 12px Arial';
             ctx.textAlign = 'right';
-            ctx.fillText('Corinthians', margin.left - 10, margin.top + 20); // Próximo ao topo
+            
+            // Buscar nomes dos times dinamicamente
+            let nomeTimeCasa = 'Corinthians';
+            let nomeTimeFora = 'Flamengo';
+            try {
+                const jogoResponse = await fetch('/api/analise/jogo/1');
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados) {
+                        nomeTimeCasa = jogoData.dados.time_casa || 'Time Casa';
+                        nomeTimeFora = jogoData.dados.time_fora || 'Time Fora';
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ [GRAFICO] Usando nomes padrão:', error);
+            }
+            
+            ctx.fillText(nomeTimeCasa, margin.left - 10, margin.top + 20); // Próximo ao topo
             
             ctx.fillStyle = '#dc3545';
-            ctx.fillText('Flamengo', margin.left - 10, margin.top + chartHeight - 10); // Próximo ao fundo
+            ctx.fillText(nomeTimeFora, margin.left - 10, margin.top + chartHeight - 10); // Próximo ao fundo
             
             console.log(`✅ [GRAFICO-JOGO1] Gráfico criado com ${dadosGrafico.length} confrontos`);
         }
 
         // CARREGAR E RENDERIZAR BOLINHAS DOS CONFRONTOS
         async function carregarConfrontosBolinhas() {
-            console.log('🔴 [CONFRONTOS] Carregando bolinhas dos confrontos Corinthians vs Flamengo...');
+            console.log('🔴 [CONFRONTOS] Carregando bolinhas dos confrontos...');
             
             try {
-                const response = await fetch('/api/br/loteca/confronto-modal/CORINTHIANS/FLAMENGO');
+                // PRIMEIRO: Buscar dados do jogo 1 da Central Admin
+                const jogoResponse = await fetch('/api/analise/jogo/1');
+                let timeCasa = 'CORINTHIANS';
+                let timeFora = 'FLAMENGO';
+                
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados) {
+                        timeCasa = jogoData.dados.time_casa || 'CORINTHIANS';
+                        timeFora = jogoData.dados.time_fora || 'FLAMENGO';
+                        console.log(`✅ [CONFRONTOS] Usando times da Central Admin: ${timeCasa} vs ${timeFora}`);
+                    }
+                }
+                
+                console.log(`🔴 [CONFRONTOS] Carregando bolinhas dos confrontos ${timeCasa} vs ${timeFora}...`);
+                
+                const response = await fetch(`/api/br/loteca/confronto-modal/${encodeURIComponent(timeCasa)}/${encodeURIComponent(timeFora)}`);
                 const data = await response.json();
                 
                 let confrontos = [];
@@ -9709,31 +9808,106 @@ Equilíbrio
         }
 
         // FUNÇÃO PARA CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 1
-        function carregarDadosReaisDiretos() {
+        async function carregarDadosReaisDiretos() {
             console.log('🎯 [LOTECA] Carregando dados reais DIRETOS do dashboard...');
             
-            // DADOS REAIS OBTIDOS DO DASHBOARD ADMIN (testados e funcionando)
-            const dadosReais = {
+            // DADOS PADRÃO (fallback)
+            let dadosReais = {
                 corinthians: {
                     nome: 'SC Corinthians',
-                    forma_recente: 'D-V-E-V-D',  // Dados reais do dashboard
-                    aproveitamento_casa: '48%',   // Dados reais do dashboard
-                    pontos_ultimos_5: 7          // Estimativa baseada na forma
+                    forma_recente: 'D-V-E-V-D',
+                    aproveitamento_casa: '48%',
+                    pontos_ultimos_5: 7
                 },
                 flamengo: {
                     nome: 'CR Flamengo', 
-                    forma_recente: 'V-V-E-V-E',  // Dados reais do dashboard
-                    aproveitamento_fora: '67%',   // Dados reais do dashboard
-                    pontos_ultimos_5: 11         // Estimativa baseada na forma
+                    forma_recente: 'V-V-E-V-E',
+                    aproveitamento_fora: '67%',
+                    pontos_ultimos_5: 11
                 }
             };
+            
+            // TENTAR CARREGAR DADOS DA CENTRAL ADMIN
+            try {
+                console.log('🔄 [LOTECA] Buscando dados da Central Admin...');
+                const response = await fetch('/api/analise/jogo/1');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.dados) {
+                        console.log('✅ [LOTECA] Dados carregados da Central Admin:', data.dados);
+                        
+                        // USAR DADOS DA CENTRAL ADMIN
+                        dadosReais = {
+                            corinthians: {
+                                nome: data.dados.time_casa || 'SC Corinthians',
+                                forma_recente: data.dados.confrontos_sequence || 'D-V-E-V-D',
+                                aproveitamento_casa: data.dados.fator_casa || '48%',
+                                pontos_ultimos_5: 7
+                            },
+                            flamengo: {
+                                nome: data.dados.time_fora || 'CR Flamengo',
+                                forma_recente: data.dados.confrontos_sequence || 'V-V-E-V-E',
+                                aproveitamento_fora: data.dados.fator_fora || '67%',
+                                pontos_ultimos_5: 11
+                            }
+                        };
+                        
+                        console.log('🎯 [LOTECA] Usando dados da Central Admin!');
+                    }
+                }
+            } catch (error) {
+                console.log('⚠️ [LOTECA] Usando dados padrão (fallback):', error);
+            }
             
             // Atualizar nomes dos times
             const timeCasaNome = document.getElementById('time-casa-nome');
             const timeForaNome = document.getElementById('time-fora-nome');
+            const timeCasaNomeJogo1 = document.getElementById('time-casa-nome-jogo1');
+            const timeForaNomeJogo1 = document.getElementById('time-fora-nome-jogo1');
             
             if (timeCasaNome) timeCasaNome.textContent = dadosReais.corinthians.nome;
             if (timeForaNome) timeForaNome.textContent = dadosReais.flamengo.nome;
+            if (timeCasaNomeJogo1) timeCasaNomeJogo1.textContent = dadosReais.corinthians.nome;
+            if (timeForaNomeJogo1) timeForaNomeJogo1.textContent = dadosReais.flamengo.nome;
+            
+            // Atualizar escudos do cabeçalho do JOGO 1
+            const escudoCasaJogo1 = document.getElementById('escudo-casa-jogo1');
+            const escudoForaJogo1 = document.getElementById('escudo-fora-jogo1');
+            
+            if (escudoCasaJogo1) {
+                // Buscar escudo da Central Admin se disponível
+                try {
+                    const response = await fetch('/api/analise/jogo/1');
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success && data.dados && data.dados.escudo_casa) {
+                            escudoCasaJogo1.src = data.dados.escudo_casa;
+                            escudoCasaJogo1.alt = dadosReais.corinthians.nome;
+                            console.log('🖼️ [JOGO1] Escudo casa atualizado:', data.dados.escudo_casa);
+                        }
+                    }
+                } catch (error) {
+                    console.log('⚠️ [JOGO1] Usando escudo padrão casa:', error);
+                }
+            }
+            
+            if (escudoForaJogo1) {
+                // Buscar escudo da Central Admin se disponível
+                try {
+                    const response = await fetch('/api/analise/jogo/1');
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success && data.dados && data.dados.escudo_fora) {
+                            escudoForaJogo1.src = data.dados.escudo_fora;
+                            escudoForaJogo1.alt = dadosReais.flamengo.nome;
+                            console.log('🖼️ [JOGO1] Escudo fora atualizado:', data.dados.escudo_fora);
+                        }
+                    }
+                } catch (error) {
+                    console.log('⚠️ [JOGO1] Usando escudo padrão fora:', error);
+                }
+            }
             
             // Atualizar forma recente
             const formaCasa = document.getElementById('forma-casa');

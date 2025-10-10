@@ -1339,5 +1339,414 @@ def salvar_csv_jogos():
             'message': f'Erro ao salvar CSV: {str(e)}'
         }), 500
 
+@bp_admin.route('/api/admin/analise/salvar', methods=['POST'])
+@cross_origin()
+def salvar_analise_jogo():
+    """Salvar análise de jogo na estrutura por concurso"""
+    try:
+        data = request.get_json()
+        
+        # Extrair informações do jogo
+        jogo_numero = data.get('metadados', {}).get('jogo_numero', '1')
+        concurso_numero = data.get('metadados', {}).get('concurso_numero', '1215')
+        
+        # NOVA ESTRUTURA: Pasta por concurso
+        pasta_concurso = f'models/concurso_{concurso_numero}'
+        pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
+        nome_arquivo = f'jogo_{jogo_numero}.json'
+        caminho_arquivo = os.path.join(pasta_analise, nome_arquivo)
+        
+        # Garantir que as pastas existem
+        os.makedirs(pasta_analise, exist_ok=True)
+        
+        # Salvar arquivo JSON
+        with open(caminho_arquivo, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"✅ [API] Análise do jogo {jogo_numero} do concurso {concurso_numero} salva: {caminho_arquivo}")
+        
+        return jsonify({
+            'success': True,
+            'arquivo': caminho_arquivo,
+            'mensagem': f'Análise salva em {nome_arquivo}'
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ [API] Erro ao salvar análise: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/analise/carregar', methods=['POST'])
+@cross_origin()
+def carregar_analise_jogo():
+    """Carregar análise de jogo da estrutura por concurso"""
+    try:
+        data = request.get_json()
+        jogo_numero = data.get('jogo_numero')
+        concurso_numero = data.get('concurso_numero', '1215')
+        
+        if not jogo_numero:
+            return jsonify({
+                'success': False,
+                'error': 'Número do jogo é obrigatório'
+            }), 400
+        
+        # NOVA ESTRUTURA: Pasta por concurso
+        pasta_concurso = f'models/concurso_{concurso_numero}'
+        pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
+        nome_arquivo = f'jogo_{jogo_numero}.json'
+        caminho_arquivo = os.path.join(pasta_analise, nome_arquivo)
+        
+        # Verificar se arquivo existe
+        if not os.path.exists(caminho_arquivo):
+            return jsonify({
+                'success': False,
+                'error': f'Arquivo do jogo {jogo_numero} do concurso {concurso_numero} não encontrado'
+            }), 404
+        
+        # Carregar arquivo JSON
+        with open(caminho_arquivo, 'r', encoding='utf-8') as f:
+            dados_analise = json.load(f)
+        
+        logger.info(f"✅ [API] Análise do jogo {jogo_numero} do concurso {concurso_numero} carregada: {caminho_arquivo}")
+        
+        return jsonify({
+            'success': True,
+            'dados': dados_analise,
+            'arquivo': caminho_arquivo
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ [API] Erro ao carregar análise: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/confrontos/lista', methods=['GET'])
+@cross_origin()
+def listar_arquivos_confrontos():
+    """Listar todos os arquivos CSV de confrontos"""
+    try:
+        # Caminho da pasta de confrontos
+        pasta_confrontos = 'models/Confrontos'
+        
+        # Verificar se pasta existe
+        if not os.path.exists(pasta_confrontos):
+            return jsonify({
+                'success': True,
+                'arquivos': []
+            })
+        
+        # Listar arquivos CSV
+        arquivos = []
+        for arquivo in os.listdir(pasta_confrontos):
+            if arquivo.endswith('.csv'):
+                arquivos.append(arquivo)
+        
+        # Ordenar alfabeticamente
+        arquivos.sort()
+        
+        logger.info(f"✅ [API] {len(arquivos)} arquivos CSV encontrados")
+        
+        return jsonify({
+            'success': True,
+            'arquivos': arquivos
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ [API] Erro ao listar arquivos de confrontos: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/confrontos/carregar', methods=['POST'])
+@cross_origin()
+def carregar_arquivo_confrontos():
+    """Carregar arquivo CSV de confrontos"""
+    try:
+        data = request.get_json()
+        nome_arquivo = data.get('nome_arquivo')
+        
+        if not nome_arquivo:
+            return jsonify({
+                'success': False,
+                'error': 'Nome do arquivo é obrigatório'
+            }), 400
+        
+        # Caminho da pasta de confrontos
+        pasta_confrontos = 'models/Confrontos'
+        caminho_arquivo = os.path.join(pasta_confrontos, nome_arquivo)
+        
+        # Verificar se arquivo existe
+        if not os.path.exists(caminho_arquivo):
+            return jsonify({
+                'success': False,
+                'error': f'Arquivo {nome_arquivo} não encontrado'
+            }), 404
+        
+        # Ler arquivo CSV com diferentes encodings
+        confrontos = []
+        encodings = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+        
+        for encoding in encodings:
+            try:
+                logger.info(f"📊 [API] Tentando encoding: {encoding}")
+                with open(caminho_arquivo, 'r', encoding=encoding) as f:
+                    linhas = f.readlines()
+                
+                logger.info(f"📊 [API] Arquivo lido com sucesso usando {encoding}")
+                logger.info(f"📊 [API] Arquivo tem {len(linhas)} linhas")
+                
+                # Pular cabeçalho se existir
+                inicio = 1 if len(linhas) > 0 and 'data' in linhas[0].lower() else 0
+                logger.info(f"📊 [API] Iniciando leitura a partir da linha {inicio + 1}")
+                
+                for i, linha in enumerate(linhas[inicio:], start=inicio + 1):
+                    linha = linha.strip()
+                    if linha:
+                        # Tentar diferentes separadores
+                        partes = []
+                        if ',' in linha:
+                            partes = linha.split(',')
+                        elif ';' in linha:
+                            partes = linha.split(';')
+                        elif '\t' in linha:
+                            partes = linha.split('\t')
+                        else:
+                            # Se não há separador, tentar dividir por espaços
+                            partes = linha.split()
+                        
+                        logger.info(f"📊 [API] Linha {i}: {len(partes)} partes - {partes}")
+                        
+                        if len(partes) >= 7:
+                            # ESTRUTURA CORRETA DO CSV: Data,mandante_nome,Placar,visitante_nome,Campeonato,Campeonato,Resultado
+                            confronto = {
+                                'data': partes[0].strip(),
+                                'mandante_nome': partes[1].strip(),
+                                'placar': partes[2].strip(),
+                                'visitante_nome': partes[3].strip(),
+                                'campeonato': partes[4].strip(),
+                                'resultado': partes[6].strip()  # Coluna 6 = Resultado
+                            }
+                            confrontos.append(confronto)
+                            logger.info(f"✅ [API] Confronto adicionado: {confronto}")
+                        else:
+                            logger.warning(f"⚠️ [API] Linha {i} ignorada (menos de 7 partes): {linha}")
+                
+                # Se chegou até aqui, o encoding funcionou
+                logger.info(f"✅ [API] Arquivo processado com sucesso usando encoding: {encoding}")
+                break
+                
+            except UnicodeDecodeError as e:
+                logger.warning(f"⚠️ [API] Encoding {encoding} falhou: {str(e)}")
+                continue
+            except Exception as e:
+                logger.error(f"❌ [API] Erro ao processar arquivo com {encoding}: {str(e)}")
+                continue
+        else:
+            # Se nenhum encoding funcionou
+            logger.error(f"❌ [API] Nenhum encoding funcionou para o arquivo {nome_arquivo}")
+            return jsonify({
+                'success': False,
+                'error': f'Não foi possível ler o arquivo {nome_arquivo} com nenhum encoding suportado'
+            }), 500
+        
+        logger.info(f"✅ [API] {len(confrontos)} confrontos carregados de {nome_arquivo}")
+        
+        return jsonify({
+            'success': True,
+            'confrontos': confrontos,
+            'arquivo': nome_arquivo
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ [API] Erro ao carregar confrontos: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/admin/analise/sincronizar', methods=['POST'])
+@cross_origin()
+def sincronizar_analise_site():
+    """Sincronizar dados de análise com a página do usuário"""
+    try:
+        data = request.get_json()
+        jogo_numero = data.get('jogo_numero')
+        dados_jogo = data.get('dados')
+        
+        if not jogo_numero or not dados_jogo:
+            return jsonify({
+                'success': False,
+                'error': 'Número do jogo e dados são obrigatórios'
+            }), 400
+        
+        # Salvar dados em arquivo JSON para a página do usuário
+        pasta_analise = 'models/analise_rapida'
+        os.makedirs(pasta_analise, exist_ok=True)
+        
+        arquivo_analise = os.path.join(pasta_analise, f'jogo_{jogo_numero}.json')
+        
+        # Estrutura para a página do usuário
+        dados_sincronizacao = {
+            'metadados': {
+                'jogo_numero': jogo_numero,
+                'sincronizado_em': dados_jogo.get('sincronizado_em'),
+                'versao': '1.0'
+            },
+            'dados_publicos': {
+                'time_casa': dados_jogo.get('time_casa'),
+                'time_fora': dados_jogo.get('time_fora'),
+                'arena': dados_jogo.get('arena'),
+                'campeonato': dados_jogo.get('campeonato'),
+                'dia': dados_jogo.get('dia'),
+                'escudo_casa': dados_jogo.get('escudo_casa'),
+                'escudo_fora': dados_jogo.get('escudo_fora'),
+                'probabilidades': dados_jogo.get('probabilidades'),
+                'recomendacao': dados_jogo.get('recomendacao'),
+                'confrontos_sequence': dados_jogo.get('confrontos_sequence'),
+                'posicao_casa': dados_jogo.get('posicao_casa'),
+                'posicao_fora': dados_jogo.get('posicao_fora'),
+                'confronto_direto': dados_jogo.get('confronto_direto'),
+                'fator_casa': dados_jogo.get('fator_casa'),
+                'fator_fora': dados_jogo.get('fator_fora')
+            }
+        }
+        
+        # Salvar arquivo
+        with open(arquivo_analise, 'w', encoding='utf-8') as f:
+            json.dump(dados_sincronizacao, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"✅ [API] Análise do JOGO {jogo_numero} sincronizada com o site")
+        
+        return jsonify({
+            'success': True,
+            'mensagem': f'JOGO {jogo_numero} sincronizado com sucesso',
+            'arquivo': arquivo_analise,
+            'dados_publicos': dados_sincronizacao['dados_publicos']
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ [API] Erro ao sincronizar análise: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@bp_admin.route('/api/analise/jogo/<int:jogo_numero>', methods=['GET'])
+@cross_origin()
+def obter_dados_analise_jogo(jogo_numero):
+    """Obter dados de análise de um jogo específico para a página do usuário"""
+    try:
+        # NOVA ESTRUTURA: Buscar por concurso
+        # Primeiro, tentar encontrar o arquivo no concurso mais recente
+        pasta_models = 'models'
+        concursos_encontrados = []
+        
+        # Listar todos os concursos disponíveis
+        if os.path.exists(pasta_models):
+            for item in os.listdir(pasta_models):
+                if item.startswith('concurso_') and os.path.isdir(os.path.join(pasta_models, item)):
+                    concursos_encontrados.append(item)
+        
+        # Ordenar concursos por número (mais recente primeiro)
+        concursos_encontrados.sort(key=lambda x: int(x.split('_')[1]), reverse=True)
+        
+        # Tentar encontrar o arquivo do jogo
+        arquivo_analise = None
+        for concurso in concursos_encontrados:
+            pasta_analise = os.path.join(pasta_models, concurso, 'analise_rapida')
+            arquivo_teste = os.path.join(pasta_analise, f'jogo_{jogo_numero}.json')
+            if os.path.exists(arquivo_teste):
+                arquivo_analise = arquivo_teste
+                break
+        
+        if not arquivo_analise:
+            logger.warning(f'Arquivo de análise não encontrado para jogo {jogo_numero}')
+            return jsonify({
+                'success': False,
+                'error': f'Dados do jogo {jogo_numero} não encontrados'
+            }), 404
+        
+        # Ler dados do arquivo
+        with open(arquivo_analise, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+        
+        # NOVA FUNCIONALIDADE: SEGUIR ENDEREÇOS DA PLANILHA
+        dados_publicos = dados.get('dados_publicos', {})
+        
+        # Buscar dados reais seguindo os endereços da planilha
+        dados_enriquecidos = enriquecer_dados_com_enderecos(dados_publicos)
+        
+        logger.info(f'Dados do jogo {jogo_numero} carregados e enriquecidos com sucesso')
+        
+        return jsonify({
+            'success': True,
+            'dados': dados_enriquecidos,
+            'metadados': dados.get('metadados', {})
+        })
+        
+    except Exception as e:
+        logger.error(f'Erro ao obter dados de análise: {str(e)}')
+        return jsonify({
+            'success': False,
+            'error': f'Erro ao carregar dados: {str(e)}'
+        }), 500
+
+def enriquecer_dados_com_enderecos(dados_publicos):
+    """Enriquecer dados seguindo os endereços especificados na planilha"""
+    try:
+        dados_enriquecidos = dados_publicos.copy()
+        
+        # 1. VERIFICAR SE ESCUDOS EXISTEM
+        escudo_casa = dados_publicos.get('escudo_casa', '')
+        escudo_fora = dados_publicos.get('escudo_fora', '')
+        
+        if escudo_casa and not os.path.exists(escudo_casa.lstrip('/')):
+            logger.warning(f'Escudo casa não encontrado: {escudo_casa}')
+            dados_enriquecidos['escudo_casa_status'] = 'not_found'
+        else:
+            dados_enriquecidos['escudo_casa_status'] = 'found'
+            
+        if escudo_fora and not os.path.exists(escudo_fora.lstrip('/')):
+            logger.warning(f'Escudo fora não encontrado: {escudo_fora}')
+            dados_enriquecidos['escudo_fora_status'] = 'not_found'
+        else:
+            dados_enriquecidos['escudo_fora_status'] = 'found'
+        
+        # 2. BUSCAR DADOS DE CONFRONTOS SE ARQUIVO ESPECIFICADO
+        confrontos_sequence = dados_publicos.get('confrontos_sequence', '')
+        if confrontos_sequence:
+            # Se já tem sequência, manter
+            dados_enriquecidos['confrontos_source'] = 'planilha'
+        else:
+            # Tentar buscar de arquivo CSV se especificado
+            # (implementar busca automática de CSV baseado nos times)
+            dados_enriquecidos['confrontos_source'] = 'auto_search'
+        
+        # 3. BUSCAR DADOS DE CLASSIFICAÇÃO SE ESPECIFICADO
+        posicao_casa = dados_publicos.get('posicao_casa', '')
+        posicao_fora = dados_publicos.get('posicao_fora', '')
+        
+        if not posicao_casa or not posicao_fora:
+            # Buscar posições automaticamente baseado nos times
+            time_casa = dados_publicos.get('time_casa', '')
+            time_fora = dados_publicos.get('time_fora', '')
+            
+            if time_casa and time_fora:
+                # Implementar busca automática de posições
+                dados_enriquecidos['posicoes_source'] = 'auto_search'
+        
+        logger.info('Dados enriquecidos com informações dos endereços')
+        return dados_enriquecidos
+        
+    except Exception as e:
+        logger.error(f'Erro ao enriquecer dados: {str(e)}')
+        return dados_publicos
+
 # Blueprint integrado ao app principal
 # Acesse via: http://localhost:5000/admin
