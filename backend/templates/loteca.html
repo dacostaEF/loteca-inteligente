@@ -10084,7 +10084,9 @@ Equilíbrio
             const probCol2 = document.getElementById('prob-col2');
             const recomendacao = document.getElementById('recomendacao-jogo-1');
             
-            // Transição suave: remover loading e inserir dados reais
+            // DESABILITADO: Função antiga que sobrescrevia com dados hardcoded
+            // Os dados agora vêm da função carregarDadosJogo1() que usa o JSON
+            /*
             if (probCol1) {
                 probCol1.classList.remove('loading');
                 probCol1.innerHTML = '22%';  // Corinthians (ponderado)
@@ -10097,9 +10099,14 @@ Equilíbrio
                 probCol2.classList.remove('loading');
                 probCol2.innerHTML = '48%';  // Flamengo (ponderado)
             }
+            */
+            // DESABILITADO: Recomendação antiga hardcoded
+            // A recomendação agora vem da função carregarDadosJogo1() que usa o JSON
+            /*
             if (recomendacao) {
                 recomendacao.innerHTML = '<strong>Recomendação Estatística: Coluna 2 (Flamengo)</strong> - Risco Baixo';
             }
+            */
             
             console.log('✅ [LOTECA] Dados reais carregados com sucesso!');
             console.log('📊 [LOTECA] Probabilidades atualizadas: 32% - 20% - 48%');
