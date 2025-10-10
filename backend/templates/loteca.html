@@ -6341,8 +6341,129 @@ Equilíbrio
             return '/static/placeholder-team-logo.svg';
         }
 
+        // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 1
+        async function carregarDadosJogo1() {
+            console.log('🎯 [JOGO1] Iniciando carregamento dos dados do JOGO 1...');
+            
+            try {
+                // Fazer requisição para a API
+                const response = await fetch('/api/analise/jogo/1');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [JOGO1] Dados recebidos da API:', data);
+                
+                if (data.success && data.dados) {
+                    // SUBSTITUIR DADOS HARDCODED
+                    atualizarDadosJogo1(data.dados);
+                    console.log('✅ [JOGO1] Dados atualizados com sucesso!');
+                } else {
+                    console.warn('⚠️ [JOGO1] API retornou dados vazios ou inválidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [JOGO1] Erro ao carregar dados:', error);
+            }
+        }
+
+        // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 1
+        function atualizarDadosJogo1(dados) {
+            console.log('🔄 [JOGO1] Atualizando campos com dados:', dados);
+            
+            // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES
+            const escudoCasa = document.getElementById('escudo-casa-jogo1');
+            const nomeCasa = document.getElementById('time-casa-nome-jogo1');
+            const escudoFora = document.getElementById('escudo-fora-jogo1');
+            const nomeFora = document.getElementById('time-fora-nome-jogo1');
+            
+            if (escudoCasa && dados.escudo_casa) {
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa;
+            }
+            
+            if (nomeCasa && dados.time_casa) {
+                nomeCasa.textContent = dados.time_casa.toUpperCase();
+            }
+            
+            if (escudoFora && dados.escudo_fora) {
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora;
+            }
+            
+            if (nomeFora && dados.time_fora) {
+                nomeFora.textContent = dados.time_fora.toUpperCase();
+            }
+            
+            // 2. ATUALIZAR INFORMAÇÕES DO JOGO
+            const gameInfo = document.querySelector('.game-info');
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+            }
+            
+            // 3. ATUALIZAR PROBABILIDADES
+            if (dados.probabilidades) {
+                const probCol1 = document.getElementById('prob-col1');
+                const probColX = document.getElementById('prob-colX');
+                const probCol2 = document.getElementById('prob-col2');
+                
+                if (probCol1 && dados.probabilidades.col1) {
+                    probCol1.innerHTML = `<span class="probability-value">${dados.probabilidades.col1}</span>`;
+                }
+                
+                if (probColX && dados.probabilidades.colX) {
+                    probColX.innerHTML = `<span class="probability-value">${dados.probabilidades.colX}</span>`;
+                }
+                
+                if (probCol2 && dados.probabilidades.col2) {
+                    probCol2.innerHTML = `<span class="probability-value">${dados.probabilidades.col2}</span>`;
+                }
+            }
+            
+            // 4. ATUALIZAR RECOMENDAÇÃO
+            const recomendacao = document.getElementById('recomendacao-jogo-1');
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+            }
+            
+            // 5. ATUALIZAR TABELA DE ANÁLISE
+            const posicaoCasa = document.getElementById('posicao-casa');
+            const posicaoFora = document.getElementById('posicao-fora');
+            const confrontoDireto = document.getElementById('confronto-direto-principais');
+            const fatorCasa = document.getElementById('fator-casa');
+            const fatorFora = document.getElementById('fator-fora');
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = dados.posicao_casa + '°';
+            }
+            
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = dados.posicao_fora + '°';
+            }
+            
+            if (confrontoDireto && dados.confronto_direto) {
+                confrontoDireto.textContent = dados.confronto_direto;
+            }
+            
+            if (fatorCasa && dados.fator_casa) {
+                fatorCasa.textContent = dados.fator_casa + '%';
+            }
+            
+            if (fatorFora && dados.fator_fora) {
+                fatorFora.textContent = dados.fator_fora + '%';
+            }
+            
+            console.log('✅ [JOGO1] Todos os campos atualizados!');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 [DEBUG] Iniciando aplicação...');
+            
+            // PRIMEIRO: Carregar dados do JOGO 1 automaticamente
+            carregarDadosJogo1();
+            console.log('✅ [DEBUG] Dados do JOGO 1 carregados');
             
             // PRIMEIRO: Inicializar abas principais
             initializeTabs();

@@ -151,7 +151,7 @@
             border-color: var(--cor-destaque-primaria);
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
         }
-        
+
         .form-section {
             background: var(--cor-fundo-card);
             border: 1px solid var(--cor-borda);
@@ -1846,7 +1846,7 @@
                            style="width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; text-align: center; font-weight: bold;">
                     <button class="btn-primary" onclick="carregarConcursoEspecifico()">
                         <i class="fas fa-sync"></i> Carregar Jogos
-                    </button>
+                </button>
                 </div>
                 <button class="btn-success" onclick="salvarJogosLoteca()" style="margin-right: 10px; background: #00ff00; color: black; font-weight: bold;">
                     <i class="fas fa-save"></i> Salvar Concurso
@@ -2357,7 +2357,7 @@
                         <div class="form-group">
                             <label>Time Casa:</label>
                             <input type="text" id="time-casa-admin" class="form-control" placeholder="Ex: Ponte Preta/SP">
-                        </div>
+                    </div>
                         <div class="form-group">
                             <label>Time Fora:</label>
                             <input type="text" id="time-fora-admin" class="form-control" placeholder="Ex: Guarani/RJ">
@@ -2511,6 +2511,12 @@
                         <small class="form-text">V=Vitória, E=Empate, D=Derrota</small>
                     </div>
                     
+                    <!-- Analise Posição -->
+                    <div class="form-group">
+                        <label>Analise Posição:</label>
+                        <input type="text" id="analise-posicao-admin" class="form-control" placeholder="Ex: Vantagem Flamengo">
+                    </div>
+                    
                     <!-- Posições na Tabela -->
                     <div class="form-row">
                         <div class="form-group">
@@ -2521,12 +2527,22 @@
                             <label>Posição Time Fora:</label>
                             <input type="number" id="posicao-fora-admin" class="form-control" min="1" max="20" placeholder="Ex: 12">
                         </div>
+                        <div class="form-group">
+                            <label>Analise Posição tabelas:</label>
+                            <input type="text" id="analise-posicao-tabelas-admin" class="form-control" placeholder="Ex: Carregando dados...">
+                        </div>
                     </div>
                     
                     <!-- Confronto Direto -->
                     <div class="form-group">
                         <label>Confronto Direto (Últimos 10):</label>
                         <input type="text" id="confronto-direto-admin" class="form-control" placeholder="Ex: 3V-2E-5D (Casa: 2V-1E-2D)">
+                    </div>
+                    
+                    <!-- Analise Confronto Direto -->
+                    <div class="form-group">
+                        <label>Analise Confronto Direto:</label>
+                        <input type="text" id="analise-confronto-direto-admin" class="form-control" placeholder="Ex: Vantagem Flamengo">
                     </div>
                     
                     <!-- Fator Casa -->
@@ -2538,6 +2554,10 @@
                         <div class="form-group">
                             <label>Fator Casa - Time Fora:</label>
                             <input type="text" id="fator-fora-admin" class="form-control" placeholder="Ex: 25% aproveitamento fora">
+                        </div>
+                        <div class="form-group">
+                            <label>Analise Fator Caas:</label>
+                            <input type="text" id="analise-fator-casa-admin" class="form-control" placeholder="Ex: Carregando dados...">
                         </div>
                     </div>
                 </div>
@@ -2803,7 +2823,7 @@
                 // Enviar dados para o servidor (atualizar página do usuário)
                 const response = await fetch(`${API_BASE}/api/admin/analise/sincronizar`, {
                     method: 'POST',
-                    headers: {
+                        headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
@@ -3195,11 +3215,15 @@
                 },
                 recomendacao: document.getElementById('recomendacao-admin').value,
                 confrontos_sequence: document.getElementById('confrontos-sequence-admin').value,
+                analise_posicao: document.getElementById('analise-posicao-admin').value,
                 posicao_casa: document.getElementById('posicao-casa-admin').value,
                 posicao_fora: document.getElementById('posicao-fora-admin').value,
+                analise_posicao_tabelas: document.getElementById('analise-posicao-tabelas-admin').value,
                 confronto_direto: document.getElementById('confronto-direto-admin').value,
+                analise_confronto_direto: document.getElementById('analise-confronto-direto-admin').value,
                 fator_casa: document.getElementById('fator-casa-admin').value,
                 fator_fora: document.getElementById('fator-fora-admin').value,
+                analise_fator_casa: document.getElementById('analise-fator-casa-admin').value,
                 arquivo_confrontos: document.getElementById('arquivo-confrontos-base').value,
                 salvo_em: new Date().toISOString()
             };
@@ -3352,11 +3376,15 @@
                         probabilidades: dadosJogo.probabilidades,
                         recomendacao: dadosJogo.recomendacao,
                         confrontos_sequence: dadosJogo.confrontos_sequence,
+                        analise_posicao: dadosJogo.analise_posicao,
                         posicao_casa: dadosJogo.posicao_casa,
                         posicao_fora: dadosJogo.posicao_fora,
+                        analise_posicao_tabelas: dadosJogo.analise_posicao_tabelas,
                         confronto_direto: dadosJogo.confronto_direto,
+                        analise_confronto_direto: dadosJogo.analise_confronto_direto,
                         fator_casa: dadosJogo.fator_casa,
                         fator_fora: dadosJogo.fator_fora,
+                        analise_fator_casa: dadosJogo.analise_fator_casa,
                         arquivo_confrontos: dadosJogo.arquivo_confrontos
                     }
                 };
@@ -3368,7 +3396,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        nome_arquivo: nomeArquivo,
+                        nome_arquivo: `jogo_${dadosJogo.numero}.json`,
                         dados: dadosEnvio
                     })
                 });
@@ -3477,12 +3505,13 @@
                 if (response.ok) {
                     const resultado = await response.json();
                     if (resultado.success && resultado.dados) {
-                        console.log(`✅ [ANÁLISE] Arquivo encontrado no servidor: ${nomeArquivo}`);
-                        return resultado.dados.analise;
+                        console.log(`✅ [ANÁLISE] Arquivo encontrado no servidor: jogo_${jogoSelecionado}.json`);
+                        // A API retorna: { success: true, dados: { nome_arquivo, dados: { metadados, dados_publicos } } }
+                        return resultado.dados.dados;
                     }
                 }
                 
-                console.log(`📝 [ANÁLISE] Arquivo não encontrado no servidor: ${nomeArquivo}`);
+                console.log(`📝 [ANÁLISE] Arquivo não encontrado no servidor: jogo_${jogoSelecionado}.json`);
                 return null;
                 
             } catch (error) {
@@ -3495,30 +3524,35 @@
             console.log('📝 [ANÁLISE] Preenchendo formulário com dados salvos:', dados);
             
             // Preencher TODOS os campos do formulário
-            document.getElementById('time-casa-admin').value = dados.time_casa || '';
-            document.getElementById('time-fora-admin').value = dados.time_fora || '';
-            document.getElementById('arena-admin').value = dados.arena || '';
-            document.getElementById('campeonato-admin').value = dados.campeonato || '';
-            document.getElementById('dia-admin').value = dados.dia || 'Sábado';
-            document.getElementById('escudo-casa-path').value = dados.escudo_casa || '';
-            document.getElementById('escudo-fora-path').value = dados.escudo_fora || '';
-            document.getElementById('prob-col1-admin').value = dados.probabilidades?.col1 || '';
-            document.getElementById('prob-colX-admin').value = dados.probabilidades?.colX || '';
-            document.getElementById('prob-col2-admin').value = dados.probabilidades?.col2 || '';
-            document.getElementById('recomendacao-admin').value = dados.recomendacao || '';
-            document.getElementById('confrontos-sequence-admin').value = dados.confrontos_sequence || '';
-            document.getElementById('posicao-casa-admin').value = dados.posicao_casa || '';
-            document.getElementById('posicao-fora-admin').value = dados.posicao_fora || '';
-            document.getElementById('confronto-direto-admin').value = dados.confronto_direto || '';
-            document.getElementById('fator-casa-admin').value = dados.fator_casa || '';
-            document.getElementById('fator-fora-admin').value = dados.fator_fora || '';
+            document.getElementById('time-casa-admin').value = dados.dados_publicos?.time_casa || dados.time_casa || '';
+            document.getElementById('time-fora-admin').value = dados.dados_publicos?.time_fora || dados.time_fora || '';
+            document.getElementById('arena-admin').value = dados.dados_publicos?.arena || dados.arena || '';
+            document.getElementById('campeonato-admin').value = dados.dados_publicos?.campeonato || dados.campeonato || '';
+            document.getElementById('dia-admin').value = dados.dados_publicos?.dia || dados.dia || 'Sábado';
+            document.getElementById('escudo-casa-path').value = dados.dados_publicos?.escudo_casa || dados.escudo_casa || '';
+            document.getElementById('escudo-fora-path').value = dados.dados_publicos?.escudo_fora || dados.escudo_fora || '';
+            document.getElementById('prob-col1-admin').value = dados.dados_publicos?.probabilidades?.col1 || dados.probabilidades?.col1 || '';
+            document.getElementById('prob-colX-admin').value = dados.dados_publicos?.probabilidades?.colX || dados.probabilidades?.colX || '';
+            document.getElementById('prob-col2-admin').value = dados.dados_publicos?.probabilidades?.col2 || dados.probabilidades?.col2 || '';
+            document.getElementById('recomendacao-admin').value = dados.dados_publicos?.recomendacao || dados.recomendacao || '';
+            document.getElementById('confrontos-sequence-admin').value = dados.dados_publicos?.confrontos_sequence || dados.confrontos_sequence || '';
+            document.getElementById('analise-posicao-admin').value = dados.dados_publicos?.analise_posicao || dados.analise_posicao || '';
+            document.getElementById('posicao-casa-admin').value = dados.dados_publicos?.posicao_casa || dados.posicao_casa || '';
+            document.getElementById('posicao-fora-admin').value = dados.dados_publicos?.posicao_fora || dados.posicao_fora || '';
+            document.getElementById('analise-posicao-tabelas-admin').value = dados.dados_publicos?.analise_posicao_tabelas || dados.analise_posicao_tabelas || '';
+            document.getElementById('confronto-direto-admin').value = dados.dados_publicos?.confronto_direto || dados.confronto_direto || '';
+            document.getElementById('analise-confronto-direto-admin').value = dados.dados_publicos?.analise_confronto_direto || dados.analise_confronto_direto || '';
+            document.getElementById('fator-casa-admin').value = dados.dados_publicos?.fator_casa || dados.fator_casa || '';
+            document.getElementById('fator-fora-admin').value = dados.dados_publicos?.fator_fora || dados.fator_fora || '';
+            document.getElementById('analise-fator-casa-admin').value = dados.dados_publicos?.analise_fator_casa || dados.analise_fator_casa || '';
             
             // Preencher arquivo de confrontos se disponível
-            if (dados.arquivo_confrontos) {
-                document.getElementById('arquivo-confrontos-base').value = dados.arquivo_confrontos;
+            const arquivoConfrontos = dados.dados_publicos?.arquivo_confrontos || dados.arquivo_confrontos;
+            if (arquivoConfrontos) {
+                document.getElementById('arquivo-confrontos-base').value = arquivoConfrontos;
                 
                 // Extrair nome do arquivo do caminho completo
-                const nomeArquivo = dados.arquivo_confrontos.split('\\').pop();
+                const nomeArquivo = arquivoConfrontos.split('\\').pop();
                 console.log('📁 [ANÁLISE] Nome do arquivo extraído:', nomeArquivo);
                 
                 // Selecionar o arquivo no dropdown
@@ -3726,7 +3760,7 @@
                     <div style="padding: 10px; border-bottom: 1px solid var(--cor-borda); display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                         <div style="flex: 0 0 30px; text-align: center; font-weight: bold; color: var(--cor-destaque-primaria);">
                             ${i + 1}
-                        </div>
+                </div>
                         <div style="flex: 0 0 25px; text-align: center;">
                             <img src="${escudoMostrar}" alt="${nomeTimeMostrar}" style="width: 20px; height: 20px; object-fit: contain;" onerror="console.log('Erro ao carregar escudo:', this.src); this.src='/static/placeholder-team-logo.svg'" onload="console.log('Escudo carregado com sucesso:', this.src)">
                         </div>
@@ -3735,8 +3769,8 @@
                             <div style="font-weight: bold; color: var(--cor-destaque-primaria);">${nomeTimeMostrar}</div>
                             <div style="font-size: 0.75rem; color: var(--cor-texto-secundario);">${placar}</div>
                         </div>
-                    </div>
-                `;
+                </div>
+            `;
             }
             
             // Gerar HTML da coluna 2 (jogos 6-10)
@@ -3871,7 +3905,7 @@
                     if (confronto.resultado_corrigido) {
                         resultadoFinal = confronto.resultado_corrigido;
                         console.log(`🔧 [ANÁLISE] Usando correção manual: ${resultadoFinal}`);
-                    } else {
+            } else {
                         // LÓGICA CORRETA: Campo "resultado" contém o nome do vencedor ou "empate"
                         if (resultado) {
                             const resultadoLower = resultado.toLowerCase().trim();
@@ -4165,9 +4199,9 @@
                                 <em>${confronto.resultado || 'Resultado não disponível'}</em>
                             </span>
                         </label>
-                    </div>
-                `;
-                
+                </div>
+            `;
+            
                 lista.appendChild(div);
             });
             
@@ -4205,9 +4239,9 @@
                         ...confronto,
                         resultado_corrigido: null,
                         corrigido: false
-                    });
-                }
-            });
+                });
+            }
+        });
             
             // Atualizar dados globais
             window.confrontosPreview = confrontosCorrigidos;
@@ -4360,17 +4394,17 @@
                     
                     // Formatar data da última sincronização
                     if (ultimaSync) {
-                        if (data.ultima_sincronizacao) {
-                            const dataObj = new Date(data.ultima_sincronizacao);
-                            const dataFormatada = dataObj.toLocaleString('pt-BR', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                            });
+                    if (data.ultima_sincronizacao) {
+                        const dataObj = new Date(data.ultima_sincronizacao);
+                        const dataFormatada = dataObj.toLocaleString('pt-BR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
                             ultimaSync.textContent = dataFormatada;
-                        } else {
+                    } else {
                             ultimaSync.textContent = 'Nunca';
                         }
                     }
@@ -7594,7 +7628,7 @@
                 // Preparar dados para salvar no servidor
                 const dadosConcurso = {
                     numero: numeroConcurso,
-                    periodo_apostas: periodoApostas,
+                        periodo_apostas: periodoApostas,
                     realizacao_jogos: realizacaoJogos,
                     jogos: jogos,
                     timestamp: new Date().toISOString()
@@ -7614,7 +7648,7 @@
                 if (result.success) {
                     // Salvar também no localStorage para sincronização imediata
                     localStorage.setItem('concursoAtual', JSON.stringify(dadosConcurso));
-
+                    
                     console.log('✅ [LOTECA] Concurso salvo no servidor!', dadosConcurso);
                     mostrarNotificacao(`✅ Concurso ${numeroConcurso} salvo com sucesso no servidor!`, 'success');
                     
@@ -7658,7 +7692,7 @@
                 
                 const select = document.getElementById('concursoSelect');
                 if (select) {
-                    select.innerHTML = '<option value="">🔄 Carregando concursos...</option>';
+                select.innerHTML = '<option value="">🔄 Carregando concursos...</option>';
                 } else {
                     console.log('⚠️ [LOTECA] Elemento concursoSelect não encontrado (removido da interface)');
                     return;
@@ -7684,7 +7718,7 @@
                 console.error('💥 [LOTECA] Erro ao carregar concursos:', error);
                 const select = document.getElementById('concursoSelect');
                 if (select) {
-                    select.innerHTML = '<option value="">❌ Erro ao carregar concursos</option>';
+                select.innerHTML = '<option value="">❌ Erro ao carregar concursos</option>';
                 }
             }
         }
@@ -7781,23 +7815,23 @@
                 // Tentar carregar via API primeiro
                 try {
                     const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/1215`);
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        const dados = result.concurso;
+                const result = await response.json();
+                
+                if (result.success) {
+                    const dados = result.concurso;
                         const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '1215';
-                        
-                        // Atualizar campos
-                        document.getElementById('numeroConcurso').value = numeroConcurso;
+                    
+                    // Atualizar campos
+                    document.getElementById('numeroConcurso').value = numeroConcurso;
                         document.getElementById('periodoApostas').value = dados?.concurso?.periodo_apostas || '07/10/2025 a 08/10/2025';
                         document.getElementById('realizacaoJogos').value = dados?.concurso?.realizacao_jogos || '27/09/2025 a 28/09/2025';
-                        
-                        // Atualizar jogos
+                    
+                    // Atualizar jogos
                         if (dados?.jogos && dados.jogos.length > 0) {
-                            jogosAtuais = dados.jogos;
-                            carregarJogosAtuais();
-                        }
-                        
+                        jogosAtuais = dados.jogos;
+                        carregarJogosAtuais();
+                    }
+                    
                         console.log(`✅ [LOTECA] Concurso ${numeroConcurso} carregado via API`);
                         return;
                     }
