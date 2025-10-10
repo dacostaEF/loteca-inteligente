@@ -4695,8 +4695,11 @@ Equilíbrio
             const homeClassification = classificationData['CORINTHIANS'] || { position: 10, points: 32 };
             const awayClassification = classificationData['FLAMENGO'] || { position: 1, points: 51 };
             
-            // ATUALIZAR POSIÇÕES NA INTERFACE
+            // DESABILITADO: API antiga que interferia com o sistema novo
+            // As posições do JOGO 1 agora vêm da função carregarDadosJogo1() que usa o JSON
+            /*
             updatePositionDisplay(homeClassification, awayClassification);
+            */
             
             // GERAR RECOMENDAÇÃO AUTOMÁTICA COM DADOS REAIS DE CLASSIFICAÇÃO
             await generateAutoRecommendation({
@@ -6584,11 +6587,14 @@ Equilíbrio
    • Dados reais de elenco e mercado
             `);
             
-            // CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 1
+            // DESABILITADO: API antiga que interferia com o sistema novo
+            // Os dados do JOGO 1 agora vêm da função carregarDadosJogo1() que usa o JSON
+            /*
             setTimeout(() => {
                 console.log('🎯 [LOTECA] Carregando dados reais DIRETOS do dashboard...');
                 carregarDadosReaisDiretos();
-            }, 2000); // Aguardar 2 segundos para garantir que a página carregou
+            }, 2000);
+            */
 
             // CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 2
             setTimeout(() => {
@@ -6602,11 +6608,14 @@ Equilíbrio
                 renderizarConfrontoDirectoResumo([]);
             }, 3000);
 
-            // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 1
+            // DESABILITADO: APIs antigas que interferiam com o sistema novo
+            // O confronto direto do JOGO 1 agora vem da função carregarDadosJogo1() que usa o JSON
+            /*
             setTimeout(() => forcarConfrontoDirecto(), 1000);
             setTimeout(() => forcarConfrontoDirecto(), 2000);
             setTimeout(() => forcarConfrontoDirecto(), 4000);
             setTimeout(() => forcarConfrontoDirecto(), 6000);
+            */
 
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 2
             setTimeout(() => forcarConfrontoDirectoJogo2(), 1500);
