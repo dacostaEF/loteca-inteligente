@@ -1642,52 +1642,38 @@ def sincronizar_analise_site():
 def obter_dados_analise_jogo(jogo_numero):
     """Obter dados de análise de um jogo específico para a página do usuário"""
     try:
-        # NOVA ESTRUTURA: Buscar por concurso
-        # Primeiro, tentar encontrar o arquivo no concurso mais recente
+        # ESTRUTURA FIXA: Usar APENAS concurso 1215
         pasta_models = 'models'
-        concursos_encontrados = []
+        concurso_fixo = 'concurso_1215'
         
-        # Listar todos os concursos disponíveis
-        if os.path.exists(pasta_models):
-            for item in os.listdir(pasta_models):
-                if item.startswith('concurso_') and os.path.isdir(os.path.join(pasta_models, item)):
-                    concursos_encontrados.append(item)
+        # Buscar arquivo no concurso 1215
+        pasta_analise = os.path.join(pasta_models, concurso_fixo, 'analise_rapida')
+        arquivo_analise = os.path.join(pasta_analise, f'jogo_{jogo_numero}.json')
         
-        # Ordenar concursos por número (mais recente primeiro)
-        concursos_encontrados.sort(key=lambda x: int(x.split('_')[1]), reverse=True)
+        logger.info(f'🔍 [API] Buscando arquivo: {arquivo_analise}')
         
-        # Tentar encontrar o arquivo do jogo
-        arquivo_analise = None
-        for concurso in concursos_encontrados:
-            pasta_analise = os.path.join(pasta_models, concurso, 'analise_rapida')
-            arquivo_teste = os.path.join(pasta_analise, f'jogo_{jogo_numero}.json')
-            if os.path.exists(arquivo_teste):
-                arquivo_analise = arquivo_teste
-                break
-        
-        if not arquivo_analise:
-            logger.warning(f'Arquivo de análise não encontrado para jogo {jogo_numero}')
+        if not os.path.exists(arquivo_analise):
+            logger.warning(f'Arquivo de análise não encontrado: {arquivo_analise}')
             return jsonify({
                 'success': False,
-                'error': f'Dados do jogo {jogo_numero} não encontrados'
+                'error': f'Dados do jogo {jogo_numero} não encontrados no concurso 1215'
             }), 404
         
         # Ler dados do arquivo
         with open(arquivo_analise, 'r', encoding='utf-8') as f:
             dados = json.load(f)
         
-        # NOVA FUNCIONALIDADE: SEGUIR ENDEREÇOS DA PLANILHA
-        dados_publicos = dados.get('dados_publicos', {})
+        # RETORNAR DADOS COMPLETOS DO JSON
+        dados_publicos = dados.get('dados', {}).get('dados_publicos', {})
         
-        # Buscar dados reais seguindo os endereços da planilha
-        dados_enriquecidos = enriquecer_dados_com_enderecos(dados_publicos)
-        
-        logger.info(f'Dados do jogo {jogo_numero} carregados e enriquecidos com sucesso')
+        logger.info(f'Dados do jogo {jogo_numero} carregados com sucesso')
+        logger.info(f'Time casa: {dados_publicos.get("time_casa", "N/A")}')
+        logger.info(f'Time fora: {dados_publicos.get("time_fora", "N/A")}')
         
         return jsonify({
             'success': True,
-            'dados': dados_enriquecidos,
-            'metadados': dados.get('metadados', {})
+            'dados': dados_publicos,
+            'metadados': dados.get('dados', {}).get('metadados', {})
         })
         
     except Exception as e:

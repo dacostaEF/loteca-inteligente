@@ -6420,6 +6420,18 @@ Equilíbrio
                 if (probCol2 && dados.probabilidades.col2) {
                     probCol2.innerHTML = `<span class="probability-value">${dados.probabilidades.col2}</span>`;
                 }
+                
+                // ATUALIZAR OS LABELS DOS TIMES NAS PROBABILIDADES
+                const labelCol1 = document.querySelector('#probabilidades-jogo-1 .col1 .label');
+                const labelCol2 = document.querySelector('#probabilidades-jogo-1 .col2 .label');
+                
+                if (labelCol1 && dados.time_casa) {
+                    labelCol1.textContent = `Coluna 1 (${dados.time_casa})`;
+                }
+                
+                if (labelCol2 && dados.time_fora) {
+                    labelCol2.textContent = `Coluna 2 (${dados.time_fora})`;
+                }
             }
             
             // 4. ATUALIZAR RECOMENDAÇÃO
