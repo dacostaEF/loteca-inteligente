@@ -6467,6 +6467,28 @@ Equilíbrio
                 fatorFora.textContent = dados.fator_fora + '%';
             }
             
+            // 6. ATUALIZAR ANÁLISES DA TABELA
+            const formaAnalise = document.getElementById('forma-analise');
+            const posicaoAnalise = document.getElementById('posicao-analise');
+            const h2hAnalise = document.getElementById('h2h-analise');
+            const fatorAnalise = document.getElementById('fator-analise');
+            
+            if (formaAnalise && dados.analise_posicao) {
+                formaAnalise.textContent = dados.analise_posicao;
+            }
+            
+            if (posicaoAnalise && dados.analise_posicao_tabelas) {
+                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+            }
+            
+            if (h2hAnalise && dados.analise_confronto_direto) {
+                h2hAnalise.textContent = dados.analise_confronto_direto;
+            }
+            
+            if (fatorAnalise && dados.analise_fator_casa) {
+                fatorAnalise.textContent = dados.analise_fator_casa;
+            }
+            
             console.log('✅ [JOGO1] Todos os campos atualizados!');
         }
 
@@ -10049,10 +10071,14 @@ Equilíbrio
             
             if (formaCasa) formaCasa.textContent = dadosReais.corinthians.forma_recente;
             if (formaFora) formaFora.textContent = dadosReais.flamengo.forma_recente;
+            // DESABILITADO: Análise antiga hardcoded
+            // A análise agora vem da função carregarDadosJogo1() que usa o JSON
+            /*
             if (formaAnalise) {
                 // Flamengo tem mais pontos nos últimos 5 (11 vs 7)
                 formaAnalise.innerHTML = 'Vantagem Flamengo';
             }
+            */
             
             // Atualizar confronto direto com dados reais
             const h2hCasa = document.getElementById('h2h-casa');
@@ -10073,10 +10099,14 @@ Equilíbrio
             
             if (fatorCasa) fatorCasa.textContent = dadosReais.corinthians.aproveitamento_casa;
             if (fatorFora) fatorFora.textContent = dadosReais.flamengo.aproveitamento_fora;
+            // DESABILITADO: Análise antiga hardcoded
+            // A análise agora vem da função carregarDadosJogo1() que usa o JSON
+            /*
             if (fatorAnalise) {
                 // Flamengo fora (67%) > Corinthians casa (48%) = Vantagem Flamengo
                 fatorAnalise.innerHTML = 'Vantagem Flamengo';
             }
+            */
             
             // Atualizar probabilidades baseadas nos dados reais
             const probCol1 = document.getElementById('prob-col1');
@@ -10115,11 +10145,14 @@ Equilíbrio
             // FORÇAR CARREGAMENTO DO CONFRONTO DIRETO
             setTimeout(() => {
                 forcarConfrontoDirecto();
-                // Corrigir análise do confronto direto
+                // DESABILITADO: Análise antiga hardcoded
+                // A análise agora vem da função carregarDadosJogo1() que usa o JSON
+                /*
                 const analiseElement = document.getElementById('h2h-analise');
                 if (analiseElement) {
                     analiseElement.innerHTML = 'Vantagem Flamengo';
                 }
+                */
             }, 500);
         }
 
