@@ -6459,7 +6459,15 @@ Equilíbrio
             }
             
             if (confrontoDireto && dados.confronto_direto) {
-                confrontoDireto.textContent = dados.confronto_direto;
+                // Criar HTML com escudos para o confronto direto
+                const confrontoHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <img src="${dados.escudo_casa}" alt="${dados.time_casa}" style="width: 24px; height: 24px;">
+                        <span>${dados.confronto_direto}</span>
+                        <img src="${dados.escudo_fora}" alt="${dados.time_fora}" style="width: 24px; height: 24px;">
+                    </div>
+                `;
+                confrontoDireto.innerHTML = confrontoHTML;
             }
             
             if (fatorCasa && dados.fator_casa) {
