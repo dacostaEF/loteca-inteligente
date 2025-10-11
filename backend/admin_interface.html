@@ -1840,47 +1840,13 @@
             </div>
 
             <!-- BOTÕES DE AÇÃO -->
-            <div class="form-row" style="margin-top: 20px;">
-                <div style="display: flex; align-items: center; gap: 10px; margin-right: 10px;">
-                    <input type="text" id="numeroConcursoCarregar" placeholder="1215" value="1215" 
-                           style="width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; text-align: center; font-weight: bold;">
-                    <button class="btn-primary" onclick="carregarConcursoEspecifico()">
-                        <i class="fas fa-sync"></i> Carregar Jogos
+            <div class="form-row" style="margin-top: 20px; justify-content: center; gap: 15px;">
+                <button class="btn-primary" onclick="abrirSeletorCSV()" style="background: #FF6B35;">
+                    <i class="fas fa-file-csv"></i> Carregar Concurso CSV
                 </button>
-                </div>
-                <button class="btn-success" onclick="salvarJogosLoteca()" style="margin-right: 10px; background: #00ff00; color: black; font-weight: bold;">
-                    <i class="fas fa-save"></i> Salvar Concurso
+                <button class="btn-success" onclick="salvarDadosManualmente()" style="background: #28a745; color: white;">
+                    <i class="fas fa-save"></i> Salvar Dados
                 </button>
-                <button class="btn-secondary" onclick="gerarAnalises()" style="margin-right: 10px;">
-                    <i class="fas fa-chart-bar"></i> Gerar Análises
-                </button>
-                <button class="btn-warning" onclick="publicarNoSite()" style="background: #00ffff; color: black; font-weight: bold; border: 2px solid #00cccc;">
-                    <i class="fas fa-upload"></i> Publicar no Site
-                </button>
-            </div>
-
-            <!-- HISTÓRICO DE CONCURSOS -->
-            <div class="historico-section" style="margin-top: 40px;">
-                <h3 style="color: #333; margin-bottom: 15px;">
-                    <i class="fas fa-history"></i> Histórico de Concursos
-                </h3>
-                <div class="loading-message" id="loadingHistorico" style="display: none;">
-                    <i class="fas fa-spinner fa-spin"></i> Carregando histórico...
-                </div>
-                <table class="data-table" id="tabelaHistorico">
-                    <thead>
-                        <tr>
-                            <th>Concurso</th>
-                            <th>Data</th>
-                            <th>Status</th>
-                            <th>Jogos</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historicoBody">
-                        <!-- Histórico será inserido aqui -->
-                    </tbody>
-                </table>
             </div>
         </div>
 
@@ -2586,7 +2552,7 @@
                         <div style="text-align: center; color: #666; font-size: 12px;">
                             <div id="info-arquivo-salvamento">
                                 <strong>Arquivo:</strong> <span id="nome-arquivo-salvamento">jogo_1.json</span><br>
-                                <strong>Caminho:</strong> <span id="caminho-arquivo-salvamento">models/concurso_1215/analise_rapida/</span>
+                                <strong>Caminho:</strong> <span id="caminho-arquivo-salvamento">backend/Concursos_CEF/</span>
                             </div>
                         </div>
                     </div>
@@ -3008,7 +2974,7 @@
             
             // Nome do arquivo baseado no jogo selecionado
             const nomeArquivoCompleto = `jogo_${jogoSelecionado}.json`;
-            const caminhoCompleto = `models/concurso_${numeroConcurso}/analise_rapida/`;
+            const caminhoCompleto = `backend/Concursos_CEF/`;
             
             // Atualizar botão com nome do arquivo
             btnSalvar.innerHTML = `<i class="fas fa-save"></i> Salvar Dados do Jogo (${nomeArquivoCompleto})`;
@@ -3071,7 +3037,7 @@
                     campeonato: 'Brasileirão Série A',
                     dia: 'Sábado',
                     escudo_casa: '/static/escudos/FOR_Fortaleza/Fortaleza.png',
-                    escudo_fora: '/static/escudos/SPO_Sport/Sport.png'
+                    escudo_fora: '/static/escudos/SPT_Sport/Sport.png'
                 },
                 '3': {
                     time_casa: 'Juventude/RS',
@@ -3339,7 +3305,7 @@
                         campeonato: 'Brasileirão Série A',
                         dia: 'Domingo',
                         escudo_casa: '/static/escudos/FOR_Fortaleza/Fortaleza.png',
-                        escudo_fora: '/static/escudos/SPO_Sport/Sport.png',
+                        escudo_fora: '/static/escudos/SPT_Sport/Sport.png',
                         probabilidades: { col1: '55%', colX: '25%', col2: '20%' },
                         recomendacao: 'Fortaleza forte em casa contra Sport em má fase.',
                         confrontos_sequence: 'V-V-D-V-V-D-V-V-D-V',
@@ -4373,6 +4339,8 @@
                     // Inicializando sistema de concursos...
                     carregarListaConcursos();
                     carregarUltimoConcurso();
+                    // Carregar dados salvos automaticamente
+                    carregarDadosSalvos();
                 }, 200);
             }
         }
@@ -7446,7 +7414,324 @@
         }
 
         // Nova função para carregar concurso específico
-        async function carregarConcursoEspecifico() {
+        // FUNÇÃO PARA ABRIR SELETOR DE ARQUIVO CSV
+        function abrirSeletorCSV() {
+            // Mostrar mensagem para o usuário navegar até a pasta correta
+            mostrarNotificacao('📁 Navegue até: backend/Concursos_CEF/', 'info');
+            
+            // Criar um novo input file
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv';
+            input.style.display = 'none';
+            
+            // Adicionar evento para processar o arquivo selecionado
+            input.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const fileName = this.files[0].name;
+                    const filePath = this.files[0].webkitRelativePath || 'Arquivo selecionado';
+                    
+                    console.log('📁 [CSV] Arquivo selecionado:', fileName);
+                    console.log('📁 [CSV] Caminho completo:', filePath);
+                    
+                    // Verificar se o arquivo está na pasta correta
+                    if (filePath.includes('Concursos_CEF') || filePath.includes('concurso_loteca')) {
+                        console.log('✅ [CSV] Arquivo está na pasta correta!');
+                        
+                        // Processar o arquivo
+                        const file = this.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            try {
+                                const csvContent = e.target.result;
+                                processarCSVLoteca(csvContent, fileName);
+                            } catch (error) {
+                                console.error('❌ [CSV] Erro ao processar arquivo:', error);
+                                mostrarNotificacao('❌ Erro ao processar arquivo CSV!', 'error');
+                            }
+                        };
+                        reader.readAsText(file, 'UTF-8');
+                    } else {
+                        console.log('⚠️ [CSV] Arquivo pode não estar na pasta correta');
+                        mostrarNotificacao('⚠️ Certifique-se de que o arquivo está em backend/Concursos_CEF/', 'warning');
+                        
+                        // Processar mesmo assim
+                        const file = this.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            try {
+                                const csvContent = e.target.result;
+                                processarCSVLoteca(csvContent, fileName);
+                            } catch (error) {
+                                console.error('❌ [CSV] Erro ao processar arquivo:', error);
+                                mostrarNotificacao('❌ Erro ao processar arquivo CSV!', 'error');
+                            }
+                        };
+                        reader.readAsText(file, 'UTF-8');
+                    }
+                }
+            });
+            
+            // Adicionar ao DOM temporariamente e clicar
+            document.body.appendChild(input);
+            input.click();
+            
+            // Remover do DOM após o clique
+            setTimeout(() => {
+                if (document.body.contains(input)) {
+                    document.body.removeChild(input);
+                }
+            }, 100);
+        }
+        
+        // FUNÇÃO PARA SALVAR DADOS AUTOMATICAMENTE
+        async function salvarDadosJogosAutomaticamente() {
+            try {
+                console.log('💾 [AUTO-SAVE] Salvando dados automaticamente...');
+                
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1215';
+                const periodoApostas = document.getElementById('periodoApostas').value || '07/10/2025 a 08/10/2025';
+                const realizacaoJogos = document.getElementById('realizacaoJogos').value || '27/09/2025 a 28/09/2025';
+
+                // Preparar dados para salvar
+                const dadosConcurso = {
+                    numero: numeroConcurso,
+                    periodo_apostas: periodoApostas,
+                    realizacao_jogos: realizacaoJogos,
+                    jogos: jogosAtuais,
+                    timestamp: new Date().toISOString(),
+                    origem: 'CSV_AUTO_SAVE'
+                };
+
+                // Salvar no localStorage para retenção na página
+                localStorage.setItem('ultimoConcursoCarregado', JSON.stringify(dadosConcurso));
+                console.log('💾 [AUTO-SAVE] Dados salvos no localStorage');
+
+                // Salvar no servidor via API (se disponível)
+                try {
+                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dadosConcurso)
+                    });
+
+                    if (response.ok) {
+                        console.log('💾 [AUTO-SAVE] Dados salvos no servidor');
+                    } else {
+                        console.warn('⚠️ [AUTO-SAVE] Erro ao salvar no servidor, mas dados mantidos no localStorage');
+                    }
+                } catch (apiError) {
+                    console.warn('⚠️ [AUTO-SAVE] API não disponível, dados mantidos no localStorage:', apiError);
+                }
+
+            } catch (error) {
+                console.error('❌ [AUTO-SAVE] Erro ao salvar dados:', error);
+            }
+        }
+        
+        // FUNÇÃO PARA SALVAR DADOS MANUALMENTE (BOTÃO)
+        async function salvarDadosManualmente() {
+            try {
+                console.log('💾 [MANUAL-SAVE] Salvando dados manualmente...');
+                
+                // Verificar se há jogos para salvar
+                if (!jogosAtuais || jogosAtuais.length === 0) {
+                    mostrarNotificacao('❌ Nenhum jogo carregado para salvar!', 'error');
+                    return;
+                }
+                
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1215';
+                const periodoApostas = document.getElementById('periodoApostas').value || '07/10/2025 a 08/10/2025';
+                const realizacaoJogos = document.getElementById('realizacaoJogos').value || '27/09/2025 a 28/09/2025';
+
+                // Preparar dados para salvar
+                const dadosConcurso = {
+                    numero: numeroConcurso,
+                    periodo_apostas: periodoApostas,
+                    realizacao_jogos: realizacaoJogos,
+                    jogos: jogosAtuais,
+                    timestamp: new Date().toISOString(),
+                    origem: 'MANUAL_SAVE',
+                    total_jogos: jogosAtuais.length
+                };
+
+                // 1. SALVAR NO LOCALSTORAGE (GARANTIA IMEDIATA)
+                localStorage.setItem('ultimoConcursoCarregado', JSON.stringify(dadosConcurso));
+                localStorage.setItem('concursoSalvo_' + numeroConcurso, JSON.stringify(dadosConcurso));
+                console.log('💾 [MANUAL-SAVE] Dados salvos no localStorage');
+
+                // 2. SALVAR NO SERVIDOR VIA API
+                try {
+                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dadosConcurso)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('💾 [MANUAL-SAVE] Dados salvos no servidor:', result);
+                        mostrarNotificacao(`✅ ${jogosAtuais.length} jogos salvos com sucesso!`, 'success');
+                    } else {
+                        const error = await response.json();
+                        console.error('❌ [MANUAL-SAVE] Erro do servidor:', error);
+                        mostrarNotificacao('⚠️ Dados salvos localmente, mas erro no servidor!', 'warning');
+                    }
+                } catch (apiError) {
+                    console.warn('⚠️ [MANUAL-SAVE] API não disponível:', apiError);
+                    mostrarNotificacao('⚠️ Dados salvos apenas localmente!', 'warning');
+                }
+
+                // 3. SALVAR BACKUP ADICIONAL
+                const backupKey = 'backup_concurso_' + numeroConcurso + '_' + Date.now();
+                localStorage.setItem(backupKey, JSON.stringify(dadosConcurso));
+                console.log('💾 [MANUAL-SAVE] Backup criado:', backupKey);
+
+                // 4. CONFIRMAR SALVAMENTO
+                console.log('✅ [MANUAL-SAVE] Salvamento concluído com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ [MANUAL-SAVE] Erro ao salvar dados:', error);
+                mostrarNotificacao('❌ Erro ao salvar dados!', 'error');
+            }
+        }
+        
+        // FUNÇÃO PARA CARREGAR DADOS SALVOS AO INICIAR A PÁGINA
+        function carregarDadosSalvos() {
+            try {
+                console.log('📂 [LOAD] Procurando dados salvos...');
+                
+                // Tentar carregar dados do último concurso
+                let dadosSalvos = localStorage.getItem('ultimoConcursoCarregado');
+                
+                // Se não encontrar, tentar carregar do concurso 1215
+                if (!dadosSalvos) {
+                    dadosSalvos = localStorage.getItem('concursoSalvo_1215');
+                    console.log('📂 [LOAD] Tentando carregar concurso 1215...');
+                }
+                
+                if (dadosSalvos) {
+                    const dados = JSON.parse(dadosSalvos);
+                    console.log('📂 [LOAD] Dados encontrados:', dados);
+                    
+                    // Atualizar campos do formulário
+                    if (dados.numero) {
+                        document.getElementById('numeroConcurso').value = dados.numero;
+                    }
+                    if (dados.periodo_apostas) {
+                        document.getElementById('periodoApostas').value = dados.periodo_apostas;
+                    }
+                    if (dados.realizacao_jogos) {
+                        document.getElementById('realizacaoJogos').value = dados.realizacao_jogos;
+                    }
+                    
+                    // Atualizar jogos
+                    if (dados.jogos && dados.jogos.length > 0) {
+                        jogosAtuais = dados.jogos;
+                        carregarJogosAtuais();
+                        console.log(`✅ [LOAD] ${dados.jogos.length} jogos carregados do localStorage`);
+                        
+                        // Mostrar notificação de dados carregados
+                        mostrarNotificacao(`📂 ${dados.jogos.length} jogos carregados automaticamente!`, 'info');
+                    }
+                    
+                    // Atualizar display
+                    atualizarDisplayConcurso();
+                    
+                    console.log('✅ [LOAD] Dados salvos carregados com sucesso!');
+                } else {
+                    console.log('📂 [LOAD] Nenhum dado salvo encontrado');
+                }
+            } catch (error) {
+                console.error('❌ [LOAD] Erro ao carregar dados salvos:', error);
+            }
+        }
+        
+        function processarCSVLoteca(csvContent, nomeArquivo) {
+            try {
+                console.log('🔄 [CSV] Processando conteúdo CSV...');
+                
+                const linhas = csvContent.split('\n').filter(linha => linha.trim());
+                console.log(`📊 [CSV] ${linhas.length} linhas encontradas`);
+                
+                // Limpar jogos atuais
+                jogosAtuais = [];
+                
+                // Processar cada linha (pular cabeçalho se existir)
+                let inicioLinhas = 0;
+                if (linhas[0] && (linhas[0].toLowerCase().includes('jogo') || linhas[0].toLowerCase().includes('coluna'))) {
+                    inicioLinhas = 1; // Pular cabeçalho
+                    console.log('📋 [CSV] Cabeçalho detectado, pulando primeira linha');
+                }
+                
+                console.log(`📋 [CSV] Processando ${linhas.length - inicioLinhas} linhas de dados`);
+                
+                for (let i = inicioLinhas; i < linhas.length && i < inicioLinhas + 14; i++) {
+                    const linha = linhas[i].trim();
+                    if (!linha) continue;
+                    
+                    console.log(`📝 [CSV] Linha ${i + 1}: "${linha}"`);
+                    
+                    // Dividir por vírgula ou ponto e vírgula
+                    const colunas = linha.split(/[,;]/).map(col => col.trim().replace(/"/g, ''));
+                    
+                    console.log(`📊 [CSV] Colunas encontradas: ${colunas.length} - [${colunas.join('] [')}]`);
+                    
+                    if (colunas.length >= 4) {
+                        const numeroJogo = i - inicioLinhas + 1;
+                        
+                        // CORRIGIDO: Formato real do CSV da CEF (4 colunas)
+                        // colunas[0] = Número do jogo (1, 2, 3...)
+                        // colunas[1] = Time Casa (PONTE PRETA/SP, PALMEIRAS/SP...)
+                        // colunas[2] = Time Fora (GUARANI/SP, JUVENTUDE/RS...)
+                        // colunas[3] = Data (Sábado, Domingo)
+                        const timeCasa = colunas[1] || '';
+                        const timeFora = colunas[2] || '';
+                        const dataJogo = colunas[3] || 'Sábado'; // Ler data real do CSV
+                        
+                        if (timeCasa && timeFora) {
+                            jogosAtuais.push({
+                                numero: numeroJogo,
+                                time_casa: timeCasa.toUpperCase(),
+                                time_fora: timeFora.toUpperCase(),
+                                data: dataJogo
+                            });
+                            
+                            console.log(`✅ [CSV] Jogo ${numeroJogo}: ${timeCasa} vs ${timeFora} (${dataJogo})`);
+                            console.log(`📊 [CSV] Colunas lidas: [1]="${colunas[1]}" [2]="${colunas[2]}" [3]="${colunas[3]}"`);
+                        }
+                    }
+                }
+                
+                // Atualizar a tabela na página
+                carregarJogosAtuais();
+                
+                // Atualizar número do concurso se estiver no nome do arquivo
+                if (nomeArquivo) {
+                    const matchConcurso = nomeArquivo.match(/concurso[_-]?(\d+)/i);
+                    if (matchConcurso) {
+                        document.getElementById('numeroConcurso').value = matchConcurso[1];
+                        console.log(`🎯 [CSV] Número do concurso atualizado para: ${matchConcurso[1]}`);
+                    }
+                }
+                
+                // SALVAR AUTOMATICAMENTE OS DADOS
+                salvarDadosJogosAutomaticamente();
+                
+                mostrarNotificacao(`✅ ${jogosAtuais.length} jogos carregados e salvos automaticamente!`, 'success');
+                
+            } catch (error) {
+                console.error('❌ [CSV] Erro ao processar CSV:', error);
+                mostrarNotificacao('❌ Erro ao processar arquivo CSV!', 'error');
+            }
+        }
+
+        // FUNÇÃO REMOVIDA - não mais necessária
+        /* async function carregarConcursoEspecifico() {
             try {
                 const numeroConcurso = document.getElementById('numeroConcursoCarregar').value;
                 
@@ -7533,7 +7818,7 @@
                 console.error('💥 [LOTECA] Erro ao carregar concurso:', error);
                 mostrarNotificacao('❌ Erro ao carregar concurso!', 'error');
             }
-        }
+        } */
 
 
         function atualizarJogo(id, campo, valor) {
@@ -7644,7 +7929,8 @@
             }
         }
 
-        async function salvarJogosLoteca() {
+        // FUNÇÃO REMOVIDA - não mais necessária
+        /* async function salvarJogosLoteca() {
             try {
                 console.log('💾 [LOTECA] Salvando concurso no servidor...');
                 
@@ -7715,9 +8001,10 @@
                 console.error('💥 [LOTECA] Erro ao salvar:', error);
                 mostrarNotificacao('❌ Erro ao salvar concurso!', 'error');
             }
-        }
+        } */
 
-        async function gerarAnalises() {
+        // FUNÇÃO REMOVIDA - não mais necessária
+        /* async function gerarAnalises() {
             try {
                 console.log('🎯 [LOTECA] Gerando análises automáticas...');
                 
@@ -7728,7 +8015,7 @@
                 console.error('💥 [LOTECA] Erro ao gerar análises:', error);
                 mostrarNotificacao('❌ Erro ao gerar análises!', 'error');
             }
-        }
+        } */
 
         // === FUNÇÕES PARA GERENCIAMENTO DE CONCURSOS ===
 
@@ -7934,41 +8221,10 @@
             }
         }
 
-        async function publicarNoSite() {
-            try {
-                console.log('🚀 [LOTECA] Publicando no site...');
-                
-                const numeroConcurso = document.getElementById('numeroConcurso').value;
-                if (!numeroConcurso) {
-                    mostrarNotificacao('❌ Número do concurso é obrigatório!', 'error');
-                    return;
-                }
-                
-                // Carregar dados do servidor
-                const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/${numeroConcurso}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    const concurso = result.concurso;
-                    console.log('📊 [LOTECA] Dados do concurso carregados:', concurso);
-                    
-                    // Atualizar a página "Análise Rápida" com os novos dados
-                    await atualizarPaginaAnaliseRapida(concurso);
-                    
-                    mostrarNotificacao('🚀 Concurso publicado no site com sucesso!', 'success');
-                } else {
-                    console.error('❌ [LOTECA] Erro ao carregar concurso:', result.message);
-                    mostrarNotificacao(`❌ Erro ao carregar concurso: ${result.message}`, 'error');
-                }
-                
-            } catch (error) {
-                console.error('💥 [LOTECA] Erro ao publicar:', error);
-                mostrarNotificacao('❌ Erro ao publicar no site!', 'error');
-            }
-        }
+        // FUNÇÃO REMOVIDA - não mais necessária
         
-        // Função para atualizar a página "Análise Rápida"
-        async function atualizarPaginaAnaliseRapida(concurso) {
+        // FUNÇÃO REMOVIDA - não mais necessária
+        /* async function atualizarPaginaAnaliseRapida(concurso) {
             try {
                 console.log('🔄 [LOTECA] Atualizando página Análise Rápida...');
                 
@@ -8034,7 +8290,7 @@
                 console.error('❌ [LOTECA] Erro ao atualizar página:', error);
                 throw error;
             }
-        }
+        } */
 
         // Inicializar ao carregar a aba
         function inicializarLoteca() {

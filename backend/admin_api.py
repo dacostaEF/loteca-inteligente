@@ -1171,6 +1171,80 @@ def get_proximo_numero():
             'message': f'Erro ao calcular próximo número: {str(e)}'
         }), 500
 
+@bp_admin.route('/api/admin/loteca/listar-csv', methods=['GET'])
+@cross_origin()
+def listar_arquivos_csv():
+    """Listar arquivos CSV da pasta Concursos_CEF"""
+    try:
+        # Caminho da pasta de concursos CSV
+        pasta_csv = os.path.join(os.path.dirname(__file__), '..', 'Concursos_CEF')
+        
+        if not os.path.exists(pasta_csv):
+            logger.warning(f"⚠️ Pasta CSV não encontrada: {pasta_csv}")
+            return jsonify({
+                'success': True,
+                'arquivos': []
+            })
+        
+        # Listar arquivos CSV
+        arquivos = []
+        for arquivo in os.listdir(pasta_csv):
+            if arquivo.lower().endswith('.csv'):
+                arquivos.append(arquivo)
+        
+        # Ordenar por nome
+        arquivos.sort()
+        
+        logger.info(f"📁 {len(arquivos)} arquivos CSV encontrados em {pasta_csv}")
+        
+        return jsonify({
+            'success': True,
+            'arquivos': arquivos,
+            'pasta': pasta_csv
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ Erro ao listar arquivos CSV: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao listar arquivos CSV: {str(e)}'
+        }), 500
+
+@bp_admin.route('/api/admin/loteca/carregar-csv/<nome_arquivo>', methods=['GET'])
+@cross_origin()
+def carregar_arquivo_csv(nome_arquivo):
+    """Carregar conteúdo de um arquivo CSV específico"""
+    try:
+        # Caminho da pasta de concursos CSV
+        pasta_csv = os.path.join(os.path.dirname(__file__), '..', 'Concursos_CEF')
+        caminho_arquivo = os.path.join(pasta_csv, nome_arquivo)
+        
+        # Verificar se arquivo existe
+        if not os.path.exists(caminho_arquivo):
+            return jsonify({
+                'success': False,
+                'message': f'Arquivo {nome_arquivo} não encontrado'
+            }), 404
+        
+        # Ler arquivo CSV
+        with open(caminho_arquivo, 'r', encoding='utf-8') as f:
+            conteudo = f.read()
+        
+        logger.info(f"📂 Arquivo CSV carregado: {nome_arquivo}")
+        
+        return jsonify({
+            'success': True,
+            'conteudo': conteudo,
+            'arquivo': nome_arquivo
+        })
+        
+    except Exception as e:
+        logger.error(f"❌ Erro ao carregar arquivo CSV {nome_arquivo}: {e}")
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao carregar arquivo CSV: {str(e)}'
+        }), 500
+
 @bp_admin.route('/api/admin/atualizar-ultimos-confrontos', methods=['POST'])
 @cross_origin()
 def atualizar_ultimos_confrontos():
