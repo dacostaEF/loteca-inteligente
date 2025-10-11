@@ -1,7 +1,7 @@
 {
   "metadados": {
     "jogo_numero": "1",
-    "sincronizado_em": "2025-10-10T20:29:18.998Z",
+    "sincronizado_em": "2025-10-11T11:36:22.937Z",
     "versao": "1.0"
   },
   "dados_publicos": {
@@ -17,7 +17,8 @@
       "colX": "34",
       "col2": "33"
     },
-    "recomendacao": "Confronto equilibrado entre Ponte Preta e Guarani. Ambos os times apresentam campanhas similares e características técnicas parecidas. A Ponte Preta tem a vantagem de jogar em casa (40%), mas o Guarani é competitivo como visitante (30%). O histórico recente mostra equilíbrio, com alta probabilidade de empate (30%). Recomendação: Coluna 1 (Ponte Preta) pelo fator casa, mas considerar Dupla 1X pela imprevisibilidade do confronto.",
+    "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Médio",
+    "conclusao_analista": null,
     "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
     "posicao_casa": "1",
     "posicao_fora": "2",

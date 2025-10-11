@@ -1608,6 +1608,7 @@ def sincronizar_analise_site():
                 'escudo_fora': dados_jogo.get('escudo_fora'),
                 'probabilidades': dados_jogo.get('probabilidades'),
                 'recomendacao': dados_jogo.get('recomendacao'),
+                'conclusao_analista': dados_jogo.get('conclusao_analista'),
                 'confrontos_sequence': dados_jogo.get('confrontos_sequence'),
                 'posicao_casa': dados_jogo.get('posicao_casa'),
                 'posicao_fora': dados_jogo.get('posicao_fora'),

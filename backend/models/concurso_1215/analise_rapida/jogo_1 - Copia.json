@@ -6,7 +6,7 @@
       "concurso_numero": "1215",
       "time_casa": "Ponte Preta/SP",
       "time_fora": "Guarani/RJ",
-      "salvo_em": "2025-10-11T11:36:22.911Z",
+      "salvo_em": "2025-10-10T20:29:18.985Z",
       "versao": "1.0"
     },
     "dados_publicos": {
@@ -18,12 +18,11 @@
       "escudo_casa": "/static/escudos/PON_Ponte-Preta/PontePreta.png",
       "escudo_fora": "/static/escudos/GUA_Guarani/Guarani.png",
       "probabilidades": {
-        "col1": "33",
-        "colX": "34",
-        "col2": "33"
+        "col1": "33%",
+        "colX": "34%",
+        "col2": "33%"
       },
-      "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Médio",
-      "conclusao_analista": "confronto totalmente equilibrado, o que é comum em um clássico como este. O sistema de análise da Loteca indica que este é um jogo imprevisível com múltiplos cenários possíveis.  A análise sugere que, embora a Ponte Preta tenha a vantagem de jogar no Moisés Lucarelli, o Guarani é competitivo, e a alta probabilidade de empate faz com que a Dupla Casa + Empate (1X) seja a opção mais segura para a Loteca\n",
+      "recomendacao": "Confronto equilibrado entre Ponte Preta e Guarani. Ambos os times apresentam campanhas similares e características técnicas parecidas. A Ponte Preta tem a vantagem de jogar em casa (40%), mas o Guarani é competitivo como visitante (30%). O histórico recente mostra equilíbrio, com alta probabilidade de empate (30%). Recomendação: Coluna 1 (Ponte Preta) pelo fator casa, mas considerar Dupla 1X pela imprevisibilidade do confronto.",
       "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
       "analise_posicao": "Confronto Equilibrado",
       "posicao_casa": "1",

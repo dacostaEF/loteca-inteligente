@@ -2437,10 +2437,10 @@
                 </div>
 
                 <!-- RECOMENDAÇÃO -->
-                <div class="form-section">
-                    <h4>💡 Recomendação</h4>
+                <div class="form-section" style="border-top: 3px solid #32CD32;">
+                    <h4 style="color: #A855F7;">💡 Recomendação</h4>
                     <div class="form-group" style="width: 100%;">
-                        <label>Recomendação Estatística:</label>
+                        <label style="color: #94a3b8;">Recomendação Estatística:</label>
                         <textarea id="recomendacao-admin" class="form-control" rows="6" style="min-height: 120px; resize: vertical; width: 100%; max-width: none;" placeholder="Ex: Baseado na análise dos últimos confrontos e posição na tabela, recomendamos..."></textarea>
                     </div>
                 </div>
@@ -2562,15 +2562,33 @@
                     </div>
                 </div>
 
+                <!-- CONCLUSÃO DO ANALISTA -->
+                <div class="form-section" style="border-top: 3px solid #A855F7;">
+                    <h4 style="color: #A855F7;">🎯 Conclusão do Analista</h4>
+                    <div class="form-group" style="width: 100%;">
+                        <label style="color: #94a3b8;">Conclusão Final do Analista:</label>
+                        <textarea id="conclusao-analista-admin" class="form-control" rows="4" style="min-height: 100px; resize: vertical; width: 100%; max-width: none;" placeholder="Ex: A análise estatística aponta superioridade clara do time da casa..."></textarea>
+                    </div>
+                </div>
+
                 <!-- BOTÕES DE AÇÃO -->
                 <div class="form-section">
                     <div class="form-row">
-                        <button class="btn-primary" onclick="salvarDadosJogo()">
+                        <button class="btn-primary" onclick="salvarDadosJogo()" id="btn-salvar-jogo">
                             <i class="fas fa-save"></i> Salvar Dados do Jogo
                         </button>
                         <button class="btn-secondary" onclick="limparFormularioJogo()">
                             <i class="fas fa-eraser"></i> Limpar Formulário
                         </button>
+                    </div>
+                    <!-- INFORMAÇÕES DO ARQUIVO -->
+                    <div class="form-row" style="margin-top: 10px;">
+                        <div style="text-align: center; color: #666; font-size: 12px;">
+                            <div id="info-arquivo-salvamento">
+                                <strong>Arquivo:</strong> <span id="nome-arquivo-salvamento">jogo_1.json</span><br>
+                                <strong>Caminho:</strong> <span id="caminho-arquivo-salvamento">models/concurso_1215/analise_rapida/</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2979,6 +2997,30 @@
         // === DADOS DOS JOGOS ===
         let jogosAnaliseData = {};
         
+        // FUNÇÃO PARA ATUALIZAR INFORMAÇÕES DO ARQUIVO DE SALVAMENTO
+        function atualizarInfoArquivoSalvamento(jogoSelecionado) {
+            const btnSalvar = document.getElementById('btn-salvar-jogo');
+            const nomeArquivo = document.getElementById('nome-arquivo-salvamento');
+            const caminhoArquivo = document.getElementById('caminho-arquivo-salvamento');
+            
+            // Obter número do concurso atual
+            const numeroConcurso = document.getElementById('numeroConcurso').value || '1215';
+            
+            // Nome do arquivo baseado no jogo selecionado
+            const nomeArquivoCompleto = `jogo_${jogoSelecionado}.json`;
+            const caminhoCompleto = `models/concurso_${numeroConcurso}/analise_rapida/`;
+            
+            // Atualizar botão com nome do arquivo
+            btnSalvar.innerHTML = `<i class="fas fa-save"></i> Salvar Dados do Jogo (${nomeArquivoCompleto})`;
+            
+            // Atualizar informações do arquivo
+            nomeArquivo.textContent = nomeArquivoCompleto;
+            caminhoArquivo.textContent = caminhoCompleto;
+            
+            console.log(`📁 [ARQUIVO] Arquivo de salvamento: ${nomeArquivoCompleto}`);
+            console.log(`📁 [ARQUIVO] Caminho: ${caminhoCompleto}`);
+        }
+        
         function carregarDadosJogo() {
             const jogoSelecionado = document.getElementById('jogo-analise-select').value;
             const container = document.getElementById('dados-jogo-container');
@@ -2997,6 +3039,9 @@
             // Atualizar título
             const opcaoSelecionada = document.querySelector(`#jogo-analise-select option[value="${jogoSelecionado}"]`);
             titulo.textContent = `🎯 ${opcaoSelecionada.textContent}`;
+            
+            // ATUALIZAR BOTÃO E INFORMAÇÕES DO ARQUIVO
+            atualizarInfoArquivoSalvamento(jogoSelecionado);
             
             // AUTO-PREENCHIMENTO BASEADO NO JOGO SELECIONADO
             autoPreencherDadosJogo(jogoSelecionado);
@@ -3214,6 +3259,7 @@
                     col2: document.getElementById('prob-col2-admin').value
                 },
                 recomendacao: document.getElementById('recomendacao-admin').value,
+                conclusao_analista: document.getElementById('conclusao-analista-admin').value,
                 confrontos_sequence: document.getElementById('confrontos-sequence-admin').value,
                 analise_posicao: document.getElementById('analise-posicao-admin').value,
                 posicao_casa: document.getElementById('posicao-casa-admin').value,
@@ -3375,6 +3421,7 @@
                         escudo_fora: dadosJogo.escudo_fora,
                         probabilidades: dadosJogo.probabilidades,
                         recomendacao: dadosJogo.recomendacao,
+                        conclusao_analista: dadosJogo.conclusao_analista,
                         confrontos_sequence: dadosJogo.confrontos_sequence,
                         analise_posicao: dadosJogo.analise_posicao,
                         posicao_casa: dadosJogo.posicao_casa,
@@ -3428,6 +3475,7 @@
             document.getElementById('prob-colX-admin').value = '';
             document.getElementById('prob-col2-admin').value = '';
             document.getElementById('recomendacao-admin').value = '';
+            document.getElementById('conclusao-analista-admin').value = '';
             document.getElementById('confrontos-sequence-admin').value = '';
             document.getElementById('posicao-casa-admin').value = '';
             document.getElementById('posicao-fora-admin').value = '';
@@ -3535,6 +3583,7 @@
             document.getElementById('prob-colX-admin').value = dados.dados_publicos?.probabilidades?.colX || dados.probabilidades?.colX || '';
             document.getElementById('prob-col2-admin').value = dados.dados_publicos?.probabilidades?.col2 || dados.probabilidades?.col2 || '';
             document.getElementById('recomendacao-admin').value = dados.dados_publicos?.recomendacao || dados.recomendacao || '';
+            document.getElementById('conclusao-analista-admin').value = dados.dados_publicos?.conclusao_analista || dados.conclusao_analista || '';
             document.getElementById('confrontos-sequence-admin').value = dados.dados_publicos?.confrontos_sequence || dados.confrontos_sequence || '';
             document.getElementById('analise-posicao-admin').value = dados.dados_publicos?.analise_posicao || dados.analise_posicao || '';
             document.getElementById('posicao-casa-admin').value = dados.dados_publicos?.posicao_casa || dados.posicao_casa || '';
