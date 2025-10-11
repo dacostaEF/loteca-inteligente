@@ -1,23 +1,24 @@
 {
   "metadados": {
     "jogo_numero": "2",
-    "sincronizado_em": "2025-10-11T10:41:13.151Z",
+    "sincronizado_em": "2025-10-11T15:03:05.067Z",
     "versao": "1.0"
   },
   "dados_publicos": {
-    "time_casa": "Fortaleza/CE",
-    "time_fora": "Sport/PE",
-    "arena": "Arena Castelão",
+    "time_casa": "Palmeiras/SP",
+    "time_fora": "Juventude/SP",
+    "arena": "Moises Lucharelli ",
     "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/FOR_Fortaleza/Fortaleza.png",
-    "escudo_fora": "/static/escudos/SPO_Sport/Sport.png",
+    "escudo_casa": "/static/escudos\\PAL_Palmeiras\\Palmeiras.png",
+    "escudo_fora": "/static/escudos\\JUV_Juventude\\Juventude.png",
     "probabilidades": {
-      "col1": "",
-      "colX": "",
-      "col2": ""
+      "col1": "33",
+      "colX": "34",
+      "col2": "33"
     },
-    "recomendacao": "Confronto equilibrado entre Ponte Preta e Guarani. Ambos os times apresentam campanhas similares e características técnicas parecidas. A Ponte Preta tem a vantagem de jogar em casa (40%), mas o Guarani é competitivo como visitante (30%). O histórico recente mostra equilíbrio, com alta probabilidade de empate (30%). Recomendação: Coluna 1 (Ponte Preta) pelo fator casa, mas considerar Dupla 1X pela imprevisibilidade do confronto.",
+    "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Médio",
+    "conclusao_analista": null,
     "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
     "posicao_casa": "1",
     "posicao_fora": "2",

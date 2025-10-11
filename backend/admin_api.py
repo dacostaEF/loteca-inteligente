@@ -1424,11 +1424,19 @@ def salvar_analise_jogo():
         jogo_numero = data.get('metadados', {}).get('jogo_numero', '1')
         concurso_numero = data.get('metadados', {}).get('concurso_numero', '1215')
         
+        logger.info(f"💾 [SALVAR] Salvando JOGO {jogo_numero} do CONCURSO {concurso_numero}")
+        logger.info(f"📊 [SALVAR] Dados recebidos: {data}")
+        
         # NOVA ESTRUTURA: Pasta por concurso
         pasta_concurso = f'models/concurso_{concurso_numero}'
         pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
         nome_arquivo = f'jogo_{jogo_numero}.json'
         caminho_arquivo = os.path.join(pasta_analise, nome_arquivo)
+        
+        logger.info(f"📁 [SALVAR] Pasta concurso: {pasta_concurso}")
+        logger.info(f"📁 [SALVAR] Pasta análise: {pasta_analise}")
+        logger.info(f"📄 [SALVAR] Nome arquivo: {nome_arquivo}")
+        logger.info(f"📄 [SALVAR] Caminho completo: {caminho_arquivo}")
         
         # Garantir que as pastas existem
         os.makedirs(pasta_analise, exist_ok=True)

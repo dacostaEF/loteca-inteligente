@@ -5,18 +5,18 @@
       "jogo_numero": "1",
       "concurso_numero": "1215",
       "time_casa": "Ponte Preta/SP",
-      "time_fora": "Guarani/RJ",
-      "salvo_em": "2025-10-11T11:36:22.911Z",
+      "time_fora": "Guarani/SP",
+      "salvo_em": "2025-10-11T15:06:16.183Z",
       "versao": "1.0"
     },
     "dados_publicos": {
       "time_casa": "Ponte Preta/SP",
-      "time_fora": "Guarani/RJ",
+      "time_fora": "Guarani/SP",
       "arena": "Moises Lucharelli ",
       "campeonato": "Brasileirão Série A",
       "dia": "Sábado",
-      "escudo_casa": "/static/escudos/PON_Ponte-Preta/PontePreta.png",
-      "escudo_fora": "/static/escudos/GUA_Guarani/Guarani.png",
+      "escudo_casa": "/static/escudos\\PON_Ponte-Preta\\PontePreta.png",
+      "escudo_fora": "/static/escudos\\GUA_Guarani\\Guarani.png",
       "probabilidades": {
         "col1": "33",
         "colX": "34",

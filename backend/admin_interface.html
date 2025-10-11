@@ -2334,7 +2334,7 @@
                     <div class="form-row">
                         <div class="form-group" style="flex: 1;">
                             <label>Escudo Time Casa:</label>
-                            <input type="text" id="escudo-casa-path" class="form-control" placeholder="/static/escudos/PON_Ponte_Preta/Ponte_Preta.png" onchange="atualizarPreviewEscudo('casa')">
+                            <input type="text" id="escudo-casa-path" class="form-control" value="/static/escudos/" placeholder="Digite o nome do time (ex: PAL_Palmeiras/Palmeiras.png)" onchange="atualizarPreviewEscudo('casa')">
                             <small class="form-text">Caminho completo do arquivo do escudo</small>
                         </div>
                         <div class="form-group" style="flex: 0 0 120px; text-align: center;">
@@ -2348,7 +2348,7 @@
                     <div class="form-row">
                         <div class="form-group" style="flex: 1;">
                             <label>Escudo Time Fora:</label>
-                            <input type="text" id="escudo-fora-path" class="form-control" placeholder="/static/escudos/GUA_Guarani/Guarani.png" onchange="atualizarPreviewEscudo('fora')">
+                            <input type="text" id="escudo-fora-path" class="form-control" value="/static/escudos/" placeholder="Digite o nome do time (ex: JUV_Juventude/Juventude.png)" onchange="atualizarPreviewEscudo('fora')">
                             <small class="form-text">Caminho completo do arquivo do escudo</small>
                         </div>
                         <div class="form-group" style="flex: 0 0 120px; text-align: center;">
@@ -3009,8 +3009,8 @@
             // ATUALIZAR BOTÃO E INFORMAÇÕES DO ARQUIVO
             atualizarInfoArquivoSalvamento(jogoSelecionado);
             
-            // AUTO-PREENCHIMENTO BASEADO NO JOGO SELECIONADO
-            autoPreencherDadosJogo(jogoSelecionado);
+            // CORRESPONDÊNCIA AUTOMÁTICA COM A TABELA DA ABA "JOGOS DA LOTECA"
+            sincronizarComTabelaLoteca(jogoSelecionado);
             
             // Carregar dados existentes se disponíveis (sobrescreve o auto-preenchimento)
             carregarDadosJogoExistente();
@@ -3370,7 +3370,7 @@
                 // Preparar dados para envio com estrutura do concurso
                 const dadosEnvio = {
                     metadados: {
-                        jogo_numero: dadosJogo.numero,
+                        jogo_numero: dadosJogo.numero.toString(),
                         concurso_numero: numeroConcurso,
                         time_casa: dadosJogo.time_casa,
                         time_fora: dadosJogo.time_fora,
@@ -7411,6 +7411,9 @@
             });
 
             console.log('✅ [LOTECA] 14 jogos carregados na tabela');
+            
+            // ATUALIZAR DROPDOWN DA ABA "PLANILHA ANÁLISE RÁPIDA"
+            atualizarDropdownAnaliseRapida();
         }
 
         // Nova função para carregar concurso específico
@@ -7482,6 +7485,245 @@
                     document.body.removeChild(input);
                 }
             }, 100);
+        }
+        
+        // FUNÇÃO PARA ATUALIZAR DROPDOWN DA ABA "PLANILHA ANÁLISE RÁPIDA"
+        function atualizarDropdownAnaliseRapida() {
+            try {
+                console.log('🔄 [DROPDOWN] Atualizando dropdown da aba Análise Rápida...');
+                
+                const dropdown = document.getElementById('jogo-analise-select');
+                if (!dropdown) {
+                    console.log('⚠️ [DROPDOWN] Dropdown não encontrado');
+                    return;
+                }
+                
+                // Atualizar cada opção do dropdown com os dados da tabela
+                for (let i = 1; i <= 14; i++) {
+                    const timeCasa = document.getElementById(`coluna1_${i}`)?.value || '';
+                    const timeFora = document.getElementById(`coluna2_${i}`)?.value || '';
+                    
+                    const opcao = dropdown.querySelector(`option[value="${i}"]`);
+                    if (opcao && timeCasa && timeFora) {
+                        opcao.textContent = `JOGO ${i} - ${timeCasa} vs ${timeFora}`;
+                        console.log(`✅ [DROPDOWN] Opção ${i} atualizada: ${opcao.textContent}`);
+                    }
+                }
+                
+                console.log('✅ [DROPDOWN] Dropdown da aba Análise Rápida atualizado!');
+                
+            } catch (error) {
+                console.error('❌ [DROPDOWN] Erro ao atualizar dropdown:', error);
+            }
+        }
+        
+        // FUNÇÃO PARA SINCRONIZAR COM A TABELA DA ABA "JOGOS DA LOTECA"
+        function sincronizarComTabelaLoteca(jogoSelecionado) {
+            try {
+                console.log(`🔄 [SINCRONIZAÇÃO] Sincronizando Jogo ${jogoSelecionado} com tabela da Loteca...`);
+                
+                // Buscar dados da tabela da aba "Jogos da Loteca"
+                const timeCasa = document.getElementById(`coluna1_${jogoSelecionado}`)?.value || '';
+                const timeFora = document.getElementById(`coluna2_${jogoSelecionado}`)?.value || '';
+                const dataJogo = document.getElementById(`data_${jogoSelecionado}`)?.value || '';
+                
+                console.log(`📊 [SINCRONIZAÇÃO] Dados encontrados: ${timeCasa} vs ${timeFora} (${dataJogo})`);
+                
+                // SUBSTITUIÇÃO AUTOMÁTICA COMPLETA DE TODOS OS CAMPOS
+                if (timeCasa && timeFora) {
+                    console.log(`🔄 [SUBSTITUIÇÃO] Substituindo dados antigos pelos novos: ${timeCasa} vs ${timeFora}`);
+                    
+                    // 1. CAMPOS BÁSICOS - SUBSTITUIÇÃO AUTOMÁTICA
+                    document.getElementById('time-casa-admin').value = timeCasa;
+                    document.getElementById('time-fora-admin').value = timeFora;
+                    
+                    // 2. IDENTIFICAR CLUBES E SUBSTITUIR ESCUDOS AUTOMATICAMENTE
+                    const escudos = identificarEscudosClubes(timeCasa, timeFora);
+                    if (escudos.casa) {
+                        document.getElementById('escudo-casa-path').value = escudos.casa;
+                        console.log(`🛡️ [SUBSTITUIÇÃO] Escudo casa substituído: ${escudos.casa}`);
+                    }
+                    if (escudos.fora) {
+                        document.getElementById('escudo-fora-path').value = escudos.fora;
+                        console.log(`🛡️ [SUBSTITUIÇÃO] Escudo fora substituído: ${escudos.fora}`);
+                    }
+                    
+                    // 3. SUBSTITUIR ARENA E CAMPEONATO AUTOMATICAMENTE
+                    const infoJogo = identificarInfoJogo(timeCasa, timeFora, dataJogo);
+                    if (infoJogo.arena) {
+                        document.getElementById('arena-admin').value = infoJogo.arena;
+                        console.log(`🏟️ [SUBSTITUIÇÃO] Arena substituída: ${infoJogo.arena}`);
+                    }
+                    if (infoJogo.campeonato) {
+                        document.getElementById('campeonato-admin').value = infoJogo.campeonato;
+                        console.log(`🏆 [SUBSTITUIÇÃO] Campeonato substituído: ${infoJogo.campeonato}`);
+                    }
+                    if (infoJogo.dia) {
+                        document.getElementById('dia-admin').value = infoJogo.dia;
+                        console.log(`📅 [SUBSTITUIÇÃO] Dia substituído: ${infoJogo.dia}`);
+                    }
+                    
+                    // 4. LIMPAR CAMPOS DE ANÁLISE PARA NOVA ANÁLISE
+                    document.getElementById('probabilidade-casa-admin').value = '';
+                    document.getElementById('probabilidade-empate-admin').value = '';
+                    document.getElementById('probabilidade-fora-admin').value = '';
+                    document.getElementById('recomendacao-admin').value = '';
+                    document.getElementById('conclusao-analista-admin').value = '';
+                    
+                    console.log(`✅ [SUBSTITUIÇÃO] Todos os campos substituídos automaticamente!`);
+                    console.log(`🔄 [SUBSTITUIÇÃO] Dados antigos removidos, prontos para nova análise!`);
+                }
+                
+                // Atualizar opção do dropdown para refletir os times atuais
+                const opcaoDropdown = document.querySelector(`#jogo-analise-select option[value="${jogoSelecionado}"]`);
+                if (opcaoDropdown && timeCasa && timeFora) {
+                    opcaoDropdown.textContent = `JOGO ${jogoSelecionado} - ${timeCasa} vs ${timeFora}`;
+                    console.log(`✅ [SINCRONIZAÇÃO] Dropdown atualizado: ${opcaoDropdown.textContent}`);
+                }
+                
+                console.log(`✅ [SINCRONIZAÇÃO] Jogo ${jogoSelecionado} sincronizado com sucesso!`);
+                
+            } catch (error) {
+                console.error(`❌ [SINCRONIZAÇÃO] Erro ao sincronizar Jogo ${jogoSelecionado}:`, error);
+            }
+        }
+        
+        // FUNÇÃO PARA IDENTIFICAR ESCUDOS DOS CLUBES
+        function identificarEscudosClubes(timeCasa, timeFora) {
+            const escudos = { casa: '', fora: '' };
+            
+            // Mapeamento de times para escudos
+            const mapeamentoEscudos = {
+                'PONTE PRETA/SP': '/static/escudos/PON_Ponte_Preta/Ponte_Preta.png',
+                'GUARANI/RJ': '/static/escudos/GUA_Guarani/Guarani.png',
+                'FORTALEZA/CE': '/static/escudos/FOR_Fortaleza/Fortaleza.png',
+                'SPORT/PE': '/static/escudos/SPT_Sport/Sport.png',
+                'JUVENTUDE/RS': '/static/escudos/JUV_Juventude/Juventude.png',
+                'INTERNACIONAL/RS': '/static/escudos/INT_Internacional/Internacional.png',
+                'VASCO DA GAMA/RJ': '/static/escudos/VAS_Vasco/Vasco.png',
+                'CRUZEIRO/MG': '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
+                'ATHLETICO/PR': '/static/escudos/ATL_Athletico/Athletico.png',
+                'OPERARIO/PR': '/static/escudos/OPE_Operario/Operario.png',
+                'ATLETICO/MG': '/static/escudos/ATM_Atletico_MG/Atletico_MG.png',
+                'MIRASSOL/SP': '/static/escudos/MIR_Mirassol/Mirassol.png',
+                'GREMIO/RS': '/static/escudos/GRE_Gremio/Gremio.png',
+                'VITORIA/BA': '/static/escudos/VIT_Vitoria/Vitoria.png',
+                'BAHIA/BA': '/static/escudos/BAH_Bahia/Bahia.png',
+                'PALMEIRAS/SP': '/static/escudos/PAL_Palmeiras/Palmeiras.png',
+                'FLUMINENSE/RJ': '/static/escudos/FLU_Fluminense/Fluminense.png',
+                'BOTAFOGO/RJ': '/static/escudos/BOT_Botafogo/Botafogo.png',
+                'CRICIUMA/SC': '/static/escudos/CRI_Criciuma/Criciuma.png',
+                'PAYSANDU/PA': '/static/escudos/PAY_Paysandu/Paysandu.png',
+                'BRAGANTINO/SP': '/static/escudos/BRA_Bragantino/Bragantino.png',
+                'SANTOS/SP': '/static/escudos/SAN_Santos/Santos.png',
+                'ESTONIA': '/static/escudos/EST_Estonia/Estonia.png',
+                'ITALIA': '/static/escudos/ITA_Italia/Italia.png',
+                'BULGARIA': '/static/escudos/BUL_Bulgaria/Bulgaria.png',
+                'TURQUIA': '/static/escudos/TUR_Turquia/Turquia.png',
+                'ESPANHA': '/static/escudos/ESP_Espanha/Espanha.png',
+                'GEORGIA': '/static/escudos/GEO_Georgia/Georgia.png',
+                'SERVIA/SER': '/static/escudos/SER_Servia/Servia.png',
+                'ALBANIA': '/static/escudos/ALB_Albania/Albania.png',
+                'PORTUGAL': '/static/escudos/POR_Portugal/Portugal.png',
+                'IRLANDA': '/static/escudos/IRL_Irlanda/Irlanda.png',
+                'NOVORIZONTINO/SP': '/static/escudos/NOV_Novorizontino/Novorizontino.png',
+                'HOLANDA': '/static/escudos/HOL_Holanda/Holanda.png',
+                'FINLANDIA': '/static/escudos/FIN_Finlandia/Finlandia.png',
+                'AMERICA/MG': '/static/escudos/AME_America_MG/America_MG.png',
+                'CUIABA/MT': '/static/escudos/CUI_Cuiaba/Cuiaba.png',
+                'CORITIBA/PR': '/static/escudos/COR_Coritiba/Coritiba.png',
+                'ROMENIA': '/static/escudos/ROM_Romenia/Romenia.png',
+                'AUSTRIA': '/static/escudos/AUT_Austria/Austria.png',
+                'DINAMARCA': '/static/escudos/DIN_Dinamarca/Dinamarca.png',
+                'GRECIA': '/static/escudos/GRE_Grecia/Grecia.png',
+                'LITUANIA': '/static/escudos/LIT_Lituania/Lituania.png',
+                'POLONIA': '/static/escudos/POL_Polonia/Polonia.png',
+                'ASTON VILLA': '/static/escudos/AVL_Aston_Villa/Aston_Villa.png',
+                'FULHAM': '/static/escudos/FUL_Fulham/Fulham.png',
+                'NEW CASTLE': '/static/escudos/NEW_Newcastle/Newcastle.png',
+                'ARSENAL': '/static/escudos/ARS_Arsenal/Arsenal.png',
+                'BARCELONA': '/static/escudos/BAR_Barcelona/Barcelona.png',
+                'REAL SOCIEDAD': '/static/escudos/RSO_Real_Sociedad/Real_Sociedad.png'
+            };
+            
+            // Identificar escudos
+            escudos.casa = mapeamentoEscudos[timeCasa.toUpperCase()] || '';
+            escudos.fora = mapeamentoEscudos[timeFora.toUpperCase()] || '';
+            
+            console.log(`🛡️ [ESCUDOS] ${timeCasa}: ${escudos.casa}`);
+            console.log(`🛡️ [ESCUDOS] ${timeFora}: ${escudos.fora}`);
+            
+            return escudos;
+        }
+        
+        // FUNÇÃO PARA IDENTIFICAR INFORMAÇÕES DO JOGO
+        function identificarInfoJogo(timeCasa, timeFora, dataJogo) {
+            const info = { arena: '', campeonato: '', dia: '' };
+            
+            // Mapeamento de arenas
+            const mapeamentoArenas = {
+                'PONTE PRETA/SP': 'Neo Química Arena',
+                'GUARANI/RJ': 'Estádio do Guarani',
+                'FORTALEZA/CE': 'Arena Castelão',
+                'SPORT/PE': 'Arena Pernambuco',
+                'JUVENTUDE/RS': 'Alfredo Jaconi',
+                'INTERNACIONAL/RS': 'Beira-Rio',
+                'VASCO DA GAMA/RJ': 'São Januário',
+                'CRUZEIRO/MG': 'Mineirão',
+                'ATHLETICO/PR': 'Arena da Baixada',
+                'OPERARIO/PR': 'Estádio do Operário',
+                'ATLETICO/MG': 'Arena MRV',
+                'MIRASSOL/SP': 'Estádio José Maria de Campos Maia',
+                'GREMIO/RS': 'Arena do Grêmio',
+                'VITORIA/BA': 'Barradão',
+                'BAHIA/BA': 'Arena Fonte Nova',
+                'PALMEIRAS/SP': 'Allianz Parque',
+                'FLUMINENSE/RJ': 'Maracanã',
+                'BOTAFOGO/RJ': 'Nilton Santos',
+                'CRICIUMA/SC': 'Heriberto Hülse',
+                'PAYSANDU/PA': 'Curuzu',
+                'BRAGANTINO/SP': 'Nabi Abi Chedid',
+                'SANTOS/SP': 'Vila Belmiro',
+                'ESTONIA': 'A. Le Coq Arena',
+                'ITALIA': 'Estádio Olímpico',
+                'BULGARIA': 'Vasil Levski National Stadium',
+                'TURQUIA': 'Türk Telekom Stadium',
+                'ESPANHA': 'Santiago Bernabéu',
+                'GEORGIA': 'Boris Paichadze Stadium',
+                'SERVIA/SER': 'Stadion Rajko Mitić',
+                'ALBANIA': 'Arena Kombëtare',
+                'PORTUGAL': 'Estádio da Luz',
+                'IRLANDA': 'Aviva Stadium',
+                'NOVORIZONTINO/SP': 'Estádio Dr. Jorge Ismael de Biasi',
+                'HOLANDA': 'Johan Cruyff Arena',
+                'FINLANDIA': 'Helsinki Olympic Stadium',
+                'AMERICA/MG': 'Independência',
+                'CUIABA/MT': 'Arena Pantanal',
+                'CORITIBA/PR': 'Couto Pereira',
+                'ROMENIA': 'Arena Națională',
+                'AUSTRIA': 'Ernst Happel Stadium',
+                'DINAMARCA': 'Parken Stadium',
+                'GRECIA': 'Olympic Stadium',
+                'LITUANIA': 'LFF Stadium',
+                'POLONIA': 'National Stadium',
+                'ASTON VILLA': 'Villa Park',
+                'FULHAM': 'Craven Cottage',
+                'NEW CASTLE': 'St. James\' Park',
+                'ARSENAL': 'Emirates Stadium',
+                'BARCELONA': 'Camp Nou',
+                'REAL SOCIEDAD': 'Reale Arena'
+            };
+            
+            // Identificar arena (baseada no time da casa)
+            info.arena = mapeamentoArenas[timeCasa.toUpperCase()] || 'Arena não identificada';
+            info.campeonato = 'Brasileirão Série A';
+            info.dia = dataJogo || 'Sábado';
+            
+            console.log(`🏟️ [INFO] Arena: ${info.arena}`);
+            console.log(`🏆 [INFO] Campeonato: ${info.campeonato}`);
+            console.log(`📅 [INFO] Dia: ${info.dia}`);
+            
+            return info;
         }
         
         // FUNÇÃO PARA SALVAR DADOS AUTOMATICAMENTE
@@ -7828,6 +8070,9 @@
             if (jogo) {
                 jogo[campo] = valor;
                 console.log(`✅ [LOTECA] Jogo ${id} atualizado`);
+                
+                // ATUALIZAR DROPDOWN DA ABA "PLANILHA ANÁLISE RÁPIDA"
+                atualizarDropdownAnaliseRapida();
             }
         }
 
