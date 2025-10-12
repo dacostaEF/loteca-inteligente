@@ -1668,7 +1668,9 @@ def sincronizar_analise_site():
             }), 400
         
         # Salvar dados em arquivo JSON para a página do usuário
-        pasta_analise = 'models/analise_rapida'
+        # ESTRUTURA FIXA: Usar APENAS concurso 1215
+        pasta_concurso = 'models/concurso_1215'
+        pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
         os.makedirs(pasta_analise, exist_ok=True)
         
         arquivo_analise = os.path.join(pasta_analise, f'jogo_{jogo_numero}.json')

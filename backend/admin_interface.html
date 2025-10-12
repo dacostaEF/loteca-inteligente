@@ -2198,7 +2198,7 @@
             <div class="form-row">
                 <div class="input-group">
                     <label>Selecionar Clube</label>
-                    <select id="clubeEstatisticas">
+                    <select id="clubeEstatisticasResumo">
                         <option value="">Carregando clubes...</option>
                     </select>
                 </div>
@@ -2208,7 +2208,7 @@
                 </div>
                 <div class="input-group">
                     <label>% Prováveis</label>
-                    <input type="number" id="pctProvaveis" placeholder="Ex: 35.5" step="0.1" min="0" max="100">
+                    <input type="number" id="pctProvaveisResumo" placeholder="Ex: 35.5" step="0.1" min="0" max="100">
                 </div>
                 <div class="input-group">
                     <label>Média Pontos</label>
@@ -2831,6 +2831,9 @@
                 const btn = document.getElementById('btn-sincronizar-analise');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sync"></i> Sincronizar com Site (Secundário)';
+                
+                // Re-anexar event listeners após mudança no DOM
+                setTimeout(() => reanexarEventListeners(), 100);
             }
         }
         
@@ -2957,6 +2960,9 @@
                 const btn = document.getElementById('btn-calcular-estatisticas');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-calculator"></i> Calcular Estatísticas';
+                
+                // Re-anexar event listeners após mudança no DOM
+                setTimeout(() => reanexarEventListeners(), 100);
             }
         }
         
@@ -2982,6 +2988,9 @@
             // Atualizar informações do arquivo
             nomeArquivo.textContent = nomeArquivoCompleto;
             caminhoArquivo.textContent = caminhoCompleto;
+            
+            // Re-anexar event listeners após mudança no DOM
+            setTimeout(() => reanexarEventListeners(), 100);
             
             console.log(`📁 [ARQUIVO] Arquivo de salvamento: ${nomeArquivoCompleto}`);
             console.log(`📁 [ARQUIVO] Caminho: ${caminhoCompleto}`);
@@ -4441,7 +4450,7 @@
             // Carregando clubes...
             try {
                 // Preencher o select (se ainda não estiver populado)
-                const select = document.querySelector('#estatisticas #clubeEstatisticas');
+                const select = document.getElementById('clubeEstatisticas');
                 if (select && select.options.length <= 1) {
                     const clubes = [
                         'Flamengo','Palmeiras','Botafogo','Cruzeiro','Corinthians',
@@ -4495,7 +4504,15 @@
         }
 
         function filtrarClubes() {
-            const searchTerm = document.getElementById('searchClubes').value.toLowerCase();
+            // Usar getter seguro
+            const el = $('searchClubes');
+            const searchTerm = el ? el.value.toLowerCase() : '';
+            
+            if (!searchTerm) {
+                console.warn('⚠️ [FILTRO] Elemento searchClubes não encontrado na DOM atual');
+                return;
+            }
+            
             const clubesFiltrados = clubesData.filter(clube => 
                 clube.nome_fantasia.toLowerCase().includes(searchTerm) ||
                 clube.abreviacao.toLowerCase().includes(searchTerm) ||
@@ -4507,15 +4524,16 @@
         // Função removida - select agora é preenchido diretamente em carregarClubes()
 
         async function salvarClube() {
+            // Usar getters seguros
             const clube = {
-                nome_fantasia: document.getElementById('nomeFantasia').value,
-                abreviacao: document.getElementById('abreviacao').value,
-                estado: document.getElementById('estado').value,
-                serie: document.getElementById('serie').value,
-                id: document.getElementById('cartolaId').value,
-                escudo_url: document.getElementById('escudoUrl').value,
-                cor_primaria: document.getElementById('corPrimaria').value,
-                cor_secundaria: document.getElementById('corSecundaria').value,
+                nome_fantasia: val('nomeFantasia'),
+                abreviacao: val('abreviacao'),
+                estado: val('estado'),
+                serie: val('serie'),
+                id: val('cartolaId'),
+                escudo_url: val('escudoUrl'),
+                cor_primaria: val('corPrimaria'),
+                cor_secundaria: val('corSecundaria'),
                 admin_key: ADMIN_KEY
             };
             
@@ -4548,14 +4566,21 @@
         }
 
         function limparFormClube() {
-            document.getElementById('nomeFantasia').value = '';
-            document.getElementById('abreviacao').value = '';
-            document.getElementById('estado').value = '';
-            document.getElementById('serie').value = '';
-            document.getElementById('cartolaId').value = '';
-            document.getElementById('escudoUrl').value = '';
-            document.getElementById('corPrimaria').value = '#FF0000';
-            document.getElementById('corSecundaria').value = '#000000';
+            const campos = [
+                { id: 'nomeFantasia', value: '' },
+                { id: 'abreviacao', value: '' },
+                { id: 'estado', value: '' },
+                { id: 'serie', value: '' },
+                { id: 'cartolaId', value: '' },
+                { id: 'escudoUrl', value: '' },
+                { id: 'corPrimaria', value: '#FF0000' },
+                { id: 'corSecundaria', value: '#000000' }
+            ];
+            
+            campos.forEach(campo => {
+                const el = $(campo.id);
+                if (el) el.value = campo.value;
+            });
         }
 
         function editarClube(id) {
@@ -5492,11 +5517,8 @@
         async function carregarEstatisticasClube() {
             console.log('🔍 [DEBUG] carregarEstatisticasClube chamada');
             
-            // Tentar ambos os seletores para garantir
-            let clubeSelecionado = document.querySelector('#estatisticas #clubeEstatisticas')?.value;
-            if (!clubeSelecionado) {
-                clubeSelecionado = document.getElementById('clubeEstatisticas')?.value;
-            }
+            // Usar seletor específico para evitar ambiguidade
+            let clubeSelecionado = document.getElementById('clubeEstatisticas')?.value;
             
             console.log('🔍 [DEBUG] Clube selecionado:', clubeSelecionado);
             
@@ -5882,7 +5904,7 @@
                             'santos': 4.1
                         };
                         
-                        const clubeAtual = window.CLUBE_ATUAL || document.querySelector('#estatisticas #clubeEstatisticas')?.value?.toLowerCase();
+                        const clubeAtual = window.CLUBE_ATUAL || document.getElementById('clubeEstatisticas')?.value?.toLowerCase();
                         chutesPorJogo = dadosChutes[clubeAtual] ?? 12; // Fallback seguro
                         
                         // Opcional: já mostrar o que foi usado
@@ -7253,6 +7275,63 @@
             camposComCadeado.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
                 if (field) {
+                    // Remover listeners existentes para evitar duplicação
+                    field.removeEventListener('input', mostrarCadeadoSePreenchido);
+                    field.removeEventListener('blur', mostrarCadeadoSePreenchido);
+                    
+                    // Adicionar novos listeners
+                    field.addEventListener('input', () => mostrarCadeadoSePreenchido(fieldId));
+                    field.addEventListener('blur', () => mostrarCadeadoSePreenchido(fieldId));
+                    // Verificar no carregamento
+                    mostrarCadeadoSePreenchido(fieldId);
+                }
+            });
+        }
+        
+        // Função para re-anexar event listeners de uma seção específica
+        function rehookEvents(sectionId) {
+            console.log(`🔄 [LISTENERS] Re-anexando event listeners da seção: ${sectionId}`);
+            
+            const section = $(sectionId);
+            if (!section) {
+                console.warn(`⚠️ [LISTENERS] Seção ${sectionId} não encontrada`);
+                return;
+            }
+            
+            // Re-anexar listeners de cadeado para esta seção
+            adicionarListenersCadeadoSection(sectionId);
+            
+            // Re-anexar outros listeners conforme necessário
+            // (adicionar aqui outros listeners específicos da seção)
+            
+            console.log(`✅ [LISTENERS] Event listeners da seção ${sectionId} re-anexados com sucesso`);
+        }
+        
+        // Função para re-anexar todos os event listeners após mudanças no DOM
+        function reanexarEventListeners() {
+            console.log('🔄 [LISTENERS] Re-anexando event listeners após mudança no DOM...');
+            
+            // Re-anexar listeners de cadeado
+            adicionarListenersCadeado();
+            
+            // Re-anexar outros listeners conforme necessário
+            // (adicionar aqui outros listeners que precisam ser re-anexados)
+            
+            console.log('✅ [LISTENERS] Event listeners re-anexados com sucesso');
+        }
+        
+        // Função para adicionar listeners de cadeado em uma seção específica
+        function adicionarListenersCadeadoSection(sectionId) {
+            const camposComCadeado = ['elencoTotal', 'pctProvaveis', 'valorElenco', 'ratingMedio', 'chutesPorJogo', 'posseBola', 'passesCertos'];
+            
+            camposComCadeado.forEach(fieldId => {
+                const field = $section(sectionId, fieldId) || $(fieldId);
+                if (field) {
+                    // Remover listeners existentes para evitar duplicação
+                    field.removeEventListener('input', mostrarCadeadoSePreenchido);
+                    field.removeEventListener('blur', mostrarCadeadoSePreenchido);
+                    
+                    // Adicionar novos listeners
                     field.addEventListener('input', () => mostrarCadeadoSePreenchido(fieldId));
                     field.addEventListener('blur', () => mostrarCadeadoSePreenchido(fieldId));
                     // Verificar no carregamento
@@ -7261,6 +7340,72 @@
             });
         }
 
+        // === ESTADO GLOBAL ===
+        window.ADMIN_STATE = {
+            currentSection: null,
+            formData: {},
+            lastSaved: null,
+            isDirty: false
+        };
+        
+        // Funções para gerenciar estado
+        const saveState = (sectionId, data) => {
+            window.ADMIN_STATE.currentSection = sectionId;
+            window.ADMIN_STATE.formData[sectionId] = data;
+            window.ADMIN_STATE.lastSaved = new Date().toISOString();
+            window.ADMIN_STATE.isDirty = false;
+        };
+        
+        const loadState = (sectionId) => {
+            return window.ADMIN_STATE.formData[sectionId] || {};
+        };
+        
+        const syncDOMToState = (sectionId) => {
+            const data = {};
+            const section = $(sectionId);
+            if (section) {
+                const inputs = section.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    if (input.id) {
+                        data[input.id] = input.value;
+                    }
+                });
+            }
+            saveState(sectionId, data);
+        };
+        
+        const syncStateToDOM = (sectionId) => {
+            const data = loadState(sectionId);
+            const section = $(sectionId);
+            if (section) {
+                Object.entries(data).forEach(([id, value]) => {
+                    const element = $(id);
+                    if (element && 'value' in element) {
+                        element.value = value;
+                    }
+                });
+            }
+        };
+
+        // === HELPERS SEGUROS ===
+        const $ = (id) => document.getElementById(id);
+        const val = (id, fallback = '') => {
+            const el = $(id);
+            return el && 'value' in el ? el.value : fallback;
+        };
+        
+        // Helper para selecionar elementos dentro de uma seção específica
+        const $section = (sectionId, fieldName) => {
+            const section = $(sectionId);
+            if (!section) return null;
+            return section.querySelector(`[data-field="${fieldName}"]`);
+        };
+        
+        const valSection = (sectionId, fieldName, fallback = '') => {
+            const el = $section(sectionId, fieldName);
+            return el && 'value' in el ? el.value : fallback;
+        };
+        
         // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔐 Central Admin - Loteca Inteligente carregada');
