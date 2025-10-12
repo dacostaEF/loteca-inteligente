@@ -1625,6 +1625,8 @@
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
         }
     </style>
+    
+    <!-- SAFETY SHIM REMOVIDO TEMPORARIAMENTE -->
 </head>
 <body>
     <!-- === TELA DE LOGIN === -->
@@ -2540,9 +2542,10 @@
                 <!-- BOTÕES DE AÇÃO -->
                 <div class="form-section">
                     <div class="form-row">
-                        <button class="btn-primary" onclick="salvarDadosJogo()" id="btn-salvar-jogo">
-                            <i class="fas fa-save"></i> Salvar Dados do Jogo
+                        <button class="btn-primary" id="btn-salvar-jogo" data-action="save-jogo" data-jogo="1">
+                            <i class="fas fa-save"></i> Salvar Dados do Jogo (<b class="rotulo-arquivo">jogo_1.json</b>)
                         </button>
+                        <input type="hidden" id="nomeArquivo" value="jogo_1.json">
                         <button class="btn-secondary" onclick="limparFormularioJogo()">
                             <i class="fas fa-eraser"></i> Limpar Formulário
                         </button>
@@ -3015,14 +3018,49 @@
             const opcaoSelecionada = document.querySelector(`#jogo-analise-select option[value="${jogoSelecionado}"]`);
             titulo.textContent = `🎯 ${opcaoSelecionada.textContent}`;
             
-            // ATUALIZAR BOTÃO E INFORMAÇÕES DO ARQUIVO
+            // ATUALIZAR ÍNDICE DO BOTÃO DE SALVAR (NOVA IMPLEMENTAÇÃO)
+            atualizarIndiceJogo(parseInt(jogoSelecionado));
+            
+            // ATUALIZAR BOTÃO E INFORMAÇÕES DO ARQUIVO (MÉTODO ANTIGO - MANTER PARA COMPATIBILIDADE)
             atualizarInfoArquivoSalvamento(jogoSelecionado);
             
-            // CORRESPONDÊNCIA AUTOMÁTICA COM A TABELA DA ABA "JOGOS DA LOTECA"
-            sincronizarComTabelaLoteca(jogoSelecionado);
+            // PRIMEIRO: Carregar dados existentes se disponíveis
+            carregarDadosJogoExistente().then(() => {
+                // SEGUNDO: Só sincronizar com tabela se não houver dados salvos
+                const temDadosSalvos = verificarSeTemDadosSalvos(jogoSelecionado);
+                if (!temDadosSalvos) {
+                    console.log(`🔄 [SINCRONIZAÇÃO] Nenhum dado salvo encontrado, sincronizando com tabela...`);
+                    sincronizarComTabelaLoteca(jogoSelecionado);
+                } else {
+                    console.log(`✅ [SINCRONIZAÇÃO] Dados salvos encontrados, pulando sincronização com tabela`);
+                }
+            });
+        }
+        
+        // === FUNÇÃO PARA VERIFICAR SE HÁ DADOS SALVOS ===
+        function verificarSeTemDadosSalvos(jogoSelecionado) {
+            // Verificar se há dados no localStorage
+            const dadosSalvos = localStorage.getItem('jogosAnaliseData');
+            if (dadosSalvos) {
+                const jogosData = JSON.parse(dadosSalvos);
+                if (jogosData[jogoSelecionado]) {
+                    console.log(`📊 [VERIFICAÇÃO] Dados encontrados no localStorage para jogo ${jogoSelecionado}`);
+                    return true;
+                }
+            }
             
-            // Carregar dados existentes se disponíveis (sobrescreve o auto-preenchimento)
-            carregarDadosJogoExistente();
+            // Verificar se há dados nos campos do formulário (indicando que foram carregados do servidor)
+            const timeCasa = document.getElementById('time-casa-admin')?.value;
+            const timeFora = document.getElementById('time-fora-admin')?.value;
+            const recomendacao = document.getElementById('recomendacao-admin')?.value;
+            
+            if (timeCasa && timeFora && recomendacao) {
+                console.log(`📊 [VERIFICAÇÃO] Dados encontrados no formulário para jogo ${jogoSelecionado}`);
+                return true;
+            }
+            
+            console.log(`📊 [VERIFICAÇÃO] Nenhum dado salvo encontrado para jogo ${jogoSelecionado}`);
+            return false;
         }
         
         function autoPreencherDadosJogo(numeroJogo) {
@@ -7406,6 +7444,129 @@
             return el && 'value' in el ? el.value : fallback;
         };
         
+        // === LISTENER DELEGADO PARA SALVAR JOGOS ===
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-action="save-jogo"]');
+            if (!btn) return;
+
+            console.log(`🎯 [LISTENER] Botão clicado encontrado:`, btn);
+            console.log(`🎯 [LISTENER] Dataset atual:`, btn.dataset);
+            
+            const idx = Number(btn.dataset.jogo || 1);
+            console.log(`🎯 [LISTENER] Índice extraído: ${idx} (tipo: ${typeof idx})`);
+            console.log(`🎯 [LISTENER] Salvando jogo ${idx}`);
+            salvarAnaliseRapida(idx);
+        });
+
+        // === FUNÇÃO PARA ATUALIZAR ÍNDICE DO JOGO ===
+        function atualizarIndiceJogo(idx) {
+            console.log(`🔄 [ÍNDICE] Iniciando atualização para jogo ${idx}`);
+            
+            const btn = document.getElementById('btn-salvar-jogo');
+            if (btn) {
+                console.log(`🔄 [ÍNDICE] Botão encontrado, atualizando dataset.jogo de "${btn.dataset.jogo}" para "${idx}"`);
+                btn.dataset.jogo = String(idx);
+                
+                const rotulo = btn.querySelector('.rotulo-arquivo');
+                if (rotulo) {
+                    console.log(`🔄 [ÍNDICE] Rótulo encontrado, atualizando de "${rotulo.textContent}" para "jogo_${idx}.json"`);
+                    rotulo.textContent = `jogo_${idx}.json`;
+                } else {
+                    console.warn(`⚠️ [ÍNDICE] Rótulo .rotulo-arquivo não encontrado no botão`);
+                }
+            } else {
+                console.error(`❌ [ÍNDICE] Botão btn-salvar-jogo não encontrado!`);
+            }
+            
+            const hiddenNome = document.getElementById('nomeArquivo');
+            if (hiddenNome) {
+                hiddenNome.value = `jogo_${idx}.json`;
+                console.log(`🔄 [ÍNDICE] Hidden input atualizado para "jogo_${idx}.json"`);
+            } else {
+                console.warn(`⚠️ [ÍNDICE] Hidden input nomeArquivo não encontrado`);
+            }
+            
+            console.log(`✅ [ÍNDICE] Atualização concluída para jogo ${idx}`);
+        }
+
+        // === FUNÇÃO PARA COLETAR DADOS DO FORMULÁRIO ATUAL ===
+        function coletarDadosJogoAtual() {
+            // Usar getters seguros para evitar erros
+            const getValue = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value : '';
+            };
+            
+            return {
+                numero: getValue('jogo-analise-select'),
+                time_casa: getValue('time-casa-admin'),
+                time_fora: getValue('time-fora-admin'),
+                arena: getValue('arena-admin'),
+                campeonato: getValue('campeonato-admin'),
+                dia: getValue('dia-admin'),
+                escudo_casa: getValue('escudo-casa-path'),
+                escudo_fora: getValue('escudo-fora-path'),
+                probabilidade_casa: getValue('prob-col1-admin'),
+                probabilidade_empate: getValue('prob-colX-admin'),
+                probabilidade_fora: getValue('prob-col2-admin'),
+                recomendacao: getValue('recomendacao-admin'),
+                conclusao_analista: getValue('conclusao-analista-admin'),
+                confrontos_sequence: getValue('confrontos-sequence-admin'),
+                posicao_casa: getValue('posicao-casa-admin'),
+                posicao_fora: getValue('posicao-fora-admin'),
+                confronto_direto: getValue('confronto-direto-admin'),
+                fator_casa: getValue('fator-casa-admin'),
+                fator_fora: getValue('fator-fora-admin'),
+                analise_posicao: getValue('analise-posicao-admin'),
+                analise_posicao_tabelas: getValue('analise-posicao-tabelas-admin'),
+                analise_confronto_direto: getValue('analise-confronto-direto-admin'),
+                analise_fator_casa: getValue('analise-fator-casa-admin'),
+                sincronizado_em: new Date().toISOString()
+            };
+        }
+
+        // === NOVA FUNÇÃO DE SALVAR (SEM CLOSURE) ===
+        async function salvarAnaliseRapida(idx) {
+            console.log(`💾 [SALVAR] Iniciando salvamento do jogo ${idx}`);
+            
+            try {
+                // 1) Coleta de dados do formulário atual
+                const payload = coletarDadosJogoAtual();
+                
+                // 2) Nome de arquivo derivado do índice
+                const nomeArquivo = `jogo_${idx}.json`;
+                
+                // 3) POST para o backend (estrutura esperada pelo backend)
+                const response = await fetch('/api/admin/analise/salvar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        metadados: {
+                            jogo_numero: idx.toString(),
+                            concurso_numero: '1215'
+                        },
+                        dados: payload,
+                        admin_key: ADMIN_KEY
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ [SALVAR] Falha ao salvar:', errorText);
+                    alert(`❌ Falha ao salvar: ${errorText}`);
+                    return;
+                }
+                
+                const result = await response.json();
+                console.log(`✅ [SALVAR] Sucesso: ${nomeArquivo}`, result);
+                alert(`✅ Salvo com sucesso: ${nomeArquivo}`);
+                
+            } catch (error) {
+                console.error('❌ [SALVAR] Erro:', error);
+                alert(`❌ Erro ao salvar: ${error.message}`);
+            }
+        }
+
         // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔐 Central Admin - Loteca Inteligente carregada');
@@ -7679,41 +7840,65 @@
                     console.log(`🔄 [SUBSTITUIÇÃO] Substituindo dados antigos pelos novos: ${timeCasa} vs ${timeFora}`);
                     
                     // 1. CAMPOS BÁSICOS - SUBSTITUIÇÃO AUTOMÁTICA
-                    document.getElementById('time-casa-admin').value = timeCasa;
-                    document.getElementById('time-fora-admin').value = timeFora;
+                    const timeCasaEl = document.getElementById('time-casa-admin');
+                    const timeForaEl = document.getElementById('time-fora-admin');
+                    
+                    if (timeCasaEl) timeCasaEl.value = timeCasa;
+                    if (timeForaEl) timeForaEl.value = timeFora;
                     
                     // 2. IDENTIFICAR CLUBES E SUBSTITUIR ESCUDOS AUTOMATICAMENTE
                     const escudos = identificarEscudosClubes(timeCasa, timeFora);
                     if (escudos.casa) {
-                        document.getElementById('escudo-casa-path').value = escudos.casa;
-                        console.log(`🛡️ [SUBSTITUIÇÃO] Escudo casa substituído: ${escudos.casa}`);
+                        const escudoCasaEl = document.getElementById('escudo-casa-path');
+                        if (escudoCasaEl) {
+                            escudoCasaEl.value = escudos.casa;
+                            console.log(`🛡️ [SUBSTITUIÇÃO] Escudo casa substituído: ${escudos.casa}`);
+                        }
                     }
                     if (escudos.fora) {
-                        document.getElementById('escudo-fora-path').value = escudos.fora;
-                        console.log(`🛡️ [SUBSTITUIÇÃO] Escudo fora substituído: ${escudos.fora}`);
+                        const escudoForaEl = document.getElementById('escudo-fora-path');
+                        if (escudoForaEl) {
+                            escudoForaEl.value = escudos.fora;
+                            console.log(`🛡️ [SUBSTITUIÇÃO] Escudo fora substituído: ${escudos.fora}`);
+                        }
                     }
                     
                     // 3. SUBSTITUIR ARENA E CAMPEONATO AUTOMATICAMENTE
                     const infoJogo = identificarInfoJogo(timeCasa, timeFora, dataJogo);
                     if (infoJogo.arena) {
-                        document.getElementById('arena-admin').value = infoJogo.arena;
-                        console.log(`🏟️ [SUBSTITUIÇÃO] Arena substituída: ${infoJogo.arena}`);
+                        const arenaEl = document.getElementById('arena-admin');
+                        if (arenaEl) {
+                            arenaEl.value = infoJogo.arena;
+                            console.log(`🏟️ [SUBSTITUIÇÃO] Arena substituída: ${infoJogo.arena}`);
+                        }
                     }
                     if (infoJogo.campeonato) {
-                        document.getElementById('campeonato-admin').value = infoJogo.campeonato;
-                        console.log(`🏆 [SUBSTITUIÇÃO] Campeonato substituído: ${infoJogo.campeonato}`);
+                        const campeonatoEl = document.getElementById('campeonato-admin');
+                        if (campeonatoEl) {
+                            campeonatoEl.value = infoJogo.campeonato;
+                            console.log(`🏆 [SUBSTITUIÇÃO] Campeonato substituído: ${infoJogo.campeonato}`);
+                        }
                     }
                     if (infoJogo.dia) {
-                        document.getElementById('dia-admin').value = infoJogo.dia;
-                        console.log(`📅 [SUBSTITUIÇÃO] Dia substituído: ${infoJogo.dia}`);
+                        const diaEl = document.getElementById('dia-admin');
+                        if (diaEl) {
+                            diaEl.value = infoJogo.dia;
+                            console.log(`📅 [SUBSTITUIÇÃO] Dia substituído: ${infoJogo.dia}`);
+                        }
                     }
                     
                     // 4. LIMPAR CAMPOS DE ANÁLISE PARA NOVA ANÁLISE
-                    document.getElementById('probabilidade-casa-admin').value = '';
-                    document.getElementById('probabilidade-empate-admin').value = '';
-                    document.getElementById('probabilidade-fora-admin').value = '';
-                    document.getElementById('recomendacao-admin').value = '';
-                    document.getElementById('conclusao-analista-admin').value = '';
+                    const probCasa = document.getElementById('prob-col1-admin');
+                    const probEmpate = document.getElementById('prob-colX-admin');
+                    const probFora = document.getElementById('prob-col2-admin');
+                    const recomendacao = document.getElementById('recomendacao-admin');
+                    const conclusao = document.getElementById('conclusao-analista-admin');
+                    
+                    if (probCasa) probCasa.value = '';
+                    if (probEmpate) probEmpate.value = '';
+                    if (probFora) probFora.value = '';
+                    if (recomendacao) recomendacao.value = '';
+                    if (conclusao) conclusao.value = '';
                     
                     console.log(`✅ [SUBSTITUIÇÃO] Todos os campos substituídos automaticamente!`);
                     console.log(`🔄 [SUBSTITUIÇÃO] Dados antigos removidos, prontos para nova análise!`);
