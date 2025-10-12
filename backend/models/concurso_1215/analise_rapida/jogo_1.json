@@ -1,40 +1,29 @@
 {
-  "nome_arquivo": "jogo_1.json",
-  "dados": {
-    "metadados": {
-      "jogo_numero": "1",
-      "concurso_numero": "1215",
-      "time_casa": "Ponte Preta/SP",
-      "time_fora": "Guarani/SP",
-      "salvo_em": "2025-10-11T15:06:16.183Z",
-      "versao": "1.0"
+  "metadados": {
+    "jogo_numero": "1",
+    "sincronizado_em": "2025-10-11T22:32:54.555Z",
+    "versao": "1.0"
+  },
+  "dados_publicos": {
+    "time_casa": "Ponte Preta/SP",
+    "time_fora": "Guarani/RJ",
+    "arena": "Moises Lucharelli ",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/PON_Ponte-Preta/PontePreta.png",
+    "escudo_fora": "/static/escudos/GUA_Guarani/Guarani.png",
+    "probabilidades": {
+      "col1": "30",
+      "colX": "40",
+      "col2": "30"
     },
-    "dados_publicos": {
-      "time_casa": "Ponte Preta/SP",
-      "time_fora": "Guarani/SP",
-      "arena": "Moises Lucharelli ",
-      "campeonato": "Brasileirão Série A",
-      "dia": "Sábado",
-      "escudo_casa": "/static/escudos\\PON_Ponte-Preta\\PontePreta.png",
-      "escudo_fora": "/static/escudos\\GUA_Guarani\\Guarani.png",
-      "probabilidades": {
-        "col1": "33",
-        "colX": "34",
-        "col2": "33"
-      },
-      "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Médio",
-      "conclusao_analista": "confronto totalmente equilibrado, o que é comum em um clássico como este. O sistema de análise da Loteca indica que este é um jogo imprevisível com múltiplos cenários possíveis.  A análise sugere que, embora a Ponte Preta tenha a vantagem de jogar no Moisés Lucarelli, o Guarani é competitivo, e a alta probabilidade de empate faz com que a Dupla Casa + Empate (1X) seja a opção mais segura para a Loteca\n",
-      "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
-      "analise_posicao": "Confronto Equilibrado",
-      "posicao_casa": "1",
-      "posicao_fora": "2",
-      "analise_posicao_tabelas": "Confronto Equilibrado",
-      "confronto_direto": "3V-4E-3D",
-      "analise_confronto_direto": "Confronto Equilibrado",
-      "fator_casa": "50",
-      "fator_fora": "50",
-      "analise_fator_casa": "Confronto Equilibrado",
-      "arquivo_confrontos": "\\0 - Loteca\\backend\\models\\Confrontos\\Ponte-Preta_vs_Guarani.csv"
-    }
+    "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Alto",
+    "conclusao_analista": null,
+    "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
+    "posicao_casa": "1",
+    "posicao_fora": "2",
+    "confronto_direto": "3V-4E-3D",
+    "fator_casa": "50",
+    "fator_fora": "50"
   }
 }
