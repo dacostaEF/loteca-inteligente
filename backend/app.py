@@ -8,6 +8,7 @@ from flask_cors import CORS
 import os
 from routes_brasileirao import bp_br
 from admin_api import bp_admin
+# from analise_routes import bp_analise  # Comentado para usar apenas bp_admin
 
 def create_app():
     """Criar e configurar a aplicação Flask"""
@@ -75,6 +76,7 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(bp_br)
     app.register_blueprint(bp_admin)
+    # app.register_blueprint(bp_analise)  # Comentado para usar apenas bp_admin
     
     # Error handlers
     @app.errorhandler(404)

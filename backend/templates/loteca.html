@@ -91,24 +91,24 @@
         <div class="tab-content" id="analise-rapida" style="display: block;">
             <!-- TODO O CONTEÚDO ATUAL VAI AQUI -->
 
-        <!-- JOGO 1: CORINTHIANS vs FLAMENGO -->
+        <!-- JOGO 1: Times serão carregados via API -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 1:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo1" src="/static/escudos/COR_Corinthians/Corinthians.png" 
+                        <img id="escudo-casa-jogo1" src="/static/placeholder-team-logo.svg" 
                              alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-casa-nome-jogo1">CORINTHIANS</span>
+                        <span id="time-casa-nome-jogo1">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo1" src="/static/escudos/FLA_Flamengo/Flamengo.png" 
+                        <img id="escudo-fora-jogo1" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-fora-nome-jogo1">FLAMENGO</span>
+                        <span id="time-fora-nome-jogo1">Carregando...</span>
                     </div>
                 </div>
                 
@@ -137,37 +137,37 @@
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Forma Recente</div>
                         <div class="analysis-mobile-teams">
-                            <span><img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
-                            <span><img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                            <span><img id="escudo-mobile-casa" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
                         </div>
                         <div class="analysis-mobile-result">
-COR
+CASA
                         </div>
                     </div>
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Posição</div>
                         <div class="analysis-mobile-teams">
-                            <span><img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px; margin-right: 5px;">5º</span>
-                            <span><img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" style="width: 20px; height: 20px; margin-right: 5px;">2º</span>
+                            <span><img id="escudo-mobile-casa-pos" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">5º</span>
+                            <span><img id="escudo-mobile-fora-pos" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2º</span>
                         </div>
                         <div class="analysis-mobile-result">
-FLA
+FORA
                         </div>
                     </div>
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Confronto Direto</div>
                         <div class="analysis-mobile-teams">
-                            <span><img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
-                            <span><img src="/static/escudos/FLA_Flamengo/Flamengo.png" alt="Flamengo" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
+                            <span><img id="escudo-mobile-casa-h2h" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
+                            <span><img id="escudo-mobile-fora-h2h" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
                         </div>
                         <div class="analysis-mobile-result">
-Equal
+EQUILIBRADO
                         </div>
                     </div>
                 </div>
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p id="conclusao-analista-jogo1">A análise estatística aponta superioridade clara do Flamengo: melhor posicionamento (1º vs 10º), ataque superior (2.09 vs 1.00 gols/jogo) e defesa sólida (0.48 vs 1.21 gols sofridos). Porém, o Corinthians é historicamente uma "pedra no sapato" no confronto direto e joga em casa, fatores que elevam significativamente as chances de empate (30%). O Flamengo permanece favorito (48%), mas este é um clássico onde surpresas acontecem. Recomendação: Coluna 2 (Flamengo), mas considerar Dupla X2 pela imprevisibilidade do confronto.</p>
+                    <p id="conclusao-analista-jogo1">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -1322,19 +1322,19 @@ Equilíbrio
                                 <span class="recommended-bet">Coluna 2</span>
                             </div>
                             <div class="recommendation-reasoning">
-                                <p><strong>Análise:</strong> FLAMENGO apresenta superioridade clara em múltiplos aspectos estatísticos.</p>
+                                <p><strong>Análise:</strong> Time visitante apresenta superioridade clara em múltiplos aspectos estatísticos.</p>
                             </div>
                             
-                            <!-- CAMPOS DE FORÇA (A FAVOR DO FLAMENGO) -->
+                            <!-- CAMPOS DE FORÇA (A FAVOR DO TIME VISITANTE) -->
                             <div class="analise-section">
-                                <h5 class="section-title forca">🔥 Campos de FORÇA (A favor do Flamengo)</h5>
+                                <h5 class="section-title forca">🔥 Campos de FORÇA (A favor do Time Visitante)</h5>
                                 <div class="campos-analise">
                                     <div class="campo-item forca">
                                         <div class="campo-header">
-                                            <span class="campo-nome">✅ FLAMENGO melhor posicionado (1º vs 10º)</span>
+                                            <span class="campo-nome">✅ Time visitante melhor posicionado (1º vs 10º)</span>
                                         </div>
                                         <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> Flamengo está na 1ª posição com 51 pontos, enquanto Corinthians está na 10ª com 32 pontos.
+                                            <strong>O que significa:</strong> Time visitante está na 1ª posição com 51 pontos, enquanto time da casa está na 10ª com 32 pontos.
                                         </div>
                                         <div class="campo-importancia">
                                             <strong>Por que é crucial:</strong> A diferença de 19 pontos na tabela reflete superioridade técnica e consistência ao longo do campeonato.
@@ -1343,52 +1343,52 @@ Equilíbrio
                                     
                                     <div class="campo-item forca">
                                         <div class="campo-header">
-                                            <span class="campo-nome">✅ FLAMENGO ataque muito superior (2.09 vs 1.00 gols/jogo)</span>
+                                            <span class="campo-nome">✅ Time visitante ataque muito superior (2.09 vs 1.00 gols/jogo)</span>
                                         </div>
                                         <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O Flamengo tem uma média de 2.09 Gols Marcados/Jogo, mais que o dobro da média do Corinthians (1.00).
+                                            <strong>O que significa:</strong> O time visitante tem uma média de 2.09 Gols Marcados/Jogo, mais que o dobro da média do time da casa (1.00).
                                         </div>
                                         <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> Isso sugere que o Flamengo tem poder de fogo para furar a defesa do Corinthians e garantir a vitória.
+                                            <strong>Por que é crucial:</strong> Isso sugere que o time visitante tem poder de fogo para furar a defesa do time da casa e garantir a vitória.
                                         </div>
                                     </div>
                                     
                                     <div class="campo-item forca">
                                         <div class="campo-header">
-                                            <span class="campo-nome">✅ FLAMENGO defesa muito superior (0.48 vs 1.21 gols/jogo)</span>
+                                            <span class="campo-nome">✅ Time visitante defesa muito superior (0.48 vs 1.21 gols/jogo)</span>
                                         </div>
                                         <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O Flamengo tem uma média de apenas 0.48 Gols Sofridos/Jogo contra 1.21 do Corinthians.
+                                            <strong>O que significa:</strong> O time visitante tem uma média de apenas 0.48 Gols Sofridos/Jogo contra 1.21 do time da casa.
                                         </div>
                                         <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> Enfrentando um ataque fraco (1.00 gol/jogo), a chance de o Flamengo não sofrer gols (Clean Sheet) é muito alta.
+                                            <strong>Por que é crucial:</strong> Enfrentando um ataque fraco (1.00 gol/jogo), a chance de o time visitante não sofrer gols (Clean Sheet) é muito alta.
                                         </div>
                                     </div>
                                     
                                     <div class="campo-item forca">
                                         <div class="campo-header">
-                                            <span class="campo-nome">✅ FLAMENGO aproveitamento muito superior (66.7% vs 48.5%)</span>
+                                            <span class="campo-nome">✅ Time visitante aproveitamento muito superior (66.7% vs 48.5%)</span>
                                         </div>
                                         <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O Flamengo tem 66.7% de aproveitamento geral contra 48.5% do Corinthians.
+                                            <strong>O que significa:</strong> O time visitante tem 66.7% de aproveitamento geral contra 48.5% do time da casa.
                                         </div>
                                         <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> A diferença de quase 18 pontos percentuais é gigantesca e indica que o Flamengo é mais provável de vencer, mesmo jogando fora.
+                                            <strong>Por que é crucial:</strong> A diferença de quase 18 pontos percentuais é gigantesca e indica que o time visitante é mais provável de vencer, mesmo jogando fora.
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- CAMPOS DE RISCO (A FAVOR DO CORINTHIANS) -->
+                            <!-- CAMPOS DE RISCO (A FAVOR DO TIME DA CASA) -->
                             <div class="analise-section">
-                                <h5 class="section-title risco">⚠️ Campos de RISCO (A favor do Corinthians)</h5>
+                                <h5 class="section-title risco">⚠️ Campos de RISCO (A favor do Time da Casa)</h5>
                                 <div class="campos-analise">
                                     <div class="campo-item risco">
                                         <div class="campo-header">
-                                            <span class="campo-nome">❌ CORINTHIANS joga em casa</span>
+                                            <span class="campo-nome">❌ Time da casa joga em casa</span>
                                         </div>
                                         <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O jogo ocorre na Arena, campo do Corinthians, com apoio da torcida.
+                                            <strong>O que significa:</strong> O jogo ocorre na Arena, campo do time da casa, com apoio da torcida.
                                         </div>
                                         <div class="campo-importancia">
                                             <strong>Por que é crucial:</strong> O "caldeirão" do mando de campo é um fator psicológico que pode compensar a inferioridade técnica, fortalecendo chances de empate.
@@ -3673,7 +3673,28 @@ Equilíbrio
         // FUNÇÃO AUXILIAR PARA EXTRAIR JOGO DE UM CARD
         function extrairJogoDoCard(card, numeroJogo) {
             try {
-                // Método 1: Buscar pelo span com "JOGO X:"
+                // CORRIGIDO: Para JOGO 1, ler diretamente dos elementos atualizados pela API
+                if (numeroJogo === 1) {
+                    const nomeCasa = document.getElementById('time-casa-nome-jogo1');
+                    const nomeFora = document.getElementById('time-fora-nome-jogo1');
+                    
+                    if (nomeCasa && nomeFora) {
+                        const timeCasa = nomeCasa.textContent.trim();
+                        const timeVisitante = nomeFora.textContent.trim();
+                        
+                        if (timeCasa && timeVisitante) {
+                            console.log(`✅ [SYNC] JOGO 1 lido dos elementos da API: ${timeCasa} vs ${timeVisitante}`);
+                            return {
+                                numero: numeroJogo,
+                                timeCasa: timeCasa,
+                                timeVisitante: timeVisitante,
+                                descricao: `Jogo ${numeroJogo}: ${timeCasa} vs ${timeVisitante}`
+                            };
+                        }
+                    }
+                }
+                
+                // Método original para outros jogos
                 const jogoSpan = card.querySelector('.confronto-visual span[style*="font-size: 18px"]');
                 const timeInfos = card.querySelectorAll('.time-info span');
                 
@@ -4726,9 +4747,11 @@ Equilíbrio
             const classificationData = await getClassificationData();
             
             // OBTER POSIÇÕES REAIS DOS TIMES
-            // MANTER DADOS ORIGINAIS DO CORINTHIANS VS FLAMENGO
-            const homeClassification = classificationData['CORINTHIANS'] || { position: 10, points: 32 };
-            const awayClassification = classificationData['FLAMENGO'] || { position: 1, points: 51 };
+            // CORRIGIDO: Usar nomes corretos dos times da API
+            const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
+            const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
+            const homeClassification = classificationData[nomeCasa] || { position: 10, points: 32 };
+            const awayClassification = classificationData[nomeFora] || { position: 1, points: 51 };
             
             // DESABILITADO: API antiga que interferia com o sistema novo
             // As posições do JOGO 1 agora vêm da função carregarDadosJogo1() que usa o JSON
@@ -4739,7 +4762,7 @@ Equilíbrio
             // GERAR RECOMENDAÇÃO AUTOMÁTICA COM DADOS REAIS DE CLASSIFICAÇÃO
             await generateAutoRecommendation({
                 home: {
-                    name: 'CORINTHIANS',
+                    name: nomeCasa,
                     position: homeClassification.position,
                     points: homeClassification.points,
                     golsMarcados: homeGolsMarcados,
@@ -4747,7 +4770,7 @@ Equilíbrio
                     aproveitamento: homeAproveitamento
                 },
                 away: {
-                    name: 'FLAMENGO', 
+                    name: nomeFora, 
                     position: awayClassification.position,
                     points: awayClassification.points,
                     golsMarcados: awayGolsMarcados,
@@ -4863,9 +4886,11 @@ Equilíbrio
             } catch (error) {
                 console.error('❌ [CLASSIFICATION] Erro ao buscar classificação:', error);
                 // Retornar dados padrão em caso de erro
+                const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
+                const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
                 return {
-                    'CORINTHIANS': { position: 5, points: 47, games: 23 },
-                    'FLAMENGO': { position: 2, points: 51, games: 23 }
+                    [nomeCasa]: { position: 5, points: 47, games: 23 },
+                    [nomeFora]: { position: 2, points: 51, games: 23 }
                 };
             }
         }
@@ -5073,8 +5098,10 @@ Equilíbrio
             console.log('🔍 [CONFRONTOS-DIRETOS] Conteúdo completo team-away-name:', awayNameElement?.textContent);
             
             // USAR PARÂMETROS OU DETECÇÃO AUTOMÁTICA
-            const timeCasaFinal = timeCasa || homeName || 'CORINTHIANS';
-            const timeForaFinal = timeFora || awayName || 'FLAMENGO';
+            const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
+            const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
+            const timeCasaFinal = timeCasa || homeName || nomeCasa;
+            const timeForaFinal = timeFora || awayName || nomeFora;
             
             console.log(`⚔️ [CONFRONTOS-DIRETOS] Abrindo modal de confrontos diretos ${timeCasaFinal} vs ${timeForaFinal}...`);
             
@@ -5505,9 +5532,9 @@ Equilíbrio
             await criarGraficoConfrontosJogo1(ultimos10);
         }
         
-        // CRIAR GRÁFICO DE BARRAS PARA JOGO 1 (CORINTHIANS VS FLAMENGO)
+        // CRIAR GRÁFICO DE BARRAS PARA JOGO 1 (Times serão carregados via API)
         async function criarGraficoConfrontosJogo1(confrontos) {
-            console.log('📊 [GRAFICO-JOGO1] Criando gráfico de barras para Corinthians vs Flamengo...', confrontos);
+            console.log('📊 [GRAFICO-JOGO1] Criando gráfico de barras para Jogo 1...', confrontos);
             
             const canvas = document.getElementById('grafico-confrontos-jogo1');
             if (!canvas) {
@@ -5688,15 +5715,17 @@ Equilíbrio
             
             try {
                 // PRIMEIRO: Buscar dados do jogo 1 da Central Admin
-                const jogoResponse = await fetch('/api/analise/jogo/1');
-                let timeCasa = 'CORINTHIANS';
-                let timeFora = 'FLAMENGO';
+                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1215');
+                const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
+                const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
+                let timeCasa = nomeCasa;
+                let timeFora = nomeFora;
                 
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
                     if (jogoData.success && jogoData.dados) {
-                        timeCasa = jogoData.dados.time_casa || 'CORINTHIANS';
-                        timeFora = jogoData.dados.time_fora || 'FLAMENGO';
+                        timeCasa = jogoData.dados.time_casa || nomeCasa;
+                        timeFora = jogoData.dados.time_fora || nomeFora;
                         console.log(`✅ [CONFRONTOS] Usando times da Central Admin: ${timeCasa} vs ${timeFora}`);
                     }
                 }
@@ -6384,8 +6413,8 @@ Equilíbrio
             console.log('🎯 [JOGO1] Iniciando carregamento dos dados do JOGO 1...');
             
             try {
-                // Fazer requisição para a API
-                const response = await fetch('/api/analise/jogo/1');
+                // Fazer requisição para a API com parâmetro de concurso
+                const response = await fetch('/api/analise/jogo/1?concurso=concurso_1215');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -6423,7 +6452,9 @@ Equilíbrio
             }
             
             if (nomeCasa && dados.time_casa) {
+                console.log('🔄 [DEBUG] Atualizando nome casa:', dados.time_casa);
                 nomeCasa.textContent = dados.time_casa.toUpperCase();
+                console.log('✅ [DEBUG] Nome casa atualizado para:', nomeCasa.textContent);
             }
             
             if (escudoFora && dados.escudo_fora) {
@@ -6432,7 +6463,9 @@ Equilíbrio
             }
             
             if (nomeFora && dados.time_fora) {
+                console.log('🔄 [DEBUG] Atualizando nome fora:', dados.time_fora);
                 nomeFora.textContent = dados.time_fora.toUpperCase();
+                console.log('✅ [DEBUG] Nome fora atualizado para:', nomeFora.textContent);
             }
             
             // 2. ATUALIZAR INFORMAÇÕES DO JOGO
@@ -6546,6 +6579,68 @@ Equilíbrio
             
             console.log('✅ [JOGO1] Todos os campos atualizados!');
         }
+
+        // FUNÇÃO REMOVIDA - DUPLICATA CONFLITANTE
+
+        // 2) Função de preenchimento do JOGO 1 (IDs existentes)
+        function preencherJogo1Com(src) {
+            const setText = (id, t='') => { const el = document.getElementById(id); if (el) el.textContent = t; };
+            const setHTML = (id, h='')  => { const el = document.getElementById(id); if (el) el.innerHTML = h; };
+            const putPct = (id, v) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.classList.remove('loading');
+                if (v === '' || v == null) return;
+                el.innerHTML = `<span class="probability-value">${String(v).replace('%','')}%</span>`;
+            };
+
+            // Cabeçalho e escudos
+            setText('time-casa-nome', (src.time_casa || '').toUpperCase());
+            setText('time-fora-nome', (src.time_fora || '').toUpperCase());
+            const escCasa = document.getElementById('escudo-casa-jogo1');
+            const escFora = document.getElementById('escudo-fora-jogo1');
+            if (escCasa && src.escudo_casa) escCasa.src = src.escudo_casa;
+            if (escFora && src.escudo_fora) escFora.src = src.escudo_fora;
+
+            // Linha "Arena | Campeonato | Dia"
+            const gameInfo = document.querySelector('#analise-rapida .game-card:nth-of-type(1) .game-info');
+            if (gameInfo) gameInfo.textContent = `${src.arena || ''} | ${src.campeonato || ''} | ${src.dia || ''}`;
+
+            // Probabilidades (novo ou legado)
+            const p = src.probabilidades || {};
+            putPct('prob-col1', p.col1 ?? src.probabilidade_casa);
+            putPct('prob-colX', p.colX ?? src.probabilidade_empate);
+            putPct('prob-col2', p.col2 ?? src.probabilidade_fora);
+
+            // Recomendações e conclusão
+            if (src.recomendacao) setHTML('recomendacao-jogo-1', `<strong>${src.recomendacao}</strong>`);
+            setText('conclusao-analista-jogo1', src.conclusao_analista || '');
+
+            // Tabela análise (posições, H2H, fator casa/fora)
+            setText('posicao-casa', src.posicao_casa ? `${src.posicao_casa}°` : '');
+            setText('posicao-fora', src.posicao_fora ? `${src.posicao_fora}°` : '');
+            setText('fator-casa',  src.fator_casa  || '');
+            setText('fator-fora',  src.fator_fora  || '');
+
+            const h2h = document.getElementById('confronto-direto-principais');
+            if (h2h && src.confronto_direto) {
+                h2h.innerHTML = `
+                    <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+                        <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:24px;height:24px;">
+                        <span>${src.confronto_direto}</span>
+                        <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:24px;height:24px;">
+                    </div>`;
+            }
+
+            // Linhas de análise textual
+            const h2hAnalise = document.getElementById('h2h-analise');
+            const posAnalise = document.getElementById('posicao-analise');
+            const fatorAnalise = document.getElementById('fator-analise');
+            if (h2hAnalise) h2hAnalise.innerHTML = src.analise_confronto_direto || '';
+            if (posAnalise) posAnalise.textContent = src.analise_posicao || '';
+            if (fatorAnalise) fatorAnalise.innerHTML = src.analise_fator_casa || '';
+        }
+        // ===== FIM DO PATCH CIRÚRGICO =====
 
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 [DEBUG] Iniciando aplicação...');
@@ -10388,5 +10483,126 @@ Equilíbrio
         });
     </script>
 
-</body>
+    <script>
+    (async function(){
+      async function carregarDados(jogo){
+        const url = `/api/analise/jogo/${jogo}?concurso=concurso_1215`; // ajuste o 1215 se necessário
+        const resp = await fetch(url);
+        if (!resp.ok) { console.error('HTTP', resp.status, url); return; }
+        const api = await resp.json();
+        const raw = (api && api.dados && api.dados.dados) || api || {};
+        const src = raw.dados_publicos || raw.dados || raw;
+        if (!src.probabilidades) {
+          const col1 = src.probabilidade_casa ?? null;
+          const colX = src.probabilidade_empate ?? null;
+          const col2 = src.probabilidade_fora ?? null;
+          if (col1 != null || colX != null || col2 != null) src.probabilidades = { col1, colX, col2 };
+        }
+        if (jogo === 1) preencherJogo1Com(src);
+        if (jogo === 2) preencherJogo2Com(src);
+      }
+
+      function putPct(id, v){
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('loading');
+        if (v == null || v === '') return;
+        el.innerHTML = `<span class="probability-value">${String(v).replace('%','')}%</span>`;
+      }
+      function setText(id, t=''){ const el = document.getElementById(id); if (el) el.textContent = t; }
+      function setHTML(id, h=''){ const el = document.getElementById(id); if (el) el.innerHTML = h; }
+
+      // ==== JOGO 1 ====
+      function preencherJogo1Com(src){
+        setText('time-casa-nome', (src.time_casa||'').toUpperCase());
+        setText('time-fora-nome', (src.time_fora||'').toUpperCase());
+        setText('time-casa-nome-jogo1', (src.time_casa||'').toUpperCase());
+        setText('time-fora-nome-jogo1', (src.time_fora||'').toUpperCase());
+        const escCasa = document.getElementById('escudo-casa-jogo1');
+        const escFora = document.getElementById('escudo-fora-jogo1');
+        if (escCasa && src.escudo_casa) escCasa.src = src.escudo_casa;
+        if (escFora && src.escudo_fora) escFora.src = src.escudo_fora;
+
+        const info1 = document.querySelector('#analise-rapida .game-card:nth-of-type(1) .game-info');
+        if (info1) info1.textContent = `${src.arena||''} | ${src.campeonato||''} | ${src.dia||''}`;
+
+        const p = src.probabilidades || {};
+        putPct('prob-col1', p.col1 ?? src.probabilidade_casa);
+        putPct('prob-colX', p.colX ?? src.probabilidade_empate);
+        putPct('prob-col2', p.col2 ?? src.probabilidade_fora);
+
+        if (src.recomendacao) setHTML('recomendacao-jogo-1', `<strong>${src.recomendacao}</strong>`);
+        setText('conclusao-analista-jogo1', src.conclusao_analista||'');
+
+        setText('posicao-casa', src.posicao_casa ? `${src.posicao_casa}°` : '');
+        setText('posicao-fora', src.posicao_fora ? `${src.posicao_fora}°` : '');
+        setText('fator-casa',  src.fator_casa||'');
+        setText('fator-fora',  src.fator_fora||'');
+
+        const h2h = document.getElementById('confronto-direto-principais');
+        if (h2h && src.confronto_direto) {
+          h2h.innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+              <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:24px;height:24px;">
+              <span>${src.confronto_direto}</span>
+              <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:24px;height:24px;">
+            </div>`;
+        }
+        const h2hAnal = document.getElementById('h2h-analise');
+        const posAnal = document.getElementById('posicao-analise');
+        const fatAnal = document.getElementById('fator-analise');
+        if (h2hAnal) h2hAnal.innerHTML = src.analise_confronto_direto || '';
+        if (posAnal) posAnal.textContent = src.analise_posicao || '';
+        if (fatAnal) fatAnal.innerHTML = src.analise_fator_casa || '';
+      }
+
+      // ==== JOGO 2 ====
+      function preencherJogo2Com(src){
+        setText('time-casa-nome-2', (src.time_casa||'').toUpperCase());
+        setText('time-fora-nome-2', (src.time_fora||'').toUpperCase());
+        const escCasa = document.getElementById('escudo-casa-jogo2');
+        const escFora = document.getElementById('escudo-fora-jogo2');
+        if (escCasa && src.escudo_casa) escCasa.src = src.escudo_casa;
+        if (escFora && src.escudo_fora) escFora.src = src.escudo_fora;
+
+        const info2 = document.querySelector('#analise-rapida .game-card:nth-of-type(2) .game-info');
+        if (info2) info2.textContent = `${src.arena||''} | ${src.campeonato||''} | ${src.dia||''}`;
+
+        const p = src.probabilidades || {};
+        putPct('prob-col1-2', p.col1 ?? src.probabilidade_casa);
+        putPct('prob-colX-2', p.colX ?? src.probabilidade_empate);
+        putPct('prob-col2-2', p.col2 ?? src.probabilidade_fora);
+
+        if (src.recomendacao) setHTML('recomendacao-jogo-2', `<strong>${src.recomendacao}</strong>`);
+        setText('conclusao-analista-2', src.conclusao_analista||'');
+
+        setText('posicao-casa-2', src.posicao_casa ? `${src.posicao_casa}°` : '');
+        setText('posicao-fora-2', src.posicao_fora ? `${src.posicao_fora}°` : '');
+        setText('fator-casa-2',  src.fator_casa||'');
+        setText('fator-fora-2',  src.fator_fora||'');
+
+        const h2h = document.getElementById('confronto-direto-principais-2');
+        if (h2h && src.confronto_direto) {
+          h2h.innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+              <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:24px;height:24px;">
+              <span>${src.confronto_direto}</span>
+              <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:24px;height:24px;">
+            </div>`;
+        }
+        const h2hAnal = document.getElementById('h2h-analise-2');
+        const posAnal = document.getElementById('posicao-analise-2');
+        const fatAnal = document.getElementById('fator-analise-2');
+        if (h2hAnal) h2hAnal.innerHTML = src.analise_confronto_direto || '';
+        if (posAnal) posAnal.textContent = src.analise_posicao || '';
+        if (fatAnal) fatAnal.innerHTML = src.analise_fator_casa || '';
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        carregarDados(1);
+        carregarDados(2);
+      });
+    })();
+    </script>
+    </body>
 </html>

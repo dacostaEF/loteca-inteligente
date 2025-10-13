@@ -1726,38 +1726,52 @@ def sincronizar_analise_site():
 @cross_origin()
 def obter_dados_analise_jogo(jogo_numero):
     """
-    Retorna os dados do jogo_X.json normalizados para o front.
-    Aceita formato legado (dados.probabilidade_casa, etc.) e novo (dados_publicos.probabilidades.col1,...)
-    Query opcional: ?concurso=concurso_1215
+    NOVA API - Baseada no teste que funcionou perfeitamente
     """
+    import json
     from pathlib import Path
-    from json import JSONDecodeError
     
-    # Helper: raiz do backend (pasta onde está este arquivo)
-    BACKEND_DIR = Path(__file__).resolve().parent
+    # CORRIGIDO: Já estamos no diretório backend/ (mudado pelo railway_entry.py)
+    import os
+    BACKEND_DIR = Path(os.getcwd())  # Já estamos em backend/
     
     def _dir_analise(concurso: str) -> Path:
         # backend/models/<concurso>/analise_rapida
         return BACKEND_DIR / "models" / concurso / "analise_rapida"
     
+    # Parâmetros
     concurso = request.args.get("concurso", "concurso_1215")
+    print(f"[NOVA-API] Concurso recebido: '{concurso}'")
+    
     pasta = _dir_analise(concurso)
     arquivo = pasta / f"jogo_{jogo_numero}.json"
-
-    # Logs úteis para diagnóstico
-    logger.info(f'[ANALISE] Carregar jogo_{jogo_numero} de {arquivo}')
-
+    
+    print(f"[NOVA-API] BACKEND_DIR: {BACKEND_DIR}")
+    print(f"[NOVA-API] Pasta calculada: {pasta}")
+    print(f"[NOVA-API] Caminho do arquivo: {arquivo}")
+    print(f"[NOVA-API] Arquivo existe: {arquivo.exists()}")
+    print(f"[NOVA-API] Conteúdo da pasta: {list(pasta.iterdir()) if pasta.exists() else 'Pasta não existe'}")
+    
     if not arquivo.exists():
-        logger.warning(f'[ANALISE] Arquivo não encontrado: {arquivo}')
+        print(f"[NOVA-API] ARQUIVO NAO ENCONTRADO!")
         return jsonify({"success": False, "error": "not_found", "file": str(arquivo)}), 404
-
+    
     try:
+        # MESMA LÓGICA DO TESTE
         with open(arquivo, "r", encoding="utf-8") as f:
             raw = json.load(f)
-        # raw pode estar no formato "novo" (dados_publicos) OU "legado" (dados) OU direto
-        dados = raw.get("dados_publicos") or raw.get("dados") or raw
-
-        # Normaliza probabilidades (se vierem achatadas no legado)
+        
+        print(f"[NOVA-API] Arquivo lido com sucesso!")
+        print(f"[NOVA-API] Estrutura: {list(raw.keys())}")
+        
+        # MESMA LÓGICA DO TESTE
+        dados = raw.get("dados", {})
+        metadados = raw.get("metadados", {})
+        
+        print(f"[NOVA-API] Dados extraidos: {len(dados)} campos")
+        print(f"[NOVA-API] Metadados extraidos: {len(metadados)} campos")
+        
+        # MESMA NORMALIZAÇÃO DO TESTE
         prob = dados.get("probabilidades")
         if not prob:
             prob = {
@@ -1765,33 +1779,25 @@ def obter_dados_analise_jogo(jogo_numero):
                 "colX": dados.get("probabilidade_empate"),
                 "col2": dados.get("probabilidade_fora"),
             }
-            # Só define se ao menos um existir para não poluir
             if any(v is not None for v in prob.values()):
                 dados["probabilidades"] = prob
-
-        # Monta metadados (se houver)
-        metadados = raw.get("metadados", {})
-
-        # Shape padronizado que o front entende
+        
+        # MESMO PAYLOAD DO TESTE
         payload = {
             "success": True,
-            "dados": {
-                "dados": {
-                    "metadados": metadados,
-                    "dados_publicos": dados
-                }
-            }
+            "dados": dados,
+            "metadados": metadados
         }
-        logger.info(f'[ANALISE] OK jogo_{jogo_numero} -> normalizado e retornado')
+        
+        print(f"[NOVA-API] Payload final criado!")
+        print(f"[NOVA-API] Dados no payload: {len(payload['dados'])} campos")
+        print(f"[NOVA-API] Metadados no payload: {len(payload['metadados'])} campos")
+        
         return jsonify(payload), 200
-
-    except JSONDecodeError as e:
-        logger.exception(f'[ANALISE] JSON inválido em {arquivo}: {e}')
-        return jsonify({"success": False, "error": "bad_json", "file": str(arquivo)}), 500
+        
     except Exception as e:
-        # Não silencie — logue e devolva 500 para enxergar o erro
-        logger.exception(f'[ANALISE] Falha ao processar {arquivo}: {e}')
-        return jsonify({"success": False, "error": "server_error", "file": str(arquivo)}), 500
+        print(f"[NOVA-API] ERRO ao ler arquivo: {e}")
+        return jsonify({"success": False, "error": str(e)}), 500
 
 def enriquecer_dados_com_enderecos(dados_publicos):
     """Enriquecer dados seguindo os endereços especificados na planilha"""
