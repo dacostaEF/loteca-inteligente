@@ -1725,48 +1725,73 @@ def sincronizar_analise_site():
 @bp_admin.route('/api/analise/jogo/<int:jogo_numero>', methods=['GET'])
 @cross_origin()
 def obter_dados_analise_jogo(jogo_numero):
-    """Obter dados de análise de um jogo específico para a página do usuário"""
+    """
+    Retorna os dados do jogo_X.json normalizados para o front.
+    Aceita formato legado (dados.probabilidade_casa, etc.) e novo (dados_publicos.probabilidades.col1,...)
+    Query opcional: ?concurso=concurso_1215
+    """
+    from pathlib import Path
+    from json import JSONDecodeError
+    
+    # Helper: raiz do backend (pasta onde está este arquivo)
+    BACKEND_DIR = Path(__file__).resolve().parent
+    
+    def _dir_analise(concurso: str) -> Path:
+        # backend/models/<concurso>/analise_rapida
+        return BACKEND_DIR / "models" / concurso / "analise_rapida"
+    
+    concurso = request.args.get("concurso", "concurso_1215")
+    pasta = _dir_analise(concurso)
+    arquivo = pasta / f"jogo_{jogo_numero}.json"
+
+    # Logs úteis para diagnóstico
+    logger.info(f'[ANALISE] Carregar jogo_{jogo_numero} de {arquivo}')
+
+    if not arquivo.exists():
+        logger.warning(f'[ANALISE] Arquivo não encontrado: {arquivo}')
+        return jsonify({"success": False, "error": "not_found", "file": str(arquivo)}), 404
+
     try:
-        # ESTRUTURA FIXA: Usar APENAS concurso 1215
-        pasta_models = 'models'
-        concurso_fixo = 'concurso_1215'
-        
-        # Buscar arquivo no concurso 1215
-        pasta_analise = os.path.join(pasta_models, concurso_fixo, 'analise_rapida')
-        arquivo_analise = os.path.join(pasta_analise, f'jogo_{jogo_numero}.json')
-        
-        logger.info(f'🔍 [API] Buscando arquivo: {arquivo_analise}')
-        
-        if not os.path.exists(arquivo_analise):
-            logger.warning(f'Arquivo de análise não encontrado: {arquivo_analise}')
-            return jsonify({
-                'success': False,
-                'error': f'Dados do jogo {jogo_numero} não encontrados no concurso 1215'
-            }), 404
-        
-        # Ler dados do arquivo
-        with open(arquivo_analise, 'r', encoding='utf-8') as f:
-            dados = json.load(f)
-        
-        # RETORNAR DADOS COMPLETOS DO JSON
-        dados_publicos = dados.get('dados', {}).get('dados_publicos', {})
-        
-        logger.info(f'Dados do jogo {jogo_numero} carregados com sucesso')
-        logger.info(f'Time casa: {dados_publicos.get("time_casa", "N/A")}')
-        logger.info(f'Time fora: {dados_publicos.get("time_fora", "N/A")}')
-        
-        return jsonify({
-            'success': True,
-            'dados': dados_publicos,
-            'metadados': dados.get('dados', {}).get('metadados', {})
-        })
-        
+        with open(arquivo, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+        # raw pode estar no formato "novo" (dados_publicos) OU "legado" (dados) OU direto
+        dados = raw.get("dados_publicos") or raw.get("dados") or raw
+
+        # Normaliza probabilidades (se vierem achatadas no legado)
+        prob = dados.get("probabilidades")
+        if not prob:
+            prob = {
+                "col1": dados.get("probabilidade_casa"),
+                "colX": dados.get("probabilidade_empate"),
+                "col2": dados.get("probabilidade_fora"),
+            }
+            # Só define se ao menos um existir para não poluir
+            if any(v is not None for v in prob.values()):
+                dados["probabilidades"] = prob
+
+        # Monta metadados (se houver)
+        metadados = raw.get("metadados", {})
+
+        # Shape padronizado que o front entende
+        payload = {
+            "success": True,
+            "dados": {
+                "dados": {
+                    "metadados": metadados,
+                    "dados_publicos": dados
+                }
+            }
+        }
+        logger.info(f'[ANALISE] OK jogo_{jogo_numero} -> normalizado e retornado')
+        return jsonify(payload), 200
+
+    except JSONDecodeError as e:
+        logger.exception(f'[ANALISE] JSON inválido em {arquivo}: {e}')
+        return jsonify({"success": False, "error": "bad_json", "file": str(arquivo)}), 500
     except Exception as e:
-        logger.error(f'Erro ao obter dados de análise: {str(e)}')
-        return jsonify({
-            'success': False,
-            'error': f'Erro ao carregar dados: {str(e)}'
-        }), 500
+        # Não silencie — logue e devolva 500 para enxergar o erro
+        logger.exception(f'[ANALISE] Falha ao processar {arquivo}: {e}')
+        return jsonify({"success": False, "error": "server_error", "file": str(arquivo)}), 500
 
 def enriquecer_dados_com_enderecos(dados_publicos):
     """Enriquecer dados seguindo os endereços especificados na planilha"""
