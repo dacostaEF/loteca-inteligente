@@ -1,21 +1,21 @@
-﻿Data,mandante,mandante_nome,placar, visitante, visitante_nome,vencedor,Rodada,Competição,
-5/24/2025,Atlético Mineiro,Atlético Mineiro,0-0,Corinthians,Corinthians,Empate,R10,Brasileirão 2025,
-7/28/2024,Atlético Mineiro,Atlético Mineiro,2-1,Corinthians,Corinthians,Atlético Mineiro,R20,Brasileirão 2024,
-4/14/2024,Corinthians,Corinthians,0-0,Atlético Mineiro,Atlético Mineiro,Empate,R1,Brasileirão 2024,
-11/9/2023,Corinthians,Corinthians,1-1,Atlético Mineiro,Atlético Mineiro,Empate,R33,Brasileirão 2023,
-7/8/2023,Atlético Mineiro,Atlético Mineiro,0-1,Corinthians,Corinthians,Corinthians,R14,Brasileirão 2023,
-5/31/2023,Corinthians,Corinthians,2-0 (3-1 Pen.),Atlético Mineiro,Atlético Mineiro,Corinthians,1/8,Copa do Brasil 2023,
-5/17/2023,Atlético Mineiro,Atlético Mineiro,2-0,Corinthians,Corinthians,Atlético Mineiro,25/7,Copa do Brasil 2023,
-11/13/2022,Corinthians,Corinthians,0-1,Atlético Mineiro,Atlético Mineiro,Atlético Mineiro,R38,Brasileirão 2022,
-7/24/2022,Atlético Mineiro,Atlético Mineiro,1-2,Corinthians,Corinthians,Corinthians,R19,Brasileirão 2022,
-11/10/2021,Atlético Mineiro,Atlético Mineiro,3-0,Corinthians,Corinthians,Atlético Mineiro,R31,Brasileirão 2021,
-7/17/2021,Corinthians,Corinthians,1-2,Atlético Mineiro,Atlético Mineiro,Atlético Mineiro,R12,Brasileirão 2021,
-11/14/2020,Corinthians,Corinthians,1-2,Atlético Mineiro,Atlético Mineiro,Atlético Mineiro,R21,Brasileirão 2020,
-8/12/2020,Atlético Mineiro,Atlético Mineiro,3-2,Corinthians,Corinthians,Atlético Mineiro,R2,Brasileirão 2020,
-12/1/2019,Atlético Mineiro,Atlético Mineiro,2-1,Corinthians,Corinthians,Atlético Mineiro,R36,Brasileirão 2019,
-9/1/2019,Corinthians,Corinthians,1-0,Atlético Mineiro,Atlético Mineiro,Corinthians,R17,Brasileirão 2019,
-9/1/2018,Corinthians,Corinthians,1-1,Atlético Mineiro,Atlético Mineiro,Empate,R22,Brasileirão 2018,
-4/29/2018,Atlético Mineiro,Atlético Mineiro,1-0,Corinthians,Corinthians,Atlético Mineiro,R3,Brasileirão 2018,
-11/26/2017,Corinthians,Corinthians,2-2,Atlético Mineiro,Atlético Mineiro,Empate,R37,Brasileirão 2017,
-8/2/2017,Atlético Mineiro,Atlético Mineiro,0-2,Corinthians,Corinthians,Corinthians,R18,Brasileirão 2017,
-10/5/2016,Corinthians,Corinthians,0-0,Atlético Mineiro,Atlético Mineiro,Empate,R29,Brasileirão 2016,
+﻿Data,mandante,placar, visitante,vencedor,Rodada,Competição
+5/24/2025,Atlético Mineiro,0-0,Corinthians,Empate,R10,Brasileirão 2025
+7/28/2024,Atlético Mineiro,2-1,Corinthians,Atlético Mineiro,R20,Brasileirão 2024
+4/14/2024,Corinthians,0-0,Atlético Mineiro,Empate,R1,Brasileirão 2024
+11/9/2023,Corinthians,1-1,Atlético Mineiro,Empate,R33,Brasileirão 2023
+7/8/2023,Atlético Mineiro,0-1,Corinthians,Corinthians,R14,Brasileirão 2023
+5/31/2023,Corinthians,2-0 (3-1 Pen.),Atlético Mineiro,Corinthians,2/8,Copa do Brasil 2023
+5/17/2023,Atlético Mineiro,0-2,Corinthians,Atlético Mineiro,25/7,Copa do Brasil 2023
+11/13/2022,Corinthians,0-1,Atlético Mineiro,Atlético Mineiro,R38,Brasileirão 2022
+7/24/2022,Atlético Mineiro,1-2,Corinthians,Corinthians,R19,Brasileirão 2022
+11/10/2021,Atlético Mineiro,3-0,Corinthians,Atlético Mineiro,R31,Brasileirão 2021
+7/17/2021,Corinthians,1-2,Atlético Mineiro,Atlético Mineiro,R12,Brasileirão 2021
+11/14/2020,Corinthians,1-2,Atlético Mineiro,Atlético Mineiro,R21,Brasileirão 2020
+8/12/2020,Atlético Mineiro,3-2,Corinthians,Atlético Mineiro,R2,Brasileirão 2020
+12/1/2019,Atlético Mineiro,2-1,Corinthians,Atlético Mineiro,R36,Brasileirão 2019
+9/1/2019,Corinthians,1-0,Atlético Mineiro,Corinthians,R17,Brasileirão 2019
+9/1/2018,Corinthians,1-1,Atlético Mineiro,Empate,R22,Brasileirão 2018
+4/29/2018,Atlético Mineiro,1-0,Corinthians,Atlético Mineiro,R3,Brasileirão 2018
+11/26/2017,Corinthians,2-2,Atlético Mineiro,Empate,R37,Brasileirão 2017
+8/2/2017,Atlético Mineiro,0-2,Corinthians,Corinthians,R18,Brasileirão 2017
+10/5/2016,Corinthians,0-0,Atlético Mineiro,Empate,R29,Brasileirão 2016

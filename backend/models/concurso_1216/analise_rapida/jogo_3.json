@@ -1,33 +1,33 @@
 {
   "metadados": {
-    "jogo_numero": "1",
-    "concurso_numero": "1215"
+    "jogo_numero": "3",
+    "concurso_numero": "1216"
   },
   "dados": {
-    "numero": "1",
-    "time_casa": "Ponte Preta/SP",
-    "time_fora": "Guarani/RJ",
+    "numero": "3",
+    "time_casa": "Corinthians/SP",
+    "time_fora": "Atletico/MG",
     "arena": "Moises Lucharelli ",
-    "campeonato": "Brasileirão Série B",
+    "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/PON_Ponte-Preta/PontePreta.png",
-    "escudo_fora": "/static/escudos/GUA_Guarani/Guarani.png",
-    "probabilidade_casa": "30",
-    "probabilidade_empate": "40",
-    "probabilidade_fora": "30",
-    "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Alto",
-    "conclusao_analista": "Confronto equilibrado entre Ponte Preta e Guarani. Ambos os times apresentam campanhas similares e características técnicas parecidas. A Ponte Preta tem a vantagem de jogar em casa (40%), mas o Guarani é competitivo como visitante (30%). O histórico recente mostra equilíbrio, com alta probabilidade de empate (30%). Recomendação: Coluna 1 (Ponte Preta) pelo fator casa, mas considerar Dupla 1X pela imprevisibilidade do confronto.",
-    "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
-    "posicao_casa": "1",
-    "posicao_fora": "2",
-    "confronto_direto": "3V-4E-3D",
-    "fator_casa": "50",
-    "fator_fora": "50",
+    "escudo_casa": "/static/escudos/COR_Corinthians/Corinthians.png",
+    "escudo_fora": "/static/escudos/CAM_Atletico-MG/Atletico_MG.png",
+    "probabilidade_casa": "48",
+    "probabilidade_empate": "30",
+    "probabilidade_fora": "22",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (corinthians) - Risco alto",
+    "conclusao_analista": "Apesar de ser um confronto entre times com desempenhos gerais parecidos na tabela (Corinthians em 12º e Atlético-MG em 15º, separados por apenas 4 pontos), o fator casa desequilibra completamente a balança a favor do Corinthians. Por que o Corinthians é favorito:\n\nContraste brutal de rendimento:\n\nCorinthians em casa: 52% de aproveitamento\nAtlético-MG fora: 21% de aproveitamento (um dos piores visitantes)\n\n\nNúmeros que falam:\n\nGalo tem apenas 2 vitórias em 14 jogos fora\nSofre 20 gols e marca apenas 8 como visitante\nCorinthians tem 9 vitórias em casa (já marca 14 e sofre apenas 9)",
+    "confrontos_sequence": "E-D-E-E-V-V-V-D-V-D",
+    "posicao_casa": "12",
+    "posicao_fora": "14",
+    "confronto_direto": "5V-3E-2D",
+    "fator_casa": "65",
+    "fator_fora": "35",
     "analise_posicao": "Confronto Equilibrado",
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-14T04:56:04.387Z"
+    "sincronizado_em": "2025-10-14T16:52:20.183Z"
   },
   "admin_key": "loteca2024admin"
 }

@@ -1604,20 +1604,21 @@ def carregar_arquivo_confrontos():
                         
                         logger.info(f"📊 [API] Linha {i}: {len(partes)} partes - {partes}")
                         
-                        if len(partes) >= 7:
-                            # ESTRUTURA CORRETA DO CSV: Data,mandante_nome,Placar,visitante_nome,Campeonato,Campeonato,Resultado
+                        if len(partes) >= 5:
+                            # ESTRUTURA ATUALIZADA DO CSV: Data,mandante,placar,visitante,vencedor,Rodada,Competição
                             confronto = {
                                 'data': partes[0].strip(),
                                 'mandante_nome': partes[1].strip(),
                                 'placar': partes[2].strip(),
                                 'visitante_nome': partes[3].strip(),
-                                'campeonato': partes[4].strip(),
-                                'resultado': partes[6].strip()  # Coluna 6 = Resultado
+                                'resultado': partes[4].strip(),  # Coluna 4 = vencedor (Corinthians/Atlético Mineiro/Empate)
+                                'rodada': partes[5].strip() if len(partes) > 5 else '',
+                                'campeonato': partes[6].strip() if len(partes) > 6 else ''
                             }
                             confrontos.append(confronto)
                             logger.info(f"✅ [API] Confronto adicionado: {confronto}")
                         else:
-                            logger.warning(f"⚠️ [API] Linha {i} ignorada (menos de 7 partes): {linha}")
+                            logger.warning(f"⚠️ [API] Linha {i} ignorada (menos de 5 partes): {linha}")
                 
                 # Se chegou até aqui, o encoding funcionou
                 logger.info(f"✅ [API] Arquivo processado com sucesso usando encoding: {encoding}")
