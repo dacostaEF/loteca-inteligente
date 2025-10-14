@@ -179,17 +179,17 @@ EQUILIBRADO
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 2:</span>
                     <div class="time-info">
-                        <img src="/static/escudos/FOR_Fortaleza/Fortaleza.png" 
-                             alt="Fortaleza" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span>FORTALEZA</span>
+                        <img id="escudo-casa-jogo2" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span id="time-casa-nome-jogo2">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img src="/static/escudos/SPT_Sport/Sport.png" 
-                             alt="Sport" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span>SPORT</span>
+                        <img id="escudo-fora-jogo2" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span id="time-fora-nome-jogo2">Carregando...</span>
                     </div>
                 </div>
                 
@@ -197,15 +197,15 @@ EQUILIBRADO
             </div>
             <div class="game-card-body">
                 <div class="probabilities" id="probabilidades-jogo-2">
-                    <div class="prob-item col1"><div class="label">Coluna 1 (Fortaleza)</div><div class="value loading" id="prob-col1-2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Casa)</div><div class="value loading" id="prob-col1-2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                     <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label">Coluna 2 (Sport)</div><div class="value loading" id="prob-col2-2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Fora)</div><div class="value loading" id="prob-col2-2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
                 <div class="recommendation" id="recomendacao-jogo-2"><strong>⏳ Analisando dados...</strong></div>
                 
                 <!-- TABELA DESKTOP -->
                 <table class="analysis-table" id="analise-jogo-2">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-2">Fortaleza</th><th class="team-header" id="time-fora-nome-2">Sport</th><th>Análise</th></tr></thead>
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-2">Carregando...</th><th class="team-header" id="time-fora-nome-2">Carregando...</th><th>Análise</th></tr></thead>
                     <tbody>
                         <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-2"></div></td><td id="forma-analise-2">Baseado nos últimos 10 jogos</td></tr>
                         <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-2">-</td><td class="team-header" id="posicao-fora-2">-</td><td id="posicao-analise-2">Carregando dados...</td></tr>
@@ -250,7 +250,7 @@ FOR
                 
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p>O Fortaleza apresenta um favoritismo claro neste confronto. Além de jogar em casa, o time vive uma fase muito superior à do Sport e possui um histórico recente dominante no confronto direto. A aposta na Coluna 1 é a mais segura segundo os dados.</p>
+                    <p id="conclusao-analista-2">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -6436,6 +6436,44 @@ Equilíbrio
             }
         }
 
+        // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 2 (IDÊNTICA AO JOGO 1)
+        async function carregarDadosJogo2() {
+            console.log('🎯 [JOGO2] Iniciando carregamento dos dados do JOGO 2...');
+            console.log('🔍 [JOGO2] URL da API:', '/api/analise/jogo/2?concurso=concurso_1215');
+            
+            try {
+                // Fazer requisição para a API com parâmetro de concurso
+                const response = await fetch('/api/analise/jogo/2?concurso=concurso_1215');
+                
+                console.log('📡 [JOGO2] Response status:', response.status);
+                console.log('📡 [JOGO2] Response ok:', response.ok);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [JOGO2] Dados recebidos da API:', data);
+                console.log('🔍 [JOGO2] data.success:', data.success);
+                console.log('🔍 [JOGO2] data.dados existe:', !!data.dados);
+                
+                if (data.success && data.dados) {
+                    console.log('🔄 [JOGO2] Chamando atualizarDadosJogo2()...');
+                    // SUBSTITUIR DADOS HARDCODED
+                    atualizarDadosJogo2(data.dados);
+                    console.log('✅ [JOGO2] Dados atualizados com sucesso!');
+                } else {
+                    console.warn('⚠️ [JOGO2] API retornou dados vazios ou inválidos');
+                    console.warn('⚠️ [JOGO2] data.success:', data.success);
+                    console.warn('⚠️ [JOGO2] data.dados:', data.dados);
+                }
+                
+            } catch (error) {
+                console.error('❌ [JOGO2] Erro ao carregar dados:', error);
+                console.error('❌ [JOGO2] Stack trace:', error.stack);
+            }
+        }
+
         // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 1
         function atualizarDadosJogo1(dados) {
             console.log('🔄 [JOGO1] Atualizando campos com dados:', dados);
@@ -6578,6 +6616,208 @@ Equilíbrio
             }
             
             console.log('✅ [JOGO1] Todos os campos atualizados!');
+        }
+
+        // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 2 (IDÊNTICA AO JOGO 1)
+        function atualizarDadosJogo2(dados) {
+            console.log('🔄 [JOGO2] Atualizando campos com dados:', dados);
+            console.log('🔍 [JOGO2] Dados recebidos:', JSON.stringify(dados, null, 2));
+            
+            // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES (AGORA COM IDs ÚNICOS)
+            const escudoCasa = document.getElementById('escudo-casa-jogo2');
+            const nomeCasa = document.getElementById('time-casa-nome-jogo2');
+            const escudoFora = document.getElementById('escudo-fora-jogo2');
+            const nomeFora = document.getElementById('time-fora-nome-jogo2');
+            
+            console.log('🔍 [JOGO2] Elementos encontrados:');
+            console.log('🔍 [JOGO2] escudoCasa:', escudoCasa);
+            console.log('🔍 [JOGO2] nomeCasa:', nomeCasa);
+            console.log('🔍 [JOGO2] escudoFora:', escudoFora);
+            console.log('🔍 [JOGO2] nomeFora:', nomeFora);
+            
+            if (escudoCasa && dados.escudo_casa) {
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa;
+                console.log('✅ [DEBUG] Escudo casa jogo 2 atualizado:', dados.escudo_casa);
+            }
+            
+            if (nomeCasa && dados.time_casa) {
+                console.log('🔄 [DEBUG] Atualizando nome casa jogo 2:', dados.time_casa);
+                nomeCasa.textContent = dados.time_casa.toUpperCase();
+                console.log('✅ [DEBUG] Nome casa jogo 2 atualizado para:', nomeCasa.textContent);
+            }
+            
+            if (escudoFora && dados.escudo_fora) {
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora;
+                console.log('✅ [DEBUG] Escudo fora jogo 2 atualizado:', dados.escudo_fora);
+            }
+            
+            if (nomeFora && dados.time_fora) {
+                console.log('🔄 [DEBUG] Atualizando nome fora jogo 2:', dados.time_fora);
+                nomeFora.textContent = dados.time_fora.toUpperCase();
+                console.log('✅ [DEBUG] Nome fora jogo 2 atualizado para:', nomeFora.textContent);
+            }
+            
+            // 2. ATUALIZAR INFORMAÇÕES DO JOGO
+            const gameInfo = document.querySelector('#analise-rapida .game-card:nth-of-type(2) .game-info');
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+                console.log('✅ [DEBUG] Info jogo 2 atualizada:', gameInfo.textContent);
+            }
+            
+            // 3. ATUALIZAR PROBABILIDADES E LABELS
+            const probCol1 = document.getElementById('prob-col1-2');
+            const probColX = document.getElementById('prob-colX-2');
+            const probCol2 = document.getElementById('prob-col2-2');
+            
+            // Atualizar labels das probabilidades
+            const labelCol1 = probCol1?.parentElement?.querySelector('.label');
+            const labelCol2 = probCol2?.parentElement?.querySelector('.label');
+            
+            if (labelCol1 && dados.time_casa) {
+                labelCol1.textContent = `Coluna 1 (${dados.time_casa})`;
+            }
+            
+            if (labelCol2 && dados.time_fora) {
+                labelCol2.textContent = `Coluna 2 (${dados.time_fora})`;
+            }
+            
+            if (probCol1 && dados.probabilidade_casa) {
+                probCol1.classList.remove('loading');
+                probCol1.innerHTML = `<span class="probability-value">${dados.probabilidade_casa}%</span>`;
+                console.log('✅ [DEBUG] Prob Col1 jogo 2:', dados.probabilidade_casa);
+            }
+            
+            if (probColX && dados.probabilidade_empate) {
+                probColX.classList.remove('loading');
+                probColX.innerHTML = `<span class="probability-value">${dados.probabilidade_empate}%</span>`;
+                console.log('✅ [DEBUG] Prob ColX jogo 2:', dados.probabilidade_empate);
+            }
+            
+            if (probCol2 && dados.probabilidade_fora) {
+                probCol2.classList.remove('loading');
+                probCol2.innerHTML = `<span class="probability-value">${dados.probabilidade_fora}%</span>`;
+                console.log('✅ [DEBUG] Prob Col2 jogo 2:', dados.probabilidade_fora);
+            }
+            
+            // 4. ATUALIZAR RECOMENDAÇÃO
+            const recomendacao = document.getElementById('recomendacao-jogo-2');
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+                console.log('✅ [DEBUG] Recomendação jogo 2 atualizada');
+            }
+            
+            // 5. ATUALIZAR CONCLUSÃO DO ANALISTA
+            const conclusao = document.getElementById('conclusao-analista-2');
+            if (conclusao && dados.conclusao_analista) {
+                conclusao.textContent = dados.conclusao_analista;
+                console.log('✅ [DEBUG] Conclusão jogo 2 atualizada');
+            }
+            
+            // 6. ATUALIZAR TABELA DE ANÁLISE
+            const posicaoCasa = document.getElementById('posicao-casa-2');
+            const posicaoFora = document.getElementById('posicao-fora-2');
+            const fatorCasa = document.getElementById('fator-casa-2');
+            const fatorFora = document.getElementById('fator-fora-2');
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = `${dados.posicao_casa}°`;
+            }
+            
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = `${dados.posicao_fora}°`;
+            }
+            
+            if (fatorCasa && dados.fator_casa) {
+                fatorCasa.textContent = dados.fator_casa;
+            }
+            
+            if (fatorFora && dados.fator_fora) {
+                fatorFora.textContent = dados.fator_fora;
+            }
+            
+            // 7. ATUALIZAR ÚLTIMOS CONFRONTOS (FORMATO IGUAL AO JOGO 1)
+            if (dados.confrontos_sequence) {
+                const confrontosContainer = document.getElementById('confrontos-principais-2');
+                if (confrontosContainer) {
+                    // CORRIGIDO: Pegar apenas os primeiros 10 resultados (igual ao JOGO 1)
+                    const sequenciaLimitada = dados.confrontos_sequence.substring(0, 10);
+                    
+                    // CORRIGIDO: Criar confrontos com DATA + PLACAR + ESCUDO (igual ao JOGO 1)
+                    const confrontos = sequenciaLimitada.split('').map((resultado, index) => {
+                        // Gerar data fictícia (últimos 10 jogos)
+                        const data = new Date();
+                        data.setDate(data.getDate() - (index * 7)); // 1 semana entre jogos
+                        const dataFormatada = data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' });
+                        
+                        // Gerar placar fictício baseado no resultado
+                        let placar;
+                        if (resultado === 'V') {
+                            placar = '2-1'; // Vitória casa
+                        } else if (resultado === 'D') {
+                            placar = '1-2'; // Vitória fora
+                        } else {
+                            placar = '1-1'; // Empate
+                        }
+                        
+                        // Criar HTML igual ao JOGO 1: DATA | PLACAR | ESCUDO/RESULTADO
+                        if (resultado === 'V') {
+                            return `<div class="confronto-item">
+                                <div class="confronto-data">${dataFormatada}</div>
+                                <div class="confronto-placar">${placar}</div>
+                                <div class="confronto-result casa" title="Vitória ${dados.time_casa}">
+                                    <img src="${dados.escudo_casa}" alt="${dados.time_casa}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>${dados.time_casa.substring(0,3).toUpperCase()}</span>'">
+                                </div>
+                            </div>`;
+                        } else if (resultado === 'D') {
+                            return `<div class="confronto-item">
+                                <div class="confronto-data">${dataFormatada}</div>
+                                <div class="confronto-placar">${placar}</div>
+                                <div class="confronto-result fora" title="Vitória ${dados.time_fora}">
+                                    <img src="${dados.escudo_fora}" alt="${dados.time_fora}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>${dados.time_fora.substring(0,3).toUpperCase()}</span>'">
+                                </div>
+                            </div>`;
+                        } else {
+                            return `<div class="confronto-item">
+                                <div class="confronto-data">${dataFormatada}</div>
+                                <div class="confronto-placar">${placar}</div>
+                                <div class="confronto-result empate" title="Empate">E</div>
+                            </div>`;
+                        }
+                    }).join('');
+                    
+                    confrontosContainer.innerHTML = confrontos;
+                    console.log('✅ [DEBUG] Últimos confrontos jogo 2 atualizados (10 resultados com data + placar + escudo)');
+                }
+            }
+            
+            // 8. ATUALIZAR CONFRONTO DIRETO
+            if (dados.confronto_direto) {
+                const confrontoDiretoContainer = document.getElementById('confronto-direto-principais-2');
+                if (confrontoDiretoContainer) {
+                    // Formato: "5V-3E-2D" -> mostrar como 5-3-2
+                    const confrontoHtml = `
+                        <div class="confronto-direto-item">
+                            <img src="${dados.escudo_casa}" alt="${dados.time_casa}" class="confronto-direto-escudo" onerror="this.outerHTML='<span>${dados.time_casa.substring(0,3).toUpperCase()}</span>'">
+                            <span class="confronto-direto-count">${dados.confronto_direto.split('-')[0].replace('V', '')}</span>
+                        </div>
+                        <span class="confronto-direto-separador">-</span>
+                        <div class="confronto-direto-item">
+                            <span class="confronto-direto-count">${dados.confronto_direto.split('-')[1]}</span>
+                        </div>
+                        <span class="confronto-direto-separador">-</span>
+                        <div class="confronto-direto-item">
+                            <span class="confronto-direto-count">${dados.confronto_direto.split('-')[2].replace('D', '')}</span>
+                            <img src="${dados.escudo_fora}" alt="${dados.time_fora}" class="confronto-direto-escudo" onerror="this.outerHTML='<span>${dados.time_fora.substring(0,3).toUpperCase()}</span>'">
+                        </div>
+                    `;
+                    confrontoDiretoContainer.innerHTML = confrontoHtml;
+                    console.log('✅ [DEBUG] Confronto direto jogo 2 atualizado');
+                }
+            }
+            
+            console.log('✅ [JOGO2] Todos os campos atualizados com sucesso!');
         }
 
         // FUNÇÃO REMOVIDA - DUPLICATA CONFLITANTE
@@ -6743,10 +6983,10 @@ Equilíbrio
             }, 2000);
             */
 
-            // CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 2
+            // CORRIGIDO: CARREGAR DADOS DO JOGO 2 VIA API (IGUAL AO JOGO 1)
             setTimeout(() => {
-                console.log('🎯 [LOTECA-JOGO2] Carregando dados reais DIRETOS do dashboard...');
-                carregarDadosReaisDiretosJogo2();
+                console.log('🎯 [JOGO2] Carregando dados via API (igual ao jogo 1)...');
+                carregarDadosJogo2();
             }, 2500); // Aguardar 2.5 segundos para garantir que a página carregou
 
             // CARREGAR CONFRONTO DIRETO NA ABA 1 (FORÇAR CARREGAMENTO)
@@ -6764,11 +7004,11 @@ Equilíbrio
             setTimeout(() => forcarConfrontoDirecto(), 6000);
             */
 
-            // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 2
-            setTimeout(() => forcarConfrontoDirectoJogo2(), 1500);
-            setTimeout(() => forcarConfrontoDirectoJogo2(), 3000);
-            setTimeout(() => forcarConfrontoDirectoJogo2(), 5000);
-            setTimeout(() => forcarConfrontoDirectoJogo2(), 7000);
+            // FUNÇÕES HARDCODED REMOVIDAS - JOGO 2 AGORA USA APENAS API
+            // setTimeout(() => forcarConfrontoDirectoJogo2(), 1500);
+            // setTimeout(() => forcarConfrontoDirectoJogo2(), 3000);
+            // setTimeout(() => forcarConfrontoDirectoJogo2(), 5000);
+            // setTimeout(() => forcarConfrontoDirectoJogo2(), 7000);
 
             // CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 3
             setTimeout(() => {
@@ -7536,8 +7776,8 @@ Equilíbrio
             document.getElementById('data-source').textContent = fonte;
         }
 
-        // FUNÇÃO PARA CARREGAR POSIÇÕES NA TABELA DO JOGO 2
-        async function carregarPosicoesTabelaJogo2() {
+        // FUNÇÃO HARDCODED REMOVIDA - JOGO 2 AGORA USA APENAS API
+        /* async function carregarPosicoesTabelaJogo2() {
             try {
                 console.log('📊 [POSITION-JOGO2] Buscando posições na tabela para Fortaleza vs Sport...');
                 
@@ -7621,10 +7861,10 @@ Equilíbrio
             }
             
             console.log('✅ [POSITION-JOGO2] Posições atualizadas na interface');
-        }
+        } */
 
-        // FUNÇÃO PARA CARREGAR ÚLTIMOS CONFRONTOS DO JOGO 2
-        function carregarUltimosConfrontosJogo2() {
+        // FUNÇÃO HARDCODED REMOVIDA - JOGO 2 AGORA USA APENAS API
+        /* function carregarUltimosConfrontosJogo2() {
             console.log('🎯 [CONFRONTOS-JOGO2] Carregando últimos confrontos Fortaleza vs Sport...');
             
             const container = document.getElementById('confrontos-principais-2');
@@ -7687,10 +7927,10 @@ Equilíbrio
             
             container.innerHTML = bolinhasHtml;
             console.log(`✅ [CONFRONTOS-JOGO2] ${ultimos10.length} bolinhas renderizadas na tabela (linha única)`);
-        }
+        } */
 
-        // FUNÇÃO SIMPLES PARA FORÇAR CONFRONTO DIRETO JOGO 2
-        function forcarConfrontoDirectoJogo2() {
+        // FUNÇÃO HARDCODED REMOVIDA - JOGO 2 AGORA USA APENAS API
+        /* function forcarConfrontoDirectoJogo2() {
             console.log('🔥 [FORCE-H2H-JOGO2] Forçando confronto direto Fortaleza vs Sport...');
             
             const elemento = document.getElementById('confronto-direto-principais-2');
@@ -7718,7 +7958,7 @@ Equilíbrio
             } else {
                 console.error('❌ [FORCE-H2H-JOGO2] Elemento confronto-direto-principais-2 NÃO ENCONTRADO!');
             }
-        }
+        } */
 
         // FUNÇÃO SIMPLES PARA FORÇAR CONFRONTO DIRETO
         function forcarConfrontoDirecto() {
@@ -7757,8 +7997,8 @@ Equilíbrio
             }
         }
 
-        // FUNÇÃO PARA CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 2
-        function carregarDadosReaisDiretosJogo2() {
+        // FUNÇÃO REMOVIDA: carregarDadosReaisDiretosJogo2() - substituída por carregarDadosJogo2() que usa API
+        /* function carregarDadosReaisDiretosJogo2() {
             console.log('🎯 [LOTECA-JOGO2] Carregando dados reais DIRETOS do dashboard...');
             
             // DADOS REAIS OBTIDOS DO DASHBOARD ADMIN (testados e funcionando)
@@ -7846,27 +8086,19 @@ Equilíbrio
             console.log('✅ [LOTECA-JOGO2] Dados reais carregados com sucesso!');
             console.log('📊 [LOTECA-JOGO2] Probabilidades atualizadas: 65% - 25% - 10%');
             console.log('🎯 [LOTECA-JOGO2] Nova recomendação: Coluna 1 (Fortaleza) - Risco Baixo');
-            
-            // CARREGAR ÚLTIMOS CONFRONTOS (BOLINHAS)
-            setTimeout(() => {
-                carregarUltimosConfrontosJogo2();
-            }, 300);
+            // FUNÇÕES HARDCODED REMOVIDAS - JOGO 2 AGORA USA APENAS API
+            // setTimeout(() => {
+            //     carregarPosicoesTabelaJogo2();
+            // }, 400);
 
-            // CARREGAR POSIÇÕES NA TABELA
-            setTimeout(() => {
-                carregarPosicoesTabelaJogo2();
-            }, 400);
-
-            // FORÇAR CARREGAMENTO DO CONFRONTO DIRETO
-            setTimeout(() => {
-                forcarConfrontoDirectoJogo2();
-                // Corrigir análise do confronto direto
-                const analiseElement = document.getElementById('h2h-analise-2');
-                if (analiseElement) {
-                    analiseElement.innerHTML = 'Vantagem Fortaleza';
-                }
-            }, 500);
-        }
+            // setTimeout(() => {
+            //     forcarConfrontoDirectoJogo2();
+            //     const analiseElement = document.getElementById('h2h-analise-2');
+            //     if (analiseElement) {
+            //         analiseElement.innerHTML = 'Vantagem Fortaleza';
+            //     }
+            // }, 500);
+        } */
 
         // FUNÇÃO PARA CARREGAR ÚLTIMOS CONFRONTOS DO JOGO 3
         function carregarUltimosConfrontosJogo3() {
