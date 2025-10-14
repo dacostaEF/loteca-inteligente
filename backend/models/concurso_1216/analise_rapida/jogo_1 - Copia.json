@@ -1,0 +1,29 @@
+{
+  "metadados": {
+    "jogo_numero": "1",
+    "sincronizado_em": "2025-10-11T22:32:54.555Z",
+    "versao": "1.0"
+  },
+  "dados_publicos": {
+    "time_casa": "Ponte Preta/SP",
+    "time_fora": "Guarani/RJ",
+    "arena": "Moises Lucharelli ",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/PON_Ponte-Preta/PontePreta.png",
+    "escudo_fora": "/static/escudos/GUA_Guarani/Guarani.png",
+    "probabilidades": {
+      "col1": "30",
+      "colX": "40",
+      "col2": "30"
+    },
+    "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Alto",
+    "conclusao_analista": null,
+    "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
+    "posicao_casa": "1",
+    "posicao_fora": "2",
+    "confronto_direto": "3V-4E-3D",
+    "fator_casa": "50",
+    "fator_fora": "50"
+  }
+}

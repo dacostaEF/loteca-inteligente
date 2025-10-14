@@ -65,7 +65,7 @@
                 <img src="{{ url_for('static', filename='Logo_loteraisinteligente.png') }}" alt="Logo Loterias Inteligente - Visite nosso site" class="logo">
             </a>
             <h1>Raio-X da Loteca</h1>
-            <h1>Concurso 1215</h1>
+            <h1>Concurso 1216</h1>
             <p>Análise estatística completa dos 14 jogos para te ajudar a montar um palpite mais inteligente. Cruzamos dados de performance, histórico e momento para calcular as probabilidades de cada confronto.</p>
         </header>
 
@@ -5715,7 +5715,7 @@ Equilíbrio
             
             try {
                 // PRIMEIRO: Buscar dados do jogo 1 da Central Admin
-                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1215');
+                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1216');
                 const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
                 const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
                 let timeCasa = nomeCasa;
@@ -6414,7 +6414,7 @@ Equilíbrio
             
             try {
                 // Fazer requisição para a API com parâmetro de concurso
-                const response = await fetch('/api/analise/jogo/1?concurso=concurso_1215');
+                const response = await fetch('/api/analise/jogo/1?concurso=concurso_1216');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -6439,11 +6439,11 @@ Equilíbrio
         // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 2 (IDÊNTICA AO JOGO 1)
         async function carregarDadosJogo2() {
             console.log('🎯 [JOGO2] Iniciando carregamento dos dados do JOGO 2...');
-            console.log('🔍 [JOGO2] URL da API:', '/api/analise/jogo/2?concurso=concurso_1215');
+            console.log('🔍 [JOGO2] URL da API:', '/api/analise/jogo/2?concurso=concurso_1216');
             
             try {
                 // Fazer requisição para a API com parâmetro de concurso
-                const response = await fetch('/api/analise/jogo/2?concurso=concurso_1215');
+                const response = await fetch('/api/analise/jogo/2?concurso=concurso_1216');
                 
                 console.log('📡 [JOGO2] Response status:', response.status);
                 console.log('📡 [JOGO2] Response ok:', response.ok);
@@ -10718,7 +10718,7 @@ Equilíbrio
     <script>
     (async function(){
       async function carregarDados(jogo){
-        const url = `/api/analise/jogo/${jogo}?concurso=concurso_1215`; // ajuste o 1215 se necessário
+        const url = `/api/analise/jogo/${jogo}?concurso=concurso_1216`; // ajuste o 1216 se necessário
         const resp = await fetch(url);
         if (!resp.ok) { console.error('HTTP', resp.status, url); return; }
         const api = await resp.json();

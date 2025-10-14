@@ -1,94 +1,94 @@
 {
   "metadados": {
-    "numero": "1215",
-    "salvo_em": "2025-10-14T08:35:51.549396",
+    "numero": "1216",
+    "salvo_em": "2025-10-14T08:50:55.937468",
     "versao": "1.0"
   },
   "concurso": {},
   "jogos": [
     {
+      "data": "Domingo",
       "numero": 1,
       "time_casa": "PONTE PRETA/SP",
-      "time_fora": "GUARANIS/SP",
-      "data": "Domingo"
+      "time_fora": "GUARANIS/SP"
     },
     {
+      "data": "Domingo",
       "numero": 2,
       "time_casa": "PALMEIRAS/SP",
-      "time_fora": "JUVENTUDE/RS",
-      "data": "Domingo"
+      "time_fora": "JUVENTUDE/RS"
     },
     {
+      "data": "S�bado",
       "numero": 3,
       "time_casa": "CORINTHIANS/SP",
-      "time_fora": "ATLETICO/MG",
-      "data": "S�bado"
+      "time_fora": "ATLETICO/MG"
     },
     {
+      "data": "S�bado",
       "numero": 4,
       "time_casa": "ROMA",
-      "time_fora": "INTER DE MILAO",
-      "data": "S�bado"
+      "time_fora": "INTER DE MILAO"
     },
     {
+      "data": "S�bado",
       "numero": 5,
       "time_casa": "ATLETICO MADRID",
-      "time_fora": "OSASUNA",
-      "data": "S�bado"
+      "time_fora": "OSASUNA"
     },
     {
+      "data": "S�bado",
       "numero": 6,
       "time_casa": "CRUZEIRO/MG",
-      "time_fora": "FORTALEZA/CE",
-      "data": "S�bado"
+      "time_fora": "FORTALEZA/CE"
     },
     {
+      "data": "Domingo",
       "numero": 7,
       "time_casa": "TOTTENHAM",
-      "time_fora": "ASTON VILLA",
-      "data": "Domingo"
+      "time_fora": "ASTON VILLA"
     },
     {
+      "data": "Domingo",
       "numero": 8,
       "time_casa": "MIRASSOL/SP",
-      "time_fora": "SAO PAULO/SP",
-      "data": "Domingo"
+      "time_fora": "SAO PAULO/SP"
     },
     {
+      "data": "Domingo",
       "numero": 9,
       "time_casa": "CEARA/CE",
-      "time_fora": "BOTAFOGO/RJ",
-      "data": "Domingo"
+      "time_fora": "BOTAFOGO/RJ"
     },
     {
+      "data": "Domingo",
       "numero": 10,
       "time_casa": "LIVERPOOL",
-      "time_fora": "MANCHESTER UNITED",
-      "data": "Domingo"
+      "time_fora": "MANCHESTER UNITED"
     },
     {
+      "data": "Domingo",
       "numero": 11,
       "time_casa": "ATALANTA BERGAMAS",
-      "time_fora": "LAZIO",
-      "data": "Domingo"
+      "time_fora": "LAZIO"
     },
     {
+      "data": "Domingo",
       "numero": 12,
       "time_casa": "BAHIA/BA",
-      "time_fora": "GREMIO/RS",
-      "data": "Domingo"
+      "time_fora": "GREMIO/RS"
     },
     {
+      "data": "Domingo",
       "numero": 13,
       "time_casa": "MILAN",
-      "time_fora": "FIORENTINA",
-      "data": "Domingo"
+      "time_fora": "FIORENTINA"
     },
     {
+      "data": "Domingo",
       "numero": 14,
       "time_casa": "GETAFE",
-      "time_fora": "REAL MADRID",
-      "data": "Domingo"
+      "time_fora": "REAL MADRID"
     }
   ],
   "estatisticas": {}

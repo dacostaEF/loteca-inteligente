@@ -7587,6 +7587,12 @@
                 console.log('🎮 [LOTECA] Iniciando carregamento da aba Jogos Loteca...');
                 carregarListaConcursos();
                 carregarUltimoConcurso();
+                
+                // Atualizar dropdown da aba Análise Rápida
+                setTimeout(() => {
+                    console.log('🔄 [INIT] Atualizando dropdown da aba Análise Rápida...');
+                    atualizarDropdownAnaliseRapida();
+                }, 500);
                 carregarInformacoesConcursoSalvas();
             }, 1500);
             
@@ -7802,6 +7808,37 @@
                     console.log('⚠️ [DROPDOWN] Dropdown não encontrado');
                     return;
                 }
+                
+                // PRIORIDADE 1: Usar dados do arquivo JSON salvo (jogosAtuais)
+                if (jogosAtuais && jogosAtuais.length > 0) {
+                    console.log('📊 [DROPDOWN] Usando dados do arquivo JSON salvo:', jogosAtuais);
+                    
+                    // Limpar opções existentes (exceto a primeira)
+                    while (dropdown.children.length > 1) {
+                        dropdown.removeChild(dropdown.lastChild);
+                    }
+                    
+                    // Adicionar jogos do arquivo JSON
+                    jogosAtuais.forEach(jogo => {
+                        const option = document.createElement('option');
+                        option.value = jogo.numero || jogo.id;
+                        
+                        // Formatar nome dos times
+                        const timeCasa = jogo.time_casa || jogo.coluna1 || '';
+                        const timeFora = jogo.time_fora || jogo.coluna2 || '';
+                        
+                        option.textContent = `JOGO ${jogo.numero || jogo.id} - ${timeCasa} vs ${timeFora}`;
+                        dropdown.appendChild(option);
+                        
+                        console.log(`✅ [DROPDOWN] Opção ${jogo.numero || jogo.id} adicionada: ${option.textContent}`);
+                    });
+                    
+                    console.log(`✅ [DROPDOWN] ${jogosAtuais.length} jogos carregados do arquivo JSON!`);
+                    return;
+                }
+                
+                // PRIORIDADE 2: Fallback - usar dados da tabela (método antigo)
+                console.log('📊 [DROPDOWN] Usando dados da tabela (fallback)...');
                 
                 // Atualizar cada opção do dropdown com os dados da tabela
                 for (let i = 1; i <= 14; i++) {
@@ -8076,7 +8113,18 @@
 
                 // Salvar no localStorage para retenção na página
                 localStorage.setItem('ultimoConcursoCarregado', JSON.stringify(dadosConcurso));
+                
+                // SALVAR INFORMAÇÕES DOS 3 CAMPOS DE CIMA
+                const infoConcurso = {
+                    numero: numeroConcurso,
+                    periodoApostas: periodoApostas,
+                    realizacaoJogos: realizacaoJogos,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('infoConcursoAtual', JSON.stringify(infoConcurso));
+                
                 console.log('💾 [AUTO-SAVE] Dados salvos no localStorage');
+                console.log('💾 [AUTO-SAVE] Informações dos 3 campos salvas:', infoConcurso);
 
                 // Salvar no servidor via API (se disponível)
                 try {
@@ -8090,6 +8138,11 @@
 
                     if (response.ok) {
                         console.log('💾 [AUTO-SAVE] Dados salvos no servidor');
+                        
+                        // ATUALIZAR DROPDOWN DA ABA "PLANILHA ANÁLISE RÁPIDA"
+                        console.log('🔄 [AUTO-SAVE] Atualizando dropdown com novos jogos...');
+                        atualizarDropdownAnaliseRapida();
+                        
                     } else {
                         console.warn('⚠️ [AUTO-SAVE] Erro ao salvar no servidor, mas dados mantidos no localStorage');
                     }
@@ -8106,9 +8159,12 @@
         async function salvarDadosManualmente() {
             try {
                 console.log('💾 [MANUAL-SAVE] Salvando dados manualmente...');
+                console.log('💾 [MANUAL-SAVE] jogosAtuais:', jogosAtuais);
+                console.log('💾 [MANUAL-SAVE] jogosAtuais.length:', jogosAtuais ? jogosAtuais.length : 'undefined');
                 
                 // Verificar se há jogos para salvar
                 if (!jogosAtuais || jogosAtuais.length === 0) {
+                    console.log('❌ [MANUAL-SAVE] Nenhum jogo carregado!');
                     mostrarNotificacao('❌ Nenhum jogo carregado para salvar!', 'error');
                     return;
                 }
@@ -8131,10 +8187,24 @@
                 // 1. SALVAR NO LOCALSTORAGE (GARANTIA IMEDIATA)
                 localStorage.setItem('ultimoConcursoCarregado', JSON.stringify(dadosConcurso));
                 localStorage.setItem('concursoSalvo_' + numeroConcurso, JSON.stringify(dadosConcurso));
+                
+                // SALVAR INFORMAÇÕES DOS 3 CAMPOS DE CIMA
+                const infoConcurso = {
+                    numero: numeroConcurso,
+                    periodoApostas: periodoApostas,
+                    realizacaoJogos: realizacaoJogos,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('infoConcursoAtual', JSON.stringify(infoConcurso));
+                
                 console.log('💾 [MANUAL-SAVE] Dados salvos no localStorage');
+                console.log('💾 [MANUAL-SAVE] Informações dos 3 campos salvas:', infoConcurso);
 
                 // 2. SALVAR NO SERVIDOR VIA API
                 try {
+                    console.log('💾 [MANUAL-SAVE] Enviando para API:', `${API_BASE}/api/admin/loteca/concurso`);
+                    console.log('💾 [MANUAL-SAVE] Dados enviados:', dadosConcurso);
+                    
                     const response = await fetch(`${API_BASE}/api/admin/loteca/concurso`, {
                         method: 'POST',
                         headers: {
@@ -8142,11 +8212,19 @@
                         },
                         body: JSON.stringify(dadosConcurso)
                     });
+                    
+                    console.log('💾 [MANUAL-SAVE] Response status:', response.status);
+                    console.log('💾 [MANUAL-SAVE] Response ok:', response.ok);
 
                     if (response.ok) {
                         const result = await response.json();
                         console.log('💾 [MANUAL-SAVE] Dados salvos no servidor:', result);
                         mostrarNotificacao(`✅ ${jogosAtuais.length} jogos salvos com sucesso!`, 'success');
+                        
+                        // ATUALIZAR DROPDOWN DA ABA "PLANILHA ANÁLISE RÁPIDA"
+                        console.log('🔄 [MANUAL-SAVE] Atualizando dropdown com novos jogos...');
+                        atualizarDropdownAnaliseRapida();
+                        
                     } else {
                         const error = await response.json();
                         console.error('❌ [MANUAL-SAVE] Erro do servidor:', error);
@@ -8411,17 +8489,35 @@
                 console.log('📂 [LOTECA] Carregando informações salvas do concurso...');
                 
                 const infoSalva = localStorage.getItem('infoConcursoAtual');
+                console.log('📂 [LOTECA] Dados salvos encontrados:', infoSalva);
+                
                 if (infoSalva) {
                     const info = JSON.parse(infoSalva);
+                    console.log('📂 [LOTECA] Informações parseadas:', info);
                     
                     // Preencher campos
                     const numeroConcurso = document.getElementById('numeroConcurso');
                     const periodoApostas = document.getElementById('periodoApostas');
                     const realizacaoJogos = document.getElementById('realizacaoJogos');
                     
-                    if (numeroConcurso) numeroConcurso.value = info.numero || '1213';
-                    if (periodoApostas) periodoApostas.value = info.periodoApostas || '24/09/2025 até 15h do dia 27/09/2025';
-                    if (realizacaoJogos) realizacaoJogos.value = info.realizacaoJogos || '27/09/2025 a 28/09/2025';
+                    console.log('📂 [LOTECA] Campos encontrados:', {
+                        numeroConcurso: !!numeroConcurso,
+                        periodoApostas: !!periodoApostas,
+                        realizacaoJogos: !!realizacaoJogos
+                    });
+                    
+                    if (numeroConcurso) {
+                        numeroConcurso.value = info.numero || '1213';
+                        console.log('📂 [LOTECA] Campo número preenchido:', numeroConcurso.value);
+                    }
+                    if (periodoApostas) {
+                        periodoApostas.value = info.periodoApostas || '24/09/2025 até 15h do dia 27/09/2025';
+                        console.log('📂 [LOTECA] Campo período preenchido:', periodoApostas.value);
+                    }
+                    if (realizacaoJogos) {
+                        realizacaoJogos.value = info.realizacaoJogos || '27/09/2025 a 28/09/2025';
+                        console.log('📂 [LOTECA] Campo realização preenchido:', realizacaoJogos.value);
+                    }
                     
                     // Atualizar display
                     const displayConcurso = document.getElementById('displayConcurso');

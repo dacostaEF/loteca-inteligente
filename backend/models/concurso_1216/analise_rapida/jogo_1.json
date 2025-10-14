@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "1",
+    "concurso_numero": "1215"
+  },
+  "dados": {
+    "numero": "1",
+    "time_casa": "Ponte Preta/SP",
+    "time_fora": "Guarani/RJ",
+    "arena": "Moises Lucharelli ",
+    "campeonato": "Brasileirão Série B",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/PON_Ponte-Preta/PontePreta.png",
+    "escudo_fora": "/static/escudos/GUA_Guarani/Guarani.png",
+    "probabilidade_casa": "30",
+    "probabilidade_empate": "40",
+    "probabilidade_fora": "30",
+    "recomendacao": "Recomendação Estatística: Coluna X (Empate) - Risco Alto",
+    "conclusao_analista": "Confronto equilibrado entre Ponte Preta e Guarani. Ambos os times apresentam campanhas similares e características técnicas parecidas. A Ponte Preta tem a vantagem de jogar em casa (40%), mas o Guarani é competitivo como visitante (30%). O histórico recente mostra equilíbrio, com alta probabilidade de empate (30%). Recomendação: Coluna 1 (Ponte Preta) pelo fator casa, mas considerar Dupla 1X pela imprevisibilidade do confronto.",
+    "confrontos_sequence": "V-V-E-D-E-D-E-V-E-D",
+    "posicao_casa": "1",
+    "posicao_fora": "2",
+    "confronto_direto": "3V-4E-3D",
+    "fator_casa": "50",
+    "fator_fora": "50",
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Confronto Equilibrado",
+    "sincronizado_em": "2025-10-14T04:56:04.387Z"
+  },
+  "admin_key": "loteca2024admin"
+}

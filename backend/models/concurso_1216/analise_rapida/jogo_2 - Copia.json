@@ -1,0 +1,29 @@
+{
+  "metadados": {
+    "jogo_numero": "2",
+    "sincronizado_em": "2025-10-11T21:26:10.936Z",
+    "versao": "1.0"
+  },
+  "dados_publicos": {
+    "time_casa": "Palmeiras/SP",
+    "time_fora": "Juventude/RS",
+    "arena": "Allianz Parque",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/PAL_Palmeiras/Palmeiras.png",
+    "escudo_fora": "/static/escudos/JUV_Juventude/Juventude.png",
+    "probabilidades": {
+      "col1": "70",
+      "colX": "20",
+      "col2": "10"
+    },
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Palameira Franco Favorito) - Risco Baixo",
+    "conclusao_analista": null,
+    "confrontos_sequence": "V-V-V-V-E-V-D-E-D-E",
+    "posicao_casa": "1",
+    "posicao_fora": "2",
+    "confronto_direto": "5V-3E-2D",
+    "fator_casa": "50",
+    "fator_fora": "50"
+  }
+}

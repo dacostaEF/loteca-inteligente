@@ -30,7 +30,10 @@ class ConcursoManager:
     
     def get_concurso_file_path(self, numero: str) -> str:
         """Retorna o caminho do arquivo do concurso"""
-        return os.path.join(self.base_path, f"concurso_{numero}.json")
+        # Salvar na pasta específica do concurso (ex: models/concurso_1216/)
+        concurso_dir = os.path.join(os.path.dirname(self.base_path), f"concurso_{numero}")
+        os.makedirs(concurso_dir, exist_ok=True)
+        return os.path.join(concurso_dir, f"concurso_{numero}.json")
     
     def salvar_concurso(self, numero: str, dados: Dict[str, Any]) -> bool:
         """
@@ -79,11 +82,18 @@ class ConcursoManager:
             Dict com dados do concurso ou None se não encontrado
         """
         try:
+            # Primeiro, tentar na nova localização (pasta específica do concurso)
             file_path = self.get_concurso_file_path(numero)
             
             if not os.path.exists(file_path):
-                logger.warning(f"⚠️ Concurso {numero} não encontrado: {file_path}")
-                return None
+                # Fallback: tentar na localização antiga (pasta concursos/)
+                old_path = os.path.join(self.base_path, f"concurso_{numero}.json")
+                if os.path.exists(old_path):
+                    file_path = old_path
+                    logger.info(f"📂 Concurso {numero} encontrado na localização antiga: {file_path}")
+                else:
+                    logger.warning(f"⚠️ Concurso {numero} não encontrado: {file_path}")
+                    return None
             
             with open(file_path, 'r', encoding='utf-8') as file:
                 dados = json.load(file)
@@ -104,25 +114,36 @@ class ConcursoManager:
         """
         try:
             concursos = []
+            numeros_encontrados = set()
             
-            if not os.path.exists(self.base_path):
-                return concursos
+            # Buscar na pasta concursos/ (localização antiga)
+            if os.path.exists(self.base_path):
+                for filename in os.listdir(self.base_path):
+                    if filename.startswith('concurso_') and filename.endswith('.json'):
+                        numero = filename.replace('concurso_', '').replace('.json', '')
+                        numeros_encontrados.add(numero)
             
-            # Buscar arquivos de concurso
-            for filename in os.listdir(self.base_path):
-                if filename.startswith('concurso_') and filename.endswith('.json'):
-                    # Extrair número do concurso
-                    numero = filename.replace('concurso_', '').replace('.json', '')
-                    
-                    # Carregar dados básicos
-                    dados = self.carregar_concurso(numero)
-                    if dados:
-                        concursos.append({
-                            "numero": numero,
-                            "data_sorteio": dados.get("concurso", {}).get("data_sorteio", ""),
-                            "salvo_em": dados.get("metadados", {}).get("salvo_em", ""),
-                            "total_jogos": len(dados.get("jogos", []))
-                        })
+            # Buscar nas pastas específicas dos concursos (nova localização)
+            models_dir = os.path.dirname(self.base_path)
+            if os.path.exists(models_dir):
+                for item in os.listdir(models_dir):
+                    if item.startswith('concurso_') and os.path.isdir(os.path.join(models_dir, item)):
+                        numero = item.replace('concurso_', '')
+                        # Verificar se existe o arquivo JSON dentro da pasta
+                        json_file = os.path.join(models_dir, item, f"concurso_{numero}.json")
+                        if os.path.exists(json_file):
+                            numeros_encontrados.add(numero)
+            
+            # Carregar dados de cada concurso encontrado
+            for numero in numeros_encontrados:
+                dados = self.carregar_concurso(numero)
+                if dados:
+                    concursos.append({
+                        "numero": numero,
+                        "data_sorteio": dados.get("concurso", {}).get("data_sorteio", ""),
+                        "salvo_em": dados.get("metadados", {}).get("salvo_em", ""),
+                        "total_jogos": len(dados.get("jogos", []))
+                    })
             
             # Ordenar por número (mais recente primeiro)
             concursos.sort(key=lambda x: int(x["numero"]), reverse=True)

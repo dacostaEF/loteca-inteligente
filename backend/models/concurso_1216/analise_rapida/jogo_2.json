@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "2",
+    "concurso_numero": "1215"
+  },
+  "dados": {
+    "numero": "2",
+    "time_casa": "Palmeiras/SP",
+    "time_fora": "Juventude/RS",
+    "arena": "Allianz Parque",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/PAL_Palmeiras/Palmeiras.png",
+    "escudo_fora": "/static/escudos/JUV_Juventude/Juventude.png",
+    "probabilidade_casa": "70",
+    "probabilidade_empate": "20",
+    "probabilidade_fora": "10",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Palameira Franco Favorito) - Risco Baixo",
+    "conclusao_analista": "Essa é uma análise com um cenário completamente diferente do Derby Campineiro, amigão!\n\nO confronto atual entre Palmeiras e Juventude na Série A do Campeonato Brasileiro é descrito como um clássico duelo de \"líder contra time na zona de rebaixamento\". O Palmeiras é o franco favorito e o jogo é visto como uma oportunidade para o time se isolar na liderança.",
+    "confrontos_sequence": "V-V-V-V-E-V-D-E-D-E",
+    "posicao_casa": "1",
+    "posicao_fora": "19",
+    "confronto_direto": "5V-3E-2D",
+    "fator_casa": "70",
+    "fator_fora": "30",
+    "analise_posicao": "Vantagem Palmeiras",
+    "analise_posicao_tabelas": "Vantagem Palmeiras",
+    "analise_confronto_direto": "Vantagem Palmeiras",
+    "analise_fator_casa": "Vantagem Palmeiras",
+    "sincronizado_em": "2025-10-14T05:33:12.016Z"
+  },
+  "admin_key": "loteca2024admin"
+}
