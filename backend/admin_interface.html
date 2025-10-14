@@ -2780,7 +2780,7 @@
                     return;
                 }
                 
-                // Coletar todos os dados do formulário atual
+                // CORRIGIDO: Coletar dados no FORMATO NOVO
                 const dadosJogo = {
                     numero: jogoSelecionado,
                     time_casa: document.getElementById('time-casa-admin').value,
@@ -2790,11 +2790,9 @@
                     dia: document.getElementById('dia-admin').value,
                     escudo_casa: document.getElementById('escudo-casa-path').value,
                     escudo_fora: document.getElementById('escudo-fora-path').value,
-                    probabilidades: {
-                        col1: document.getElementById('prob-col1-admin').value,
-                        colX: document.getElementById('prob-colX-admin').value,
-                        col2: document.getElementById('prob-col2-admin').value
-                    },
+                    probabilidade_casa: document.getElementById('prob-col1-admin').value,
+                    probabilidade_empate: document.getElementById('prob-colX-admin').value,
+                    probabilidade_fora: document.getElementById('prob-col2-admin').value,
                     recomendacao: document.getElementById('recomendacao-admin').value,
                     confrontos_sequence: document.getElementById('confrontos-sequence-admin').value,
                     posicao_casa: document.getElementById('posicao-casa-admin').value,
@@ -3300,22 +3298,19 @@
             mostrarNotificacao(`✅ Dados do JOGO ${jogoSelecionado} salvos e sincronizados com o site!`, 'success');
         }
         
-        // NOVA FUNÇÃO: SALVAR E SINCRONIZAR AUTOMATICAMENTE (MÉTODO PRINCIPAL)
+        // CORRIGIDO: SALVAR APENAS UMA VEZ (ELIMINAR DUPLICAÇÃO)
         async function salvarESincronizarAnalise(dadosJogo) {
             try {
-                console.log(`🔄 [ANÁLISE] Salvando e sincronizando JOGO ${dadosJogo.numero}...`);
+                console.log(`🔄 [ANÁLISE] Salvando JOGO ${dadosJogo.numero} (formato unificado)...`);
                 
-                // 1. Salvar na pasta de confrontos (backup)
-                await salvarAnaliseNoServidor(dadosJogo);
+                // USAR APENAS UMA FUNÇÃO: salvarAnaliseRapida (que já usa formato novo)
+                await salvarAnaliseRapida(dadosJogo.numero);
                 
-                // 2. Sincronizar com o site (método principal)
-                await sincronizarAnaliseRapida();
-                
-                console.log(`✅ [ANÁLISE] JOGO ${dadosJogo.numero} salvo e sincronizado com sucesso!`);
+                console.log(`✅ [ANÁLISE] JOGO ${dadosJogo.numero} salvo com sucesso!`);
                 
             } catch (error) {
-                console.error(`❌ [ANÁLISE] Erro ao salvar e sincronizar JOGO ${dadosJogo.numero}:`, error);
-                mostrarNotificacao(`❌ Erro ao sincronizar: ${error.message}`, 'error');
+                console.error(`❌ [ANÁLISE] Erro ao salvar JOGO ${dadosJogo.numero}:`, error);
+                mostrarNotificacao(`❌ Erro ao salvar: ${error.message}`, 'error');
             }
         }
         
@@ -3414,7 +3409,7 @@
                 const numeroConcurso = document.getElementById('numeroConcurso').value || '1215';
                 console.log(`📊 [ANÁLISE] Concurso atual: ${numeroConcurso}`);
                 
-                // Preparar dados para envio com estrutura do concurso
+                // CORRIGIDO: Usar FORMATO NOVO (dados) em vez de dados_publicos
                 const dadosEnvio = {
                     metadados: {
                         jogo_numero: dadosJogo.numero.toString(),
@@ -3424,7 +3419,8 @@
                         salvo_em: dadosJogo.salvo_em,
                         versao: "1.0"
                     },
-                    dados_publicos: {
+                    dados: {
+                        numero: dadosJogo.numero,
                         time_casa: dadosJogo.time_casa,
                         time_fora: dadosJogo.time_fora,
                         arena: dadosJogo.arena,
@@ -3432,7 +3428,9 @@
                         dia: dadosJogo.dia,
                         escudo_casa: dadosJogo.escudo_casa,
                         escudo_fora: dadosJogo.escudo_fora,
-                        probabilidades: dadosJogo.probabilidades,
+                        probabilidade_casa: dadosJogo.probabilidades?.col1 || dadosJogo.probabilidade_casa,
+                        probabilidade_empate: dadosJogo.probabilidades?.colX || dadosJogo.probabilidade_empate,
+                        probabilidade_fora: dadosJogo.probabilidades?.col2 || dadosJogo.probabilidade_fora,
                         recomendacao: dadosJogo.recomendacao,
                         conclusao_analista: dadosJogo.conclusao_analista,
                         confrontos_sequence: dadosJogo.confrontos_sequence,
@@ -3445,7 +3443,8 @@
                         fator_casa: dadosJogo.fator_casa,
                         fator_fora: dadosJogo.fator_fora,
                         analise_fator_casa: dadosJogo.analise_fator_casa,
-                        arquivo_confrontos: dadosJogo.arquivo_confrontos
+                        arquivo_confrontos: dadosJogo.arquivo_confrontos,
+                        sincronizado_em: new Date().toISOString()
                     }
                 };
                 
