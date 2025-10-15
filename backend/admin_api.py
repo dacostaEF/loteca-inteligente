@@ -665,6 +665,10 @@ def get_classificacao():
             # Buscando dados da La Liga...
             classificacao = classificacao_db.get_classificacao_la_liga()
             # La Liga retornou {len(classificacao)} registros
+        elif campeonato == 'serie-a-italiana':
+            # Buscando dados da Série A Italiana...
+            classificacao = classificacao_db.get_classificacao_serie_a_italiana()
+            # Série A Italiana retornou {len(classificacao)} registros
         elif campeonato == 'ligue1':
             # Buscando dados da Ligue 1...
             classificacao = classificacao_db.get_classificacao_frances()
@@ -724,6 +728,8 @@ def salvar_classificacao():
             serie = 'premier'
         elif campeonato == 'la-liga':
             serie = 'laliga'
+        elif campeonato == 'serie-a-italiana':
+            serie = 'serie_a_italiana'
         elif campeonato == 'ligue1':
             serie = 'ligue1'
         else:
@@ -736,6 +742,8 @@ def salvar_classificacao():
             campeonato_nome = "Premier League"
         elif serie == 'laliga':
             campeonato_nome = "La Liga"
+        elif serie == 'serie_a_italiana':
+            campeonato_nome = "Série A Italiana"
         elif serie == 'ligue1':
             campeonato_nome = "Ligue 1"
         else:

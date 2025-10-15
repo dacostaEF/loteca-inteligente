@@ -234,6 +234,55 @@ class ClassificacaoDB:
         except Exception as e:
             logger.error(f"Erro ao obter classificação Champions League: {e}")
             return []
+
+    def get_classificacao_serie_a_italiana(self) -> List[Dict]:
+        """Obter classificação da Série A Italiana"""
+        try:
+            with self.get_connection() as conn:
+                cursor = conn.cursor()
+                
+                # Verificar se a tabela existe
+                cursor.execute("""
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='classificacao_serie_a_italiana'
+                """)
+                
+                if not cursor.fetchone():
+                    logger.warning("Tabela classificacao_serie_a_italiana não encontrada")
+                    return []
+                
+                cursor.execute("""
+                    SELECT posicao, time, pontos, jogos, vitorias, empates, derrotas, 
+                           gols_pro, gols_contra, saldo_gols, aproveitamento, ultimos_confrontos
+                    FROM classificacao_serie_a_italiana 
+                    ORDER BY posicao
+                """)
+                
+                rows = cursor.fetchall()
+                classificacao = []
+                
+                for row in rows:
+                    classificacao.append({
+                        'posicao': row[0],
+                        'time': row[1],
+                        'pontos': row[2],
+                        'jogos': row[3],
+                        'vitorias': row[4],
+                        'empates': row[5],
+                        'derrotas': row[6],
+                        'gols_pro': row[7],
+                        'gols_contra': row[8],
+                        'saldo_gols': row[9],
+                        'aproveitamento': row[10],
+                        'ultimos_confrontos': row[11] if row[11] else ''
+                    })
+                
+                logger.info(f"Série A Italiana: {len(classificacao)} times carregados")
+                return classificacao
+                
+        except Exception as e:
+            logger.error(f"Erro ao buscar classificação da Série A Italiana: {e}")
+            return []
     
     def update_time_stats(self, time_id: int, campo: str, valor: str, serie: str = 'a') -> bool:
         """Atualizar estatística específica de um time"""

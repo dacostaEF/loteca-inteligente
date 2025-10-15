@@ -1724,6 +1724,7 @@
                         <option value="serie-b" style="background: #6b46c1; color: white;">🥈 Brasileirão Série B</option>
                         <option value="premier-league" style="background: #1e40af; color: white;">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</option>
                         <option value="la-liga" style="background: #dc2626; color: white;">🇪🇸 La Liga</option>
+                        <option value="serie-a-italiana" style="background: #059669; color: white;">🇮🇹 Série A Italiana</option>
                         <option value="ligue1" style="background: #0f172a; color: white;">🇫🇷 Ligue 1</option>
                         <option value="champions-league" style="background: #fbbf24; color: white;">🏆 Champions League</option>
                     </select>
@@ -8471,27 +8472,27 @@
                     console.warn(`⚠️ [LOTECA] API falhou para concurso ${numeroConcurso}:`, apiError);
                 }
                 
-                // Fallback: tentar carregar dados hardcoded se for concurso 1215
-                if (numeroConcurso === '1215') {
-                    console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1215...');
+                // Fallback: tentar carregar dados hardcoded se for concurso 1216
+                if (numeroConcurso === '1216') {
+                    console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1216...');
                     
                     const dadosHardcoded = {
-                        numero: '1215',
+                        numero: '1216',
                         periodo_apostas: '07/10/2025 a 08/10/2025',
                         realizacao_jogos: '27/09/2025 a 28/09/2025',
                         jogos: [
-                            { numero: 1, time_casa: 'PONTE PRETA/SP', time_fora: 'GUARANI/RJ', data: 'Sábado' },
-                            { numero: 2, time_casa: 'FORTALEZA/CE', time_fora: 'SPORT/PE', data: 'Sábado' },
-                            { numero: 3, time_casa: 'JUVENTUDE/RS', time_fora: 'INTERNACIONAL/RS', data: 'Sábado' },
-                            { numero: 4, time_casa: 'VASCO DA GAMA/RJ', time_fora: 'CRUZEIRO/MG', data: 'Sábado' },
-                            { numero: 5, time_casa: 'ATHLETICO/PR', time_fora: 'OPERARIO/PR', data: 'Sábado' },
-                            { numero: 6, time_casa: 'ATLETICO/MG', time_fora: 'MIRASSOL/SP', data: 'Sábado' },
-                            { numero: 7, time_casa: 'GREMIO/RS', time_fora: 'VITORIA/BA', data: 'Domingo' },
-                            { numero: 8, time_casa: 'ASTON VILLA', time_fora: 'FULHAM', data: 'Domingo' },
-                            { numero: 9, time_casa: 'BAHIA/BA', time_fora: 'PALMEIRAS/SP', data: 'Domingo' },
-                            { numero: 10, time_casa: 'FLUMINENSE/RJ', time_fora: 'BOTAFOGO/RJ', data: 'Domingo' },
-                            { numero: 11, time_casa: 'CRICIUMA/SC', time_fora: 'PAYSANDU/PA', data: 'Domingo' },
-                            { numero: 12, time_casa: 'NEW CASTLE', time_fora: 'ARSENAL', data: 'Domingo' },
+                            { numero: 1, time_casa: 'PONTE PRETA/SP', time_fora: 'GUARANIS/SP', data: 'Domingo' },
+                            { numero: 2, time_casa: 'PALMEIRAS/SP', time_fora: 'JUVENTUDE/RS', data: 'Domingo' },
+                            { numero: 3, time_casa: 'CORINTHIANS/SP', time_fora: 'ATLETICO/MG', data: 'Sábado' },
+                            { numero: 4, time_casa: 'ROMA', time_fora: 'INTER DE MILAO', data: 'Sábado' },
+                            { numero: 5, time_casa: 'ATLETICO MADRID', time_fora: 'OSASUNA', data: 'Sábado' },
+                            { numero: 6, time_casa: 'CRUZEIRO/MG', time_fora: 'FORTALEZA/CE', data: 'Sábado' },
+                            { numero: 7, time_casa: 'TOTTENHAM', time_fora: 'ASTON VILLA', data: 'Domingo' },
+                            { numero: 8, time_casa: 'MIRASSOL/SP', time_fora: 'SAO PAULO/SP', data: 'Domingo' },
+                            { numero: 9, time_casa: 'CEARA/CE', time_fora: 'BOTAFOGO/RJ', data: 'Domingo' },
+                            { numero: 10, time_casa: 'LIVERPOOL', time_fora: 'MANCHESTER UNITED', data: 'Domingo' },
+                            { numero: 11, time_casa: 'ATALANTA BERGAMAS', time_fora: 'LAZIO', data: 'Domingo' },
+                            { numero: 12, time_casa: 'BAHIA/BA', time_fora: 'GREMIO/RS', data: 'Domingo' },
                             { numero: 13, time_casa: 'BRAGANTINO/SP', time_fora: 'SANTOS/SP', data: 'Domingo' },
                             { numero: 14, time_casa: 'BARCELONA', time_fora: 'REAL SOCIEDAD', data: 'Domingo' }
                         ]
@@ -8869,12 +8870,12 @@
                 
                 // Tentar carregar via API primeiro
                 try {
-                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/1215`);
+                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/1216`);
                 const result = await response.json();
                 
                 if (result.success) {
                     const dados = result.concurso;
-                        const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '1215';
+                        const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '1216';
                     
                     // Atualizar campos
                     document.getElementById('numeroConcurso').value = numeroConcurso;
@@ -8894,11 +8895,11 @@
                     console.warn('⚠️ [LOTECA] API falhou, usando dados hardcoded:', apiError);
                 }
                 
-                // Fallback: usar dados hardcoded do concurso 1215
-                console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1215...');
+                // Fallback: usar dados hardcoded do concurso 1216
+                console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1216...');
                 
                 const dadosHardcoded = {
-                    numero: '1215',
+                    numero: '1216',
                     periodo_apostas: '07/10/2025 a 08/10/2025',
                     realizacao_jogos: '27/09/2025 a 28/09/2025',
                     jogos: [

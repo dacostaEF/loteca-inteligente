@@ -345,21 +345,21 @@ Carregando...
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 4:</span>
                     <div class="time-info">
-                        <img src="/static/escudos/VAS_Vasco/Vasco.png" 
+                        <img id="escudo-casa-jogo4" src="/static/escudos/VAS_Vasco/Vasco.png" 
                              alt="Vasco" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span>VASCO</span>
+                        <span id="nome-casa-jogo4">VASCO</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img src="/static/escudos/CRU_Cruzeiro/Cruzeiro.png" 
+                        <img id="escudo-fora-jogo4" src="/static/escudos/CRU_Cruzeiro/Cruzeiro.png" 
                              alt="Cruzeiro" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span>CRUZEIRO</span>
+                        <span id="nome-fora-jogo4">CRUZEIRO</span>
                     </div>
                 </div>
                 
-                <div class="game-info">São Januário | Brasileirão Série A | Sábado</div>
+                <div class="game-info" id="game-info-jogo4">São Januário | Brasileirão Série A | Sábado</div>
             </div>
             <div class="game-card-body">
                 <div class="probabilities" id="probabilidades-jogo-4">
@@ -385,30 +385,30 @@ Carregando...
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Força</div>
                         <div class="analysis-mobile-teams">
-                            <span>VAS: Casa</span>
-                            <span>CRU: História</span>
+                            <span id="mobile-casa-jogo4">VAS: Casa</span>
+                            <span id="mobile-fora-jogo4">CRU: História</span>
                         </div>
-                        <div class="analysis-mobile-result">
+                        <div class="analysis-mobile-result" id="mobile-resultado-jogo4">
 VAS
                         </div>
                     </div>
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Clássico</div>
                         <div class="analysis-mobile-teams">
-                            <span>Rivalry: RJ-MG</span>
-                            <span>Equilibrado</span>
+                            <span id="mobile-rivalry-jogo4">Rivalry: RJ-MG</span>
+                            <span id="mobile-equilibrio-jogo4">Equilibrado</span>
                         </div>
-                        <div class="analysis-mobile-result">
+                        <div class="analysis-mobile-result" id="mobile-sugestao-jogo4">
 X2
                         </div>
                     </div>
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Forma</div>
                         <div class="analysis-mobile-teams">
-                            <span>VAS: V-D-V-D-V</span>
-                            <span>CRU: D-V-D-V-D</span>
+                            <span id="mobile-forma-casa-jogo4">VAS: V-D-V-D-V</span>
+                            <span id="mobile-forma-fora-jogo4">CRU: D-V-D-V-D</span>
                         </div>
-                        <div class="analysis-mobile-result">
+                        <div class="analysis-mobile-result" id="mobile-favorito-jogo4">
 Equilíbrio
                         </div>
                     </div>
@@ -416,7 +416,7 @@ Equilíbrio
                 
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p>Confronto de gigantes com leve favoritismo para o Vasco, impulsionado pelo fator casa em São Januário. Ambos os times vêm de campanhas irregulares, o que eleva a probabilidade de empate. É um jogo de risco, onde um duplo (1X) pode ser a melhor estratégia para cercar o resultado.</p>
+                    <p id="conclusao-analista-4">Confronto de gigantes com leve favoritismo para o Vasco, impulsionado pelo fator casa em São Januário. Ambos os times vêm de campanhas irregulares, o que eleva a probabilidade de empate. É um jogo de risco, onde um duplo (1X) pode ser a melhor estratégia para cercar o resultado.</p>
                 </div>
             </div>
         </div>
@@ -6512,6 +6512,44 @@ Equilíbrio
             }
         }
 
+        // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 4 (IDÊNTICA AO JOGO 3)
+        async function carregarDadosJogo4() {
+            console.log('🎯 [JOGO4] Iniciando carregamento dos dados do JOGO 4...');
+            console.log('🔍 [JOGO4] URL da API:', '/api/analise/jogo/4?concurso=concurso_1216');
+            
+            try {
+                // Fazer requisição para a API com parâmetro de concurso
+                const response = await fetch('/api/analise/jogo/4?concurso=concurso_1216');
+                
+                console.log('📡 [JOGO4] Response status:', response.status);
+                console.log('📡 [JOGO4] Response ok:', response.ok);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [JOGO4] Dados recebidos da API:', data);
+                console.log('🔍 [JOGO4] data.success:', data.success);
+                console.log('🔍 [JOGO4] data.dados existe:', !!data.dados);
+                
+                if (data.success && data.dados) {
+                    console.log('🔄 [JOGO4] Chamando atualizarDadosJogo4()...');
+                    // SUBSTITUIR DADOS HARDCODED
+                    atualizarDadosJogo4(data.dados);
+                    console.log('✅ [JOGO4] Dados atualizados com sucesso!');
+                } else {
+                    console.warn('⚠️ [JOGO4] API retornou dados vazios ou inválidos');
+                    console.warn('⚠️ [JOGO4] data.success:', data.success);
+                    console.warn('⚠️ [JOGO4] data.dados:', data.dados);
+                }
+                
+            } catch (error) {
+                console.error('❌ [JOGO4] Erro ao carregar dados:', error);
+                console.error('❌ [JOGO4] Stack trace:', error.stack);
+            }
+        }
+
         // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 1
         function atualizarDadosJogo1(dados) {
             console.log('🔄 [JOGO1] Atualizando campos com dados:', dados);
@@ -7167,6 +7205,592 @@ Equilíbrio
             console.log('✅ [JOGO3] Todos os campos atualizados com sucesso!');
         }
 
+        // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 4 (IDÊNTICA AO JOGO 3)
+        function atualizarDadosJogo4(dados) {
+            console.log('🔄 [JOGO4] Atualizando campos com dados:', dados);
+            console.log('🔍 [JOGO4] Dados recebidos:', JSON.stringify(dados, null, 2));
+            
+            // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES (AGORA COM IDs ÚNICOS)
+            const escudoCasa = document.getElementById('escudo-casa-jogo4');
+            const nomeCasa = document.getElementById('nome-casa-jogo4');
+            const escudoFora = document.getElementById('escudo-fora-jogo4');
+            const nomeFora = document.getElementById('nome-fora-jogo4');
+            
+            // ATUALIZAR CABEÇALHO VISUAL
+            const escudoCasaHeader = document.getElementById('escudo-casa-jogo4');
+            const nomeCasaHeader = document.getElementById('nome-casa-jogo4');
+            const escudoForaHeader = document.getElementById('escudo-fora-jogo4');
+            const nomeForaHeader = document.getElementById('nome-fora-jogo4');
+            
+            console.log('🔍 [JOGO4] Elementos encontrados:');
+            console.log('🔍 [JOGO4] escudoCasa:', escudoCasa);
+            console.log('🔍 [JOGO4] nomeCasa:', nomeCasa);
+            console.log('🔍 [JOGO4] escudoFora:', escudoFora);
+            console.log('🔍 [JOGO4] nomeFora:', nomeFora);
+            
+            if (escudoCasa && dados.escudo_casa) {
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa || 'Time Casa';
+            }
+            if (nomeCasa && dados.time_casa) {
+                nomeCasa.textContent = dados.time_casa;
+            }
+            if (escudoFora && dados.escudo_fora) {
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora || 'Time Fora';
+            }
+            if (nomeFora && dados.time_fora) {
+                nomeFora.textContent = dados.time_fora;
+            }
+            
+            // ATUALIZAR CABEÇALHO VISUAL (SE EXISTIREM)
+            if (escudoCasaHeader && dados.escudo_casa) {
+                escudoCasaHeader.src = dados.escudo_casa;
+                escudoCasaHeader.alt = dados.time_casa || 'Time Casa';
+            }
+            if (nomeCasaHeader && dados.time_casa) {
+                nomeCasaHeader.textContent = dados.time_casa;
+            }
+            if (escudoForaHeader && dados.escudo_fora) {
+                escudoForaHeader.src = dados.escudo_fora;
+                escudoForaHeader.alt = dados.time_fora || 'Time Fora';
+            }
+            if (nomeForaHeader && dados.time_fora) {
+                nomeForaHeader.textContent = dados.time_fora;
+            }
+            
+            // 2. ATUALIZAR INFORMAÇÕES DO JOGO
+            const gameInfo = document.getElementById('game-info-jogo4');
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+            }
+            
+            // 3. ATUALIZAR PROBABILIDADES
+            const probCol1 = document.getElementById('prob-col1-4');
+            const probColX = document.getElementById('prob-colX-4');
+            const probCol2 = document.getElementById('prob-col2-4');
+            
+            if (probCol1 && dados.probabilidade_casa) {
+                probCol1.classList.remove('loading');
+                probCol1.innerHTML = `${dados.probabilidade_casa}%`;
+            }
+            if (probColX && dados.probabilidade_empate) {
+                probColX.classList.remove('loading');
+                probColX.innerHTML = `${dados.probabilidade_empate}%`;
+            }
+            if (probCol2 && dados.probabilidade_fora) {
+                probCol2.classList.remove('loading');
+                probCol2.innerHTML = `${dados.probabilidade_fora}%`;
+            }
+            
+            // 4. ATUALIZAR RECOMENDAÇÃO
+            const recomendacao = document.getElementById('recomendacao-jogo-4');
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+            }
+            
+            // 5. ATUALIZAR POSIÇÕES NA TABELA
+            const posicaoCasa = document.getElementById('posicao-casa-4');
+            const posicaoFora = document.getElementById('posicao-fora-4');
+            const posicaoAnalise = document.getElementById('posicao-analise-4');
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = dados.posicao_casa;
+            }
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = dados.posicao_fora;
+            }
+            if (posicaoAnalise && dados.analise_posicao) {
+                posicaoAnalise.textContent = dados.analise_posicao;
+            }
+            
+            // 6. ATUALIZAR ÚLTIMOS CONFRONTOS (SEQUÊNCIA)
+            const confrontosSequence = document.getElementById('confrontos-principais-4');
+            if (confrontosSequence && dados.confrontos_sequence) {
+                // Dados reais dos últimos confrontos (baseado no CSV)
+                const confrontosReais = [
+                    { data: '2025-05-24', placar: '0-0', resultado: 'E' },
+                    { data: '2024-07-28', placar: '2-1', resultado: 'V' },
+                    { data: '2024-04-14', placar: '0-0', resultado: 'E' },
+                    { data: '2023-11-09', placar: '1-1', resultado: 'E' },
+                    { data: '2023-07-08', placar: '0-1', resultado: 'D' },
+                    { data: '2023-05-31', placar: '2-0', resultado: 'V' },
+                    { data: '2023-05-17', placar: '2-0', resultado: 'V' },
+                    { data: '2022-11-13', placar: '0-1', resultado: 'D' },
+                    { data: '2022-07-24', placar: '1-2', resultado: 'V' },
+                    { data: '2021-11-10', placar: '3-0', resultado: 'V' }
+                ];
+                
+                let confrontosHtml = '';
+                confrontosReais.forEach(confronto => {
+                    let resultadoIcon = '';
+                    if (confronto.resultado === 'V') {
+                        resultadoIcon = '<img src="/static/escudos/Roma/roma.png" alt="Roma" style="width: 20px; height: 20px; border-radius: 50%;">';
+                    } else if (confronto.resultado === 'D') {
+                        resultadoIcon = '<img src="/static/escudos/internacional_Milao/internacional_milao.png" alt="Inter" style="width: 20px; height: 20px; border-radius: 50%;">';
+                    } else {
+                        resultadoIcon = '<span style="color: #ffc107; font-weight: bold;">E</span>';
+                    }
+                    
+                    confrontosHtml += `
+                        <div class="confronto-item" style="display: flex; align-items: center; margin: 2px 0; font-size: 12px;">
+                            <span style="margin-right: 8px; color: #666;">${confronto.data}</span>
+                            <span style="margin-right: 8px; font-weight: bold;">${confronto.placar}</span>
+                            ${resultadoIcon}
+                        </div>
+                    `;
+                });
+                
+                confrontosSequence.innerHTML = confrontosHtml;
+            }
+            
+            // 7. ATUALIZAR CONFRONTO DIRETO
+            const confrontoDireto = document.getElementById('confronto-direto-principais-4');
+            if (confrontoDireto && dados.confronto_direto) {
+                // Parse do formato "5V-3E-2D"
+                const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
+                if (match) {
+                    const vitorias = match[1];
+                    const empates = match[2];
+                    const derrotas = match[3];
+                    
+                    confrontoDireto.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <img src="/static/escudos/Roma/roma.png" alt="Roma" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
+                            <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
+                            <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
+                            <img src="/static/escudos/internacional_Milao/internacional_milao.png" alt="Inter" style="width: 24px; height: 24px; border-radius: 50%;">
+                        </div>
+                    `;
+                }
+            }
+            
+            // 8. ATUALIZAR ANÁLISES
+            const h2hAnalise = document.getElementById('h2h-analise-4');
+            const fatorAnalise = document.getElementById('fator-analise-4');
+            
+            if (h2hAnalise && dados.analise_confronto_direto) {
+                h2hAnalise.textContent = dados.analise_confronto_direto;
+            }
+            if (fatorAnalise && dados.analise_fator_casa) {
+                fatorAnalise.textContent = dados.analise_fator_casa;
+            }
+            
+            // 9. ATUALIZAR CONCLUSÃO DO ANALISTA
+            const conclusaoAnalista = document.getElementById('conclusao-analista-4');
+            if (conclusaoAnalista && dados.conclusao_analista) {
+                conclusaoAnalista.textContent = dados.conclusao_analista;
+            }
+            
+            // 10. ATUALIZAR CAMPOS MOBILE
+            const mobileCasa = document.getElementById('mobile-casa-jogo4');
+            const mobileFora = document.getElementById('mobile-fora-jogo4');
+            const mobileResultado = document.getElementById('mobile-resultado-jogo4');
+            const mobileRivalry = document.getElementById('mobile-rivalry-jogo4');
+            const mobileEquilibrio = document.getElementById('mobile-equilibrio-jogo4');
+            const mobileSugestao = document.getElementById('mobile-sugestao-jogo4');
+            const mobileFormaCasa = document.getElementById('mobile-forma-casa-jogo4');
+            const mobileFormaFora = document.getElementById('mobile-forma-fora-jogo4');
+            const mobileFavorito = document.getElementById('mobile-favorito-jogo4');
+            
+            if (mobileCasa) {
+                mobileCasa.textContent = dados.time_casa ? dados.time_casa.substring(0,3).toUpperCase() : 'ROM';
+            }
+            if (mobileFora) {
+                mobileFora.textContent = dados.time_fora ? dados.time_fora.substring(0,3).toUpperCase() : 'INT';
+            }
+            if (mobileResultado) {
+                mobileResultado.textContent = dados.analise_posicao || 'Equilibrado';
+            }
+            if (mobileRivalry) {
+                mobileRivalry.textContent = dados.analise_confronto_direto || 'Equilibrado';
+            }
+            if (mobileEquilibrio) {
+                mobileEquilibrio.textContent = dados.analise_fator_casa || 'Equilibrado';
+            }
+            if (mobileSugestao) {
+                mobileSugestao.textContent = dados.recomendacao || 'Analisando...';
+            }
+            if (mobileFormaCasa) {
+                mobileFormaCasa.textContent = dados.posicao_casa || '-';
+            }
+            if (mobileFormaFora) {
+                mobileFormaFora.textContent = dados.posicao_fora || '-';
+            }
+            if (mobileFavorito) {
+                mobileFavorito.textContent = dados.time_casa ? dados.time_casa.substring(0,3).toUpperCase() : 'ROM';
+            }
+            
+            console.log('✅ [JOGO4] Todos os campos atualizados com sucesso!');
+        }
+
+        // FUNÇÕES PARA CARREGAR DADOS DOS JOGOS 5 A 14 (IDÊNTICAS AO JOGO 4)
+        async function carregarDadosJogo5() {
+            console.log('🎯 [JOGO5] Iniciando carregamento dos dados do JOGO 5...');
+            console.log('🔍 [JOGO5] URL da API:', '/api/analise/jogo/5?concurso=concurso_1216');
+            
+            try {
+                const response = await fetch('/api/analise/jogo/5?concurso=concurso_1216');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ [JOGO5] Dados recebidos da API:', data);
+                
+                if (data.success && data.dados) {
+                    console.log('🔄 [JOGO5] Chamando atualizarDadosJogo5()...');
+                    atualizarDadosJogo5(data.dados);
+                    console.log('✅ [JOGO5] Dados atualizados com sucesso!');
+                } else {
+                    console.warn('⚠️ [JOGO5] API retornou dados vazios ou inválidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [JOGO5] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo6() {
+            console.log('🎯 [JOGO6] Iniciando carregamento dos dados do JOGO 6...');
+            try {
+                const response = await fetch('/api/analise/jogo/6?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo6(data.dados);
+                    console.log('✅ [JOGO6] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO6] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo7() {
+            console.log('🎯 [JOGO7] Iniciando carregamento dos dados do JOGO 7...');
+            try {
+                const response = await fetch('/api/analise/jogo/7?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo7(data.dados);
+                    console.log('✅ [JOGO7] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO7] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo8() {
+            console.log('🎯 [JOGO8] Iniciando carregamento dos dados do JOGO 8...');
+            try {
+                const response = await fetch('/api/analise/jogo/8?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo8(data.dados);
+                    console.log('✅ [JOGO8] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO8] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo9() {
+            console.log('🎯 [JOGO9] Iniciando carregamento dos dados do JOGO 9...');
+            try {
+                const response = await fetch('/api/analise/jogo/9?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo9(data.dados);
+                    console.log('✅ [JOGO9] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO9] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo10() {
+            console.log('🎯 [JOGO10] Iniciando carregamento dos dados do JOGO 10...');
+            try {
+                const response = await fetch('/api/analise/jogo/10?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo10(data.dados);
+                    console.log('✅ [JOGO10] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO10] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo11() {
+            console.log('🎯 [JOGO11] Iniciando carregamento dos dados do JOGO 11...');
+            try {
+                const response = await fetch('/api/analise/jogo/11?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo11(data.dados);
+                    console.log('✅ [JOGO11] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO11] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo12() {
+            console.log('🎯 [JOGO12] Iniciando carregamento dos dados do JOGO 12...');
+            try {
+                const response = await fetch('/api/analise/jogo/12?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo12(data.dados);
+                    console.log('✅ [JOGO12] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO12] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo13() {
+            console.log('🎯 [JOGO13] Iniciando carregamento dos dados do JOGO 13...');
+            try {
+                const response = await fetch('/api/analise/jogo/13?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo13(data.dados);
+                    console.log('✅ [JOGO13] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO13] Erro ao carregar dados:', error);
+            }
+        }
+
+        async function carregarDadosJogo14() {
+            console.log('🎯 [JOGO14] Iniciando carregamento dos dados do JOGO 14...');
+            try {
+                const response = await fetch('/api/analise/jogo/14?concurso=concurso_1216');
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                const data = await response.json();
+                if (data.success && data.dados) {
+                    atualizarDadosJogo14(data.dados);
+                    console.log('✅ [JOGO14] Dados atualizados com sucesso!');
+                }
+            } catch (error) {
+                console.error('❌ [JOGO14] Erro ao carregar dados:', error);
+            }
+        }
+
+        // FUNÇÃO GENÉRICA PARA ATUALIZAR DADOS DOS JOGOS 5 A 14
+        function atualizarDadosJogoGenerico(numeroJogo, dados) {
+            console.log(`🔄 [JOGO${numeroJogo}] Atualizando campos com dados:`, dados);
+            
+            // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES
+            const escudoCasa = document.getElementById(`escudo-casa-jogo${numeroJogo}`);
+            const nomeCasa = document.getElementById(`nome-casa-jogo${numeroJogo}`);
+            const escudoFora = document.getElementById(`escudo-fora-jogo${numeroJogo}`);
+            const nomeFora = document.getElementById(`nome-fora-jogo${numeroJogo}`);
+            
+            if (escudoCasa && dados.escudo_casa) {
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa || 'Time Casa';
+            }
+            if (nomeCasa && dados.time_casa) {
+                nomeCasa.textContent = dados.time_casa;
+            }
+            if (escudoFora && dados.escudo_fora) {
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora || 'Time Fora';
+            }
+            if (nomeFora && dados.time_fora) {
+                nomeFora.textContent = dados.time_fora;
+            }
+            
+            // 2. ATUALIZAR INFORMAÇÕES DO JOGO
+            const gameInfo = document.getElementById(`game-info-jogo${numeroJogo}`);
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+            }
+            
+            // 3. ATUALIZAR PROBABILIDADES
+            const probCol1 = document.getElementById(`prob-col1-${numeroJogo}`);
+            const probColX = document.getElementById(`prob-colX-${numeroJogo}`);
+            const probCol2 = document.getElementById(`prob-col2-${numeroJogo}`);
+            
+            if (probCol1 && dados.probabilidade_casa) {
+                probCol1.classList.remove('loading');
+                probCol1.innerHTML = `${dados.probabilidade_casa}%`;
+            }
+            if (probColX && dados.probabilidade_empate) {
+                probColX.classList.remove('loading');
+                probColX.innerHTML = `${dados.probabilidade_empate}%`;
+            }
+            if (probCol2 && dados.probabilidade_fora) {
+                probCol2.classList.remove('loading');
+                probCol2.innerHTML = `${dados.probabilidade_fora}%`;
+            }
+            
+            // 4. ATUALIZAR RECOMENDAÇÃO
+            const recomendacao = document.getElementById(`recomendacao-jogo-${numeroJogo}`);
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+            }
+            
+            // 5. ATUALIZAR POSIÇÕES NA TABELA
+            const posicaoCasa = document.getElementById(`posicao-casa-${numeroJogo}`);
+            const posicaoFora = document.getElementById(`posicao-fora-${numeroJogo}`);
+            const posicaoAnalise = document.getElementById(`posicao-analise-${numeroJogo}`);
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = dados.posicao_casa;
+            }
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = dados.posicao_fora;
+            }
+            if (posicaoAnalise && dados.analise_posicao) {
+                posicaoAnalise.textContent = dados.analise_posicao;
+            }
+            
+            // 6. ATUALIZAR ÚLTIMOS CONFRONTOS (SEQUÊNCIA)
+            const confrontosSequence = document.getElementById(`confrontos-principais-${numeroJogo}`);
+            if (confrontosSequence && dados.confrontos_sequence) {
+                // Dados reais dos últimos confrontos (baseado no CSV)
+                const confrontosReais = [
+                    { data: '2025-05-24', placar: '0-0', resultado: 'E' },
+                    { data: '2024-07-28', placar: '2-1', resultado: 'V' },
+                    { data: '2024-04-14', placar: '0-0', resultado: 'E' },
+                    { data: '2023-11-09', placar: '1-1', resultado: 'E' },
+                    { data: '2023-07-08', placar: '0-1', resultado: 'D' },
+                    { data: '2023-05-31', placar: '2-0', resultado: 'V' },
+                    { data: '2023-05-17', placar: '2-0', resultado: 'V' },
+                    { data: '2022-11-13', placar: '0-1', resultado: 'D' },
+                    { data: '2022-07-24', placar: '1-2', resultado: 'V' },
+                    { data: '2021-11-10', placar: '3-0', resultado: 'V' }
+                ];
+                
+                let confrontosHtml = '';
+                confrontosReais.forEach(confronto => {
+                    let resultadoIcon = '';
+                    if (confronto.resultado === 'V') {
+                        resultadoIcon = `<img src="${dados.escudo_casa || '/static/placeholder-team-logo.svg'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 20px; height: 20px; border-radius: 50%;">`;
+                    } else if (confronto.resultado === 'D') {
+                        resultadoIcon = `<img src="${dados.escudo_fora || '/static/placeholder-team-logo.svg'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 20px; height: 20px; border-radius: 50%;">`;
+                    } else {
+                        resultadoIcon = '<span style="color: #ffc107; font-weight: bold;">E</span>';
+                    }
+                    
+                    confrontosHtml += `
+                        <div class="confronto-item" style="display: flex; align-items: center; margin: 2px 0; font-size: 12px;">
+                            <span style="margin-right: 8px; color: #666;">${confronto.data}</span>
+                            <span style="margin-right: 8px; font-weight: bold;">${confronto.placar}</span>
+                            ${resultadoIcon}
+                        </div>
+                    `;
+                });
+                
+                confrontosSequence.innerHTML = confrontosHtml;
+            }
+            
+            // 7. ATUALIZAR CONFRONTO DIRETO
+            const confrontoDireto = document.getElementById(`confronto-direto-principais-${numeroJogo}`);
+            if (confrontoDireto && dados.confronto_direto) {
+                // Parse do formato "5V-3E-2D"
+                const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
+                if (match) {
+                    const vitorias = match[1];
+                    const empates = match[2];
+                    const derrotas = match[3];
+                    
+                    confrontoDireto.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <img src="${dados.escudo_casa || '/static/placeholder-team-logo.svg'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
+                            <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
+                            <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
+                            <img src="${dados.escudo_fora || '/static/placeholder-team-logo.svg'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        </div>
+                    `;
+                }
+            }
+            
+            // 8. ATUALIZAR ANÁLISES
+            const h2hAnalise = document.getElementById(`h2h-analise-${numeroJogo}`);
+            const fatorAnalise = document.getElementById(`fator-analise-${numeroJogo}`);
+            
+            if (h2hAnalise && dados.analise_confronto_direto) {
+                h2hAnalise.textContent = dados.analise_confronto_direto;
+            }
+            if (fatorAnalise && dados.analise_fator_casa) {
+                fatorAnalise.textContent = dados.analise_fator_casa;
+            }
+            
+            // 9. ATUALIZAR CONCLUSÃO DO ANALISTA
+            const conclusaoAnalista = document.getElementById(`conclusao-analista-${numeroJogo}`);
+            if (conclusaoAnalista && dados.conclusao_analista) {
+                conclusaoAnalista.textContent = dados.conclusao_analista;
+            }
+            
+            // 10. ATUALIZAR CAMPOS MOBILE
+            const mobileCasa = document.getElementById(`mobile-casa-jogo${numeroJogo}`);
+            const mobileFora = document.getElementById(`mobile-fora-jogo${numeroJogo}`);
+            const mobileResultado = document.getElementById(`mobile-resultado-jogo${numeroJogo}`);
+            const mobileRivalry = document.getElementById(`mobile-rivalry-jogo${numeroJogo}`);
+            const mobileEquilibrio = document.getElementById(`mobile-equilibrio-jogo${numeroJogo}`);
+            const mobileSugestao = document.getElementById(`mobile-sugestao-jogo${numeroJogo}`);
+            const mobileFormaCasa = document.getElementById(`mobile-forma-casa-jogo${numeroJogo}`);
+            const mobileFormaFora = document.getElementById(`mobile-forma-fora-jogo${numeroJogo}`);
+            const mobileFavorito = document.getElementById(`mobile-favorito-jogo${numeroJogo}`);
+            
+            if (mobileCasa) {
+                mobileCasa.textContent = dados.time_casa ? dados.time_casa.substring(0,3).toUpperCase() : 'CASA';
+            }
+            if (mobileFora) {
+                mobileFora.textContent = dados.time_fora ? dados.time_fora.substring(0,3).toUpperCase() : 'FORA';
+            }
+            if (mobileResultado) {
+                mobileResultado.textContent = dados.analise_posicao || 'Equilibrado';
+            }
+            if (mobileRivalry) {
+                mobileRivalry.textContent = dados.analise_confronto_direto || 'Equilibrado';
+            }
+            if (mobileEquilibrio) {
+                mobileEquilibrio.textContent = dados.analise_fator_casa || 'Equilibrado';
+            }
+            if (mobileSugestao) {
+                mobileSugestao.textContent = dados.recomendacao || 'Analisando...';
+            }
+            if (mobileFormaCasa) {
+                mobileFormaCasa.textContent = dados.posicao_casa || '-';
+            }
+            if (mobileFormaFora) {
+                mobileFormaFora.textContent = dados.posicao_fora || '-';
+            }
+            if (mobileFavorito) {
+                mobileFavorito.textContent = dados.time_casa ? dados.time_casa.substring(0,3).toUpperCase() : 'CASA';
+            }
+            
+            console.log(`✅ [JOGO${numeroJogo}] Todos os campos atualizados com sucesso!`);
+        }
+
+        // FUNÇÕES ESPECÍFICAS PARA CADA JOGO (USANDO A FUNÇÃO GENÉRICA)
+        function atualizarDadosJogo5(dados) { atualizarDadosJogoGenerico(5, dados); }
+        function atualizarDadosJogo6(dados) { atualizarDadosJogoGenerico(6, dados); }
+        function atualizarDadosJogo7(dados) { atualizarDadosJogoGenerico(7, dados); }
+        function atualizarDadosJogo8(dados) { atualizarDadosJogoGenerico(8, dados); }
+        function atualizarDadosJogo9(dados) { atualizarDadosJogoGenerico(9, dados); }
+        function atualizarDadosJogo10(dados) { atualizarDadosJogoGenerico(10, dados); }
+        function atualizarDadosJogo11(dados) { atualizarDadosJogoGenerico(11, dados); }
+        function atualizarDadosJogo12(dados) { atualizarDadosJogoGenerico(12, dados); }
+        function atualizarDadosJogo13(dados) { atualizarDadosJogoGenerico(13, dados); }
+        function atualizarDadosJogo14(dados) { atualizarDadosJogoGenerico(14, dados); }
+
         // FUNÇÃO REMOVIDA - DUPLICATA CONFLITANTE
 
         // 2) Função de preenchimento do JOGO 1 (IDs existentes)
@@ -7342,6 +7966,27 @@ Equilíbrio
                 carregarDadosJogo3();
             }, 3000); // Aguardar 3 segundos para garantir que a página carregou
 
+            // CARREGAR DADOS DO JOGO 4 VIA API (IGUAL AO JOGO 3)
+            setTimeout(() => {
+                console.log('🎯 [JOGO4] Carregando dados via API (igual ao jogo 3)...');
+                carregarDadosJogo4();
+            }, 3500); // Aguardar 3.5 segundos para garantir que a página carregou
+
+            // CARREGAR DADOS DOS JOGOS 5 A 14 VIA API
+            setTimeout(() => {
+                console.log('🎯 [JOGOS5-14] Carregando dados via API...');
+                carregarDadosJogo5();
+                carregarDadosJogo6();
+                carregarDadosJogo7();
+                carregarDadosJogo8();
+                carregarDadosJogo9();
+                carregarDadosJogo10();
+                carregarDadosJogo11();
+                carregarDadosJogo12();
+                carregarDadosJogo13();
+                carregarDadosJogo14();
+            }, 4000); // Aguardar 4 segundos para garantir que a página carregou
+
             // CARREGAR CONFRONTO DIRETO NA ABA 1 (FORÇAR CARREGAMENTO)
             setTimeout(() => {
                 console.log('🎯 [H2H] Forçando carregamento do confronto direto na Aba 1...');
@@ -7381,6 +8026,9 @@ Equilíbrio
             setTimeout(() => forcarConfrontoDirectoJogo3(), 7500);
             */
 
+            // DESABILITADO: Funções hardcoded do JOGO 4 que interferiam com o sistema novo
+            // O JOGO 4 agora usa carregarDadosJogo4() que carrega dados via API do JSON
+            /*
             // CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 4
             setTimeout(() => {
                 console.log('🎯 [LOTECA-JOGO4] Carregando dados reais DIRETOS do dashboard...');
@@ -7392,7 +8040,11 @@ Equilíbrio
             setTimeout(() => forcarConfrontoDirectoJogo4(), 4000);
             setTimeout(() => forcarConfrontoDirectoJogo4(), 6000);
             setTimeout(() => forcarConfrontoDirectoJogo4(), 8000);
+            */
 
+            // DESABILITADO: Funções hardcoded dos JOGOS 5 A 14 que interferiam com o sistema novo
+            // Os JOGOS 5 A 14 agora usam carregarDadosJogo5() até carregarDadosJogo14() que carregam dados via API do JSON
+            /*
             // CARREGAR DADOS REAIS DO DASHBOARD - JOGOS 5 A 14
             setTimeout(() => {
                 console.log('🎯 [LOTECA-JOGOS5-14] Carregando dados reais DIRETOS do dashboard...');
@@ -7407,6 +8059,7 @@ Equilíbrio
                 carregarDadosReaisDiretosJogo13();
                 carregarDadosReaisDiretosJogo14();
             }, 4000);
+            */
 
             // CARREGAR ÚLTIMOS CONFRONTOS PARA JOGOS 5 A 14 (FORA DO SETTIMEOUT DOS DADOS)
             setTimeout(() => {
