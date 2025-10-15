@@ -3797,8 +3797,44 @@
             
             // ORDENAR POR DATA: Mais recente para mais antiga (igual à lógica de sequência)
             const confrontosOrdenados = confrontos.sort((a, b) => {
-                const dataA = new Date(a.data || '1900-01-01');
-                const dataB = new Date(b.data || '1900-01-01');
+                // Função para normalizar datas em diferentes formatos
+                function normalizarData(dataStr) {
+                    if (!dataStr) return new Date('1900-01-01');
+                    
+                    // Tentar diferentes formatos de data
+                    const formatos = [
+                        /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/, // DD/MM/YYYY
+                        /^(\d{1,2})\/(\d{1,2})\/(\d{2})$/,  // DD/MM/YY
+                    ];
+                    
+                    for (const formato of formatos) {
+                        const match = dataStr.match(formato);
+                        if (match) {
+                            let [, dia, mes, ano] = match;
+                            
+                            // Converter ano de 2 dígitos para 4 dígitos
+                            if (ano.length === 2) {
+                                const anoAtual = new Date().getFullYear();
+                                const anoCompleto = parseInt(ano) + 2000;
+                                // Se o ano for maior que o atual, assumir que é do século passado
+                                if (anoCompleto > anoAtual) {
+                                    ano = parseInt(ano) + 1900;
+                                } else {
+                                    ano = anoCompleto;
+                                }
+                            }
+                            
+                            // Criar data no formato YYYY-MM-DD
+                            return new Date(`${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`);
+                        }
+                    }
+                    
+                    // Fallback para data padrão
+                    return new Date('1900-01-01');
+                }
+                
+                const dataA = normalizarData(a.data);
+                const dataB = normalizarData(b.data);
                 return dataB - dataA; // Ordem decrescente (mais recente primeiro)
             });
             
@@ -3829,24 +3865,28 @@
                 console.log('🔍 [PREVIEW] Mandante:', confronto.mandante_nome);
                 console.log('🔍 [PREVIEW] Visitante:', confronto.visitante_nome);
                 
-                // LÓGICA CORRIGIDA: Usar nomes dos times do CSV
-                if (resultado.toLowerCase().includes('empate')) {
+                // LÓGICA CORRIGIDA: Usar resultado V/E/D para determinar o vencedor
+                if (resultado === 'E') {
                     escudoMostrar = '/static/escudos/Empate.png?v=' + Date.now();
-                    nomeTimeMostrar = 'Empate';
+                    nomeTimeMostrar = 'E Empate';
                     console.log('🛡️ [PREVIEW] Empate identificado:', escudoMostrar);
-                } else if (resultado.toLowerCase().includes('corinthians')) {
-                    escudoMostrar = '/static/escudos/COR_Corinthians/Corinthians.png';
-                    nomeTimeMostrar = 'Corinthians/SP';
-                    console.log('⚽ [PREVIEW] Vitória do Corinthians identificada:', escudoMostrar);
-                } else if (resultado.toLowerCase().includes('atlético') || resultado.toLowerCase().includes('atletico')) {
-                    escudoMostrar = '/static/escudos/CAM_Atletico-MG/Atletico_MG.png';
-                    nomeTimeMostrar = 'Atlético/MG';
-                    console.log('⚽ [PREVIEW] Vitória do Atlético identificada:', escudoMostrar);
+                } else if (resultado === 'V') {
+                    // Vitória do time da casa
+                    const mandante = confronto.mandante_nome || 'Time Casa';
+                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${mandante}`;
+                    console.log('⚽ [PREVIEW] Vitória do time da casa:', mandante);
+                } else if (resultado === 'D') {
+                    // Vitória do time visitante
+                    const visitante = confronto.visitante_nome || 'Time Fora';
+                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${visitante}`;
+                    console.log('⚽ [PREVIEW] Vitória do time visitante:', visitante);
                 } else {
                     console.log('⚠️ [PREVIEW] Resultado não identificado:', resultado, 'para confronto:', confronto);
                     // Fallback para empate se não conseguir identificar
                     escudoMostrar = '/static/escudos/Empate.png';
-                    nomeTimeMostrar = 'Empate';
+                    nomeTimeMostrar = 'E Empate';
                     console.log('🛡️ [PREVIEW] Fallback para empate:', escudoMostrar);
                 }
                 
@@ -3886,24 +3926,28 @@
                 console.log('🔍 [PREVIEW] Mandante:', confronto.mandante_nome);
                 console.log('🔍 [PREVIEW] Visitante:', confronto.visitante_nome);
                 
-                // LÓGICA CORRIGIDA: Usar nomes dos times do CSV
-                if (resultado.toLowerCase().includes('empate')) {
+                // LÓGICA CORRIGIDA: Usar resultado V/E/D para determinar o vencedor
+                if (resultado === 'E') {
                     escudoMostrar = '/static/escudos/Empate.png?v=' + Date.now();
-                    nomeTimeMostrar = 'Empate';
+                    nomeTimeMostrar = 'E Empate';
                     console.log('🛡️ [PREVIEW] Empate identificado:', escudoMostrar);
-                } else if (resultado.toLowerCase().includes('corinthians')) {
-                    escudoMostrar = '/static/escudos/COR_Corinthians/Corinthians.png';
-                    nomeTimeMostrar = 'Corinthians/SP';
-                    console.log('⚽ [PREVIEW] Vitória do Corinthians identificada:', escudoMostrar);
-                } else if (resultado.toLowerCase().includes('atlético') || resultado.toLowerCase().includes('atletico')) {
-                    escudoMostrar = '/static/escudos/CAM_Atletico-MG/Atletico_MG.png';
-                    nomeTimeMostrar = 'Atlético/MG';
-                    console.log('⚽ [PREVIEW] Vitória do Atlético identificada:', escudoMostrar);
+                } else if (resultado === 'V') {
+                    // Vitória do time da casa
+                    const mandante = confronto.mandante_nome || 'Time Casa';
+                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${mandante}`;
+                    console.log('⚽ [PREVIEW] Vitória do time da casa:', mandante);
+                } else if (resultado === 'D') {
+                    // Vitória do time visitante
+                    const visitante = confronto.visitante_nome || 'Time Fora';
+                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${visitante}`;
+                    console.log('⚽ [PREVIEW] Vitória do time visitante:', visitante);
                 } else {
                     console.log('⚠️ [PREVIEW] Resultado não identificado:', resultado, 'para confronto:', confronto);
                     // Fallback para empate se não conseguir identificar
                     escudoMostrar = '/static/escudos/Empate.png';
-                    nomeTimeMostrar = 'Empate';
+                    nomeTimeMostrar = 'E Empate';
                     console.log('🛡️ [PREVIEW] Fallback para empate:', escudoMostrar);
                 }
                 
@@ -3976,7 +4020,7 @@
                 console.log(`📊 [ANÁLISE] Processando ${ultimosConfrontos.length} confrontos ordenados por data (mais recente primeiro)`);
                 console.log(`📅 [ANÁLISE] Datas dos confrontos:`, ultimosConfrontos.map(c => c.data));
                 
-                // Gerar sequência baseada nos vencedores - LÓGICA CORRIGIDA
+                // Gerar sequência baseada nos vencedores - LÓGICA CORRIGIDA PARA FLAMENGO VS PALMEIRAS
                 let sequencia = '';
                 ultimosConfrontos.forEach((confronto, index) => {
                     console.log(`🔍 [ANÁLISE] Confronto ${index + 1}:`, confronto);
@@ -4001,30 +4045,62 @@
                     if (confronto.resultado_corrigido) {
                         resultadoFinal = confronto.resultado_corrigido;
                         console.log(`🔧 [ANÁLISE] Usando correção manual: ${resultadoFinal}`);
-            } else {
-                    // LÓGICA CORRIGIDA: Campo "resultado" contém o nome do vencedor ou "empate"
-                    if (resultado) {
-                        const resultadoLower = resultado.toLowerCase().trim();
-                        console.log(`🔍 [ANÁLISE] Analisando resultado: "${resultadoLower}"`);
+                    } else {
+                        // LÓGICA CORRIGIDA: Processar baseado na estrutura do CSV Flamengo vs Palmeiras
+                        // Estrutura: Data,Time da Casa,Placar,Time Visitante,Vencedor,Campeonato,Resultado (Flamengo)
                         
-                        // LÓGICA CORRIGIDA: V = Corinthians, D = Atlético, E = Empate
-                        if (resultadoLower.includes('empate')) {
-                            resultadoFinal = 'E';
-                            console.log(`⚖️ [ANÁLISE] Empate detectado: ${resultado}`);
-                        } else if (resultadoLower.includes('corinthians')) {
-                            resultadoFinal = 'V'; // Vitória do Corinthians
-                            console.log(`✅ [ANÁLISE] Vitória do Corinthians: ${resultado}`);
-                        } else if (resultadoLower.includes('atlético') || resultadoLower.includes('atletico')) {
-                            resultadoFinal = 'D'; // Vitória do Atlético
-                            console.log(`❌ [ANÁLISE] Vitória do Atlético: ${resultado}`);
+                        // PRIORIDADE 1: Usar campo "resultado" se disponível (V/E/D)
+                        if (resultado && ['V', 'E', 'D'].includes(resultado.toUpperCase())) {
+                            resultadoFinal = resultado.toUpperCase();
+                            console.log(`✅ [ANÁLISE] Resultado direto V/E/D: ${resultadoFinal}`);
+                        }
+                        // PRIORIDADE 2: Usar campo "vencedor" diretamente (SIMPLIFICADO)
+                        else if (vencedor) {
+                            const vencedorLower = vencedor.toLowerCase().trim();
+                            console.log(`🔍 [ANÁLISE] Analisando vencedor: "${vencedorLower}"`);
+                            
+                            if (vencedorLower.includes('empate')) {
+                                resultadoFinal = 'E';
+                                console.log(`⚖️ [ANÁLISE] Empate detectado: ${vencedor}`);
+                            } else {
+                                // SIMPLES: Se o vencedor é o mandante, V. Se não, D.
+                                const mandanteLower = (confronto.mandante_nome || '').toLowerCase().trim();
+                                
+                                // Verificar se o vencedor contém palavras do mandante
+                                const palavrasMandante = mandanteLower.split(' ').filter(p => p.length > 2);
+                                const vencedorContemMandante = palavrasMandante.some(palavra => vencedorLower.includes(palavra));
+                                
+                                if (vencedorContemMandante) {
+                                    resultadoFinal = 'V'; // Time da casa venceu
+                                    console.log(`🏠 [ANÁLISE] Time da casa venceu: ${vencedor}`);
+                                } else {
+                                    resultadoFinal = 'D'; // Time visitante venceu
+                                    console.log(`✈️ [ANÁLISE] Time visitante venceu: ${vencedor}`);
+                                }
+                            }
+                        }
+                        // PRIORIDADE 3: Lógica genérica para outros times
+                        else if (resultado) {
+                            const resultadoLower = resultado.toLowerCase().trim();
+                            console.log(`🔍 [ANÁLISE] Analisando resultado genérico: "${resultadoLower}"`);
+                            
+                            if (resultadoLower.includes('empate')) {
+                                resultadoFinal = 'E';
+                                console.log(`⚖️ [ANÁLISE] Empate detectado: ${resultado}`);
+                            } else if (resultadoLower.includes('vitória') || resultadoLower.includes('vitoria')) {
+                                resultadoFinal = 'V';
+                                console.log(`✅ [ANÁLISE] Vitória detectada: ${resultado}`);
+                            } else if (resultadoLower.includes('derrota')) {
+                                resultadoFinal = 'D';
+                                console.log(`❌ [ANÁLISE] Derrota detectada: ${resultado}`);
+                            }
                         }
                     }
-                    }
                     
-                    // FALLBACK: Se não conseguiu identificar pelo campo "resultado", assumir empate
+                    // FALLBACK: Se não conseguiu identificar, assumir empate
                     if (!resultadoFinal) {
                         resultadoFinal = 'E';
-                        console.log(`⚠️ [ANÁLISE] Resultado não identificado no campo "resultado", assumindo empate`);
+                        console.log(`⚠️ [ANÁLISE] Resultado não identificado, assumindo empate`);
                     }
                     
                     sequencia += resultadoFinal + '-';
@@ -4045,16 +4121,20 @@
                     console.error('❌ [ANÁLISE] Campo confrontos-sequence-admin não encontrado!');
                 }
                 
-                // CALCULAR CONFRONTO DIRETO (V-E-D) - CORRIGIDO
-                // V = Vitórias do Corinthians, E = Empates, D = Vitórias do Atlético
-                const vitoriasCorinthians = (sequencia.match(/V/g) || []).length;
+                // CALCULAR CONFRONTO DIRETO (V-E-D) - GENÉRICO
+                // V = Vitórias do time da casa, E = Empates, D = Vitórias do time visitante
+                const vitoriasTimeCasa = (sequencia.match(/V/g) || []).length;
                 const empates = (sequencia.match(/E/g) || []).length;
-                const vitoriasAtletico = (sequencia.match(/D/g) || []).length;
+                const vitoriasTimeFora = (sequencia.match(/D/g) || []).length;
                 
-                console.log(`📊 [ANÁLISE] Estatísticas calculadas: Corinthians ${vitoriasCorinthians}V, Empates ${empates}E, Atlético ${vitoriasAtletico}D`);
+                // Obter nomes dos times para log
+                const nomeTimeCasa = document.getElementById('time-casa-admin').value || 'Time Casa';
+                const nomeTimeFora = document.getElementById('time-fora-admin').value || 'Time Fora';
+                
+                console.log(`📊 [ANÁLISE] Estatísticas calculadas: ${nomeTimeCasa} ${vitoriasTimeCasa}V, Empates ${empates}E, ${nomeTimeFora} ${vitoriasTimeFora}D`);
                 
                 // Preencher o campo de confronto direto
-                const confrontoDireto = `${vitoriasCorinthians}V-${empates}E-${vitoriasAtletico}D`;
+                const confrontoDireto = `${vitoriasTimeCasa}V-${empates}E-${vitoriasTimeFora}D`;
                 const campoConfrontoDireto = document.getElementById('confronto-direto-admin');
                 if (campoConfrontoDireto) {
                     // Primeiro tentar como input (value)
@@ -4062,16 +4142,16 @@
                         campoConfrontoDireto.value = confrontoDireto;
                         console.log(`✅ [ANÁLISE] Campo confronto direto (input) preenchido: ${confrontoDireto}`);
                     } else {
-                        // Se for div, usar innerHTML com escudos
+                        // Se for div, usar innerHTML com escudos genéricos
                         const confrontoHTML = `
                             <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
-                                <img src="/static/escudos/COR_Corinthians/Corinthians.png" alt="Corinthians" style="width: 20px; height: 20px;" onerror="this.outerHTML='<span style=\\'color: #fff; font-size: 12px; font-weight: bold;\\'>COR</span>'">
-                                <span style="color: #fff; font-weight: bold;">${vitoriasCorinthians}</span>
+                                <span style="color: #fff; font-size: 12px; font-weight: bold;">${nomeTimeCasa.substring(0,3).toUpperCase()}</span>
+                                <span style="color: #fff; font-weight: bold;">${vitoriasTimeCasa}</span>
                                 <span style="color: #fff; margin: 0 5px;">-</span>
                                 <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
                                 <span style="color: #fff; margin: 0 5px;">-</span>
-                                <span style="color: #fff; font-weight: bold;">${vitoriasAtletico}</span>
-                                <img src="/static/escudos/CAM_Atletico-MG/Atletico_MG.png" alt="Atlético/MG" style="width: 20px; height: 20px;" onerror="this.outerHTML='<span style=\\'color: #fff; font-size: 12px; font-weight: bold;\\'>CAM</span>'">
+                                <span style="color: #fff; font-weight: bold;">${vitoriasTimeFora}</span>
+                                <span style="color: #fff; font-size: 12px; font-weight: bold;">${nomeTimeFora.substring(0,3).toUpperCase()}</span>
                             </div>
                         `;
                         campoConfrontoDireto.innerHTML = confrontoHTML;

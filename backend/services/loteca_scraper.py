@@ -284,3 +284,4 @@ if __name__ == "__main__":
     
     # Executar teste
     test_scraper()
+

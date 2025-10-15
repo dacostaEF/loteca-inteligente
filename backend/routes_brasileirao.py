@@ -1018,29 +1018,76 @@ def api_confronto_historico_modal(clube_casa, clube_fora):
                 "arquivos_procurados": arquivo_opcoes
             }), 404
         
-        # Ler dados do CSV
+        # Ler dados do CSV com lógica flexível
         confrontos = []
         with open(arquivo_encontrado, 'r', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                # Pular linhas vazias
-                if not row.get('data') or not row.get('mandante'):
-                    continue
-                    
-                # Usar os nomes corretos das colunas do CSV (genérico)
-                # Tentar diferentes nomes de colunas de resultado
-                resultado_casa = (row.get('resultado_corinthians') or 
-                                 row.get('resultado_fortaleza') or 
-                                 row.get('resultado') or 'E').upper()
+            linhas = file.readlines()
+            
+        # Pular cabeçalho
+        for i, linha in enumerate(linhas[1:], 1):
+            linha = linha.strip()
+            if not linha:
+                continue
                 
-                confrontos.append({
-                    "data": row.get('data', ''),
-                    "mandante": row.get('mandante', ''),
-                    "visitante": row.get('visitante', ''),
-                    "placar": row.get('placar', ''),
-                    "resultado_corinthians": resultado_casa,  # Manter nome padrão para compatibilidade
-                    "competicao": row.get('competicao', '')
-                })
+            # Dividir por vírgula
+            partes = linha.split(',')
+            if len(partes) < 5:
+                continue
+            
+            # Detectar estrutura automaticamente baseada no cabeçalho
+            cabecalho = linhas[0].lower()
+            
+            if 'time da casa' in cabecalho:
+                # Estrutura: Data,Time da Casa,Placar,Time Visitante,Vencedor,Campeonato,Resultado (Time)
+                confronto = {
+                    "data": partes[0].strip(),
+                    "mandante": partes[1].strip(),
+                    "visitante": partes[3].strip(),
+                    "placar": partes[2].strip(),
+                    "vencedor": partes[4].strip(),
+                    "competicao": partes[5].strip() if len(partes) > 5 else '',
+                    "resultado": ''  # Será calculado
+                }
+            elif 'mandante' in cabecalho and 'vencedor' in cabecalho:
+                # Estrutura: Data,mandante,placar,visitante,vencedor,Rodada,Competição
+                confronto = {
+                    "data": partes[0].strip(),
+                    "mandante": partes[1].strip(),
+                    "visitante": partes[3].strip(),
+                    "placar": partes[2].strip(),
+                    "vencedor": partes[4].strip(),
+                    "competicao": partes[6].strip() if len(partes) > 6 else '',
+                    "resultado": ''  # Será calculado
+                }
+            else:
+                # Estrutura padrão
+                confronto = {
+                    "data": partes[0].strip(),
+                    "mandante": partes[1].strip(),
+                    "visitante": partes[3].strip(),
+                    "placar": partes[2].strip(),
+                    "vencedor": partes[4].strip() if len(partes) > 4 else '',
+                    "competicao": partes[5].strip() if len(partes) > 5 else '',
+                    "resultado": ''  # Será calculado
+                }
+            
+            # Calcular resultado V/E/D baseado no vencedor
+            if confronto.get('vencedor'):
+                vencedor = confronto['vencedor'].lower().strip()
+                if 'empate' in vencedor:
+                    confronto['resultado'] = 'E'
+                else:
+                    # Determinar se foi vitória do time casa ou fora
+                    mandante_lower = confronto['mandante'].lower().strip()
+                    if any(palavra in mandante_lower for palavra in vencedor.split() if len(palavra) > 2):
+                        confronto['resultado'] = 'V'  # Time da casa venceu
+                    else:
+                        confronto['resultado'] = 'D'  # Time visitante venceu
+            
+            # Manter compatibilidade com código existente
+            confronto['resultado_corinthians'] = confronto['resultado']
+            
+            confrontos.append(confronto)
         
         return jsonify({
             "success": True,

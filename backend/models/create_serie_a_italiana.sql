@@ -45,3 +45,4 @@ INSERT OR REPLACE INTO classificacao_serie_a_italiana (posicao, time, pontos, jo
 -- Criar índices para melhor performance
 CREATE INDEX IF NOT EXISTS idx_serie_a_italiana_posicao ON classificacao_serie_a_italiana(posicao);
 CREATE INDEX IF NOT EXISTS idx_serie_a_italiana_time ON classificacao_serie_a_italiana(time);
+

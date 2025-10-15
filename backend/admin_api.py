@@ -1613,16 +1613,79 @@ def carregar_arquivo_confrontos():
                         logger.info(f"📊 [API] Linha {i}: {len(partes)} partes - {partes}")
                         
                         if len(partes) >= 5:
-                            # ESTRUTURA ATUALIZADA DO CSV: Data,mandante,placar,visitante,vencedor,Rodada,Competição
-                            confronto = {
-                                'data': partes[0].strip(),
-                                'mandante_nome': partes[1].strip(),
-                                'placar': partes[2].strip(),
-                                'visitante_nome': partes[3].strip(),
-                                'resultado': partes[4].strip(),  # Coluna 4 = vencedor (Corinthians/Atlético Mineiro/Empate)
-                                'rodada': partes[5].strip() if len(partes) > 5 else '',
-                                'campeonato': partes[6].strip() if len(partes) > 6 else ''
-                            }
+                            # DETECTAR AUTOMATICAMENTE A ESTRUTURA DO CSV
+                            confronto = {}
+                            
+                            # Estrutura 1: Data,mandante,placar,visitante,vencedor,Rodada,Competição (CSV antigo)
+                            if len(partes) == 7 and 'vencedor' in linhas[0].lower():
+                                confronto = {
+                                    'data': partes[0].strip(),
+                                    'mandante_nome': partes[1].strip(),
+                                    'placar': partes[2].strip(),
+                                    'visitante_nome': partes[3].strip(),
+                                    'vencedor': partes[4].strip(),  # Coluna 4 = vencedor
+                                    'resultado': '',
+                                    'rodada': partes[5].strip(),
+                                    'campeonato': partes[6].strip()
+                                }
+                            
+                            # Estrutura 2: Data,Time da Casa,Placar,Time Visitante,Vencedor,Campeonato,Resultado (Time) (CSV novo)
+                            elif len(partes) == 7 and 'time da casa' in linhas[0].lower():
+                                confronto = {
+                                    'data': partes[0].strip(),
+                                    'mandante_nome': partes[1].strip(),
+                                    'placar': partes[2].strip(),
+                                    'visitante_nome': partes[3].strip(),
+                                    'vencedor': partes[4].strip(),  # Coluna 4 = vencedor
+                                    'resultado': '',
+                                    'campeonato': partes[5].strip(),
+                                    'resultado_time': partes[6].strip()
+                                }
+                            
+                            # Estrutura 3: data,mandante,mandante_nome,placar,visitante,visitante_nome,resultado_time,rodada,competicao
+                            elif len(partes) >= 8 and 'resultado_' in linhas[0].lower():
+                                confronto = {
+                                    'data': partes[0].strip(),
+                                    'mandante_nome': partes[2].strip(),  # mandante_nome na coluna 2
+                                    'placar': partes[3].strip(),
+                                    'visitante_nome': partes[5].strip(),  # visitante_nome na coluna 5
+                                    'vencedor': '',  # Não tem campo vencedor direto
+                                    'resultado': partes[6].strip(),  # Coluna 6 = resultado V/E/D
+                                    'rodada': partes[7].strip() if len(partes) > 7 else '',
+                                    'campeonato': partes[8].strip() if len(partes) > 8 else ''
+                                }
+                            
+                            # Estrutura padrão (fallback)
+                            else:
+                                confronto = {
+                                    'data': partes[0].strip(),
+                                    'mandante_nome': partes[1].strip(),
+                                    'placar': partes[2].strip(),
+                                    'visitante_nome': partes[3].strip(),
+                                    'vencedor': partes[4].strip() if len(partes) > 4 else '',
+                                    'resultado': '',
+                                    'rodada': partes[5].strip() if len(partes) > 5 else '',
+                                    'campeonato': partes[6].strip() if len(partes) > 6 else ''
+                                }
+                            
+                            # SIMPLIFICADO: Usar diretamente a coluna "Vencedor" para determinar V/E/D
+                            if confronto.get('vencedor'):
+                                vencedor = confronto['vencedor'].strip()
+                                vencedor_lower = vencedor.lower()
+                                
+                                if 'empate' in vencedor_lower:
+                                    confronto['resultado'] = 'E'
+                                else:
+                                    # Determinar se foi vitória do time casa ou fora baseado no vencedor
+                                    mandante_lower = confronto['mandante_nome'].lower().strip()
+                                    
+                                    # Se o vencedor contém o nome do mandante, time da casa venceu
+                                    if any(palavra in mandante_lower for palavra in vencedor_lower.split() if len(palavra) > 2):
+                                        confronto['resultado'] = 'V'  # Time da casa venceu
+                                    else:
+                                        confronto['resultado'] = 'D'  # Time visitante venceu
+                                        
+                                logger.info(f"🎯 [API] Vencedor: '{vencedor}' → Resultado: {confronto['resultado']}")
                             confrontos.append(confronto)
                             logger.info(f"✅ [API] Confronto adicionado: {confronto}")
                         else:

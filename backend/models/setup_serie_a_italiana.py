@@ -124,3 +124,4 @@ if __name__ == "__main__":
         print("❌ Configuração falhou!")
         print("🔍 Verifique os logs acima para mais detalhes")
         sys.exit(1)
+
