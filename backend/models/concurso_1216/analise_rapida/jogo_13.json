@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "13",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "13",
+    "time_casa": "MILAN",
+    "time_fora": "FIORENTINA",
+    "arena": "Arena MILAN",
+    "campeonato": "Internacional",
+    "dia": "Domingo",
+    "escudo_casa": "/static/escudos/Milan/milan.png",
+    "escudo_fora": "/static/escudos/Fiorentina/fiorentina.png",
+    "probabilidade_casa": "35",
+    "probabilidade_empate": "30",
+    "probabilidade_fora": "35",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (MILAN) - Risco Médio",
+    "conclusao_analista": "clássico de tradição no futebol italiano, mas que, ao contrário de Roma e Inter, tem mostrado um desequilíbrio maior nos confrontos diretos recentes. ase Atual e Classificação (Tabela 2 - Fornecida anteriormente):\n\nO Milan (3º lugar, 13 Pts) está em ótima fase e no topo da tabela. Seu desempenho recente (3 vitórias, 1 empate, 1 derrota nos últimos 5 jogos) é sólido e reflete a briga pelo G4.\n\nA Fiorentina (17º lugar, 3 Pts) está em péssima fase, muito perto da zona de rebaixamento. Seu desempenho recente (4 derrotas e 1 empate nos últimos 5 jogos) é alarmante. A enorme diferença de momento e de posição na tabela é o fator mais decisivo aqui.",
+    "confrontos_sequence": "E-V-D-V-V-V-V-V-D-V",
+    "posicao_casa": "3",
+    "posicao_fora": "17",
+    "confronto_direto": "6V-1E-3D",
+    "fator_casa": "50",
+    "fator_fora": "50",
+    "analise_posicao": "Vantagem Milan",
+    "analise_posicao_tabelas": "Vantagem Milan",
+    "analise_confronto_direto": "Vantagem Milan",
+    "analise_fator_casa": "Vantagem Milan",
+    "sincronizado_em": "2025-10-15T18:04:16.105Z"
+  },
+  "admin_key": "loteca2024admin"
+}

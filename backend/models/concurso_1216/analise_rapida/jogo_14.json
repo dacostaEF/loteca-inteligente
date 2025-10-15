@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "14",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "14",
+    "time_casa": "GETAFE",
+    "time_fora": "REAL MADRID",
+    "arena": "Estadio Coliseum - Getafe",
+    "campeonato": "La Liga",
+    "dia": "Domingo",
+    "escudo_casa": "/static/escudos/Getafe/getafe.png",
+    "escudo_fora": "/static/escudos/Real_Madrid/real_madrid.png",
+    "probabilidade_casa": "10",
+    "probabilidade_empate": "15",
+    "probabilidade_fora": "75",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (GETAFE) - Risco Médio",
+    "conclusao_analista": "O Real Madrid é o favorito muito claro neste confronto, mesmo jogando na casa do Getafe (que é conhecido por ter um estádio com ambiente tenso).\n\nDominância Histórica (Esmagadora): O retrospecto recente é extremamente favorável ao Real Madrid. Analisando os últimos 20 confrontos:\n\nO Real Madrid venceu 15 vezes.\n\nO Getafe venceu apenas 3 vezes.\n\nHouve apenas 2 empates.\n\nNotável: O Getafe tem tido dificuldades extremas de marcar gols contra o Real Madrid em casa, mas conseguiu algumas vitórias pontuais, como o 1 a 0 em 2022 (2/1/22) e 2023 (13/5/23).",
+    "confrontos_sequence": "D-V-D-V-V-V-D-V-E-V",
+    "posicao_casa": "1",
+    "posicao_fora": "11",
+    "confronto_direto": "1V-1E-8D",
+    "fator_casa": "88",
+    "fator_fora": "12",
+    "analise_posicao": "Vantagem Real Madrid",
+    "analise_posicao_tabelas": "Vantagem Real Madrid",
+    "analise_confronto_direto": "Vantagem Real Madrid",
+    "analise_fator_casa": "Vantagem Real Madrid",
+    "sincronizado_em": "2025-10-15T17:31:05.805Z"
+  },
+  "admin_key": "loteca2024admin"
+}

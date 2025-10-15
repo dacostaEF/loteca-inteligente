@@ -4196,24 +4196,42 @@
                 let empates = 0;
                 let vitoriasTimeFora = 0;
                 
-                // Contar resultados baseado na lógica da tabela modal
+                // Obter nomes dos times do jogo atual
+                const timeCasaAtual = document.getElementById('time-casa-admin').value.toLowerCase().trim();
+                const timeForaAtual = document.getElementById('time-fora-admin').value.toLowerCase().trim();
+                
+                console.log('🏠 [ANÁLISE] Time Casa Atual:', timeCasaAtual);
+                console.log('✈️ [ANÁLISE] Time Fora Atual:', timeForaAtual);
+                
+                // Contar resultados baseado no vencedor real
                 confrontos.forEach((confronto, index) => {
                     const vencedor = (confronto.vencedor || '').trim();
-                    const mandante = (confronto.mandante_nome || '').toLowerCase().trim();
+                    const vencedorLower = vencedor.toLowerCase();
                     
-                    if ('empate' in vencedor.toLowerCase()) {
+                    console.log(`🎯 [ANÁLISE] Confronto ${index + 1}: Vencedor = "${vencedor}"`);
+                    
+                    if (vencedorLower.includes('empate')) {
                         empates++;
+                        console.log(`   → Empate (E)`);
                     } else {
-                        // Se o vencedor contém palavras do mandante, time da casa venceu
-                        const palavrasMandante = mandante.split(' ');
-                        const vencedorContemMandante = palavrasMandante.some(palavra => 
-                            vencedor.toLowerCase().includes(palavra) && palavra.length > 2
+                        // Verificar se o vencedor é o time da casa atual
+                        const vencedorEhTimeCasa = timeCasaAtual.split(' ').some(palavra => 
+                            vencedorLower.includes(palavra) && palavra.length > 2
                         );
                         
-                        if (vencedorContemMandante) {
-                            vitoriasTimeCasa++; // Time da casa venceu
+                        // Verificar se o vencedor é o time de fora atual
+                        const vencedorEhTimeFora = timeForaAtual.split(' ').some(palavra => 
+                            vencedorLower.includes(palavra) && palavra.length > 2
+                        );
+                        
+                        if (vencedorEhTimeCasa) {
+                            vitoriasTimeCasa++; // Time da casa atual venceu
+                            console.log(`   → Vitória Time Casa (V)`);
+                        } else if (vencedorEhTimeFora) {
+                            vitoriasTimeFora++; // Time de fora atual venceu
+                            console.log(`   → Vitória Time Fora (D)`);
                         } else {
-                            vitoriasTimeFora++; // Time visitante venceu
+                            console.log(`   ⚠️ Vencedor não identificado: "${vencedor}"`);
                         }
                     }
                 });

@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "8",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "8",
+    "time_casa": "MIRASSOL/SP",
+    "time_fora": "SAO PAULO/SP",
+    "arena": "Arena MIRASSOL",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Domingo",
+    "escudo_casa": "/static/escudos/MIR_Mirassol/Mirassol.png",
+    "escudo_fora": "/static/escudos/SAO_Sao-Paulo/SaoPaulo.png",
+    "probabilidade_casa": "35",
+    "probabilidade_empate": "30",
+    "probabilidade_fora": "35",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (MIRASSOL) - Risco Médio",
+    "conclusao_analista": "Confronto equilibrado entre MIRASSOL/SP e SAO PAULO/SP. Ambos os times apresentam campanhas similares e características técnicas parecidas. O fator casa será decisivo para determinar o resultado. Recomendação: Análise detalhada necessária.",
+    "confrontos_sequence": "E-E-E-E-E-E-E-E-E-E",
+    "posicao_casa": "10",
+    "posicao_fora": "12",
+    "confronto_direto": "3V-4E-3D",
+    "fator_casa": "50",
+    "fator_fora": "50",
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Confronto Equilibrado",
+    "sincronizado_em": "2025-10-15T15:20:00.000Z"
+  },
+  "admin_key": "loteca2024admin"
+}

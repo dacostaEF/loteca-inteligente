@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "7",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "7",
+    "time_casa": "TOTTENHAM",
+    "time_fora": "ASTON VILLA",
+    "arena": "Arena TOTTENHAM",
+    "campeonato": "Internacional",
+    "dia": "Domingo",
+    "escudo_casa": "/static/escudos/Tottenham/tottenham.png",
+    "escudo_fora": "/static/escudos/Aston_Villa/aston_villa.png",
+    "probabilidade_casa": "35",
+    "probabilidade_empate": "30",
+    "probabilidade_fora": "35",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (TOTTENHAM) - Risco Médio",
+    "conclusao_analista": "Confronto equilibrado entre TOTTENHAM e ASTON VILLA. Ambos os times apresentam campanhas similares e características técnicas parecidas. O fator casa será decisivo para determinar o resultado. Recomendação: Análise detalhada necessária.",
+    "confrontos_sequence": "E-E-E-E-E-E-E-E-E-E",
+    "posicao_casa": "10",
+    "posicao_fora": "12",
+    "confronto_direto": "3V-4E-3D",
+    "fator_casa": "50",
+    "fator_fora": "50",
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Confronto Equilibrado",
+    "sincronizado_em": "2025-10-15T15:20:00.000Z"
+  },
+  "admin_key": "loteca2024admin"
+}

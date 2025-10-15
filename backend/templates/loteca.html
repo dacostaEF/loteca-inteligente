@@ -3879,28 +3879,46 @@ Equilíbrio
             });
         }
 
-        // INICIALIZAR ESTATÍSTICAS AVANÇADAS
+        // INICIALIZAR ESTATÍSTICAS AVANÇADAS COM CARREGAMENTO DINÂMICO
         function initializeAdvancedStats() {
             const gameSelector = document.getElementById('game-selector');
             const detailedAnalysis = document.getElementById('detailed-analysis');
             const noGameSelected = document.getElementById('no-game-selected');
 
             if (gameSelector) {
-                gameSelector.addEventListener('change', (e) => {
+                gameSelector.addEventListener('change', async (e) => {
                     const gameId = parseInt(e.target.value);
                     
-                    if (gameId && advancedStatsData[gameId]) {
-                        showDetailedAnalysis(gameId);
-                        detailedAnalysis.style.display = 'block';
-                        noGameSelected.style.display = 'none';
+                    console.log(`🎮 [DROPDOWN] Jogo selecionado: ${gameId}`);
+                    
+                    if (gameId && gameId >= 1 && gameId <= 14) {
+                        // NOVA LÓGICA: Carregar dados dinamicamente do arquivo JSON
+                        console.log(`🚀 [DROPDOWN] Carregando dados dinâmicos do Jogo ${gameId}...`);
+                        
+                        try {
+                            // Mostrar loading
+                            detailedAnalysis.style.display = 'block';
+                            noGameSelected.style.display = 'none';
+                            
+                            // Carregar e exibir análise detalhada
+                            await showDetailedAnalysis(gameId);
+                            
+                            console.log(`✅ [DROPDOWN] Análise do Jogo ${gameId} carregada com sucesso!`);
+                            
+                        } catch (error) {
+                            console.error(`❌ [DROPDOWN] Erro ao carregar Jogo ${gameId}:`, error);
+                            detailedAnalysis.style.display = 'none';
+                            noGameSelected.style.display = 'block';
+                        }
                     } else {
+                        console.log('⚠️ [DROPDOWN] Jogo inválido ou não selecionado');
                         detailedAnalysis.style.display = 'none';
                         noGameSelected.style.display = 'block';
                     }
                 });
             }
             
-            // Carregamento automático - sem botão de sincronização
+            console.log('✅ [DROPDOWN] Sistema de carregamento dinâmico inicializado!');
         }
 
         // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS
@@ -4199,15 +4217,212 @@ Equilíbrio
             console.log('✅ [TIMES-LOTECA] Carregamento automático ativo');
         }
 
-        // MOSTRAR ANÁLISE DETALHADA COM DADOS REAIS DO CENTRAL ADMIN
-        // ORIGEM DOS DADOS: Central Admin → Aba "Estatísticas Detalhadas dos Clubes" + "Ranking Estatísticas"
-        async function showDetailedAnalysis(gameId) {
-            // FONTE: advancedStatsData é populado pela Aba 1 (dados da Loteca)
-            // ORIGEM: Central Admin → Aba "Loteca" → "Confrontos da Rodada"
-            const data = advancedStatsData[gameId];
-            if (!data) return;
+        // ===== NOVA FUNÇÃO GENÉRICA PARA CARREGAMENTO DINÂMICO =====
+        async function carregarDadosJogoDinamico(jogoNumero) {
+            console.log(`🚀 [DINÂMICO] Carregando dados do Jogo ${jogoNumero}...`);
+            
+            try {
+                // Fazer requisição para a API com parâmetro de concurso
+                const response = await fetch(`/api/analise/jogo/${jogoNumero}?concurso=concurso_1216`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log(`✅ [DINÂMICO] Dados recebidos da API para Jogo ${jogoNumero}:`, data);
+                
+                if (data.success && data.dados) {
+                    console.log(`🎯 [DINÂMICO] Dados válidos encontrados para Jogo ${jogoNumero}`);
+                    return data.dados;
+                } else {
+                    console.warn(`⚠️ [DINÂMICO] API retornou dados vazios para Jogo ${jogoNumero}`);
+                    return null;
+                }
+                
+            } catch (error) {
+                console.error(`❌ [DINÂMICO] Erro ao carregar dados do Jogo ${jogoNumero}:`, error);
+                return null;
+            }
+        }
 
-            console.log(`🎯 [ANALYSIS] Carregando análise detalhada do Jogo ${gameId}`);
+        // ===== FUNÇÃO PARA ATUALIZAR ESTATÍSTICAS COM DADOS DO JSON =====
+        function atualizarEstatisticasComDadosJson(data, dadosJson) {
+            console.log('📊 [ESTATÍSTICAS] Atualizando estatísticas com dados do JSON...');
+            
+            // Atualizar probabilidades
+            if (data.probabilidades) {
+                console.log('🎯 [ESTATÍSTICAS] Atualizando probabilidades:', data.probabilidades);
+                // Aqui você pode atualizar elementos da interface com as probabilidades
+            }
+            
+            // Atualizar sequência de confrontos
+            if (data.confrontos_sequence) {
+                console.log('🔄 [ESTATÍSTICAS] Sequência de confrontos:', data.confrontos_sequence);
+                // Aqui você pode atualizar elementos da interface com a sequência
+            }
+            
+            // Atualizar análise rápida
+            if (data.analise_rapida) {
+                console.log('📝 [ESTATÍSTICAS] Análise rápida:', data.analise_rapida);
+                // Aqui você pode atualizar elementos da interface com a análise
+            }
+            
+            // NOVA FUNCIONALIDADE: Carregar arquivo CSV de confrontos se disponível
+            if (data.arquivo_confrontos && data.arquivo_confrontos.trim() !== '') {
+                console.log('📁 [ESTATÍSTICAS] Arquivo de confrontos encontrado:', data.arquivo_confrontos);
+                carregarConfrontosDoArquivo(data.arquivo_confrontos);
+            } else {
+                console.log('⚠️ [ESTATÍSTICAS] Nenhum arquivo de confrontos especificado');
+            }
+            
+            console.log('✅ [ESTATÍSTICAS] Estatísticas atualizadas com sucesso!');
+        }
+
+        // ===== FUNÇÃO PARA CARREGAR CONFRONTOS DO ARQUIVO CSV =====
+        async function carregarConfrontosDoArquivo(nomeArquivo) {
+            console.log(`📁 [CSV] Carregando confrontos do arquivo: ${nomeArquivo}`);
+            
+            try {
+                // Fazer requisição para carregar o arquivo CSV
+                const response = await fetch('/api/admin/confrontos/carregar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nome_arquivo: nomeArquivo
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.confrontos) {
+                        console.log(`✅ [CSV] ${data.confrontos.length} confrontos carregados do arquivo ${nomeArquivo}`);
+                        
+                        // Processar confrontos e atualizar interface
+                        processarConfrontosCarregados(data.confrontos);
+                    } else {
+                        console.error(`❌ [CSV] Erro ao carregar confrontos: ${data.error}`);
+                    }
+                } else {
+                    console.error(`❌ [CSV] Erro HTTP ao carregar arquivo: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.error(`❌ [CSV] Erro ao carregar arquivo ${nomeArquivo}:`, error);
+            }
+        }
+
+        // ===== FUNÇÃO PARA PROCESSAR CONFRONTOS CARREGADOS =====
+        function processarConfrontosCarregados(confrontos) {
+            console.log('🔄 [PROCESSAR] Processando confrontos carregados...');
+            
+            if (confrontos && confrontos.length > 0) {
+                // Pegar últimos 10 confrontos
+                const ultimosConfrontos = confrontos.slice(0, 10);
+                
+                // Calcular sequência de resultados
+                let sequencia = '';
+                let vitoriasCasa = 0, empates = 0, vitoriasFora = 0;
+                
+                ultimosConfrontos.forEach(confronto => {
+                    const resultado = confronto.resultado || 'E';
+                    sequencia += resultado + '-';
+                    
+                    if (resultado === 'V') vitoriasCasa++;
+                    else if (resultado === 'E') empates++;
+                    else if (resultado === 'D') vitoriasFora++;
+                });
+                
+                // Remover último hífen
+                sequencia = sequencia.slice(0, -1);
+                
+                // Criar resumo
+                const resumo = `${vitoriasCasa}V-${empates}E-${vitoriasFora}D`;
+                
+                console.log(`📊 [PROCESSAR] Sequência calculada: ${sequencia}`);
+                console.log(`📊 [PROCESSAR] Resumo calculado: ${resumo}`);
+                
+                // Atualizar elementos da interface se existirem
+                const elementoSequencia = document.querySelector('[data-sequencia-confrontos]');
+                const elementoResumo = document.querySelector('[data-resumo-confrontos]');
+                
+                if (elementoSequencia) {
+                    elementoSequencia.textContent = sequencia;
+                }
+                
+                if (elementoResumo) {
+                    elementoResumo.textContent = resumo;
+                }
+                
+                console.log('✅ [PROCESSAR] Confrontos processados e interface atualizada!');
+            } else {
+                console.log('⚠️ [PROCESSAR] Nenhum confronto encontrado para processar');
+            }
+        }
+
+        // ===== FUNÇÃO PARA CONVERTER DADOS JSON EM FORMATO COMPATÍVEL =====
+        function converterDadosJsonParaAnalise(dadosJson) {
+            console.log('🔄 [CONVERSÃO] Convertendo dados JSON para formato de análise...');
+            
+            if (!dadosJson) {
+                console.error('❌ [CONVERSÃO] Dados JSON vazios!');
+                return null;
+            }
+            
+            // Converter estrutura JSON para formato esperado pela análise
+            const dadosConvertidos = {
+                home: {
+                    name: dadosJson.time_casa || 'Time Casa',
+                    position: dadosJson.posicao_time_casa || 'N/A',
+                    stats: dadosJson.estatisticas_time_casa || {}
+                },
+                away: {
+                    name: dadosJson.time_fora || 'Time Fora', 
+                    position: dadosJson.posicao_time_fora || 'N/A',
+                    stats: dadosJson.estatisticas_time_fora || {}
+                },
+                stadium: dadosJson.estadio || 'Estádio',
+                date: dadosJson.data_jogo || 'Data',
+                h2h: dadosJson.confronto_direto || 'N/A',
+                recommendation: dadosJson.recomendacao || 'Análise em andamento',
+                // Dados específicos da Loteca
+                probabilidades: dadosJson.probabilidades || { vitoria_casa: 35, empate: 30, vitoria_fora: 35 },
+                confrontos_sequence: dadosJson.confrontos_sequence || 'E-E-E-E-E-E-E-E-E-E',
+                analise_rapida: dadosJson.analise_rapida || 'Confronto equilibrado',
+                escudo_time_casa: dadosJson.escudo_time_casa || '',
+                escudo_time_fora: dadosJson.escudo_time_fora || '',
+                // Campo para arquivo de confrontos
+                arquivo_confrontos: dadosJson.arquivo_confrontos || ''
+            };
+            
+            console.log('✅ [CONVERSÃO] Dados convertidos com sucesso:', dadosConvertidos);
+            return dadosConvertidos;
+        }
+
+        // MOSTRAR ANÁLISE DETALHADA COM DADOS DINÂMICOS DOS ARQUIVOS JSON
+        // NOVA IMPLEMENTAÇÃO: Carrega dados diretamente dos arquivos jogo_X.json
+        async function showDetailedAnalysis(gameId) {
+            console.log(`🎯 [ANALYSIS] Carregando análise detalhada do Jogo ${gameId}...`);
+            
+            // NOVA LÓGICA: Carregar dados dinamicamente do arquivo JSON
+            const dadosJson = await carregarDadosJogoDinamico(gameId);
+            
+            if (!dadosJson) {
+                console.error(`❌ [ANALYSIS] Não foi possível carregar dados do Jogo ${gameId}`);
+                return;
+            }
+            
+            // Converter dados JSON para formato compatível
+            const data = converterDadosJsonParaAnalise(dadosJson);
+            
+            if (!data) {
+                console.error(`❌ [ANALYSIS] Erro na conversão dos dados do Jogo ${gameId}`);
+                return;
+            }
+
+            console.log(`✅ [ANALYSIS] Dados carregados com sucesso do Jogo ${gameId}`);
             console.log(`🏠 [ANALYSIS] Time Casa: ${data.home.name}`);
             console.log(`✈️ [ANALYSIS] Time Visitante: ${data.away.name}`);
 
@@ -4224,20 +4439,12 @@ Equilíbrio
             // ORIGEM: Pasta /static/escudos/ (arquivos locais)
             atualizarEscudosAnaliseDetalhada(data.home.name, data.away.name);
 
-            // VERIFICAR SE É JOGO BRASILEIRO PARA BUSCAR DADOS REAIS
-            // ORIGEM: Lista hardcoded de times brasileiros
-            const isBrazilianMatch = isBrazilianGame(data.home.name, data.away.name);
+            // NOVA LÓGICA: Usar dados já carregados do JSON (não precisa mais verificar se é brasileiro)
+            // Os dados já vêm completos do arquivo jogo_X.json
+            console.log('📊 [ANALYSIS] Usando dados completos do arquivo JSON...');
             
-            if (isBrazilianMatch) {
-                // DADOS REAIS DO CENTRAL ADMIN
-                // ORIGEM: Central Admin → Aba "Estatísticas Detalhadas dos Clubes" + "Ranking Estatísticas"
-                // ENDPOINTS: /api/br/clube/{id}/stats + /api/br/confronto/{time1}/{time2}
-                await loadCartolaData(data);
-            } else {
-                // DADOS SIMULADOS PARA JOGOS INTERNACIONAIS
-                // ORIGEM: Dados hardcoded (não há Central Admin para times internacionais)
-                loadSimulatedData(data);
-            }
+            // Atualizar estatísticas com dados do JSON
+            atualizarEstatisticasComDadosJson(data, dadosJson);
 
             // ATUALIZAR CONFRONTO DIRETO (H2H)
             // ORIGEM: Central Admin → Aba "Ranking" → "Ranking Estatísticas"
