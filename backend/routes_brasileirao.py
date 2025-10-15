@@ -1018,75 +1018,31 @@ def api_confronto_historico_modal(clube_casa, clube_fora):
                 "arquivos_procurados": arquivo_opcoes
             }), 404
         
-        # Ler dados do CSV com lógica flexível
+        # Usar parser robusto para ler dados do CSV
+        from services.csv_parser_robusto import processar_csv_confrontos
+        
+        sucesso, confrontos_raw, mensagem = processar_csv_confrontos(str(arquivo_encontrado))
+        
+        if not sucesso:
+            return jsonify({
+                "success": False,
+                "error": f"Erro ao processar arquivo CSV: {mensagem}",
+                "confronto": f"{clube_casa} vs {clube_fora}"
+            }), 500
+        
+        # Converter para formato compatível com código existente
         confrontos = []
-        with open(arquivo_encontrado, 'r', encoding='utf-8') as file:
-            linhas = file.readlines()
-            
-        # Pular cabeçalho
-        for i, linha in enumerate(linhas[1:], 1):
-            linha = linha.strip()
-            if not linha:
-                continue
-                
-            # Dividir por vírgula
-            partes = linha.split(',')
-            if len(partes) < 5:
-                continue
-            
-            # Detectar estrutura automaticamente baseada no cabeçalho
-            cabecalho = linhas[0].lower()
-            
-            if 'time da casa' in cabecalho:
-                # Estrutura: Data,Time da Casa,Placar,Time Visitante,Vencedor,Campeonato,Resultado (Time)
-                confronto = {
-                    "data": partes[0].strip(),
-                    "mandante": partes[1].strip(),
-                    "visitante": partes[3].strip(),
-                    "placar": partes[2].strip(),
-                    "vencedor": partes[4].strip(),
-                    "competicao": partes[5].strip() if len(partes) > 5 else '',
-                    "resultado": ''  # Será calculado
-                }
-            elif 'mandante' in cabecalho and 'vencedor' in cabecalho:
-                # Estrutura: Data,mandante,placar,visitante,vencedor,Rodada,Competição
-                confronto = {
-                    "data": partes[0].strip(),
-                    "mandante": partes[1].strip(),
-                    "visitante": partes[3].strip(),
-                    "placar": partes[2].strip(),
-                    "vencedor": partes[4].strip(),
-                    "competicao": partes[6].strip() if len(partes) > 6 else '',
-                    "resultado": ''  # Será calculado
-                }
-            else:
-                # Estrutura padrão
-                confronto = {
-                    "data": partes[0].strip(),
-                    "mandante": partes[1].strip(),
-                    "visitante": partes[3].strip(),
-                    "placar": partes[2].strip(),
-                    "vencedor": partes[4].strip() if len(partes) > 4 else '',
-                    "competicao": partes[5].strip() if len(partes) > 5 else '',
-                    "resultado": ''  # Será calculado
-                }
-            
-            # Calcular resultado V/E/D baseado no vencedor
-            if confronto.get('vencedor'):
-                vencedor = confronto['vencedor'].lower().strip()
-                if 'empate' in vencedor:
-                    confronto['resultado'] = 'E'
-                else:
-                    # Determinar se foi vitória do time casa ou fora
-                    mandante_lower = confronto['mandante'].lower().strip()
-                    if any(palavra in mandante_lower for palavra in vencedor.split() if len(palavra) > 2):
-                        confronto['resultado'] = 'V'  # Time da casa venceu
-                    else:
-                        confronto['resultado'] = 'D'  # Time visitante venceu
-            
-            # Manter compatibilidade com código existente
-            confronto['resultado_corinthians'] = confronto['resultado']
-            
+        for confronto_raw in confrontos_raw:
+            confronto = {
+                "data": confronto_raw.get('data', ''),
+                "mandante": confronto_raw.get('mandante_nome', ''),
+                "visitante": confronto_raw.get('visitante_nome', ''),
+                "placar": confronto_raw.get('placar', ''),
+                "vencedor": confronto_raw.get('vencedor', ''),
+                "competicao": confronto_raw.get('campeonato', ''),
+                "resultado": confronto_raw.get('resultado', ''),
+                "resultado_corinthians": confronto_raw.get('resultado', '')  # Compatibilidade
+            }
             confrontos.append(confronto)
         
         return jsonify({

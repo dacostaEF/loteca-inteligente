@@ -702,11 +702,23 @@
             flex-wrap: wrap;
         }
 
+        /* CSS para grid de confrontos em linha horizontal */
+        .confrontos-grid {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+
         .confronto-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 2px;
+            min-width: 60px;
+            padding: 4px;
         }
 
         .confronto-data {
@@ -718,15 +730,15 @@
         }
 
         .confronto-placar {
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 700;
             white-space: nowrap;
             text-align: center;
             color: #fff;
             margin-bottom: 2px;
-            background: transparent;
-            border: none;
-            padding: 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            padding: 2px 4px;
         }
 
         /* Modal de Estatísticas Detalhadas */

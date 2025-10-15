@@ -7,7 +7,7 @@
     "numero": "4",
     "time_casa": "Roma/IT",
     "time_fora": "Inter de Milao/IT",
-    "arena": "Roma/Italia",
+    "arena": "Estádio Olípico/Roma/IT",
     "campeonato": "Italiano Série A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/Roma/roma.png",
@@ -17,17 +17,17 @@
     "probabilidade_fora": "25",
     "recomendacao": "Recomendação Estatística: Coluna 1 (Roma) - Risco Médio",
     "conclusao_analista": "Este é um CLÁSSICO ITALIANO EQUILIBRADO. Ambos times estão em boa fase. O fator casa será decisivo - quem joga em casa tem vantagem de 55-60%. Diferente do Corinthians x Atlético-MG, aqui não há um favorito óbvio, são duas equipes de alto nível!  \nPontos Fortes Roma:  \n       Invicta (solidez defensiva)\n       Apenas 2 gols sofridos\n       Consistência nos resultados\n\nPontos Fortes Inter:\n       Melhor ataque (17 gols)\n       Saldo de gols superior (+9)\n       Recuperação de forma (3 vitórias seguidas)",
-    "confrontos_sequence": "V-V-V-V-E-V-D-E-D-E",
+    "confrontos_sequence": "D-D-D-V-D-D-V-V-D-D",
     "posicao_casa": "2",
     "posicao_fora": "4",
     "confronto_direto": "4V-0E-6D",
     "fator_casa": "55%",
     "fator_fora": "45%",
-    "analise_posicao": "Sem favoritos",
-    "analise_posicao_tabelas": "Sem favoritos",
-    "analise_confronto_direto": "Vantagem Palmeiras",
-    "analise_fator_casa": "Sem favoritos",
-    "sincronizado_em": "2025-10-15T17:47:15.340Z"
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Confronto Equilibrado",
+    "sincronizado_em": "2025-10-15T22:44:50.229Z"
   },
   "admin_key": "loteca2024admin"
 }

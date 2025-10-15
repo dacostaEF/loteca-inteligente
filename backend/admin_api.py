@@ -1556,8 +1556,10 @@ def listar_arquivos_confrontos():
 @bp_admin.route('/api/admin/confrontos/carregar', methods=['POST'])
 @cross_origin()
 def carregar_arquivo_confrontos():
-    """Carregar arquivo CSV de confrontos"""
+    """Carregar arquivo CSV de confrontos usando parser robusto"""
     try:
+        from services.csv_parser_robusto import processar_csv_confrontos
+        
         data = request.get_json()
         nome_arquivo = data.get('nome_arquivo')
         
@@ -1578,143 +1580,25 @@ def carregar_arquivo_confrontos():
                 'error': f'Arquivo {nome_arquivo} não encontrado'
             }), 404
         
-        # Ler arquivo CSV com diferentes encodings
-        confrontos = []
-        encodings = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
+        # Usar parser robusto
+        logger.info(f"🚀 [API] Processando arquivo com parser robusto: {nome_arquivo}")
+        sucesso, confrontos, mensagem = processar_csv_confrontos(caminho_arquivo)
         
-        for encoding in encodings:
-            try:
-                logger.info(f"📊 [API] Tentando encoding: {encoding}")
-                with open(caminho_arquivo, 'r', encoding=encoding) as f:
-                    linhas = f.readlines()
-                
-                logger.info(f"📊 [API] Arquivo lido com sucesso usando {encoding}")
-                logger.info(f"📊 [API] Arquivo tem {len(linhas)} linhas")
-                
-                # Pular cabeçalho se existir
-                inicio = 1 if len(linhas) > 0 and 'data' in linhas[0].lower() else 0
-                logger.info(f"📊 [API] Iniciando leitura a partir da linha {inicio + 1}")
-                
-                for i, linha in enumerate(linhas[inicio:], start=inicio + 1):
-                    linha = linha.strip()
-                    if linha:
-                        # Tentar diferentes separadores
-                        partes = []
-                        if ',' in linha:
-                            partes = linha.split(',')
-                        elif ';' in linha:
-                            partes = linha.split(';')
-                        elif '\t' in linha:
-                            partes = linha.split('\t')
-                        else:
-                            # Se não há separador, tentar dividir por espaços
-                            partes = linha.split()
-                        
-                        logger.info(f"📊 [API] Linha {i}: {len(partes)} partes - {partes}")
-                        
-                        if len(partes) >= 5:
-                            # DETECTAR AUTOMATICAMENTE A ESTRUTURA DO CSV
-                            confronto = {}
-                            
-                            # Estrutura 1: Data,mandante,placar,visitante,vencedor,Rodada,Competição (CSV antigo)
-                            if len(partes) == 7 and 'vencedor' in linhas[0].lower():
-                                confronto = {
-                                    'data': partes[0].strip(),
-                                    'mandante_nome': partes[1].strip(),
-                                    'placar': partes[2].strip(),
-                                    'visitante_nome': partes[3].strip(),
-                                    'vencedor': partes[4].strip(),  # Coluna 4 = vencedor
-                                    'resultado': '',
-                                    'rodada': partes[5].strip(),
-                                    'campeonato': partes[6].strip()
-                                }
-                            
-                            # Estrutura 2: Data,Time da Casa,Placar,Time Visitante,Vencedor,Campeonato,Resultado (Time) (CSV novo)
-                            elif len(partes) == 7 and 'time da casa' in linhas[0].lower():
-                                confronto = {
-                                    'data': partes[0].strip(),
-                                    'mandante_nome': partes[1].strip(),
-                                    'placar': partes[2].strip(),
-                                    'visitante_nome': partes[3].strip(),
-                                    'vencedor': partes[4].strip(),  # Coluna 4 = vencedor
-                                    'resultado': '',
-                                    'campeonato': partes[5].strip(),
-                                    'resultado_time': partes[6].strip()
-                                }
-                            
-                            # Estrutura 3: data,mandante,mandante_nome,placar,visitante,visitante_nome,resultado_time,rodada,competicao
-                            elif len(partes) >= 8 and 'resultado_' in linhas[0].lower():
-                                confronto = {
-                                    'data': partes[0].strip(),
-                                    'mandante_nome': partes[2].strip(),  # mandante_nome na coluna 2
-                                    'placar': partes[3].strip(),
-                                    'visitante_nome': partes[5].strip(),  # visitante_nome na coluna 5
-                                    'vencedor': '',  # Não tem campo vencedor direto
-                                    'resultado': partes[6].strip(),  # Coluna 6 = resultado V/E/D
-                                    'rodada': partes[7].strip() if len(partes) > 7 else '',
-                                    'campeonato': partes[8].strip() if len(partes) > 8 else ''
-                                }
-                            
-                            # Estrutura padrão (fallback)
-                            else:
-                                confronto = {
-                                    'data': partes[0].strip(),
-                                    'mandante_nome': partes[1].strip(),
-                                    'placar': partes[2].strip(),
-                                    'visitante_nome': partes[3].strip(),
-                                    'vencedor': partes[4].strip() if len(partes) > 4 else '',
-                                    'resultado': '',
-                                    'rodada': partes[5].strip() if len(partes) > 5 else '',
-                                    'campeonato': partes[6].strip() if len(partes) > 6 else ''
-                                }
-                            
-                            # SIMPLIFICADO: Usar diretamente a coluna "Vencedor" para determinar V/E/D
-                            if confronto.get('vencedor'):
-                                vencedor = confronto['vencedor'].strip()
-                                vencedor_lower = vencedor.lower()
-                                
-                                if 'empate' in vencedor_lower:
-                                    confronto['resultado'] = 'E'
-                                else:
-                                    # Determinar se foi vitória do time casa ou fora baseado no vencedor
-                                    mandante_lower = confronto['mandante_nome'].lower().strip()
-                                    
-                                    # Se o vencedor contém o nome do mandante, time da casa venceu
-                                    if any(palavra in mandante_lower for palavra in vencedor_lower.split() if len(palavra) > 2):
-                                        confronto['resultado'] = 'V'  # Time da casa venceu
-                                    else:
-                                        confronto['resultado'] = 'D'  # Time visitante venceu
-                                        
-                                logger.info(f"🎯 [API] Vencedor: '{vencedor}' → Resultado: {confronto['resultado']}")
-                            confrontos.append(confronto)
-                            logger.info(f"✅ [API] Confronto adicionado: {confronto}")
-                        else:
-                            logger.warning(f"⚠️ [API] Linha {i} ignorada (menos de 5 partes): {linha}")
-                
-                # Se chegou até aqui, o encoding funcionou
-                logger.info(f"✅ [API] Arquivo processado com sucesso usando encoding: {encoding}")
-                break
-                
-            except UnicodeDecodeError as e:
-                logger.warning(f"⚠️ [API] Encoding {encoding} falhou: {str(e)}")
-                continue
-            except Exception as e:
-                logger.error(f"❌ [API] Erro ao processar arquivo com {encoding}: {str(e)}")
-                continue
-        else:
-            # Se nenhum encoding funcionou
-            logger.error(f"❌ [API] Nenhum encoding funcionou para o arquivo {nome_arquivo}")
+        if not sucesso:
+            logger.error(f"❌ [API] Erro no parser robusto: {mensagem}")
             return jsonify({
                 'success': False,
-                'error': f'Não foi possível ler o arquivo {nome_arquivo} com nenhum encoding suportado'
+                'error': mensagem
             }), 500
         
         logger.info(f"✅ [API] {len(confrontos)} confrontos carregados de {nome_arquivo}")
+        logger.info(f"📊 [API] Mensagem do parser: {mensagem}")
         
         return jsonify({
             'success': True,
             'confrontos': confrontos,
-            'arquivo': nome_arquivo
+            'arquivo': nome_arquivo,
+            'parser_message': mensagem
         })
         
     except Exception as e:
