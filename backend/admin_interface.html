@@ -4189,6 +4189,43 @@
             if (window.confrontosPreview && window.confrontosPreview.length > 0) {
                 console.log(`✅ [ANÁLISE] ${window.confrontosPreview.length} confrontos encontrados para confirmar`);
                 
+                // NOVA LÓGICA: Calcular resumo baseado na tabela modal (que está correta)
+                const confrontos = window.confrontosPreview.slice(0, 10); // Últimos 10
+                
+                let vitoriasTimeCasa = 0;
+                let empates = 0;
+                let vitoriasTimeFora = 0;
+                
+                // Contar resultados baseado na lógica da tabela modal
+                confrontos.forEach((confronto, index) => {
+                    const vencedor = (confronto.vencedor || '').trim();
+                    const mandante = (confronto.mandante_nome || '').toLowerCase().trim();
+                    
+                    if ('empate' in vencedor.toLowerCase()) {
+                        empates++;
+                    } else {
+                        // Se o vencedor contém palavras do mandante, time da casa venceu
+                        const palavrasMandante = mandante.split(' ');
+                        const vencedorContemMandante = palavrasMandante.some(palavra => 
+                            vencedor.toLowerCase().includes(palavra) && palavra.length > 2
+                        );
+                        
+                        if (vencedorContemMandante) {
+                            vitoriasTimeCasa++; // Time da casa venceu
+                        } else {
+                            vitoriasTimeFora++; // Time visitante venceu
+                        }
+                    }
+                });
+                
+                // Preencher campo de confronto direto com valores corretos da tabela modal
+                const confrontoDireto = `${vitoriasTimeCasa}V-${empates}E-${vitoriasTimeFora}D`;
+                const campoConfrontoDireto = document.getElementById('confronto-direto-admin');
+                if (campoConfrontoDireto) {
+                    campoConfrontoDireto.value = confrontoDireto;
+                    console.log(`✅ [ANÁLISE] Campo confronto direto preenchido com valores da tabela modal: ${confrontoDireto}`);
+                }
+                
                 // Auto-preencher a sequência
                 console.log('🔄 [ANÁLISE] Chamando autoPreencherSequenciaConfrontos...');
                 autoPreencherSequenciaConfrontos(window.confrontosPreview);
