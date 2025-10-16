@@ -123,7 +123,7 @@
                 <div class="recommendation" id="recomendacao-jogo-1"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
                 <table class="analysis-table" id="analise-jogo-1">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome">Ponte Preta</th><th class="team-header" id="time-fora-nome">Guarani</th><th>Análise</th></tr></thead>
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome">Flamengo/RJ</th><th class="team-header" id="time-fora-nome">Palmeiras/SP</th><th>Análise</th></tr></thead>
                     <tbody>
                         <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais"></div></td><td id="forma-analise">Baseado nos últimos 10 jogos</td></tr>
                         <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa">-</td><td class="team-header" id="posicao-fora">-</td><td id="posicao-analise">Carregando dados...</td></tr>
@@ -5630,24 +5630,24 @@ Equilíbrio
                 return;
             }
             
-            // DADOS PADRÃO (fallback)
+            // DADOS REAIS DO ARQUIVO CSV - FLAMENGO vs PALMEIRAS
             let confrontos = [
-                { data: '2025-09-28', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-2', resultado: 'D' },
-                { data: '2025-04-27', mandante: 'Flamengo', visitante: 'Corinthians', placar: '4-0', resultado: 'D' },
-                { data: '2024-10-20', mandante: 'Corinthians', visitante: 'Flamengo', placar: '0-0', resultado: 'E' },
-                { data: '2024-10-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado: 'D' },
-                { data: '2024-09-01', mandante: 'Corinthians', visitante: 'Flamengo', placar: '2-1', resultado: 'V' },
-                { data: '2024-05-11', mandante: 'Flamengo', visitante: 'Corinthians', placar: '2-0', resultado: 'D' },
-                { data: '2023-10-07', mandante: 'Corinthians', visitante: 'Flamengo', placar: '1-1', resultado: 'E' },
-                { data: '2023-05-21', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-0', resultado: 'D' },
-                { data: '2022-11-02', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-2', resultado: 'V' },
-                { data: '2022-10-19', mandante: 'Flamengo', visitante: 'Corinthians', placar: '1-1 (6-5 Pen.)', resultado: 'E' } // Empate
+                { data: '25/05/2025', mandante: 'Palmeiras', visitante: 'Flamengo', placar: '0-2', resultado: 'V' },
+                { data: '8/11/24', mandante: 'Flamengo', visitante: 'Palmeiras', placar: '1-1', resultado: 'E' },
+                { data: '8/7/24', mandante: 'Palmeiras', visitante: 'Flamengo', placar: '1-0', resultado: 'D' },
+                { data: '31/07/2024', mandante: 'Flamengo', visitante: 'Palmeiras', placar: '2-0', resultado: 'V' },
+                { data: '21/04/2024', mandante: 'Palmeiras', visitante: 'Flamengo', placar: '0-0', resultado: 'E' },
+                { data: '11/8/23', mandante: 'Flamengo', visitante: 'Palmeiras', placar: '3-0', resultado: 'V' },
+                { data: '7/8/23', mandante: 'Palmeiras', visitante: 'Flamengo', placar: '1-1', resultado: 'E' },
+                { data: '28/01/2023', mandante: 'Palmeiras', visitante: 'Flamengo', placar: '4-3', resultado: 'D' },
+                { data: '21/08/2022', mandante: 'Palmeiras', visitante: 'Flamengo', placar: '1-1', resultado: 'E' },
+                { data: '20/04/2022', mandante: 'Flamengo', visitante: 'Palmeiras', placar: '0-0', resultado: 'E' }
             ];
             
             // TENTAR CARREGAR DADOS DA CENTRAL ADMIN
             try {
                 console.log('🔄 [CONFRONTOS-JOGO1] Buscando dados da Central Admin...');
-                const jogoResponse = await fetch('/api/analise/jogo/1');
+                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1216');
                 
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
@@ -5656,17 +5656,8 @@ Equilíbrio
                         
                         // USAR DADOS DA CENTRAL ADMIN (se disponível)
                         if (jogoData.dados.confrontos_sequence) {
-                            // Converter sequência em dados de confrontos
-                            const sequencia = jogoData.dados.confrontos_sequence.split('-');
-                            confrontos = sequencia.map((resultado, index) => ({
-                                data: `2025-${String(12-index).padStart(2, '0')}-${String(15-index).padStart(2, '0')}`,
-                                mandante: jogoData.dados.time_casa || 'Time Casa',
-                                visitante: jogoData.dados.time_fora || 'Time Fora',
-                                placar: resultado === 'V' ? '2-1' : resultado === 'D' ? '1-2' : '1-1',
-                                resultado: resultado
-                            }));
-                            
-                            console.log('🎯 [CONFRONTOS-JOGO1] Usando dados da Central Admin!');
+                            console.log('🎯 [CONFRONTOS-JOGO1] Central Admin tem sequência, mas usando dados reais do CSV!');
+                            // NÃO converter sequência - usar dados reais do CSV que já estão definidos acima
                         }
                     }
                 }
@@ -5678,31 +5669,38 @@ Equilíbrio
             const ultimos10 = confrontos.slice(0, 10);
             
             // Buscar escudos da Central Admin uma única vez
-            let escudoCasa = '/static/escudos/COR_Corinthians/Corinthians.png';
-            let escudoFora = '/static/escudos/FLA_Flamengo/Flamengo.png';
+            let escudoCasa = '/static/escudos/FLA_Flamengo/Flamengo.png';
+            let escudoFora = '/static/escudos/PAL_Palmeiras/Palmeiras.png';
+            
+            console.log('🔍 [CONFRONTOS-JOGO1] Escudos iniciais:', escudoCasa, escudoFora);
             
             try {
-                const jogoResponse = await fetch('/api/analise/jogo/1');
+                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1216');
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
                     if (jogoData.success && jogoData.dados) {
                         escudoCasa = jogoData.dados.escudo_casa || escudoCasa;
                         escudoFora = jogoData.dados.escudo_fora || escudoFora;
-                        console.log('🖼️ [CONFRONTOS] Escudos da Central Admin:', escudoCasa, escudoFora);
+                        console.log('🖼️ [CONFRONTOS-JOGO1] Escudos da Central Admin:', escudoCasa, escudoFora);
                     }
                 }
             } catch (error) {
-                console.log('⚠️ [CONFRONTOS] Usando escudos padrão:', error);
+                console.log('⚠️ [CONFRONTOS-JOGO1] Usando escudos padrão:', error);
             }
             
+            console.log('🎯 [CONFRONTOS-JOGO1] Escudos finais que serão usados:', escudoCasa, escudoFora);
+            
             // Renderizar bolinhas em uma única linha com data (igual ao Jogo 2)
-            const bolinhasHtml = ultimos10.map(confronto => {
+            console.log('🎯 [CONFRONTOS-JOGO1] Renderizando', ultimos10.length, 'confrontos...');
+            const bolinhasHtml = ultimos10.map((confronto, index) => {
                 const resultado = confronto.resultado.toUpperCase();
                 let classe, conteudo;
                 
                 // USAR DADOS DINÂMICOS DOS TIMES COM ESCUDOS DA CENTRAL ADMIN
-                const timeCasa = confronto.mandante || 'Corinthians';
-                const timeFora = confronto.visitante || 'Flamengo';
+                const timeCasa = confronto.mandante || 'Flamengo';
+                const timeFora = confronto.visitante || 'Palmeiras';
+                
+                console.log(`🔍 [CONFRONTOS-JOGO1] Confronto ${index + 1}: ${timeCasa} vs ${timeFora}, Resultado: ${resultado}`);
                 
                 if (resultado === 'V') {
                     classe = 'time-casa';
@@ -5715,13 +5713,8 @@ Equilíbrio
                     conteudo = 'E';
                 }
                 
-                // Formatar data (DD/MM/AA) - apenas dezena do ano (igual ao Jogo 2)
-                let dataFormatada = '';
-                if (confronto.data) {
-                    const [ano, mes, dia] = confronto.data.split('-');
-                    const anoAbrev = ano.substring(2); // Pega apenas os 2 últimos dígitos
-                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
-                }
+                // Formatar data (DD/MM/AA) - já está no formato correto do CSV
+                let dataFormatada = confronto.data || '';
                 
                 return `
                     <div class="confronto-item">
@@ -6304,10 +6297,10 @@ Equilíbrio
                 }, 1500);
             }
             
-            // 3. CARREGAR BOLINHAS DOS CONFRONTOS (DESABILITADO - DADOS VÊM DA API)
-            // setTimeout(() => {
-            //     carregarUltimosConfrontosJogo1();
-            // }, 2000);
+            // 3. CARREGAR BOLINHAS DOS CONFRONTOS
+            setTimeout(() => {
+                carregarUltimosConfrontosJogo1();
+            }, 2000);
 
         // RENDERIZAR CONFRONTO DIRETO RESUMO NA ABA 1
         function renderizarConfrontoDirectoResumo(confrontos) {
