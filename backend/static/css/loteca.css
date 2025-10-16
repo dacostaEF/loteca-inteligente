@@ -856,16 +856,16 @@
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
-        /* Empate - Círculo amarelo simples */
+        /* Empate - Letra E simples */
         .confronto-result.empate {
             width: 24px;
             height: 24px;
-            border-radius: 50%;
-            background: #FFD700;
+            /* border-radius: 50%; ← REMOVIDO: não queremos círculo */
+            /* background: #FFD700; ← REMOVIDO: não queremos fundo */
             font-weight: 700;
             font-size: 0.7rem;
-            color: #000;
-            border: 2px solid #FFA500;
+            color: #ffc107; /* Cor amarela apenas para a letra */
+            /* border: 2px solid #FFA500; ← REMOVIDO: não queremos borda */
         }
 
         .honesty-modal .modal-header {
