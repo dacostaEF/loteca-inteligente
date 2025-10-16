@@ -8697,7 +8697,7 @@ Equilíbrio
             }, 4500);
             */
             
-            // ATIVAR JOGOS 11, 12 E 13 (com API CSV)
+            // ATIVAR JOGOS 11, 12, 13 E 14 (com API CSV)
             setTimeout(() => {
                 carregarUltimosConfrontosJogo11();
             }, 4500);
@@ -8709,6 +8709,10 @@ Equilíbrio
             setTimeout(() => {
                 carregarUltimosConfrontosJogo13();
             }, 5500);
+            
+            setTimeout(() => {
+                carregarUltimosConfrontosJogo14();
+            }, 6000);
 
             // DESABILITADO: Funções hardcoded que sobrescrevem dados da API
             /*
@@ -12376,41 +12380,111 @@ Equilíbrio
                 return;
             }
             
-            // DADOS REAIS: Barcelona vs Carregando... - confrontos históricos (do arquivo CSV)
-            // Campo 'resultado' representa o resultado do Barcelona (V=Vitória Barcelona, D=Derrota Barcelona, E=Empate)
-            const confrontos = [
-                { data: '2025-09-28', mandante: 'Barcelona', visitante: 'Carregando...', placar: '2-1', resultado: 'V' }, // Barcelona venceu
-                { data: '2025-03-02', mandante: 'Barcelona', visitante: 'Carregando...', placar: '4-0', resultado: 'V' }, // Barcelona venceu
-                { data: '2024-11-10', mandante: 'Carregando...', visitante: 'Barcelona', placar: '1-0', resultado: 'D' }, // Carregando... venceu
-                { data: '2024-05-13', mandante: 'Barcelona', visitante: 'Carregando...', placar: '2-0', resultado: 'V' }, // Barcelona venceu
-                { data: '2023-11-04', mandante: 'Carregando...', visitante: 'Barcelona', placar: '0-1', resultado: 'V' }, // Barcelona venceu
-                { data: '2023-05-20', mandante: 'Barcelona', visitante: 'Carregando...', placar: '1-2', resultado: 'D' }, // Carregando... venceu
-                { data: '2023-01-25', mandante: 'Barcelona', visitante: 'Carregando...', placar: '1-0', resultado: 'V' }, // Barcelona venceu
-                { data: '2022-08-21', mandante: 'Carregando...', visitante: 'Barcelona', placar: '1-4', resultado: 'V' }, // Barcelona venceu
-                { data: '2022-04-21', mandante: 'Carregando...', visitante: 'Barcelona', placar: '0-1', resultado: 'V' }, // Barcelona venceu
-                { data: '2021-08-15', mandante: 'Barcelona', visitante: 'Carregando...', placar: '4-2', resultado: 'V' }  // Barcelona venceu
-            ];
+            // DADOS REAIS DO ARQUIVO CSV - GETAFE vs REAL MADRID
+            let confrontos = [];
+            
+            // TENTAR CARREGAR DADOS DO ARQUIVO CSV
+            try {
+                console.log('🔄 [CONFRONTOS-JOGO14] Buscando dados do arquivo CSV...');
+                const csvResponse = await fetch('/api/confrontos/Getafe_vs_Real-Madrid.csv');
+                console.log('📡 [CONFRONTOS-JOGO14] Resposta da API:', csvResponse.status, csvResponse.statusText);
+                
+                if (csvResponse.ok) {
+                    const csvText = await csvResponse.text();
+                    console.log('✅ [CONFRONTOS-JOGO14] CSV carregado:', csvText.substring(0, 200) + '...');
+                    
+                    // Parse do CSV
+                    const lines = csvText.split('\n').filter(line => line.trim());
+                    const csvData = lines.slice(1, 11).map(line => {
+                        const [data, mandante, placar, visitante, vencedor, rodada, competicao] = line.split(',');
+                        let resultado = 'E'; // Default to Empate
+                        
+                        // PRIORIZAR PLACAR sobre campo vencedor (CSV tem inconsistências)
+                        if (placar && placar.includes('-')) {
+                            const [golsCasa, golsFora] = placar.split('-').map(g => parseInt(g.trim()));
+                            if (golsCasa === golsFora) {
+                                resultado = 'E'; // Empate
+                            } else if (golsCasa > golsFora) {
+                                resultado = 'V'; // Vitória do mandante (Getafe)
+                            } else {
+                                resultado = 'D'; // Derrota do mandante (Real Madrid venceu)
+                            }
+                        } else {
+                            // Fallback: usar campo vencedor se placar não disponível
+                            if (vencedor && vencedor.trim() === mandante) {
+                                resultado = 'V';
+                            } else if (vencedor && vencedor.trim() === visitante) {
+                                resultado = 'D';
+                            }
+                        }
+                        return {
+                            data: data,
+                            mandante: mandante,
+                            visitante: visitante,
+                            placar: placar,
+                            resultado: resultado
+                        };
+                    });
+                    
+                    if (csvData.length > 0) {
+                        confrontos = csvData;
+                        console.log('✅ [CONFRONTOS-JOGO14] Dados CSV carregados:', confrontos.length, 'confrontos');
+                        console.log('📊 [CONFRONTOS-JOGO14] Primeiro confronto:', confrontos[0]);
+                    } else {
+                        console.log('⚠️ [CONFRONTOS-JOGO14] Nenhum dado CSV válido encontrado');
+                    }
+                } else {
+                    console.log('⚠️ [CONFRONTOS-JOGO14] CSV não encontrado, usando dados padrão');
+                }
+            } catch (error) {
+                console.error('❌ [CONFRONTOS-JOGO14] Erro ao carregar CSV:', error);
+            }
+            
+            // VERIFICAR SE CONSEGUIMOS CARREGAR DADOS
+            if (confrontos.length === 0) {
+                console.error('❌ [CONFRONTOS-JOGO14] NENHUM DADO CARREGADO! Usando dados de emergência...');
+                confrontos = [
+                    { data: '23/4/2025', mandante: 'Getafe', visitante: 'Real Madrid', placar: '0-1', resultado: 'D' },
+                    { data: '1/12/2024', mandante: 'Real Madrid', visitante: 'Getafe', placar: '2-0', resultado: 'D' },
+                    { data: '1/2/2024', mandante: 'Getafe', visitante: 'Real Madrid', placar: '0-2', resultado: 'D' },
+                    { data: '2/9/2023', mandante: 'Real Madrid', visitante: 'Getafe', placar: '2-1', resultado: 'D' },
+                    { data: '13/5/2023', mandante: 'Real Madrid', visitante: 'Getafe', placar: '1-0', resultado: 'D' },
+                    { data: '8/10/2022', mandante: 'Getafe', visitante: 'Real Madrid', placar: '0-1', resultado: 'D' },
+                    { data: '9/4/2022', mandante: 'Real Madrid', visitante: 'Getafe', placar: '2-0', resultado: 'D' },
+                    { data: '2/1/2022', mandante: 'Getafe', visitante: 'Real Madrid', placar: '1-0', resultado: 'V' },
+                    { data: '18/4/2021', mandante: 'Getafe', visitante: 'Real Madrid', placar: '0-0', resultado: 'E' },
+                    { data: '9/2/2021', mandante: 'Real Madrid', visitante: 'Getafe', placar: '2-0', resultado: 'D' }
+                ];
+            }
             
             const bolinhasHtml = confrontos.map(confronto => {
                 const resultado = confronto.resultado.toUpperCase();
                 let classe, conteudo;
                 
                 if (resultado === 'V') {
-                    classe = 'barcelona';
-                    conteudo = '<img src="/static/placeholder-team-logo.svg"Barcelona/Barcelona.png" alt="Time Casa" class="confronto-escudo" onerror="this.outerHTML=\'BAR\'">';
+                    classe = 'getafe';
+                    conteudo = '<img src="/static/escudos/Getafe/getafe.png" alt="Getafe" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>GET</span>\'">';
                 } else if (resultado === 'D') {
-                    classe = 'real-sociedad';
-                    conteudo = '<img src="/static/placeholder-team-logo.svg"Real_Sociedad/Real_Sociedad.png" alt="Carregando..." class="confronto-escudo" onerror="this.outerHTML=\'RSO\'">';
+                    classe = 'real-madrid';
+                    conteudo = '<img src="/static/escudos/Real_Madrid/real_madrid.png" alt="Real Madrid" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>RMA</span>\'">';
                 } else {
                     classe = 'empate';
-                    conteudo = 'E';
+                    conteudo = '<span style="color: #f59e0b; font-weight: bold; background: #fef3c7; padding: 2px 6px; border-radius: 50%; display: inline-block; width: 20px; height: 20px; text-align: center; line-height: 16px;">E</span>';
                 }
                 
                 let dataFormatada = '';
                 if (confronto.data) {
-                    const [ano, mes, dia] = confronto.data.split('-');
-                    const anoAbrev = ano.substring(2);
-                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    // CSV usa formato DD/MM/YYYY, não YYYY-MM-DD
+                    if (confronto.data.includes('/')) {
+                        const [dia, mes, ano] = confronto.data.split('/');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    } else {
+                        // Fallback para formato YYYY-MM-DD
+                        const [ano, mes, dia] = confronto.data.split('-');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    }
                 }
                 
                 return `
