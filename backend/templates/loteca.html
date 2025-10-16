@@ -521,23 +521,23 @@ Equilíbrio
             </div>
         </div>
 
-        <!-- JOGO 7: GREMIO vs VITORIA -->
+        <!-- JOGO 7: TOTTENHAM vs ASTON VILLA -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 7:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo7" src="/static/placeholder-team-logo.svg"GRE_Grêmio/Gremio.png" 
-                             alt="Grêmio" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <img id="escudo-casa-jogo7" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
                         <span id="nome-casa-jogo7">TIME CASA</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo7" src="/static/placeholder-team-logo.svg"VIT_Vitória/Vitoria.PNG" 
-                             alt="Vitória" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <img id="escudo-fora-jogo7" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
                         <span id="nome-fora-jogo7">TIME FORA</span>
                     </div>
                 </div>
@@ -546,9 +546,9 @@ Equilíbrio
             </div>
             <div class="game-card-body">
                 <div class="probabilities">
-                    <div class="prob-item col1"><div class="label" id="label-casa-7">Coluna 1 (Grêmio)</div><div class="value" id="prob-casa-7"><div class="loading-spinner"></div>Carregando...</div></div>
+                    <div class="prob-item col1"><div class="label" id="label-casa-7">Coluna 1 (Time Casa)</div><div class="value" id="prob-casa-7"><div class="loading-spinner"></div>Carregando...</div></div>
                     <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value" id="prob-empate-7"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label" id="label-fora-7">Coluna 2 (Vitória)</div><div class="value" id="prob-fora-7"><div class="loading-spinner"></div>Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label" id="label-fora-7">Coluna 2 (Time Fora)</div><div class="value" id="prob-fora-7"><div class="loading-spinner"></div>Carregando...</div></div>
                 </div>
                 <div class="recommendation" id="recomendacao-7"><strong>Recomendação Estatística:</strong> <span class="loading-spinner"></span>Carregando análise...</div>
                 
@@ -571,22 +571,22 @@ Equilíbrio
             </div>
         </div>
 
-        <!-- JOGO 8: ASTON VILLA vs FULHAM -->
+        <!-- JOGO 8: MIRASSOL vs SAO PAULO -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 8:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo8" src="/static/placeholder-team-logo.svg"Aston_Villa/Aston_Villa.png" 
-                             alt="Carregando..." class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <img id="escudo-casa-jogo8" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
                         <span id="nome-casa-jogo8">TIME CASA</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo8" src="/static/placeholder-team-logo.svg"Fulhan/Carregando....PNG" 
+                        <img id="escudo-fora-jogo8" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
                         <span id="nome-fora-jogo8">TIME FORA</span>
                     </div>
@@ -8453,6 +8453,8 @@ Equilíbrio
             }, 4700);
             */
 
+            // DESABILITADO: Funções de posições hardcoded que sobrescrevem dados da API
+            /*
             // CARREGAR POSIÇÕES NA TABELA PARA JOGOS 5 A 14 (FORA DO SETTIMEOUT DOS DADOS)
             setTimeout(() => {
                 carregarPosicoesTabelaJogo5();
@@ -8466,6 +8468,7 @@ Equilíbrio
                 carregarPosicoesTabelaJogo13();
                 carregarPosicoesTabelaJogo14();
             }, 4600);
+            */
 
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGOS 5 A 14
             for (let i = 5; i <= 14; i++) {
@@ -10045,7 +10048,7 @@ Equilíbrio
         }
 
         function carregarDadosReaisDiretosJogo7() {
-            console.log('🎯 [LOTECA-JOGO7] Carregando dados Grêmio vs Vitória...');
+            console.log('🎯 [LOTECA-JOGO7] Carregando dados Tottenham vs Aston Villa...');
             
             const probCol1 = document.getElementById('prob-casa-7');
             const probColX = document.getElementById('prob-empate-7');
@@ -10594,8 +10597,8 @@ Equilíbrio
         function atualizarFormaAnaliseJogo7() {
             const formaAnalise = document.getElementById('forma-analise-7');
             if (formaAnalise) {
-                // Grêmio vs Vitória: Grêmio tem vantagem histórica
-                formaAnalise.innerHTML = 'Vantagem Grêmio';
+                // Tottenham vs Aston Villa: Tottenham tem vantagem histórica
+                formaAnalise.innerHTML = 'Vantagem Tottenham';
             }
         }
 
@@ -10776,7 +10779,7 @@ Equilíbrio
         }
 
         function carregarUltimosConfrontosJogo7() {
-            console.log('🎯 [CONFRONTOS-JOGO7] Carregando últimos confrontos Grêmio vs Vitória...');
+            console.log('🎯 [CONFRONTOS-JOGO7] Carregando últimos confrontos Tottenham vs Aston Villa...');
             
             const container = document.getElementById('confrontos-principais-7');
             if (!container) {
@@ -10784,19 +10787,19 @@ Equilíbrio
                 return;
             }
             
-            // DADOS REAIS: Grêmio vs Vitória - confrontos históricos (do arquivo CSV)
-            // Campo 'resultado' representa o resultado do Grêmio (V=Vitória Grêmio, D=Derrota Grêmio, E=Empate)
+            // DADOS REAIS: Tottenham vs Aston Villa - confrontos históricos
+            // Campo 'resultado' representa o resultado do Tottenham (V=Vitória Tottenham, D=Derrota Tottenham, E=Empate)
             const confrontos = [
-                { data: '2025-09-28', mandante: 'Grêmio', visitante: 'Vitória', placar: '3-1', resultado: 'V' }, // Grêmio venceu
-                { data: '2025-04-27', mandante: 'Vitória', visitante: 'Grêmio', placar: '1-1', resultado: 'E' }, // Empate
-                { data: '2024-12-04', mandante: 'Vitória', visitante: 'Grêmio', placar: '1-1', resultado: 'E' }, // Empate
-                { data: '2024-07-21', mandante: 'Grêmio', visitante: 'Vitória', placar: '2-0', resultado: 'V' }, // Grêmio venceu
-                { data: '2021-08-03', mandante: 'Grêmio', visitante: 'Vitória', placar: '1-0', resultado: 'V' }, // Grêmio venceu
-                { data: '2021-07-27', mandante: 'Vitória', visitante: 'Grêmio', placar: '0-3', resultado: 'V' }, // Grêmio venceu
-                { data: '2018-11-25', mandante: 'Vitória', visitante: 'Grêmio', placar: '0-0', resultado: 'E' }, // Empate
-                { data: '2018-08-12', mandante: 'Grêmio', visitante: 'Vitória', placar: '4-0', resultado: 'V' }, // Grêmio venceu
-                { data: '2017-11-12', mandante: 'Grêmio', visitante: 'Vitória', placar: '1-1', resultado: 'E' }, // Empate
-                { data: '2017-07-19', mandante: 'Vitória', visitante: 'Grêmio', placar: '1-3', resultado: 'V' }  // Grêmio venceu
+                { data: '2025-05-24', mandante: 'Tottenham', visitante: 'Aston Villa', placar: '0-0', resultado: 'E' }, // Empate
+                { data: '2024-07-28', mandante: 'Tottenham', visitante: 'Aston Villa', placar: '2-1', resultado: 'V' }, // Tottenham venceu
+                { data: '2024-04-14', mandante: 'Tottenham', visitante: 'Aston Villa', placar: '0-0', resultado: 'E' }, // Empate
+                { data: '2023-05-31', mandante: 'Tottenham', visitante: 'Aston Villa', placar: '2-0', resultado: 'V' }, // Tottenham venceu
+                { data: '2023-05-17', mandante: 'Tottenham', visitante: 'Aston Villa', placar: '2-0', resultado: 'V' }, // Tottenham venceu
+                { data: '2022-11-13', mandante: 'Tottenham', visitante: 'Aston Villa', placar: '0-1', resultado: 'D' }, // Aston Villa venceu
+                { data: '2023-11-09', mandante: 'Aston Villa', visitante: 'Tottenham', placar: '1-1', resultado: 'E' }, // Empate
+                { data: '2023-07-08', mandante: 'Aston Villa', visitante: 'Tottenham', placar: '0-1', resultado: 'D' }, // Aston Villa venceu
+                { data: '2022-07-24', mandante: 'Aston Villa', visitante: 'Tottenham', placar: '1-2', resultado: 'D' }, // Aston Villa venceu
+                { data: '2021-11-10', mandante: 'Aston Villa', visitante: 'Tottenham', placar: '3-0', resultado: 'D' }  // Aston Villa venceu
             ];
             
             // Verificar se há confrontos suficientes
@@ -11330,7 +11333,7 @@ Equilíbrio
 
         // FUNÇÕES DE POSIÇÕES NA TABELA PARA JOGOS 7 A 14
         function carregarPosicoesTabelaJogo7() {
-            console.log('📊 [POSITION-JOGO7] Buscando posições na tabela para Grêmio vs Vitória...');
+            console.log('📊 [POSITION-JOGO7] Buscando posições na tabela para Tottenham vs Aston Villa...');
             
             // Para jogos do Brasileirão Série A
             const homeClassification = { position: 12, points: 25 };
@@ -11354,9 +11357,9 @@ Equilíbrio
                     posicaoAnalise.innerHTML = 'Confronto equilibrado';
                 } else {
                     if (homeClassification.position < awayClassification.position) {
-                        posicaoAnalise.innerHTML = 'Vantagem Grêmio';
+                        posicaoAnalise.innerHTML = 'Vantagem Tottenham';
                     } else {
-                        posicaoAnalise.innerHTML = 'Vantagem Vitória';
+                        posicaoAnalise.innerHTML = 'Vantagem Aston Villa';
                     }
                 }
             }
