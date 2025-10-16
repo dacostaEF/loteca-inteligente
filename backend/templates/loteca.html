@@ -8697,7 +8697,7 @@ Equilíbrio
             }, 4500);
             */
             
-            // ATIVAR JOGOS 11 E 12 (com API CSV)
+            // ATIVAR JOGOS 11, 12 E 13 (com API CSV)
             setTimeout(() => {
                 carregarUltimosConfrontosJogo11();
             }, 4500);
@@ -8705,6 +8705,10 @@ Equilíbrio
             setTimeout(() => {
                 carregarUltimosConfrontosJogo12();
             }, 5000);
+            
+            setTimeout(() => {
+                carregarUltimosConfrontosJogo13();
+            }, 5500);
 
             // DESABILITADO: Funções hardcoded que sobrescrevem dados da API
             /*
@@ -12243,20 +12247,82 @@ Equilíbrio
                 return;
             }
             
-            // DADOS REAIS: Milan vs Fiorentina - confrontos históricos
-            // Campo 'resultado' representa o resultado do Milan (V=Vitória Milan, D=Derrota Milan, E=Empate)
-            const confrontos = [
-                { data: '2025-05-24', mandante: 'Milan', visitante: 'Fiorentina', placar: '0-0', resultado: 'E' }, // Empate
-                { data: '2024-07-28', mandante: 'Milan', visitante: 'Fiorentina', placar: '2-1', resultado: 'V' }, // Milan venceu
-                { data: '2024-04-14', mandante: 'Milan', visitante: 'Fiorentina', placar: '0-0', resultado: 'E' }, // Empate
-                { data: '2023-05-31', mandante: 'Milan', visitante: 'Fiorentina', placar: '2-0', resultado: 'V' }, // Milan venceu
-                { data: '2023-05-17', mandante: 'Milan', visitante: 'Fiorentina', placar: '2-0', resultado: 'V' }, // Milan venceu
-                { data: '2022-11-13', mandante: 'Milan', visitante: 'Fiorentina', placar: '0-1', resultado: 'D' }, // Fiorentina venceu
-                { data: '2023-11-09', mandante: 'Fiorentina', visitante: 'Milan', placar: '1-1', resultado: 'E' }, // Empate
-                { data: '2023-07-08', mandante: 'Fiorentina', visitante: 'Milan', placar: '0-1', resultado: 'V' }, // Milan venceu
-                { data: '2022-07-24', mandante: 'Fiorentina', visitante: 'Milan', placar: '1-2', resultado: 'V' }, // Milan venceu
-                { data: '2021-11-10', mandante: 'Fiorentina', visitante: 'Milan', placar: '3-0', resultado: 'D' }  // Fiorentina venceu
-            ];
+            // DADOS REAIS DO ARQUIVO CSV - MILAN vs FIORENTINA
+            let confrontos = [];
+            
+            // TENTAR CARREGAR DADOS DO ARQUIVO CSV
+            try {
+                console.log('🔄 [CONFRONTOS-JOGO13] Buscando dados do arquivo CSV...');
+                const csvResponse = await fetch('/api/confrontos/Milan_vs_Fiorentina.csv');
+                console.log('📡 [CONFRONTOS-JOGO13] Resposta da API:', csvResponse.status, csvResponse.statusText);
+                
+                if (csvResponse.ok) {
+                    const csvText = await csvResponse.text();
+                    console.log('✅ [CONFRONTOS-JOGO13] CSV carregado:', csvText.substring(0, 200) + '...');
+                    
+                    // Parse do CSV
+                    const lines = csvText.split('\n').filter(line => line.trim());
+                    const csvData = lines.slice(1, 11).map(line => {
+                        const [data, mandante, placar, visitante, vencedor, rodada, competicao] = line.split(',');
+                        let resultado = 'E'; // Default to Empate
+                        
+                        // PRIORIZAR PLACAR sobre campo vencedor (CSV tem inconsistências)
+                        if (placar && placar.includes('-')) {
+                            const [golsCasa, golsFora] = placar.split('-').map(g => parseInt(g.trim()));
+                            if (golsCasa === golsFora) {
+                                resultado = 'E'; // Empate
+                            } else if (golsCasa > golsFora) {
+                                resultado = 'V'; // Vitória do mandante (Milan)
+                            } else {
+                                resultado = 'D'; // Derrota do mandante (Fiorentina venceu)
+                            }
+                        } else {
+                            // Fallback: usar campo vencedor se placar não disponível
+                            if (vencedor && vencedor.trim() === mandante) {
+                                resultado = 'V';
+                            } else if (vencedor && vencedor.trim() === visitante) {
+                                resultado = 'D';
+                            }
+                        }
+                        return {
+                            data: data,
+                            mandante: mandante,
+                            visitante: visitante,
+                            placar: placar,
+                            resultado: resultado
+                        };
+                    });
+                    
+                    if (csvData.length > 0) {
+                        confrontos = csvData;
+                        console.log('✅ [CONFRONTOS-JOGO13] Dados CSV carregados:', confrontos.length, 'confrontos');
+                        console.log('📊 [CONFRONTOS-JOGO13] Primeiro confronto:', confrontos[0]);
+                    } else {
+                        console.log('⚠️ [CONFRONTOS-JOGO13] Nenhum dado CSV válido encontrado');
+                    }
+                } else {
+                    console.log('⚠️ [CONFRONTOS-JOGO13] CSV não encontrado, usando dados padrão');
+                }
+            } catch (error) {
+                console.error('❌ [CONFRONTOS-JOGO13] Erro ao carregar CSV:', error);
+            }
+            
+            // VERIFICAR SE CONSEGUIMOS CARREGAR DADOS
+            if (confrontos.length === 0) {
+                console.error('❌ [CONFRONTOS-JOGO13] NENHUM DADO CARREGADO! Usando dados de emergência...');
+                confrontos = [
+                    { data: '5/4/2025', mandante: 'Milan', visitante: 'Fiorentina', placar: '2-2', resultado: 'E' },
+                    { data: '6/10/2024', mandante: 'Fiorentina', visitante: 'Milan', placar: '1-2', resultado: 'V' },
+                    { data: '30/3/24', mandante: 'Fiorentina', visitante: 'Milan', placar: '2-1', resultado: 'D' },
+                    { data: '25/11/23', mandante: 'Milan', visitante: 'Fiorentina', placar: '1-0', resultado: 'V' },
+                    { data: '4/3/2023', mandante: 'Fiorentina', visitante: 'Milan', placar: '1-1', resultado: 'E' },
+                    { data: '13/11/22', mandante: 'Milan', visitante: 'Fiorentina', placar: '1-2', resultado: 'D' },
+                    { data: '1/5/2022', mandante: 'Milan', visitante: 'Fiorentina', placar: '1-0', resultado: 'V' },
+                    { data: '20/11/21', mandante: 'Fiorentina', visitante: 'Milan', placar: '3-4', resultado: 'V' },
+                    { data: '21/3/21', mandante: 'Fiorentina', visitante: 'Milan', placar: '3-2', resultado: 'D' },
+                    { data: '29/11/20', mandante: 'Milan', visitante: 'Fiorentina', placar: '2-0', resultado: 'V' }
+                ];
+            }
             
             const bolinhasHtml = confrontos.map(confronto => {
                 const resultado = confronto.resultado.toUpperCase();
@@ -12264,20 +12330,28 @@ Equilíbrio
                 
                 if (resultado === 'V') {
                     classe = 'milan';
-                    conteudo = '<img src="/static/escudos/Milan_IT/milan.png" alt="Milan" class="confronto-escudo" onerror="this.outerHTML=\'MIL\'">';
+                    conteudo = '<img src="/static/escudos/Milan_IT/milan.png" alt="Milan" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>MIL</span>\'">';
                 } else if (resultado === 'D') {
                     classe = 'fiorentina';
-                    conteudo = '<img src="/static/escudos/Fiorentina_IT/fiorentina.png" alt="Fiorentina" class="confronto-escudo" onerror="this.outerHTML=\'FIO\'">';
+                    conteudo = '<img src="/static/escudos/Fiorentina_IT/fiorentina.png" alt="Fiorentina" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>FIO</span>\'">';
                 } else {
                     classe = 'empate';
-                    conteudo = 'E';
+                    conteudo = '<span style="color: #f59e0b; font-weight: bold; background: #fef3c7; padding: 2px 6px; border-radius: 50%; display: inline-block; width: 20px; height: 20px; text-align: center; line-height: 16px;">E</span>';
                 }
                 
                 let dataFormatada = '';
                 if (confronto.data) {
-                    const [ano, mes, dia] = confronto.data.split('-');
-                    const anoAbrev = ano.substring(2);
-                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    // CSV usa formato DD/MM/YYYY, não YYYY-MM-DD
+                    if (confronto.data.includes('/')) {
+                        const [dia, mes, ano] = confronto.data.split('/');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    } else {
+                        // Fallback para formato YYYY-MM-DD
+                        const [ano, mes, dia] = confronto.data.split('-');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    }
                 }
                 
                 return `
