@@ -8697,10 +8697,14 @@ Equilíbrio
             }, 4500);
             */
             
-            // ATIVAR APENAS JOGO 11 (com API CSV)
+            // ATIVAR JOGOS 11 E 12 (com API CSV)
             setTimeout(() => {
                 carregarUltimosConfrontosJogo11();
             }, 4500);
+            
+            setTimeout(() => {
+                carregarUltimosConfrontosJogo12();
+            }, 5000);
 
             // DESABILITADO: Funções hardcoded que sobrescrevem dados da API
             /*
@@ -12110,41 +12114,111 @@ Equilíbrio
                 return;
             }
             
-            // DADOS REAIS: Carregando... vs Carregando... - confrontos históricos (do arquivo CSV)
-            // Campo 'resultado' representa o resultado do Carregando... (V=Vitória Carregando..., D=Derrota Carregando..., E=Empate)
-            const confrontos = [
-                { data: '2025-09-28', mandante: 'Carregando...', visitante: 'Carregando...', placar: '1-2', resultado: 'D' }, // Carregando... venceu
-                { data: '2025-05-18', mandante: 'Carregando...', visitante: 'Carregando...', placar: '1-0', resultado: 'D' }, // Carregando... venceu
-                { data: '2025-02-05', mandante: 'Carregando...', visitante: 'Carregando...', placar: '2-0', resultado: 'V' }, // Carregando... venceu
-                { data: '2025-01-07', mandante: 'Carregando...', visitante: 'Carregando...', placar: '0-2', resultado: 'V' }, // Carregando... venceu
-                { data: '2024-11-02', mandante: 'Carregando...', visitante: 'Carregando...', placar: '1-0', resultado: 'V' }, // Carregando... venceu
-                { data: '2024-02-24', mandante: 'Carregando...', visitante: 'Carregando...', placar: '4-1', resultado: 'D' }, // Carregando... venceu
-                { data: '2023-11-04', mandante: 'Carregando...', visitante: 'Carregando...', placar: '1-0', resultado: 'V' }, // Carregando... venceu
-                { data: '2023-05-07', mandante: 'Carregando...', visitante: 'Carregando...', placar: '0-2', resultado: 'D' }, // Carregando... venceu
-                { data: '2023-01-03', mandante: 'Carregando...', visitante: 'Carregando...', placar: '0-0', resultado: 'E' }, // Empate
-                { data: '2022-05-16', mandante: 'Carregando...', visitante: 'Carregando...', placar: '2-0', resultado: 'V' }  // Carregando... venceu
-            ];
+            // DADOS REAIS DO ARQUIVO CSV - BAHIA vs GRÊMIO
+            let confrontos = [];
+            
+            // TENTAR CARREGAR DADOS DO ARQUIVO CSV
+            try {
+                console.log('🔄 [CONFRONTOS-JOGO12] Buscando dados do arquivo CSV...');
+                const csvResponse = await fetch('/api/confrontos/Bahia_vs_Gremio.csv');
+                console.log('📡 [CONFRONTOS-JOGO12] Resposta da API:', csvResponse.status, csvResponse.statusText);
+                
+                if (csvResponse.ok) {
+                    const csvText = await csvResponse.text();
+                    console.log('✅ [CONFRONTOS-JOGO12] CSV carregado:', csvText.substring(0, 200) + '...');
+                    
+                    // Parse do CSV
+                    const lines = csvText.split('\n').filter(line => line.trim());
+                    const csvData = lines.slice(1, 11).map(line => {
+                        const [data, timeCasa, placar, timeFora, campeonato, resultadoBahia, vencedor] = line.split(',');
+                        let resultado = 'E'; // Default to Empate
+                        
+                        // PRIORIZAR PLACAR sobre campo vencedor (CSV tem inconsistências)
+                        if (placar && placar.includes('-')) {
+                            const [golsCasa, golsFora] = placar.split('-').map(g => parseInt(g.trim()));
+                            if (golsCasa === golsFora) {
+                                resultado = 'E'; // Empate
+                            } else if (golsCasa > golsFora) {
+                                resultado = 'V'; // Vitória do mandante (Bahia)
+                            } else {
+                                resultado = 'D'; // Derrota do mandante (Grêmio venceu)
+                            }
+                        } else {
+                            // Fallback: usar campo vencedor se placar não disponível
+                            if (vencedor && vencedor.trim() === timeCasa) {
+                                resultado = 'V';
+                            } else if (vencedor && vencedor.trim() === timeFora) {
+                                resultado = 'D';
+                            }
+                        }
+                        return {
+                            data: data,
+                            mandante: timeCasa,
+                            visitante: timeFora,
+                            placar: placar,
+                            resultado: resultado
+                        };
+                    });
+                    
+                    if (csvData.length > 0) {
+                        confrontos = csvData;
+                        console.log('✅ [CONFRONTOS-JOGO12] Dados CSV carregados:', confrontos.length, 'confrontos');
+                        console.log('📊 [CONFRONTOS-JOGO12] Primeiro confronto:', confrontos[0]);
+                    } else {
+                        console.log('⚠️ [CONFRONTOS-JOGO12] Nenhum dado CSV válido encontrado');
+                    }
+                } else {
+                    console.log('⚠️ [CONFRONTOS-JOGO12] CSV não encontrado, usando dados padrão');
+                }
+            } catch (error) {
+                console.error('❌ [CONFRONTOS-JOGO12] Erro ao carregar CSV:', error);
+            }
+            
+            // VERIFICAR SE CONSEGUIMOS CARREGAR DADOS
+            if (confrontos.length === 0) {
+                console.error('❌ [CONFRONTOS-JOGO12] NENHUM DADO CARREGADO! Usando dados de emergência...');
+                confrontos = [
+                    { data: '25/05/2025', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-0', resultado: 'D' },
+                    { data: '17/08/2024', mandante: 'Grêmio', visitante: 'Bahia', placar: '0-2', resultado: 'V' },
+                    { data: '27/04/2024', mandante: 'Bahia', visitante: 'Grêmio', placar: '1-0', resultado: 'V' },
+                    { data: '11/4/23', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-0', resultado: 'D' },
+                    { data: '7/12/23', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-1', resultado: 'E' },
+                    { data: '7/4/23', mandante: 'Bahia', visitante: 'Grêmio', placar: '1-1', resultado: 'E' },
+                    { data: '7/1/23', mandante: 'Bahia', visitante: 'Grêmio', placar: '1-2', resultado: 'D' },
+                    { data: '16/10/2022', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-1', resultado: 'E' },
+                    { data: '7/3/22', mandante: 'Bahia', visitante: 'Grêmio', placar: '0-0', resultado: 'E' },
+                    { data: '26/11/2021', mandante: 'Bahia', visitante: 'Grêmio', placar: '3-1', resultado: 'V' }
+                ];
+            }
             
             const bolinhasHtml = confrontos.map(confronto => {
                 const resultado = confronto.resultado.toUpperCase();
                 let classe, conteudo;
                 
                 if (resultado === 'V') {
-                    classe = 'newcastle';
-                    conteudo = '<img src="/static/placeholder-team-logo.svg"New Castle/New_Castle.png" alt="Time Casa" class="confronto-escudo" onerror="this.outerHTML=\'NEW\'">';
+                    classe = 'bahia';
+                    conteudo = '<img src="/static/escudos/BAH_Bahia/Bahia.PNG" alt="Bahia" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>BAH</span>\'">';
                 } else if (resultado === 'D') {
-                    classe = 'arsenal';
-                    conteudo = '<img src="/static/placeholder-team-logo.svg"Carregando.../Carregando....png" alt="Time Fora" class="confronto-escudo" onerror="this.outerHTML=\'ARS\'">';
+                    classe = 'gremio';
+                    conteudo = '<img src="/static/escudos/GRE_Gremio/Gremio.png" alt="Grêmio" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>GRE</span>\'">';
                 } else {
                     classe = 'empate';
-                    conteudo = 'E';
+                    conteudo = '<span style="color: #f59e0b; font-weight: bold; background: #fef3c7; padding: 2px 6px; border-radius: 50%; display: inline-block; width: 20px; height: 20px; text-align: center; line-height: 16px;">E</span>';
                 }
                 
                 let dataFormatada = '';
                 if (confronto.data) {
-                    const [ano, mes, dia] = confronto.data.split('-');
-                    const anoAbrev = ano.substring(2);
-                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    // CSV usa formato DD/MM/YYYY, não YYYY-MM-DD
+                    if (confronto.data.includes('/')) {
+                        const [dia, mes, ano] = confronto.data.split('/');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    } else {
+                        // Fallback para formato YYYY-MM-DD
+                        const [ano, mes, dia] = confronto.data.split('-');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    }
                 }
                 
                 return `
