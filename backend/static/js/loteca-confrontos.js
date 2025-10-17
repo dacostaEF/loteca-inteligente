@@ -251,6 +251,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'Manchester United', // ← TIME FORA (resultado 'D' = vitória do Manchester United)
             escudoCasa: '/static/escudos/Liverpool/Liverpool.png',
             escudoFora: '/static/escudos/Manchester_United/Manchester_United.png'
+        },
+        11: {
+            csv: 'Atalanta_vs_Lazio.csv',
+            timeCasa: 'Atalanta',         // ← TIME CASA (resultado 'V' = vitória do Atalanta)
+            timeFora: 'Lazio',            // ← TIME FORA (resultado 'D' = vitória do Lazio)
+            escudoCasa: '/static/escudos/Atalanta-IT/atalanta.png',
+            escudoFora: '/static/escudos/Lazio-IT/lazio.png'
         }
         // Adicionar mais jogos conforme necessário
     };

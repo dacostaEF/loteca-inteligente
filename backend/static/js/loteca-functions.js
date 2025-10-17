@@ -49,6 +49,8 @@ const escudosMap = {
     'Lazio': '/static/escudos/lazio.png',
     'Liverpool': '/static/escudos/Liverpool/Liverpool.png',
     'Manchester United': '/static/escudos/Manchester_United/Manchester_United.png',
+    'Atalanta': '/static/escudos/Atalanta-IT/atalanta.png',
+    'Lazio': '/static/escudos/Lazio-IT/lazio.png',
     'Ceará': '/static/escudos/Ceara/Ceara.png',
     'Botafogo': '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
 };
