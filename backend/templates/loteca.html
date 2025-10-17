@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
     <script src="{{ url_for('static', filename='js/providers/cartola-provider.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
     
     <!-- SAFETY SHIM ADDED BY SCRIPT -->
     <script>
@@ -251,6 +253,87 @@ FOR
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
                     <p id="conclusao-analista-2">Carregando análise...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOGO 5: ATLÉTICO MADRID vs OSASUNA (DUPLICADO DO JOGO 1) -->
+        <div class="game-card">
+            <div class="game-card-header">
+                <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
+                <div class="confronto-visual">
+                    <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 5:</span>
+                    <div class="time-info">
+                        <img id="escudo-casa-jogo5-novo" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span id="time-casa-nome-jogo5-novo">Carregando...</span>
+                    </div>
+                    
+                    <div class="vs-divider">×</div>
+                    
+                    <div class="time-info">
+                        <img id="escudo-fora-jogo5-novo" src="/static/placeholder-team-logo.svg" 
+                             alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
+                        <span id="time-fora-nome-jogo5-novo">Carregando...</span>
+                    </div>
+                </div>
+                
+                <div class="game-info" id="game-info-jogo5-novo">Carregando informações...</div>
+            </div>
+            <div class="game-card-body">
+                <div class="probabilities" id="probabilidades-jogo-5-novo">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1-5-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-5-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2-5-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                </div>
+                <div class="recommendation" id="recomendacao-jogo-5-novo"><strong>⏳ Analisando dados...</strong></div>
+                <!-- TABELA DESKTOP -->
+                <table class="analysis-table" id="analise-jogo-5-novo">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-5-novo">Carregando...</th><th class="team-header" id="time-fora-nome-5-novo">Carregando...</th><th>Análise</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-5-novo"></div></td><td id="forma-analise-5-novo">Baseado nos últimos 10 jogos</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-5-novo">-</td><td class="team-header" id="posicao-fora-5-novo">-</td><td id="posicao-analise-5-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-5-novo"></div></td><td id="h2h-analise-5-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-5-novo">-</td><td class="team-header" id="fator-fora-5-novo">-</td><td id="fator-analise-5-novo">Carregando dados...</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- VERSÃO MOBILE -->
+                <div class="analysis-mobile">
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Forma Recente</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-5-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora-5-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                        </div>
+                        <div class="analysis-mobile-result">
+CASA
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Posição</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-pos-5-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">5º</span>
+                            <span><img id="escudo-mobile-fora-pos-5-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">12º</span>
+                        </div>
+                        <div class="analysis-mobile-result">
+CASA
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Confronto Direto</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-h2h-5-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">8V-0E-2D</span>
+                            <span><img id="escudo-mobile-fora-h2h-5-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2V-0E-8D</span>
+                        </div>
+                        <div class="analysis-mobile-result">
+CASA
+                        </div>
+                    </div>
+                </div>
+                <div class="analyst-conclusion">
+                    <h4>Conclusão do Analista</h4>
+                    <p id="conclusao-analista-jogo5-novo">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -5618,7 +5701,7 @@ Equilíbrio
         }
 
         // MAPEAMENTO DE TIMES PARA DIRETÓRIOS DE ESCUDOS
-        
+
         // MAPEAMENTO DE JOGOS PARA ARQUIVOS CSV DE CONFRONTOS (com nomes alternativos)
         const jogosCsvMap = {
             1: ['Flamengo_vs_Palmeiras.csv', 'Palmeiras_vs_Flamengo.csv'],
@@ -6828,40 +6911,13 @@ Equilíbrio
         }
 
         // INICIALIZAR A APLICAÇÃO
-        // MAPEAMENTO DOS ESCUDOS DOS TIMES - CORRIGIDO E COMPLETO
-        const escudosMap = {
-            'CORINTHIANS': 'COR_Corinthians',
-            'FLAMENGO': 'FLA_Flamengo', 
-            'FORTALEZA': 'FOR_Fortaleza', // ✅ ADICIONADO
-            'SPORT': 'SPT_Sport',
-            'JUVENTUDE': 'JUV_Juventude',
-            'INTERNACIONAL': 'INT_Internacional',
-            'VASCO': 'VAS_Vasco',
-            'VASCO DA GAMA': 'VAS_Vasco',
-            'CRUZEIRO': 'CRU_Cruzeiro',
-            'ATHLETICO': 'Athlético-PR',
-            'OPERARIO': 'OPE_Carregando...',
-            'ATLETICO': 'CAM_Atletico-MG', // ✅ CORRIGIDO: agora é o Carregando... real
-            'ATLETICO/MG': 'CAM_Atletico-MG', // ✅ CORRIGIDO: Carregando... correto
-            'MIRASSOL': 'MIR_Mirassol',
-            'GREMIO': 'GRE_Grêmio',
-            'VITORIA': 'VIT_Vitória',
-            'BAHIA': 'BAH_Bahia',
-            'PALMEIRAS': 'PAL_Palmeiras',
-            'FLUMINENSE': 'FLU_Fluminense',
-            'BOTAFOGO': 'Carregando...', // ✅ CORRIGIDO: agora é o Carregando...
-            'CRICIUMA': 'CRI_Criciúma',
-            'PAYSANDU': 'PAY_Paysandu',
-            'BRAGANTINO': 'RBB_Bragantino', // ✅ CORRIGIDO
-            'SANTOS': 'SAN_Santos', // ✅ CORRIGIDO: agora é o Santos real
-            'MILAN': 'Milan_IT', // ✅ ADICIONADO: Milan
-            'FIORENTINA': 'Fiorentina_IT' // ✅ ADICIONADO: Fiorentina
-        };
+        // MAPEAMENTO DOS ESCUDOS DOS TIMES - MOVIDO PARA loteca-functions.js
 
         function getEscudoUrl(nomeTime, nomeArquivo = '45x45') {
             // Limpar nome do time
             const nome = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '').trim();
-            const abrev = escudosMap[nome];
+            // Usar escudosMap do arquivo externo loteca-functions.js
+            const abrev = window.escudosMap ? window.escudosMap[nome] : null;
             
             if (abrev) {
                 // Se nomeArquivo não é um tamanho padrão, usar o nome do clube
@@ -7907,33 +7963,7 @@ Equilíbrio
             console.log('✅ [JOGO4] Todos os campos atualizados com sucesso!');
         }
 
-        // FUNÇÕES PARA CARREGAR DADOS DOS JOGOS 5 A 14 (IDÊNTICAS AO JOGO 4)
-        async function carregarDadosJogo5() {
-            console.log('🎯 [JOGO5] Iniciando carregamento dos dados do JOGO 5...');
-            console.log('🔍 [JOGO5] URL da API:', '/api/analise/jogo/5?concurso=concurso_1216');
-            
-            try {
-                const response = await fetch('/api/analise/jogo/5?concurso=concurso_1216');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                console.log('✅ [JOGO5] Dados recebidos da API:', data);
-                
-                if (data.success && data.dados) {
-                    console.log('🔄 [JOGO5] Chamando atualizarDadosJogo5()...');
-                    atualizarDadosJogo5(data.dados);
-                    console.log('✅ [JOGO5] Dados atualizados com sucesso!');
-                } else {
-                    console.warn('⚠️ [JOGO5] API retornou dados vazios ou inválidos');
-                }
-                
-            } catch (error) {
-                console.error('❌ [JOGO5] Erro ao carregar dados:', error);
-            }
-        }
+        // FUNÇÃO DUPLICADA REMOVIDA - USANDO A FUNÇÃO ESPECÍFICA ABAIXO
 
         async function carregarDadosJogo6() {
             console.log('🎯 [JOGO6] Iniciando carregamento dos dados do JOGO 6...');
@@ -8198,23 +8228,23 @@ Equilíbrio
                 posicaoAnalise.textContent = dados.analise_posicao;
             }
             
-            // 6. ATUALIZAR ÚLTIMOS CONFRONTOS (SEQUÊNCIA) - DESABILITADO PARA JOGO 11
-            if (numeroJogo !== 11) {
-                const confrontosSequence = document.getElementById(`confrontos-principais-${numeroJogo}`);
-                if (confrontosSequence && dados.confrontos_sequence) {
-                    // Dados reais dos últimos confrontos (baseado no CSV)
-                    const confrontosReais = [
-                        { data: '2025-05-24', placar: '0-0', resultado: 'E' },
-                        { data: '2024-07-28', placar: '2-1', resultado: 'V' },
-                        { data: '2024-04-14', placar: '0-0', resultado: 'E' },
-                        { data: '2023-11-09', placar: '1-1', resultado: 'E' },
-                        { data: '2023-07-08', placar: '0-1', resultado: 'D' },
-                        { data: '2023-05-31', placar: '2-0', resultado: 'V' },
-                        { data: '2023-05-17', placar: '2-0', resultado: 'V' },
-                        { data: '2022-11-13', placar: '0-1', resultado: 'D' },
-                        { data: '2022-07-24', placar: '1-2', resultado: 'V' },
-                        { data: '2021-11-10', placar: '3-0', resultado: 'V' }
-                    ];
+            // 6. ATUALIZAR ÚLTIMOS CONFRONTOS (SEQUÊNCIA) - DESABILITADO PARA JOGOS 5 E 11
+            if (numeroJogo !== 5 && numeroJogo !== 11) {
+            const confrontosSequence = document.getElementById(`confrontos-principais-${numeroJogo}`);
+            if (confrontosSequence && dados.confrontos_sequence) {
+                // Dados reais dos últimos confrontos (baseado no CSV)
+                const confrontosReais = [
+                    { data: '2025-05-24', placar: '0-0', resultado: 'E' },
+                    { data: '2024-07-28', placar: '2-1', resultado: 'V' },
+                    { data: '2024-04-14', placar: '0-0', resultado: 'E' },
+                    { data: '2023-11-09', placar: '1-1', resultado: 'E' },
+                    { data: '2023-07-08', placar: '0-1', resultado: 'D' },
+                    { data: '2023-05-31', placar: '2-0', resultado: 'V' },
+                    { data: '2023-05-17', placar: '2-0', resultado: 'V' },
+                    { data: '2022-11-13', placar: '0-1', resultado: 'D' },
+                    { data: '2022-07-24', placar: '1-2', resultado: 'V' },
+                    { data: '2021-11-10', placar: '3-0', resultado: 'V' }
+                ];
                 
                 let confrontosHtml = '';
                 confrontosReais.forEach(confronto => {
@@ -8242,24 +8272,24 @@ Equilíbrio
             
             // 7. ATUALIZAR CONFRONTO DIRETO
             {
-                const confrontoDireto = document.getElementById(`confronto-direto-principais-${numeroJogo}`);
-                if (confrontoDireto && dados.confronto_direto) {
-                    // Parse do formato "5V-3E-2D"
-                    const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
-                    if (match) {
-                        const vitorias = match[1];
-                        const empates = match[2];
-                        const derrotas = match[3];
-                        
-                        confrontoDireto.innerHTML = `
-                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                <img src="${dados.escudo_casa || '/static/placeholder-team-logo.svg'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
-                                <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
-                                <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
-                                <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
-                                <img src="${dados.escudo_fora || '/static/placeholder-team-logo.svg'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
-                            </div>
-                        `;
+            const confrontoDireto = document.getElementById(`confronto-direto-principais-${numeroJogo}`);
+            if (confrontoDireto && dados.confronto_direto) {
+                // Parse do formato "5V-3E-2D"
+                const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
+                if (match) {
+                    const vitorias = match[1];
+                    const empates = match[2];
+                    const derrotas = match[3];
+                    
+                    confrontoDireto.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <img src="${dados.escudo_casa || '/static/placeholder-team-logo.svg'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
+                            <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
+                            <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
+                            <img src="${dados.escudo_fora || '/static/placeholder-team-logo.svg'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        </div>
+                    `;
                     }
                 }
             }
@@ -8336,8 +8366,709 @@ Equilíbrio
             console.log(`✅ [JOGO${numeroJogo}] Todos os campos atualizados com sucesso!`);
         }
 
-        // FUNÇÕES ESPECÍFICAS PARA CADA JOGO (USANDO A FUNÇÃO GENÉRICA)
-        function atualizarDadosJogo5(dados) { atualizarDadosJogoGenerico(5, dados); }
+        // FUNÇÕES MOVIDAS PARA ARQUIVO SEPARADO: loteca-functions.js
+
+        // FUNÇÕES MOVIDAS PARA ARQUIVO SEPARADO: loteca-functions.js
+
+        // FUNÇÕES MOVIDAS PARA ARQUIVO SEPARADO: loteca-functions.js
+
+        // FUNÇÃO MOVIDA PARA ARQUIVO SEPARADO: loteca-functions.js
+        
+        // FUNÇÃO PARA O NOVO JOGO 5 (USANDO SCRIPTS EXTERNOS)
+        async function carregarJogo5Novo() {
+            console.log('🎯 [JOGO5-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
+            
+            try {
+                // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
+                console.log('🔍 [JOGO5-NOVO] Verificando funções disponíveis...');
+                console.log('📊 [JOGO5-NOVO] carregarDadosCompletosJogo:', typeof carregarDadosCompletosJogo);
+                console.log('📊 [JOGO5-NOVO] carregarConfrontosJogo5:', typeof carregarConfrontosJogo5);
+                
+                // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
+                const mapeamentoIds = {
+                    'escudo-casa-jogo5-novo': 'escudo-casa-jogo5',
+                    'time-casa-nome-jogo5-novo': 'time-casa-nome-jogo5',
+                    'escudo-fora-jogo5-novo': 'escudo-fora-jogo5',
+                    'time-fora-nome-jogo5-novo': 'time-fora-nome-jogo5',
+                    'game-info-jogo5-novo': 'game-info-jogo5',
+                    'prob-col1-5-novo': 'prob-casa-5',
+                    'prob-colX-5-novo': 'prob-empate-5',
+                    'prob-col2-5-novo': 'prob-fora-5',
+                    'recomendacao-jogo-5-novo': 'recomendacao-5',
+                    'posicao-casa-5-novo': 'posicao-casa-5',
+                    'posicao-fora-5-novo': 'posicao-fora-5',
+                    'confronto-direto-principais-5-novo': 'confronto-direto-principais-5',
+                    'fator-casa-5-novo': 'fator-casa-5',
+                    'fator-fora-5-novo': 'fator-fora-5',
+                    'forma-analise-5-novo': 'forma-analise-5',
+                    'posicao-analise-5-novo': 'posicao-analise-5',
+                    'h2h-analise-5-novo': 'h2h-analise-5',
+                    'fator-analise-5-novo': 'fator-analise-5',
+                    'conclusao-analista-jogo5-novo': 'conclusao-5',
+                    'confrontos-principais-5-novo': 'confrontos-principais-5'
+                };
+                
+                // 3. TEMPORARIAMENTE RENOMEAR IDs PARA USAR AS FUNÇÕES EXTERNAS
+                console.log('🔄 [JOGO5-NOVO] Renomeando IDs temporariamente...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(novoId);
+                    if (elemento) {
+                        elemento.id = idEsperado;
+                        console.log(`✅ [JOGO5-NOVO] ${novoId} → ${idEsperado}`);
+                    } else {
+                        console.warn(`⚠️ [JOGO5-NOVO] Elemento não encontrado: ${novoId}`);
+                    }
+                });
+                
+                // 4. USAR FUNÇÃO DO loteca-functions.js PARA DADOS JSON
+                if (typeof carregarDadosCompletosJogo === 'function') {
+                    console.log('📊 [JOGO5-NOVO] Chamando carregarDadosCompletosJogo(5)...');
+                    await carregarDadosCompletosJogo(5);
+                    console.log('✅ [JOGO5-NOVO] carregarDadosCompletosJogo(5) executado!');
+                } else {
+                    console.error('❌ [JOGO5-NOVO] Função carregarDadosCompletosJogo não encontrada!');
+                }
+                
+                // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA CONFRONTOS
+                if (typeof carregarConfrontosJogo5 === 'function') {
+                    console.log('📊 [JOGO5-NOVO] Chamando carregarConfrontosJogo5()...');
+                    await carregarConfrontosJogo5();
+                    console.log('✅ [JOGO5-NOVO] carregarConfrontosJogo5() executado!');
+                } else {
+                    console.error('❌ [JOGO5-NOVO] Função carregarConfrontosJogo5 não encontrada!');
+                }
+                
+                // 6. RESTAURAR IDs ORIGINAIS
+                console.log('🔄 [JOGO5-NOVO] Restaurando IDs originais...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(idEsperado);
+                    if (elemento) {
+                        elemento.id = novoId;
+                        console.log(`✅ [JOGO5-NOVO] ${idEsperado} → ${novoId}`);
+                    }
+                });
+                
+                console.log('🎉 [JOGO5-NOVO] Carregamento com SCRIPTS EXTERNOS finalizado!');
+                
+            } catch (error) {
+                console.error('❌ [JOGO5-NOVO] Erro no carregamento:', error);
+                
+                // FALLBACK: Usar função local
+                console.log('🔄 [JOGO5-NOVO] Usando fallback local...');
+                atualizarDadosJogo5Novo({
+                    time_casa: 'ATLETICO MADRID',
+                    time_fora: 'OSASUNA',
+                    arena: 'estádio Riyadh Air Metropolitano - Madri',
+                    campeonato: 'La Liga',
+                    dia: 'Sábado',
+                    escudo_casa: '/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png',
+                    escudo_fora: '/static/escudos/Osasuna/osasuna.png',
+                    probabilidade_casa: '80',
+                    probabilidade_empate: '10',
+                    probabilidade_fora: '10',
+                    recomendacao: 'Recomendação Estatística: Coluna 1 (ATLETICO MADRID) - Risco Baixo',
+                    posicao_casa: '5',
+                    posicao_fora: '12',
+                    confronto_direto: '8V-0E-2D',
+                    fator_casa: '90',
+                    fator_fora: '10',
+                    analise_posicao: 'Vantagem Atletico de madrid',
+                    analise_posicao_tabelas: 'Vantagem Atletico de madrid',
+                    analise_confronto_direto: 'Vantagem Atletico de madrid',
+                    analise_fator_casa: 'Vantagem Atletico de madrid',
+                    conclusao_analista: 'O retrospecto recente é avassalador a favor do Atleti. Nos últimos 20 confrontos diretos, o Atlético de Madrid venceu 16 vezes, contra apenas 3 vitórias do Osasuna e 1 único empate.'
+                });
+                carregarConfrontosJogo5Novo();
+            }
+        }
+        
+        // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO NOVO JOGO 5 (SEGUINDO PADRÃO DO JOGO 1)
+        function atualizarDadosJogo5Novo(dados) {
+            console.log('🔄 [JOGO5-NOVO] Atualizando campos com dados:', dados);
+            console.log('🔍 [JOGO5-NOVO] Dados recebidos:', {
+                time_casa: dados.time_casa,
+                time_fora: dados.time_fora,
+                escudo_casa: dados.escudo_casa,
+                escudo_fora: dados.escudo_fora,
+                probabilidade_casa: dados.probabilidade_casa,
+                confronto_direto: dados.confronto_direto,
+                conclusao_analista: dados.conclusao_analista
+            });
+            
+            // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES
+            const escudoCasa = document.getElementById('escudo-casa-jogo5-novo');
+            const nomeCasa = document.getElementById('time-casa-nome-jogo5-novo');
+            const escudoFora = document.getElementById('escudo-fora-jogo5-novo');
+            const nomeFora = document.getElementById('time-fora-nome-jogo5-novo');
+            
+            console.log('🔍 [JOGO5-NOVO] Elementos encontrados:', {
+                escudoCasa: !!escudoCasa,
+                nomeCasa: !!nomeCasa,
+                escudoFora: !!escudoFora,
+                nomeFora: !!nomeFora
+            });
+            
+            if (escudoCasa && dados.escudo_casa) {
+                console.log('✅ [JOGO5-NOVO] Atualizando escudo casa:', dados.escudo_casa);
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa;
+            }
+            
+            if (nomeCasa && dados.time_casa) {
+                console.log('✅ [JOGO5-NOVO] Atualizando nome casa:', dados.time_casa);
+                nomeCasa.textContent = dados.time_casa.toUpperCase();
+            }
+            
+            if (escudoFora && dados.escudo_fora) {
+                console.log('✅ [JOGO5-NOVO] Atualizando escudo fora:', dados.escudo_fora);
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora;
+            }
+            
+            if (nomeFora && dados.time_fora) {
+                console.log('✅ [JOGO5-NOVO] Atualizando nome fora:', dados.time_fora);
+                nomeFora.textContent = dados.time_fora.toUpperCase();
+            }
+            
+            // 2. ATUALIZAR INFORMAÇÕES DO JOGO
+            const gameInfo = document.getElementById('game-info-jogo5-novo');
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+            }
+            
+            // 3. ATUALIZAR PROBABILIDADES
+            const probCasa = document.getElementById('prob-col1-5-novo');
+            const probEmpate = document.getElementById('prob-colX-5-novo');
+            const probFora = document.getElementById('prob-col2-5-novo');
+            
+            if (probCasa && dados.probabilidade_casa) {
+                probCasa.classList.remove('loading');
+                probCasa.innerHTML = `<span class="probability-value">${dados.probabilidade_casa}</span>`;
+            }
+            
+            if (probEmpate && dados.probabilidade_empate) {
+                probEmpate.classList.remove('loading');
+                probEmpate.innerHTML = `<span class="probability-value">${dados.probabilidade_empate}</span>`;
+            }
+            
+            if (probFora && dados.probabilidade_fora) {
+                probFora.classList.remove('loading');
+                probFora.innerHTML = `<span class="probability-value">${dados.probabilidade_fora}</span>`;
+            }
+            
+            // 4. ATUALIZAR RECOMENDAÇÃO
+            const recomendacao = document.getElementById('recomendacao-jogo-5-novo');
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+            }
+            
+            // 5. ATUALIZAR POSIÇÕES
+            const posicaoCasa = document.getElementById('posicao-casa-5-novo');
+            const posicaoFora = document.getElementById('posicao-fora-5-novo');
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = dados.posicao_casa + '°';
+            }
+            
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = dados.posicao_fora + '°';
+            }
+            
+            // 6. ATUALIZAR CONFRONTO DIRETO
+            const confrontoDireto = document.getElementById('confronto-direto-principais-5-novo');
+            if (confrontoDireto && dados.confronto_direto) {
+                const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
+                if (match) {
+                    const vitorias = match[1];
+                    const empates = match[2];
+                    const derrotas = match[3];
+                    
+                    confrontoDireto.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
+                            <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
+                            <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
+                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        </div>
+                    `;
+                }
+            }
+            
+            // 7. ATUALIZAR FATOR CASA
+            const fatorCasa = document.getElementById('fator-casa-5-novo');
+            const fatorFora = document.getElementById('fator-fora-5-novo');
+            
+            if (fatorCasa && dados.fator_casa) {
+                fatorCasa.textContent = dados.fator_casa + '%';
+            }
+            
+            if (fatorFora && dados.fator_fora) {
+                fatorFora.textContent = dados.fator_fora + '%';
+            }
+            
+            // 8. ATUALIZAR ANÁLISES
+            const formaAnalise = document.getElementById('forma-analise-5-novo');
+            const posicaoAnalise = document.getElementById('posicao-analise-5-novo');
+            const h2hAnalise = document.getElementById('h2h-analise-5-novo');
+            const fatorAnalise = document.getElementById('fator-analise-5-novo');
+            
+            if (formaAnalise && dados.analise_posicao) {
+                formaAnalise.textContent = dados.analise_posicao;
+            }
+            
+            if (posicaoAnalise && dados.analise_posicao_tabelas) {
+                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+            }
+            
+            if (h2hAnalise && dados.analise_confronto_direto) {
+                h2hAnalise.textContent = dados.analise_confronto_direto;
+            }
+            
+            if (fatorAnalise && dados.analise_fator_casa) {
+                fatorAnalise.textContent = dados.analise_fator_casa;
+            }
+            
+            // 9. ATUALIZAR CONCLUSÃO DO ANALISTA
+            const conclusaoAnalista = document.getElementById('conclusao-analista-jogo5-novo');
+            console.log('🔍 [JOGO5-NOVO] Elemento conclusão encontrado:', !!conclusaoAnalista);
+            console.log('🔍 [JOGO5-NOVO] Dados conclusão:', dados.conclusao_analista);
+            if (conclusaoAnalista && dados.conclusao_analista) {
+                console.log('✅ [JOGO5-NOVO] Atualizando conclusão do analista');
+                conclusaoAnalista.textContent = dados.conclusao_analista;
+            } else {
+                console.warn('⚠️ [JOGO5-NOVO] Conclusão não atualizada - elemento ou dados não encontrados');
+            }
+            
+            console.log('✅ [JOGO5-NOVO] Todos os campos atualizados!');
+        }
+        
+        // FUNÇÃO PARA ATUALIZAR O NOVO JOGO 5
+        function atualizarJogo5Novo(dados) {
+            console.log('🔧 [JOGO5-NOVO] Atualizando campos com novos IDs...');
+            
+            // 1. ESCUDOS E NOMES
+            const escudoCasa = document.getElementById('escudo-casa-jogo5-novo');
+            const nomeCasa = document.getElementById('time-casa-nome-jogo5-novo');
+            const escudoFora = document.getElementById('escudo-fora-jogo5-novo');
+            const nomeFora = document.getElementById('time-fora-nome-jogo5-novo');
+            
+            if (escudoCasa && dados.escudo_casa) {
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa;
+            }
+            
+            if (nomeCasa && dados.time_casa) {
+                nomeCasa.textContent = dados.time_casa.toUpperCase();
+            }
+            
+            if (escudoFora && dados.escudo_fora) {
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora;
+            }
+            
+            if (nomeFora && dados.time_fora) {
+                nomeFora.textContent = dados.time_fora.toUpperCase();
+            }
+            
+            // 2. INFORMAÇÕES DO JOGO
+            const gameInfo = document.getElementById('game-info-jogo5-novo');
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+            }
+            
+            // 3. PROBABILIDADES
+            const probCasa = document.getElementById('prob-col1-5-novo');
+            const probEmpate = document.getElementById('prob-colX-5-novo');
+            const probFora = document.getElementById('prob-col2-5-novo');
+            
+            if (probCasa && dados.probabilidade_casa) {
+                probCasa.classList.remove('loading');
+                probCasa.innerHTML = `<span class="probability-value">${dados.probabilidade_casa}</span>`;
+            }
+            
+            if (probEmpate && dados.probabilidade_empate) {
+                probEmpate.classList.remove('loading');
+                probEmpate.innerHTML = `<span class="probability-value">${dados.probabilidade_empate}</span>`;
+            }
+            
+            if (probFora && dados.probabilidade_fora) {
+                probFora.classList.remove('loading');
+                probFora.innerHTML = `<span class="probability-value">${dados.probabilidade_fora}</span>`;
+            }
+            
+            // 4. RECOMENDAÇÃO
+            const recomendacao = document.getElementById('recomendacao-jogo-5-novo');
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+            }
+            
+            // 5. POSIÇÕES
+            const posicaoCasa = document.getElementById('posicao-casa-5-novo');
+            const posicaoFora = document.getElementById('posicao-fora-5-novo');
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = dados.posicao_casa + '°';
+            }
+            
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = dados.posicao_fora + '°';
+            }
+            
+            // 6. CONFRONTO DIRETO
+            const confrontoDireto = document.getElementById('confronto-direto-principais-5-novo');
+            if (confrontoDireto && dados.confronto_direto) {
+                const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
+                if (match) {
+                    const vitorias = match[1];
+                    const empates = match[2];
+                    const derrotas = match[3];
+                    
+                    confrontoDireto.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
+                            <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
+                            <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
+                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        </div>
+                    `;
+                }
+            }
+            
+            // 7. FATOR CASA
+            const fatorCasa = document.getElementById('fator-casa-5-novo');
+            const fatorFora = document.getElementById('fator-fora-5-novo');
+            
+            if (fatorCasa && dados.fator_casa) {
+                fatorCasa.textContent = dados.fator_casa + '%';
+            }
+            
+            if (fatorFora && dados.fator_fora) {
+                fatorFora.textContent = dados.fator_fora + '%';
+            }
+            
+            // 8. ANÁLISES
+            const formaAnalise = document.getElementById('forma-analise-5-novo');
+            const posicaoAnalise = document.getElementById('posicao-analise-5-novo');
+            const h2hAnalise = document.getElementById('h2h-analise-5-novo');
+            const fatorAnalise = document.getElementById('fator-analise-5-novo');
+            
+            if (formaAnalise && dados.analise_posicao) {
+                formaAnalise.textContent = dados.analise_posicao;
+            }
+            
+            if (posicaoAnalise && dados.analise_posicao_tabelas) {
+                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+            }
+            
+            if (h2hAnalise && dados.analise_confronto_direto) {
+                h2hAnalise.textContent = dados.analise_confronto_direto;
+            }
+            
+            if (fatorAnalise && dados.analise_fator_casa) {
+                fatorAnalise.textContent = dados.analise_fator_casa;
+            }
+            
+            // 9. CONCLUSÃO DO ANALISTA
+            const conclusaoAnalista = document.getElementById('conclusao-analista-jogo5-novo');
+            if (conclusaoAnalista && dados.conclusao_analista) {
+                conclusaoAnalista.textContent = dados.conclusao_analista;
+            }
+            
+            console.log('✅ [JOGO5-NOVO] Campos atualizados com novos IDs!');
+        }
+        
+        // FUNÇÃO PARA CARREGAR CONFRONTOS DO NOVO JOGO 5
+        async function carregarConfrontosJogo5Novo() {
+            console.log('🎯 [CONFRONTOS-JOGO5-NOVO] Carregando últimos confrontos...');
+            
+            const container = document.getElementById('confrontos-principais-5-novo');
+            if (!container) {
+                console.error('❌ [CONFRONTOS-JOGO5-NOVO] Container não encontrado!');
+                return;
+            }
+            
+            // DADOS REAIS DO CSV
+            let confrontos = [
+                { data: '15/5/25', mandante: 'Osasuna', visitante: 'Atlético de Madrid', placar: '2-0', resultado: 'D' },
+                { data: '12/1/25', mandante: 'Atlético de Madrid', visitante: 'Osasuna', placar: '1-0', resultado: 'V' },
+                { data: '19/5/24', mandante: 'Atlético de Madrid', visitante: 'Osasuna', placar: '1-4', resultado: 'D' },
+                { data: '28/9/23', mandante: 'Osasuna', visitante: 'Atlético de Madrid', placar: '0-2', resultado: 'V' },
+                { data: '21/5/23', mandante: 'Atlético de Madrid', visitante: 'Osasuna', placar: '3-0', resultado: 'V' },
+                { data: '29/1/23', mandante: 'Osasuna', visitante: 'Atlético de Madrid', placar: '0-1', resultado: 'V' },
+                { data: '19/2/22', mandante: 'Osasuna', visitante: 'Atlético de Madrid', placar: '0-3', resultado: 'V' },
+                { data: '20/11/21', mandante: 'Atlético de Madrid', visitante: 'Osasuna', placar: '1-0', resultado: 'V' },
+                { data: '16/5/21', mandante: 'Atlético de Madrid', visitante: 'Osasuna', placar: '2-1', resultado: 'V' },
+                { data: '31/10/20', mandante: 'Osasuna', visitante: 'Atlético de Madrid', placar: '1-3', resultado: 'V' }
+            ];
+            
+            // RENDERIZAR CONFRONTOS
+            const boxesHtml = confrontos.map(confronto => {
+                const resultado = confronto.resultado.toUpperCase();
+                let conteudo;
+            
+                if (resultado === 'V') {
+                    conteudo = `<img src="/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png" alt="Atlético Madrid" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>ATM</span>'">`;
+                } else if (resultado === 'D') {
+                    conteudo = `<img src="/static/escudos/Osasuna/osasuna.png" alt="Osasuna" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>OSA</span>'">`;
+                } else {
+                    conteudo = '<span style="color: #ffc107; font-weight: bold; font-size: 11px;">E</span>';
+                }
+            
+                return `
+                    <div style="
+                        background: #2a2a2a; 
+                        border-left: 2px solid #28a745; 
+                        border-radius: 6px; 
+                        padding: 8px 6px; 
+                        margin: 3px; 
+                        display: flex; 
+                        flex-direction: column; 
+                        align-items: center; 
+                        min-width: 56px;
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+                    ">
+                        <div style="
+                            color: #ccc; 
+                            font-size: 8px; 
+                            margin-bottom: 5px; 
+                            text-align: center;
+                        ">${confronto.data}</div>
+                        <div style="
+                            background: #1a1a1a; 
+                            color: #fff; 
+                            font-weight: bold; 
+                            font-size: 10px; 
+                            padding: 4px 8px; 
+                            border-radius: 4px; 
+                            margin-bottom: 5px; 
+                            text-align: center;
+                            min-width: 28px;
+                        ">${confronto.placar}</div>
+                        <div style="
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center;
+                        ">${conteudo}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = boxesHtml;
+            console.log('✅ [CONFRONTOS-JOGO5-NOVO] 10 boxes renderizados!');
+        }
+
+        // FUNÇÃO SIMPLIFICADA PARA O JOGO 5 - DADOS HARDCODED
+        async function carregarDadosJogo5() {
+            console.log('🎯 [JOGO5] Iniciando carregamento SIMPLIFICADO do JOGO 5...');
+            
+            try {
+                // 1. CARREGAR DADOS DO JSON
+                console.log('📊 [JOGO5] Carregando análise JSON...');
+                const response = await fetch('/api/analise/jogo/5?concurso=concurso_1216');
+                
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.status}`);
+                }
+                
+                const responseData = await response.json();
+                console.log('✅ [JOGO5] Dados JSON carregados:', responseData);
+                
+                // EXTRAIR DADOS DO JSON
+                const dados = responseData.dados || responseData;
+                console.log('✅ [JOGO5] Dados extraídos:', dados);
+                
+                // 2. ATUALIZAR CAMPOS PRINCIPAIS - SIMPLIFICADO
+                atualizarCamposJogo5Simplificado(dados);
+                
+                // 3. CARREGAR CONFRONTOS DO CSV
+                carregarConfrontosJogo5();
+                
+                console.log('🎉 [JOGO5] Carregamento SIMPLIFICADO finalizado!');
+                
+            } catch (error) {
+                console.error('❌ [JOGO5] Erro no carregamento:', error);
+                
+                // FALLBACK: Dados hardcoded
+                const dadosFallback = {
+                    time_casa: 'ATLETICO MADRID',
+                    time_fora: 'OSASUNA',
+                    arena: 'estádio Riyadh Air Metropolitano - Madri',
+                    campeonato: 'La Liga',
+                    dia: 'Sábado',
+                    escudo_casa: '/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png',
+                    escudo_fora: '/static/escudos/Osasuna/osasuna.png',
+                    probabilidade_casa: '80',
+                    probabilidade_empate: '10',
+                    probabilidade_fora: '10',
+                    recomendacao: 'Recomendação Estatística: Coluna 1 (ATLETICO MADRID) - Risco Baixo',
+                    posicao_casa: '5',
+                    posicao_fora: '12',
+                    confronto_direto: '8V-0E-2D',
+                    fator_casa: '90',
+                    fator_fora: '10',
+                    analise_posicao: 'Vantagem Atletico de madrid',
+                    analise_posicao_tabelas: 'Vantagem Atletico de madrid',
+                    analise_confronto_direto: 'Vantagem Atletico de madrid',
+                    analise_fator_casa: 'Vantagem Atletico de madrid',
+                    conclusao_analista: 'O retrospecto recente é avassalador a favor do Atleti. Nos últimos 20 confrontos diretos, o Atlético de Madrid venceu 16 vezes, contra apenas 3 vitórias do Osasuna e 1 único empate.'
+                };
+                
+                atualizarCamposJogo5Simplificado(dadosFallback);
+                carregarConfrontosJogo5();
+            }
+        }
+        
+        // FUNÇÃO SIMPLIFICADA PARA ATUALIZAR CAMPOS DO JOGO 5
+        function atualizarCamposJogo5Simplificado(dados) {
+            console.log('🔧 [JOGO5] Atualizando campos SIMPLIFICADOS...');
+            
+            // 1. ESCUDOS E NOMES
+            const escudoCasa = document.getElementById('escudo-casa-jogo5');
+            const nomeCasa = document.getElementById('time-casa-nome-jogo5');
+            const escudoFora = document.getElementById('escudo-fora-jogo5');
+            const nomeFora = document.getElementById('time-fora-nome-jogo5');
+            
+            if (escudoCasa && dados.escudo_casa) {
+                escudoCasa.src = dados.escudo_casa;
+                escudoCasa.alt = dados.time_casa;
+            }
+            
+            if (nomeCasa && dados.time_casa) {
+                nomeCasa.textContent = dados.time_casa.toUpperCase();
+            }
+            
+            if (escudoFora && dados.escudo_fora) {
+                escudoFora.src = dados.escudo_fora;
+                escudoFora.alt = dados.time_fora;
+            }
+            
+            if (nomeFora && dados.time_fora) {
+                nomeFora.textContent = dados.time_fora.toUpperCase();
+            }
+            
+            // 2. INFORMAÇÕES DO JOGO
+            const gameInfo = document.getElementById('game-info-jogo5');
+            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
+                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
+            }
+            
+            // 3. PROBABILIDADES
+            const probCasa = document.getElementById('prob-casa-5');
+            const probEmpate = document.getElementById('prob-empate-5');
+            const probFora = document.getElementById('prob-fora-5');
+            
+            if (probCasa && dados.probabilidade_casa) {
+                probCasa.classList.remove('loading');
+                probCasa.innerHTML = `<span class="probability-value">${dados.probabilidade_casa}</span>`;
+            }
+            
+            if (probEmpate && dados.probabilidade_empate) {
+                probEmpate.classList.remove('loading');
+                probEmpate.innerHTML = `<span class="probability-value">${dados.probabilidade_empate}</span>`;
+            }
+            
+            if (probFora && dados.probabilidade_fora) {
+                probFora.classList.remove('loading');
+                probFora.innerHTML = `<span class="probability-value">${dados.probabilidade_fora}</span>`;
+            }
+            
+            // 4. LABELS
+            const labelCasa = document.getElementById('label-casa-5');
+            const labelFora = document.getElementById('label-fora-5');
+            
+            if (labelCasa && dados.time_casa) {
+                labelCasa.textContent = `Coluna 1 (${dados.time_casa})`;
+            }
+            
+            if (labelFora && dados.time_fora) {
+                labelFora.textContent = `Coluna 2 (${dados.time_fora})`;
+            }
+            
+            // 5. RECOMENDAÇÃO
+            const recomendacao = document.getElementById('recomendacao-5');
+            if (recomendacao && dados.recomendacao) {
+                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
+            }
+            
+            // 6. POSIÇÕES
+            const posicaoCasa = document.getElementById('posicao-casa-5');
+            const posicaoFora = document.getElementById('posicao-fora-5');
+            
+            if (posicaoCasa && dados.posicao_casa) {
+                posicaoCasa.textContent = dados.posicao_casa + '°';
+            }
+            
+            if (posicaoFora && dados.posicao_fora) {
+                posicaoFora.textContent = dados.posicao_fora + '°';
+            }
+            
+            // 7. CONFRONTO DIRETO
+            const confrontoDireto = document.getElementById('confronto-direto-principais-5');
+            if (confrontoDireto && dados.confronto_direto) {
+                const match = dados.confronto_direto.match(/(\d+)V-(\d+)E-(\d+)D/);
+                if (match) {
+                    const vitorias = match[1];
+                    const empates = match[2];
+                    const derrotas = match[3];
+                    
+                    confrontoDireto.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
+                            <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
+                            <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
+                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        </div>
+                    `;
+                }
+            }
+            
+            // 8. FATOR CASA
+            const fatorCasa = document.getElementById('fator-casa-5');
+            const fatorFora = document.getElementById('fator-fora-5');
+            
+            if (fatorCasa && dados.fator_casa) {
+                fatorCasa.textContent = dados.fator_casa + '%';
+            }
+            
+            if (fatorFora && dados.fator_fora) {
+                fatorFora.textContent = dados.fator_fora + '%';
+            }
+            
+            // 9. ANÁLISES
+            const formaAnalise = document.getElementById('forma-analise-5');
+            const posicaoAnalise = document.getElementById('posicao-analise-5');
+            const h2hAnalise = document.getElementById('h2h-analise-5');
+            const fatorAnalise = document.getElementById('fator-analise-5');
+            
+            if (formaAnalise && dados.analise_posicao) {
+                formaAnalise.textContent = dados.analise_posicao;
+            }
+            
+            if (posicaoAnalise && dados.analise_posicao_tabelas) {
+                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+            }
+            
+            if (h2hAnalise && dados.analise_confronto_direto) {
+                h2hAnalise.textContent = dados.analise_confronto_direto;
+            }
+            
+            if (fatorAnalise && dados.analise_fator_casa) {
+                fatorAnalise.textContent = dados.analise_fator_casa;
+            }
+            
+            // 10. CONCLUSÃO DO ANALISTA
+            const conclusaoAnalista = document.getElementById('conclusao-5');
+            if (conclusaoAnalista && dados.conclusao_analista) {
+                conclusaoAnalista.textContent = dados.conclusao_analista;
+            }
+            
+            console.log('✅ [JOGO5] Campos SIMPLIFICADOS atualizados!');
+        }
+        
+        // FUNÇÕES PARA OUTROS JOGOS (MANTIDAS)
         function atualizarDadosJogo6(dados) { atualizarDadosJogoGenerico(6, dados); }
         function atualizarDadosJogo7(dados) { atualizarDadosJogoGenerico(7, dados); }
         function atualizarDadosJogo8(dados) { atualizarDadosJogoGenerico(8, dados); }
@@ -8532,7 +9263,8 @@ Equilíbrio
             // CARREGAR DADOS DOS JOGOS 5 A 14 VIA API
             setTimeout(() => {
                 console.log('🎯 [JOGOS5-14] Carregando dados via API...');
-                carregarDadosJogo5();
+                console.log('🔥 [DEBUG] Chamando carregarJogo5Novo()...');
+                carregarJogo5Novo();
                 carregarDadosJogo6();
                 carregarDadosJogo7();
                 carregarDadosJogo8();
@@ -8599,10 +9331,7 @@ Equilíbrio
             setTimeout(() => forcarConfrontoDirectoJogo4(), 8000);
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 5
-            setTimeout(() => forcarConfrontoDirectoJogo5(), 3000);
-            setTimeout(() => forcarConfrontoDirectoJogo5(), 5000);
-            setTimeout(() => forcarConfrontoDirectoJogo5(), 7000);
-            setTimeout(() => forcarConfrontoDirectoJogo5(), 9000);
+            // REMOVIDO - AGORA USA carregarDadosJogo5() ESPECÍFICA
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 6
             setTimeout(() => forcarConfrontoDirectoJogo6(), 3000);
@@ -8697,22 +9426,24 @@ Equilíbrio
             }, 4500);
             */
             
-            // ATIVAR JOGOS 11, 12, 13 E 14 (com API CSV)
-            setTimeout(() => {
-                carregarUltimosConfrontosJogo11();
-            }, 4500);
+            // ATIVAR JOGOS 5, 11, 12, 13 E 14 (com API CSV)
+            // JOGO 5 AGORA USA carregarDadosCompletosJogo(5) - REMOVIDO
             
             setTimeout(() => {
-                carregarUltimosConfrontosJogo12();
+                carregarUltimosConfrontosJogo11();
             }, 5000);
             
             setTimeout(() => {
-                carregarUltimosConfrontosJogo13();
+                carregarUltimosConfrontosJogo12();
             }, 5500);
             
             setTimeout(() => {
-                carregarUltimosConfrontosJogo14();
+                carregarUltimosConfrontosJogo13();
             }, 6000);
+            
+            setTimeout(() => {
+                carregarUltimosConfrontosJogo14();
+            }, 6500);
 
             // DESABILITADO: Funções hardcoded que sobrescrevem dados da API
             /*
@@ -9630,7 +10361,7 @@ Equilíbrio
             container.innerHTML = bolinhasHtml;
             console.log(`✅ [CONFRONTOS-JOGO2] ${confrontos.length} bolinhas renderizadas na tabela`);
         }
-        
+
         // FUNÇÃO HARDCODED REMOVIDA - JOGO 2 AGORA USA APENAS API
         /* function carregarUltimosConfrontosJogo2_OLD() {
             console.log('🎯 [CONFRONTOS-JOGO2] Carregando últimos confrontos Fortaleza vs Sport...');
@@ -11301,7 +12032,7 @@ Equilíbrio
 
         // FUNÇÕES DE ÚLTIMOS CONFRONTOS PARA JOGOS 5 A 14
         async function carregarUltimosConfrontosJogo5() {
-            console.log('🎯 [CONFRONTOS-JOGO5] Carregando últimos confrontos Atletico Madrid vs Osasuna...');
+            console.log('🎯 [CONFRONTOS-JOGO5] Carregando últimos confrontos ATLETICO MADRID vs OSASUNA...');
             
             const container = document.getElementById('confrontos-principais-5');
             if (!container) {
@@ -11310,23 +12041,13 @@ Equilíbrio
             }
             
             // DADOS REAIS DO ARQUIVO CSV - ATLETICO MADRID vs OSASUNA
-            let confrontos = [
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Atletico Madrid', visitante: 'Osasuna', placar: '1-1', resultado: 'E' }
-            ];
+            let confrontos = [];
             
             // TENTAR CARREGAR DADOS DO ARQUIVO CSV
             try {
                 console.log('🔄 [CONFRONTOS-JOGO5] Buscando dados do arquivo CSV...');
-                const csvResponse = await fetch('/api/confrontos/Atletico-de-Madrid_vs_Osasuna.csv');
+                const csvResponse = await fetch('/api/confrontos/Atletico-Madrid_vs_Osasuna.csv');
+                console.log('📡 [CONFRONTOS-JOGO5] Resposta da API:', csvResponse.status, csvResponse.statusText);
                 
                 if (csvResponse.ok) {
                     const csvText = await csvResponse.text();
@@ -11344,9 +12065,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -11368,12 +12089,32 @@ Equilíbrio
                     if (csvData.length > 0) {
                         confrontos = csvData;
                         console.log('✅ [CONFRONTOS-JOGO5] Dados CSV carregados:', confrontos.length, 'confrontos');
+                        console.log('📊 [CONFRONTOS-JOGO5] Primeiro confronto:', confrontos[0]);
+                    } else {
+                        console.log('⚠️ [CONFRONTOS-JOGO5] Nenhum dado CSV válido encontrado');
                     }
                 } else {
                     console.log('⚠️ [CONFRONTOS-JOGO5] CSV não encontrado, usando dados padrão');
                 }
             } catch (error) {
                 console.error('❌ [CONFRONTOS-JOGO5] Erro ao carregar CSV:', error);
+            }
+            
+            // VERIFICAR SE CONSEGUIMOS CARREGAR DADOS
+            if (confrontos.length === 0) {
+                console.error('❌ [CONFRONTOS-JOGO5] NENHUM DADO CARREGADO! Usando dados de emergência...');
+                confrontos = [
+                    { data: '15/5/25', mandante: 'ATLETICO MADRID', visitante: 'OSASUNA', placar: '2-0', resultado: 'V' },
+                    { data: '12/1/25', mandante: 'ATLETICO MADRID', visitante: 'OSASUNA', placar: '1-0', resultado: 'V' },
+                    { data: '19/5/24', mandante: 'ATLETICO MADRID', visitante: 'OSASUNA', placar: '1-4', resultado: 'D' },
+                    { data: '28/9/23', mandante: 'OSASUNA', visitante: 'ATLETICO MADRID', placar: '0-2', resultado: 'V' },
+                    { data: '21/5/23', mandante: 'ATLETICO MADRID', visitante: 'OSASUNA', placar: '3-0', resultado: 'V' },
+                    { data: '29/1/23', mandante: 'OSASUNA', visitante: 'ATLETICO MADRID', placar: '0-1', resultado: 'V' },
+                    { data: '19/2/22', mandante: 'OSASUNA', visitante: 'ATLETICO MADRID', placar: '0-3', resultado: 'V' },
+                    { data: '20/11/21', mandante: 'ATLETICO MADRID', visitante: 'OSASUNA', placar: '1-0', resultado: 'V' },
+                    { data: '16/5/21', mandante: 'ATLETICO MADRID', visitante: 'OSASUNA', placar: '2-1', resultado: 'V' },
+                    { data: '31/10/20', mandante: 'OSASUNA', visitante: 'ATLETICO MADRID', placar: '1-3', resultado: 'V' }
+                ];
             }
             
             const ultimos10 = confrontos.slice(0, 10);
@@ -11383,10 +12124,10 @@ Equilíbrio
                 let classe, conteudo;
                 
                 if (resultado === 'V') {
-                    classe = 'athletico';
+                    classe = 'atletico-madrid';
                     conteudo = '<img src="/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png" alt="Atlético Madrid" class="confronto-escudo" onerror="this.outerHTML=\'ATM\'">';
                 } else if (resultado === 'D') {
-                    classe = 'operario';
+                    classe = 'osasuna';
                     conteudo = '<img src="/static/escudos/Osasuna/Osasuna.png" alt="Osasuna" class="confronto-escudo" onerror="this.outerHTML=\'OSA\'">';
                 } else {
                     classe = 'empate';
@@ -11395,9 +12136,17 @@ Equilíbrio
                 
                 let dataFormatada = '';
                 if (confronto.data) {
+                    // CSV usa formato DD/MM/YYYY, não YYYY-MM-DD
+                    if (confronto.data.includes('/')) {
+                        const [dia, mes, ano] = confronto.data.split('/');
+                        const anoAbrev = ano.substring(2);
+                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    } else {
+                        // Fallback para formato YYYY-MM-DD
                     const [ano, mes, dia] = confronto.data.split('-');
                     const anoAbrev = ano.substring(2);
                     dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    }
                 }
                 
                 return `
@@ -11410,7 +12159,7 @@ Equilíbrio
             }).join('');
             
             container.innerHTML = bolinhasHtml;
-            console.log('✅ [CONFRONTOS-JOGO5] 10 bolinhas renderizadas na tabela (linha única)');
+            console.log(`✅ [CONFRONTOS-JOGO5] ${confrontos.length} bolinhas renderizadas na tabela (linha única)`);
         }
 
         async function carregarUltimosConfrontosJogo6() {
@@ -11457,9 +12206,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -11575,9 +12324,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -11694,9 +12443,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -11805,9 +12554,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -11917,9 +12666,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -12018,9 +12767,9 @@ Equilíbrio
                             if (golsCasa === golsFora) {
                                 resultado = 'E'; // Empate
                             } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Atalanta)
+                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
                             } else {
-                                resultado = 'D'; // Derrota do mandante (Lazio venceu)
+                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
                             }
                         } else {
                             // Fallback: usar campo vencedor se placar não disponível
@@ -12094,9 +12843,9 @@ Equilíbrio
                         dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     } else {
                         // Fallback para formato YYYY-MM-DD
-                        const [ano, mes, dia] = confronto.data.split('-');
-                        const anoAbrev = ano.substring(2);
-                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    const [ano, mes, dia] = confronto.data.split('-');
+                    const anoAbrev = ano.substring(2);
+                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     }
                 }
                 
@@ -12223,9 +12972,9 @@ Equilíbrio
                         dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     } else {
                         // Fallback para formato YYYY-MM-DD
-                        const [ano, mes, dia] = confronto.data.split('-');
-                        const anoAbrev = ano.substring(2);
-                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    const [ano, mes, dia] = confronto.data.split('-');
+                    const anoAbrev = ano.substring(2);
+                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     }
                 }
                 
@@ -12352,9 +13101,9 @@ Equilíbrio
                         dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     } else {
                         // Fallback para formato YYYY-MM-DD
-                        const [ano, mes, dia] = confronto.data.split('-');
-                        const anoAbrev = ano.substring(2);
-                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    const [ano, mes, dia] = confronto.data.split('-');
+                    const anoAbrev = ano.substring(2);
+                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     }
                 }
                 
@@ -12481,9 +13230,9 @@ Equilíbrio
                         dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     } else {
                         // Fallback para formato YYYY-MM-DD
-                        const [ano, mes, dia] = confronto.data.split('-');
-                        const anoAbrev = ano.substring(2);
-                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+                    const [ano, mes, dia] = confronto.data.split('-');
+                    const anoAbrev = ano.substring(2);
+                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
                     }
                 }
                 

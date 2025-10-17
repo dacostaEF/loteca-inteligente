@@ -62,3 +62,4 @@
 **Status:** URLs corrigidas, investigação pendente  
 **Próximo:** Verificar console e testar URLs
 
+

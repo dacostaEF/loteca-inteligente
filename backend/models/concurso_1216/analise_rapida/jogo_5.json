@@ -4,7 +4,7 @@
     "concurso_numero": "1216"
   },
   "dados": {
-    "numero": "5",
+    "numero": "",
     "time_casa": "ATLETICO MADRID",
     "time_fora": "OSASUNA",
     "arena": "estádio Riyadh Air Metropolitano - Madri",
@@ -12,13 +12,13 @@
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png",
     "escudo_fora": "/static/escudos/Osasuna/osasuna.png",
-    "probabilidade_casa": "80",
-    "probabilidade_empate": "10",
+    "probabilidade_casa": "75",
+    "probabilidade_empate": "15",
     "probabilidade_fora": "10",
     "recomendacao": "Recomendação Estatística: Coluna 1 (ATLETICO MADRID) - Risco Baixo",
-    "conclusao_analista": "O retrospecto recente é avassalador a favor do Atleti. Nos últimos 20 confrontos diretos, o Atlético de Madrid venceu 16 vezes, contra apenas 3 vitórias do Osasuna e 1 único empate. Isso demonstra um desequilíbrio psicológico e técnico muito grande neste duelo.\n\nFase Atual (Tabela de Classificação):\n\nO Atlético de Madrid (5º lugar, 13 Pts) está em melhor condição na tabela, brigando por vaga europeia.\n\nO Osasuna (12º lugar, 10 Pts) está na zona intermediária e, mais importante, vem em péssima fase, com 4 derrotas e 1 empate nos últimos 5 jogos (como visto na coluna \"Últimas 5\" da tabela).",
+    "conclusao_analista": "O retrospecto recente é avassalador a favor do Atletico de Madrid. Nos últimos 20 confrontos diretos, o Atlético de Madrid venceu 16 vezes, contra apenas 3 vitórias do Osasuna e 1 único empate. Isso demonstra um desequilíbrio psicológico e técnico muito grande neste duelo.\n\nFase Atual (Tabela de Classificação):\n\nO Atlético de Madrid (5º lugar, 13 Pts) está em melhor condição na tabela, brigando por vaga europeia.\n\nO Osasuna (12º lugar, 10 Pts) está na zona intermediária e, mais importante, vem em péssima fase, com 4 derrotas e 1 empate nos últimos 5 jogos (como visto na coluna \"Últimas 5\" da tabela).",
     "confrontos_sequence": "D-V-D-V-V-V-V-V-V-V",
-    "posicao_casa": "5",
+    "posicao_casa": "4",
     "posicao_fora": "12",
     "confronto_direto": "8V-0E-2D",
     "fator_casa": "90",
@@ -27,8 +27,7 @@
     "analise_posicao_tabelas": "Vantagem Atletico de madrid",
     "analise_confronto_direto": "Vantagem Atletico de madrid",
     "analise_fator_casa": "Vantagem Atletico de madrid",
-    "arquivo_confrontos": "Atletico-de-Madrid_vs_Osasuna.csv",
-    "sincronizado_em": "2025-10-15T17:29:54.021Z"
+    "sincronizado_em": "2025-10-17T10:08:21.041Z"
   },
   "admin_key": "loteca2024admin"
 }
