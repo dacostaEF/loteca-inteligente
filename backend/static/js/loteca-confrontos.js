@@ -217,6 +217,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
             escudoFora: '/static/escudos/FOR_Fortaleza/Fortaleza.png'
         },
+        4: {
+            csv: 'Roma_vs_Internazionale.csv',
+            timeCasa: 'ROMA',             // ← TIME CASA (resultado 'V' = vitória da Roma)
+            timeFora: 'INTERNAZIONALE',   // ← TIME FORA (resultado 'D' = vitória do Internazionale)
+            escudoCasa: '/static/escudos/Roma/Roma.png',
+            escudoFora: '/static/escudos/Internazionale/Internazionale.png'
+        },
         7: {
             csv: 'Tottenham_vs_Aston-Villa.csv',
             timeCasa: 'TOTTENHAM',        // ← TIME CASA (resultado 'V' = vitória do Tottenham)
