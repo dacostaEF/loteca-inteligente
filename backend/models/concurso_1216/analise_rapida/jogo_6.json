@@ -20,14 +20,14 @@
     "confrontos_sequence": "D-D-E-D-D-V-E-E-D-V",
     "posicao_casa": "3",
     "posicao_fora": "18",
-    "confronto_direto": "4V-3E-3D",
-    "fator_casa": "87",
-    "fator_fora": "13",
+    "confronto_direto": "3V-3E-4D",
+    "fator_casa": "80",
+    "fator_fora": "20",
     "analise_posicao": "Vantagem Cruzeiro",
     "analise_posicao_tabelas": "Vantagem Cruzeiro",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Vantagem Cruzeiro",
-    "sincronizado_em": "2025-10-15T18:19:01.791Z"
+    "sincronizado_em": "2025-10-17T12:20:02.972Z"
   },
   "admin_key": "loteca2024admin"
 }

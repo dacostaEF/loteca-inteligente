@@ -33,7 +33,7 @@ async function carregarConfrontosJogo5() {
     // TENTAR CARREGAR DADOS DO ARQUIVO CSV
     try {
         console.log('🔄 [CONFRONTOS-JOGO5] Buscando dados do arquivo CSV...');
-        const csvResponse = await fetch('/api/confrontos/Atletico-de-Madrid_vs_Osasuna.csv');
+        const csvResponse = await fetch('/api/br/confrontos/Atletico-de-Madrid_vs_Osasuna.csv');
         
         if (csvResponse.ok) {
             const csvText = await csvResponse.text();
@@ -129,7 +129,7 @@ async function carregarConfrontosJogo5() {
         } else if (resultado === 'D') {
             conteudo = `<img src="${escudoFora}" alt="Osasuna" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>OSA</span>'">`;
         } else {
-            conteudo = '<span style="color: #ffc107; font-weight: bold; font-size: 11px;">E</span>';
+            conteudo = 'E'; // PADRONIZADO: Apenas letra 'E' simples
         }
         
         let dataFormatada = '';
@@ -187,6 +187,214 @@ async function carregarConfrontosJogo5() {
 }
 
 /**
+ * FUNÇÃO AUTOMATIZADA PARA CARREGAR CONFRONTOS DE QUALQUER JOGO
+ * Identifica automaticamente o número do jogo e busca os arquivos correspondentes
+ * @param {number} numeroJogo - Número do jogo (5, 6, 7, etc.)
+ */
+async function carregarConfrontosAutomatico(numeroJogo) {
+    console.log(`🎯 [CONFRONTOS-AUTO-${numeroJogo}] Iniciando carregamento automático...`);
+    
+    const container = document.getElementById(`confrontos-principais-${numeroJogo}`);
+    if (!container) {
+        console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Container confrontos-principais-${numeroJogo} não encontrado!`);
+        return;
+    }
+    
+    // MAPEAMENTO AUTOMÁTICO DE ARQUIVOS POR JOGO
+    // MAPEAMENTO CLARO: Define qual time é CASA e qual é FORA para cada jogo
+    const mapeamentoJogos = {
+        5: {
+            csv: 'Atletico-de-Madrid_vs_Osasuna.csv',
+            timeCasa: 'ATLÉTICO DE MADRID',  // ← NOME EXATO DO CSV (com acentos)
+            timeFora: 'OSASUNA',             // ← TIME FORA (resultado 'D' = vitória deste time)
+            escudoCasa: '/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png',
+            escudoFora: '/static/escudos/Osasuna/osasuna.png'
+        },
+        6: {
+            csv: 'Cruzeiro_vs_Fortaleza.csv',
+            timeCasa: 'CRUZEIRO',         // ← TIME CASA (resultado 'V' = vitória do Cruzeiro)
+            timeFora: 'FORTALEZA',        // ← TIME FORA (resultado 'D' = vitória da Fortaleza)
+            escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
+            escudoFora: '/static/escudos/FOR_Fortaleza/Fortaleza.png'
+        }
+        // Adicionar mais jogos conforme necessário
+    };
+    
+    const configJogo = mapeamentoJogos[numeroJogo];
+    if (!configJogo) {
+        console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Configuração não encontrada para o jogo ${numeroJogo}!`);
+        return;
+    }
+    
+    console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Configuração encontrada:`, configJogo);
+    
+    // INICIALIZAR VAZIO - SEM DADOS FICTÍCIOS
+    let confrontos = [];
+    
+    // TENTAR CARREGAR DADOS DO ARQUIVO CSV AUTOMATICAMENTE
+    try {
+        console.log(`🔄 [CONFRONTOS-AUTO-${numeroJogo}] Buscando CSV: ${configJogo.csv}`);
+        const csvResponse = await fetch(`/api/br/confrontos/${configJogo.csv}`);
+        console.log(`📡 [CONFRONTOS-AUTO-${numeroJogo}] Resposta da API:`, csvResponse.status, csvResponse.statusText);
+        
+        if (csvResponse.ok) {
+            const csvText = await csvResponse.text();
+            console.log(`✅ [CONFRONTOS-AUTO-${numeroJogo}] CSV carregado:`, csvText.substring(0, 200) + '...');
+            
+            // Parse do CSV
+            const lines = csvText.split('\n').filter(line => line.trim());
+            
+            // 1. LER CABEÇALHO E IDENTIFICAR ÍNDICES DAS COLUNAS
+            const header = lines[0].split(',').map(col => col.trim().toLowerCase());
+            console.log(`📋 [CONFRONTOS-AUTO-${numeroJogo}] Cabeçalho encontrado:`, header);
+            
+            const dataIndex = header.findIndex(col => col.includes('data'));
+            const mandanteIndex = header.findIndex(col => col.includes('mandante'));
+            const placarIndex = header.findIndex(col => col.includes('placar'));
+            const visitanteIndex = header.findIndex(col => col.includes('visitante'));
+            const vencedorIndex = header.findIndex(col => col.includes('vencedor'));
+            
+            console.log(`🔍 [CONFRONTOS-AUTO-${numeroJogo}] Índices encontrados:`, {
+                data: dataIndex,
+                mandante: mandanteIndex,
+                placar: placarIndex,
+                visitante: visitanteIndex,
+                vencedor: vencedorIndex
+            });
+            
+            // 3. VALIDAR SE TODOS OS ÍNDICES FORAM ENCONTRADOS
+            if (dataIndex === -1 || mandanteIndex === -1 || placarIndex === -1 || visitanteIndex === -1 || vencedorIndex === -1) {
+                console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Colunas obrigatórias não encontradas no CSV!`);
+                console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Colunas necessárias: data, mandante, placar, visitante, vencedor`);
+                console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Colunas encontradas:`, header);
+                return;
+            }
+            
+            const csvData = lines.slice(1, 11).map(line => {
+                const colunas = line.split(',');
+                
+                // 2. EXTRAIR DADOS USANDO ÍNDICES DINÂMICOS
+                const data = colunas[dataIndex]?.trim();
+                const mandante = colunas[mandanteIndex]?.trim();
+                const placar = colunas[placarIndex]?.trim();
+                const visitante = colunas[visitanteIndex]?.trim();
+                const vencedor = colunas[vencedorIndex]?.trim();
+                
+                console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Dados extraídos:`, {
+                    data, mandante, placar, visitante, vencedor
+                });
+                
+                let resultado = 'E'; // Default to Empate
+                
+                // LÓGICA CLARA: Comparar vencedor com timeCasa e timeFora da configuração
+                if (vencedor && vencedor.trim().toLowerCase() === 'empate') {
+                    resultado = 'E'; // Empate
+                } else if (vencedor && vencedor.trim().toUpperCase() === configJogo.timeCasa.toUpperCase()) {
+                    resultado = 'V'; // Vitória do TIME CASA (configuração)
+                } else if (vencedor && vencedor.trim().toUpperCase() === configJogo.timeFora.toUpperCase()) {
+                    resultado = 'D'; // Vitória do TIME FORA (configuração)
+                } else {
+                    // Fallback: usar placar se vencedor não disponível
+                    if (placar && placar.includes('-')) {
+                        const [golsCasa, golsFora] = placar.split('-').map(g => parseInt(g.trim()));
+                        if (golsCasa === golsFora) {
+                            resultado = 'E'; // Empate
+                        } else if (golsCasa > golsFora) {
+                            resultado = 'V'; // Vitória do mandante
+                        } else {
+                            resultado = 'D'; // Derrota do mandante
+                        }
+                    }
+                }
+                return {
+                    data: data,
+                    mandante: mandante,
+                    visitante: visitante,
+                    placar: placar,
+                    resultado: resultado
+                };
+            });
+            
+            if (csvData.length > 0) {
+                confrontos = csvData;
+                console.log(`✅ [CONFRONTOS-AUTO-${numeroJogo}] Dados CSV carregados:`, confrontos.length, 'confrontos');
+                console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Primeiro confronto:`, confrontos[0]);
+            } else {
+                console.log(`⚠️ [CONFRONTOS-AUTO-${numeroJogo}] Nenhum dado CSV válido encontrado`);
+            }
+        } else {
+            console.log(`⚠️ [CONFRONTOS-AUTO-${numeroJogo}] CSV não encontrado - API retornou ${csvResponse.status}`);
+        }
+    } catch (error) {
+        console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Erro ao carregar CSV:`, error);
+    }
+    
+    // VERIFICAR SE TEMOS DADOS REAIS
+    if (confrontos.length === 0) {
+        console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] NENHUM DADO REAL CARREGADO!`);
+        container.innerHTML = `
+            <div style="color: #ff6b6b; padding: 20px; text-align: center; background: #2d2d2d; border-radius: 8px; border: 2px solid #ff6b6b;">
+                <h4>❌ ERRO: Dados não carregados</h4>
+                <p>Não foi possível carregar os dados dos confrontos para o Jogo ${numeroJogo}</p>
+                <p><strong>Arquivo esperado:</strong> ${configJogo.csv}</p>
+                <p><small>Verifique se o arquivo existe e a API está funcionando</small></p>
+            </div>
+        `;
+        return;
+    }
+    
+    const ultimos10 = confrontos.slice(0, 10);
+    
+    // RENDERIZAÇÃO CLARA: Mostra escudo do time vencedor baseado no resultado
+    const boxesHtml = ultimos10.map(confronto => {
+        const resultado = confronto.resultado.toUpperCase();
+        let classe, conteudo;
+        
+        if (resultado === 'V') {
+            // V = Vitória do TIME CASA → Mostra escudo do time casa
+            classe = configJogo.timeCasa.toLowerCase().replace(/\s+/g, '-');
+            conteudo = `<img src="${configJogo.escudoCasa}" alt="${configJogo.timeCasa}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.outerHTML='${configJogo.timeCasa.substring(0,3).toUpperCase()}'">`;
+        } else if (resultado === 'D') {
+            // D = Vitória do TIME FORA → Mostra escudo do time fora
+            classe = configJogo.timeFora.toLowerCase().replace(/\s+/g, '-');
+            conteudo = `<img src="${configJogo.escudoFora}" alt="${configJogo.timeFora}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.outerHTML='${configJogo.timeFora.substring(0,3).toUpperCase()}'">`;
+        } else {
+            // E = Empate → Mostra letra 'E'
+            classe = 'empate';
+            conteudo = 'E'; // PADRONIZADO: Apenas letra 'E' simples
+        }
+        
+        let dataFormatada = '';
+        if (confronto.data) {
+            // CSV usa formato DD/MM/YYYY, não YYYY-MM-DD
+            if (confronto.data.includes('/')) {
+                const [dia, mes, ano] = confronto.data.split('/');
+                const anoAbrev = ano.substring(2);
+                dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+            } else {
+                // Fallback para formato YYYY-MM-DD
+                const [ano, mes, dia] = confronto.data.split('-');
+                const anoAbrev = ano.substring(2);
+                dataFormatada = `${dia}/${mes}/${anoAbrev}`;
+            }
+        }
+        
+        return `
+            <div style="display: flex; flex-direction: column; align-items: center; padding: 8px; margin: 2px; min-width: 60px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 8px; border-left: 3px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                <div style="font-size: 10px; color: #888; margin-bottom: 2px;">${dataFormatada}</div>
+                <div style="font-size: 11px; color: #fff; margin-bottom: 4px; font-weight: bold;">${confronto.placar}</div>
+                <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #343a40; border-radius: 50%; color: #fff; font-weight: bold; font-size: 12px;">
+                    ${conteudo}
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    container.innerHTML = boxesHtml;
+    console.log(`✅ [CONFRONTOS-AUTO-${numeroJogo}] ${confrontos.length} boxes renderizados automaticamente!`);
+}
+
+/**
  * FUNÇÃO GENÉRICA PARA CARREGAR CONFRONTOS DE QUALQUER JOGO
  * @param {number} numeroJogo - Número do jogo (1-14)
  * @param {string} timeCasa - Nome do time da casa
@@ -221,7 +429,7 @@ async function carregarConfrontosGenerico(numeroJogo, timeCasa, timeFora, arquiv
     // TENTAR CARREGAR DADOS DO ARQUIVO CSV
     try {
         console.log(`🔄 [CONFRONTOS-JOGO${numeroJogo}] Buscando dados do arquivo CSV: ${arquivoCsv}`);
-        const csvResponse = await fetch(`/api/confrontos/${arquivoCsv}`);
+        const csvResponse = await fetch(`/api/br/confrontos/${arquivoCsv}`);
         
         if (csvResponse.ok) {
             const csvText = await csvResponse.text();
@@ -290,7 +498,7 @@ async function carregarConfrontosGenerico(numeroJogo, timeCasa, timeFora, arquiv
             conteudo = `<img src="${escudoForaFinal}" alt="${timeFora}" class="confronto-escudo" onerror="this.outerHTML='${timeFora.substring(0,3).toUpperCase()}'">`;
         } else {
             classe = 'empate';
-            conteudo = 'E';
+            conteudo = 'E'; // PADRONIZADO: Apenas letra 'E' simples
         }
         
         let dataFormatada = '';

@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_file
 from flask_cors import cross_origin
+import os
 from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
 # from services.loteca_provider_new import get_current_loteca_matches  # REMOVIDO: código morto
 from models.classificacao_db import classificacao_db
@@ -1112,6 +1113,38 @@ def api_todos_elencos():
         return jsonify({
             "success": False,
             "error": str(e)
+        }), 500
+
+@bp_br.route("/confrontos/<filename>", methods=["GET"])
+@cross_origin()
+def servir_arquivo_confrontos(filename):
+    """
+    Endpoint para servir arquivos CSV de confrontos
+    GET /api/br/confrontos/<filename>
+    """
+    try:
+        # Caminho para a pasta de confrontos
+        confrontos_path = os.path.join(os.path.dirname(__file__), 'models', 'Confrontos')
+        arquivo_path = os.path.join(confrontos_path, filename)
+        
+        # Verificar se o arquivo existe
+        if not os.path.exists(arquivo_path):
+            return jsonify({
+                "error": f"Arquivo não encontrado: {filename}"
+            }), 404
+        
+        # Verificar se é um arquivo CSV
+        if not filename.lower().endswith('.csv'):
+            return jsonify({
+                "error": "Apenas arquivos CSV são permitidos"
+            }), 400
+        
+        # Servir o arquivo
+        return send_file(arquivo_path, mimetype='text/csv')
+        
+    except Exception as e:
+        return jsonify({
+            "error": f"Erro ao servir arquivo: {str(e)}"
         }), 500
 
 # Função para registrar o blueprint (será chamada em app.py)
