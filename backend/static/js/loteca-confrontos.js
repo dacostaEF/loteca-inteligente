@@ -237,6 +237,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'Sao_Paulo',        // ← TIME FORA (resultado 'D' = vitória do São Paulo) - EXATO DO CSV CORRIGIDO
             escudoCasa: '/static/escudos/MIR_Mirassol/Mirassol.png',
             escudoFora: '/static/escudos/SAP_SaoPaulo/SaoPaulo.png'
+        },
+        9: {
+            csv: 'Ceara_vs_Botafogo-RJ.csv',
+            timeCasa: 'Ceará',            // ← TIME CASA (resultado 'V' = vitória do Ceará)
+            timeFora: 'Botafogo',         // ← TIME FORA (resultado 'D' = vitória do Botafogo)
+            escudoCasa: '/static/escudos/Ceara/Ceara.png',
+            escudoFora: '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
         }
         // Adicionar mais jogos conforme necessário
     };

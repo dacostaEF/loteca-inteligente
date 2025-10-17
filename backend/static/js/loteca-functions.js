@@ -14,7 +14,7 @@ const jogosMap = {
     6: { csv: 'Cruzeiro_vs_Fortaleza.csv', casa: 'Cruzeiro', fora: 'Fortaleza' },
     7: { csv: 'Tottenham_vs_Aston-Villa.csv', casa: 'Tottenham', fora: 'Aston Villa' },
     8: { csv: 'Mirassol_vs_Sao-Paulo.csv', casa: 'Mirassol', fora: 'Sao_Paulo' },
-    9: { csv: 'Roma_vs_Lazio.csv', casa: 'Roma', fora: 'Lazio' },
+    9: { csv: 'Ceara_vs_Botafogo-RJ.csv', casa: 'Ceará', fora: 'Botafogo' },
     10: { csv: 'Fiorentina_vs_Atalanta.csv', casa: 'Fiorentina', fora: 'Atalanta' },
     11: { csv: 'Atalanta_vs_Lazio.csv', casa: 'Atalanta', fora: 'Lazio' },
     12: { csv: 'Napoli_vs_Juventus.csv', casa: 'Napoli', fora: 'Juventus' },
@@ -48,7 +48,9 @@ const escudosMap = {
     'Sao_Paulo': '/static/escudos/SAP_SaoPaulo/SaoPaulo.png',
     'Lazio': '/static/escudos/lazio.png',
     'Fiorentina': '/static/escudos/fiorentina.png',
-    'Atalanta': '/static/escudos/atalanta.png'
+    'Atalanta': '/static/escudos/atalanta.png',
+    'Ceará': '/static/escudos/Ceara/Ceara.png',
+    'Botafogo': '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
 };
 
 /**
