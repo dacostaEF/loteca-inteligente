@@ -588,14 +588,14 @@ Carregando...
                         <div class="analysis-mobile-teams">
                             <span><img id="escudo-mobile-casa-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
                             <span><img id="escudo-mobile-fora-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
-                        </div>
-                    </div>
+                </div>
+            </div>
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Confronto Direto</div>
                         <div class="analysis-mobile-teams">
                             <span><img id="escudo-mobile-casa-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">3V</span>
                             <span><img id="escudo-mobile-fora-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">1V</span>
-                        </div>
+        </div>
                     </div>
                 </div>
                 
@@ -606,52 +606,68 @@ Carregando...
             </div>
         </div>
 
-        <!-- JOGO 8: MIRASSOL vs SAO PAULO -->
+        <!-- JOGO 8: MILAN vs NAPOLI (NOVO) -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 8:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo8" src="/static/placeholder-team-logo.svg" 
+                        <img id="escudo-casa-jogo8-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-casa-nome-jogo8">TIME CASA</span>
+                        <span id="time-casa-nome-jogo8-novo">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo8" src="/static/placeholder-team-logo.svg" 
+                        <img id="escudo-fora-jogo8-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-fora-nome-jogo8">TIME FORA</span>
+                        <span id="time-fora-nome-jogo8-novo">Carregando...</span>
                     </div>
                 </div>
                 
-                <div class="game-info" id="game-info-jogo8">Carregando informações...</div>
+                <div class="game-info" id="game-info-jogo8-novo">Carregando informações...</div>
             </div>
             <div class="game-card-body">
-                <div class="probabilities">
-                    <div class="prob-item col1"><div class="label" id="label-casa-8">Coluna 1 (Carregando...)</div><div class="value" id="prob-casa-8"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value" id="prob-empate-8"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label" id="label-fora-8">Coluna 2 (Carregando...)</div><div class="value" id="prob-fora-8"><div class="loading-spinner"></div>Carregando...</div></div>
+                <div class="probabilities" id="probabilidades-jogo-8-novo">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1-8-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-8-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2-8-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
-                <div class="recommendation" id="recomendacao-8"><strong>Recomendação Estatística:</strong> <span class="loading-spinner"></span>Carregando análise...</div>
-                
+                <div class="recommendation" id="recomendacao-jogo-8-novo"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
-                <table class="analysis-table" id="analise-jogo-8">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-8">Carregando...</th><th class="team-header" id="time-fora-nome-8">Carregando... FC</th><th>Análise</th></tr></thead>
+                <table class="analysis-table" id="analise-jogo-8-novo">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-8-novo">Carregando...</th><th class="team-header" id="time-fora-nome-8-novo">Carregando...</th><th>Análise</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-8"></div></td><td id="forma-analise-8">Baseado nos últimos 10 jogos</td></tr>
-                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-8">-</td><td class="team-header" id="posicao-fora-8">-</td><td id="posicao-analise-8">Carregando dados...</td></tr>
-                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-8"></div></td><td id="h2h-analise-8">Carregando dados...</td></tr>
-                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-8">-</td><td class="team-header" id="fator-fora-8">-</td><td id="fator-analise-8">Carregando dados...</td></tr>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-8-novo"></div></td><td id="forma-analise-8-novo">Baseado nos últimos 10 jogos</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-8-novo">-</td><td class="team-header" id="posicao-fora-8-novo">-</td><td id="posicao-analise-8-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-8-novo"></div></td><td id="h2h-analise-8-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-8-novo">-</td><td class="team-header" id="fator-fora-8-novo">-</td><td id="fator-analise-8-novo">Carregando dados...</td></tr>
                     </tbody>
                 </table>
-                
-                
+
+                <!-- VERSÃO MOBILE -->
+                <div class="analysis-mobile">
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Forma Recente</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-8-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora-8-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Confronto Direto</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-8-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">3V</span>
+                            <span><img id="escudo-mobile-fora-8-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">1V</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p id="conclusao-8">Carregando análise completa...</p>
+                    <p id="conclusao-analista-jogo8-novo">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -7884,20 +7900,6 @@ Carregando...
 
 
 
-        async function carregarDadosJogo8() {
-            console.log('🎯 [JOGO8] Iniciando carregamento dos dados do JOGO 8...');
-            try {
-                const response = await fetch('/api/analise/jogo/8?concurso=concurso_1216');
-                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                const data = await response.json();
-                if (data.success && data.dados) {
-                    atualizarDadosJogo8(data.dados);
-                    console.log('✅ [JOGO8] Dados atualizados com sucesso!');
-                }
-            } catch (error) {
-                console.error('❌ [JOGO8] Erro ao carregar dados:', error);
-            }
-        }
 
         async function carregarDadosJogo9() {
             console.log('🎯 [JOGO9] Iniciando carregamento dos dados do JOGO 9...');
@@ -8488,6 +8490,113 @@ Carregando...
             }
         }
 
+        // FUNÇÃO PARA O NOVO JOGO 8 (USANDO SCRIPTS EXTERNOS)
+        async function carregarJogo8Novo() {
+            console.log('🎯 [JOGO8-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
+            
+            try {
+                // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
+                console.log('🔍 [JOGO8-NOVO] Verificando funções disponíveis...');
+                console.log('📊 [JOGO8-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
+                console.log('📊 [JOGO8-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                
+                // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
+                const mapeamentoIds = {
+                    'escudo-casa-jogo8-novo': 'escudo-casa-jogo8',
+                    'time-casa-nome-jogo8-novo': 'time-casa-nome-jogo8',
+                    'escudo-fora-jogo8-novo': 'escudo-fora-jogo8',
+                    'time-fora-nome-jogo8-novo': 'time-fora-nome-jogo8',
+                    'game-info-jogo8-novo': 'game-info-jogo8',
+                    'prob-col1-8-novo': 'prob-casa-8',
+                    'prob-colX-8-novo': 'prob-empate-8',
+                    'prob-col2-8-novo': 'prob-fora-8',
+                    'recomendacao-jogo-8-novo': 'recomendacao-8',
+                    'posicao-casa-8-novo': 'posicao-casa-8',
+                    'posicao-fora-8-novo': 'posicao-fora-8',
+                    'confronto-direto-principais-8-novo': 'confronto-direto-principais-8',
+                    'fator-casa-8-novo': 'fator-casa-8',
+                    'fator-fora-8-novo': 'fator-fora-8',
+                    'forma-analise-8-novo': 'forma-analise-8',
+                    'posicao-analise-8-novo': 'posicao-analise-8',
+                    'h2h-analise-8-novo': 'h2h-analise-8',
+                    'fator-analise-8-novo': 'fator-analise-8',
+                    'conclusao-analista-jogo8-novo': 'conclusao-8',
+                    'confrontos-principais-8-novo': 'confrontos-principais-8'
+                };
+                
+                // 3. TEMPORARIAMENTE RENOMEAR IDs PARA USAR AS FUNÇÕES EXTERNAS
+                console.log('🔄 [JOGO8-NOVO] Renomeando IDs temporariamente...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(novoId);
+                    if (elemento) {
+                        elemento.id = idEsperado;
+                        console.log(`✅ [JOGO8-NOVO] ${novoId} → ${idEsperado}`);
+                    } else {
+                        console.warn(`⚠️ [JOGO8-NOVO] Elemento não encontrado: ${novoId}`);
+                    }
+                });
+                
+                // 4. USAR FUNÇÃO DO loteca-functions.js PARA DADOS JSON
+                if (typeof window.carregarDadosCompletosJogo === 'function') {
+                    console.log('📊 [JOGO8-NOVO] Chamando carregarDadosCompletosJogo(8)...');
+                    await window.carregarDadosCompletosJogo(8);
+                    console.log('✅ [JOGO8-NOVO] carregarDadosCompletosJogo(8) executado!');
+                } else {
+                    console.warn('⚠️ [JOGO8-NOVO] carregarDadosCompletosJogo não disponível');
+                }
+                
+                // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA CONFRONTOS
+                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                    console.log('📊 [JOGO8-NOVO] Chamando carregarConfrontosAutomatico(8)...');
+                    await window.carregarConfrontosAutomatico(8);
+                    console.log('✅ [JOGO8-NOVO] carregarConfrontosAutomatico(8) executado!');
+                } else {
+                    console.warn('⚠️ [JOGO8-NOVO] carregarConfrontosAutomatico não disponível');
+                }
+                
+                // 6. RESTAURAR IDs ORIGINAIS
+                console.log('🔄 [JOGO8-NOVO] Restaurando IDs originais...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(idEsperado);
+                    if (elemento) {
+                        elemento.id = novoId;
+                        console.log(`✅ [JOGO8-NOVO] ${idEsperado} → ${novoId}`);
+                    }
+                });
+                
+                console.log('🎉 [JOGO8-NOVO] Carregamento com SCRIPTS EXTERNOS finalizado!');
+                
+            } catch (error) {
+                console.error('❌ [JOGO8-NOVO] Erro no carregamento:', error);
+                
+                // FALLBACK: Usar dados hardcoded
+                console.log('🔄 [JOGO8-NOVO] Usando fallback local...');
+                atualizarDadosJogo8Novo({
+                    time_casa: 'MILAN',
+                    time_fora: 'NAPOLI',
+                    arena: 'San Siro - Milão',
+                    campeonato: 'Serie A',
+                    dia: 'Domingo',
+                    escudo_casa: '/static/escudos/Milan/Milan.png',
+                    escudo_fora: '/static/escudos/Napoli/Napoli.png',
+                    probabilidade_casa: '40',
+                    probabilidade_empate: '35',
+                    probabilidade_fora: '25',
+                    posicao_casa: '3',
+                    posicao_fora: '6',
+                    confronto_direto: '2V-3E-1D',
+                    fator_casa: '52',
+                    fator_fora: '38',
+                    analise_posicao: 'Vantagem Milan',
+                    analise_posicao_tabelas: 'Vantagem Milan',
+                    analise_confronto_direto: 'Equilibrado',
+                    analise_fator_casa: 'Vantagem Milan',
+                    conclusao_analista: 'O Milan tem vantagem em casa e melhor posição na tabela. O Napoli vem de campanha irregular, mas o confronto direto mostra equilíbrio.'
+                });
+                carregarConfrontosJogo8Novo();
+            }
+        }
+
         // FUNÇÃO PARA O NOVO JOGO 4 (USANDO SCRIPTS EXTERNOS)
         async function carregarJogo4Novo() {
             console.log('🎯 [JOGO4-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
@@ -8979,7 +9088,7 @@ Carregando...
                     <div style="display: flex; flex-direction: column; align-items: center; padding: 8px; margin: 2px; min-width: 60px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 8px; border-left: 3px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                         <div style="font-size: 10px; color: #888; margin-bottom: 2px;">${confronto.data}</div>
                         <div style="font-size: 11px; color: #fff; margin-bottom: 4px; font-weight: bold;">${confronto.placar}</div>
-                        <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: ${resultado === 'E' ? '#ffc107' : '#343a40'}; border-radius: 50%; color: ${resultado === 'E' ? '#000' : '#fff'}; font-weight: bold; font-size: 12px;">
+                        <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: ${resultado === 'E' ? 'transparent' : '#343a40'}; border-radius: 50%; color: ${resultado === 'E' ? '#fff' : '#fff'}; font-weight: bold; font-size: 12px;">
                             ${conteudo}
                         </div>
                     </div>
@@ -9370,7 +9479,6 @@ Carregando...
         
         
         // FUNÇÕES PARA OUTROS JOGOS (MANTIDAS)
-        function atualizarDadosJogo8(dados) { atualizarDadosJogoGenerico(8, dados); }
         function atualizarDadosJogo9(dados) { atualizarDadosJogoGenerico(9, dados); }
         function atualizarDadosJogo10(dados) { atualizarDadosJogoGenerico(10, dados); }
         function atualizarDadosJogo11(dados) { atualizarDadosJogoGenerico(11, dados); }
@@ -9569,8 +9677,8 @@ Carregando...
                 carregarJogo6Novo();
                 console.log('🔥 [DEBUG] Chamando carregarJogo7Novo()...');
                 carregarJogo7Novo();
+                carregarJogo8Novo();
                 carregarDadosJogo6();
-                carregarDadosJogo8();
                 carregarDadosJogo9();
                 carregarDadosJogo10();
                 carregarDadosJogo11();
@@ -9626,11 +9734,6 @@ Carregando...
             
             
             
-            // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 8
-            setTimeout(() => forcarConfrontoDirectoJogo8(), 3000);
-            setTimeout(() => forcarConfrontoDirectoJogo8(), 5000);
-            setTimeout(() => forcarConfrontoDirectoJogo8(), 7000);
-            setTimeout(() => forcarConfrontoDirectoJogo8(), 9000);
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 9
             setTimeout(() => forcarConfrontoDirectoJogo9(), 3000);
@@ -9680,7 +9783,6 @@ Carregando...
                 console.log('🎯 [LOTECA-JOGOS5-14] Carregando dados reais DIRETOS do dashboard...');
                 carregarDadosReaisDiretosJogo5();
                 carregarDadosReaisDiretosJogo7();
-                carregarDadosReaisDiretosJogo8();
                 carregarDadosReaisDiretosJogo9();
                 carregarDadosReaisDiretosJogo10();
                 carregarDadosReaisDiretosJogo11();
@@ -9695,7 +9797,6 @@ Carregando...
             /*
             setTimeout(() => {
                 carregarUltimosConfrontosJogo7();
-                carregarUltimosConfrontosJogo8();
                 carregarUltimosConfrontosJogo9();
                 carregarUltimosConfrontosJogo10();
                 carregarUltimosConfrontosJogo12();
@@ -9731,7 +9832,6 @@ Carregando...
                 atualizarFormaAnaliseJogo4();
                 atualizarFormaAnaliseJogo5();
                 atualizarFormaAnaliseJogo7();
-                atualizarFormaAnaliseJogo8();
                 atualizarFormaAnaliseJogo9();
                 atualizarFormaAnaliseJogo10();
                 atualizarFormaAnaliseJogo11();
@@ -9747,7 +9847,6 @@ Carregando...
             setTimeout(() => {
                 carregarPosicoesTabelaJogo5();
                 carregarPosicoesTabelaJogo7();
-                carregarPosicoesTabelaJogo8();
                 carregarPosicoesTabelaJogo9();
                 carregarPosicoesTabelaJogo10();
                 carregarPosicoesTabelaJogo11();
@@ -11696,21 +11795,6 @@ Carregando...
             if (conclusao) conclusao.innerHTML = 'O Grêmio é favorito em casa, mas o Vitória costuma ser um adversário competitivo. A força da torcida e a qualidade técnica do time gaúcho pesam a favor da Coluna 1, mas a boa organização defensiva do time baiano pode levar a um empate.';
         }
 
-        function carregarDadosReaisDiretosJogo8() {
-            console.log('🎯 [LOTECA-JOGO8] Carregando dados Carregando... vs Carregando......');
-            
-            const probCol1 = document.getElementById('prob-casa-8');
-            const probColX = document.getElementById('prob-empate-8');
-            const probCol2 = document.getElementById('prob-fora-8');
-            const recomendacao = document.getElementById('recomendacao-8');
-            const conclusao = document.getElementById('conclusao-8');
-            
-            if (probCol1) probCol1.innerHTML = '50%';
-            if (probColX) probColX.innerHTML = '25%';
-            if (probCol2) probCol2.innerHTML = '25%';
-            if (recomendacao) recomendacao.innerHTML = '<strong>Recomendação Estatística: Coluna 1 (Carregando...)</strong> - Risco Médio';
-            if (conclusao) conclusao.innerHTML = 'Jogando em casa, o Carregando... tem um claro favoritismo. O time vem fazendo uma campanha sólida na Premier League. O Carregando... é um time imprevisível, capaz de surpreender, mas a consistência e o fator casa dão ao Villa a vantagem estatística.';
-        }
 
         function carregarDadosReaisDiretosJogo9() {
             console.log('🎯 [LOTECA-JOGO9] Carregando dados Bahia vs Palmeiras...');
@@ -11842,43 +11926,6 @@ Carregando...
 
 
 
-        function forcarConfrontoDirectoJogo8() {
-            console.log('🔥 [FORCE-H2H-JOGO8] Forçando confronto direto Mirassol vs São Paulo...');
-            const container = document.getElementById('confronto-direto-principais-8');
-            const analiseContainer = document.getElementById('h2h-analise-8');
-            
-            if (container) {
-                container.innerHTML = `
-                    <img src="/static/escudos/MIR_Mirassol/Mirassol.png" alt="Mirassol" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>MIR</span>'">
-                    <span class="confronto-direto-count">0</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">1E</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">2</span>
-                    <img src="/static/escudos/SAP_SaoPaulo/SaoPaulo.png" alt="São Paulo" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>SAO</span>'">
-                `;
-                console.log('✅ [FORCE-H2H-JOGO8] Confronto direto FORÇADO com sucesso!');
-            } else {
-                console.error('❌ [FORCE-H2H-JOGO8] Container confronto-direto-principais-8 não encontrado!');
-            }
-            
-            // Atualizar análise do confronto direto baseada nos dados reais
-            if (analiseContainer) {
-                analiseContainer.innerHTML = 'Vantagem São Paulo';
-                console.log('✅ [FORCE-H2H-JOGO8] Análise do confronto direto atualizada!');
-            }
-            
-            // Atualizar Fator Casa baseado nos dados reais
-            const fatorCasa = document.getElementById('fator-casa-8');
-            const fatorFora = document.getElementById('fator-fora-8');
-            const fatorAnalise = document.getElementById('fator-analise-8');
-            
-            if (fatorCasa) fatorCasa.innerHTML = '35%';
-            if (fatorFora) fatorFora.innerHTML = '55%';
-            if (fatorAnalise) fatorAnalise.innerHTML = 'Vantagem São Paulo';
-            
-            console.log('✅ [FORCE-H2H-JOGO8] Fator Casa atualizado!');
-        }
 
         function forcarConfrontoDirectoJogo9() {
             console.log('🔥 [FORCE-H2H-JOGO9] Forçando confronto direto Ceará vs Botafogo...');
@@ -12152,13 +12199,6 @@ Carregando...
             }
         }
 
-        function atualizarFormaAnaliseJogo8() {
-            const formaAnalise = document.getElementById('forma-analise-8');
-            if (formaAnalise) {
-                // Carregando... vs Carregando...: Carregando... tem vantagem histórica
-                formaAnalise.innerHTML = 'Vantagem Carregando...';
-            }
-        }
 
         function atualizarFormaAnaliseJogo9() {
             const formaAnalise = document.getElementById('forma-analise-9');

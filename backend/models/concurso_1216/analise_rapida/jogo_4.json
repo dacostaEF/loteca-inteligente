@@ -11,7 +11,7 @@
     "campeonato": "Italiano Série A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/Roma/roma.png",
-    "escudo_fora": "/static/escudos/internacional_Milao/internacional_milao.png",
+    "escudo_fora": "/static/escudos/Internazionale/Internazionale.png",
     "probabilidade_casa": "45",
     "probabilidade_empate": "30",
     "probabilidade_fora": "25",

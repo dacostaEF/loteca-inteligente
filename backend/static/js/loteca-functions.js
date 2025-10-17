@@ -13,7 +13,7 @@ const jogosMap = {
     5: { csv: 'Atletico-Madrid_vs_Osasuna.csv', casa: 'Atletico Madrid', fora: 'Osasuna' },
     6: { csv: 'Cruzeiro_vs_Fortaleza.csv', casa: 'Cruzeiro', fora: 'Fortaleza' },
     7: { csv: 'Tottenham_vs_Aston-Villa.csv', casa: 'Tottenham', fora: 'Aston Villa' },
-    8: { csv: 'Milan_vs_Napoli.csv', casa: 'Milan', fora: 'Napoli' },
+    8: { csv: 'Mirassol_vs_Sao-Paulo.csv', casa: 'Mirassol', fora: 'Sao_Paulo' },
     9: { csv: 'Roma_vs_Lazio.csv', casa: 'Roma', fora: 'Lazio' },
     10: { csv: 'Fiorentina_vs_Atalanta.csv', casa: 'Fiorentina', fora: 'Atalanta' },
     11: { csv: 'Atalanta_vs_Lazio.csv', casa: 'Atalanta', fora: 'Lazio' },
@@ -44,6 +44,8 @@ const escudosMap = {
     'Fortaleza': '/static/escudos/FOR_Fortaleza/Fortaleza.png',
     'Tottenham': '/static/escudos/Tottenham/Tottenham.png',
     'Aston Villa': '/static/escudos/Aston_Villa/Aston_Villa.PNG',
+    'Mirassol': '/static/escudos/MIR_Mirassol/Mirassol.png',
+    'Sao_Paulo': '/static/escudos/SAP_SaoPaulo/SaoPaulo.png',
     'Lazio': '/static/escudos/lazio.png',
     'Fiorentina': '/static/escudos/fiorentina.png',
     'Atalanta': '/static/escudos/atalanta.png'
@@ -513,6 +515,7 @@ async function carregarDadosJogo5() {
         await carregarERenderizarConfrontos(5, dadosFallback);
     }
 }
+
 
 // EXPORTAR FUNÇÕES PARA USO GLOBAL
 window.carregarDadosCompletosJogo = carregarDadosCompletosJogo;

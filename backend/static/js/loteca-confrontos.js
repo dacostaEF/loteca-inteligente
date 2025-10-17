@@ -230,6 +230,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'ASTON VILLA',      // ← TIME FORA (resultado 'D' = vitória do Aston Villa)
             escudoCasa: '/static/escudos/Tottenham/Tottenham.png',
             escudoFora: '/static/escudos/Aston_Villa/Aston_Villa.PNG'
+        },
+        8: {
+            csv: 'Mirassol_vs_Sao-Paulo.csv',
+            timeCasa: 'MIRASSOL',         // ← TIME CASA (resultado 'V' = vitória do Mirassol)
+            timeFora: 'Sao_Paulo',        // ← TIME FORA (resultado 'D' = vitória do São Paulo) - EXATO DO CSV CORRIGIDO
+            escudoCasa: '/static/escudos/MIR_Mirassol/Mirassol.png',
+            escudoFora: '/static/escudos/SAP_SaoPaulo/SaoPaulo.png'
         }
         // Adicionar mais jogos conforme necessário
     };
