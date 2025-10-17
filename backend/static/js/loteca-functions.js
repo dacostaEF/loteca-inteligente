@@ -146,12 +146,30 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
         if (nomeCasa) {
             nomeCasa.textContent = dados.time_casa.toUpperCase();
         }
+        
+        // ATUALIZAR NOME DO TIME CASA NO CABEÇALHO DA TABELA
+        const nomeCasaTabela = document.getElementById(`time-casa-nome-${numeroJogo}-novo`);
+        if (nomeCasaTabela) {
+            nomeCasaTabela.textContent = dados.time_casa.toUpperCase();
+            console.log(`✅ [JOGO${numeroJogo}] Nome time casa na tabela: ${dados.time_casa.toUpperCase()}`);
+        } else {
+            console.warn(`⚠️ [JOGO${numeroJogo}] Elemento não encontrado: time-casa-nome-${numeroJogo}-novo`);
+        }
     }
     
     if (dados.time_fora) {
         const nomeFora = document.getElementById(ids.nomeFora);
         if (nomeFora) {
             nomeFora.textContent = dados.time_fora.toUpperCase();
+        }
+        
+        // ATUALIZAR NOME DO TIME FORA NO CABEÇALHO DA TABELA
+        const nomeForaTabela = document.getElementById(`time-fora-nome-${numeroJogo}-novo`);
+        if (nomeForaTabela) {
+            nomeForaTabela.textContent = dados.time_fora.toUpperCase();
+            console.log(`✅ [JOGO${numeroJogo}] Nome time fora na tabela: ${dados.time_fora.toUpperCase()}`);
+        } else {
+            console.warn(`⚠️ [JOGO${numeroJogo}] Elemento não encontrado: time-fora-nome-${numeroJogo}-novo`);
         }
     }
     
