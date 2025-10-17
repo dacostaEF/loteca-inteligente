@@ -244,6 +244,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'Botafogo',         // ← TIME FORA (resultado 'D' = vitória do Botafogo)
             escudoCasa: '/static/escudos/Ceara/Ceara.png',
             escudoFora: '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
+        },
+        10: {
+            csv: 'Liverpool_vs_Mancheter-United.csv',
+            timeCasa: 'Liverpool',        // ← TIME CASA (resultado 'V' = vitória do Liverpool)
+            timeFora: 'Manchester United', // ← TIME FORA (resultado 'D' = vitória do Manchester United)
+            escudoCasa: '/static/escudos/Liverpool/Liverpool.png',
+            escudoFora: '/static/escudos/Manchester_United/Manchester_United.png'
         }
         // Adicionar mais jogos conforme necessário
     };

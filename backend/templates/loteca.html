@@ -743,52 +743,73 @@ Carregando...
             </div>
         </div>
 
-        <!-- JOGO 10: FLUMINENSE vs BOTAFOGO -->
+        <!-- JOGO 10 NOVO: Fiorentina vs Atalanta -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 10:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo10" src="/static/placeholder-team-logo.svg"FLU_Fluminense/Fluminense.PNG" 
+                        <img id="escudo-casa-jogo10-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-casa-nome-jogo10">TIME CASA</span>
+                        <span id="time-casa-nome-jogo10-novo">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo10" src="/static/placeholder-team-logo.svg"Carregando.../Botafogo_RJ.png" 
+                        <img id="escudo-fora-jogo10-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-fora-nome-jogo10">TIME FORA</span>
+                        <span id="time-fora-nome-jogo10-novo">Carregando...</span>
                     </div>
                 </div>
                 
-                <div class="game-info" id="game-info-jogo10">Carregando informações...</div>
+                <div class="game-info" id="game-info-jogo10-novo">Carregando informações...</div>
             </div>
             <div class="game-card-body">
-                <div class="probabilities">
-                    <div class="prob-item col1"><div class="label" id="label-casa-10">Coluna 1 (Fluminense)</div><div class="value" id="prob-casa-10"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value" id="prob-empate-10"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label" id="label-fora-10">Coluna 2 (Botafogo)</div><div class="value" id="prob-fora-10"><div class="loading-spinner"></div>Carregando...</div></div>
+                <div class="probabilities" id="probabilidades-jogo-10-novo">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1-10-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-10-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2-10-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
-                <div class="recommendation" id="recomendacao-10"><strong>Recomendação Estatística:</strong> <span class="loading-spinner"></span>Carregando análise...</div>
-                
+                <div class="recommendation" id="recomendacao-jogo-10-novo"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
-                <table class="analysis-table" id="analise-jogo-10">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-10">Carregando...</th><th class="team-header" id="time-fora-nome-10">Carregando...</th><th>Análise</th></tr></thead>
+                <table class="analysis-table" id="analise-jogo-10-novo">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-10-novo">Carregando...</th><th class="team-header" id="time-fora-nome-10-novo">Carregando...</th><th>Análise</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-10"></div></td><td id="forma-analise-10">Baseado nos últimos 10 jogos</td></tr>
-                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-10">-</td><td class="team-header" id="posicao-fora-10">-</td><td id="posicao-analise-10">Carregando dados...</td></tr>
-                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-10"></div></td><td id="h2h-analise-10">Carregando dados...</td></tr>
-                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-10">-</td><td class="team-header" id="fator-fora-10">-</td><td id="fator-analise-10">Carregando dados...</td></tr>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-10-novo"></div></td><td id="forma-analise-10-novo">Baseado nos últimos 10 jogos</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-10-novo">-</td><td class="team-header" id="posicao-fora-10-novo">-</td><td id="posicao-analise-10-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-10-novo"></div></td><td id="h2h-analise-10-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-10-novo">-</td><td class="team-header" id="fator-fora-10-novo">-</td><td id="fator-analise-10-novo">Carregando dados...</td></tr>
                     </tbody>
                 </table>
                 
+                <!-- VERSÃO MOBILE -->
+                <div class="analysis-mobile">
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Forma Recente</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-10-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora-10-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Confronto Direto</div>
+                        <div class="analysis-mobile-teams">
+                            <span id="confronto-direto-mobile-10-novo">Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Fator Casa</div>
+                        <div class="analysis-mobile-teams">
+                            <span id="fator-casa-mobile-10-novo">Carregando...</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p id="conclusao-10">Carregando análise completa...</p>
+                    <p id="conclusao-analista-jogo10-novo">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -7923,20 +7944,6 @@ Carregando...
 
 
 
-        async function carregarDadosJogo10() {
-            console.log('🎯 [JOGO10] Iniciando carregamento dos dados do JOGO 10...');
-            try {
-                const response = await fetch('/api/analise/jogo/10?concurso=concurso_1216');
-                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                const data = await response.json();
-                if (data.success && data.dados) {
-                    atualizarDadosJogo10(data.dados);
-                    console.log('✅ [JOGO10] Dados atualizados com sucesso!');
-                }
-            } catch (error) {
-                console.error('❌ [JOGO10] Erro ao carregar dados:', error);
-            }
-        }
 
         async function carregarDadosJogo11() {
             console.log('🎯 [JOGO11] Iniciando carregamento dos dados do JOGO 11...');
@@ -8771,6 +8778,113 @@ Carregando...
             // Implementar confrontos fallback se necessário
         }
 
+        // FUNÇÃO PARA O NOVO JOGO 10 (USANDO SCRIPTS EXTERNOS)
+        async function carregarJogo10Novo() {
+            console.log('🎯 [JOGO10-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
+            
+            try {
+                // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
+                console.log('🔍 [JOGO10-NOVO] Verificando funções disponíveis...');
+                console.log('📊 [JOGO10-NOVO] carregarDadosCompletosJogo:', typeof carregarDadosCompletosJogo);
+                console.log('📊 [JOGO10-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
+                
+                // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
+                const mapeamentoIds = {
+                    'escudo-casa-jogo10-novo': 'escudo-casa-jogo10',
+                    'time-casa-nome-jogo10-novo': 'time-casa-nome-jogo10',
+                    'escudo-fora-jogo10-novo': 'escudo-fora-jogo10',
+                    'time-fora-nome-jogo10-novo': 'time-fora-nome-jogo10',
+                    'game-info-jogo10-novo': 'game-info-jogo10',
+                    'prob-col1-10-novo': 'prob-casa-10',
+                    'prob-colX-10-novo': 'prob-empate-10',
+                    'prob-col2-10-novo': 'prob-fora-10',
+                    'recomendacao-jogo-10-novo': 'recomendacao-10',
+                    'posicao-casa-10-novo': 'posicao-casa-10',
+                    'posicao-fora-10-novo': 'posicao-fora-10',
+                    'posicao-analise-10-novo': 'posicao-analise-10',
+                    'confronto-direto-principais-10-novo': 'confronto-direto-principais-10',
+                    'h2h-analise-10-novo': 'h2h-analise-10',
+                    'fator-casa-10-novo': 'fator-casa-10',
+                    'fator-fora-10-novo': 'fator-fora-10',
+                    'fator-analise-10-novo': 'fator-analise-10',
+                    'conclusao-analista-jogo10-novo': 'conclusao-10',
+                    'time-casa-nome-10-novo': 'time-casa-nome-10-novo',
+                    'time-fora-nome-10-novo': 'time-fora-nome-10-novo',
+                    'confrontos-principais-10-novo': 'confrontos-principais-10',
+                    'forma-analise-10-novo': 'forma-analise-10'
+                };
+                
+                // 3. CRIAR ELEMENTOS TEMPORÁRIOS COM IDs ESPERADOS PELAS FUNÇÕES
+                console.log('🔄 [JOGO10-NOVO] Criando elementos temporários...');
+                const elementosTemporarios = {};
+                
+                for (const [idNovo, idEsperado] of Object.entries(mapeamentoIds)) {
+                    const elementoNovo = document.getElementById(idNovo);
+                    if (elementoNovo) {
+                        // Criar elemento temporário com ID esperado
+                        const elementoTemp = elementoNovo.cloneNode(true);
+                        elementoTemp.id = idEsperado;
+                        elementoTemp.style.display = 'none';
+                        document.body.appendChild(elementoTemp);
+                        elementosTemporarios[idEsperado] = elementoTemp;
+                        console.log(`✅ [JOGO10-NOVO] Elemento temporário criado: ${idEsperado}`);
+                    }
+                }
+                
+                // 4. CHAMAR FUNÇÕES EXTERNAS
+                console.log('🚀 [JOGO10-NOVO] Chamando carregarDadosCompletosJogo(10)...');
+                if (typeof carregarDadosCompletosJogo === 'function') {
+                    await carregarDadosCompletosJogo(10);
+                } else {
+                    console.warn('⚠️ [JOGO10-NOVO] carregarDadosCompletosJogo não disponível');
+                }
+                
+                console.log('🚀 [JOGO10-NOVO] Chamando carregarConfrontosAutomatico(10)...');
+                if (typeof carregarConfrontosAutomatico === 'function') {
+                    await carregarConfrontosAutomatico(10);
+                } else {
+                    console.warn('⚠️ [JOGO10-NOVO] carregarConfrontosAutomatico não disponível');
+                }
+                
+                // 5. COPIAR DADOS DOS ELEMENTOS TEMPORÁRIOS PARA OS ELEMENTOS NOVOS
+                console.log('🔄 [JOGO10-NOVO] Copiando dados para elementos novos...');
+                for (const [idEsperado, elementoTemp] of Object.entries(elementosTemporarios)) {
+                    // Encontrar o elemento novo correspondente usando o mapeamento reverso
+                    const idNovo = Object.keys(mapeamentoIds).find(key => mapeamentoIds[key] === idEsperado);
+                    const elementoNovo = idNovo ? document.getElementById(idNovo) : null;
+                    if (elementoNovo && elementoTemp) {
+                        // Copiar conteúdo
+                        if (elementoTemp.innerHTML) {
+                            elementoNovo.innerHTML = elementoTemp.innerHTML;
+                        }
+                        // Copiar atributos
+                        if (elementoTemp.src) {
+                            elementoNovo.src = elementoTemp.src;
+                        }
+                        if (elementoTemp.className) {
+                            elementoNovo.className = elementoTemp.className;
+                        }
+                        console.log(`✅ [JOGO10-NOVO] Dados copiados: ${idEsperado} → ${elementoNovo.id}`);
+                    }
+                }
+                
+                // 6. LIMPAR ELEMENTOS TEMPORÁRIOS
+                console.log('🧹 [JOGO10-NOVO] Limpando elementos temporários...');
+                for (const elementoTemp of Object.values(elementosTemporarios)) {
+                    if (elementoTemp && elementoTemp.parentNode) {
+                        elementoTemp.parentNode.removeChild(elementoTemp);
+                    }
+                }
+                
+                console.log('✅ [JOGO10-NOVO] Carregamento concluído com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ [JOGO10-NOVO] Erro no carregamento:', error);
+                console.log('🔄 [JOGO10-NOVO] Carregando confrontos fallback...');
+                // Implementar confrontos fallback se necessário
+            }
+        }
+
         // FUNÇÃO PARA O NOVO JOGO 9 (USANDO SCRIPTS EXTERNOS)
         async function carregarJogo9Novo() {
             console.log('🎯 [JOGO9-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
@@ -9592,7 +9706,6 @@ Carregando...
         
         // FUNÇÕES PARA OUTROS JOGOS (MANTIDAS)
         function atualizarDadosJogo9(dados) { atualizarDadosJogoGenerico(9, dados); }
-        function atualizarDadosJogo10(dados) { atualizarDadosJogoGenerico(10, dados); }
         function atualizarDadosJogo11(dados) { atualizarDadosJogoGenerico(11, dados); }
         function atualizarDadosJogo12(dados) { atualizarDadosJogoGenerico(12, dados); }
         function atualizarDadosJogo13(dados) { atualizarDadosJogoGenerico(13, dados); }
@@ -9792,8 +9905,9 @@ Carregando...
                 carregarJogo8Novo();
                 console.log('🔥 [DEBUG] Chamando carregarJogo9Novo()...');
                 carregarJogo9Novo();
+                console.log('🔥 [DEBUG] Chamando carregarJogo10Novo()...');
+                carregarJogo10Novo();
                 carregarDadosJogo6();
-                carregarDadosJogo10();
                 carregarDadosJogo11();
                 carregarDadosJogo12();
                 carregarDadosJogo13();
@@ -9848,11 +9962,6 @@ Carregando...
             
             
             
-            // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 10
-            setTimeout(() => forcarConfrontoDirectoJogo10(), 3000);
-            setTimeout(() => forcarConfrontoDirectoJogo10(), 5000);
-            setTimeout(() => forcarConfrontoDirectoJogo10(), 7000);
-            setTimeout(() => forcarConfrontoDirectoJogo10(), 9000);
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 11
             setTimeout(() => forcarConfrontoDirectoJogo11(), 3000);
@@ -9891,7 +10000,6 @@ Carregando...
                 carregarDadosReaisDiretosJogo5();
                 carregarDadosReaisDiretosJogo7();
                 carregarDadosReaisDiretosJogo9();
-                carregarDadosReaisDiretosJogo10();
                 carregarDadosReaisDiretosJogo11();
                 carregarDadosReaisDiretosJogo12();
                 carregarDadosReaisDiretosJogo13();
@@ -9905,7 +10013,6 @@ Carregando...
             setTimeout(() => {
                 carregarUltimosConfrontosJogo7();
                 carregarUltimosConfrontosJogo9();
-                carregarUltimosConfrontosJogo10();
                 carregarUltimosConfrontosJogo12();
                 carregarUltimosConfrontosJogo13();
                 carregarUltimosConfrontosJogo14();
@@ -9940,7 +10047,6 @@ Carregando...
                 atualizarFormaAnaliseJogo5();
                 atualizarFormaAnaliseJogo7();
                 atualizarFormaAnaliseJogo9();
-                atualizarFormaAnaliseJogo10();
                 atualizarFormaAnaliseJogo11();
                 atualizarFormaAnaliseJogo12();
                 atualizarFormaAnaliseJogo13();
@@ -9955,7 +10061,6 @@ Carregando...
                 carregarPosicoesTabelaJogo5();
                 carregarPosicoesTabelaJogo7();
                 carregarPosicoesTabelaJogo9();
-                carregarPosicoesTabelaJogo10();
                 carregarPosicoesTabelaJogo11();
                 carregarPosicoesTabelaJogo12();
                 carregarPosicoesTabelaJogo13();
@@ -11904,21 +12009,6 @@ Carregando...
 
 
 
-        function carregarDadosReaisDiretosJogo10() {
-            console.log('🎯 [LOTECA-JOGO10] Carregando dados Fluminense vs Botafogo...');
-            
-            const probCol1 = document.getElementById('prob-casa-10');
-            const probColX = document.getElementById('prob-empate-10');
-            const probCol2 = document.getElementById('prob-fora-10');
-            const recomendacao = document.getElementById('recomendacao-10');
-            const conclusao = document.getElementById('conclusao-10');
-            
-            if (probCol1) probCol1.innerHTML = '35%';
-            if (probColX) probColX.innerHTML = '40%';
-            if (probCol2) probCol2.innerHTML = '25%';
-            if (recomendacao) recomendacao.innerHTML = '<strong>Recomendação Estatística: Coluna X (Empate)</strong> - Risco Alto';
-            if (conclusao) conclusao.innerHTML = 'O clássico mais equilibrado da rodada. Ambos os times possuem estilos de jogo fortes e campanhas similares. O fator "campo neutro" (Maracanã) anula a vantagem de mandante. A alta probabilidade de empate faz da Coluna X a aposta estatisticamente mais provável para este confronto.';
-        }
 
         function carregarDadosReaisDiretosJogo11() {
             console.log('🎯 [LOTECA-JOGO11] Carregando dados Criciúma vs Paysandu...');
@@ -12020,43 +12110,6 @@ Carregando...
 
 
 
-        function forcarConfrontoDirectoJogo10() {
-            console.log('🔥 [FORCE-H2H-JOGO10] Forçando confronto direto Liverpool vs Manchester United...');
-            const container = document.getElementById('confronto-direto-principais-10');
-            const analiseContainer = document.getElementById('h2h-analise-10');
-            
-            if (container) {
-                container.innerHTML = `
-                    <img src="/static/escudos/Liverpool/liverpool.png" alt="Liverpool" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>LIV</span>'">
-                    <span class="confronto-direto-count">4</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">2E</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">4</span>
-                    <img src="/static/escudos/Manchester_United/manchester_united.png" alt="Manchester United" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>MUN</span>'">
-                `;
-                console.log('✅ [FORCE-H2H-JOGO10] Confronto direto FORÇADO com sucesso!');
-            } else {
-                console.error('❌ [FORCE-H2H-JOGO10] Container confronto-direto-principais-10 não encontrado!');
-            }
-            
-            // Atualizar Fator Casa baseado nos dados reais
-            const fatorCasa = document.getElementById('fator-casa-10');
-            const fatorFora = document.getElementById('fator-fora-10');
-            const fatorAnalise = document.getElementById('fator-analise-10');
-            
-            if (fatorCasa) fatorCasa.innerHTML = '50%';
-            if (fatorFora) fatorFora.innerHTML = '50%';
-            if (fatorAnalise) fatorAnalise.innerHTML = 'Confronto equilibrado';
-            
-            console.log('✅ [FORCE-H2H-JOGO10] Fator Casa atualizado!');
-            
-            // Atualizar análise do confronto direto
-            const h2hAnalise = document.getElementById('h2h-analise-10');
-            if (h2hAnalise) {
-                h2hAnalise.innerHTML = 'Confronto equilibrado';
-            }
-        }
 
         function forcarConfrontoDirectoJogo11() {
             console.log('🔥 [FORCE-H2H-JOGO11] Forçando confronto direto Atalanta vs Lazio...');
@@ -12249,13 +12302,6 @@ Carregando...
 
 
 
-        function atualizarFormaAnaliseJogo10() {
-            const formaAnalise = document.getElementById('forma-analise-10');
-            if (formaAnalise) {
-                // Fluminense vs Botafogo: Confronto equilibrado
-                formaAnalise.innerHTML = 'Confronto equilibrado';
-            }
-        }
 
         function atualizarFormaAnaliseJogo11() {
             const formaAnalise = document.getElementById('forma-analise-11');
@@ -12523,116 +12569,6 @@ Carregando...
         }
 
 
-        async function carregarUltimosConfrontosJogo10() {
-            console.log('🎯 [CONFRONTOS-JOGO10] Carregando últimos confrontos Liverpool vs Manchester United...');
-            
-            const container = document.getElementById('confrontos-principais-10');
-            if (!container) {
-                console.error('❌ [CONFRONTOS-JOGO10] Container confrontos-principais-10 não encontrado!');
-                return;
-            }
-            
-            // DADOS REAIS DO ARQUIVO CSV - LIVERPOOL vs MANCHESTER UNITED
-            let confrontos = [
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' },
-                { data: '2025-01-01', mandante: 'Liverpool', visitante: 'Manchester United', placar: '1-1', resultado: 'E' }
-            ];
-            
-            // TENTAR CARREGAR DADOS DO ARQUIVO CSV
-            try {
-                console.log('🔄 [CONFRONTOS-JOGO10] Buscando dados do arquivo CSV...');
-                const csvResponse = await fetch('/api/confrontos/Liverpool_vs_Mancheter-United.csv');
-                
-                if (csvResponse.ok) {
-                    const csvText = await csvResponse.text();
-                    console.log('✅ [CONFRONTOS-JOGO10] CSV carregado:', csvText.substring(0, 200) + '...');
-                    
-                    // Parse do CSV
-                    const lines = csvText.split('\n').filter(line => line.trim());
-                    const csvData = lines.slice(1, 11).map(line => {
-                        const [data, mandante, placar, visitante, vencedor, rodada, competicao] = line.split(',');
-                        let resultado = 'E'; // Default to Empate
-                        
-                        // PRIORIZAR PLACAR sobre campo vencedor (CSV tem inconsistências)
-                        if (placar && placar.includes('-')) {
-                            const [golsCasa, golsFora] = placar.split('-').map(g => parseInt(g.trim()));
-                            if (golsCasa === golsFora) {
-                                resultado = 'E'; // Empate
-                            } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (ATLETICO MADRID)
-                            } else {
-                                resultado = 'D'; // Derrota do mandante (OSASUNA venceu)
-                            }
-                        } else {
-                            // Fallback: usar campo vencedor se placar não disponível
-                            if (vencedor && vencedor.trim() === mandante) {
-                                resultado = 'V';
-                            } else if (vencedor && vencedor.trim() === visitante) {
-                                resultado = 'D';
-                            }
-                        }
-                        return {
-                            data: data,
-                            mandante: mandante,
-                            visitante: visitante,
-                            placar: placar,
-                            resultado: resultado
-                        };
-                    });
-                    
-                    if (csvData.length > 0) {
-                        confrontos = csvData;
-                        console.log('✅ [CONFRONTOS-JOGO10] Dados CSV carregados:', confrontos.length, 'confrontos');
-                    }
-                } else {
-                    console.log('⚠️ [CONFRONTOS-JOGO10] CSV não encontrado, usando dados padrão');
-                }
-            } catch (error) {
-                console.error('❌ [CONFRONTOS-JOGO10] Erro ao carregar CSV:', error);
-            }
-            
-            const bolinhasHtml = confrontos.map(confronto => {
-                const resultado = confronto.resultado.toUpperCase();
-                let classe, conteudo;
-                
-                if (resultado === 'V') {
-                    classe = 'liverpool';
-                    conteudo = '<img src="/static/escudos/LIV_Liverpool/Liverpool.png" alt="Liverpool" class="confronto-escudo" onerror="this.outerHTML=\'LIV\'">';
-                } else if (resultado === 'D') {
-                    classe = 'manchester-united';
-                    conteudo = '<img src="/static/escudos/MUN_Manchester-United/Manchester_United.png" alt="Manchester United" class="confronto-escudo" onerror="this.outerHTML=\'MUN\'">';
-                } else {
-                    classe = 'empate';
-                    conteudo = 'E';
-                }
-                
-                let dataFormatada = '';
-                if (confronto.data) {
-                    const [ano, mes, dia] = confronto.data.split('-');
-                    const anoAbrev = ano.substring(2);
-                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
-                }
-                
-                return `
-                    <div class="confronto-item">
-                        <div class="confronto-data">${dataFormatada}</div>
-                        <div class="confronto-placar">${confronto.placar}</div>
-                        <div class="confronto-result ${classe}" title="${confronto.data}: ${confronto.mandante} ${confronto.placar} ${confronto.visitante}">${conteudo}</div>
-                    </div>
-                `;
-            }).join('');
-            
-            container.innerHTML = bolinhasHtml;
-            console.log(`✅ [CONFRONTOS-JOGO10] ${confrontos.length} bolinhas renderizadas na tabela (linha única)`);
-        }
 
         async function carregarUltimosConfrontosJogo11() {
             console.log('🎯 [CONFRONTOS-JOGO11] Carregando últimos confrontos Atalanta vs Lazio...');
@@ -13309,38 +13245,6 @@ Carregando...
         }
 
 
-        function carregarPosicoesTabelaJogo10() {
-            console.log('📊 [POSITION-JOGO10] Buscando posições na tabela para Fluminense vs Botafogo...');
-            const homeClassification = { position: 9, points: 32 };
-            const awayClassification = { position: 6, points: 38 };
-            
-            const posicaoCasa = document.getElementById('posicao-casa-10');
-            const posicaoFora = document.getElementById('posicao-fora-10');
-            const posicaoAnalise = document.getElementById('posicao-analise-10');
-            
-            if (posicaoCasa) {
-                posicaoCasa.innerHTML = `${homeClassification.position}º`;
-            }
-            
-            if (posicaoFora) {
-                posicaoFora.innerHTML = `${awayClassification.position}º`;
-            }
-            
-            if (posicaoAnalise) {
-                const positionDiff = Math.abs(homeClassification.position - awayClassification.position);
-                if (positionDiff <= 3) {
-                    posicaoAnalise.innerHTML = 'Confronto equilibrado';
-                } else {
-                    if (homeClassification.position < awayClassification.position) {
-                        posicaoAnalise.innerHTML = 'Vantagem Fluminense';
-                    } else {
-                        posicaoAnalise.innerHTML = 'Vantagem Botafogo';
-                    }
-                }
-            }
-            
-            console.log('✅ [POSITION-JOGO10] Posições atualizadas na interface');
-        }
 
         function carregarPosicoesTabelaJogo11() {
             console.log('📊 [POSITION-JOGO11] Buscando posições na tabela para Criciúma vs Paysandu...');

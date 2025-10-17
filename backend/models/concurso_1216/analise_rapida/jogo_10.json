@@ -21,13 +21,13 @@
     "posicao_casa": "2",
     "posicao_fora": "10",
     "confronto_direto": "5V-3E-2D",
-    "fator_casa": "60",
-    "fator_fora": "40",
+    "fator_casa": "55",
+    "fator_fora": "45",
     "analise_posicao": "Vantagem Liverpool",
     "analise_posicao_tabelas": "Vantagem Liverpool",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-15T19:10:51.208Z"
+    "sincronizado_em": "2025-10-17T22:26:34.785Z"
   },
   "admin_key": "loteca2024admin"
 }
