@@ -216,6 +216,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'FORTALEZA',        // ← TIME FORA (resultado 'D' = vitória da Fortaleza)
             escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
             escudoFora: '/static/escudos/FOR_Fortaleza/Fortaleza.png'
+        },
+        7: {
+            csv: 'Tottenham_vs_Aston-Villa.csv',
+            timeCasa: 'TOTTENHAM',        // ← TIME CASA (resultado 'V' = vitória do Tottenham)
+            timeFora: 'ASTON VILLA',      // ← TIME FORA (resultado 'D' = vitória do Aston Villa)
+            escudoCasa: '/static/escudos/Tottenham/Tottenham.png',
+            escudoFora: '/static/escudos/Aston_Villa/Aston_Villa.PNG'
         }
         // Adicionar mais jogos conforme necessário
     };

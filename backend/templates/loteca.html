@@ -585,54 +585,68 @@ Equilíbrio
             </div>
         </div>
 
-
-
-        <!-- JOGO 7: TOTTENHAM vs ASTON VILLA -->
+        <!-- JOGO 7: TOTTENHAM vs ASTON VILLA (NOVO) -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 7:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo7" src="/static/placeholder-team-logo.svg" 
+                        <img id="escudo-casa-jogo7-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-casa-nome-jogo7">TIME CASA</span>
+                        <span id="time-casa-nome-jogo7-novo">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo7" src="/static/placeholder-team-logo.svg" 
+                        <img id="escudo-fora-jogo7-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-fora-nome-jogo7">TIME FORA</span>
+                        <span id="time-fora-nome-jogo7-novo">Carregando...</span>
                     </div>
                 </div>
                 
-                <div class="game-info" id="game-info-jogo7">Carregando informações...</div>
+                <div class="game-info" id="game-info-jogo7-novo">Carregando informações...</div>
             </div>
             <div class="game-card-body">
-                <div class="probabilities">
-                    <div class="prob-item col1"><div class="label" id="label-casa-7">Coluna 1 (Time Casa)</div><div class="value" id="prob-casa-7"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value" id="prob-empate-7"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label" id="label-fora-7">Coluna 2 (Time Fora)</div><div class="value" id="prob-fora-7"><div class="loading-spinner"></div>Carregando...</div></div>
+                <div class="probabilities" id="probabilidades-jogo-7-novo">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1-7-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-7-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2-7-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
-                <div class="recommendation" id="recomendacao-7"><strong>Recomendação Estatística:</strong> <span class="loading-spinner"></span>Carregando análise...</div>
-                
+                <div class="recommendation" id="recomendacao-jogo-7-novo"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
-                <table class="analysis-table" id="analise-jogo-7">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-7">Carregando...</th><th class="team-header" id="time-fora-nome-7">Carregando...</th><th>Análise</th></tr></thead>
+                <table class="analysis-table" id="analise-jogo-7-novo">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-7-novo">Carregando...</th><th class="team-header" id="time-fora-nome-7-novo">Carregando...</th><th>Análise</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-7"></div></td><td id="forma-analise-7">Baseado nos últimos 10 jogos</td></tr>
-                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-7">-</td><td class="team-header" id="posicao-fora-7">-</td><td id="posicao-analise-7">Carregando dados...</td></tr>
-                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-7"></div></td><td id="h2h-analise-7">Carregando dados...</td></tr>
-                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-7">-</td><td class="team-header" id="fator-fora-7">-</td><td id="fator-analise-7">Carregando dados...</td></tr>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-7-novo"></div></td><td id="forma-analise-7-novo">Baseado nos últimos 10 jogos</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-7-novo">-</td><td class="team-header" id="posicao-fora-7-novo">-</td><td id="posicao-analise-7-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-7-novo"></div></td><td id="h2h-analise-7-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-7-novo">-</td><td class="team-header" id="fator-fora-7-novo">-</td><td id="fator-analise-7-novo">Carregando dados...</td></tr>
                     </tbody>
                 </table>
-                
-                
+
+                <!-- VERSÃO MOBILE -->
+                <div class="analysis-mobile">
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Forma Recente</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Confronto Direto</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">3V</span>
+                            <span><img id="escudo-mobile-fora-7-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">1V</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p id="conclusao-7">Carregando análise completa...</p>
+                    <p id="conclusao-analista-jogo7-novo">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -7949,20 +7963,6 @@ Equilíbrio
         // FUNÇÃO DUPLICADA REMOVIDA - USANDO A FUNÇÃO ESPECÍFICA ABAIXO
 
 
-        async function carregarDadosJogo7() {
-            console.log('🎯 [JOGO7] Iniciando carregamento dos dados do JOGO 7...');
-            try {
-                const response = await fetch('/api/analise/jogo/7?concurso=concurso_1216');
-                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                const data = await response.json();
-                if (data.success && data.dados) {
-                    atualizarDadosJogo7(data.dados);
-                    console.log('✅ [JOGO7] Dados atualizados com sucesso!');
-                }
-            } catch (error) {
-                console.error('❌ [JOGO7] Erro ao carregar dados:', error);
-            }
-        }
 
         async function carregarDadosJogo8() {
             console.log('🎯 [JOGO8] Iniciando carregamento dos dados do JOGO 8...');
@@ -8458,6 +8458,113 @@ Equilíbrio
                     conclusao_analista: 'O Cruzeiro tem vantagem em casa e melhor posição na tabela. O Fortaleza vem de campanha sólida, mas o fator casa pode ser decisivo.'
                 });
                 carregarConfrontosJogo6Novo();
+            }
+        }
+
+        // FUNÇÃO PARA O NOVO JOGO 7 (USANDO SCRIPTS EXTERNOS)
+        async function carregarJogo7Novo() {
+            console.log('🎯 [JOGO7-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
+            
+            try {
+                // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
+                console.log('🔍 [JOGO7-NOVO] Verificando funções disponíveis...');
+                console.log('📊 [JOGO7-NOVO] carregarDadosCompletosJogo:', typeof carregarDadosCompletosJogo);
+                console.log('📊 [JOGO7-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
+                
+                // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
+                const mapeamentoIds = {
+                    'escudo-casa-jogo7-novo': 'escudo-casa-jogo7',
+                    'time-casa-nome-jogo7-novo': 'time-casa-nome-jogo7',
+                    'escudo-fora-jogo7-novo': 'escudo-fora-jogo7',
+                    'time-fora-nome-jogo7-novo': 'time-fora-nome-jogo7',
+                    'game-info-jogo7-novo': 'game-info-jogo7',
+                    'prob-col1-7-novo': 'prob-casa-7',
+                    'prob-colX-7-novo': 'prob-empate-7',
+                    'prob-col2-7-novo': 'prob-fora-7',
+                    'recomendacao-jogo-7-novo': 'recomendacao-7',
+                    'posicao-casa-7-novo': 'posicao-casa-7',
+                    'posicao-fora-7-novo': 'posicao-fora-7',
+                    'confronto-direto-principais-7-novo': 'confronto-direto-principais-7',
+                    'fator-casa-7-novo': 'fator-casa-7',
+                    'fator-fora-7-novo': 'fator-fora-7',
+                    'forma-analise-7-novo': 'forma-analise-7',
+                    'posicao-analise-7-novo': 'posicao-analise-7',
+                    'h2h-analise-7-novo': 'h2h-analise-7',
+                    'fator-analise-7-novo': 'fator-analise-7',
+                    'conclusao-analista-jogo7-novo': 'conclusao-7',
+                    'confrontos-principais-7-novo': 'confrontos-principais-7'
+                };
+                
+                // 3. TEMPORARIAMENTE RENOMEAR IDs PARA USAR AS FUNÇÕES EXTERNAS
+                console.log('🔄 [JOGO7-NOVO] Renomeando IDs temporariamente...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(novoId);
+                    if (elemento) {
+                        elemento.id = idEsperado;
+                        console.log(`✅ [JOGO7-NOVO] ${novoId} → ${idEsperado}`);
+                    } else {
+                        console.warn(`⚠️ [JOGO7-NOVO] Elemento não encontrado: ${novoId}`);
+                    }
+                });
+                
+                // 4. USAR FUNÇÃO DO loteca-functions.js PARA DADOS JSON
+                if (typeof carregarDadosCompletosJogo === 'function') {
+                    console.log('📊 [JOGO7-NOVO] Chamando carregarDadosCompletosJogo(7)...');
+                    await carregarDadosCompletosJogo(7);
+                    console.log('✅ [JOGO7-NOVO] carregarDadosCompletosJogo(7) executado!');
+                } else {
+                    console.error('❌ [JOGO7-NOVO] Função carregarDadosCompletosJogo não encontrada!');
+                }
+                
+                // 5. USAR FUNÇÃO AUTOMATIZADA DO loteca-confrontos.js PARA CONFRONTOS
+                if (typeof carregarConfrontosAutomatico === 'function') {
+                    console.log('📊 [JOGO7-NOVO] Chamando carregarConfrontosAutomatico(7)...');
+                    await carregarConfrontosAutomatico(7);
+                    console.log('✅ [JOGO7-NOVO] carregarConfrontosAutomatico(7) executado!');
+                } else {
+                    console.error('❌ [JOGO7-NOVO] Função carregarConfrontosAutomatico não encontrada!');
+                }
+                
+                // 6. RESTAURAR IDs ORIGINAIS
+                console.log('🔄 [JOGO7-NOVO] Restaurando IDs originais...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(idEsperado);
+                    if (elemento) {
+                        elemento.id = novoId;
+                        console.log(`✅ [JOGO7-NOVO] ${idEsperado} → ${novoId}`);
+                    }
+                });
+                
+                console.log('🎉 [JOGO7-NOVO] Carregamento com SCRIPTS EXTERNOS finalizado!');
+                
+            } catch (error) {
+                console.error('❌ [JOGO7-NOVO] Erro no carregamento:', error);
+                
+                // FALLBACK: Usar dados hardcoded
+                console.log('🔄 [JOGO7-NOVO] Usando fallback local...');
+                atualizarDadosJogo7Novo({
+                    time_casa: 'TOTTENHAM',
+                    time_fora: 'ASTON VILLA',
+                    arena: 'Tottenham Hotspur Stadium - Londres',
+                    campeonato: 'Premier League',
+                    dia: 'Sábado',
+                    escudo_casa: '/static/escudos/Tottenham/Tottenham.png',
+                    escudo_fora: '/static/escudos/Aston_Villa/Aston_Villa.PNG',
+                    probabilidade_casa: '45',
+                    probabilidade_empate: '30',
+                    probabilidade_fora: '25',
+                    posicao_casa: '5',
+                    posicao_fora: '8',
+                    confronto_direto: '3V-2E-1D',
+                    fator_casa: '48',
+                    fator_fora: '42',
+                    analise_posicao: 'Vantagem Tottenham',
+                    analise_posicao_tabelas: 'Vantagem Tottenham',
+                    analise_confronto_direto: 'Vantagem Tottenham',
+                    analise_fator_casa: 'Vantagem Tottenham',
+                    conclusao_analista: 'O Tottenham tem vantagem em casa e melhor posição na tabela. O Aston Villa vem de campanha sólida, mas o fator casa pode ser decisivo.'
+                });
+                carregarConfrontosJogo7Novo();
             }
         }
 
@@ -9176,7 +9283,6 @@ Equilíbrio
         
         
         // FUNÇÕES PARA OUTROS JOGOS (MANTIDAS)
-        function atualizarDadosJogo7(dados) { atualizarDadosJogoGenerico(7, dados); }
         function atualizarDadosJogo8(dados) { atualizarDadosJogoGenerico(8, dados); }
         function atualizarDadosJogo9(dados) { atualizarDadosJogoGenerico(9, dados); }
         function atualizarDadosJogo10(dados) { atualizarDadosJogoGenerico(10, dados); }
@@ -9373,8 +9479,9 @@ Equilíbrio
                 carregarJogo5Novo();
                 console.log('🔥 [DEBUG] Chamando carregarJogo6Novo()...');
                 carregarJogo6Novo();
+                console.log('🔥 [DEBUG] Chamando carregarJogo7Novo()...');
+                carregarJogo7Novo();
                 carregarDadosJogo6();
-                carregarDadosJogo7();
                 carregarDadosJogo8();
                 carregarDadosJogo9();
                 carregarDadosJogo10();
@@ -9441,11 +9548,6 @@ Equilíbrio
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 5
             
             
-            // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 7
-            setTimeout(() => forcarConfrontoDirectoJogo7(), 3000);
-            setTimeout(() => forcarConfrontoDirectoJogo7(), 5000);
-            setTimeout(() => forcarConfrontoDirectoJogo7(), 7000);
-            setTimeout(() => forcarConfrontoDirectoJogo7(), 9000);
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 8
             setTimeout(() => forcarConfrontoDirectoJogo8(), 3000);
@@ -11662,44 +11764,6 @@ Equilíbrio
         }
 
 
-        function forcarConfrontoDirectoJogo7() {
-            console.log('🔥 [FORCE-H2H-JOGO7] Forçando confronto direto Tottenham vs Aston Villa...');
-            const container = document.getElementById('confronto-direto-principais-7');
-            const analiseContainer = document.getElementById('h2h-analise-7');
-            
-            if (container) {
-                // DADOS REAIS baseados nos Últimos Confrontos: Tottenham vs Aston Villa
-                container.innerHTML = `
-                    <img src="/static/escudos/Tottenham/Tottenham.png" alt="Tottenham" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>TOT</span>'">
-                    <span class="confronto-direto-count">3</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">2E</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">1</span>
-                    <img src="/static/escudos/Aston_Villa/Aston_Villa.PNG" alt="Aston Villa" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>AVL</span>'">
-                `;
-                console.log('✅ [FORCE-H2H-JOGO7] Confronto direto FORÇADO com sucesso!');
-            } else {
-                console.error('❌ [FORCE-H2H-JOGO7] Container confronto-direto-principais-7 não encontrado!');
-            }
-            
-            // Atualizar análise do confronto direto baseada nos dados reais
-            if (analiseContainer) {
-                analiseContainer.innerHTML = 'Vantagem Tottenham';
-                console.log('✅ [FORCE-H2H-JOGO7] Análise do confronto direto atualizada!');
-            }
-            
-            // Atualizar Fator Casa baseado nos dados reais
-            const fatorCasa = document.getElementById('fator-casa-7');
-            const fatorFora = document.getElementById('fator-fora-7');
-            const fatorAnalise = document.getElementById('fator-analise-7');
-            
-            if (fatorCasa) fatorCasa.innerHTML = '48%';
-            if (fatorFora) fatorFora.innerHTML = '42%';
-            if (fatorAnalise) fatorAnalise.innerHTML = 'Vantagem Tottenham';
-            
-            console.log('✅ [FORCE-H2H-JOGO7] Fator Casa atualizado!');
-        }
 
         function forcarConfrontoDirectoJogo8() {
             console.log('🔥 [FORCE-H2H-JOGO8] Forçando confronto direto Mirassol vs São Paulo...');
