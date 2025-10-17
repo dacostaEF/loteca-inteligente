@@ -17,10 +17,74 @@ const jogosMap = {
     9: { csv: 'Ceara_vs_Botafogo-RJ.csv', casa: 'Ceará', fora: 'Botafogo' },
     10: { csv: 'Liverpool_vs_Mancheter-United.csv', casa: 'Liverpool', fora: 'Manchester United' },
     11: { csv: 'Atalanta_vs_Lazio.csv', casa: 'Atalanta', fora: 'Lazio' },
-    12: { csv: 'Napoli_vs_Juventus.csv', casa: 'Napoli', fora: 'Juventus' },
+    12: { csv: 'Bahia_vs_Gremio.csv', casa: 'Bahia', fora: 'Gremio' },
     13: { csv: 'Milan_vs_Fiorentina.csv', casa: 'Milan', fora: 'Fiorentina' },
     14: { csv: 'Inter_vs_Roma.csv', casa: 'Inter', fora: 'Roma' }
 };
+
+/**
+ * FUNÇÃO DE NORMALIZAÇÃO DE TEXTO PARA COMPARAÇÃO DE TIMES
+ * Remove acentos, converte para minúsculas e trata variações comuns
+ */
+function normalizarTexto(texto) {
+    if (!texto || typeof texto !== 'string') return '';
+    
+    return texto
+        // Converter para minúsculas
+        .toLowerCase()
+        // Remover acentos e caracteres especiais
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        // Remover espaços extras
+        .trim()
+        // Substituir variações comuns
+        .replace(/gremio/g, 'gremio')
+        .replace(/grêmio/g, 'gremio')
+        .replace(/grêmio/g, 'gremio')
+        .replace(/sao paulo/g, 'sao_paulo')
+        .replace(/são paulo/g, 'sao_paulo')
+        .replace(/manchester united/g, 'manchester_united')
+        .replace(/manchester-united/g, 'manchester_united')
+        .replace(/mancheter-united/g, 'manchester_united')
+        .replace(/mancheter united/g, 'manchester_united')
+        .replace(/botafogo-rj/g, 'botafogo')
+        .replace(/botafogo rj/g, 'botafogo')
+        .replace(/sao-paulo/g, 'sao_paulo')
+        .replace(/são-paulo/g, 'sao_paulo')
+        // Remover caracteres especiais restantes
+        .replace(/[^a-z0-9_]/g, '');
+}
+
+/**
+ * FUNÇÃO PARA COMPARAR TIMES NORMALIZADOS
+ * Compara dois nomes de times ignorando acentos, maiúsculas e variações
+ */
+function compararTimes(time1, time2) {
+    const normalizado1 = normalizarTexto(time1);
+    const normalizado2 = normalizarTexto(time2);
+    
+    console.log(`🔍 [COMPARAÇÃO] "${time1}" → "${normalizado1}" vs "${time2}" → "${normalizado2}"`);
+    
+    return normalizado1 === normalizado2;
+}
+
+/**
+ * FUNÇÃO PARA ENCONTRAR TIME CORRESPONDENTE EM LISTA
+ * Encontra o time correto mesmo com variações de nome
+ */
+function encontrarTimeCorrespondente(nomeTime, listaTimes) {
+    const normalizado = normalizarTexto(nomeTime);
+    
+    for (const time of listaTimes) {
+        if (compararTimes(nomeTime, time)) {
+            console.log(`✅ [ENCONTROU] "${nomeTime}" corresponde a "${time}"`);
+            return time;
+        }
+    }
+    
+    console.warn(`⚠️ [NÃO ENCONTRADO] "${nomeTime}" não encontrado na lista:`, listaTimes);
+    return nomeTime; // Retorna o nome original se não encontrar
+}
 
 // MAPEAMENTO DOS ESCUDOS
 const escudosMap = {
@@ -28,8 +92,8 @@ const escudosMap = {
     'Palmeiras': '/static/escudos/palmeiras.png',
     'Corinthians': '/static/escudos/corinthians.png',
     'Atletico-MG': '/static/escudos/atletico-mg.png',
-    'Bahia': '/static/escudos/bahia.png',
-    'Gremio': '/static/escudos/gremio.png',
+    'Bahia': '/static/escudos/BAH_Bahia/Bahia.PNG',
+    'Gremio': '/static/escudos/GRE_Gremio/Gremio.png',
     'Atletico Madrid': '/static/escudos/atletico-madrid.png',
     'Osasuna': '/static/escudos/osasuna.png',
     'Barcelona': '/static/escudos/barcelona.png',
@@ -51,6 +115,8 @@ const escudosMap = {
     'Manchester United': '/static/escudos/Manchester_United/Manchester_United.png',
     'Atalanta': '/static/escudos/Atalanta-IT/atalanta.png',
     'Lazio': '/static/escudos/Lazio-IT/lazio.png',
+    'Bahia': '/static/escudos/BAH_Bahia/Bahia.PNG',
+    'Gremio': '/static/escudos/GRE_Gremio/Gremio.png',
     'Ceará': '/static/escudos/Ceara/Ceara.png',
     'Botafogo': '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
 };

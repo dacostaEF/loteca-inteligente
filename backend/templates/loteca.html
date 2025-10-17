@@ -885,52 +885,73 @@ Carregando...
             </div>
         </div>
 
-        <!-- JOGO 12: NEWCASTLE vs ARSENAL -->
+        <!-- JOGO 12 NOVO: Napoli vs Juventus -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 12:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo12" src="/static/placeholder-team-logo.svg"New Castle/New_Castle.PNG" 
+                        <img id="escudo-casa-jogo12-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-casa-nome-jogo12">TIME CASA</span>
+                        <span id="time-casa-nome-jogo12-novo">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo12" src="/static/placeholder-team-logo.svg"Carregando.../Carregando....PNG" 
+                        <img id="escudo-fora-jogo12-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-fora-nome-jogo12">TIME FORA</span>
+                        <span id="time-fora-nome-jogo12-novo">Carregando...</span>
                     </div>
                 </div>
                 
-                <div class="game-info" id="game-info-jogo12">Carregando informações...</div>
+                <div class="game-info" id="game-info-jogo12-novo">Carregando informações...</div>
             </div>
             <div class="game-card-body">
-                <div class="probabilities">
-                    <div class="prob-item col1"><div class="label" id="label-casa-12">Coluna 1 (Time Casa)</div><div class="value" id="prob-casa-12"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value" id="prob-empate-12"><div class="loading-spinner"></div>Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label" id="label-fora-12">Coluna 2 (Time Fora)</div><div class="value" id="prob-fora-12"><div class="loading-spinner"></div>Carregando...</div></div>
+                <div class="probabilities" id="probabilidades-jogo-12-novo">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1-12-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-12-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2-12-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
-                <div class="recommendation" id="recomendacao-12"><strong>Recomendação Estatística:</strong> <span class="loading-spinner"></span>Carregando análise...</div>
-                
+                <div class="recommendation" id="recomendacao-jogo-12-novo"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
-                <table class="analysis-table" id="analise-jogo-12">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-12">Carregando... Utd</th><th class="team-header" id="time-fora-nome-12">Carregando... FC</th><th>Análise</th></tr></thead>
+                <table class="analysis-table" id="analise-jogo-12-novo">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-12-novo">Carregando...</th><th class="team-header" id="time-fora-nome-12-novo">Carregando...</th><th>Análise</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-12"></div></td><td id="forma-analise-12">Baseado nos últimos 10 jogos</td></tr>
-                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-12">-</td><td class="team-header" id="posicao-fora-12">-</td><td id="posicao-analise-12">Carregando dados...</td></tr>
-                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-12"></div></td><td id="h2h-analise-12">Carregando dados...</td></tr>
-                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-12">-</td><td class="team-header" id="fator-fora-12">-</td><td id="fator-analise-12">Carregando dados...</td></tr>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-12-novo"></div></td><td id="forma-analise-12-novo">Baseado nos últimos 10 jogos</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-12-novo">-</td><td class="team-header" id="posicao-fora-12-novo">-</td><td id="posicao-analise-12-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-12-novo"></div></td><td id="h2h-analise-12-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-12-novo">-</td><td class="team-header" id="fator-fora-12-novo">-</td><td id="fator-analise-12-novo">Carregando dados...</td></tr>
                     </tbody>
                 </table>
                 
+                <!-- VERSÃO MOBILE -->
+                <div class="analysis-mobile">
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Forma Recente</div>
+                        <div class="analysis-mobile-teams">
+                            <span><img id="escudo-mobile-casa-12-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora-12-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Confronto Direto</div>
+                        <div class="analysis-mobile-teams">
+                            <span id="confronto-direto-mobile-12-novo">Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="analysis-mobile-item">
+                        <div class="analysis-mobile-label">Fator Casa</div>
+                        <div class="analysis-mobile-teams">
+                            <span id="fator-casa-mobile-12-novo">Carregando...</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p id="conclusao-12">Carregando análise completa...</p>
+                    <p id="conclusao-analista-jogo12-novo">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -7967,20 +7988,6 @@ Carregando...
 
 
 
-        async function carregarDadosJogo12() {
-            console.log('🎯 [JOGO12] Iniciando carregamento dos dados do JOGO 12...');
-            try {
-                const response = await fetch('/api/analise/jogo/12?concurso=concurso_1216');
-                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                const data = await response.json();
-                if (data.success && data.dados) {
-                    atualizarDadosJogo12(data.dados);
-                    console.log('✅ [JOGO12] Dados atualizados com sucesso!');
-                }
-            } catch (error) {
-                console.error('❌ [JOGO12] Erro ao carregar dados:', error);
-            }
-        }
 
         async function carregarDadosJogo13() {
             console.log('🎯 [JOGO13] Iniciando carregamento dos dados do JOGO 13...');
@@ -8995,6 +9002,120 @@ Carregando...
             } catch (error) {
                 console.error('❌ [JOGO11-NOVO] Erro no carregamento:', error);
                 console.log('🔄 [JOGO11-NOVO] Carregando confrontos fallback...');
+                // Implementar confrontos fallback se necessário
+            }
+        }
+
+        // FUNÇÃO PARA O NOVO JOGO 12 (USANDO SCRIPTS EXTERNOS)
+        async function carregarJogo12Novo() {
+            console.log('🎯 [JOGO12-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
+            
+            try {
+                // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
+                console.log('🔍 [JOGO12-NOVO] Verificando funções disponíveis...');
+                console.log('📊 [JOGO12-NOVO] carregarDadosCompletosJogo:', typeof carregarDadosCompletosJogo);
+                console.log('📊 [JOGO12-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
+                
+                // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
+                const mapeamentoIds = {
+                    'escudo-casa-jogo12-novo': 'escudo-casa-jogo12',
+                    'time-casa-nome-jogo12-novo': 'time-casa-nome-jogo12',
+                    'escudo-fora-jogo12-novo': 'escudo-fora-jogo12',
+                    'time-fora-nome-jogo12-novo': 'time-fora-nome-jogo12',
+                    'game-info-jogo12-novo': 'game-info-jogo12',
+                    'prob-col1-12-novo': 'prob-casa-12',
+                    'prob-colX-12-novo': 'prob-empate-12',
+                    'prob-col2-12-novo': 'prob-fora-12',
+                    'recomendacao-jogo-12-novo': 'recomendacao-12',
+                    'posicao-casa-12-novo': 'posicao-casa-12',
+                    'posicao-fora-12-novo': 'posicao-fora-12',
+                    'posicao-analise-12-novo': 'posicao-analise-12',
+                    'confronto-direto-principais-12-novo': 'confronto-direto-principais-12',
+                    'h2h-analise-12-novo': 'h2h-analise-12',
+                    'fator-casa-12-novo': 'fator-casa-12',
+                    'fator-fora-12-novo': 'fator-fora-12',
+                    'fator-analise-12-novo': 'fator-analise-12',
+                    'conclusao-analista-jogo12-novo': 'conclusao-12',
+                    'time-casa-nome-12-novo': 'time-casa-nome-12-novo',
+                    'time-fora-nome-12-novo': 'time-fora-nome-12-novo',
+                    'confrontos-principais-12-novo': 'confrontos-principais-12',
+                    'forma-analise-12-novo': 'forma-analise-12'
+                };
+                
+                // 3. CRIAR ELEMENTOS TEMPORÁRIOS COM IDs ESPERADOS PELAS FUNÇÕES
+                console.log('🔄 [JOGO12-NOVO] Criando elementos temporários...');
+                const elementosTemporarios = {};
+                
+                for (const [idNovo, idEsperado] of Object.entries(mapeamentoIds)) {
+                    const elementoNovo = document.getElementById(idNovo);
+                    if (elementoNovo) {
+                        // Criar elemento temporário com ID esperado
+                        const elementoTemp = elementoNovo.cloneNode(true);
+                        elementoTemp.id = idEsperado;
+                        elementoTemp.style.display = 'none';
+                        document.body.appendChild(elementoTemp);
+                        elementosTemporarios[idEsperado] = elementoTemp;
+                        console.log(`✅ [JOGO12-NOVO] Elemento temporário criado: ${idEsperado}`);
+                    }
+                }
+                
+                // 4. CHAMAR FUNÇÕES EXTERNAS
+                console.log('🚀 [JOGO12-NOVO] Chamando carregarDadosCompletosJogo(12)...');
+                if (typeof carregarDadosCompletosJogo === 'function') {
+                    await carregarDadosCompletosJogo(12);
+                } else {
+                    console.warn('⚠️ [JOGO12-NOVO] carregarDadosCompletosJogo não disponível');
+                }
+                
+                console.log('🚀 [JOGO12-NOVO] Chamando carregarConfrontosAutomatico(12)...');
+                if (typeof carregarConfrontosAutomatico === 'function') {
+                    await carregarConfrontosAutomatico(12);
+                } else {
+                    console.warn('⚠️ [JOGO12-NOVO] carregarConfrontosAutomatico não disponível');
+                }
+                
+                // 5. COPIAR DADOS DOS ELEMENTOS TEMPORÁRIOS PARA OS ELEMENTOS NOVOS
+                console.log('🔄 [JOGO12-NOVO] Copiando dados para elementos novos...');
+                for (const [idEsperado, elementoTemp] of Object.entries(elementosTemporarios)) {
+                    // Encontrar o elemento novo correspondente usando o mapeamento reverso
+                    const idNovo = Object.keys(mapeamentoIds).find(key => mapeamentoIds[key] === idEsperado);
+                    const elementoNovo = idNovo ? document.getElementById(idNovo) : null;
+                    if (elementoNovo && elementoTemp) {
+                        // Copiar conteúdo
+                        if (elementoTemp.innerHTML) {
+                            elementoNovo.innerHTML = elementoTemp.innerHTML;
+                        }
+                        // Copiar atributos
+                        if (elementoTemp.src) {
+                            elementoNovo.src = elementoTemp.src;
+                        }
+                        if (elementoTemp.className) {
+                            elementoNovo.className = elementoTemp.className;
+                        }
+                        console.log(`✅ [JOGO12-NOVO] Dados copiados: ${idEsperado} → ${elementoNovo.id}`);
+                    }
+                }
+                
+                // 6. LIMPAR ELEMENTOS TEMPORÁRIOS
+                console.log('🧹 [JOGO12-NOVO] Limpando elementos temporários...');
+                for (const elementoTemp of Object.values(elementosTemporarios)) {
+                    if (elementoTemp && elementoTemp.parentNode) {
+                        elementoTemp.parentNode.removeChild(elementoTemp);
+                    }
+                }
+                
+                console.log('✅ [JOGO12-NOVO] Carregamento concluído com sucesso!');
+                
+                // LOG ESPECÍFICO PARA DEBUG DOS ESCUDOS
+                console.log('🎯 [JOGO12-ESCUDOS] Verificando elementos dos escudos...');
+                const escudoCasaNovo = document.getElementById('escudo-casa-jogo12-novo');
+                const escudoForaNovo = document.getElementById('escudo-fora-jogo12-novo');
+                console.log('🎯 [JOGO12-ESCUDOS] Escudo casa encontrado:', !!escudoCasaNovo, escudoCasaNovo?.src);
+                console.log('🎯 [JOGO12-ESCUDOS] Escudo fora encontrado:', !!escudoForaNovo, escudoForaNovo?.src);
+                
+            } catch (error) {
+                console.error('❌ [JOGO12-NOVO] Erro no carregamento:', error);
+                console.log('🔄 [JOGO12-NOVO] Carregando confrontos fallback...');
                 // Implementar confrontos fallback se necessário
             }
         }
@@ -10023,8 +10144,9 @@ Carregando...
                 carregarJogo10Novo();
                 console.log('🔥 [DEBUG] Chamando carregarJogo11Novo()...');
                 carregarJogo11Novo();
+                console.log('🔥 [DEBUG] Chamando carregarJogo12Novo()...');
+                carregarJogo12Novo();
                 carregarDadosJogo6();
-                carregarDadosJogo12();
                 carregarDadosJogo13();
                 carregarDadosJogo14();
             }, 4000); // Aguardar 4 segundos para garantir que a página carregou
@@ -10081,10 +10203,6 @@ Carregando...
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 11
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 12
-            setTimeout(() => forcarConfrontoDirectoJogo12(), 3000);
-            setTimeout(() => forcarConfrontoDirectoJogo12(), 5000);
-            setTimeout(() => forcarConfrontoDirectoJogo12(), 7000);
-            setTimeout(() => forcarConfrontoDirectoJogo12(), 9000);
             
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 13
             setTimeout(() => forcarConfrontoDirectoJogo13(), 3000);
@@ -10124,7 +10242,6 @@ Carregando...
             setTimeout(() => {
                 carregarUltimosConfrontosJogo7();
                 carregarUltimosConfrontosJogo9();
-                carregarUltimosConfrontosJogo12();
                 carregarUltimosConfrontosJogo13();
                 carregarUltimosConfrontosJogo14();
             }, 4500);
@@ -10135,7 +10252,6 @@ Carregando...
             
             
             setTimeout(() => {
-                carregarUltimosConfrontosJogo12();
             }, 5500);
             
             setTimeout(() => {
@@ -10169,7 +10285,6 @@ Carregando...
                 carregarPosicoesTabelaJogo5();
                 carregarPosicoesTabelaJogo7();
                 carregarPosicoesTabelaJogo9();
-                carregarPosicoesTabelaJogo12();
                 carregarPosicoesTabelaJogo13();
                 carregarPosicoesTabelaJogo14();
             }, 4600);
@@ -12219,43 +12334,6 @@ Carregando...
 
 
 
-        function forcarConfrontoDirectoJogo12() {
-            console.log('🔥 [FORCE-H2H-JOGO12] Forçando confronto direto Bahia vs Grêmio...');
-            const container = document.getElementById('confronto-direto-principais-12');
-            const analiseContainer = document.getElementById('h2h-analise-12');
-            
-            if (container) {
-                container.innerHTML = `
-                    <img src="/static/escudos/BAH_Bahia/Bahia.PNG" alt="Bahia" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>BAH</span>'">
-                    <span class="confronto-direto-count">2</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">3E</span>
-                    <span class="confronto-direto-separator">×</span>
-                    <span class="confronto-direto-count">5</span>
-                    <img src="/static/escudos/GRE_Gremio/Gremio.png" alt="Grêmio" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>GRE</span>'">
-                `;
-                console.log('✅ [FORCE-H2H-JOGO12] Confronto direto FORÇADO com sucesso!');
-            } else {
-                console.error('❌ [FORCE-H2H-JOGO12] Container confronto-direto-principais-12 não encontrado!');
-            }
-            
-            // Atualizar Fator Casa baseado nos dados reais
-            const fatorCasa = document.getElementById('fator-casa-12');
-            const fatorFora = document.getElementById('fator-fora-12');
-            const fatorAnalise = document.getElementById('fator-analise-12');
-            
-            if (fatorCasa) fatorCasa.innerHTML = '40%';
-            if (fatorFora) fatorFora.innerHTML = '60%';
-            if (fatorAnalise) fatorAnalise.innerHTML = 'Vantagem Carregando...';
-            
-            console.log('✅ [FORCE-H2H-JOGO12] Fator Casa atualizado!');
-            
-            // Atualizar análise do confronto direto
-            const h2hAnalise = document.getElementById('h2h-analise-12');
-            if (h2hAnalise) {
-                h2hAnalise.innerHTML = 'Vantagem Carregando...';
-            }
-        }
 
         function forcarConfrontoDirectoJogo13() {
             console.log('🔥 [FORCE-H2H-JOGO13] Forçando confronto direto Milan vs Fiorentina...');
@@ -12641,134 +12719,6 @@ Carregando...
 
 
 
-        async function carregarUltimosConfrontosJogo12() {
-            console.log('🎯 [CONFRONTOS-JOGO12] Carregando últimos confrontos Bahia vs Grêmio...');
-            
-            const container = document.getElementById('confrontos-principais-12');
-            if (!container) {
-                console.error('❌ [CONFRONTOS-JOGO12] Container confrontos-principais-12 não encontrado!');
-                return;
-            }
-            
-            // DADOS REAIS DO ARQUIVO CSV - BAHIA vs GRÊMIO
-            let confrontos = [];
-            
-            // TENTAR CARREGAR DADOS DO ARQUIVO CSV
-            try {
-                console.log('🔄 [CONFRONTOS-JOGO12] Buscando dados do arquivo CSV...');
-                const csvResponse = await fetch('/api/confrontos/Bahia_vs_Gremio.csv');
-                console.log('📡 [CONFRONTOS-JOGO12] Resposta da API:', csvResponse.status, csvResponse.statusText);
-                
-                if (csvResponse.ok) {
-                    const csvText = await csvResponse.text();
-                    console.log('✅ [CONFRONTOS-JOGO12] CSV carregado:', csvText.substring(0, 200) + '...');
-                    
-                    // Parse do CSV
-                    const lines = csvText.split('\n').filter(line => line.trim());
-                    const csvData = lines.slice(1, 11).map(line => {
-                        const [data, timeCasa, placar, timeFora, campeonato, resultadoBahia, vencedor] = line.split(',');
-                        let resultado = 'E'; // Default to Empate
-                        
-                        // PRIORIZAR PLACAR sobre campo vencedor (CSV tem inconsistências)
-                        if (placar && placar.includes('-')) {
-                            const [golsCasa, golsFora] = placar.split('-').map(g => parseInt(g.trim()));
-                            if (golsCasa === golsFora) {
-                                resultado = 'E'; // Empate
-                            } else if (golsCasa > golsFora) {
-                                resultado = 'V'; // Vitória do mandante (Bahia)
-                            } else {
-                                resultado = 'D'; // Derrota do mandante (Grêmio venceu)
-                            }
-                        } else {
-                            // Fallback: usar campo vencedor se placar não disponível
-                            if (vencedor && vencedor.trim() === timeCasa) {
-                                resultado = 'V';
-                            } else if (vencedor && vencedor.trim() === timeFora) {
-                                resultado = 'D';
-                            }
-                        }
-                        return {
-                            data: data,
-                            mandante: timeCasa,
-                            visitante: timeFora,
-                            placar: placar,
-                            resultado: resultado
-                        };
-                    });
-                    
-                    if (csvData.length > 0) {
-                        confrontos = csvData;
-                        console.log('✅ [CONFRONTOS-JOGO12] Dados CSV carregados:', confrontos.length, 'confrontos');
-                        console.log('📊 [CONFRONTOS-JOGO12] Primeiro confronto:', confrontos[0]);
-                    } else {
-                        console.log('⚠️ [CONFRONTOS-JOGO12] Nenhum dado CSV válido encontrado');
-                    }
-                } else {
-                    console.log('⚠️ [CONFRONTOS-JOGO12] CSV não encontrado, usando dados padrão');
-                }
-            } catch (error) {
-                console.error('❌ [CONFRONTOS-JOGO12] Erro ao carregar CSV:', error);
-            }
-            
-            // VERIFICAR SE CONSEGUIMOS CARREGAR DADOS
-            if (confrontos.length === 0) {
-                console.error('❌ [CONFRONTOS-JOGO12] NENHUM DADO CARREGADO! Usando dados de emergência...');
-                confrontos = [
-                    { data: '25/05/2025', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-0', resultado: 'D' },
-                    { data: '17/08/2024', mandante: 'Grêmio', visitante: 'Bahia', placar: '0-2', resultado: 'V' },
-                    { data: '27/04/2024', mandante: 'Bahia', visitante: 'Grêmio', placar: '1-0', resultado: 'V' },
-                    { data: '11/4/23', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-0', resultado: 'D' },
-                    { data: '7/12/23', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-1', resultado: 'E' },
-                    { data: '7/4/23', mandante: 'Bahia', visitante: 'Grêmio', placar: '1-1', resultado: 'E' },
-                    { data: '7/1/23', mandante: 'Bahia', visitante: 'Grêmio', placar: '1-2', resultado: 'D' },
-                    { data: '16/10/2022', mandante: 'Grêmio', visitante: 'Bahia', placar: '1-1', resultado: 'E' },
-                    { data: '7/3/22', mandante: 'Bahia', visitante: 'Grêmio', placar: '0-0', resultado: 'E' },
-                    { data: '26/11/2021', mandante: 'Bahia', visitante: 'Grêmio', placar: '3-1', resultado: 'V' }
-                ];
-            }
-            
-            const bolinhasHtml = confrontos.map(confronto => {
-                const resultado = confronto.resultado.toUpperCase();
-                let classe, conteudo;
-                
-                if (resultado === 'V') {
-                    classe = 'bahia';
-                    conteudo = '<img src="/static/escudos/BAH_Bahia/Bahia.PNG" alt="Bahia" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>BAH</span>\'">';
-                } else if (resultado === 'D') {
-                    classe = 'gremio';
-                    conteudo = '<img src="/static/escudos/GRE_Gremio/Gremio.png" alt="Grêmio" class="confronto-escudo" onerror="this.outerHTML=\'<span style=\'color: #1e40af; font-weight: bold;\'>GRE</span>\'">';
-                } else {
-                    classe = 'empate';
-                    conteudo = 'E';
-                }
-                
-                let dataFormatada = '';
-                if (confronto.data) {
-                    // CSV usa formato DD/MM/YYYY, não YYYY-MM-DD
-                    if (confronto.data.includes('/')) {
-                        const [dia, mes, ano] = confronto.data.split('/');
-                        const anoAbrev = ano.substring(2);
-                        dataFormatada = `${dia}/${mes}/${anoAbrev}`;
-                    } else {
-                        // Fallback para formato YYYY-MM-DD
-                    const [ano, mes, dia] = confronto.data.split('-');
-                    const anoAbrev = ano.substring(2);
-                    dataFormatada = `${dia}/${mes}/${anoAbrev}`;
-                    }
-                }
-                
-                return `
-                    <div class="confronto-item">
-                        <div class="confronto-data">${dataFormatada}</div>
-                        <div class="confronto-placar">${confronto.placar}</div>
-                        <div class="confronto-result ${classe}" title="${confronto.data}: ${confronto.mandante} ${confronto.placar} ${confronto.visitante}">${conteudo}</div>
-                    </div>
-                `;
-            }).join('');
-            
-            container.innerHTML = bolinhasHtml;
-            console.log(`✅ [CONFRONTOS-JOGO12] ${confrontos.length} bolinhas renderizadas na tabela (linha única)`);
-        }
 
         async function carregarUltimosConfrontosJogo13() {
             console.log('🎯 [CONFRONTOS-JOGO13] Carregando últimos confrontos Milan vs Fiorentina...');
@@ -13189,89 +13139,6 @@ Carregando...
 
 
 
-        async function carregarPosicoesTabelaJogo12() {
-            try {
-                console.log('📊 [POSITION-JOGO12] Buscando posições na tabela para Carregando... vs Carregando......');
-                
-                // Buscar dados de classificação da Premier League
-                const response = await fetch('/api/admin/classificacao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        campeonato: 'premier-league',
-                        admin_key: 'loteca2024admin'
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                console.log('✅ [POSITION-JOGO12] Dados de classificação recebidos:', data);
-                
-                // Criar mapa de posições por time
-                const positionsMap = {};
-                if (data.classificacao) {
-                    data.classificacao.forEach((time, index) => {
-                        positionsMap[time.clube.toLowerCase()] = {
-                            position: time.posicao || index + 1,
-                            points: time.pts || 0
-                        };
-                    });
-                }
-                
-                console.log('📊 [POSITION-JOGO12] Mapa de posições:', positionsMap);
-                console.log('🔍 [POSITION-JOGO12] Chaves disponíveis:', Object.keys(positionsMap));
-                console.log('🔍 [POSITION-JOGO12] Buscando Carregando...:', positionsMap['newcastle']);
-                console.log('🔍 [POSITION-JOGO12] Buscando Carregando...:', positionsMap['arsenal']);
-                
-                // Buscar posições dos times específicos
-                const homeClassification = positionsMap['newcastle'] || { position: '-', points: 0 };
-                const awayClassification = positionsMap['arsenal'] || { position: '-', points: 0 };
-                
-                const posicaoCasa = document.getElementById('posicao-casa-12');
-                const posicaoFora = document.getElementById('posicao-fora-12');
-                const posicaoAnalise = document.getElementById('posicao-analise-12');
-                
-                if (posicaoCasa) {
-                    posicaoCasa.innerHTML = `${homeClassification.position}º`;
-                }
-                
-                if (posicaoFora) {
-                    posicaoFora.innerHTML = `${awayClassification.position}º`;
-                }
-                
-                if (posicaoAnalise) {
-                    const positionDiff = Math.abs(homeClassification.position - awayClassification.position);
-                    if (positionDiff <= 3) {
-                        posicaoAnalise.innerHTML = 'Confronto equilibrado';
-                    } else {
-                        if (homeClassification.position < awayClassification.position) {
-                            posicaoAnalise.innerHTML = 'Vantagem Carregando...';
-                        } else {
-                            posicaoAnalise.innerHTML = 'Vantagem Carregando...';
-                        }
-                    }
-                }
-                
-                console.log('✅ [POSITION-JOGO12] Posições atualizadas na interface');
-                
-            } catch (error) {
-                console.error('❌ [POSITION-JOGO12] Erro ao carregar posições:', error);
-                
-                // Fallback para dados hardcoded em caso de erro
-                const posicaoCasa = document.getElementById('posicao-casa-12');
-                const posicaoFora = document.getElementById('posicao-fora-12');
-                const posicaoAnalise = document.getElementById('posicao-analise-12');
-                
-                if (posicaoCasa) posicaoCasa.innerHTML = '-';
-                if (posicaoFora) posicaoFora.innerHTML = '-';
-                if (posicaoAnalise) posicaoAnalise.innerHTML = 'Carregando dados...';
-            }
-        }
 
         function carregarPosicoesTabelaJogo13() {
             console.log('📊 [POSITION-JOGO13] Buscando posições na tabela para Bragantino vs Santos...');

@@ -258,6 +258,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'Lazio',            // ← TIME FORA (resultado 'D' = vitória do Lazio)
             escudoCasa: '/static/escudos/Atalanta-IT/atalanta.png',
             escudoFora: '/static/escudos/Lazio-IT/lazio.png'
+        },
+        12: {
+            csv: 'Bahia_vs_Gremio.csv',
+            timeCasa: 'Bahia',            // ← TIME CASA (resultado 'V' = vitória do Bahia)
+            timeFora: 'Gremio',           // ← TIME FORA (resultado 'D' = vitória do Grêmio)
+            escudoCasa: '/static/escudos/BAH_Bahia/Bahia.PNG',
+            escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
         }
         // Adicionar mais jogos conforme necessário
     };
@@ -481,12 +488,32 @@ async function carregarConfrontosGenerico(numeroJogo, timeCasa, timeFora, arquiv
             const lines = csvText.split('\n');
             const csvData = lines.slice(1, 11).map(line => {
                 const [data, timeCasaCsv, placar, timeForaCsv, vencedor, campeonato] = line.split(',');
+                // USAR NORMALIZAÇÃO PARA COMPARAÇÃO ROBUSTA
+                const vencedorNormalizado = normalizarTexto(vencedor);
+                const timeCasaNormalizado = normalizarTexto(timeCasa);
+                const timeForaNormalizado = normalizarTexto(timeFora);
+                
+                let resultado = 'E'; // Empate por padrão
+                if (compararTimes(vencedor, timeCasa)) {
+                    resultado = 'V'; // Vitória do time casa
+                } else if (compararTimes(vencedor, timeFora)) {
+                    resultado = 'D'; // Vitória do time fora
+                }
+                
+                console.log(`🔍 [COMPARAÇÃO-JOGO${numeroJogo}] "${vencedor}" vs "${timeCasa}" (${resultado === 'V' ? 'VITÓRIA CASA' : 'NÃO'}) vs "${timeFora}" (${resultado === 'D' ? 'VITÓRIA FORA' : 'NÃO'})`);
+                
+                // LOG ESPECÍFICO PARA JOGO 12 (BAHIA vs GRÊMIO)
+                if (numeroJogo === 12) {
+                    console.log(`🎯 [JOGO12-DEBUG] CSV: "${vencedor}" | Config: "${timeCasa}" vs "${timeFora}" | Resultado: ${resultado}`);
+                    console.log(`🎯 [JOGO12-DEBUG] Normalizado: "${normalizarTexto(vencedor)}" vs "${normalizarTexto(timeCasa)}" vs "${normalizarTexto(timeFora)}"`);
+                }
+                
                 return {
                     data: data,
                     mandante: timeCasaCsv,
                     visitante: timeForaCsv,
                     placar: placar,
-                    resultado: vencedor === timeCasa ? 'V' : vencedor === timeFora ? 'D' : 'E'
+                    resultado: resultado
                 };
             });
             

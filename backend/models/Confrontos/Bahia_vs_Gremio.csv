@@ -1,21 +1,21 @@
-﻿Data,Time da Casa,Placar,Time Visitante,Campeonato,Resultado (Bahia),Vencedor
-25/05/2025,Grêmio,1-0,Bahia,Brasileirão 2025,Derrota,Grêmio
-17/08/2024,Grêmio,0-2,Bahia,Brasileirão 2024,Vitória,Bahia
-27/04/2024,Bahia,1-0,Grêmio,Brasileirão 2024,Vitória,Bahia
-11/4/23,Grêmio,1-0,Bahia,Brasileirão 2023,Derrota,Grêmio
-7/12/23,Grêmio,1-1 (4-3 Pên.),Bahia,Copa do Brasil 2023,Empate,Grêmio
-7/4/23,Bahia,1-1,Grêmio,Copa do Brasil 2023,Empate,Empate
-7/1/23,Bahia,1-2,Grêmio,Brasileirão 2023,Derrota,Grêmio
-16/10/2022,Grêmio,1-1,Bahia,Série B 2022,Empate,Empate
-7/3/22,Bahia,0-0,Grêmio,Série B 2022,Empate,Empate
-26/11/2021,Bahia,3-1,Grêmio,Brasileirão 2021,Vitória,Bahia
-21/08/2021,Grêmio,2-0,Bahia,Brasileirão 2021,Derrota,Grêmio
-1/6/21,Grêmio,2-1,Bahia,Brasileirão 2020,Derrota,Grêmio
-9/10/20,Bahia,0-2,Grêmio,Brasileirão 2020,Derrota,Grêmio
-16/10/2019,Grêmio,0-1,Bahia,Brasileirão 2019,Vitória,Bahia
-17/07/2019,Bahia,0-1,Grêmio,Copa do Brasil 2019,Derrota,Grêmio
-7/10/19,Grêmio,1-1,Bahia,Copa do Brasil 2019,Empate,Empate
-6/1/19,Bahia,1-0,Grêmio,Brasileirão 2019,Vitória,Bahia
-10/6/18,Grêmio,2-2,Bahia,Brasileirão 2018,Empate,Empate
-6/3/18,Bahia,0-2,Grêmio,Brasileirão 2018,Derrota,Grêmio
-24/09/2017,Bahia,1-0,Grêmio,Brasileirão 2017,Vitória,Bahia
+﻿Data,mandante,Placar,Visitante,vencedor,Campeonato,Resultado (Bahia)
+25/05/2025,Grêmio,1-0,Bahia,Grêmio,Brasileirão 2025,Derrota
+17/08/2024,Grêmio,0-2,Bahia,Bahia,Brasileirão 2024,Vitória
+27/04/2024,Bahia,1-0,Grêmio,Bahia,Brasileirão 2024,Vitória
+11/4/2023,Grêmio,1-0,Bahia,Grêmio,Brasileirão 2023,Derrota
+7/12/2023,Grêmio,1-1 (4-3 Pên.),Bahia,Empate,Copa do Brasil 2023,empate
+7/4/2023,Bahia,1-1,Grêmio,empate,Copa do Brasil 2023,Empate
+7/1/2023,Bahia,1-2,Grêmio,Grêmio,Brasileirão 2023,Derrota
+16/10/2022,Grêmio,1-1,Bahia,empate,Série B 2022,Empate
+7/3/22,Bahia,0-0,Grêmio,empate,Série B 2022,Empate
+26/11/2021,Bahia,3-1,Grêmio,Bahia,Brasileirão 2021,Vitória
+21/08/2021,Grêmio,2-0,Bahia,Grêmio,Brasileirão 2021,Derrota
+1/6/2021,Grêmio,2-1,Bahia,Grêmio,Brasileirão 2020,Derrota
+9/10/2020,Bahia,0-2,Grêmio,Grêmio,Brasileirão 2020,Derrota
+16/10/2019,Grêmio,0-1,Bahia,bahia,Brasileirão 2019,Vitória
+17/07/2019,Bahia,0-1,Grêmio,Grêmio,Copa do Brasil 2019,Derrota
+7/10/2019,Grêmio,1-1,Bahia,empate,Copa do Brasil 2019,Empate
+6/1/2019,Bahia,1-0,Grêmio,bahia,Brasileirão 2019,Vitória
+10/6/2018,Grêmio,2-2,Bahia,empate,Brasileirão 2018,Empate,Empate
+6/3/2018,Bahia,0-2,Grêmio,Grêmio,Brasileirão 2018,Derrota
+24/09/2017,Bahia,1-0,Grêmio,bahia,Brasileirão 2017,Vitória
