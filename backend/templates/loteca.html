@@ -93,44 +93,45 @@
         <div class="tab-content" id="analise-rapida" style="display: block;">
             <!-- TODO O CONTEÚDO ATUAL VAI AQUI -->
 
-        <!-- JOGO 1: Times serão carregados via API -->
+
+        <!-- JOGO 1 NOVO: Corinthians vs Flamengo -->
         <div class="game-card">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
                     <span style="font-size: 18px; font-weight: bold; color: var(--cor-destaque-secundaria); margin-right: 15px;">JOGO 1:</span>
                     <div class="time-info">
-                        <img id="escudo-casa-jogo1" src="/static/placeholder-team-logo.svg" 
+                        <img id="escudo-casa-jogo1-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Casa" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-casa-nome-jogo1">Carregando...</span>
+                        <span id="time-casa-nome-jogo1-novo">Carregando...</span>
                     </div>
                     
                     <div class="vs-divider">×</div>
                     
                     <div class="time-info">
-                        <img id="escudo-fora-jogo1" src="/static/placeholder-team-logo.svg" 
+                        <img id="escudo-fora-jogo1-novo" src="/static/placeholder-team-logo.svg" 
                              alt="Time Fora" class="escudo-time" onerror="this.src='/static/placeholder-team-logo.svg'">
-                        <span id="time-fora-nome-jogo1">Carregando...</span>
+                        <span id="time-fora-nome-jogo1-novo">Carregando...</span>
                     </div>
                 </div>
                 
-                <div class="game-info">Neo Química Arena | Brasileirão Série A | Domingo</div>
+                <div class="game-info" id="game-info-jogo1-novo">Carregando informações...</div>
             </div>
             <div class="game-card-body">
-                <div class="probabilities" id="probabilidades-jogo-1">
-                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1"><span class="loading-spinner">⏳</span> Carregando...</div></div>
-                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX"><span class="loading-spinner">⏳</span> Carregando...</div></div>
-                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                <div class="probabilities" id="probabilidades-jogo-1-novo">
+                    <div class="prob-item col1"><div class="label">Coluna 1 (Time Casa)</div><div class="value loading" id="prob-col1-1-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item colX"><div class="label">Coluna X (Empate)</div><div class="value loading" id="prob-colX-1-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
+                    <div class="prob-item col2"><div class="label">Coluna 2 (Time Fora)</div><div class="value loading" id="prob-col2-1-novo"><span class="loading-spinner">⏳</span> Carregando...</div></div>
                 </div>
-                <div class="recommendation" id="recomendacao-jogo-1"><strong>⏳ Analisando dados...</strong></div>
+                <div class="recommendation" id="recomendacao-jogo-1-novo"><strong>⏳ Analisando dados...</strong></div>
                 <!-- TABELA DESKTOP -->
-                <table class="analysis-table" id="analise-jogo-1">
-                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome">Flamengo/RJ</th><th class="team-header" id="time-fora-nome">Palmeiras/SP</th><th>Análise</th></tr></thead>
+                <table class="analysis-table" id="analise-jogo-1-novo">
+                    <thead><tr><th>Fator Analisado</th><th class="team-header" id="time-casa-nome-1-novo">Carregando...</th><th class="team-header" id="time-fora-nome-1-novo">Carregando...</th><th>Análise</th></tr></thead>
                     <tbody>
-                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais"></div></td><td id="forma-analise">Baseado nos últimos 10 jogos</td></tr>
-                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa">-</td><td class="team-header" id="posicao-fora">-</td><td id="posicao-analise">Carregando dados...</td></tr>
-                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais"></div></td><td id="h2h-analise">Carregando dados...</td></tr>
-                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa">-</td><td class="team-header" id="fator-fora">-</td><td id="fator-analise">Carregando dados...</td></tr>
+                        <tr><td><strong>Últimos Confrontos</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confrontos-sequence" id="confrontos-principais-1-novo"></div></td><td id="forma-analise-1-novo">Baseado nos últimos 10 jogos</td></tr>
+                        <tr><td><strong>Posição na Tabela</strong></td><td class="team-header" id="posicao-casa-1-novo">-</td><td class="team-header" id="posicao-fora-1-novo">-</td><td id="posicao-analise-1-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Confronto Direto</strong></td><td colspan="2" class="team-header" style="text-align: center;"><div class="confronto-direto-resumo" id="confronto-direto-principais-1-novo"></div></td><td id="h2h-analise-1-novo">Carregando dados...</td></tr>
+                        <tr><td><strong>Fator Casa</strong></td><td class="team-header" id="fator-casa-1-novo">-</td><td class="team-header" id="fator-fora-1-novo">-</td><td id="fator-analise-1-novo">Carregando dados...</td></tr>
                     </tbody>
                 </table>
 
@@ -139,8 +140,8 @@
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Forma Recente</div>
                         <div class="analysis-mobile-teams">
-                            <span><img id="escudo-mobile-casa" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
-                            <span><img id="escudo-mobile-fora" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
+                            <span><img id="escudo-mobile-casa-1-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img id="escudo-mobile-fora-1-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
                         </div>
                         <div class="analysis-mobile-result">
 CASA
@@ -149,8 +150,8 @@ CASA
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Posição</div>
                         <div class="analysis-mobile-teams">
-                            <span><img id="escudo-mobile-casa-pos" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">5º</span>
-                            <span><img id="escudo-mobile-fora-pos" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2º</span>
+                            <span><img id="escudo-mobile-casa-pos-1-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">5º</span>
+                            <span><img id="escudo-mobile-fora-pos-1-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2º</span>
                         </div>
                         <div class="analysis-mobile-result">
 FORA
@@ -159,8 +160,8 @@ FORA
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Confronto Direto</div>
                         <div class="analysis-mobile-teams">
-                            <span><img id="escudo-mobile-casa-h2h" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
-                            <span><img id="escudo-mobile-fora-h2h" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
+                            <span><img id="escudo-mobile-casa-h2h-1-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
+                            <span><img id="escudo-mobile-fora-h2h-1-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">2V-1E-2D</span>
                         </div>
                         <div class="analysis-mobile-result">
 EQUILIBRADO
@@ -169,7 +170,7 @@ EQUILIBRADO
                 </div>
                 <div class="analyst-conclusion">
                     <h4>Conclusão do Analista</h4>
-                    <p id="conclusao-analista-jogo1">Carregando análise...</p>
+                    <p id="conclusao-analista-jogo1-novo">Carregando análise...</p>
                 </div>
             </div>
         </div>
@@ -3808,8 +3809,9 @@ Carregando...
             try {
                 // CORRIGIDO: Para JOGO 1, ler diretamente dos elementos atualizados pela API
                 if (numeroJogo === 1) {
-                    const nomeCasa = document.getElementById('time-casa-nome-jogo1');
-                    const nomeFora = document.getElementById('time-fora-nome-jogo1');
+                // JOGO 1 REMOVIDO - USAR DADOS PADRÃO
+                const nomeCasa = null; // document.getElementById('time-casa-nome-jogo1');
+                const nomeFora = null; // document.getElementById('time-fora-nome-jogo1');
                     
                     if (nomeCasa && nomeFora) {
                         const timeCasa = nomeCasa.textContent.trim();
@@ -5088,8 +5090,9 @@ Carregando...
             
             // OBTER POSIÇÕES REAIS DOS TIMES
             // CORRIGIDO: Usar nomes corretos dos times da API
-            const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
-            const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
+            // JOGO 1 REMOVIDO - USAR DADOS PADRÃO
+            const nomeCasa = 'CORINTHIANS'; // document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
+            const nomeFora = 'FLAMENGO'; // document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
             const homeClassification = classificationData[nomeCasa] || { position: 10, points: 32 };
             const awayClassification = classificationData[nomeFora] || { position: 1, points: 51 };
             
@@ -5438,8 +5441,9 @@ Carregando...
             console.log('🔍 [CONFRONTOS-DIRETOS] Conteúdo completo team-away-name:', awayNameElement?.textContent);
             
             // USAR PARÂMETROS OU DETECÇÃO AUTOMÁTICA
-            const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
-            const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
+            // JOGO 1 REMOVIDO - USAR DADOS PADRÃO
+            const nomeCasa = 'CORINTHIANS'; // document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
+            const nomeFora = 'FLAMENGO'; // document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
             const timeCasaFinal = timeCasa || homeName || nomeCasa;
             const timeForaFinal = timeFora || awayName || nomeFora;
             
@@ -6985,33 +6989,6 @@ Carregando...
             return '/static/placeholder-team-logo.svg';
         }
 
-        // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 1
-        async function carregarDadosJogo1() {
-            console.log('🎯 [JOGO1] Iniciando carregamento dos dados do JOGO 1...');
-            
-            try {
-                // Fazer requisição para a API com parâmetro de concurso
-                const response = await fetch('/api/analise/jogo/1?concurso=concurso_1216');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                console.log('✅ [JOGO1] Dados recebidos da API:', data);
-                
-                if (data.success && data.dados) {
-                    // SUBSTITUIR DADOS HARDCODED
-                    atualizarDadosJogo1(data.dados);
-                    console.log('✅ [JOGO1] Dados atualizados com sucesso!');
-                } else {
-                    console.warn('⚠️ [JOGO1] API retornou dados vazios ou inválidos');
-                }
-                
-            } catch (error) {
-                console.error('❌ [JOGO1] Erro ao carregar dados:', error);
-            }
-        }
 
         // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 2 (IDÊNTICA AO JOGO 1)
         async function carregarDadosJogo2() {
@@ -7092,148 +7069,6 @@ Carregando...
         // FUNÇÃO ESPECÍFICA PARA CARREGAR DADOS DO JOGO 4 (IDÊNTICA AO JOGO 3)
 
         // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 1
-        function atualizarDadosJogo1(dados) {
-            console.log('🔄 [JOGO1] Atualizando campos com dados:', dados);
-            
-            // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES
-            const escudoCasa = document.getElementById('escudo-casa-jogo1');
-            const nomeCasa = document.getElementById('time-casa-nome-jogo1');
-            const escudoFora = document.getElementById('escudo-fora-jogo1');
-            const nomeFora = document.getElementById('time-fora-nome-jogo1');
-            
-            if (escudoCasa && dados.escudo_casa) {
-                escudoCasa.src = dados.escudo_casa;
-                escudoCasa.alt = dados.time_casa;
-            }
-            
-            if (nomeCasa && dados.time_casa) {
-                console.log('🔄 [DEBUG] Atualizando nome casa:', dados.time_casa);
-                nomeCasa.textContent = dados.time_casa.toUpperCase();
-                console.log('✅ [DEBUG] Nome casa atualizado para:', nomeCasa.textContent);
-            }
-            
-            if (escudoFora && dados.escudo_fora) {
-                escudoFora.src = dados.escudo_fora;
-                escudoFora.alt = dados.time_fora;
-            }
-            
-            if (nomeFora && dados.time_fora) {
-                console.log('🔄 [DEBUG] Atualizando nome fora:', dados.time_fora);
-                nomeFora.textContent = dados.time_fora.toUpperCase();
-                console.log('✅ [DEBUG] Nome fora atualizado para:', nomeFora.textContent);
-            }
-            
-            // 2. ATUALIZAR INFORMAÇÕES DO JOGO
-            const gameInfo = document.querySelector('.game-info');
-            if (gameInfo && dados.arena && dados.campeonato && dados.dia) {
-                gameInfo.textContent = `${dados.arena} | ${dados.campeonato} | ${dados.dia}`;
-            }
-            
-            // 3. ATUALIZAR PROBABILIDADES
-            if (dados.probabilidades) {
-                const probCol1 = document.getElementById('prob-col1');
-                const probColX = document.getElementById('prob-colX');
-                const probCol2 = document.getElementById('prob-col2');
-                
-                if (probCol1 && dados.probabilidades.col1) {
-                    probCol1.classList.remove('loading');
-                    probCol1.innerHTML = `<span class="probability-value">${dados.probabilidades.col1}</span>`;
-                }
-                
-                if (probColX && dados.probabilidades.colX) {
-                    probColX.classList.remove('loading');
-                    probColX.innerHTML = `<span class="probability-value">${dados.probabilidades.colX}</span>`;
-                }
-                
-                if (probCol2 && dados.probabilidades.col2) {
-                    probCol2.classList.remove('loading');
-                    probCol2.innerHTML = `<span class="probability-value">${dados.probabilidades.col2}</span>`;
-                }
-            }
-            
-            // ATUALIZAR OS LABELS DOS TIMES NAS PROBABILIDADES
-            const labelCol1 = document.querySelector('#probabilidades-jogo-1 .col1 .label');
-            const labelCol2 = document.querySelector('#probabilidades-jogo-1 .col2 .label');
-            
-            if (labelCol1 && dados.time_casa) {
-                labelCol1.textContent = `Coluna 1 (${dados.time_casa})`;
-            }
-            
-            if (labelCol2 && dados.time_fora) {
-                labelCol2.textContent = `Coluna 2 (${dados.time_fora})`;
-            }
-            
-            // 4. ATUALIZAR RECOMENDAÇÃO
-            const recomendacao = document.getElementById('recomendacao-jogo-1');
-            if (recomendacao && dados.recomendacao) {
-                recomendacao.innerHTML = `<strong>${dados.recomendacao}</strong>`;
-            }
-            
-            // 4.1. ATUALIZAR CONCLUSÃO DO ANALISTA
-            const conclusaoAnalista = document.getElementById('conclusao-analista-jogo1');
-            if (conclusaoAnalista && dados.conclusao_analista) {
-                conclusaoAnalista.textContent = dados.conclusao_analista;
-            }
-            
-            // 5. ATUALIZAR TABELA DE ANÁLISE
-            const posicaoCasa = document.getElementById('posicao-casa');
-            const posicaoFora = document.getElementById('posicao-fora');
-            const confrontoDireto = document.getElementById('confronto-direto-principais');
-            const fatorCasa = document.getElementById('fator-casa');
-            const fatorFora = document.getElementById('fator-fora');
-            
-            if (posicaoCasa && dados.posicao_casa) {
-                posicaoCasa.textContent = dados.posicao_casa + '°';
-            }
-            
-            if (posicaoFora && dados.posicao_fora) {
-                posicaoFora.textContent = dados.posicao_fora + '°';
-            }
-            
-            if (confrontoDireto && dados.confronto_direto) {
-                // Criar HTML com escudos para o confronto direto
-                const confrontoHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <img src="${dados.escudo_casa}" alt="${dados.time_casa}" style="width: 24px; height: 24px;">
-                        <span>${dados.confronto_direto}</span>
-                        <img src="${dados.escudo_fora}" alt="${dados.time_fora}" style="width: 24px; height: 24px;">
-                    </div>
-                `;
-                confrontoDireto.innerHTML = confrontoHTML;
-            }
-            
-            if (fatorCasa && dados.fator_casa) {
-                fatorCasa.textContent = dados.fator_casa + '%';
-            }
-            
-            if (fatorFora && dados.fator_fora) {
-                fatorFora.textContent = dados.fator_fora + '%';
-            }
-            
-            // 6. ATUALIZAR ANÁLISES DA TABELA
-            const formaAnalise = document.getElementById('forma-analise');
-            const posicaoAnalise = document.getElementById('posicao-analise');
-            const h2hAnalise = document.getElementById('h2h-analise');
-            const fatorAnalise = document.getElementById('fator-analise');
-            
-            if (formaAnalise && dados.analise_posicao) {
-                formaAnalise.textContent = dados.analise_posicao;
-            }
-            
-            if (posicaoAnalise && dados.analise_posicao_tabelas) {
-                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
-            }
-            
-            if (h2hAnalise && dados.analise_confronto_direto) {
-                h2hAnalise.textContent = dados.analise_confronto_direto;
-            }
-            
-            if (fatorAnalise && dados.analise_fator_casa) {
-                fatorAnalise.textContent = dados.analise_fator_casa;
-            }
-            
-            console.log('✅ [JOGO1] Todos os campos atualizados!');
-        }
 
         // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 2 (IDÊNTICA AO JOGO 1)
         function atualizarDadosJogo2(dados) {
@@ -8263,6 +8098,77 @@ Carregando...
 
         // FUNÇÃO MOVIDA PARA ARQUIVO SEPARADO: loteca-functions.js
         
+        // FUNÇÃO PARA O NOVO JOGO 1 (USANDO SCRIPTS EXTERNOS)
+        async function carregarJogo1Novo() {
+            console.log('🎯 [JOGO1-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
+            
+            try {
+                console.log('🔍 [JOGO1-NOVO] Verificando funções disponíveis...');
+                console.log('📊 [JOGO1-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
+                console.log('📊 [JOGO1-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                
+                // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
+                const mapeamentoIds = {
+                    'escudo-casa-jogo1-novo': 'escudo-casa-jogo1',
+                    'time-casa-nome-jogo1-novo': 'time-casa-nome-jogo1',
+                    'escudo-fora-jogo1-novo': 'escudo-fora-jogo1',
+                    'time-fora-nome-jogo1-novo': 'time-fora-nome-jogo1',
+                    'game-info-jogo1-novo': 'game-info-jogo1',
+                    'prob-col1-1-novo': 'prob-casa-1',
+                    'prob-colX-1-novo': 'prob-empate-1',
+                    'prob-col2-1-novo': 'prob-fora-1',
+                    'recomendacao-jogo-1-novo': 'recomendacao-1',
+                    'posicao-casa-1-novo': 'posicao-casa-1',
+                    'posicao-fora-1-novo': 'posicao-fora-1',
+                    'h2h-analise-1-novo': 'h2h-analise-1',
+                    'fator-casa-1-novo': 'fator-casa-1',
+                    'fator-fora-1-novo': 'fator-fora-1',
+                    'fator-analise-1-novo': 'fator-analise-1',
+                    'conclusao-analista-jogo1-novo': 'conclusao-1',
+                    'confrontos-principais-1-novo': 'confrontos-principais-1',
+                    'confronto-direto-principais-1-novo': 'confronto-direto-principais-1',
+                    'forma-analise-1-novo': 'forma-analise-1',
+                    'time-casa-nome-1-novo': 'time-casa-nome-1-novo',
+                    'time-fora-nome-1-novo': 'time-fora-nome-1-novo'
+                };
+                
+                // 3. TEMPORARIAMENTE RENOMEAR IDs PARA USAR AS FUNÇÕES EXTERNAS
+                console.log('🔄 [JOGO1-NOVO] Renomeando IDs temporariamente...');
+                Object.entries(mapeamentoIds).forEach(([novoId, idEsperado]) => {
+                    const elemento = document.getElementById(novoId);
+                    if (elemento) {
+                        elemento.id = idEsperado;
+                        console.log(`✅ [JOGO1-NOVO] ${novoId} → ${idEsperado}`);
+                    } else {
+                        console.warn(`⚠️ [JOGO1-NOVO] Elemento não encontrado: ${novoId}`);
+                    }
+                });
+                
+                // 4. USAR FUNÇÃO DO loteca-functions.js PARA DADOS JSON
+                if (typeof window.carregarDadosCompletosJogo === 'function') {
+                    console.log('📊 [JOGO1-NOVO] Chamando carregarDadosCompletosJogo(1)...');
+                    await window.carregarDadosCompletosJogo(1);
+                    console.log('✅ [JOGO1-NOVO] carregarDadosCompletosJogo(1) executado!');
+                } else {
+                    console.warn('⚠️ [JOGO1-NOVO] carregarDadosCompletosJogo não disponível');
+                }
+                
+                // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
+                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                    console.log('📊 [JOGO1-NOVO] Chamando carregarConfrontosAutomatico(1)...');
+                    await window.carregarConfrontosAutomatico(1);
+                    console.log('✅ [JOGO1-NOVO] carregarConfrontosAutomatico(1) executado!');
+                } else {
+                    console.warn('⚠️ [JOGO1-NOVO] carregarConfrontosAutomatico não disponível');
+                }
+                
+                console.log('✅ [JOGO1-NOVO] Carregamento concluído com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ [JOGO1-NOVO] Erro durante carregamento:', error);
+            }
+        }
+
         // FUNÇÃO PARA O NOVO JOGO 6 (USANDO SCRIPTS EXTERNOS)
         async function carregarJogo6Novo() {
             console.log('🎯 [JOGO6-NOVO] Iniciando carregamento usando SCRIPTS EXTERNOS...');
@@ -10002,8 +9908,8 @@ Carregando...
             console.log('🚀 [DEBUG] Iniciando aplicação...');
             
             // PRIMEIRO: Carregar dados do JOGO 1 automaticamente
-            carregarDadosJogo1();
-            console.log('✅ [DEBUG] Dados do JOGO 1 carregados');
+            // carregarDadosJogo1(); // REMOVIDO: Jogo 1 foi removido
+            console.log('✅ [DEBUG] Jogo 1 removido - pulando carregamento');
             
             // PRIMEIRO: Inicializar abas principais
             initializeTabs();
@@ -10118,7 +10024,9 @@ Carregando...
 
             // CARREGAR DADOS DOS JOGOS 5 A 14 VIA API
             setTimeout(() => {
-                console.log('🎯 [JOGOS5-14] Carregando dados via API...');
+                console.log('🎯 [JOGOS1-14] Carregando dados via API...');
+                console.log('🔥 [DEBUG] Chamando carregarJogo1Novo()...');
+                carregarJogo1Novo();
                 console.log('🔥 [DEBUG] Chamando carregarJogo4Novo()...');
                 carregarJogo4Novo();
                 console.log('🔥 [DEBUG] Chamando carregarJogo5Novo()...');
@@ -12954,8 +12862,9 @@ Carregando...
             // Atualizar nomes dos times
             const timeCasaNome = document.getElementById('time-casa-nome');
             const timeForaNome = document.getElementById('time-fora-nome');
-            const timeCasaNomeJogo1 = document.getElementById('time-casa-nome-jogo1');
-            const timeForaNomeJogo1 = document.getElementById('time-fora-nome-jogo1');
+            // JOGO 1 REMOVIDO - USAR DADOS PADRÃO
+            const timeCasaNomeJogo1 = null; // document.getElementById('time-casa-nome-jogo1');
+            const timeForaNomeJogo1 = null; // document.getElementById('time-fora-nome-jogo1');
             
             if (timeCasaNome) timeCasaNome.textContent = dadosReais.corinthians.nome;
             if (timeForaNome) timeForaNome.textContent = dadosReais.flamengo.nome;
@@ -13296,10 +13205,11 @@ Carregando...
       function preencherJogo1Com(src){
         setText('time-casa-nome', (src.time_casa||'').toUpperCase());
         setText('time-fora-nome', (src.time_fora||'').toUpperCase());
-        setText('time-casa-nome-jogo1', (src.time_casa||'').toUpperCase());
-        setText('time-fora-nome-jogo1', (src.time_fora||'').toUpperCase());
-        const escCasa = document.getElementById('escudo-casa-jogo1');
-        const escFora = document.getElementById('escudo-fora-jogo1');
+        // JOGO 1 REMOVIDO - PULAR ATUALIZAÇÃO
+        // setText('time-casa-nome-jogo1', (src.time_casa||'').toUpperCase());
+        // setText('time-fora-nome-jogo1', (src.time_fora||'').toUpperCase());
+        const escCasa = null; // document.getElementById('escudo-casa-jogo1');
+        const escFora = null; // document.getElementById('escudo-fora-jogo1');
         if (escCasa && src.escudo_casa) escCasa.src = src.escudo_casa;
         if (escFora && src.escudo_fora) escFora.src = src.escudo_fora;
 

@@ -362,14 +362,16 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
     if (dados.fator_casa) {
         const fatorCasa = document.getElementById(ids.fatorCasa);
         if (fatorCasa) {
-            fatorCasa.textContent = dados.fator_casa + '%';
+            // CORRIGIDO: Não adicionar % se já contém %
+            fatorCasa.textContent = dados.fator_casa.includes('%') ? dados.fator_casa : dados.fator_casa + '%';
         }
     }
     
     if (dados.fator_fora) {
         const fatorFora = document.getElementById(ids.fatorFora);
         if (fatorFora) {
-            fatorFora.textContent = dados.fator_fora + '%';
+            // CORRIGIDO: Não adicionar % se já contém %
+            fatorFora.textContent = dados.fator_fora.includes('%') ? dados.fator_fora : dados.fator_fora + '%';
         }
     }
     

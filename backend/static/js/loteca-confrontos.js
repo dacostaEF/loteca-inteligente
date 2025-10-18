@@ -203,6 +203,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
     // MAPEAMENTO AUTOMÁTICO DE ARQUIVOS POR JOGO
     // MAPEAMENTO CLARO: Define qual time é CASA e qual é FORA para cada jogo
     const mapeamentoJogos = {
+        1: {
+            csv: 'Flamengo_vs_Palmeiras.csv',
+            timeCasa: 'FLAMENGO',           // ← TIME CASA (resultado 'V' = vitória do Flamengo)
+            timeFora: 'PALMEIRAS',          // ← TIME FORA (resultado 'D' = vitória do Palmeiras)
+            escudoCasa: '/static/escudos/FLA_Flamengo/Flamengo.png',
+            escudoFora: '/static/escudos/PAL_Palmeiras/Palmeiras.png'
+        },
         5: {
             csv: 'Atletico-de-Madrid_vs_Osasuna.csv',
             timeCasa: 'ATLÉTICO DE MADRID',  // ← NOME EXATO DO CSV (com acentos)
@@ -444,7 +451,7 @@ async function carregarConfrontosAutomatico(numeroJogo) {
         
         return `
             <div style="display: flex; flex-direction: column; align-items: center; padding: 8px; margin: 2px; min-width: 60px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 8px; border-left: 3px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                <div style="font-size: 10px; color: #888; margin-bottom: 2px;">${dataFormatada}</div>
+                <div style="font-size: 10px; color: #888; margin-bottom: 4px;">${dataFormatada}</div>
                 <div style="font-size: 11px; color: #fff; margin-bottom: 4px; font-weight: bold;">${confronto.placar}</div>
                 <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #343a40; border-radius: 50%; color: #fff; font-weight: bold; font-size: 12px;">
                     ${conteudo}
