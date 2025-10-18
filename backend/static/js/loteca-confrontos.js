@@ -370,12 +370,12 @@ async function carregarConfrontosAutomatico(numeroJogo) {
                 
                 let resultado = 'E'; // Default to Empate
                 
-                // LÓGICA CORRIGIDA: O CSV já tem o resultado do Flamengo (time casa)
-                if (vencedor && vencedor.trim().toUpperCase() === 'V') {
-                    resultado = 'V'; // Vitória do Flamengo (time casa)
-                } else if (vencedor && vencedor.trim().toUpperCase() === 'D') {
-                    resultado = 'D'; // Derrota do Flamengo (vitória do Palmeiras)
-                } else if (vencedor && vencedor.trim().toUpperCase() === 'E') {
+                // LÓGICA CORRIGIDA: Verificar o nome do vencedor
+                if (vencedor && vencedor.trim().toUpperCase() === configJogo.timeCasa.toUpperCase()) {
+                    resultado = 'V'; // Vitória do time casa
+                } else if (vencedor && vencedor.trim().toUpperCase() === configJogo.timeFora.toUpperCase()) {
+                    resultado = 'D'; // Vitória do time fora
+                } else if (vencedor && vencedor.trim().toUpperCase() === 'EMPATE') {
                     resultado = 'E'; // Empate
                 } else {
                     // Fallback: usar placar se vencedor não disponível
