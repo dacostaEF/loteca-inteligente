@@ -7,7 +7,7 @@
     "numero": "12",
     "time_casa": "BAHIA/BA",
     "time_fora": "GREMIO/RS",
-    "arena": "Arena BAHIA",
+    "arena": "Arena Fonte Nova/Salvador/BA",
     "campeonato": "Brasileirão Série A",
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/BAH_Bahia/Bahia.png",
@@ -27,7 +27,7 @@
     "analise_posicao_tabelas": "Vantagem Bahia",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-17T23:26:25.916Z"
+    "sincronizado_em": "2025-10-18T12:03:52.151Z"
   },
   "admin_key": "loteca2024admin"
 }

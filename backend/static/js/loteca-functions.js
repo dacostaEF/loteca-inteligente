@@ -19,7 +19,7 @@ const jogosMap = {
     11: { csv: 'Atalanta_vs_Lazio.csv', casa: 'Atalanta', fora: 'Lazio' },
     12: { csv: 'Bahia_vs_Gremio.csv', casa: 'Bahia', fora: 'Gremio' },
     13: { csv: 'Milan_vs_Fiorentina.csv', casa: 'Milan', fora: 'Fiorentina' },
-    14: { csv: 'Inter_vs_Roma.csv', casa: 'Inter', fora: 'Roma' }
+    14: { csv: 'Getafe_vs_Real-Madrid.csv', casa: 'Getafe', fora: 'Real Madrid' }
 };
 
 /**
@@ -100,7 +100,9 @@ const escudosMap = {
     'Real Madrid': '/static/escudos/real-madrid.png',
     'Juventus': '/static/escudos/juventus.png',
     'Inter': '/static/escudos/inter.png',
-    'Milan': '/static/escudos/milan.png',
+    'Milan': '/static/escudos/Milan_IT/milan.png',
+    'Fiorentina': '/static/escudos/Fiorentina_IT/fiorentina.png',
+    'Getafe': '/static/escudos/Getafe/getafe.png',
     'Napoli': '/static/escudos/napoli.png',
     'Roma': '/static/escudos/Roma/Roma.png',
     'Internazionale': '/static/escudos/Internazionale/Internazionale.png',

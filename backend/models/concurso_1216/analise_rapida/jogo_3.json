@@ -7,7 +7,7 @@
     "numero": "3",
     "time_casa": "Corinthians/SP",
     "time_fora": "Atletico/MG",
-    "arena": "Moises Lucharelli ",
+    "arena": "Neo Quimimica Arena/SP",
     "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/COR_Corinthians/Corinthians.png",
@@ -27,7 +27,7 @@
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-16T19:15:29.659Z"
+    "sincronizado_em": "2025-10-18T12:01:03.544Z"
   },
   "admin_key": "loteca2024admin"
 }

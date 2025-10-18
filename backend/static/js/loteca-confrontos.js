@@ -265,6 +265,20 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'Gremio',           // ← TIME FORA (resultado 'D' = vitória do Grêmio)
             escudoCasa: '/static/escudos/BAH_Bahia/Bahia.PNG',
             escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
+        },
+        13: {
+            csv: 'Milan_vs_Fiorentina.csv',
+            timeCasa: 'Milan',            // ← TIME CASA (resultado 'V' = vitória do Milan)
+            timeFora: 'Fiorentina',       // ← TIME FORA (resultado 'D' = vitória da Fiorentina)
+            escudoCasa: '/static/escudos/Milan_IT/milan.png',
+            escudoFora: '/static/escudos/Fiorentina_IT/fiorentina.png'
+        },
+        14: {
+            csv: 'Getafe_vs_Real-Madrid.csv',
+            timeCasa: 'Getafe',           // ← TIME CASA (resultado 'V' = vitória do Getafe)
+            timeFora: 'Real Madrid',      // ← TIME FORA (resultado 'D' = vitória do Real Madrid)
+            escudoCasa: '/static/escudos/Getafe/getafe.png',
+            escudoFora: '/static/escudos/Real_Madrid/real_madrid.png'
         }
         // Adicionar mais jogos conforme necessário
     };

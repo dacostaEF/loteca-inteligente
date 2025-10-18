@@ -7,7 +7,7 @@
     "numero": "9",
     "time_casa": "CEARA/CE",
     "time_fora": "BOTAFOGO/RJ",
-    "arena": "Arena CEARA",
+    "arena": "Arena Castelão / Fortaleza/CE",
     "campeonato": "Brasileirão Série A",
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/Ceara/Ceara.png",
@@ -27,7 +27,7 @@
     "analise_posicao_tabelas": "Vantagem Botafogo",
     "analise_confronto_direto": "confronto Equilibrado",
     "analise_fator_casa": "confronto Equilibrado",
-    "sincronizado_em": "2025-10-17T19:22:06.106Z"
+    "sincronizado_em": "2025-10-18T12:02:15.231Z"
   },
   "admin_key": "loteca2024admin"
 }
