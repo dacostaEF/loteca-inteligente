@@ -194,9 +194,9 @@ async function carregarConfrontosJogo5() {
 async function carregarConfrontosAutomatico(numeroJogo) {
     console.log(`🎯 [CONFRONTOS-AUTO-${numeroJogo}] Iniciando carregamento automático...`);
     
-    const container = document.getElementById(`confrontos-principais-${numeroJogo}`);
+    const container = document.getElementById(`confrontos-principais-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`);
     if (!container) {
-        console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Container confrontos-principais-${numeroJogo} não encontrado!`);
+        console.error(`❌ [CONFRONTOS-AUTO-${numeroJogo}] Container confrontos-principais-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''} não encontrado!`);
         return;
     }
     
@@ -209,6 +209,20 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             timeFora: 'PALMEIRAS',          // ← TIME FORA (resultado 'D' = vitória do Palmeiras)
             escudoCasa: '/static/escudos/FLA_Flamengo/Flamengo.png',
             escudoFora: '/static/escudos/PAL_Palmeiras/Palmeiras.png'
+        },
+        2: {
+            csv: 'Internacional_vs_Sport.csv',
+            timeCasa: 'INTERNACIONAL',      // ← TIME CASA (resultado 'V' = vitória do Internacional)
+            timeFora: 'SPORT',              // ← TIME FORA (resultado 'D' = vitória do Sport)
+            escudoCasa: '/static/escudos/INT_Internacional/Internacional.png',
+            escudoFora: '/static/escudos/SPT_Sport/Sport.png'
+        },
+        3: {
+            csv: 'Corinthians_vs_Atletico-MG.csv',
+            timeCasa: 'CORINTHIANS',        // ← TIME CASA (resultado 'V' = vitória do Corinthians)
+            timeFora: 'ATLETICO-MG',        // ← TIME FORA (resultado 'D' = vitória do Atlético-MG)
+            escudoCasa: '/static/escudos/COR_Corinthians/Corinthians.png',
+            escudoFora: '/static/escudos/CAM_Atletico-MG/Atletico_MG.png'
         },
         5: {
             csv: 'Atletico-de-Madrid_vs_Osasuna.csv',

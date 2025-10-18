@@ -7,8 +7,8 @@
 // MAPEAMENTO DOS JOGOS - CSV E TIMES
 const jogosMap = {
     1: { csv: 'Flamengo_vs_Palmeiras.csv', casa: 'Flamengo', fora: 'Palmeiras' },
-    2: { csv: 'Corinthians_vs_Atletico-MG.csv', casa: 'Corinthians', fora: 'Atletico-MG' },
-    3: { csv: 'Bahia_vs_Gremio.csv', casa: 'Bahia', fora: 'Gremio' },
+    2: { csv: 'Internacional_vs_Sport.csv', casa: 'Internacional', fora: 'Sport' },
+    3: { csv: 'Corinthians_vs_Atletico-MG.csv', casa: 'Corinthians', fora: 'Atletico-MG' },
     4: { csv: 'Roma_vs_Internazionale.csv', casa: 'Roma', fora: 'Internazionale' },
     5: { csv: 'Atletico-Madrid_vs_Osasuna.csv', casa: 'Atletico Madrid', fora: 'Osasuna' },
     6: { csv: 'Cruzeiro_vs_Fortaleza.csv', casa: 'Cruzeiro', fora: 'Fortaleza' },
@@ -193,10 +193,10 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
         fatorCasa: `fator-casa-${numeroJogo}`,
         fatorFora: `fator-fora-${numeroJogo}`,
         conclusaoAnalista: `conclusao-${numeroJogo}`, // CORRIGIDO: era `conclusao-analista-${numeroJogo}`
-        formaAnalise: `forma-analise-${numeroJogo}`,
-        posicaoAnalise: `posicao-analise-${numeroJogo}`,
-        h2hAnalise: `h2h-analise-${numeroJogo}`,
-        fatorAnalise: `fator-analise-${numeroJogo}`
+        formaAnalise: `forma-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`,
+        posicaoAnalise: `posicao-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`,
+        h2hAnalise: `h2h-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`,
+        fatorAnalise: `fator-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`
     };
     
     // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES
