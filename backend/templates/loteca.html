@@ -6698,14 +6698,14 @@ Carregando...
             
             // CARREGAR CONFRONTOS DO JOGO 2
             setTimeout(() => {
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     window.carregarConfrontosAutomatico(2);
                 }
             }, 2500);
             
             // CARREGAR CONFRONTOS DO JOGO 3
             setTimeout(() => {
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     window.carregarConfrontosAutomatico(3);
                 }
             }, 3000);
@@ -7888,7 +7888,11 @@ Carregando...
                     'confronto-direto-principais-2-novo': 'confronto-direto-principais-2',
                     'fator-casa-2-novo': 'fator-casa-2',
                     'fator-fora-2-novo': 'fator-fora-2',
-                    'conclusao-analista-jogo2-novo': 'conclusao-2'
+                    'conclusao-analista-jogo2-novo': 'conclusao-2',
+                    'forma-analise-2-novo': 'forma-analise-2',
+                    'posicao-analise-2-novo': 'posicao-analise-2',
+                    'h2h-analise-2-novo': 'h2h-analise-2',
+                    'fator-analise-2-novo': 'fator-analise-2'
                 };
                 
                 // Renomear IDs temporariamente
@@ -7942,7 +7946,11 @@ Carregando...
                     'confronto-direto-principais-3-novo': 'confronto-direto-principais-3',
                     'fator-casa-3-novo': 'fator-casa-3',
                     'fator-fora-3-novo': 'fator-fora-3',
-                    'conclusao-analista-jogo3-novo': 'conclusao-3'
+                    'conclusao-analista-jogo3-novo': 'conclusao-3',
+                    'forma-analise-3-novo': 'forma-analise-3',
+                    'posicao-analise-3-novo': 'posicao-analise-3',
+                    'h2h-analise-3-novo': 'h2h-analise-3',
+                    'fator-analise-3-novo': 'fator-analise-3'
                 };
                 
                 // Renomear IDs temporariamente
@@ -7982,7 +7990,7 @@ Carregando...
             try {
                 console.log('🔍 [JOGO1-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO1-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO1-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO1-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -7997,16 +8005,17 @@ Carregando...
                     'recomendacao-jogo-1-novo': 'recomendacao-1',
                     'posicao-casa-1-novo': 'posicao-casa-1',
                     'posicao-fora-1-novo': 'posicao-fora-1',
-                    'h2h-analise-1-novo': 'h2h-analise-1',
+                    'h2h-analise-1-novo': 'h2h-analise-1-novo',
                     'fator-casa-1-novo': 'fator-casa-1',
                     'fator-fora-1-novo': 'fator-fora-1',
-                    'fator-analise-1-novo': 'fator-analise-1',
+                    'fator-analise-1-novo': 'fator-analise-1-novo',
                     'conclusao-analista-jogo1-novo': 'conclusao-1',
-                    'confrontos-principais-1-novo': 'confrontos-principais-1',
+                    'confrontos-principais-1-novo': 'confrontos-principais-1-novo',
                     'confronto-direto-principais-1-novo': 'confronto-direto-principais-1',
-                    'forma-analise-1-novo': 'forma-analise-1',
-                    'time-casa-nome-1-novo': 'time-casa-nome-1-novo',
-                    'time-fora-nome-1-novo': 'time-fora-nome-1-novo'
+                    'forma-analise-1-novo': 'forma-analise-1-novo',
+                    'posicao-analise-1-novo': 'posicao-analise-1-novo',
+                    'time-casa-nome-1-novo': 'time-casa-nome-1',
+                    'time-fora-nome-1-novo': 'time-fora-nome-1'
                 };
                 
                 // 3. TEMPORARIAMENTE RENOMEAR IDs PARA USAR AS FUNÇÕES EXTERNAS
@@ -8031,9 +8040,9 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO1-NOVO] Chamando carregarConfrontosAutomatico(1)...');
-                    await window.carregarConfrontosAutomatico(1);
+                    await carregarConfrontosAutomatico(1);
                     console.log('✅ [JOGO1-NOVO] carregarConfrontosAutomatico(1) executado!');
                 } else {
                     console.warn('⚠️ [JOGO1-NOVO] carregarConfrontosAutomatico não disponível');
@@ -8279,7 +8288,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO8-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO8-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO8-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO8-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8327,7 +8336,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA CONFRONTOS
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO8-NOVO] Chamando carregarConfrontosAutomatico(8)...');
                     await window.carregarConfrontosAutomatico(8);
                     console.log('✅ [JOGO8-NOVO] carregarConfrontosAutomatico(8) executado!');
@@ -8553,7 +8562,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO10-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO10-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO10-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO10-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8603,7 +8612,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO10-NOVO] Chamando carregarConfrontosAutomatico(10)...');
                     await window.carregarConfrontosAutomatico(10);
                     console.log('✅ [JOGO10-NOVO] carregarConfrontosAutomatico(10) executado!');
@@ -8628,7 +8637,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO11-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO11-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO11-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO11-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8678,7 +8687,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO11-NOVO] Chamando carregarConfrontosAutomatico(11)...');
                     await window.carregarConfrontosAutomatico(11);
                     console.log('✅ [JOGO11-NOVO] carregarConfrontosAutomatico(11) executado!');
@@ -8703,7 +8712,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO12-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO12-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO12-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO12-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8753,7 +8762,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO12-NOVO] Chamando carregarConfrontosAutomatico(12)...');
                     await window.carregarConfrontosAutomatico(12);
                     console.log('✅ [JOGO12-NOVO] carregarConfrontosAutomatico(12) executado!');
@@ -8785,7 +8794,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO13-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO13-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO13-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO13-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8835,7 +8844,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO13-NOVO] Chamando carregarConfrontosAutomatico(13)...');
                     await window.carregarConfrontosAutomatico(13);
                     console.log('✅ [JOGO13-NOVO] carregarConfrontosAutomatico(13) executado!');
@@ -8860,7 +8869,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO14-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO14-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO14-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO14-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8910,7 +8919,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO14-NOVO] Chamando carregarConfrontosAutomatico(14)...');
                     await window.carregarConfrontosAutomatico(14);
                     console.log('✅ [JOGO14-NOVO] carregarConfrontosAutomatico(14) executado!');
@@ -8935,7 +8944,7 @@ Carregando...
                 // 1. VERIFICAR SE AS FUNÇÕES EXTERNAS ESTÃO DISPONÍVEIS
                 console.log('🔍 [JOGO9-NOVO] Verificando funções disponíveis...');
                 console.log('📊 [JOGO9-NOVO] carregarDadosCompletosJogo:', typeof window.carregarDadosCompletosJogo);
-                console.log('📊 [JOGO9-NOVO] carregarConfrontosAutomatico:', typeof window.carregarConfrontosAutomatico);
+                console.log('📊 [JOGO9-NOVO] carregarConfrontosAutomatico:', typeof carregarConfrontosAutomatico);
                 
                 // 2. MAPEAR IDs DO NOVO CONTAINER PARA IDs ESPERADOS PELAS FUNÇÕES
                 const mapeamentoIds = {
@@ -8985,7 +8994,7 @@ Carregando...
                 }
                 
                 // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                if (typeof window.carregarConfrontosAutomatico === 'function') {
+                if (typeof carregarConfrontosAutomatico === 'function') {
                     console.log('📊 [JOGO9-NOVO] Chamando carregarConfrontosAutomatico(9)...');
                     await window.carregarConfrontosAutomatico(9);
                     console.log('✅ [JOGO9-NOVO] carregarConfrontosAutomatico(9) executado!');

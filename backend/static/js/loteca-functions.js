@@ -193,10 +193,10 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
         fatorCasa: `fator-casa-${numeroJogo}`,
         fatorFora: `fator-fora-${numeroJogo}`,
         conclusaoAnalista: `conclusao-${numeroJogo}`, // CORRIGIDO: era `conclusao-analista-${numeroJogo}`
-        formaAnalise: `forma-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`,
-        posicaoAnalise: `posicao-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`,
-        h2hAnalise: `h2h-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`,
-        fatorAnalise: `fator-analise-${numeroJogo}${numeroJogo <= 3 ? '-novo' : ''}`
+        formaAnalise: `forma-analise-${numeroJogo}`,
+        posicaoAnalise: `posicao-analise-${numeroJogo}`,
+        h2hAnalise: `h2h-analise-${numeroJogo}`,
+        fatorAnalise: `fator-analise-${numeroJogo}`
     };
     
     // 1. ATUALIZAR ESCUDOS E NOMES DOS TIMES

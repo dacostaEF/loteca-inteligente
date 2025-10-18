@@ -336,7 +336,7 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             const mandanteIndex = header.findIndex(col => col.includes('mandante'));
             const placarIndex = header.findIndex(col => col.includes('placar'));
             const visitanteIndex = header.findIndex(col => col.includes('visitante'));
-            const vencedorIndex = header.findIndex(col => col.includes('vencedor'));
+            const vencedorIndex = header.findIndex(col => col.includes('vencedor') || col.includes('resultado'));
             
             console.log(`🔍 [CONFRONTOS-AUTO-${numeroJogo}] Índices encontrados:`, {
                 data: dataIndex,
@@ -370,13 +370,13 @@ async function carregarConfrontosAutomatico(numeroJogo) {
                 
                 let resultado = 'E'; // Default to Empate
                 
-                // LÓGICA CLARA: Comparar vencedor com timeCasa e timeFora da configuração
-                if (vencedor && vencedor.trim().toLowerCase() === 'empate') {
+                // LÓGICA CORRIGIDA: O CSV já tem o resultado do Flamengo (time casa)
+                if (vencedor && vencedor.trim().toUpperCase() === 'V') {
+                    resultado = 'V'; // Vitória do Flamengo (time casa)
+                } else if (vencedor && vencedor.trim().toUpperCase() === 'D') {
+                    resultado = 'D'; // Derrota do Flamengo (vitória do Palmeiras)
+                } else if (vencedor && vencedor.trim().toUpperCase() === 'E') {
                     resultado = 'E'; // Empate
-                } else if (vencedor && vencedor.trim().toUpperCase() === configJogo.timeCasa.toUpperCase()) {
-                    resultado = 'V'; // Vitória do TIME CASA (configuração)
-                } else if (vencedor && vencedor.trim().toUpperCase() === configJogo.timeFora.toUpperCase()) {
-                    resultado = 'D'; // Vitória do TIME FORA (configuração)
                 } else {
                     // Fallback: usar placar se vencedor não disponível
                     if (placar && placar.includes('-')) {
