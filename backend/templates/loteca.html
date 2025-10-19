@@ -412,7 +412,7 @@ Carregando...
                     <div class="analysis-mobile-item">
                         <div class="analysis-mobile-label">Forma Recente</div>
                         <div class="analysis-mobile-teams">
-                            <span><img id="escudo-mobile-casa-4-novo" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
+                            <span><img class="escudo-mobile-casa novo" data-jogo="4" src="/static/placeholder-team-logo.svg" alt="Time Casa" style="width: 20px; height: 20px; margin-right: 5px;">V-E-V-D-V</span>
                             <span><img id="escudo-mobile-fora-4-novo" src="/static/placeholder-team-logo.svg" alt="Time Fora" style="width: 20px; height: 20px; margin-right: 5px;">V-V-E-E-D</span>
                         </div>
                     </div>
@@ -1317,11 +1317,11 @@ Carregando...
                             <div class="legenda-grafico" style="display: flex; justify-content: center; gap: 2rem; margin-top: 0.5rem; font-size: 0.9rem;">
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                                     <div style="width: 20px; height: 20px; background: #000; border-radius: 3px;"></div>
-                                    <span>Vitórias Corinthians</span> <!-- TODO: hardcode -->
+                                    <span data-role="legenda-vitorias-casa">Vitórias Casa</span>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                                     <div style="width: 20px; height: 20px; background: #dc3545; border-radius: 3px;"></div>
-                                    <span>Vitórias Flamengo</span> <!-- TODO: hardcode -->
+                                    <span data-role="legenda-vitorias-fora">Vitórias Fora</span>
                                 </div>
                             </div>
                         </div>
@@ -6038,10 +6038,6 @@ Carregando...
             console.log(`✅ [CONFRONTOS-JOGO1] ${confrontos.length} bolinhas renderizadas na tabela`);
         }
         
-        // ===== CÓDIGO MORTO - FUNÇÃO DUPLICADA =====
-        // OBSERVAÇÃO: Esta função foi substituída por carregarUltimosConfrontosGenerico()
-        // MOTIVO: Código duplicado - mesma lógica para todos os jogos
-        // STATUS: DESABILITADA - NÃO REMOVER AINDA
         // FUNÇÃO ORIGINAL DO JOGO 1 (DESABILITADA - USANDO GENÉRICA)
         async function carregarUltimosConfrontosJogo1_OLD() {
             console.log('🎯 [CONFRONTOS-JOGO1] Carregando últimos confrontos...');
@@ -10923,10 +10919,6 @@ Carregando...
             document.getElementById('data-source').textContent = fonte;
         }
 
-        // ===== CÓDIGO MORTO - FUNÇÃO HARDCODED REMOVIDA =====
-        // OBSERVAÇÃO: Função hardcoded do Jogo 2 - substituída por API
-        // MOTIVO: Dados hardcoded substituídos por dados dinâmicos da API
-        // STATUS: COMENTADA - NÃO REMOVER AINDA
         // FUNÇÃO HARDCODED REMOVIDA - JOGO 2 AGORA USA APENAS API
         /* async function carregarPosicoesTabelaJogo2() {
             try {
@@ -11014,10 +11006,6 @@ Carregando...
             console.log('✅ [POSITION-JOGO2] Posições atualizadas na interface');
         } */
 
-        // ===== CÓDIGO MORTO - FUNÇÃO DUPLICADA =====
-        // OBSERVAÇÃO: Função específica do Jogo 2 - substituída por carregarUltimosConfrontosGenerico()
-        // MOTIVO: Código duplicado - mesma lógica para todos os jogos
-        // STATUS: COMENTADA - NÃO REMOVER AINDA
         // FUNÇÃO PARA CARREGAR ÚLTIMOS CONFRONTOS DO JOGO 2 (DADOS REAIS DO CSV)
         // FUNÇÃO REMOVIDA - JOGO 2 ANTIGO DELETADO
         /* async function carregarUltimosConfrontosJogo2() {
@@ -11272,10 +11260,6 @@ Carregando...
             }
         }
 
-        // ===== CÓDIGO MORTO - FUNÇÃO DIRETA REMOVIDA =====
-        // OBSERVAÇÃO: Função de dados diretos do Jogo 2 - substituída por API
-        // MOTIVO: Dados diretos substituídos por dados da API
-        // STATUS: COMENTADA - NÃO REMOVER AINDA
         // FUNÇÃO REMOVIDA: carregarDadosReaisDiretosJogo2() - substituída por carregarDadosJogo2() que usa API
         /* function carregarDadosReaisDiretosJogo2() {
             console.log('🎯 [LOTECA-JOGO2] Carregando dados reais DIRETOS do dashboard...');
@@ -13481,6 +13465,19 @@ Carregando...
           console.error('[ERRO] Boot loteca', e);
         }
       });
+    </script>
+    <!-- ===== BOOTSTRAP DE INICIALIZAÇÃO - DOSE 1 ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Chamadas oficiais (APIs novas)
+                await window.LotecaConfrontos?.carregarConfrontos();
+                await window.LotecaFunctions?.preencherTodosOsJogos?.(); // rotina que distribui nos 14 containers
+                console.log('[OK] Boot loteca concluído');
+            } catch(e) {
+                console.error('[ERRO] Boot loteca', e);
+            }
+        });
     </script>
     </body>
 </html>

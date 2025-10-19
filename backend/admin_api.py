@@ -1697,19 +1697,19 @@ def obter_dados_analise_jogo(jogo_numero):
     
     # Parâmetros
     concurso = request.args.get("concurso", "concurso_1216")
-    print(f"[NOVA-API] Concurso recebido: '{concurso}'")
+    # print(f"[NOVA-API] Concurso recebido: '{concurso}'")
     
     pasta = _dir_analise(concurso)
     arquivo = pasta / f"jogo_{jogo_numero}.json"
     
-    print(f"[NOVA-API] BACKEND_DIR: {BACKEND_DIR}")
-    print(f"[NOVA-API] Pasta calculada: {pasta}")
-    print(f"[NOVA-API] Caminho do arquivo: {arquivo}")
-    print(f"[NOVA-API] Arquivo existe: {arquivo.exists()}")
-    print(f"[NOVA-API] Conteúdo da pasta: {list(pasta.iterdir()) if pasta.exists() else 'Pasta não existe'}")
+    # print(f"[NOVA-API] BACKEND_DIR: {BACKEND_DIR}")
+    # print(f"[NOVA-API] Pasta calculada: {pasta}")
+    # print(f"[NOVA-API] Caminho do arquivo: {arquivo}")
+    # print(f"[NOVA-API] Arquivo existe: {arquivo.exists()}")
+    # print(f"[NOVA-API] Conteúdo da pasta: {list(pasta.iterdir()) if pasta.exists() else 'Pasta não existe'}")
     
     if not arquivo.exists():
-        print(f"[NOVA-API] ARQUIVO NAO ENCONTRADO!")
+        # print(f"[NOVA-API] ARQUIVO NAO ENCONTRADO!")
         return jsonify({"success": False, "error": "not_found", "file": str(arquivo)}), 404
     
     try:
@@ -1717,15 +1717,15 @@ def obter_dados_analise_jogo(jogo_numero):
         with open(arquivo, "r", encoding="utf-8") as f:
             raw = json.load(f)
         
-        print(f"[NOVA-API] Arquivo lido com sucesso!")
-        print(f"[NOVA-API] Estrutura: {list(raw.keys())}")
+        # print(f"[NOVA-API] Arquivo lido com sucesso!")
+        # print(f"[NOVA-API] Estrutura: {list(raw.keys())}")
         
         # MESMA LÓGICA DO TESTE
         dados = raw.get("dados", {})
         metadados = raw.get("metadados", {})
         
-        print(f"[NOVA-API] Dados extraidos: {len(dados)} campos")
-        print(f"[NOVA-API] Metadados extraidos: {len(metadados)} campos")
+        # print(f"[NOVA-API] Dados extraidos: {len(dados)} campos")
+        # print(f"[NOVA-API] Metadados extraidos: {len(metadados)} campos")
         
         # MESMA NORMALIZAÇÃO DO TESTE
         prob = dados.get("probabilidades")
@@ -1745,14 +1745,14 @@ def obter_dados_analise_jogo(jogo_numero):
             "metadados": metadados
         }
         
-        print(f"[NOVA-API] Payload final criado!")
-        print(f"[NOVA-API] Dados no payload: {len(payload['dados'])} campos")
-        print(f"[NOVA-API] Metadados no payload: {len(payload['metadados'])} campos")
+        # print(f"[NOVA-API] Payload final criado!")
+        # print(f"[NOVA-API] Dados no payload: {len(payload['dados'])} campos")
+        # print(f"[NOVA-API] Metadados no payload: {len(payload['metadados'])} campos")
         
         return jsonify(payload), 200
         
     except Exception as e:
-        print(f"[NOVA-API] ERRO ao ler arquivo: {e}")
+        # print(f"[NOVA-API] ERRO ao ler arquivo: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
 def enriquecer_dados_com_enderecos(dados_publicos):

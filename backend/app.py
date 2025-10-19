@@ -76,6 +76,10 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(bp_br)
     app.register_blueprint(bp_admin)
+    
+    # Registrar blueprint de confrontos
+    from routes_brasileirao import bp_confrontos
+    app.register_blueprint(bp_confrontos)
     # app.register_blueprint(bp_analise)  # Comentado para usar apenas bp_admin
     
     # Error handlers

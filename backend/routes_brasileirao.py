@@ -10,6 +10,7 @@ from services.elenco_provider import get_elenco_data, get_all_elenco_data
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
+bp_confrontos = Blueprint("confrontos", __name__, url_prefix="/api")
 
 @bp_br.route("/clubes", methods=["GET"])
 @cross_origin()
@@ -1115,6 +1116,7 @@ def api_todos_elencos():
             "error": str(e)
         }), 500
 
+# ROTA PRINCIPAL: /api/br/confrontos/<filename>
 @bp_br.route("/confrontos/<filename>", methods=["GET"])
 @cross_origin()
 def servir_arquivo_confrontos(filename):
@@ -1147,7 +1149,53 @@ def servir_arquivo_confrontos(filename):
             "error": f"Erro ao servir arquivo: {str(e)}"
         }), 500
 
+# ROTA ALTERNATIVA: /api/confrontos/<filename> (redireciona para /api/br/confrontos/)
+@bp_br.route("/confrontos-alt/<filename>", methods=["GET"])
+@cross_origin()
+def servir_arquivo_confrontos_alt(filename):
+    """
+    Endpoint alternativo para servir arquivos CSV de confrontos
+    GET /api/br/confrontos-alt/<filename> (redireciona para /api/br/confrontos/<filename>)
+    """
+    # Redirecionar para a função principal
+    return servir_arquivo_confrontos(filename)
+
+# ROTA PRINCIPAL: /api/confrontos/<filename> (sem prefixo /br)
+@bp_confrontos.route("/confrontos/<filename>", methods=["GET"])
+@cross_origin()
+def servir_arquivo_confrontos_direto(filename):
+    """
+    Endpoint direto para servir arquivos CSV de confrontos
+    GET /api/confrontos/<filename>
+    """
+    # Usar a mesma lógica da função principal
+    try:
+        # Caminho para a pasta de confrontos
+        confrontos_path = os.path.join(os.path.dirname(__file__), 'models', 'Confrontos')
+        arquivo_path = os.path.join(confrontos_path, filename)
+        
+        # Verificar se o arquivo existe
+        if not os.path.exists(arquivo_path):
+            return jsonify({
+                "error": f"Arquivo não encontrado: {filename}"
+            }), 404
+        
+        # Verificar se é um arquivo CSV
+        if not filename.lower().endswith('.csv'):
+            return jsonify({
+                "error": "Apenas arquivos CSV são permitidos"
+            }), 400
+        
+        # Servir o arquivo
+        return send_file(arquivo_path, mimetype='text/csv')
+        
+    except Exception as e:
+        return jsonify({
+            "error": f"Erro ao servir arquivo: {str(e)}"
+        }), 500
+
 # Função para registrar o blueprint (será chamada em app.py)
 def register_routes(app):
     """Registrar rotas do Brasileirão na aplicação Flask"""
     app.register_blueprint(bp_br)
+    app.register_blueprint(bp_confrontos)
