@@ -93,6 +93,9 @@
                 <button class="tab-btn" data-tab="panorama-campeonatos">
                     🏆 Panorama dos Campeonatos
                 </button>
+                <button class="tab-btn" data-tab="otimizador-aposta">
+                    🎯 Otimizador de Aposta
+                </button>
             </div>
         </div>
 
@@ -1064,116 +1067,6 @@ Carregando...
             </div>
         </div>
 
-        <!-- OTIMIZADOR DE APOSTAS INTELIGENTE -->
-        <div class="optimizer-section">
-            <div class="optimizer-header">
-                <h2>🎯 Otimizador de Apostas Inteligente</h2>
-                <p>Com base na análise acima, vamos otimizar seu investimento! Defina seu orçamento e receba a distribuição mais inteligente de duplos e triplos.</p>
-            </div>
-
-            <!-- SELETOR DE ORÇAMENTO -->
-            <div class="budget-selector">
-                <h3>💰 Quanto você quer investir?</h3>
-                <div class="budget-options">
-                    <button class="budget-btn" data-value="16">R$ 16,00</button>
-                    <button class="budget-btn" data-value="32">R$ 32,00</button>
-                    <button class="budget-btn" data-value="72">R$ 72,00</button>
-                    <button class="budget-btn" data-value="144">R$ 144,00</button>
-                    <button class="budget-btn" data-value="288">R$ 288,00</button>
-                    <input type="number" id="custom-budget" placeholder="Valor personalizado" min="4" max="1728">
-                </div>
-                <div class="budget-info">
-                    <span id="budget-details">Selecione um valor para ver a distribuição otimizada</span>
-                </div>
-            </div>
-
-            <!-- CLASSIFICAÇÃO DOS JOGOS -->
-            <div class="games-classification">
-                <h3>📊 Classificação Estratégica dos Jogos</h3>
-                
-                <div class="classification-grid">
-                    <div class="classification-card seco">
-                        <h4>🎯 JOGOS "SECOS" (Alta Confiança)</h4>
-                        <p>Favorito claro > 60% - Aposte em 1 resultado apenas</p>
-                        <ul id="seco-games">
-                            <li>Jogo 5: Athletico/PR (70%) - Recomendação: 1</li>
-                            <li>Jogo 6: Atlético/MG (65%) - Recomendação: 1</li>
-                            <li>Jogo 14: Barcelona (60%) - Recomendação: 1</li>
-                        </ul>
-                    </div>
-
-                    <div class="classification-card duplo">
-                        <h4>⚖️ JOGOS PARA "DUPLO" (Incerteza Média)</h4>
-                        <p>Favorito claro, mas 2º resultado tem chance > 25%</p>
-                        <ul id="duplo-games">
-                            <li>Jogo 1: Corinthians (45%) vs Empate (30%) - Duplo: 1X</li> <!-- TODO: hardcode -->
-                            <li>Jogo 9: Palmeiras (45%) vs Empate (30%) - Duplo: X2</li>
-                            <li>Jogo 12: Carregando... (40%) vs Empate (30%) - Duplo: X2</li>
-                            <li>Jogo 7: Grêmio (55%) vs Empate (30%) - Duplo: 1X</li>
-                        </ul>
-                    </div>
-
-                    <div class="classification-card triplo">
-                        <h4>🎲 JOGOS PARA "TRIPLO" (Equilíbrio Total)</h4>
-                        <p>Resultados muito equilibrados - Cobertura total recomendada</p>
-                        <ul id="triplo-games">
-                            <li>Jogo 10: Fluminense (35%) vs Empate (40%) vs Botafogo (25%)</li>
-                            <li>Jogo 4: Vasco (40%) vs Empate (35%) vs Cruzeiro (25%)</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TABELA DE OTIMIZAÇÃO -->
-            <div class="optimization-table-container">
-                <h3>🎮 Sua Aposta Otimizada</h3>
-                <div class="table-responsive">
-                    <table class="optimization-table">
-                        <thead>
-                            <tr>
-                                <th>Jogo</th>
-                                <th>Confronto</th>
-                                <th>Classificação</th>
-                                <th>Sugestão IA</th>
-                                <th>Sua Escolha</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="optimization-tbody">
-                            <!-- Os jogos serão preenchidos via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- RESUMO DA APOSTA -->
-            <div class="bet-summary">
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="summary-value" id="duplos-count">0</div>
-                        <div class="summary-label">Duplos Selecionados</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value" id="triplos-count">0</div>
-                        <div class="summary-label">Triplos Selecionados</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value" id="total-combinations">1</div>
-                        <div class="summary-label">Nº de Apostas</div>
-                    </div>
-                    <div class="summary-card highlight">
-                        <div class="summary-value" id="total-cost">R$ 2,00</div>
-                        <div class="summary-label">Valor Total</div>
-                    </div>
-                </div>
-                
-                <div class="action-buttons">
-                    <button class="btn-primary" id="generate-tickets">🎫 Gerar Cartões para Impressão</button>
-                    <button class="btn-secondary" id="save-strategy">💾 Salvar Estratégia</button>
-                </div>
-            </div>
-        </div>
-
         </div> <!-- FIM DA ABA 1: ANÁLISE RÁPIDA -->
 
         <!-- ABA 2: DADOS AVANÇADOS -->
@@ -1997,6 +1890,216 @@ Carregando...
             </div>
         </div> <!-- FIM DA ABA 3: PANORAMA DOS CAMPEONATOS -->
 
+        <!-- ABA 4: OTIMIZADOR DE APOSTA -->
+        <div class="tab-content" id="otimizador-aposta" style="display: none;">
+            <div class="optimizer-container">
+                
+                <!-- CABEÇALHO DA ABA -->
+                <div class="section-header">
+                    <h2>🎯 Otimizador de Aposta Inteligente</h2>
+                </div>
+
+                <!-- TABELA DE OTIMIZAÇÃO INTERATIVA -->
+                <div class="optimization-table-container">
+                    <p class="table-description">Clique nos resultados para selecionar/desselecionar. A IA sugere, mas você decide!</p>
+                    
+                    <div class="table-responsive">
+                        <table class="optimization-table">
+                            <thead>
+                                <tr>
+                                    <th>Jogo</th>
+                                    <th>Confronto</th>
+                                    <th>Classificação IA</th>
+                                    <th>Sugestão IA</th>
+                                    <th>Sua Escolha</th>
+                                    <th>Probabilidades</th>
+                                </tr>
+                            </thead>
+                            <tbody id="optimization-tbody">
+                                <!-- Os jogos serão preenchidos via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SIMULADOR DE CENÁRIOS -->
+                <div class="scenario-simulator">
+                    <h3>🎮 Simulador de Cenários</h3>
+                    <p class="simulator-description">Escolha sua estratégia de aposta e veja as probabilidades em tempo real</p>
+                    
+                    <div class="scenario-buttons">
+                        <button class="scenario-btn active" data-scenario="conservador">
+                            <span class="scenario-icon">🛡️</span>
+                            <span class="scenario-name">Conservador</span>
+                            <span class="scenario-desc">Menos riscos, maior segurança</span>
+                        </button>
+                        <button class="scenario-btn" data-scenario="moderado">
+                            <span class="scenario-icon">⚖️</span>
+                            <span class="scenario-name">Moderado</span>
+                            <span class="scenario-desc">Equilíbrio entre risco e retorno</span>
+                        </button>
+                        <button class="scenario-btn" data-scenario="agressivo">
+                            <span class="scenario-icon">🚀</span>
+                            <span class="scenario-name">Agressivo</span>
+                            <span class="scenario-desc">Alto risco, alto retorno</span>
+                        </button>
+                        <button class="scenario-btn" data-scenario="personalizado">
+                            <span class="scenario-icon">🎨</span>
+                            <span class="scenario-name">Personalizado</span>
+                            <span class="scenario-desc">Você define as regras</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SELETOR DE ORÇAMENTO -->
+                <div class="budget-selector">
+                    <h3>💰 Quanto você quer investir?</h3>
+                    <div class="budget-options">
+                        <button class="budget-btn" data-value="16">R$ 16,00</button>
+                        <button class="budget-btn" data-value="32">R$ 32,00</button>
+                        <button class="budget-btn" data-value="72">R$ 72,00</button>
+                        <button class="budget-btn" data-value="144">R$ 144,00</button>
+                        <button class="budget-btn" data-value="288">R$ 288,00</button>
+                        <input type="number" id="custom-budget" placeholder="Valor personalizado" min="4" max="1728">
+                    </div>
+                    <div class="budget-info">
+                        <span id="budget-details">Selecione um valor para ver a distribuição otimizada</span>
+                    </div>
+                </div>
+
+                <!-- CLASSIFICAÇÃO DOS JOGOS -->
+                <div class="games-classification">
+                    <h3>📊 Classificação Estratégica dos Jogos</h3>
+                    
+                    <div class="classification-grid">
+                        <div class="classification-card seco">
+                            <h4>🎯 JOGOS "SECOS" (Alta Confiança)</h4>
+                            <p>Favorito claro > 60% - Aposte em 1 resultado apenas</p>
+                            <ul id="seco-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+
+                        <div class="classification-card duplo">
+                            <h4>⚖️ JOGOS PARA "DUPLO" (Incerteza Média)</h4>
+                            <p>Favorito claro, mas 2º resultado tem chance > 25%</p>
+                            <ul id="duplo-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+
+                        <div class="classification-card triplo">
+                            <h4>🎲 JOGOS PARA "TRIPLO" (Equilíbrio Total)</h4>
+                            <p>Resultados muito equilibrados - Cobertura total recomendada</p>
+                            <ul id="triplo-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ANÁLISE DE ROI EM TEMPO REAL -->
+                <div class="roi-analysis">
+                    <h3>📈 Análise de ROI (Retorno sobre Investimento)</h3>
+                    
+                    <div class="roi-grid">
+                        <div class="roi-card">
+                            <div class="roi-label">Probabilidade de Acerto (13 pontos)</div>
+                            <div class="roi-value" id="roi-13-pontos">0%</div>
+                            <div class="roi-detail">Prêmio estimado: R$ 0,00</div>
+                        </div>
+                        <div class="roi-card">
+                            <div class="roi-label">Probabilidade de Acerto (14 pontos)</div>
+                            <div class="roi-value highlight" id="roi-14-pontos">0%</div>
+                            <div class="roi-detail">Prêmio estimado: R$ 0,00</div>
+                        </div>
+                        <div class="roi-card">
+                            <div class="roi-label">ROI Esperado</div>
+                            <div class="roi-value" id="roi-expected">0x</div>
+                            <div class="roi-detail">Para cada R$ 1,00 investido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RESUMO DA APOSTA -->
+                <div class="bet-summary">
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-value" id="duplos-count">0</div>
+                            <div class="summary-label">Duplos Selecionados</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="triplos-count">0</div>
+                            <div class="summary-label">Triplos Selecionados</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-value" id="total-combinations">1</div>
+                            <div class="summary-label">Nº de Apostas</div>
+                        </div>
+                        <div class="summary-card highlight">
+                            <div class="summary-value" id="total-cost">R$ 4,00</div>
+                            <div class="summary-label">Valor Total</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-primary" id="generate-tickets">🎫 Gerar Cartões para Impressão</button>
+                        <button class="btn-secondary" id="save-strategy">💾 Salvar Estratégia</button>
+                        <button class="btn-tertiary" id="share-strategy">📤 Compartilhar Aposta</button>
+                    </div>
+                </div>
+
+                <!-- COMPARAÇÃO DE CENÁRIOS -->
+                <div class="scenario-comparison">
+                    <h3>⚖️ Compare Diferentes Cenários</h3>
+                    <p>Veja como diferentes estratégias afetam seu investimento e probabilidades</p>
+                    
+                    <div class="comparison-table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Cenário</th>
+                                    <th>Investimento</th>
+                                    <th>Nº Apostas</th>
+                                    <th>Prob. 13 pts</th>
+                                    <th>Prob. 14 pts</th>
+                                    <th>ROI Esperado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-tbody">
+                                <tr>
+                                    <td>🛡️ Conservador</td>
+                                    <td id="comp-conservador-invest">R$ 0,00</td>
+                                    <td id="comp-conservador-apostas">0</td>
+                                    <td id="comp-conservador-13">0%</td>
+                                    <td id="comp-conservador-14">0%</td>
+                                    <td id="comp-conservador-roi">0x</td>
+                                </tr>
+                                <tr>
+                                    <td>⚖️ Moderado</td>
+                                    <td id="comp-moderado-invest">R$ 0,00</td>
+                                    <td id="comp-moderado-apostas">0</td>
+                                    <td id="comp-moderado-13">0%</td>
+                                    <td id="comp-moderado-14">0%</td>
+                                    <td id="comp-moderado-roi">0x</td>
+                                </tr>
+                                <tr>
+                                    <td>🚀 Agressivo</td>
+                                    <td id="comp-agressivo-invest">R$ 0,00</td>
+                                    <td id="comp-agressivo-apostas">0</td>
+                                    <td id="comp-agressivo-13">0%</td>
+                                    <td id="comp-agressivo-14">0%</td>
+                                    <td id="comp-agressivo-roi">0x</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- FIM DA ABA 4: OTIMIZADOR DE APOSTA -->
+
         <footer class="footer">
             <div class="footer-cta">
                 <h3>📈 Aposte com Inteligência, Jogue com Confiança</h3>
@@ -2190,6 +2293,16 @@ Carregando...
                     if (selectedTab) {
                         selectedTab.style.display = 'block';
                         console.log(`🔧 [DEBUG] Aba ${targetTab} exibida com sucesso!`);
+                        
+                        // INICIALIZAR SISTEMA DE VÍNCULO QUANDO ABA 4 FOR ABERTA
+                        if (targetTab === 'otimizador-aposta') {
+                            console.log('🎯 [VÍNCULO] Aba Otimizador aberta - inicializando vínculo...');
+                            if (typeof window.inicializarVinculoConfrontos === 'function') {
+                                window.inicializarVinculoConfrontos();
+                            } else {
+                                console.warn('⚠️ [VÍNCULO] Função inicializarVinculoConfrontos não encontrada');
+                            }
+                        }
                     } else {
                         console.error(`🔧 [ERROR] Aba ${targetTab} não encontrada!`);
                     }
@@ -8133,7 +8246,7 @@ Carregando...
                     elementos.forEach(elemento => {
                         if (elemento.textContent && elemento.textContent.trim() === 'Baseado nos últimos 10 jogos') {
                             elemento.textContent = 'Confronto Equilibrado';
-                            console.log('✅ [JOGO1-NOVO] Texto genérico substituído:', elemento);
+                            // console.log('✅ [JOGO1-NOVO] Texto genérico substituído:', elemento);
                         }
                     });
                 }, 2000); // Aguarda 2 segundos para garantir que os confrontos foram carregados
@@ -10185,10 +10298,41 @@ Carregando...
 
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGOS 5 A 14
             for (let i = 5; i <= 14; i++) {
-                setTimeout(() => window[`forcarConfrontoDirectoJogo${i}`](), 3000 + (i * 200));
-                setTimeout(() => window[`forcarConfrontoDirectoJogo${i}`](), 4500 + (i * 200));
-                setTimeout(() => window[`forcarConfrontoDirectoJogo${i}`](), 6500 + (i * 200));
-                setTimeout(() => window[`forcarConfrontoDirectoJogo${i}`](), 8500 + (i * 200));
+                setTimeout(() => {
+                    const funcName = `forcarConfrontoDirectoJogo${i}`;
+                    if (window[funcName] && typeof window[funcName] === 'function') {
+                        window[funcName]();
+                    } else {
+                        // console.warn(`⚠️ [DEBUG] Função ${funcName} não encontrada`);
+                    }
+                }, 3000 + (i * 200));
+                
+                setTimeout(() => {
+                    const funcName = `forcarConfrontoDirectoJogo${i}`;
+                    if (window[funcName] && typeof window[funcName] === 'function') {
+                        window[funcName]();
+                    } else {
+                        // console.warn(`⚠️ [DEBUG] Função ${funcName} não encontrada`);
+                    }
+                }, 4500 + (i * 200));
+                
+                setTimeout(() => {
+                    const funcName = `forcarConfrontoDirectoJogo${i}`;
+                    if (window[funcName] && typeof window[funcName] === 'function') {
+                        window[funcName]();
+                    } else {
+                        // console.warn(`⚠️ [DEBUG] Função ${funcName} não encontrada`);
+                    }
+                }, 6500 + (i * 200));
+                
+                setTimeout(() => {
+                    const funcName = `forcarConfrontoDirectoJogo${i}`;
+                    if (window[funcName] && typeof window[funcName] === 'function') {
+                        window[funcName]();
+                    } else {
+                        // console.warn(`⚠️ [DEBUG] Função ${funcName} não encontrada`);
+                    }
+                }, 8500 + (i * 200));
             }
         });
 
@@ -13415,5 +13559,9 @@ Carregando...
     </script>
     <!-- ===== BOOTSTRAP DE INICIALIZAÇÃO - DOSE 1 ===== -->
     <!-- Bootstrap duplicado removido - mantido apenas o primeiro -->
+
+    <!-- ===== SISTEMA DE VÍNCULO DE CONFRONTOS ===== -->
+    <script src="{{ url_for('static', filename='js/vinculo-confrontos.js') }}"></script>
+
     </body>
 </html>

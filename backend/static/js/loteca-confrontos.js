@@ -364,9 +364,9 @@ async function carregarConfrontosAutomatico(numeroJogo) {
                 const visitante = colunas[visitanteIndex]?.trim();
                 const vencedor = colunas[vencedorIndex]?.trim();
                 
-                console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Dados extraídos:`, {
-                    data, mandante, placar, visitante, vencedor
-                });
+                // console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Dados extraídos:`, {
+                //     data, mandante, placar, visitante, vencedor
+                // });
                 
                 let resultado = 'E'; // Default to Empate
                 
@@ -402,7 +402,7 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             if (csvData.length > 0) {
                 confrontos = csvData;
                 console.log(`✅ [CONFRONTOS-AUTO-${numeroJogo}] Dados CSV carregados:`, confrontos.length, 'confrontos');
-                console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Primeiro confronto:`, confrontos[0]);
+                // console.log(`📊 [CONFRONTOS-AUTO-${numeroJogo}] Primeiro confronto:`, confrontos[0]);
             } else {
                 console.log(`⚠️ [CONFRONTOS-AUTO-${numeroJogo}] Nenhum dado CSV válido encontrado`);
             }
