@@ -8,7 +8,7 @@
  * FUNÇÃO PARA CARREGAR CONFRONTOS DO JOGO 5 - ESTRUTURA EXATA DA IMAGEM
  */
 async function carregarConfrontosJogo5() {
-    console.log('🎯 [CONFRONTOS-JOGO5] Carregando últimos confrontos ATLÉTICO MADRID vs OSASUNA...');
+    // console.log('🎯 [CONFRONTOS-JOGO5] Carregando últimos confrontos ATLÉTICO MADRID vs OSASUNA...');
     
     const container = document.getElementById('confrontos-principais-5');
     if (!container) {
@@ -32,16 +32,16 @@ async function carregarConfrontosJogo5() {
     
     // TENTAR CARREGAR DADOS DO ARQUIVO CSV
     try {
-        console.log('🔄 [CONFRONTOS-JOGO5] Buscando dados do arquivo CSV...');
+        // console.log('🔄 [CONFRONTOS-JOGO5] Buscando dados do arquivo CSV...');
         const csvResponse = await fetch('/api/br/confrontos/Atletico-de-Madrid_vs_Osasuna.csv');
         
         if (csvResponse.ok) {
             const csvText = await csvResponse.text();
-            console.log('✅ [CONFRONTOS-JOGO5] CSV carregado:', csvText.substring(0, 200) + '...');
+            // console.log('✅ [CONFRONTOS-JOGO5] CSV carregado:', csvText.substring(0, 200) + '...');
             
             // Parse do CSV - CORRIGIDO PARA ESTRUTURA REAL
             const lines = csvText.split('\n').filter(line => line.trim());
-            console.log('📊 [CONFRONTOS-JOGO5] Total de linhas no CSV:', lines.length);
+            // console.log('📊 [CONFRONTOS-JOGO5] Total de linhas no CSV:', lines.length);
             
             const csvData = lines.slice(1, 11).map((line, index) => {
                 console.log(`🔍 [CONFRONTOS-JOGO5] Processando linha ${index + 2}:`, line);

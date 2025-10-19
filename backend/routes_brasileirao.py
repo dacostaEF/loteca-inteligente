@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, send_file
 from flask_cors import cross_origin
 import os
-from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name
+# from services.cartola_provider import clubes, estatisticas_clube, mercado_status, health_check, get_clube_mappings, get_clube_id_by_name  # REMOVIDO - não mais utilizado
 # from services.loteca_provider_new import get_current_loteca_matches  # REMOVIDO: código morto
 from models.classificacao_db import classificacao_db
 from models.jogos_manager import JogosManager
@@ -12,36 +12,36 @@ from services.elenco_provider import get_elenco_data, get_all_elenco_data
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
 bp_confrontos = Blueprint("confrontos", __name__, url_prefix="/api")
 
-@bp_br.route("/clubes", methods=["GET"])
-@cross_origin()
-def api_clubes():
-    """
-    Endpoint para listar todos os clubes do Cartola FC
-    GET /api/br/clubes
-    """
-    try:
-        data = clubes()
-        # Normalizar saída em lista
-        out = [
-            {
-                "id": cid, 
-                "nome": v.get("nome", ""), 
-                "abreviacao": v.get("abreviacao", ""),
-                "escudo": v.get("url_escudo_png", "")
-            } 
-            for cid, v in data.items()
-        ]
-        return jsonify({
-            "success": True,
-            "total": len(out),
-            "clubes": out
-        })
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "error": str(e),
-            "clubes": []
-        }), 200
+# @bp_br.route("/clubes", methods=["GET"])  # REMOVIDO - dependência Cartola
+# @cross_origin()
+# def api_clubes():  # REMOVIDO - dependência Cartola
+#     """
+#     Endpoint para listar todos os clubes do Cartola FC
+#     GET /api/br/clubes
+#     """
+#     try:  # REMOVIDO - dependência Cartola
+#         data = clubes()  # REMOVIDO - dependência Cartola
+#         # Normalizar saída em lista
+#         out = [
+#             {
+#                 "id": cid, 
+#                 "nome": v.get("nome", ""), 
+#                 "abreviacao": v.get("abreviacao", ""),
+#                 "escudo": v.get("url_escudo_png", "")
+#             } 
+#             for cid, v in data.items()
+#         ]
+#         return jsonify({
+#             "success": True,
+#             "total": len(out),
+#             "clubes": out
+#         })
+#     except Exception as e:
+#         return jsonify({
+#             "success": False,
+#             "error": str(e),
+#             "clubes": []
+#         }), 200
 
 @bp_br.route("/clube/<int:clube_id>/stats", methods=["GET"])
 @cross_origin()

@@ -63,7 +63,7 @@ function compararTimes(time1, time2) {
     const normalizado1 = normalizarTexto(time1);
     const normalizado2 = normalizarTexto(time2);
     
-    console.log(`🔍 [COMPARAÇÃO] "${time1}" → "${normalizado1}" vs "${time2}" → "${normalizado2}"`);
+    // console.log(`🔍 [COMPARAÇÃO] "${time1}" → "${normalizado1}" vs "${time2}" → "${normalizado2}"`);
     
     return normalizado1 === normalizado2;
 }
@@ -77,7 +77,7 @@ function encontrarTimeCorrespondente(nomeTime, listaTimes) {
     
     for (const time of listaTimes) {
         if (compararTimes(nomeTime, time)) {
-            console.log(`✅ [ENCONTROU] "${nomeTime}" corresponde a "${time}"`);
+            // console.log(`✅ [ENCONTROU] "${nomeTime}" corresponde a "${time}"`);
             return time;
         }
     }
@@ -128,11 +128,11 @@ const escudosMap = {
  * @param {number} numeroJogo - Número do jogo (1-14)
  */
 async function carregarDadosCompletosJogo(numeroJogo) {
-    console.log(`🎯 [JOGO${numeroJogo}] Iniciando carregamento completo...`);
+    // console.log(`🎯 [JOGO${numeroJogo}] Iniciando carregamento completo...`);
     
     try {
         // 1. CARREGAR DADOS DO JSON (ANÁLISE)
-        console.log(`📊 [JOGO${numeroJogo}] Carregando análise JSON...`);
+        // console.log(`📊 [JOGO${numeroJogo}] Carregando análise JSON...`);
         const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1216`);
         
         if (!response.ok) {
@@ -140,7 +140,7 @@ async function carregarDadosCompletosJogo(numeroJogo) {
         }
         
         const dados = await response.json();
-        console.log(`✅ [JOGO${numeroJogo}] Dados JSON carregados:`, dados);
+        // console.log(`✅ [JOGO${numeroJogo}] Dados JSON carregados:`, dados);
         
         // 2. ATUALIZAR CAMPOS PRINCIPAIS (JSON)
         await atualizarCamposPrincipais(numeroJogo, dados);
@@ -148,7 +148,7 @@ async function carregarDadosCompletosJogo(numeroJogo) {
         // 3. CARREGAR E RENDERIZAR CONFRONTOS (CSV)
         await carregarERenderizarConfrontos(numeroJogo, dados);
         
-        console.log(`🎉 [JOGO${numeroJogo}] Carregamento completo finalizado!`);
+        // console.log(`🎉 [JOGO${numeroJogo}] Carregamento completo finalizado!`);
         
     } catch (error) {
         console.error(`❌ [JOGO${numeroJogo}] Erro no carregamento:`, error);
@@ -156,7 +156,7 @@ async function carregarDadosCompletosJogo(numeroJogo) {
         // FALLBACK: Usar dados do jogosMap
         const jogoInfo = jogosMap[numeroJogo];
         if (jogoInfo) {
-            console.log(`🔄 [JOGO${numeroJogo}] Usando dados de fallback...`);
+            // console.log(`🔄 [JOGO${numeroJogo}] Usando dados de fallback...`);
             await carregarERenderizarConfrontos(numeroJogo, jogoInfo);
         }
     }
@@ -168,11 +168,11 @@ async function carregarDadosCompletosJogo(numeroJogo) {
  * @param {object} responseData - Resposta completa da API
  */
 async function atualizarCamposPrincipais(numeroJogo, responseData) {
-    console.log(`🔧 [JOGO${numeroJogo}] Atualizando campos principais...`);
+    // console.log(`🔧 [JOGO${numeroJogo}] Atualizando campos principais...`);
     
     // EXTRAIR DADOS DO JSON (SEGUINDO ESTRUTURA DO JOGO 5)
     const dados = responseData.dados || responseData;
-    console.log(`📊 [JOGO${numeroJogo}] Dados extraídos:`, dados);
+    // console.log(`📊 [JOGO${numeroJogo}] Dados extraídos:`, dados);
     
     // MAPEAMENTO DE IDs DINÂMICOS - CORRIGIDO PARA ESTRUTURA REAL DO HTML
     const ids = {
@@ -596,3 +596,5 @@ window.carregarDadosCompletosJogo = carregarDadosCompletosJogo;
 window.carregarDadosJogo5 = carregarDadosJogo5;
 window.jogosMap = jogosMap;
 window.escudosMap = escudosMap;
+window.setText = setText;
+window.setHTML = setHTML;

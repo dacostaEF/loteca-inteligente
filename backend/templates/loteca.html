@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
         <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
-    <script src="{{ url_for('static', filename='js/providers/cartola-provider.js') }}"></script>
+    <!-- cartola-provider.js removido - não mais utilizado -->
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
@@ -62,22 +62,8 @@
     })();
     </script>
     <script>
-    const $ = (id) => {
-      const el = document.getElementById(id);
-      return (el && el.nodeType === 1) ? el : null;
-    };
-    const val = (id, fallback = '') => {
-      const el = $(id);
-      return el && 'value' in el ? el.value : fallback;
-    };
-    const setText = (id, text = '') => {
-      const el = $(id);
-      if (el) el.textContent = text;
-    };
-    const setHTML = (id, html = '') => {
-      const el = $(id);
-      if (el) el.innerHTML = html;
-    };
+    // Funções helper agora disponíveis globalmente via loteca-functions.js
+    // const $, val, setText, setHTML já exportadas em window
     </script>
 </head>
 <body>
@@ -3676,51 +3662,12 @@ Carregando...
 
         // Instâncias globais dos providers
         const centralAdminProvider = new CentralAdminProvider();
-        const cartolaVerificationProvider = new CartolaVerificationProvider();
+        // cartolaVerificationProvider removido - não mais utilizado
         const internationalProvider = new InternationalProvider();
 
-        // FUNÇÃO PARA IMPORTAR CLASSIFICAÇÕES DO CARTOLA FC
-        async function importarClassificacoesCartola() {
-            try {
-                console.log('🔍 [IMPORT] Iniciando importação das classificações do Cartola FC...');
-                
-                // Buscar classificações disponíveis
-                const classifications = await cartolaVerificationProvider.getAvailableClassifications();
-                
-                console.log(`📊 [IMPORT] ${classifications.length} classificações encontradas:`, classifications);
-                
-                // Importar cada classificação
-                for (const classification of classifications) {
-                    console.log(`📥 [IMPORT] Importando: ${classification.name}...`);
-                    
-                    const data = await cartolaVerificationProvider.getClassification(classification.id);
-                    
-                    if (data) {
-                        console.log(`✅ [IMPORT] ${classification.name} importada com sucesso:`, data);
-                        
-                        // Armazenar dados importados (você pode salvar em localStorage ou enviar para backend)
-                        localStorage.setItem(`cartola_${classification.id}`, JSON.stringify(data));
-                    } else {
-                        console.warn(`⚠️ [IMPORT] Falha ao importar ${classification.name}`);
-                    }
-                }
-                
-                console.log('🎉 [IMPORT] Importação concluída!');
-                return classifications;
-                
-            } catch (error) {
-                console.error('❌ [IMPORT] Erro na importação:', error);
-                return [];
-            }
-        }
+        // FUNÇÃO REMOVIDA - importarClassificacoesCartola (não mais utilizada)
 
-        // FUNÇÃO PARA TESTAR IMPORTAÇÃO (CHAMAR NO CONSOLE)
-        window.testarImportacaoCartola = async function() {
-            console.log('🧪 [TEST] Testando importação das classificações do Cartola FC...');
-            const result = await importarClassificacoesCartola();
-            console.log('📊 [TEST] Resultado:', result);
-            return result;
-        };
+        // FUNÇÃO REMOVIDA - testarImportacaoCartola (não mais utilizada)
 
         // DADOS SIMULADOS PARA ESTATÍSTICAS AVANÇADAS (FALLBACK)
         const advancedStatsData = {
@@ -6038,8 +5985,8 @@ Carregando...
             console.log(`✅ [CONFRONTOS-JOGO1] ${confrontos.length} bolinhas renderizadas na tabela`);
         }
         
-        // FUNÇÃO ORIGINAL DO JOGO 1 (DESABILITADA - USANDO GENÉRICA)
-        async function carregarUltimosConfrontosJogo1_OLD() {
+        // FUNÇÃO REMOVIDA - carregarUltimosConfrontosJogo1_OLD (não utilizada)
+        /* async function carregarUltimosConfrontosJogo1_OLD() {
             console.log('🎯 [CONFRONTOS-JOGO1] Carregando últimos confrontos...');
             
             const container = document.getElementById('confrontos-principais');
@@ -6149,7 +6096,7 @@ Carregando...
             
             // CRIAR GRÁFICO DE BARRAS COM OS MESMOS DADOS
             await criarGraficoConfrontosJogo1(ultimos10);
-        }
+        } */
         
         // CRIAR GRÁFICO DE BARRAS PARA JOGO 1 (Times serão carregados via API)
         async function criarGraficoConfrontosJogo1(confrontos) {
@@ -7388,8 +7335,8 @@ Carregando...
         } */
 
         // FUNÇÃO PARA ATUALIZAR OS CAMPOS DO JOGO 4 (IDÊNTICA AO JOGO 3)
-        // FUNÇÃO REMOVIDA - JOGO 4 ANTIGO
-        function atualizarDadosJogo4_REMOVIDA(dados) {
+        // FUNÇÃO REMOVIDA - atualizarDadosJogo4_REMOVIDA (não utilizada)
+        /* function atualizarDadosJogo4_REMOVIDA(dados) {
             console.log('🔄 [JOGO4] Atualizando campos com dados:', dados);
             console.log('🔍 [JOGO4] Dados recebidos:', JSON.stringify(dados, null, 2));
             
@@ -7617,7 +7564,7 @@ Carregando...
             }
             
             console.log('✅ [JOGO4] Todos os campos atualizados com sucesso!');
-        }
+        } */
 
         // FUNÇÃO DUPLICADA REMOVIDA - USANDO A FUNÇÃO ESPECÍFICA ABAIXO
 
@@ -9978,20 +9925,20 @@ Carregando...
         // ===== FIM DO PATCH CIRÚRGICO =====
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 [DEBUG] Iniciando aplicação...');
+            // console.log('🚀 [DEBUG] Iniciando aplicação...');
             
             // PRIMEIRO: Carregar dados do JOGO 1 automaticamente
             // carregarDadosJogo1(); // REMOVIDO: Jogo 1 foi removido
-            console.log('✅ [DEBUG] Jogo 1 removido - pulando carregamento');
+            // console.log('✅ [DEBUG] Jogo 1 removido - pulando carregamento');
             
             // PRIMEIRO: Inicializar abas principais
             initializeTabs();
-            console.log('✅ [DEBUG] Abas principais inicializadas');
+            // console.log('✅ [DEBUG] Abas principais inicializadas');
             
             // DEPOIS: Inicializar seção Times Loteca Jogos
             setTimeout(() => {
                 initializeTimesLotecaSection(); // Seção simplificada
-                console.log('✅ [DEBUG] Seção Times Loteca inicializada');
+                // console.log('✅ [DEBUG] Seção Times Loteca inicializada');
                 
             }, 100);
             
@@ -10004,7 +9951,7 @@ Carregando...
                     const jogosAba1 = extrairJogosDaAba1();
                     atualizarDropdownAba2(gameSelector, jogosAba1);
                 }
-                console.log('✅ [DEBUG] Carregamento automático inicializado');
+                // console.log('✅ [DEBUG] Carregamento automático inicializado');
             }, 500);
             initializeBudgetSelector();
             initializeOptimizationTable();
@@ -11499,8 +11446,8 @@ Carregando...
             console.log(`✅ [CONFRONTOS-JOGO3] ${confrontos.length} bolinhas renderizadas na tabela`);
         } */
         
-        // FUNÇÃO ORIGINAL DO JOGO 3 (DESABILITADA - USANDO GENÉRICA)
-        function carregarUltimosConfrontosJogo3_OLD() {
+        // FUNÇÃO REMOVIDA - carregarUltimosConfrontosJogo3_OLD (não utilizada)
+        /* function carregarUltimosConfrontosJogo3_OLD() {
             console.log('🎯 [CONFRONTOS-JOGO3] Carregando últimos confrontos Juventude vs Internacional...');
             
             const container = document.getElementById('confrontos-principais-3');
@@ -11616,7 +11563,7 @@ Carregando...
                 
                 updatePositionDisplayJogo3(homeClassification, awayClassification);
             }
-        }
+        } */
 
         // ATUALIZAR EXIBIÇÃO DAS POSIÇÕES NA TABELA DO JOGO 3
         function updatePositionDisplayJogo3(homeClassification, awayClassification) {
@@ -11902,8 +11849,8 @@ Carregando...
         // OBSERVAÇÃO: Função antiga do Jogo 4 - substituída por carregarUltimosConfrontosGenerico()
         // MOTIVO: Código duplicado - mesma lógica para todos os jogos
         // STATUS: DESABILITADA - NÃO REMOVER AINDA
-        // FUNÇÃO ORIGINAL DO JOGO 4 (DESABILITADA - USANDO GENÉRICA)
-        function carregarUltimosConfrontosJogo4_OLD() {
+        // FUNÇÃO REMOVIDA - carregarUltimosConfrontosJogo4_OLD (não utilizada)
+        /* function carregarUltimosConfrontosJogo4_OLD() {
             console.log('🎯 [CONFRONTOS-JOGO4] Carregando últimos confrontos Vasco vs Cruzeiro...');
             
             const container = document.getElementById('confrontos-principais-4');
@@ -12019,7 +11966,7 @@ Carregando...
                 
                 updatePositionDisplayJogo4(homeClassification, awayClassification);
             }
-        }
+        } */
 
         // ATUALIZAR EXIBIÇÃO DAS POSIÇÕES NA TABELA DO JOGO 4
         function updatePositionDisplayJogo4(homeClassification, awayClassification) {
@@ -12056,8 +12003,8 @@ Carregando...
         }
 
         // FUNÇÃO SIMPLES PARA FORÇAR CONFRONTO DIRETO JOGO 4
-        // FUNÇÃO REMOVIDA - JOGO 4 ANTIGO
-        function forcarConfrontoDirectoJogo4_REMOVIDA() {
+        // FUNÇÃO REMOVIDA - forcarConfrontoDirectoJogo4_REMOVIDA (não utilizada)
+        /* function forcarConfrontoDirectoJogo4_REMOVIDA() {
             console.log('🔥 [FORCE-H2H-JOGO4] Forçando confronto direto Vasco vs Cruzeiro...');
             
             const elemento = document.getElementById('confronto-direto-principais-4');
@@ -12095,7 +12042,7 @@ Carregando...
             if (fatorAnalise) fatorAnalise.innerHTML = 'Vantagem Cruzeiro';
             
             console.log('✅ [FORCE-H2H-JOGO4] Fator Casa atualizado!');
-        }
+        } */
 
         // FUNÇÃO PARA CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 4
         function carregarDadosReaisDiretosJogo4() {
@@ -13467,17 +13414,6 @@ Carregando...
       });
     </script>
     <!-- ===== BOOTSTRAP DE INICIALIZAÇÃO - DOSE 1 ===== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Chamadas oficiais (APIs novas)
-                await window.LotecaConfrontos?.carregarConfrontos();
-                await window.LotecaFunctions?.preencherTodosOsJogos?.(); // rotina que distribui nos 14 containers
-                console.log('[OK] Boot loteca concluído');
-            } catch(e) {
-                console.error('[ERRO] Boot loteca', e);
-            }
-        });
-    </script>
+    <!-- Bootstrap duplicado removido - mantido apenas o primeiro -->
     </body>
 </html>

@@ -24,17 +24,7 @@
     if (v == null || v === '') return;
     el.innerHTML = `<span class="probability-value">${String(v).replace('%','')}%</span>`;
   }
-  // Funções setText e setHTML movidas para loteca-functions.js (implementação oficial)
-  // IMPLEMENTAÇÃO TEMPORÁRIA PARA COMPATIBILIDADE
-  function setText(id, text = '') {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text;
-  }
-  
-  function setHTML(id, html = '') {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = html;
-  }
+  // Funções setText e setHTML agora disponíveis globalmente via loteca-functions.js
 
   // ==== JOGO 1 ====
   function preencherJogo1Com(src){
