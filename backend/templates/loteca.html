@@ -10317,54 +10317,68 @@ Carregando...
 
         // INICIALIZAR TABELA DE OTIMIZAÇÃO
         function initializeOptimizationTable() {
+            console.log('🏗️ [TABLE] Inicializando tabela de otimização...');
+            
             const tbody = document.getElementById('optimization-tbody');
+            if (!tbody) {
+                console.error('❌ [TABLE] Tbody não encontrado!');
+                return;
+            }
+            
+            console.log('🏗️ [TABLE] Tbody encontrado, limpando...');
             tbody.innerHTML = '';
-
-            gamesData.forEach(game => {
+            
+            console.log('🏗️ [TABLE] Dados dos jogos:', gamesData.length);
+            
+            gamesData.forEach((game, index) => {
+                console.log(`🏗️ [TABLE] Criando linha ${index + 1} para jogo ${game.id}: ${game.home} x ${game.away}`);
+                
                 const row = document.createElement('tr');
-                row.innerHTML = `
+                row.setAttribute('data-game', game.id); // ADICIONAR ATRIBUTO DATA-GAME NA LINHA
+                
+                const rowHTML = `
                     <td><strong>${game.id}</strong></td>
                     <td>${game.home} x ${game.away}</td>
                     <td><span class="status-badge ${game.classification}">${game.classification.toUpperCase()}</span></td>
                     <td><strong>${game.suggestion}</strong></td>
                     <td>
-                        <div class="choice-buttons">
-                            <button class="choice-btn" data-game="${game.id}" data-choice="1">1</button>
-                            <button class="choice-btn" data-game="${game.id}" data-choice="X">X</button>
-                            <button class="choice-btn" data-game="${game.id}" data-choice="2">2</button>
-                            <button class="choice-btn" data-game="${game.id}" data-choice="1X">1X</button>
-                            <button class="choice-btn" data-game="${game.id}" data-choice="X2">X2</button>
-                            <button class="choice-btn" data-game="${game.id}" data-choice="1X2">1X2</button>
+                        <div class="choice-buttons" style="display: flex; gap: 4px; flex-wrap: wrap;">
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="1" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">1</button>
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="X" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">X</button>
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">2</button>
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="1X" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">1X</button>
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="X2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">X2</button>
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="1X2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">1X2</button>
                         </div>
                     </td>
                     <td id="status-${game.id}">-</td>
                 `;
+                
+                row.innerHTML = rowHTML;
                 tbody.appendChild(row);
+                
+                console.log(`✅ [TABLE] Linha ${index + 1} criada com sucesso!`);
             });
+            
+            console.log('✅ [TABLE] Tabela inicializada com sucesso!');
+            console.log('✅ [TABLE] Total de linhas criadas:', tbody.children.length);
         }
 
-        // CONFIGURAR EVENT LISTENERS
+        // CONFIGURAR EVENT LISTENERS - REMOVIDO PARA EVITAR CONFLITO
+        // O LotecaBetController já gerencia os cliques dos botões choice-btn
         function initializeEventListeners() {
-            document.addEventListener('click', (e) => {
-                if (e.target.classList.contains('choice-btn')) {
-                    const gameId = parseInt(e.target.dataset.game);
-                    const choice = e.target.dataset.choice;
-                    
-                    // Update choice
-                    userChoices[gameId] = choice;
-                    
-                    // Update visual selection
-                    const gameButtons = document.querySelectorAll(`[data-game="${gameId}"]`);
-                    gameButtons.forEach(btn => btn.classList.remove('selected'));
-                    e.target.classList.add('selected');
-                    
-                    updateSummary();
-                }
-            });
-
+            console.log('🔧 [LOTECA] Event listeners gerenciados pelo LotecaBetController');
+            
             // Botões de ação
-            document.getElementById('generate-tickets').addEventListener('click', generateTickets);
-            document.getElementById('save-strategy').addEventListener('click', saveStrategy);
+            const generateBtn = document.getElementById('generate-tickets');
+            const saveBtn = document.getElementById('save-strategy');
+            
+            if (generateBtn) {
+                generateBtn.addEventListener('click', generateTickets);
+            }
+            if (saveBtn) {
+                saveBtn.addEventListener('click', saveStrategy);
+            }
         }
 
         // ATUALIZAR TABELA DE OTIMIZAÇÃO
@@ -12250,7 +12264,7 @@ Carregando...
 
         // FUNÇÕES DE CONFRONTO DIRETO PARA JOGOS 5 A 14
         function forcarConfrontoDirectoJogo5() {
-            console.log('🔥 [FORCE-H2H-JOGO5] Forçando confronto direto Athletico vs Operário...');
+            // console.log('🔥 [FORCE-H2H-JOGO5] Forçando confronto direto Athletico vs Operário...');
             const container = document.getElementById('confronto-direto-principais-5');
             
             if (container) {
@@ -12263,9 +12277,9 @@ Carregando...
                     <span class="confronto-direto-count">2</span>
                     <img src="/static/escudos/Osasuna/Osasuna.png" alt="Osasuna" class="confronto-direto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>OSA</span>'">
                 `;
-                console.log('✅ [FORCE-H2H-JOGO5] Confronto direto FORÇADO com sucesso!');
+                // console.log('✅ [FORCE-H2H-JOGO5] Confronto direto FORÇADO com sucesso!');
             } else {
-                console.error('❌ [FORCE-H2H-JOGO5] Container confronto-direto-principais-5 não encontrado!');
+                // console.error('❌ [FORCE-H2H-JOGO5] Container confronto-direto-principais-5 não encontrado!');
             }
             
             // Atualizar Fator Casa baseado nos dados reais
@@ -12277,7 +12291,7 @@ Carregando...
             if (fatorFora) fatorFora.innerHTML = '30%';
             if (fatorAnalise) fatorAnalise.innerHTML = 'Vantagem Athletico';
             
-            console.log('✅ [FORCE-H2H-JOGO5] Fator Casa atualizado!');
+            // console.log('✅ [FORCE-H2H-JOGO5] Fator Casa atualizado!');
         }
 
 
@@ -13448,12 +13462,34 @@ Carregando...
 
     <!-- ===== SISTEMA DE VÍNCULO DE CONFRONTOS ===== -->
     <script src="{{ url_for('static', filename='js/vinculo-confrontos.js') }}"></script>
+
+    <!-- ===== MÓDULO OTIMIZADOR (Aba 5) ===== -->
+    <script src="{{ url_for('static', filename='js/loteca-otimizador.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        try {
+          window.LotecaOtimizador?.init({
+            root: '#optimization-tbody',
+            painelSelectors: {
+              duplos:  '#user-duplos',
+              triplos: '#user-triplos',
+              apostas: '#user-apostas',
+              valor:   '#user-valor'
+            }
+          });
+          console.log('[Otimizador] módulo inicializado');
+        } catch(e) {
+          console.error('[Otimizador] falha ao iniciar', e);
+        }
+      });
+    </script>
     
     <!-- ===== SISTEMA DE CONTROLE DE APOSTAS LOTECA ===== -->
     <script>
         // TABELA DE PREÇOS DA LOTECA
         const LOTECA_PRICES = {
-            // Duplos, Triplos, Nº Apostas, Valor
+            // Duplos, Triplos, Nº Apostas, Valor - TABELA OFICIAL LOTECA
+            "0,0": { apostas: 1, valor: 4.00 }, // APOSTA SIMPLES (nenhum duplo, nenhum triplo) - MÍNIMO R$ 4,00
             "1,0": { apostas: 2, valor: 4.00 },
             "2,0": { apostas: 4, valor: 8.00 },
             "3,0": { apostas: 8, valor: 16.00 },
@@ -13462,7 +13498,7 @@ Carregando...
             "6,0": { apostas: 64, valor: 128.00 },
             "7,0": { apostas: 128, valor: 256.00 },
             "8,0": { apostas: 256, valor: 512.00 },
-            "9,0": { apostas: 512, valor: 1024.00 },
+            "9,0": { apostas: 512, valor: 1024.00 }, // MÁXIMO DUPLOS
             "0,1": { apostas: 3, valor: 6.00 },
             "1,1": { apostas: 6, valor: 12.00 },
             "2,1": { apostas: 12, valor: 24.00 },
@@ -13491,7 +13527,7 @@ Carregando...
             "3,4": { apostas: 648, valor: 1296.00 },
             "0,5": { apostas: 243, valor: 486.00 },
             "1,5": { apostas: 486, valor: 972.00 },
-            "0,6": { apostas: 729, valor: 1458.00 }
+            "0,6": { apostas: 729, valor: 1458.00 } // MÁXIMO TRIPLOS
         };
 
         // SISTEMA DE CONTROLE DE APOSTAS
@@ -13511,38 +13547,70 @@ Carregando...
             }
 
             setupEventListeners() {
+                console.log('🔧 [EVENTS] Configurando event listeners...');
+                
                 // Monitorar cliques nos botões de escolha
                 document.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('choice-btn')) {
+                    const btn = e.target.closest && e.target.closest('.choice-btn');
+                    console.log('🖱️ [CLICK] Clique detectado em:', e.target, '-> closest .choice-btn =', btn);
+                    if (btn) {
+                        console.log('✅ [CLICK] Botão choice-btn clicado!');
                         e.preventDefault();
-                        this.handleChoiceClick(e.target);
+                        this.handleChoiceClick(btn);
                     }
                 });
+
+                // Delegação direta no corpo da tabela (fallback)
+                const tbody = document.getElementById('optimization-tbody');
+                if (tbody) {
+                    tbody.addEventListener('click', (e) => {
+                        const btn = e.target.closest && e.target.closest('.choice-btn');
+                        if (btn) {
+                            console.log('✅ [CLICK/TBODY] Botão clicado via delegação do tbody');
+                            e.preventDefault();
+                            this.handleChoiceClick(btn);
+                        }
+                    });
+                }
                 
                 // Monitorar mudanças na tabela de otimização
                 const tbody = document.getElementById('optimization-tbody');
                 if (tbody) {
+                    console.log('👀 [OBSERVER] Configurando observer para tbody');
                     const observer = new MutationObserver(() => {
                         this.updateCounters();
                         this.updateDisplay();
                     });
                     observer.observe(tbody, { childList: true, subtree: true });
+                } else {
+                    console.warn('⚠️ [OBSERVER] Tbody não encontrado');
                 }
+                
+                console.log('✅ [EVENTS] Event listeners configurados!');
             }
 
             handleChoiceClick(button) {
                 const gameId = parseInt(button.dataset.game);
                 const choice = button.dataset.choice;
                 
-                console.log(`🎯 [LOTECA] Jogo ${gameId} - Escolha: ${choice}`);
+                console.log(`🎯 [LOTECA] CLIQUE DETECTADO - Jogo ${gameId} - Escolha: ${choice}`);
+                console.log(`🔍 [DEBUG] Botão clicado:`, button);
+                console.log(`🔍 [DEBUG] Dataset:`, button.dataset);
                 
                 // SIMULAR A ESCOLHA PARA VERIFICAR LIMITES
                 const currentChoices = this.getGameChoices(gameId);
+                console.log(`🔍 [DEBUG] Escolhas atuais do jogo ${gameId}:`, currentChoices);
+                
                 const newChoices = this.simulateChoice(currentChoices, choice);
+                console.log(`🔍 [DEBUG] Novas escolhas simuladas:`, newChoices);
                 
                 // VERIFICAR SE A NOVA COMBINAÇÃO EXCEDE OS LIMITES
-                if (!this.wouldExceedLimits(gameId, newChoices)) {
+                const canProceed = !this.wouldExceedLimits(gameId, newChoices);
+                console.log(`🔍 [LOTECA] Pode prosseguir: ${canProceed}`);
+                
+                if (canProceed) {
                     // PERMITIR A ESCOLHA - DESABILITAR ANTERIOR E HABILITAR NOVA
+                    console.log(`✅ [LOTECA] Escolha permitida - aplicando mudanças`);
                     this.toggleChoice(button);
                     this.updateCounters();
                     this.updateDisplay();
@@ -13589,7 +13657,7 @@ Carregando...
                 } else {
                     // Calcular manualmente se não estiver na tabela
                     this.totalApostas = Math.pow(2, this.duplos) * Math.pow(3, this.triplos);
-                    this.valorTotal = this.totalApostas * 2.00;
+                    this.valorTotal = this.totalApostas * 4.00; // MÍNIMO R$ 4,00 POR APOSTA
                     console.log(`💰 [LOTECA] Cálculo manual: ${this.totalApostas} apostas, R$ ${this.valorTotal}`);
                 }
             }
@@ -13597,12 +13665,21 @@ Carregando...
             getGameChoices(gameId) {
                 const choices = [];
                 const gameRow = document.querySelector(`tr[data-game="${gameId}"]`);
+                console.log(`🔍 [DEBUG] Procurando linha do jogo ${gameId}:`, gameRow);
+                
                 if (gameRow) {
                     const activeButtons = gameRow.querySelectorAll('.choice-btn.active');
+                    console.log(`🔍 [DEBUG] Botões ativos encontrados:`, activeButtons);
+                    
                     activeButtons.forEach(btn => {
+                        console.log(`🔍 [DEBUG] Botão ativo:`, btn, 'Choice:', btn.dataset.choice);
                         choices.push(btn.dataset.choice);
                     });
+                } else {
+                    console.warn(`⚠️ [DEBUG] Linha do jogo ${gameId} não encontrada!`);
                 }
+                
+                console.log(`🔍 [DEBUG] Escolhas retornadas para jogo ${gameId}:`, choices);
                 return choices;
             }
 
@@ -13672,18 +13749,35 @@ Carregando...
                     }
                 }
                 
-                // Verificar limites
-                const maxDuplos = 8;
-                const maxTriplos = 6;
+                // LIMITES OFICIAIS DA LOTECA
+                const maxDuplos = 9;  // MÁXIMO 9 DUPLOS (R$ 1.024,00)
+                const maxTriplos = 6; // MÁXIMO 6 TRIPLOS (R$ 1.458,00)
                 
+                console.log(`🔍 [LOTECA] Verificando limites: ${duplos} duplos, ${triplos} triplos`);
+                
+                // VERIFICAR SE EXCEDE LIMITES
                 if (duplos > maxDuplos) {
                     console.warn(`⚠️ [LOTECA] Limite de duplos seria excedido: ${duplos}/${maxDuplos}`);
+                    this.showLimitWarning(`Máximo de ${maxDuplos} duplos permitidos!`);
                     return true;
                 }
                 if (triplos > maxTriplos) {
                     console.warn(`⚠️ [LOTECA] Limite de triplos seria excedido: ${triplos}/${maxTriplos}`);
+                    this.showLimitWarning(`Máximo de ${maxTriplos} triplos permitidos!`);
                     return true;
                 }
+                
+                // VERIFICAR COMBINAÇÕES VÁLIDAS NA TABELA
+                const key = `${duplos},${triplos}`;
+                if (!LOTECA_PRICES[key]) {
+                    console.warn(`⚠️ [LOTECA] Combinação inválida: ${duplos} duplos, ${triplos} triplos`);
+                    console.warn(`⚠️ [LOTECA] Chave procurada: "${key}"`);
+                    console.warn(`⚠️ [LOTECA] Chaves disponíveis:`, Object.keys(LOTECA_PRICES));
+                    this.showLimitWarning(`Combinação inválida: ${duplos} duplos + ${triplos} triplos`);
+                    return true;
+                }
+                
+                console.log(`✅ [LOTECA] Combinação válida: ${duplos} duplos, ${triplos} triplos - ${LOTECA_PRICES[key].apostas} apostas, R$ ${LOTECA_PRICES[key].valor}`);
                 
                 return false;
             }
@@ -13707,7 +13801,7 @@ Carregando...
             }
             
             // MOSTRAR AVISO DE LIMITE
-            showLimitWarning() {
+            showLimitWarning(message = 'Limite excedido!') {
                 // Criar ou atualizar aviso
                 let warning = document.getElementById('loteca-limit-warning');
                 if (!warning) {
@@ -13725,7 +13819,7 @@ Carregando...
                         box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
                         z-index: 10000;
                         font-weight: 500;
-                        max-width: 300px;
+                        max-width: 350px;
                     `;
                     document.body.appendChild(warning);
                 }
@@ -13734,23 +13828,30 @@ Carregando...
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <span style="font-size: 1.2em;">⚠️</span>
                         <div>
-                            <div style="font-weight: bold;">Limite Excedido!</div>
-                            <div style="font-size: 0.9em; opacity: 0.9;">Máximo: 8 duplos, 6 triplos</div>
+                            <div style="font-weight: bold;">${message}</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">Máximo: 9 duplos, 6 triplos</div>
                         </div>
                     </div>
                 `;
                 
-                // Remover aviso após 3 segundos
+                // Remover aviso após 4 segundos
                 setTimeout(() => {
                     if (warning && warning.parentNode) {
-                        warning.parentNode.removeChild(warning);
+                        try {
+                            warning.parentNode.removeChild(warning);
+                        } catch (e) {
+                            console.warn('⚠️ [LOTECA] Erro ao remover aviso:', e);
+                            if (warning.remove) {
+                                warning.remove();
+                            }
+                        }
                     }
-                }, 3000);
+                }, 4000);
             }
 
             checkLimits() {
-                const maxDuplos = 8;
-                const maxTriplos = 6;
+                const maxDuplos = 9;  // MÁXIMO OFICIAL: 9 DUPLOS
+                const maxTriplos = 6; // MÁXIMO OFICIAL: 6 TRIPLOS
                 const maxApostas = 1728;
                 const maxValor = 1728.00;
                 
@@ -13770,31 +13871,65 @@ Carregando...
             }
         }
 
+        // Expor classe globalmente
+        window.LotecaBetController = LotecaBetController;
+
         // INICIALIZAR SISTEMA QUANDO DOM ESTIVER PRONTO
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                window.lotecaBetController = new LotecaBetController();
-                console.log('✅ [LOTECA] Sistema de controle de apostas ativado!');
-                
-                // DEBUG: Verificar se os elementos existem
-                const userDuplos = document.getElementById('user-duplos');
-                const userTriplos = document.getElementById('user-triplos');
-                const userApostas = document.getElementById('user-apostas');
-                const userValor = document.getElementById('user-valor');
-                
-                console.log('🔍 [DEBUG] Elementos encontrados:', {
-                    userDuplos: !!userDuplos,
-                    userTriplos: !!userTriplos,
-                    userApostas: !!userApostas,
-                    userValor: !!userValor
+            const PRICES = window.LOTECA_PRICES || {"0,0":{apostas:1,valor:4}};
+            const mapChoice = c => c==='1X' ? ['1','X'] : c==='X2' ? ['X','2'] : c==='12' ? ['1','2'] : c==='1X2' ? ['1','X','2'] : [c];
+            function emergencyRecalc() {
+                let d=0,t=0;
+                document.querySelectorAll('tr[data-game]').forEach(tr=>{
+                    const btn = tr.querySelector('.choice-btn.active');
+                    const len = btn ? mapChoice(btn.dataset.choice).length : 0;
+                    if (len===2) d++; else if (len===3) t++;
                 });
-                
-                // Forçar atualização inicial
-                if (window.lotecaBetController) {
-                    window.lotecaBetController.updateDisplay();
-                    console.log('🔄 [DEBUG] Display atualizado forçadamente');
+                const k = `${d},${t}`;
+                const p = PRICES[k] || PRICES["0,0"];
+                const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.textContent = typeof val==='number' ? String(val) : val; };
+                set('user-duplos', d);
+                set('user-triplos', t);
+                set('user-apostas', p.apostas);
+                set('user-valor', `R$ ${p.valor.toFixed(2).replace('.',',')}`);
+            }
+            function enableEmergency() {
+                const tbody = document.getElementById('optimization-tbody');
+                if (!tbody) return false;
+                tbody.addEventListener('click', e=>{
+                    const btn = e.target.closest('.choice-btn');
+                    if (!btn) return;
+                    const tr = btn.closest('tr[data-game]');
+                    tr?.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('active'));
+                    btn.classList.add('active');
+                    emergencyRecalc();
+                }, {capture:true});
+                console.warn('⚠️ [LOTECA] Modo emergência ativado (fallback de cliques)');
+                emergencyRecalc();
+                return true;
+            }
+            function boot() {
+                try {
+                    if (typeof window.LotecaBetController === 'function') {
+                        window.lotecaBetController = new window.LotecaBetController();
+                        console.log('✅ [LOTECA] Sistema de controle de apostas ativado!');
+                        window.lotecaBetController.updateDisplay();
+                        return true;
+                    }
+                } catch(e) {
+                    console.warn('⚠️ [LOTECA] Erro ao iniciar controlador:', e);
                 }
-            }, 2000);
+                return enableEmergency();
+            }
+            // Esperar a tabela existir, iniciar assim que possível
+            const maxWaitMs = 3000; const start = performance.now();
+            const timer = setInterval(() => {
+                if (document.getElementById('optimization-tbody')) {
+                    clearInterval(timer); boot();
+                } else if (performance.now()-start > maxWaitMs) {
+                    clearInterval(timer); boot();
+                }
+            }, 150);
         });
         
         // FUNÇÃO DE DEBUG GLOBAL
@@ -13822,6 +13957,381 @@ Carregando...
                 console.log('✅ [LOTECA] Atualização concluída!');
             } else {
                 console.warn('❌ [LOTECA] LotecaBetController não inicializado');
+            }
+        };
+        
+        // FUNÇÃO PARA TESTAR CLIQUE MANUAL
+        window.testLotecaClick = function(gameId, choice) {
+            console.log(`🧪 [TEST] Simulando clique no jogo ${gameId} com escolha ${choice}`);
+            
+            const gameRow = document.querySelector(`tr[data-game="${gameId}"]`);
+            if (gameRow) {
+                const button = gameRow.querySelector(`.choice-btn[data-choice="${choice}"]`);
+                if (button) {
+                    console.log(`🧪 [TEST] Botão encontrado:`, button);
+                    if (window.lotecaBetController) {
+                        window.lotecaBetController.handleChoiceClick(button);
+                    } else {
+                        console.warn('❌ [TEST] LotecaBetController não inicializado');
+                    }
+                } else {
+                    console.warn(`❌ [TEST] Botão com escolha ${choice} não encontrado no jogo ${gameId}`);
+                }
+            } else {
+                console.warn(`❌ [TEST] Linha do jogo ${gameId} não encontrada`);
+            }
+        };
+        
+        // FUNÇÃO PARA VERIFICAR ESTADO ATUAL
+        window.checkLotecaState = function() {
+            console.log('🔍 [STATE] Verificando estado atual...');
+            
+            for (let i = 1; i <= 14; i++) {
+                const choices = window.lotecaBetController?.getGameChoices(i) || [];
+                console.log(`🔍 [STATE] Jogo ${i}:`, choices);
+            }
+            
+            if (window.lotecaBetController) {
+                console.log('🔍 [STATE] Contadores:', {
+                    duplos: window.lotecaBetController.duplos,
+                    triplos: window.lotecaBetController.triplos,
+                    totalApostas: window.lotecaBetController.totalApostas,
+                    valorTotal: window.lotecaBetController.valorTotal
+                });
+            }
+        };
+        
+        // FUNÇÃO PARA RECRIAR A TABELA COM DATA-GAME
+        window.recreateOptimizationTable = function() {
+            console.log('🔄 [RECREATE] Recriando tabela de otimização...');
+            
+            if (typeof initializeOptimizationTable === 'function') {
+                initializeOptimizationTable();
+                console.log('✅ [RECREATE] Tabela recriada com sucesso!');
+                
+                // ADICIONAR CSS PARA BOTÕES ATIVOS
+                addChoiceButtonStyles();
+                
+                // Verificar se as linhas agora têm data-game
+                for (let i = 1; i <= 14; i++) {
+                    const row = document.querySelector(`tr[data-game="${i}"]`);
+                    console.log(`🔍 [RECREATE] Linha do jogo ${i}:`, row ? 'ENCONTRADA' : 'NÃO ENCONTRADA');
+                }
+            } else {
+                console.warn('❌ [RECREATE] Função initializeOptimizationTable não encontrada');
+            }
+        };
+        
+        // FUNÇÃO PARA ADICIONAR CSS DOS BOTÕES
+        function addChoiceButtonStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .choice-btn {
+                    padding: 8px 12px !important;
+                    margin: 2px !important;
+                    border: 1px solid #444 !important;
+                    background: #2d2d2d !important;
+                    color: #ffffff !important;
+                    border-radius: 4px !important;
+                    cursor: pointer !important;
+                    transition: all 0.3s ease !important;
+                    font-weight: 500 !important;
+                }
+                
+                .choice-btn:hover {
+                    background: #3d3d3d !important;
+                    border-color: #666 !important;
+                }
+                
+                .choice-btn.active {
+                    background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%) !important;
+                    border-color: #A855F7 !important;
+                    color: #ffffff !important;
+                    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3) !important;
+                    transform: scale(1.05) !important;
+                }
+                
+                .choice-btn.active:hover {
+                    background: linear-gradient(135deg, #9333EA 0%, #6D28D9 100%) !important;
+                }
+            `;
+            document.head.appendChild(style);
+            console.log('✅ [STYLES] CSS dos botões adicionado!');
+        }
+        
+        // FUNÇÃO PARA TESTAR A LIGAÇÃO DOS CAMPOS
+        window.testLotecaConnection = function() {
+            console.log('🔗 [CONNECTION] Testando ligação dos campos...');
+            
+            // Verificar se os elementos existem
+            const duplosCount = document.getElementById('duplos-count');
+            const triplosCount = document.getElementById('triplos-count');
+            const totalCombinations = document.getElementById('total-combinations');
+            const totalCost = document.getElementById('total-cost');
+            const userDuplos = document.getElementById('user-duplos');
+            const userTriplos = document.getElementById('user-triplos');
+            const userApostas = document.getElementById('user-apostas');
+            const userValor = document.getElementById('user-valor');
+            
+            console.log('🔍 [CONNECTION] Elementos encontrados:', {
+                duplosCount: !!duplosCount,
+                triplosCount: !!triplosCount,
+                totalCombinations: !!totalCombinations,
+                totalCost: !!totalCost,
+                userDuplos: !!userDuplos,
+                userTriplos: !!userTriplos,
+                userApostas: !!userApostas,
+                userValor: !!userValor
+            });
+            
+            // Testar atualização manual
+            if (window.lotecaBetController) {
+                console.log('🔄 [CONNECTION] Forçando atualização...');
+                window.lotecaBetController.updateCounters();
+                window.lotecaBetController.updateDisplay();
+                console.log('✅ [CONNECTION] Atualização concluída!');
+            } else {
+                console.warn('❌ [CONNECTION] LotecaBetController não inicializado');
+            }
+        };
+        
+        // FUNÇÃO PARA TESTAR CLIQUE DIRETO (BYPASS DE LIMITES)
+        window.testDirectClick = function(gameId, choice) {
+            console.log(`🧪 [DIRECT] Testando clique direto no jogo ${gameId} com escolha ${choice}`);
+            
+            const gameRow = document.querySelector(`tr[data-game="${gameId}"]`);
+            if (gameRow) {
+                const button = gameRow.querySelector(`.choice-btn[data-choice="${choice}"]`);
+                if (button) {
+                    console.log(`🧪 [DIRECT] Botão encontrado, aplicando toggleChoice diretamente...`);
+                    
+                    if (window.lotecaBetController) {
+                        // APLICAR MUDANÇA DIRETAMENTE (BYPASS DE LIMITES)
+                        window.lotecaBetController.toggleChoice(button);
+                        window.lotecaBetController.updateCounters();
+                        window.lotecaBetController.updateDisplay();
+                        console.log(`✅ [DIRECT] Clique aplicado com sucesso!`);
+                    } else {
+                        console.warn('❌ [DIRECT] LotecaBetController não inicializado');
+                    }
+                } else {
+                    console.warn(`❌ [DIRECT] Botão com escolha ${choice} não encontrado no jogo ${gameId}`);
+                }
+            } else {
+                console.warn(`❌ [DIRECT] Linha do jogo ${gameId} não encontrada`);
+            }
+        };
+        
+        // FUNÇÃO PARA TESTAR ATIVAÇÃO VISUAL
+        window.testVisualActivation = function(gameId, choice) {
+            console.log(`👁️ [VISUAL] Testando ativação visual do jogo ${gameId} com escolha ${choice}`);
+            
+            const gameRow = document.querySelector(`tr[data-game="${gameId}"]`);
+            if (gameRow) {
+                const button = gameRow.querySelector(`.choice-btn[data-choice="${choice}"]`);
+                if (button) {
+                    console.log(`👁️ [VISUAL] Botão encontrado:`, button);
+                    console.log(`👁️ [VISUAL] Classes antes:`, button.className);
+                    
+                    // ADICIONAR CLASSE ACTIVE MANUALMENTE
+                    button.classList.add('active');
+                    
+                    console.log(`👁️ [VISUAL] Classes depois:`, button.className);
+                    console.log(`👁️ [VISUAL] Estilo aplicado:`, button.style.cssText);
+                    
+                    // VERIFICAR SE A CLASSE FOI ADICIONADA
+                    setTimeout(() => {
+                        const hasActive = button.classList.contains('active');
+                        console.log(`👁️ [VISUAL] Classe 'active' presente: ${hasActive}`);
+                        
+                        if (hasActive) {
+                            console.log(`✅ [VISUAL] Botão deve estar visualmente ativo agora!`);
+                        } else {
+                            console.warn(`❌ [VISUAL] Classe 'active' não foi aplicada corretamente`);
+                        }
+                    }, 100);
+                } else {
+                    console.warn(`❌ [VISUAL] Botão com escolha ${choice} não encontrado no jogo ${gameId}`);
+                }
+            } else {
+                console.warn(`❌ [VISUAL] Linha do jogo ${gameId} não encontrada`);
+            }
+        };
+        
+        // FUNÇÃO PARA FORÇAR ATIVAÇÃO MANUAL
+        window.forceActivation = function(gameId, choice) {
+            console.log(`🔥 [FORCE] Forçando ativação do jogo ${gameId} com escolha ${choice}`);
+            
+            const gameRow = document.querySelector(`tr[data-game="${gameId}"]`);
+            if (gameRow) {
+                const button = gameRow.querySelector(`.choice-btn[data-choice="${choice}"]`);
+                if (button) {
+                    console.log(`🔥 [FORCE] Botão encontrado, aplicando mudanças...`);
+                    
+                    // REMOVER TODAS AS ESCOLHAS DO JOGO
+                    const allButtons = gameRow.querySelectorAll('.choice-btn');
+                    allButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        console.log(`🔥 [FORCE] Removendo active de:`, btn.dataset.choice);
+                    });
+                    
+                    // ADICIONAR CLASSE ACTIVE AO BOTÃO ESCOLHIDO
+                    button.classList.add('active');
+                    console.log(`🔥 [FORCE] Adicionado active a:`, button.dataset.choice);
+                    
+                    // FORÇAR ATUALIZAÇÃO DOS CONTADORES
+                    if (window.lotecaBetController) {
+                        console.log(`🔥 [FORCE] Atualizando contadores...`);
+                        window.lotecaBetController.updateCounters();
+                        window.lotecaBetController.updateDisplay();
+                        console.log(`✅ [FORCE] Ativação forçada concluída!`);
+                    } else {
+                        console.warn(`❌ [FORCE] LotecaBetController não inicializado`);
+                    }
+                } else {
+                    console.warn(`❌ [FORCE] Botão com escolha ${choice} não encontrado no jogo ${gameId}`);
+                }
+            } else {
+                console.warn(`❌ [FORCE] Linha do jogo ${gameId} não encontrada`);
+            }
+        };
+        
+        // FUNÇÃO PARA DESABILITAR LIMITES TEMPORARIAMENTE
+        window.disableLimits = function() {
+            console.log(`🚫 [DISABLE] Desabilitando verificação de limites...`);
+            
+            if (window.lotecaBetController) {
+                // SOBRESCREVER A FUNÇÃO wouldExceedLimits PARA SEMPRE RETORNAR FALSE
+                window.lotecaBetController.wouldExceedLimits = function() {
+                    console.log(`🚫 [DISABLE] Limites desabilitados - permitindo escolha`);
+                    return false;
+                };
+                console.log(`✅ [DISABLE] Limites desabilitados com sucesso!`);
+            } else {
+                console.warn(`❌ [DISABLE] LotecaBetController não inicializado`);
+            }
+        };
+        
+        // FUNÇÃO PARA HABILITAR LIMITES NOVAMENTE
+        window.enableLimits = function() {
+            console.log(`✅ [ENABLE] Habilitando verificação de limites...`);
+            
+            if (window.lotecaBetController) {
+                // RESTAURAR A FUNÇÃO ORIGINAL
+                window.lotecaBetController.wouldExceedLimits = function(gameId, newChoices) {
+                    // Contar duplos e triplos com a nova escolha
+                    let duplos = 0;
+                    let triplos = 0;
+                    
+                    for (let i = 1; i <= 14; i++) {
+                        let gameChoices;
+                        if (i === gameId) {
+                            gameChoices = newChoices;
+                        } else {
+                            gameChoices = this.getGameChoices(i);
+                        }
+                        
+                        if (gameChoices.length === 2) {
+                            duplos++;
+                        } else if (gameChoices.length === 3) {
+                            triplos++;
+                        }
+                    }
+                    
+                    // LIMITES OFICIAIS DA LOTECA
+                    const maxDuplos = 9;  // MÁXIMO 9 DUPLOS (R$ 1.024,00)
+                    const maxTriplos = 6; // MÁXIMO 6 TRIPLOS (R$ 1.458,00)
+                    
+                    console.log(`🔍 [LOTECA] Verificando limites: ${duplos} duplos, ${triplos} triplos`);
+                    
+                    // VERIFICAR SE EXCEDE LIMITES
+                    if (duplos > maxDuplos) {
+                        console.warn(`⚠️ [LOTECA] Limite de duplos seria excedido: ${duplos}/${maxDuplos}`);
+                        this.showLimitWarning(`Máximo de ${maxDuplos} duplos permitidos!`);
+                        return true;
+                    }
+                    if (triplos > maxTriplos) {
+                        console.warn(`⚠️ [LOTECA] Limite de triplos seria excedido: ${triplos}/${maxTriplos}`);
+                        this.showLimitWarning(`Máximo de ${maxTriplos} triplos permitidos!`);
+                        return true;
+                    }
+                    
+                    // VERIFICAR COMBINAÇÕES VÁLIDAS NA TABELA
+                    const key = `${duplos},${triplos}`;
+                    if (!LOTECA_PRICES[key]) {
+                        console.warn(`⚠️ [LOTECA] Combinação inválida: ${duplos} duplos, ${triplos} triplos`);
+                        console.warn(`⚠️ [LOTECA] Chave procurada: "${key}"`);
+                        console.warn(`⚠️ [LOTECA] Chaves disponíveis:`, Object.keys(LOTECA_PRICES));
+                        this.showLimitWarning(`Combinação inválida: ${duplos} duplos + ${triplos} triplos`);
+                        return true;
+                    }
+                    
+                    console.log(`✅ [LOTECA] Combinação válida: ${duplos} duplos, ${triplos} triplos - ${LOTECA_PRICES[key].apostas} apostas, R$ ${LOTECA_PRICES[key].valor}`);
+                    
+                    return false;
+                };
+                console.log(`✅ [ENABLE] Limites habilitados novamente!`);
+            } else {
+                console.warn(`❌ [ENABLE] LotecaBetController não inicializado`);
+            }
+        };
+        
+        // FUNÇÃO PARA INVESTIGAR PROBLEMA DOS BOTÕES
+        window.investigateButtons = function() {
+            console.log('🔍 [INVESTIGATE] Investigando problema dos botões...');
+            
+            // 1. VERIFICAR SE A TABELA EXISTE
+            const tbody = document.getElementById('optimization-tbody');
+            console.log('📊 [INVESTIGATE] Tbody encontrado:', !!tbody);
+            
+            if (tbody) {
+                console.log('📊 [INVESTIGATE] Conteúdo do tbody:', tbody.innerHTML.length, 'caracteres');
+            }
+            
+            // 2. VERIFICAR SE AS LINHAS EXISTEM
+            for (let i = 1; i <= 14; i++) {
+                const row = document.querySelector(`tr[data-game="${i}"]`);
+                console.log(`📊 [INVESTIGATE] Linha do jogo ${i}:`, !!row);
+                
+                if (row) {
+                    const buttons = row.querySelectorAll('.choice-btn');
+                    console.log(`📊 [INVESTIGATE] Botões do jogo ${i}:`, buttons.length);
+                    
+                    buttons.forEach((btn, index) => {
+                        console.log(`📊 [INVESTIGATE] Botão ${index + 1}:`, {
+                            text: btn.textContent,
+                            classes: btn.className,
+                            dataset: btn.dataset,
+                            style: btn.style.cssText
+                        });
+                    });
+                }
+            }
+            
+            // 3. VERIFICAR SE O CONTROLLER ESTÁ INICIALIZADO
+            console.log('🎯 [INVESTIGATE] LotecaBetController:', !!window.lotecaBetController);
+            
+            if (window.lotecaBetController) {
+                console.log('🎯 [INVESTIGATE] Event listeners configurados:', typeof window.lotecaBetController.setupEventListeners);
+            }
+            
+            // 4. TESTAR CLIQUE MANUAL EM UM BOTÃO
+            const testButton = document.querySelector('.choice-btn');
+            if (testButton) {
+                console.log('🧪 [INVESTIGATE] Testando clique manual...');
+                console.log('🧪 [INVESTIGATE] Botão de teste:', testButton);
+                
+                // SIMULAR CLIQUE
+                const clickEvent = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                
+                testButton.dispatchEvent(clickEvent);
+                console.log('🧪 [INVESTIGATE] Clique simulado enviado!');
+            } else {
+                console.warn('❌ [INVESTIGATE] Nenhum botão choice-btn encontrado!');
             }
         };
     </script>
