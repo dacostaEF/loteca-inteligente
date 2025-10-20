@@ -1,29 +1,30 @@
 Data,Time_Casa,Gols_Casa,Gols_Visitante,Time_Visitante,Local,Resultado_Cru,Pontos_Ganhos,Pontos_Acumulados
-6/10/2025,Atl,1,1,Cru,Belo Horizonte - MG,Empate,1,53
-6/11/2025,Cru,1,1,Spo,Belo Horizonte - MG,Empate,1,52
-6/12/2025,Fla,0,0,Cru,Rio de Janeiro - RJ,Empate,1,51
-6/13/2025,Vas,2,0,Cru,Rio de Janeiro - RJ,Derrota,0,50
-6/14/2025,Cru,2,1,Red,Belo Horizonte - MG,Vitoria,3,50
-6/15/2025,Bah,1,2,Cru,Salvador - BA,Vitoria,3,47
-6/16/2025,Cru,1,0,Sao,Belo Horizonte - MG,Vitoria,3,44
-6/17/2025,Cru,2,1,Int,Belo Horizonte - MG,Vitoria,3,41
-6/18/2025,Mir,1,1,Cru,Mirassol - SP,Empate,1,38
-6/19/2025,Cru,1,2,San,Belo Horizonte - MG,Empate,0,37
-6/20/2025,Bot,0,2,Cru,Rio de Janeiro - RJ,Vitoria,3,37
-6/21/2025,Cru,1,2,Cea,Belo Horizonte - MG,Empate,0,34
-6/22/2025,Cor,0,0,Cru,Sao Paulo - SP,Empate,1,34
-6/23/2025,Cru,4,0,Juv,Belo Horizonte - MG,Vitoria,3,33
-6/24/2025,Flu,0,2,Cru,Rio de Janeiro - RJ,Vitoria,3,30
-6/25/2025,Cru,4,1,Gre,Belo Horizonte - MG,Vitoria,3,27
-6/26/2025,Vit,0,0,Cru,Salvador - BA,Empate,1,24
-6/27/2025,Cru,2,1,Pal,Belo Horizonte - MG,Vitoria,3,23
-6/28/2025,For,0,2,Cru,Fortaleza - CE,Vitoria,3,20
-6/29/2025,Cru,0,0,Atl,Belo Horizonte - MG,Empate,1,17
-6/30/2025,Spo,0,4,Cru,Recife - PE,Vitoria,3,16
-7/1/2025,Cru,2,1,Fla,Belo Horizonte - MG,Vitoria,3,13
-7/2/2025,Cru,1,0,Vas,Uberlandia - MG,Vitoria,3,10
-7/3/2025,Red,1,0,Cru,Braganca Paulista - SP,Empate,0,7
-7/4/2025,Cru,3,0,Bah,Belo Horizonte - MG,Vitoria,3,7
-7/5/2025,Sao,1,1,Cru,Sao Paulo - SP,Empate,1,4
-7/6/2025,Int,3,0,Cru,Rio - Porto Alegre,Empate,0,3
-7/7/2025,Cru,2,1,Mir,Belo Horizonte - MG,Vitoria,3,3
+18/10/2025,Cru,1,0,For,Belo Horizonte - MG,Vitoria,3,56
+15/10/2025,Atl,1,1,Cru,Belo Horizonte - MG,Empate,1,53
+5/10/2025,Cru,1,1,Spo,Belo Horizonte - MG,Empate,1,52
+2/10/2025,Fla,0,0,Cru,Rio de Janeiro - RJ,Empate,1,51
+27/09/2025,Vas,2,0,Cru,Rio de Janeiro - RJ,Derrota,0,50
+21/09/2025,Cru,2,1,Red,Belo Horizonte - MG,Vitoria,3,50
+15/09/2025,Bah,1,2,Cru,Salvador - BA,Vitoria,3,47
+30/08/2025,Cru,1,0,Sao,Belo Horizonte - MG,Vitoria,3,44
+23/08/2025,Cru,2,1,Int,Belo Horizonte - MG,Vitoria,3,41
+18/08/2025,Mir,1,1,Cru,Mirassol - SP,Empate,1,38
+10/08/2025,Cru,1,2,San,Belo Horizonte - MG,Empate,0,37
+03/08/2025,Bot,0,2,Cru,Rio de Janeiro - RJ,Vitoria,3,37
+27/07/2025,Cru,1,2,Cea,Belo Horizonte - MG,Empate,0,34
+23/07/2025,Cor,0,0,Cru,Sao Paulo - SP,Empate,1,34
+20/07/2025,Cru,4,0,Juv,Belo Horizonte - MG,Vitoria,3,33
+17/07/2025,Flu,0,2,Cru,Rio de Janeiro - RJ,Vitoria,3,30
+13/07/2025,Cru,4,1,Gre,Belo Horizonte - MG,Vitoria,3,27
+12/06/2025,Vit,0,0,Cru,Salvador - BA,Empate,1,24
+01/06/2025,Cru,2,1,Pal,Belo Horizonte - MG,Vitoria,3,23
+25/05/2025,For,0,2,Cru,Fortaleza - CE,Vitoria,3,20
+18/05/2025,Cru,0,0,Atl,Belo Horizonte - MG,Empate,1,17
+11/04/2025,Spo,0,4,Cru,Recife - PE,Vitoria,3,16
+04/05/2025,Cru,2,1,Fla,Belo Horizonte - MG,Vitoria,3,13
+27/04/2025,Cru,1,0,Vas,Uberlandia - MG,Vitoria,3,10
+20/4/2025,Red,1,0,Cru,Braganca Paulista - SP,Empate,0,7
+17/4/2025,Cru,3,0,Bah,Belo Horizonte - MG,Vitoria,3,7
+13/4/2025,Sao,1,1,Cru,Sao Paulo - SP,Empate,1,4
+6/4/2025,Int,3,0,Cru,Rio - Porto Alegre,Empate,0,3
+29/3/2025,Cru,2,1,Mir,Belo Horizonte - MG,Vitoria,3,3

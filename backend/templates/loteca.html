@@ -1909,10 +1909,13 @@ Carregando...
                                 <tr>
                                     <th>Jogo</th>
                                     <th>Confronto</th>
-                                    <th>Classificação IA</th>
-                                    <th>Sugestão IA</th>
+                                    <th>Classificação</th>
+                                    <th>Sugestão</th>
                                     <th>Sua Escolha</th>
-                                    <th>Probabilidades</th>
+                                    <th>
+                                        Probabilidades
+                                        <span id="prob-help-trigger" title="Ajuda sobre Probabilidades" style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:6px; border-radius:50%; background:#b91c1c; color:#fff; font-size:12px; font-weight:700; cursor:pointer;" onclick="openProbabilitiesModal()">?</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="optimization-tbody">
@@ -2018,6 +2021,83 @@ Carregando...
             </div>
         </footer>
 
+    </div>
+
+    <!-- MODAL DE EXPLICAÇÃO DAS PROBABILIDADES -->
+    <div id="probabilities-modal" class="probabilities-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>🧮 Como interpretar a coluna Probabilidades e as Sugestões IA</h4>
+                <button class="modal-close" onclick="closeProbabilitiesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="opacity: 0.9; margin: 0.3rem 0 1rem 0;">
+                    As probabilidades exibidas nesta coluna representam a <strong>cobertura estatística</strong> da sugestão de aposta da IA para cada jogo.
+                    Elas indicam quanto da chance de acerto está sendo coberta com base nas estatísticas do confronto.
+                </p>
+
+                <details>
+                    <summary><strong>📊 Como calculamos</strong></summary>
+                    <ul>
+                        <li><strong>Sugestão 1</strong> → P(1)</li>
+                        <li><strong>Sugestão 1X</strong> → P(1) + P(X)</li>
+                        <li><strong>Sugestão 12 / X2</strong> → P(1)+P(2) ou P(X)+P(2)</li>
+                        <li><strong>Sugestão 1X2</strong> → P(1) + P(X) + P(2) = 100% (cobertura total)</li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary><strong>🟩 Faixas de confiança</strong></summary>
+                    <ul>
+                        <li><strong>≥ 70%</strong> → Alta (verde)</li>
+                        <li><strong>50% – 69%</strong> → Média (amarelo)</li>
+                        <li><strong>&lt; 50%</strong> → Baixa (vermelho)</li>
+                    </ul>
+                    <p><strong>👉 Risco = 100% – Cobertura.</strong></p>
+                </details>
+
+                <details>
+                    <summary><strong>📝 Importante sobre os limites oficiais de aposta</strong></summary>
+                    <p>A análise da IA mostra a condição estatisticamente ideal, não necessariamente uma aposta válida segundo os limites oficiais da loteria.</p>
+                    <p>Na Loteca, a aposta máxima permitida é:</p>
+                    <ul>
+                        <li><strong>3 triplos</strong></li>
+                        <li><strong>5 duplos</strong></li>
+                    </ul>
+                    <p>Por isso:</p>
+                    <ul>
+                        <li>Algumas sugestões da IA podem exceder esses limites;</li>
+                        <li>Isso não é um erro, e sim uma fotografia fiel do cenário estatístico de cada jogo;</li>
+                        <li>Cabe ao apostador adaptar, simplificar ou reduzir as sugestões para encaixar no limite permitido.</li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary><strong>📌 Exemplo:</strong></summary>
+                    <p>A IA pode sugerir triplo em 6 jogos para representar 100% de cobertura estatística.<br>
+                    O apostador pode transformar 3 desses triplos em duplos ou secos, priorizando os confrontos de maior confiança.</p>
+                </details>
+
+                <details>
+                    <summary><strong>🧠 Nosso objetivo</strong></summary>
+                    <p>Não escolhemos por você — oferecemos a leitura estatística mais completa possível, para que:</p>
+                    <ul>
+                        <li>Você veja onde estão os jogos mais incertos;</li>
+                        <li>Entenda onde pode "arriscar" e onde vale investir mais cobertura;</li>
+                        <li>Tenha autonomia para montar a aposta do seu jeito dentro das regras da loteria.</li>
+                    </ul>
+                </details>
+
+                <div style="background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%); padding: 15px; border-radius: 8px; margin-top: 20px; color: white;">
+                    <p style="margin: 0; font-weight: 600;">
+                        <strong>👉 Resumindo:</strong><br>
+                        A IA mostra o cenário ideal de cobertura.<br>
+                        Você decide como adaptar ao limite de aposta real.<br>
+                        Assim, a estratégia final é sempre sua escolha.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL DE POLÍTICA DE HONESTIDADE -->
@@ -10351,7 +10431,7 @@ Carregando...
                             <button type="button" class="choice-btn" data-game="${game.id}" data-choice="1X2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">1X2</button>
                         </div>
                     </td>
-                    <td id="status-${game.id}">-</td>
+                    <td id="prob-${game.id}" data-game="${game.id}">—</td>
                 `;
                 
                 row.innerHTML = rowHTML;
@@ -10487,8 +10567,173 @@ Carregando...
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeHonestyModal();
+                closeProbabilitiesModal();
             }
         });
+
+        // FUNÇÕES DO MODAL DE PROBABILIDADES
+        function openProbabilitiesModal() {
+            const modal = document.getElementById('probabilities-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Previne scroll do body
+            }
+        }
+
+        function closeProbabilitiesModal() {
+            const modal = document.getElementById('probabilities-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaura scroll do body
+            }
+        }
+
+        // Fechar modal de probabilidades ao clicar fora dele
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('probabilities-modal');
+            if (event.target === modal) {
+                closeProbabilitiesModal();
+            }
+        });
+    </script>
+
+    <!-- ESTILOS ESPECÍFICOS PARA MODAL DE PROBABILIDADES -->
+    <style>
+        .probabilities-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10001; /* Z-index maior que honesty-modal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .probabilities-modal .modal-content {
+            background: linear-gradient(135deg, #1e1b29, #2a2340);
+            border-radius: 15px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .probabilities-modal .modal-header {
+            padding: 20px 25px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .probabilities-modal .modal-header h4 {
+            color: #A855F7;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .probabilities-modal .modal-close {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .probabilities-modal .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .probabilities-modal .modal-body {
+            padding: 20px 25px 25px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .probabilities-modal details {
+            margin: 15px 0;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .probabilities-modal details summary {
+            cursor: pointer;
+            padding: 8px 0;
+            color: #A855F7;
+            font-weight: 600;
+            list-style: none;
+        }
+
+        .probabilities-modal details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .probabilities-modal details summary::before {
+            content: "▶ ";
+            margin-right: 8px;
+            transition: transform 0.2s;
+        }
+
+        .probabilities-modal details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .probabilities-modal details ul {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+
+        .probabilities-modal details li {
+            margin: 8px 0;
+            color: #e2e8f0;
+        }
+
+        .probabilities-modal a {
+            color: #10b981;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(16, 185, 129, 0.5);
+        }
+
+        .probabilities-modal a:hover {
+            color: #059669;
+            border-bottom-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .probabilities-modal {
+                padding: 10px;
+            }
+
+            .probabilities-modal .modal-content {
+                max-height: 90vh;
+            }
+
+            .probabilities-modal .modal-header,
+            .probabilities-modal .modal-body {
+                padding: 15px 20px;
+            }
+
+            .probabilities-modal .modal-header h4 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 
         // FUNÇÕES DE TESTE PARA DEBUG (console)
         window.testCartola = {
@@ -13465,6 +13710,8 @@ Carregando...
 
     <!-- ===== MÓDULO OTIMIZADOR (Aba 5) ===== -->
     <script src="{{ url_for('static', filename='js/loteca-otimizador.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/otimizador-jogo1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/otimizador-auto.js') }}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         try {
@@ -13478,6 +13725,22 @@ Carregando...
             }
           });
           console.log('[Otimizador] módulo inicializado');
+          // Preencher coluna Probabilidades após montar tabela e vínculos
+          setTimeout(() => {
+            if (window.LotecaOtimizador?.renderAllAnaliseFromAPI) {
+              window.LotecaOtimizador.renderAllAnaliseFromAPI();
+            } else if (window.LotecaOtimizador?.renderAllProbabilidades) {
+              window.LotecaOtimizador.renderAllProbabilidades();
+            }
+            // Aplicar decisão específica do Jogo 1 após preencher a tabela
+            if (window.OtimizadorJogo1?.init) {
+              window.OtimizadorJogo1.init();
+            }
+            // Aplicar regra para todos os jogos
+            if (window.OtimizadorAuto?.runAll) {
+              window.OtimizadorAuto.runAll();
+            }
+          }, 600);
         } catch(e) {
           console.error('[Otimizador] falha ao iniciar', e);
         }

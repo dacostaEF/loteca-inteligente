@@ -162,6 +162,175 @@ window.LotecaOtimizador = (function () {
       }
     } catch {}
     bindClicks(root, painelSelectors);
+
+    // Ajuda (modal simples) para Probabilidades
+    try {
+      const trig = document.getElementById('prob-help-trigger');
+      if (trig) {
+        trig.addEventListener('click', ()=>{
+          const html = `\n<h3 style="margin-top:0">Como leio a coluna Probabilidades?</h3>\n<p>Mostramos a probabilidade consolidada da sugestão da IA para cada jogo:</p>\n<ul>\n<li>Sugestão 1 → usamos P(1)</li>\n<li>Sugestão 1X → usamos P(1)+P(X)</li>\n<li>Sugestão 1X2 → 100% (cobertura total)</li>\n</ul>\n<p>Classificamos a confiança:</p>\n<ul>\n<li>≥ 70%: Alta (verde)</li>\n<li>50–69%: Média (amarelo)</li>\n<li>&lt; 50%: Baixa (vermelho)</li>\n</ul>\n<p>Risco = 100% – cobertura.</p>`;
+          const modal = document.createElement('div');
+          modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:10000;';
+          modal.innerHTML = `<div style="max-width:560px;width:92%;background:#1f1f1f;color:#fff;border:1px solid #444;border-radius:10px;padding:18px;">${html}<div style="text-align:right;margin-top:12px;"><button id="prob-close" style="padding:8px 14px;border:1px solid #555;background:#2d2d2d;color:#fff;border-radius:6px;cursor:pointer;">Fechar</button></div></div>`;
+          document.body.appendChild(modal);
+          modal.querySelector('#prob-close').addEventListener('click', ()=> modal.remove());
+          modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.remove(); });
+        });
+      }
+    } catch {}
+
+    // Expor utilitários de probabilidade
+    window.LotecaOtimizador = Object.assign(window.LotecaOtimizador || {}, {
+      setProbabilidade: renderProbabilidadeCell,
+      renderAllProbabilidades
+    });
+  }
+
+  // ===== Probabilidades =====
+  function probabilidadeCoberta(p1, px, p2, sugestao) {
+    const p = { '1': p1, 'X': px, '2': p2 };
+    if (sugestao === '1X2') return (p1 + px + p2);
+    return sugestao.split('').reduce((acc, s) => acc + (p[s] || 0), 0);
+  }
+
+  function nivelConf(cobertura) {
+    if (cobertura >= 0.70) return { label: 'Alta', color: '#16a34a' };
+    if (cobertura >= 0.50) return { label: 'Média', color: '#f59e0b' };
+    return { label: 'Baixa', color: '#dc2626' };
+  }
+
+  function percent(n){ return `${Math.round(n*100)}%`; }
+
+  function barHTML(pct, color){
+    const w = Math.max(4, Math.round(pct*100));
+    return `<div style="position:relative;height:10px;background:#2a2a2a;border:1px solid #444;border-radius:6px;overflow:hidden;">
+      <div style="width:${w}%;height:100%;background:${color};"></div>
+    </div>`;
+  }
+
+  function renderProbabilidadeCell(gameId, p1, px, p2, sugestao){
+    const td = document.getElementById(`prob-${gameId}`);
+    if (!td) return;
+    if (p1==null || px==null || p2==null) { td.textContent = '—'; return; }
+    const cov = probabilidadeCoberta(p1, px, p2, sugestao);
+    const risco = 1 - cov;
+    const { label, color } = nivelConf(cov);
+    td.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:6px; min-width:140px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-weight:700;">${percent(cov)}</span>
+          <span style="font-size:12px; padding:2px 6px; border:1px solid ${color}; border-radius:12px; color:${color};">Confiança ${label}</span>
+        </div>
+        ${barHTML(cov, color)}
+        <div style="font-size:12px; opacity:.85; display:flex; justify-content:space-between;">
+          <span>Cobertura (${sugestao})</span>
+          <span>Risco ${percent(risco)}</span>
+        </div>
+      </div>`;
+  }
+
+  async function fetchProb(gameId) {
+    try {
+      const url = `/api/analise/jogo/${gameId}?concurso=concurso_1216`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`${res.status}`);
+      const data = await res.json();
+      // Heurística de extração em profundidade (procura em data e data.dados)
+      const source = data?.dados || data;
+      const norm = v => (typeof v === 'string' ? Number(v.replace('%','').replace(',','.')) : Number(v));
+      const toUnit = v => (isFinite(v) ? (v>1 ? v/100 : v) : undefined);
+
+      let p1, px, p2, sugestao;
+
+      function tryAssign(key, val){
+        const k = (key||'').toString().toLowerCase();
+        const n = toUnit(norm(val));
+        if (n==null || !isFinite(n)) return;
+        if (k.includes('coluna1') || k.includes('casa') || k.includes('home') || k.includes('mandante') || k.endsWith('_1') || k.includes('prob_1')) p1 = p1 ?? n;
+        else if (k.includes('colunax') || k.includes('empate') || k.includes('draw') || k.endsWith('_x') || k.includes('prob_x')) px = px ?? n;
+        else if (k.includes('coluna2') || k.includes('fora') || k.includes('away') || k.includes('visitante') || k.endsWith('_2') || k.includes('prob_2')) p2 = p2 ?? n;
+      }
+
+      function walk(obj, prefix=''){
+        if (!obj || typeof obj !== 'object') return;
+        for (const [k,v] of Object.entries(obj)){
+          if (v && typeof v === 'object') {
+            // casos como {valor: 40, label:'Coluna 1'}
+            if ('valor' in v && (typeof v.valor === 'number' || typeof v.valor === 'string')) tryAssign(k, v.valor);
+            if ('prob' in v) tryAssign(k, v.prob);
+            walk(v, `${prefix}${k}.`);
+          } else {
+            if (typeof v === 'number' || typeof v === 'string') tryAssign(k, v);
+          }
+        }
+      }
+
+      walk(source);
+
+      // Sugestão (vários nomes possíveis)
+      sugestao = data?.sugestao ?? source?.sugestao ?? source?.sugestao_ia ?? source?.recomendacao ?? '1X2';
+      // Sanear sugestão (permitidos: '1','X','2','1X','X2','1X2')
+      const okSug = ['1','X','2','1X','X2','1X2'];
+      if (!okSug.includes(String(sugestao).toUpperCase())) sugestao = '1X2'; else sugestao = String(sugestao).toUpperCase();
+
+      return { p1, px, p2, sugestao };
+    } catch {
+      return null;
+    }
+  }
+
+  async function renderAllProbabilidades() {
+    for (let id=1; id<=14; id++) {
+      const got = await fetchProb(id);
+      if (got) renderProbabilidadeCell(id, got.p1, got.px, got.p2, got.sugestao);
+    }
+  }
+
+  // ===== Classificação e Sugestão a partir da API =====
+  function mapClassificacao(sugestao, fallback) {
+    const s = String(sugestao||'').toUpperCase();
+    if (s === '1X2') return 'triplo';
+    if (s === '1X' || s === 'X2') return 'duplo';
+    if (s === '1' || s === 'X' || s === '2') return 'seco';
+    return fallback || 'seco';
+  }
+
+  function applyClasseBadge(row, classe) {
+    const badge = row.querySelector('.status-badge');
+    if (!badge) return;
+    badge.classList.remove('seco','duplo','triplo');
+    badge.classList.add(classe);
+    badge.textContent = (classe || '').toUpperCase();
+  }
+
+  function setSuggestionCell(row, sugestao) {
+    const cells = row.querySelectorAll('td');
+    if (cells && cells[3]) {
+      cells[3].innerHTML = `<strong>${(sugestao||'').toUpperCase()}</strong>`;
+    }
+  }
+
+  async function renderClassificacaoSugestaoFromAPI() {
+    for (let id=1; id<=14; id++) {
+      try {
+        const res = await fetch(`/api/analise/jogo/${id}?concurso=concurso_1216`);
+        if (!res.ok) continue;
+        const data = await res.json();
+        const source = data?.dados || data;
+        let sugestao = source?.sugestao ?? source?.sugestao_ia ?? source?.recomendacao;
+        if (sugestao) sugestao = String(sugestao).toUpperCase();
+        const classeApi = (source?.classificacao || source?.classificacao_ia || '').toString().toLowerCase();
+        const classe = ['seco','duplo','triplo'].includes(classeApi) ? classeApi : mapClassificacao(sugestao);
+        const row = document.querySelector(`tr[data-game="${id}"]`);
+        if (!row) continue;
+        if (sugestao) setSuggestionCell(row, sugestao);
+        applyClasseBadge(row, classe);
+      } catch { /* ignore */ }
+    }
+  }
+
+  async function renderAllAnaliseFromAPI() {
+    await Promise.all([renderAllProbabilidades(), renderClassificacaoSugestaoFromAPI()]);
   }
 
   return { init, _state: SELECOES };
