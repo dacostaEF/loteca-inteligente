@@ -96,6 +96,9 @@
                 <button class="tab-btn" data-tab="otimizador-aposta">
                     🎯 Otimizador de Aposta
                 </button>
+                <button class="tab-btn" data-tab="forca-elenco">
+                    💪 Força dos Elencos
+                </button>
             </div>
         </div>
 
@@ -105,7 +108,7 @@
 
 
         <!-- JOGO 1 NOVO: Corinthians vs Flamengo --> <!-- TODO: hardcode -->
-        <div class="game-card">
+        <div class="game-card" id="jogo1-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -190,7 +193,7 @@ EQUILIBRADO
 
 
         <!-- JOGO 2: INTERNACIONAL vs SPORT (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo2-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -273,7 +276,7 @@ Carregando...
         </div>
 
         <!-- JOGO 3: CORINTHIANS vs ATLETICO-MG (NOVO) --> <!-- TODO: hardcode -->
-        <div class="game-card">
+        <div class="game-card" id="jogo3-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -356,7 +359,7 @@ Carregando...
         </div>
 
         <!-- JOGO 4: ROMA vs INTERNAZIONALE (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo4-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -422,7 +425,7 @@ Carregando...
         </div>
 
         <!-- JOGO 5: ATLÉTICO DE MADRID vs OSASUNA (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo5-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -488,7 +491,7 @@ Carregando...
         </div>
 
         <!-- JOGO 6: CRUZEIRO vs FORTALEZA (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo6-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -554,7 +557,7 @@ Carregando...
         </div>
 
         <!-- JOGO 7: TOTTENHAM vs ASTON VILLA (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo7-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -620,7 +623,7 @@ Carregando...
         </div>
 
         <!-- JOGO 8: MILAN vs NAPOLI (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo8-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -686,7 +689,7 @@ Carregando...
         </div>
 
         <!-- JOGO 9: BAHIA vs PALMEIRAS (NOVO) -->
-        <div class="game-card">
+        <div class="game-card" id="jogo9-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -757,7 +760,7 @@ Carregando...
         </div>
 
         <!-- JOGO 10 NOVO: Fiorentina vs Atalanta -->
-        <div class="game-card">
+        <div class="game-card" id="jogo10-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -828,7 +831,7 @@ Carregando...
         </div>
 
         <!-- JOGO 11 NOVO: Atalanta vs Lazio -->
-        <div class="game-card">
+        <div class="game-card" id="jogo11-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -899,7 +902,7 @@ Carregando...
         </div>
 
         <!-- JOGO 12 NOVO: Napoli vs Juventus -->
-        <div class="game-card">
+        <div class="game-card" id="jogo12-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -970,7 +973,7 @@ Carregando...
         </div>
 
         <!-- JOGO 13 NOVO: Milan vs Fiorentina -->
-        <div class="game-card">
+        <div class="game-card" id="jogo13-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -1019,7 +1022,7 @@ Carregando...
         </div>
 
         <!-- JOGO 14 NOVO: Getafe vs Real Madrid -->
-        <div class="game-card">
+        <div class="game-card" id="jogo14-container">
             <div class="game-card-header">
                 <!-- JOGO COM ESCUDOS INTEGRADOS - SEM REPETIÇÃO -->
                 <div class="confronto-visual">
@@ -1989,12 +1992,39 @@ Carregando...
             </div>
         </div> <!-- FIM DA ABA 4: OTIMIZADOR DE APOSTA -->
 
+        <!-- ABA 5: FORÇA DOS ELENCOS -->
+        <div class="tab-content" id="forca-elenco" style="display: none;">
+            <div class="forca-elenco-container">
+                
+                <!-- CABEÇALHO DA ABA -->
+                <div class="section-header">
+                    <h2>💪 Força dos Elencos - Dashboard Mundial</h2>
+                    <p class="section-description">
+                        Análise completa da força dos elencos dos principais clubes do mundo. 
+                        Dados baseados em valores de mercado e gastos com transferências.
+                    </p>
+                </div>
+
+                <!-- LOADING SPINNER -->
+                <div id="forca-elenco-loading" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Carregando dados dos elencos...</p>
+                </div>
+
+                <!-- CONTEÚDO PRINCIPAL (será carregado via API) -->
+                <div id="forca-elenco-content" style="display: none;">
+                    <!-- Dashboard será inserido aqui via JavaScript -->
+                </div>
+
+            </div>
+        </div> <!-- FIM DA ABA 5: FORÇA DOS ELENCOS -->
+
         <footer class="footer">
             <div class="footer-cta">
                 <h3>📈 Aposte com Inteligência, Jogue com Confiança</h3>
                 <p>Acesse nossa plataforma completa com <strong>+12.000 análises estatísticas</strong>, históricos, Mega Sena, Quina, Lotofácil e muito mais!</p>
                 <a href="https://www.loteriasinteligente.com.br/" target="_blank" rel="noopener noreferrer" class="footer-cta-btn">
-                    🎯 Conhecer Loterias Inteligente
+                    <span style="font-size: 0.8em;">🎯 Conhecer</span> <img src="{{ url_for('static', filename='Logo_loteraisinteligente.png') }}" alt="Loterias Inteligente" style="height: 32px; vertical-align: middle; margin-left: 8px;">
                 </a>
             </div>
             <div class="footer-legal">
@@ -2013,7 +2043,7 @@ Carregando...
                         não há garantias de ganhos. Jogue com responsabilidade.
                     </div>
                     <div class="honesty-actions">
-                        <button class="honesty-toggle" onclick="openHonestyModal()">
+                        <button class="honesty-toggle" onclick="openLegalModal()">
                             Ver detalhes
                         </button>
                     </div>
@@ -2100,7 +2130,42 @@ Carregando...
         </div>
     </div>
 
-    <!-- MODAL DE POLÍTICA DE HONESTIDADE -->
+    <!-- MODAL DE FORÇA DO ELENCO -->
+    <div id="forca-elenco-modal" class="forca-elenco-modal" style="display: none;">
+        <!-- Conteúdo será inserido dinamicamente via JavaScript -->
+    </div>
+
+    <!-- MODAL CONSOLIDADO DE DOCUMENTOS LEGAIS -->
+    <div id="legal-modal" class="legal-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>🛡 Política de Honestidade | Termos de Uso | Política de Privacidade</h4>
+                <button class="modal-close" onclick="closeLegalModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="opacity: 0.9; margin: 0.3rem 0 1rem 0;">
+                    Nosso compromisso é com a transparência, a ética e o respeito ao usuário. Todas as análises apresentadas em nossa plataforma têm caráter informativo e estatístico, sem garantia de resultados futuros. Não prometemos ganhos, lucros ou acertos — fornecemos dados para apoiar decisões conscientes do apostador.
+                </p>
+                
+                <p style="opacity: 0.9; margin: 0.3rem 0 1rem 0;">
+                    Respeitamos os limites oficiais da Loteca e demais loterias. Algumas sugestões apresentadas podem exceder esses limites por refletirem cenários estatísticos ideais, cabendo ao usuário adaptar sua aposta dentro das regras oficiais.
+                </p>
+                
+                <p style="opacity: 0.9; margin: 0.3rem 0 1rem 0;">
+                    Todas as informações pessoais são tratadas com segurança e sigilo, conforme nossa Política de Privacidade.
+                    Ao utilizar a plataforma, você declara estar ciente e de acordo com nossos Termos de Uso.
+                </p>
+                
+                <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 15px; margin: 20px 0;">
+                    <p style="margin: 0; color: #A855F7; font-weight: 600;">
+                        📌 Jogue com responsabilidade. A loteria é uma forma de entretenimento, não uma fonte garantida de renda.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE POLÍTICA DE HONESTIDADE (MANTIDO PARA COMPATIBILIDADE) -->
     <div id="honesty-modal" class="honesty-modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
@@ -10538,7 +10603,324 @@ Carregando...
             }
         });
 
-        // FUNÇÕES DO MODAL DE POLÍTICA DE HONESTIDADE
+        // FUNÇÕES DO SISTEMA DE FORÇA DO ELENCO
+        let forcaElencoData = null;
+
+        async function carregarDadosForcaElenco() {
+            try {
+                console.log('🔄 Carregando dados de força do elenco...');
+                const response = await fetch('/static/valor_elenco/forca_elenco_unificado.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                forcaElencoData = await response.json();
+                console.log('✅ Dados de força do elenco carregados:', forcaElencoData);
+                console.log('📊 Clubes disponíveis:', Object.keys(forcaElencoData.clubes));
+            } catch (error) {
+                console.error('❌ Erro ao carregar dados de força do elenco:', error);
+                console.error('🔍 URL tentada:', '/static/valor_elenco/forca_elenco_unificado.json');
+            }
+        }
+
+        function verificarForcaElenco(timeCasa, timeFora) {
+            if (!forcaElencoData) {
+                console.log('⚠️ Dados de força do elenco não carregados ainda');
+                return { casa: null, fora: null };
+            }
+            
+            // Mapeamento específico para os nomes dos times
+            const mapeamentoNomes = {
+                'flamengo/rj': 'flamengo',
+                'flamengo': 'flamengo',
+                'palmeiras/sp': 'palmeiras', 
+                'palmeiras': 'palmeiras',
+                'são paulo/sp': 'sao_paulo',
+                'sao paulo': 'sao_paulo',
+                'corinthians/sp': 'corinthians',
+                'corinthians': 'corinthians',
+                'atletico/mg': 'atletico_mg',
+                'atletico mg': 'atletico_mg',
+                'internacional': 'internacional',
+                'gremio/rs': 'gremio',
+                'gremio': 'gremio',
+                'cruzeiro/mg': 'cruzeiro',
+                'cruzeiro': 'cruzeiro',
+                'botafogo/rj': 'botafogo',
+                'botafogo': 'botafogo',
+                'vasco': 'vasco',
+                'fluminense': 'fluminense',
+                'athletico/pr': 'athletico_pr',
+                'fortaleza/ce': 'fortaleza',
+                'fortaleza': 'fortaleza',
+                'bahia/ba': 'bahia',
+                'bahia': 'bahia'
+            };
+            
+            const timeCasaKey = timeCasa.toLowerCase().trim();
+            const timeForaKey = timeFora.toLowerCase().trim();
+            
+            const chaveCasa = mapeamentoNomes[timeCasaKey] || timeCasaKey.replace(/[^a-z]/g, '_');
+            const chaveFora = mapeamentoNomes[timeForaKey] || timeForaKey.replace(/[^a-z]/g, '_');
+            
+            console.log('🔍 Verificando clubes:', { 
+                timeCasa, 
+                timeFora, 
+                chaveCasa, 
+                chaveFora,
+                clubesDisponiveis: Object.keys(forcaElencoData.clubes),
+                dadosCasa: forcaElencoData.clubes[chaveCasa],
+                dadosFora: forcaElencoData.clubes[chaveFora]
+            });
+            
+            const dadosCasa = forcaElencoData.clubes[chaveCasa] || null;
+            const dadosFora = forcaElencoData.clubes[chaveFora] || null;
+            
+            console.log('📊 Resultado da verificação:', { 
+                casa: dadosCasa ? 'ENCONTRADO' : 'NÃO ENCONTRADO', 
+                fora: dadosFora ? 'ENCONTRADO' : 'NÃO ENCONTRADO' 
+            });
+            
+            return { casa: dadosCasa, fora: dadosFora };
+        }
+
+        function criarBotoesForcaElenco(containerId, timeCasa, timeFora) {
+            console.log('🎯 Criando botões de força do elenco para:', { containerId, timeCasa, timeFora });
+            
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error('❌ Container não encontrado:', containerId);
+                return;
+            }
+            
+            console.log('✅ Container encontrado:', container);
+            
+            const dados = verificarForcaElenco(timeCasa, timeFora);
+            
+            // Remover botões existentes
+            const botoesExistentes = container.querySelectorAll('.forca-elenco-btn');
+            console.log('🗑️ Removendo botões existentes:', botoesExistentes.length);
+            botoesExistentes.forEach(btn => btn.remove());
+            
+            // Criar botão para time da casa
+            if (dados.casa) {
+                console.log('🏠 Criando botão para time da casa:', dados.casa.nome_oficial);
+                const btnCasa = document.createElement('button');
+                btnCasa.className = 'forca-elenco-btn';
+                btnCasa.innerHTML = '💪 Força do Elenco';
+                btnCasa.style.cssText = `
+                    position: absolute;
+                    top: 5px;
+                    left: 5px;
+                    background: linear-gradient(135deg, #A855F7, #7C3AED);
+                    color: white;
+                    border: none;
+                    padding: 3px 6px;
+                    border-radius: 8px;
+                    font-size: 9px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    z-index: 1000;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    transition: all 0.2s ease;
+                    white-space: nowrap;
+                `;
+                btnCasa.onclick = () => abrirModalForcaElenco(dados.casa, 'casa');
+                container.appendChild(btnCasa);
+                console.log('✅ Botão da casa criado e adicionado');
+            } else {
+                console.log('⚠️ Dados da casa não encontrados');
+            }
+            
+            // Criar botão para time visitante
+            if (dados.fora) {
+                console.log('✈️ Criando botão para time visitante:', dados.fora.nome_oficial);
+                const btnFora = document.createElement('button');
+                btnFora.className = 'forca-elenco-btn';
+                btnFora.innerHTML = '💪 Força do Elenco';
+                btnFora.style.cssText = `
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    background: linear-gradient(135deg, #A855F7, #7C3AED);
+                    color: white;
+                    border: none;
+                    padding: 3px 6px;
+                    border-radius: 8px;
+                    font-size: 9px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    z-index: 1000;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    transition: all 0.2s ease;
+                    white-space: nowrap;
+                `;
+                btnFora.onclick = () => abrirModalForcaElenco(dados.fora, 'fora');
+                container.appendChild(btnFora);
+                console.log('✅ Botão visitante criado e adicionado');
+            } else {
+                console.log('⚠️ Dados do visitante não encontrados');
+            }
+        }
+
+        function abrirModalForcaElenco(dadosClube, posicao) {
+            const modal = document.getElementById('forca-elenco-modal');
+            if (!modal) return;
+            
+            const categoria = dadosClube.categoria;
+            const corCategoria = {
+                'mundial': '#10B981',
+                'nacional_grande': '#F59E0B', 
+                'nacional_medio': '#EF4444',
+                'regional': '#6B7280'
+            };
+            
+            const iconeCategoria = {
+                'mundial': '🌍',
+                'nacional_grande': '🇧🇷',
+                'nacional_medio': '🏆',
+                'regional': '🏘️'
+            };
+            
+            const descricaoCategoria = {
+                'mundial': 'Top 100 Mundial',
+                'nacional_grande': 'Grande Clube Nacional',
+                'nacional_medio': 'Clube Médio Nacional',
+                'regional': 'Clube Regional'
+            };
+            
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>💪 Força do Elenco - ${dadosClube.nome_oficial}</h4>
+                        <button class="modal-close" onclick="fecharModalForcaElenco()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="forca-card" style="background: linear-gradient(135deg, ${corCategoria[categoria]}, ${corCategoria[categoria]}88); border-radius: 12px; padding: 20px; margin: 15px 0; color: white;">
+                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <span style="font-size: 24px; margin-right: 10px;">${iconeCategoria[categoria]}</span>
+                                <div>
+                                    <h3 style="margin: 0; font-size: 18px;">${dadosClube.nome_oficial}</h3>
+                                    <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${descricaoCategoria[categoria]}</p>
+                                </div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px;">
+                                    <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">${dadosClube.forca_elenco}</div>
+                                    <div style="font-size: 12px; opacity: 0.9;">Pontos de Força</div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px;">
+                                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">R$ ${dadosClube.valor_elenco_reais}M</div>
+                                    <div style="font-size: 12px; opacity: 0.9;">Valor do Elenco</div>
+                                </div>
+                            </div>
+                            
+                            ${dadosClube.posicao_mundial ? `
+                                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 16px; font-weight: bold;">${dadosClube.posicao_mundial}º</div>
+                                    <div style="font-size: 12px; opacity: 0.9;">Posição Mundial</div>
+                                </div>
+                            ` : ''}
+                            
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 12px; opacity: 0.9;">
+                                ${dadosClube.observacoes}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModalForcaElenco() {
+            const modal = document.getElementById('forca-elenco-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // FUNÇÃO DE TESTE MANUAL - Pode ser chamada do console
+        function testarForcaElenco() {
+            console.log('🧪 TESTE MANUAL - Testando sistema de força do elenco...');
+            console.log('📊 Dados carregados:', forcaElencoData ? 'SIM' : 'NÃO');
+            
+            if (forcaElencoData) {
+                console.log('📋 Clubes disponíveis:', Object.keys(forcaElencoData.clubes));
+                console.log('🎯 Testando mapeamento...');
+                
+                const dados = verificarForcaElenco('Flamengo/RJ', 'Palmeiras/SP');
+                console.log('📊 Resultado do mapeamento:', dados);
+                
+                if (dados.casa || dados.fora) {
+                    console.log('✅ Dados encontrados, criando botões...');
+                    criarBotoesForcaElenco('jogo1-container', 'Flamengo/RJ', 'Palmeiras/SP');
+                } else {
+                    console.log('❌ Nenhum dado encontrado para os clubes');
+                }
+            } else {
+                console.log('❌ Dados não carregados ainda');
+            }
+        }
+
+        // Expor função globalmente para teste
+        window.testarForcaElenco = testarForcaElenco;
+
+        // Função de debug para verificar todos os elementos
+        window.debugTodosJogos = function() {
+          console.log('🔍 DEBUG COMPLETO - Verificando todos os jogos...');
+          for (let jogo = 1; jogo <= 14; jogo++) {
+            const timeCasaElement = document.getElementById(`time-casa-nome-jogo${jogo}-novo`);
+            const timeForaElement = document.getElementById(`time-fora-nome-jogo${jogo}-novo`);
+            const container = document.getElementById(`jogo${jogo}-container`);
+            
+            console.log(`Jogo ${jogo}:`, {
+              casaElement: timeCasaElement,
+              foraElement: timeForaElement,
+              container: container,
+              casaText: timeCasaElement?.textContent,
+              foraText: timeForaElement?.textContent
+            });
+          }
+        };
+
+        // Função para forçar aplicação da força do elenco
+        window.forcarForcaElencoTodos = function() {
+          console.log('🚀 FORÇANDO aplicação da força do elenco em todos os jogos...');
+          for (let jogo = 1; jogo <= 14; jogo++) {
+            const timeCasa = document.getElementById(`time-casa-nome-jogo${jogo}-novo`)?.textContent?.trim();
+            const timeFora = document.getElementById(`time-fora-nome-jogo${jogo}-novo`)?.textContent?.trim();
+            const containerId = `jogo${jogo}-container`;
+            
+            if (timeCasa && timeFora) {
+              console.log(`🎯 Forçando Jogo ${jogo}:`, timeCasa, 'vs', timeFora);
+              criarBotoesForcaElenco(containerId, timeCasa, timeFora);
+            } else {
+              console.log(`⚠️ Jogo ${jogo}: Nomes não encontrados`);
+            }
+          }
+        };
+
+        // FUNÇÕES DO MODAL CONSOLIDADO DE DOCUMENTOS LEGAIS
+        function openLegalModal() {
+            const modal = document.getElementById('legal-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Previne scroll do body
+            }
+        }
+
+        function closeLegalModal() {
+            const modal = document.getElementById('legal-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaura scroll do body
+            }
+        }
+
+        // FUNÇÕES DO MODAL DE POLÍTICA DE HONESTIDADE (MANTIDO PARA COMPATIBILIDADE)
         function openHonestyModal() {
             const modal = document.getElementById('honesty-modal');
             if (modal) {
@@ -10554,22 +10936,6 @@ Carregando...
                 document.body.style.overflow = 'auto'; // Restaura scroll do body
             }
         }
-
-        // Fechar modal ao clicar fora dele
-        document.addEventListener('click', function(event) {
-            const modal = document.getElementById('honesty-modal');
-            if (event.target === modal) {
-                closeHonestyModal();
-            }
-        });
-
-        // Fechar modal com tecla ESC
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeHonestyModal();
-                closeProbabilitiesModal();
-            }
-        });
 
         // FUNÇÕES DO MODAL DE PROBABILIDADES
         function openProbabilitiesModal() {
@@ -10588,14 +10954,403 @@ Carregando...
             }
         }
 
-        // Fechar modal de probabilidades ao clicar fora dele
+        // EVENT LISTENER ÚNICO PARA TODOS OS MODAIS (evita conflitos)
         document.addEventListener('click', function(event) {
-            const modal = document.getElementById('probabilities-modal');
-            if (event.target === modal) {
+            // Verificar modal de força do elenco primeiro (maior prioridade)
+            const forcaModal = document.getElementById('forca-elenco-modal');
+            if (forcaModal && event.target === forcaModal) {
+                fecharModalForcaElenco();
+                return;
+            }
+            
+            // Verificar modal de probabilidades
+            const probModal = document.getElementById('probabilities-modal');
+            if (probModal && event.target === probModal) {
                 closeProbabilitiesModal();
+                return;
+            }
+            
+            // Verificar modal consolidado de documentos legais
+            const legalModal = document.getElementById('legal-modal');
+            if (legalModal && event.target === legalModal) {
+                closeLegalModal();
+                return;
+            }
+            
+            // Verificar modal de honestidade
+            const honestyModal = document.getElementById('honesty-modal');
+            if (honestyModal && event.target === honestyModal) {
+                closeHonestyModal();
+                return;
+            }
+        });
+
+        // Fechar modais com tecla ESC (prioridade: força > probabilidades > legal > honestidade)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                // Fechar modal de força do elenco primeiro (maior prioridade)
+                const forcaModal = document.getElementById('forca-elenco-modal');
+                if (forcaModal && forcaModal.style.display === 'flex') {
+                    fecharModalForcaElenco();
+                } else {
+                    // Se modal de força não estiver aberto, verificar modal de probabilidades
+                    const probModal = document.getElementById('probabilities-modal');
+                    if (probModal && probModal.style.display === 'flex') {
+                        closeProbabilitiesModal();
+                    } else {
+                        // Se modal de probabilidades não estiver aberto, verificar modal legal
+                        const legalModal = document.getElementById('legal-modal');
+                        if (legalModal && legalModal.style.display === 'flex') {
+                            closeLegalModal();
+                        } else {
+                            // Se modal legal não estiver aberto, fechar modal de honestidade
+                            closeHonestyModal();
+                        }
+                    }
+                }
             }
         });
     </script>
+
+    <!-- ESTILOS ESPECÍFICOS PARA MODAL DE FORÇA DO ELENCO -->
+    <style>
+        .forca-elenco-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10003; /* Z-index maior que outros modais */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .forca-elenco-modal .modal-content {
+            background: linear-gradient(135deg, #1e1b29, #2a2340);
+            border-radius: 15px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .forca-elenco-modal .modal-header {
+            padding: 20px 25px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .forca-elenco-modal .modal-header h4 {
+            color: #A855F7;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .forca-elenco-modal .modal-close {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .forca-elenco-modal .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .forca-elenco-modal .modal-body {
+            padding: 20px 25px 25px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .forca-elenco-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        /* Garantir que todos os containers dos jogos tenham position relative */
+        #jogo1-container, #jogo2-container, #jogo3-container, #jogo4-container, #jogo5-container,
+        #jogo6-container, #jogo7-container, #jogo8-container, #jogo9-container, #jogo10-container,
+        #jogo11-container, #jogo12-container, #jogo13-container, #jogo14-container {
+            position: relative !important;
+        }
+
+        /* Estilos específicos para os botões de força do elenco */
+        .forca-elenco-btn {
+            position: absolute !important;
+            z-index: 1000 !important;
+            font-size: 9px !important;
+            padding: 3px 6px !important;
+            border-radius: 8px !important;
+            white-space: nowrap !important;
+            background: linear-gradient(135deg, #A855F7, #7C3AED) !important;
+            color: white !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        @media (max-width: 768px) {
+            .forca-elenco-modal {
+                padding: 10px;
+            }
+
+            .forca-elenco-modal .modal-content {
+                max-height: 90vh;
+            }
+
+            .forca-elenco-modal .modal-header,
+            .forca-elenco-modal .modal-body {
+                padding: 15px 20px;
+            }
+
+            .forca-elenco-modal .modal-header h4 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+
+    <!-- ESTILOS ESPECÍFICOS PARA MODAL CONSOLIDADO DE DOCUMENTOS LEGAIS -->
+    <style>
+        .legal-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10002; /* Z-index maior que outros modais */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .legal-modal .modal-content {
+            background: linear-gradient(135deg, #1e1b29, #2a2340);
+            border-radius: 15px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .legal-modal .modal-header {
+            padding: 20px 25px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .legal-modal .modal-header h4 {
+            color: #A855F7;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .legal-modal .modal-close {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .legal-modal .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .legal-modal .modal-body {
+            padding: 20px 25px 25px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .legal-modal {
+                padding: 10px;
+            }
+
+            .legal-modal .modal-content {
+                max-height: 90vh;
+            }
+
+            .legal-modal .modal-header,
+            .legal-modal .modal-body {
+                padding: 15px 20px;
+            }
+
+            .legal-modal .modal-header h4 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+
+    <!-- ESTILOS ESPECÍFICOS PARA MODAL DE HONESTIDADE -->
+    <style>
+        .honesty-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000; /* Z-index menor que probabilities-modal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .honesty-modal .modal-content {
+            background: linear-gradient(135deg, #1e1b29, #2a2340);
+            border-radius: 15px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .honesty-modal .modal-header {
+            padding: 20px 25px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .honesty-modal .modal-header h4 {
+            color: #A855F7;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .honesty-modal .modal-close {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .honesty-modal .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .honesty-modal .modal-body {
+            padding: 20px 25px 25px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .honesty-modal details {
+            margin: 15px 0;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .honesty-modal details summary {
+            cursor: pointer;
+            padding: 8px 0;
+            color: #A855F7;
+            font-weight: 600;
+            list-style: none;
+        }
+
+        .honesty-modal details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .honesty-modal details summary::before {
+            content: "▶ ";
+            margin-right: 8px;
+            transition: transform 0.2s;
+        }
+
+        .honesty-modal details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .honesty-modal details ul {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+
+        .honesty-modal details li {
+            margin: 8px 0;
+            color: #e2e8f0;
+        }
+
+        .honesty-modal a {
+            color: #10b981;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(16, 185, 129, 0.5);
+        }
+
+        .honesty-modal a:hover {
+            color: #059669;
+            border-bottom-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .honesty-modal {
+                padding: 10px;
+            }
+
+            .honesty-modal .modal-content {
+                max-height: 90vh;
+            }
+
+            .honesty-modal .modal-header,
+            .honesty-modal .modal-body {
+                padding: 15px 20px;
+            }
+
+            .honesty-modal .modal-header h4 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 
     <!-- ESTILOS ESPECÍFICOS PARA MODAL DE PROBABILIDADES -->
     <style>
@@ -10817,6 +11572,153 @@ Carregando...
         window.OtimizadorJogo1.init();
         // Aplica a lógica para todos os jogos
         window.OtimizadorAuto.runAll();
+        
+        // Sistema de carregamento da aba Força dos Elencos
+        function carregarForcaElencoDashboard() {
+            console.log('🚀 Carregando dashboard de força dos elencos...');
+            
+            // Resetar flag de execução para permitir nova execução
+            window.dashboardForcaElencoExecuted = false;
+            
+            const loading = document.getElementById('forca-elenco-loading');
+            const content = document.getElementById('forca-elenco-content');
+            
+            if (loading) loading.style.display = 'block';
+            if (content) content.style.display = 'none';
+            
+            // Carregar via API dedicada
+            console.log('📡 Fazendo requisição para /api/forca-elenco/dashboard...');
+            fetch('/api/forca-elenco/dashboard')
+                .then(response => {
+                    console.log('📊 Resposta da API:', response.status, response.statusText);
+                    return response.text();
+                })
+                .then(html => {
+                    console.log('📄 HTML recebido:', html.length, 'caracteres');
+                    if (content) {
+                        content.innerHTML = html;
+                        content.style.display = 'block';
+                        
+                        // Executar JavaScript após inserir HTML
+                        console.log('🎯 Executando JavaScript do dashboard...');
+                        try {
+                            // Procurar e executar scripts no HTML inserido
+                            const scripts = content.querySelectorAll('script');
+                            console.log('📜 Scripts encontrados:', scripts.length);
+                            
+                            scripts.forEach((script, index) => {
+                                console.log(`🔄 Executando script ${index + 1}...`);
+                                const newScript = document.createElement('script');
+                                newScript.textContent = script.textContent;
+                                document.head.appendChild(newScript);
+                                document.head.removeChild(newScript);
+                            });
+                            
+                            console.log('✅ JavaScript do dashboard executado!');
+                        } catch (error) {
+                            console.error('❌ Erro ao executar JavaScript:', error);
+                        }
+                    }
+                    if (loading) loading.style.display = 'none';
+                    console.log('✅ Dashboard de força dos elencos carregado!');
+                })
+                .catch(error => {
+                    console.error('❌ Erro ao carregar dashboard:', error);
+                    if (content) {
+                        content.innerHTML = '<div class="error-message">Erro ao carregar dados dos elencos. Tente novamente.</div>';
+                        content.style.display = 'block';
+                    }
+                    if (loading) loading.style.display = 'none';
+                });
+        }
+
+        // Event listener removido - usando apenas o sistema principal de abas
+
+        // Sistema de abas da Loteca (incluindo nova aba)
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('tab-btn')) {
+                const targetTab = e.target.getAttribute('data-tab');
+                
+                // Esconder todas as abas
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Remover active de todos os botões
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Mostrar aba selecionada
+                const targetContent = document.getElementById(targetTab);
+                if (targetContent) {
+                    targetContent.style.display = 'block';
+                    e.target.classList.add('active');
+                    
+                    // Carregar dashboard se for a aba de força dos elencos
+                    if (targetTab === 'forca-elenco') {
+                        carregarForcaElencoDashboard();
+                    }
+                }
+            }
+        });
+
+        // Inicializa o sistema de força do elenco para TODOS os jogos
+        console.log('🚀 Iniciando sistema de força do elenco para TODOS os jogos...');
+        carregarDadosForcaElenco().then(() => {
+          console.log('✅ Dados carregados, aguardando carregamento completo dos jogos...');
+          
+          // Função para aplicar força do elenco em todos os jogos
+          function aplicarForcaElencoTodosJogos() {
+            console.log('🎯 Aplicando força do elenco em todos os jogos...');
+            let jogosProcessados = 0;
+            
+            for (let jogo = 1; jogo <= 14; jogo++) {
+              const timeCasaElement = document.getElementById(`time-casa-nome-jogo${jogo}-novo`);
+              const timeForaElement = document.getElementById(`time-fora-nome-jogo${jogo}-novo`);
+              const timeCasa = timeCasaElement?.textContent?.trim();
+              const timeFora = timeForaElement?.textContent?.trim();
+              const containerId = `jogo${jogo}-container`;
+              const container = document.getElementById(containerId);
+              
+              console.log(`🔍 Jogo ${jogo}:`, { 
+                timeCasaElement: !!timeCasaElement, 
+                timeForaElement: !!timeForaElement,
+                timeCasa, 
+                timeFora, 
+                containerId,
+                container: !!container
+              });
+              
+              if (timeCasa && timeFora && container) {
+                console.log(`🎯 Criando botões para Jogo ${jogo}:`, timeCasa, 'vs', timeFora);
+                criarBotoesForcaElenco(containerId, timeCasa, timeFora);
+                jogosProcessados++;
+              } else {
+                console.log(`⚠️ Jogo ${jogo}: Elementos não encontrados - Casa: ${!!timeCasaElement}, Fora: ${!!timeForaElement}, Container: ${!!container}`);
+              }
+            }
+            
+            console.log(`📊 Jogos processados: ${jogosProcessados}/14`);
+            return jogosProcessados;
+          }
+          
+          // Aguarda mais tempo para garantir que todos os jogos carreguem
+          setTimeout(() => {
+            let jogosProcessados = aplicarForcaElencoTodosJogos();
+            
+            // Se poucos jogos foram processados, tenta novamente
+            if (jogosProcessados < 10) {
+              console.log('🔄 Poucos jogos processados, tentando novamente...');
+              setTimeout(() => {
+                aplicarForcaElencoTodosJogos();
+              }, 3000);
+            }
+          }, 5000); // Aguarda 5 segundos para garantir carregamento completo
+          
+        }).catch(error => {
+          console.error('❌ Erro ao inicializar sistema de força do elenco:', error);
+        });
       });
     </script>
     

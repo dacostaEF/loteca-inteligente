@@ -163,21 +163,7 @@ window.LotecaOtimizador = (function () {
     } catch {}
     bindClicks(root, painelSelectors);
 
-    // Ajuda (modal simples) para Probabilidades
-    try {
-      const trig = document.getElementById('prob-help-trigger');
-      if (trig) {
-        trig.addEventListener('click', ()=>{
-          const html = `\n<h3 style="margin-top:0">Como leio a coluna Probabilidades?</h3>\n<p>Mostramos a probabilidade consolidada da sugestão da IA para cada jogo:</p>\n<ul>\n<li>Sugestão 1 → usamos P(1)</li>\n<li>Sugestão 1X → usamos P(1)+P(X)</li>\n<li>Sugestão 1X2 → 100% (cobertura total)</li>\n</ul>\n<p>Classificamos a confiança:</p>\n<ul>\n<li>≥ 70%: Alta (verde)</li>\n<li>50–69%: Média (amarelo)</li>\n<li>&lt; 50%: Baixa (vermelho)</li>\n</ul>\n<p>Risco = 100% – cobertura.</p>`;
-          const modal = document.createElement('div');
-          modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:10000;';
-          modal.innerHTML = `<div style="max-width:560px;width:92%;background:#1f1f1f;color:#fff;border:1px solid #444;border-radius:10px;padding:18px;">${html}<div style="text-align:right;margin-top:12px;"><button id="prob-close" style="padding:8px 14px;border:1px solid #555;background:#2d2d2d;color:#fff;border-radius:6px;cursor:pointer;">Fechar</button></div></div>`;
-          document.body.appendChild(modal);
-          modal.querySelector('#prob-close').addEventListener('click', ()=> modal.remove());
-          modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.remove(); });
-        });
-      }
-    } catch {}
+    // Modal antigo removido - usando o modal correto do HTML
 
     // Expor utilitários de probabilidade
     window.LotecaOtimizador = Object.assign(window.LotecaOtimizador || {}, {

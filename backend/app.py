@@ -8,6 +8,7 @@ from flask_cors import CORS
 import os
 from routes_brasileirao import bp_br
 from admin_api import bp_admin
+from routes_forca_elenco import forca_elenco_bp
 # from analise_routes import bp_analise  # Comentado para usar apenas bp_admin
 
 def create_app():
@@ -76,6 +77,7 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(bp_br)
     app.register_blueprint(bp_admin)
+    app.register_blueprint(forca_elenco_bp)
     
     # Registrar blueprint de confrontos
     from routes_brasileirao import bp_confrontos

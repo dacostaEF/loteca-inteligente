@@ -1,0 +1,214 @@
+{
+  "metadata": {
+    "versao": "1.0",
+    "data_criacao": "2025-01-18",
+    "fonte_principal": "Revista Veja - Abril 2025",
+    "cotacao_euro_real": 6.28,
+    "descricao": "Sistema unificado de força de elenco para análise da Loteca"
+  },
+  "sistema_pontuacao": {
+    "categorias": {
+      "mundial": {
+        "descricao": "Top 100 mundial - dados oficiais",
+        "peso": 1.0,
+        "fonte": "dados_oficiais"
+      },
+      "nacional_grande": {
+        "descricao": "Grandes clubes nacionais - estimativa baseada em histórico",
+        "peso": 0.8,
+        "fonte": "estimativa_historica"
+      },
+      "nacional_medio": {
+        "descricao": "Clubes médios nacionais - estimativa conservadora",
+        "peso": 0.6,
+        "fonte": "estimativa_conservadora"
+      },
+      "regional": {
+        "descricao": "Clubes regionais - estimativa mínima",
+        "peso": 0.4,
+        "fonte": "estimativa_minima"
+      }
+    }
+  },
+  "clubes": {
+    "flamengo": {
+      "nome_oficial": "Flamengo",
+      "nomes_alternativos": ["fla", "mengão", "clube de regatas do flamengo"],
+      "categoria": "mundial",
+      "posicao_mundial": 50,
+      "valor_elenco_euros": 85.0,
+      "valor_elenco_reais": 533.80,
+      "forca_elenco": 85.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados oficiais - Top 100 mundial"
+    },
+    "palmeiras": {
+      "nome_oficial": "Palmeiras",
+      "nomes_alternativos": ["verdão", "sociedade esportiva palmeiras"],
+      "categoria": "mundial",
+      "posicao_mundial": 65,
+      "valor_elenco_euros": 65.0,
+      "valor_elenco_reais": 408.20,
+      "forca_elenco": 65.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados oficiais - Top 100 mundial"
+    },
+    "sao_paulo": {
+      "nome_oficial": "São Paulo",
+      "nomes_alternativos": ["spfc", "tricolor", "são paulo fc"],
+      "categoria": "mundial",
+      "posicao_mundial": 78,
+      "valor_elenco_euros": 52.0,
+      "valor_elenco_reais": 326.56,
+      "forca_elenco": 52.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados oficiais - Top 100 mundial"
+    },
+    "corinthians": {
+      "nome_oficial": "Corinthians",
+      "nomes_alternativos": ["timão", "sport club corinthians paulista"],
+      "categoria": "nacional_grande",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 45.0,
+      "valor_elenco_reais": 280.00,
+      "forca_elenco": 36.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa baseada em histórico - Grande clube nacional"
+    },
+    "atletico_mg": {
+      "nome_oficial": "Atlético Mineiro",
+      "nomes_alternativos": ["galo", "atlético", "atletico mg"],
+      "categoria": "nacional_grande",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 42.0,
+      "valor_elenco_reais": 260.00,
+      "forca_elenco": 33.6,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa baseada em histórico - Grande clube nacional"
+    },
+    "santos": {
+      "nome_oficial": "Santos",
+      "nomes_alternativos": ["peixe", "santos fc"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 29.0,
+      "valor_elenco_reais": 180.00,
+      "forca_elenco": 17.4,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Estimativa conservadora - Clube médio nacional"
+    },
+    "internacional": {
+      "nome_oficial": "Internacional",
+      "nomes_alternativos": ["inter", "colorado"],
+      "categoria": "nacional_grande",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 38.0,
+      "valor_elenco_reais": 235.00,
+      "forca_elenco": 30.4,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa baseada em histórico - Grande clube nacional"
+    },
+    "gremio": {
+      "nome_oficial": "Grêmio",
+      "nomes_alternativos": ["tricolor gaúcho", "gremio"],
+      "categoria": "nacional_grande",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 35.0,
+      "valor_elenco_reais": 220.00,
+      "forca_elenco": 28.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa baseada em histórico - Grande clube nacional"
+    },
+    "cruzeiro": {
+      "nome_oficial": "Cruzeiro",
+      "nomes_alternativos": ["raposa", "cruzeiro mg"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 25.0,
+      "valor_elenco_reais": 155.00,
+      "forca_elenco": 15.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa conservadora - Clube médio nacional"
+    },
+    "botafogo": {
+      "nome_oficial": "Botafogo",
+      "nomes_alternativos": ["fogão", "botafogo rj"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 22.0,
+      "valor_elenco_reais": 135.00,
+      "forca_elenco": 13.2,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa conservadora - Clube médio nacional"
+    },
+    "vasco": {
+      "nome_oficial": "Vasco da Gama",
+      "nomes_alternativos": ["vasco", "gigante da colina"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 20.0,
+      "valor_elenco_reais": 125.00,
+      "forca_elenco": 12.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa conservadora - Clube médio nacional"
+    },
+    "fluminense": {
+      "nome_oficial": "Fluminense",
+      "nomes_alternativos": ["flu", "tricolor carioca"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 18.0,
+      "valor_elenco_reais": 110.00,
+      "forca_elenco": 10.8,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa conservadora - Clube médio nacional"
+    },
+    "athletico_pr": {
+      "nome_oficial": "Athletico Paranaense",
+      "nomes_alternativos": ["furacão", "athletico", "cap"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 16.0,
+      "valor_elenco_reais": 100.00,
+      "forca_elenco": 9.6,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa conservadora - Clube médio nacional"
+    },
+    "fortaleza": {
+      "nome_oficial": "Fortaleza",
+      "nomes_alternativos": ["leão do pici", "fortaleza ce"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 12.0,
+      "valor_elenco_reais": 75.00,
+      "forca_elenco": 4.8,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa mínima - Clube regional"
+    },
+    "bahia": {
+      "nome_oficial": "Bahia",
+      "nomes_alternativos": ["tricolor baiano", "bahia ba"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 10.0,
+      "valor_elenco_reais": 62.00,
+      "forca_elenco": 4.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa mínima - Clube regional"
+    }
+  },
+  "formulas": {
+    "calculo_forca": "valor_elenco_euros * peso_categoria",
+    "pesos": {
+      "mundial": 1.0,
+      "nacional_grande": 0.8,
+      "nacional_medio": 0.6,
+      "regional": 0.4
+    }
+  },
+  "uso_sistema": {
+    "descricao": "Sistema de pontuação unificado para análise de força de elenco",
+    "aplicacao": "Pode ser usado para calcular 'Fator Econômico' nas análises da Loteca",
+    "exemplo": "Flamengo (85.0) vs Fortaleza (4.8) = Diferença de força: 80.2 pontos"
+  }
+}
