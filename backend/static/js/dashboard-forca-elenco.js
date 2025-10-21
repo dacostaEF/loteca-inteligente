@@ -206,3 +206,4 @@ window.initDashboardForcaElenco = function() {
     console.log('🔄 [DASHBOARD] Inicialização manual...');
     new DashboardForcaElenco();
 };
+
