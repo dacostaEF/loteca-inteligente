@@ -43,6 +43,30 @@ class AutoClassificacao:
             "Semi-final": (1, 2),        # 1º ao 2º (azul) - Classificados para semi-final
             "Eliminados": (3, 4)         # 3º ao 4º (cinza) - Eliminados
         }
+        
+        # Zonas para ligas internacionais
+        self.zonas_premier_league = {
+            "Champions League": (1, 4),      # 1º ao 4º (azul) - Champions League
+            "Europa League": (5, 7),         # 5º ao 7º (laranja) - Europa League
+            "Meio de tabela": (8, 17),       # 8º ao 17º (cinza) - Meio de tabela
+            "Rebaixamento": (18, 20)         # 18º ao 20º (vermelho) - Rebaixamento
+        }
+        
+        self.zonas_la_liga = {
+            "Champions League": (1, 2),      # 1º ao 2º (azul) - Champions League
+            "Europa League": (3, 3),         # 3º (verde) - Europa League
+            "Conference League": (4, 5),     # 4º ao 5º (laranja) - Conference League
+            "Meio de tabela": (6, 17),       # 6º ao 17º (cinza) - Meio de tabela
+            "Rebaixamento": (18, 20)         # 18º ao 20º (vermelho) - Rebaixamento
+        }
+        
+        self.zonas_ligue1 = {
+            "Champions League": (1, 2),      # 1º ao 2º (azul) - Champions League
+            "Europa League": (3, 3),         # 3º (laranja) - Europa League
+            "Conference League": (4, 4),     # 4º (verde) - Conference League
+            "Meio de tabela": (5, 15),       # 5º ao 15º (cinza) - Meio de tabela
+            "Rebaixamento": (16, 18)         # 16º ao 18º (vermelho) - Rebaixamento
+        }
     
     def converter_ultimos_jogos(self, ultimos_jogos: str) -> str:
         """
@@ -527,6 +551,241 @@ class AutoClassificacao:
             
         except Exception as e:
             logger.error(f"❌ Erro ao processar Série C tradicional: {e}")
+            return []
+
+    def ler_tabela_tradicional_premier_league(self) -> List[Dict]:
+        """
+        Lê tabela tradicional da Premier League
+        """
+        try:
+            csv_path = os.path.join(self.base_path, "Premier_League_tabela_tradicional.csv")
+            logger.info(f"🔍 Procurando arquivo Premier League em: {csv_path}")
+            
+            if not os.path.exists(csv_path):
+                logger.error(f"❌ Arquivo não encontrado: {csv_path}")
+                return []
+            
+            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            
+            clubes = []
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    clube = {
+                        'time': row['Time'].strip('"'),
+                        'pontos': int(row['Pontos']),
+                        'jogos': int(row['Jogos']),
+                        'vitorias': int(row['Vitórias']),
+                        'empates': int(row['Empates']),
+                        'derrotas': int(row['Derrotas']),
+                        'gols_pro': int(row['Gols Pró']),
+                        'gols_contra': int(row['Gols Contra']),
+                        'saldo_gols': int(row['Saldo Gols']),
+                        'aproveitamento': float(row['Aproveitamento %']),
+                        'ultimos_jogos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'ultimos_confrontos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'posicao': int(row['Posição']),
+                        'variacao': self.determinar_variacao_posicao(int(row['Posição']))
+                    }
+                    
+                    # Determinar zona baseada na posição
+                    posicao = clube['posicao']
+                    if 1 <= posicao <= 4:
+                        clube['zona'] = 'Champions League'
+                    elif 5 <= posicao <= 7:
+                        clube['zona'] = 'Europa League'
+                    elif 18 <= posicao <= 20:
+                        clube['zona'] = 'Rebaixamento'
+                    else:
+                        clube['zona'] = 'Meio de tabela'
+                    
+                    clubes.append(clube)
+            
+            logger.info(f"✅ Premier League lida do CSV tradicional: {len(clubes)} clubes")
+            return clubes
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao ler tabela tradicional Premier League: {e}")
+            return []
+
+    def processar_premier_league_tradicional(self) -> List[Dict]:
+        """
+        Processa Premier League via tabela tradicional
+        """
+        try:
+            logger.info("📊 Processando Premier League via tabela tradicional...")
+            clubes = self.ler_tabela_tradicional_premier_league()
+            
+            if not clubes:
+                logger.error("❌ Nenhum clube encontrado na tabela tradicional Premier League")
+                return []
+            
+            # Ordenar por posição
+            clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
+            
+            logger.info(f"✅ Premier League processada: {len(clubes_ordenados)} clubes")
+            return clubes_ordenados
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar Premier League tradicional: {e}")
+            return []
+
+    def ler_tabela_tradicional_la_liga(self) -> List[Dict]:
+        """
+        Lê tabela tradicional da La Liga
+        """
+        try:
+            csv_path = os.path.join(self.base_path, "La_Liga_tabela_tradicional.csv")
+            logger.info(f"🔍 Procurando arquivo La Liga em: {csv_path}")
+            
+            if not os.path.exists(csv_path):
+                logger.error(f"❌ Arquivo não encontrado: {csv_path}")
+                return []
+            
+            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            
+            clubes = []
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    clube = {
+                        'time': row['Time'].strip('"'),
+                        'pontos': int(row['Pontos']),
+                        'jogos': int(row['Jogos']),
+                        'vitorias': int(row['Vitórias']),
+                        'empates': int(row['Empates']),
+                        'derrotas': int(row['Derrotas']),
+                        'gols_pro': int(row['Gols Pró']),
+                        'gols_contra': int(row['Gols Contra']),
+                        'saldo_gols': int(row['Saldo Gols']),
+                        'aproveitamento': float(row['Aproveitamento %']),
+                        'ultimos_jogos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'ultimos_confrontos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'posicao': int(row['Posição']),
+                        'variacao': self.determinar_variacao_posicao(int(row['Posição']))
+                    }
+                    
+                    # Determinar zona baseada na posição (La Liga)
+                    posicao = clube['posicao']
+                    if 1 <= posicao <= 2:
+                        clube['zona'] = 'Champions League'
+                    elif posicao == 3:
+                        clube['zona'] = 'Europa League'
+                    elif 4 <= posicao <= 5:
+                        clube['zona'] = 'Conference League'
+                    elif 18 <= posicao <= 20:
+                        clube['zona'] = 'Rebaixamento'
+                    else:
+                        clube['zona'] = 'Meio de tabela'
+                    
+                    clubes.append(clube)
+            
+            logger.info(f"✅ La Liga lida do CSV tradicional: {len(clubes)} clubes")
+            return clubes
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao ler tabela tradicional La Liga: {e}")
+            return []
+
+    def processar_la_liga_tradicional(self) -> List[Dict]:
+        """
+        Processa La Liga via tabela tradicional
+        """
+        try:
+            logger.info("📊 Processando La Liga via tabela tradicional...")
+            clubes = self.ler_tabela_tradicional_la_liga()
+            
+            if not clubes:
+                logger.error("❌ Nenhum clube encontrado na tabela tradicional La Liga")
+                return []
+            
+            # Ordenar por posição
+            clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
+            
+            logger.info(f"✅ La Liga processada: {len(clubes_ordenados)} clubes")
+            return clubes_ordenados
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar La Liga tradicional: {e}")
+            return []
+
+    def ler_tabela_tradicional_ligue1(self) -> List[Dict]:
+        """
+        Lê tabela tradicional da Ligue 1
+        """
+        try:
+            csv_path = os.path.join(self.base_path, "Ligue1_tabela_tradicional.csv")
+            logger.info(f"🔍 Procurando arquivo Ligue 1 em: {csv_path}")
+            
+            if not os.path.exists(csv_path):
+                logger.error(f"❌ Arquivo não encontrado: {csv_path}")
+                return []
+            
+            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            
+            clubes = []
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    clube = {
+                        'time': row['Time'].strip('"'),
+                        'pontos': int(row['Pontos']),
+                        'jogos': int(row['Jogos']),
+                        'vitorias': int(row['Vitórias']),
+                        'empates': int(row['Empates']),
+                        'derrotas': int(row['Derrotas']),
+                        'gols_pro': int(row['Gols Pró']),
+                        'gols_contra': int(row['Gols Contra']),
+                        'saldo_gols': int(row['Saldo Gols']),
+                        'aproveitamento': float(row['Aproveitamento %']),
+                        'ultimos_jogos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'ultimos_confrontos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'posicao': int(row['Posição']),
+                        'variacao': self.determinar_variacao_posicao(int(row['Posição']))
+                    }
+                    
+                    # Determinar zona baseada na posição (Ligue 1)
+                    posicao = clube['posicao']
+                    if 1 <= posicao <= 2:
+                        clube['zona'] = 'Champions League'
+                    elif posicao == 3:
+                        clube['zona'] = 'Europa League'
+                    elif posicao == 4:
+                        clube['zona'] = 'Conference League'
+                    elif 16 <= posicao <= 18:
+                        clube['zona'] = 'Rebaixamento'
+                    else:
+                        clube['zona'] = 'Meio de tabela'
+                    
+                    clubes.append(clube)
+            
+            logger.info(f"✅ Ligue 1 lida do CSV tradicional: {len(clubes)} clubes")
+            return clubes
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao ler tabela tradicional Ligue 1: {e}")
+            return []
+
+    def processar_ligue1_tradicional(self) -> List[Dict]:
+        """
+        Processa Ligue 1 via tabela tradicional
+        """
+        try:
+            logger.info("📊 Processando Ligue 1 via tabela tradicional...")
+            clubes = self.ler_tabela_tradicional_ligue1()
+            
+            if not clubes:
+                logger.error("❌ Nenhum clube encontrado na tabela tradicional Ligue 1")
+                return []
+            
+            # Ordenar por posição
+            clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
+            
+            logger.info(f"✅ Ligue 1 processada: {len(clubes_ordenados)} clubes")
+            return clubes_ordenados
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar Ligue 1 tradicional: {e}")
             return []
 
 # Função principal para uso externo

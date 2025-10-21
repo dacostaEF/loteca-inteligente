@@ -14,6 +14,13 @@ function determinarZona(posicao, zona) {
         if (zona === 'Sul-Americana') return 'sul-americana';
         if (zona === 'Zona de Rebaixamento') return 'rebaixamento';
         if (zona === 'Meio de tabela') return 'meio-tabela';
+        
+        // Zonas Premier League
+        if (zona === 'Champions League') return 'champions-league';
+        if (zona === 'Europa League') return 'europa-league';
+        if (zona === 'Conference League') return 'conference-league';
+        if (zona === 'Rebaixamento') return 'rebaixamento';
+        
         return zona.toLowerCase().replace(/\s+/g, '-');
     }
     
@@ -157,6 +164,116 @@ function renderTabelaClassificacao(dados, serie = 'serie-a') {
                 <div class="zone-text">
                     <strong>Zona de Rebaixamento (17º-20º)</strong>
                     <span>Rebaixamento para a Série C</span>
+                </div>
+            </div>
+        `;
+    } else if (serie === 'premier-league') {
+        // Premier League: Zonas europeias
+        zonasHTML = `
+            <div class="zone-item champions-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Champions League (1º-4º)</strong>
+                    <span>Classificação direta para a Champions League</span>
+                </div>
+            </div>
+            <div class="zone-item europa-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Europa League (5º-7º)</strong>
+                    <span>Classificação para a Europa League</span>
+                </div>
+            </div>
+            <div class="zone-item meio-tabela">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Meio de Tabela (8º-17º)</strong>
+                    <span>Permanecem na Premier League</span>
+                </div>
+            </div>
+            <div class="zone-item rebaixamento">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Rebaixamento (18º-20º)</strong>
+                    <span>Descenso para a Championship</span>
+                </div>
+            </div>
+        `;
+    } else if (serie === 'la-liga') {
+        // La Liga: Zonas europeias
+        zonasHTML = `
+            <div class="zone-item champions-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Champions League (1º-2º)</strong>
+                    <span>Classificação direta para a Champions League</span>
+                </div>
+            </div>
+            <div class="zone-item europa-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Europa League (3º)</strong>
+                    <span>Classificação para a Europa League</span>
+                </div>
+            </div>
+            <div class="zone-item conference-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Conference League (4º-5º)</strong>
+                    <span>Classificação para a Conference League</span>
+                </div>
+            </div>
+            <div class="zone-item meio-tabela">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Meio de Tabela (6º-17º)</strong>
+                    <span>Permanecem na La Liga</span>
+                </div>
+            </div>
+            <div class="zone-item rebaixamento">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Rebaixamento (18º-20º)</strong>
+                    <span>Descenso para a Segunda Divisão</span>
+                </div>
+            </div>
+        `;
+    } else if (serie === 'ligue1') {
+        // Ligue 1: Zonas europeias
+        zonasHTML = `
+            <div class="zone-item champions-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Champions League (1º-2º)</strong>
+                    <span>Classificação direta para a Champions League</span>
+                </div>
+            </div>
+            <div class="zone-item europa-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Europa League (3º)</strong>
+                    <span>Classificação para a Europa League</span>
+                </div>
+            </div>
+            <div class="zone-item conference-league">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Conference League (4º)</strong>
+                    <span>Classificação para a Conference League</span>
+                </div>
+            </div>
+            <div class="zone-item meio-tabela">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Meio de Tabela (5º-15º)</strong>
+                    <span>Permanecem na Ligue 1</span>
+                </div>
+            </div>
+            <div class="zone-item rebaixamento">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Rebaixamento (16º-18º)</strong>
+                    <span>Descenso para a Ligue 2</span>
                 </div>
             </div>
         `;

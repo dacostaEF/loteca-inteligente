@@ -2989,18 +2989,9 @@ Carregando...
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Premier League...</p></div>';
 
             try {
-                console.log('⚽ [Premier League] Carregando dados do banco...');
+                console.log('⚽ [Premier League] Carregando dados da API...');
                 
-                const response = await fetch('/api/admin/classificacao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        campeonato: 'premier-league',
-                        admin_key: 'loteca2024admin'
-                    })
-                });
+                const response = await fetch('/api/int/classificacao/premier-league');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -3009,37 +3000,34 @@ Carregando...
                 const data = await response.json();
                 console.log('⚽ [Premier League] Dados recebidos:', data);
                 
-                // CORREÇÃO: Ligas internacionais usam 'classificacao' em vez de 'data'
-                const dadosArray = data.classificacao || data.data || [];
-                
-                if (data.success && dadosArray && dadosArray.length > 0) {
-                    // Mapear campos do banco para formato da tabela
-                    const dadosFormatados = dadosArray.map(item => ({
+                if (data.success && data.data && data.data.length > 0) {
+                    // Mapear campos do backend para formato da tabela
+                    const dadosFormatados = data.data.map(item => ({
                         pos: item.posicao,
-                        time: item.clube,
-                        p: item.pts,
-                        j: item.pj,
-                        v: item.vit,
-                        e: item.e,
-                        d: item.der,
-                        gp: item.gm,
-                        gc: item.gc,
-                        sg: item.sg,
-                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
-                        ultimos: item.ultimas_5 || "-----",
+                        time: item.time,
+                        p: item.pontos,
+                        j: item.jogos,
+                        v: item.vitorias,
+                        e: item.empates,
+                        d: item.derrotas,
+                        gp: item.gols_pro,
+                        gc: item.gols_contra,
+                        sg: item.saldo_gols,
+                        aproveitamento: item.aproveitamento,
+                        ultimos: item.ultimos_jogos || item.ultimos_confrontos,
                         zona: item.zona || ""
                     }));
                     
                     console.log('⚽ [Premier League] Dados formatados:', dadosFormatados.length, 'times');
                     console.log('⚽ [Premier League] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'premier-league');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
-                    if (fonteEl) {
-                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
-                    }
+                    const updateEl = document.getElementById('update-internacional');
+                    if (fonteEl) fonteEl.textContent = '📊 Dados simulados (API Internacional)';
+                    if (updateEl) updateEl.textContent = new Date().toLocaleString();
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
@@ -3058,18 +3046,9 @@ Carregando...
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando La Liga...</p></div>';
 
             try {
-                console.log('🇪🇸 [La Liga] Carregando dados do banco...');
+                console.log('🇪🇸 [La Liga] Carregando dados da API...');
                 
-                const response = await fetch('/api/admin/classificacao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        campeonato: 'la-liga',
-                        admin_key: 'loteca2024admin'
-                    })
-                });
+                const response = await fetch('/api/int/classificacao/la-liga');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
@@ -3078,37 +3057,34 @@ Carregando...
                 const data = await response.json();
                 console.log('🇪🇸 [La Liga] Dados recebidos:', data);
                 
-                // CORREÇÃO: Ligas internacionais usam 'classificacao' em vez de 'data'
-                const dadosArray = data.classificacao || data.data || [];
-                
-                if (data.success && dadosArray && dadosArray.length > 0) {
-                    // Mapear campos do banco para formato da tabela
-                    const dadosFormatados = dadosArray.map(item => ({
+                if (data.success && data.data && data.data.length > 0) {
+                    // Mapear campos do backend para formato da tabela
+                    const dadosFormatados = data.data.map(item => ({
                         pos: item.posicao,
-                        time: item.clube,
-                        p: item.pts,
-                        j: item.pj,
-                        v: item.vit,
-                        e: item.e,
-                        d: item.der,
-                        gp: item.gm,
-                        gc: item.gc,
-                        sg: item.sg,
-                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
-                        ultimos: item.ultimas_5 || "-----",
+                        time: item.time,
+                        p: item.pontos,
+                        j: item.jogos,
+                        v: item.vitorias,
+                        e: item.empates,
+                        d: item.derrotas,
+                        gp: item.gols_pro,
+                        gc: item.gols_contra,
+                        sg: item.saldo_gols,
+                        aproveitamento: item.aproveitamento,
+                        ultimos: item.ultimos_jogos || item.ultimos_confrontos,
                         zona: item.zona || ""
                     }));
                     
                     console.log('🇪🇸 [La Liga] Dados formatados:', dadosFormatados.length, 'times');
                     console.log('🇪🇸 [La Liga] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'la-liga');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
-                    if (fonteEl) {
-                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
-                    }
+                    const updateEl = document.getElementById('update-internacional');
+                    if (fonteEl) fonteEl.textContent = '📊 Dados simulados (API Internacional)';
+                    if (updateEl) updateEl.textContent = new Date().toLocaleString();
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
@@ -3124,67 +3100,55 @@ Carregando...
             const container = document.getElementById('tabela-ligue1');
             if (!container) return;
 
-            container.innerHTML = '<div class="table-loading"><p>🔄 Carregando França (Ligue 1)...</p></div>';
+            container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Ligue 1...</p></div>';
 
             try {
-                console.log('🇫🇷 [França] Carregando dados do banco...');
+                console.log('🇫🇷 [Ligue 1] Carregando dados da API...');
                 
-                const response = await fetch('/api/admin/classificacao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        campeonato: 'ligue1',
-                        admin_key: 'loteca2024admin'
-                    })
-                });
+                const response = await fetch('/api/int/classificacao/ligue1');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
                 
                 const data = await response.json();
-                console.log('🇫🇷 [França] Dados recebidos:', data);
+                console.log('🇫🇷 [Ligue 1] Dados recebidos:', data);
                 
-                // CORREÇÃO: Ligas internacionais usam 'classificacao' em vez de 'data'
-                const dadosArray = data.classificacao || data.data || [];
-                
-                if (data.success && dadosArray && dadosArray.length > 0) {
-                    // Mapear campos do banco para formato da tabela
-                    const dadosFormatados = dadosArray.map(item => ({
+                if (data.success && data.data && data.data.length > 0) {
+                    // Mapear campos do backend para formato da tabela
+                    const dadosFormatados = data.data.map(item => ({
                         pos: item.posicao,
-                        time: item.clube,
-                        p: item.pts,
-                        j: item.pj,
-                        v: item.vit,
-                        e: item.e,
-                        d: item.der,
-                        gp: item.gm,
-                        gc: item.gc,
-                        sg: item.sg,
-                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
-                        ultimos: item.ultimas_5 || "-----",
+                        time: item.time,
+                        p: item.pontos,
+                        j: item.jogos,
+                        v: item.vitorias,
+                        e: item.empates,
+                        d: item.derrotas,
+                        gp: item.gols_pro,
+                        gc: item.gols_contra,
+                        sg: item.saldo_gols,
+                        aproveitamento: item.aproveitamento,
+                        ultimos: item.ultimos_jogos || item.ultimos_confrontos,
                         zona: item.zona || ""
                     }));
                     
-                    console.log('🇫🇷 [França] Dados formatados:', dadosFormatados.length, 'times');
-                    console.log('🇫🇷 [França] Primeiro time formatado:', dadosFormatados[0]);
+                    console.log('🇫🇷 [Ligue 1] Dados formatados:', dadosFormatados.length, 'times');
+                    console.log('🇫🇷 [Ligue 1] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'ligue1');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
-                    if (fonteEl) {
-                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
-                    }
+                    const updateEl = document.getElementById('update-internacional');
+                    if (fonteEl) fonteEl.textContent = '📊 Dados simulados (API Internacional)';
+                    if (updateEl) updateEl.textContent = new Date().toLocaleString();
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
                 
             } catch (error) {
-                console.error('❌ [França] Erro ao carregar:', error);
-                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar França</p></div>';
+                console.error('❌ [Ligue 1] Erro ao carregar:', error);
+                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar Ligue 1</p></div>';
             }
         }
 

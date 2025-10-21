@@ -1416,6 +1416,22 @@
             margin-bottom: 0.5rem;
         }
 
+        /* ZONAS PREMIER LEAGUE */
+        .champions-league {
+            border-left: 6px solid #3B82F6; /* Azul */
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+        }
+
+        .europa-league {
+            border-left: 6px solid #F59E0B; /* Laranja */
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
+        }
+
+        .conference-league {
+            border-left: 6px solid #F59E0B; /* Laranja */
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
+        }
+
         /* Últimos jogos */
         .ultimos-jogos {
             display: flex;

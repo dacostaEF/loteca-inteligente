@@ -82,6 +82,10 @@ def create_app():
     app.register_blueprint(forca_elenco_bp)
     app.register_blueprint(bp_auto)  # Automação de classificação
     
+    # Registrar blueprint das ligas internacionais
+    from routes_internacionais import bp_int
+    app.register_blueprint(bp_int)
+    
     # Registrar blueprint de confrontos
     from routes_brasileirao import bp_confrontos
     app.register_blueprint(bp_confrontos)
