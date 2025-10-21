@@ -19,7 +19,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
         <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/melhorias-abas.css') }}">
     <!-- Sistema de elenco integrado -->
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
@@ -82,24 +81,19 @@
         <!-- SISTEMA DE ABAS -->
         <div class="tabs-container">
             <div class="tabs-nav">
-                <button class="tab-btn active" data-tab="otimizador-aposta" title="Passo 1: Monte sua aposta inteligente com sugestões da IA">
-                    <span class="tab-number">1</span>
+                <button class="tab-btn active" data-tab="otimizador-aposta">
                     🎯 Otimizador de Aposta
                 </button>
-                <button class="tab-btn" data-tab="analise-rapida" title="Passo 2: Analise cada confronto em detalhes">
-                    <span class="tab-number">2</span>
+                <button class="tab-btn" data-tab="analise-rapida">
                     🎯 Análise Rápida
                 </button>
-                <button class="tab-btn" data-tab="forca-elenco" title="Passo 3: Compare a força dos elencos">
-                    <span class="tab-number">3</span>
+                <button class="tab-btn" data-tab="forca-elenco">
                     💪 Força dos Elencos
                 </button>
-                <button class="tab-btn" data-tab="dados-avancados" title="Passo 4: Explore dados estatísticos detalhados">
-                    <span class="tab-number">4</span>
+                <button class="tab-btn" data-tab="dados-avancados">
                     📊 Dados Avançados
                 </button>
-                <button class="tab-btn" data-tab="panorama-campeonatos" title="Passo 5: Veja o panorama geral dos campeonatos">
-                    <span class="tab-number">5</span>
+                <button class="tab-btn" data-tab="panorama-campeonatos">
                     🏆 Panorama dos Campeonatos
                 </button>
             </div>
@@ -2042,6 +2036,22 @@ Carregando...
 
             </div>
         </div> <!-- FIM DA ABA 5: PANORAMA DOS CAMPEONATOS -->
+
+        <div class="tab-content" id="otimizador-aposta" style="display: none;">
+            <div class="optimizer-container">
+                
+                <!-- CABEÇALHO DA ABA -->
+                <div class="section-header">
+                    <h2>🎯 Otimizador de Aposta Inteligente</h2>
+                </div>
+
+                <!-- TABELA DE OTIMIZAÇÃO INTERATIVA -->
+                <div class="optimization-table-container">
+                    <p class="table-description">Clique nos resultados para selecionar/desselecionar. A IA sugere, mas você decide!</p>
+                    
+                    <div class="table-responsive">
+                        <table class="optimization-table">
+                            <thead>
                                 <tr>
                                     <th>Jogo</th>
                                     <th>Confronto</th>
@@ -2060,6 +2070,71 @@ Carregando...
                         </table>
                     </div>
                 </div>
+
+                <!-- APOSTA USUÁRIO - MOVIDA PARA ABAIXO DA PLANILHA -->
+                <div class="user-bet-summary" style="margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); border-radius: 10px; border: 1px solid #444;">
+                    <h4 style="color: #A855F7; margin: 0 0 15px 0; font-size: 1.3em;">📊 Sua Aposta</h4>
+                    <div class="user-bet-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div class="bet-detail" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(168, 85, 247, 0.1); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Duplos:</span>
+                            <span class="bet-value" id="user-duplos" style="color: #A855F7; font-weight: bold; font-size: 1.1em;">0</span>
+                        </div>
+                        <div class="bet-detail" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(168, 85, 247, 0.1); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Triplos:</span>
+                            <span class="bet-value" id="user-triplos" style="color: #A855F7; font-weight: bold; font-size: 1.1em;">0</span>
+                        </div>
+                        <div class="bet-detail" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(168, 85, 247, 0.1); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Nº de Apostas:</span>
+                            <span class="bet-value" id="user-apostas" style="color: #A855F7; font-weight: bold; font-size: 1.1em;">1</span>
+                        </div>
+                        <div class="bet-detail highlight" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Valor:</span>
+                            <span class="bet-value" id="user-valor" style="color: #ffffff; font-weight: bold; font-size: 1.2em;">R$ 4,00</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <!-- CLASSIFICAÇÃO DOS JOGOS -->
+                <div class="games-classification">
+                    <h3>📊 Classificação Estratégica dos Jogos</h3>
+                    
+                    <div class="classification-grid">
+                        <div class="classification-card seco">
+                            <h4>🎯 JOGOS "SECOS" (Alta Confiança)</h4>
+                            <p>Favorito claro > 60% - Aposte em 1 resultado apenas</p>
+                            <ul id="seco-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+
+                        <div class="classification-card duplo">
+                            <h4>⚖️ JOGOS PARA "DUPLO" (Incerteza Média)</h4>
+                            <p>Favorito claro, mas 2º resultado tem chance > 25%</p>
+                            <ul id="duplo-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+
+                        <div class="classification-card triplo">
+                            <h4>🎲 JOGOS PARA "TRIPLO" (Equilíbrio Total)</h4>
+                            <p>Resultados muito equilibrados - Cobertura total recomendada</p>
+                            <ul id="triplo-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- FIM DA ABA 5: OTIMIZADOR DE APOSTA -->
+
 
         <footer class="footer">
             <div class="footer-cta">
@@ -11634,7 +11709,6 @@ Carregando...
     <script src="{{ url_for('static', filename='js/loteca-otimizador.js') }}"></script>
     <script src="{{ url_for('static', filename='js/otimizador-jogo1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/otimizador-auto.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/navegacao-inteligente.js') }}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // Inicializa o módulo principal do otimizador

@@ -1,0 +1,138 @@
+/* ========================================
+   MELHORIAS VISUAIS DAS ABAS
+   ======================================== */
+
+/* NÚMEROS DAS ABAS */
+.tab-number {
+    background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%);
+    color: #ffffff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
+    transition: all 0.3s ease;
+    margin-right: 8px;
+}
+
+.tab-btn.active .tab-number {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    color: #A855F7;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.tab-btn:hover .tab-number {
+    transform: scale(1.1);
+    box-shadow: 0 3px 12px rgba(168, 85, 247, 0.5);
+}
+
+/* TOOLTIPS DAS ABAS */
+.tab-btn[title] {
+    position: relative;
+}
+
+.tab-btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid #444;
+    margin-bottom: 5px;
+}
+
+.tab-btn[title]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #2d2d2d;
+    z-index: 1000;
+    margin-bottom: -5px;
+}
+
+/* ========================================
+   NAVEGAÇÃO INTELIGENTE - OTIMIZADOR
+   ======================================== */
+
+/* HOVER NEON NOS JOGOS DO OTIMIZADOR - MESMO ESTILO DA FORÇA DOS ELENCOS */
+.optimization-table tbody tr {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.optimization-table tbody tr:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+    border-color: var(--cor-destaque-primaria);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+}
+
+.optimization-table tbody tr:hover td {
+    color: var(--cor-destaque-primaria);
+    font-weight: 600;
+}
+
+/* EFEITO ESPECÍFICO PARA CÉLULA DO JOGO (primeira coluna) */
+.optimization-table tbody tr:hover td:first-child {
+    background: linear-gradient(135deg, var(--cor-destaque-primaria) 0%, #7C3AED 100%);
+    color: #ffffff;
+    border-radius: 6px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
+}
+
+/* INDICADOR DE NAVEGAÇÃO - ESTILO CONSISTENTE */
+.optimization-table tbody tr:hover::after {
+    content: '🔍 Ver Análise';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, var(--cor-destaque-primaria) 0%, #7C3AED 100%);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; transform: translateY(-50%) scale(1); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.05); }
+    100% { opacity: 0.8; transform: translateY(-50%) scale(1); }
+}
+
+/* ANIMAÇÃO DE TRANSIÇÃO ENTRE ABAS */
+.tab-transition {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
