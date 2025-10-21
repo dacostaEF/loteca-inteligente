@@ -620,3 +620,4 @@ const dadosJogo1 = quadro.criarDadosJogo(1,
 // Renderizar
 quadro.renderizarQuadro(dadosJogo1, 'container-jogo-1');
 */
+

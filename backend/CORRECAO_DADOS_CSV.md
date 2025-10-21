@@ -135,3 +135,4 @@ Para verificar se os dados estão corretos:
 ## 🎯 **CONCLUSÃO:**
 
 O sistema agora usa **exclusivamente** os dados do CSV da Série A, garantindo consistência e precisão dos dados exibidos na interface. Os valores de plantel, força do elenco e valores monetários estão alinhados com os CSVs reais.
+

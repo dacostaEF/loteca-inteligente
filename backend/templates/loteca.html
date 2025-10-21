@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
         <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
-    <!-- cartola-provider.js removido - não mais utilizado -->
+    <!-- Sistema de elenco integrado -->
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
     <script src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
@@ -84,6 +84,9 @@
                 <button class="tab-btn active" data-tab="analise-rapida">
                     🎯 Análise Rápida
                 </button>
+                <button class="tab-btn" data-tab="forca-elenco">
+                    💪 Força dos Elencos
+                </button>
                 <button class="tab-btn" data-tab="dados-avancados">
                     📊 Dados Avançados
                 </button>
@@ -92,9 +95,6 @@
                 </button>
                 <button class="tab-btn" data-tab="otimizador-aposta">
                     🎯 Otimizador de Aposta
-                </button>
-                <button class="tab-btn" data-tab="forca-elenco">
-                    💪 Força dos Elencos
                 </button>
             </div>
         </div>
@@ -1069,8 +1069,95 @@ Carregando...
 
         </div> <!-- FIM DA ABA 1: ANÁLISE RÁPIDA -->
 
-        <!-- ABA 2: DADOS AVANÇADOS -->
-        <div class="tab-content" id="dados-avancados" style="display: none;" data-rx="aba2">
+        <!-- ABA 2: FORÇA DOS ELENCOS -->
+        <div class="tab-content" id="forca-elenco" style="display: none;">
+            <div class="forca-elenco-container">
+                
+                <!-- CABEÇALHO DA ABA -->
+                <div class="section-header">
+                    <h2>💪 Força dos Elencos - Dashboard Mundial</h2>
+                    <p class="section-description">
+                        Análise completa da força dos elencos dos principais clubes do mundo. 
+                        Dados baseados em valores de mercado e gastos com transferências.
+                    </p>
+                </div>
+
+                <!-- SUB-ABAS DO DASHBOARD -->
+                <div class="sub-tabs-container">
+                    <div class="sub-tabs-nav">
+                        <button class="sub-tab-btn active" data-subtab="times-loteca">
+                            💰 Plantel ($)
+                        </button>
+                        <button class="sub-tab-btn" data-subtab="serie-a">
+                            🇧🇷 Série A
+                        </button>
+                        <button class="sub-tab-btn" data-subtab="serie-b">
+                            🇧🇷 Série B
+                        </button>
+                        <button class="sub-tab-btn" data-subtab="top100">
+                            🌍 Top 100 Mundial
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-ABA: TIMES LOTECA (PRIMEIRA) -->
+                <div class="sub-tab-content" id="times-loteca" style="display: block;">
+                    <div class="times-loteca-section">
+                        <div class="section-header">
+                            <h2>💰 Plantel ($) - Comparação Direta</h2>
+                            <!-- Botão removido: carregamento automático ativo -->
+                        </div>
+
+                        <!-- LOADING -->
+                        <div class="loading-clubes" id="loading-times-loteca">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando dados dos times...</p>
+                        </div>
+
+                        <!-- CONTAINER DOS JOGOS -->
+                        <div id="jogos-loteca-container" class="jogos-container">
+                            <!-- Os jogos serão carregados dinamicamente aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-ABA: SÉRIE A (SEGUNDA) -->
+                <div class="sub-tab-content" id="serie-a" style="display: none;">
+                    <div class="info-box blue">
+                        <h3>🇧🇷 Brasileirão Série A</h3>
+                        <p>Análise dos elencos dos clubes da Série A do Brasileirão</p>
+                    </div>
+                    <!-- Conteúdo será carregado dinamicamente -->
+                </div>
+
+                <!-- SUB-ABA: SÉRIE B (TERCEIRA) -->
+                <div class="sub-tab-content" id="serie-b" style="display: none;">
+                    <div class="info-box green">
+                        <h3>🇧🇷 Brasileirão Série B</h3>
+                        <p>Análise dos elencos dos clubes da Série B do Brasileirão</p>
+                    </div>
+                    <!-- Conteúdo será carregado dinamicamente -->
+                </div>
+
+                <!-- SUB-ABA: TOP 100 MUNDIAL (ÚLTIMA) -->
+                <div class="sub-tab-content" id="top100" style="display: none;">
+                    <!-- LOADING SPINNER -->
+                    <div id="forca-elenco-loading" class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Carregando dados dos elencos...</p>
+                    </div>
+
+                    <!-- CONTEÚDO PRINCIPAL (será carregado via API) -->
+                    <div id="forca-elenco-content" style="display: none;">
+                        <!-- Dashboard será inserido aqui via JavaScript -->
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- FIM DA ABA 2: FORÇA DOS ELENCOS -->
+
+        <!-- ABA 3: DADOS AVANÇADOS -->
+        <div class="tab-content" id="dados-avancados" style="display: none;" data-rx="aba3">
             <div class="advanced-stats-container">
                 
                 <!-- SELETOR DE CONFRONTO -->
@@ -1856,9 +1943,9 @@ Carregando...
                 </div>
 
             </div>
-        </div> <!-- FIM DA ABA 3: PANORAMA DOS CAMPEONATOS -->
+        </div> <!-- FIM DA ABA 4: PANORAMA DOS CAMPEONATOS -->
 
-        <!-- ABA 4: OTIMIZADOR DE APOSTA -->
+        <!-- ABA 5: OTIMIZADOR DE APOSTA -->
         <div class="tab-content" id="otimizador-aposta" style="display: none;">
             <div class="optimizer-container">
                 
@@ -1955,94 +2042,8 @@ Carregando...
                 </div>
 
             </div>
-        </div> <!-- FIM DA ABA 4: OTIMIZADOR DE APOSTA -->
+        </div> <!-- FIM DA ABA 5: OTIMIZADOR DE APOSTA -->
 
-        <!-- ABA 5: FORÇA DOS ELENCOS -->
-        <div class="tab-content" id="forca-elenco" style="display: none;">
-            <div class="forca-elenco-container">
-                
-                <!-- CABEÇALHO DA ABA -->
-                <div class="section-header">
-                    <h2>💪 Força dos Elencos - Dashboard Mundial</h2>
-                    <p class="section-description">
-                        Análise completa da força dos elencos dos principais clubes do mundo. 
-                        Dados baseados em valores de mercado e gastos com transferências.
-                    </p>
-                </div>
-
-                <!-- SUB-ABAS DO DASHBOARD -->
-                <div class="sub-tabs-container">
-                    <div class="sub-tabs-nav">
-                        <button class="sub-tab-btn active" data-subtab="times-loteca">
-                            💰 Plantel ($)
-                        </button>
-                        <button class="sub-tab-btn" data-subtab="serie-a">
-                            🇧🇷 Série A
-                        </button>
-                        <button class="sub-tab-btn" data-subtab="serie-b">
-                            🇧🇷 Série B
-                        </button>
-                        <button class="sub-tab-btn" data-subtab="top100">
-                            🌍 Top 100 Mundial
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SUB-ABA: TIMES LOTECA (PRIMEIRA) -->
-                <div class="sub-tab-content" id="times-loteca" style="display: block;">
-                    <div class="times-loteca-section">
-                        <div class="section-header">
-                            <h2>💰 Plantel ($) - Comparação Direta</h2>
-                            <!-- Botão removido: carregamento automático ativo -->
-                        </div>
-
-                        <!-- LOADING -->
-                        <div class="loading-clubes" id="loading-times-loteca">
-                            <div class="loading-spinner"></div>
-                            <p>Carregando dados dos times...</p>
-                        </div>
-
-                        <!-- CONTAINER DOS JOGOS -->
-                        <div id="jogos-loteca-container" class="jogos-container">
-                            <!-- Os jogos serão carregados dinamicamente aqui -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SUB-ABA: SÉRIE A (SEGUNDA) -->
-                <div class="sub-tab-content" id="serie-a" style="display: none;">
-                    <div class="info-box blue">
-                        <h3>🇧🇷 Brasileirão Série A</h3>
-                        <p>Análise dos elencos dos clubes da Série A do Brasileirão</p>
-                    </div>
-                    <!-- Conteúdo será carregado dinamicamente -->
-                </div>
-
-                <!-- SUB-ABA: SÉRIE B (TERCEIRA) -->
-                <div class="sub-tab-content" id="serie-b" style="display: none;">
-                    <div class="info-box green">
-                        <h3>🇧🇷 Brasileirão Série B</h3>
-                        <p>Análise dos elencos dos clubes da Série B do Brasileirão</p>
-                    </div>
-                    <!-- Conteúdo será carregado dinamicamente -->
-                </div>
-
-                <!-- SUB-ABA: TOP 100 MUNDIAL (ÚLTIMA) -->
-                <div class="sub-tab-content" id="top100" style="display: none;">
-                    <!-- LOADING SPINNER -->
-                    <div id="forca-elenco-loading" class="loading-container">
-                        <div class="loading-spinner"></div>
-                        <p>Carregando dados dos elencos...</p>
-                    </div>
-
-                    <!-- CONTEÚDO PRINCIPAL (será carregado via API) -->
-                    <div id="forca-elenco-content" style="display: none;">
-                        <!-- Dashboard será inserido aqui via JavaScript -->
-                    </div>
-                </div>
-
-            </div>
-        </div> <!-- FIM DA ABA 5: FORÇA DOS ELENCOS -->
 
         <footer class="footer">
             <div class="footer-cta">
@@ -3547,7 +3548,7 @@ Carregando...
                     }
                     return clubes;
                 } catch (error) {
-                    console.error('[Cartola] Erro ao buscar clubes:', error);
+                    console.error('[API] Erro ao buscar clubes:', error);
                     return {};
                 }
             }
@@ -3557,7 +3558,7 @@ Carregando...
                     const data = await this._get('/atletas/mercado', false); // Usar API direta
                     return data;
                 } catch (error) {
-                    console.error('[Cartola] Erro ao buscar atletas:', error);
+                    console.error('[API] Erro ao buscar atletas:', error);
                     return { atletas: [] };
                 }
             }
@@ -3566,7 +3567,7 @@ Carregando...
                 try {
                     return await this._get('/mercado/status');
                 } catch (error) {
-                    console.error('[Cartola] Erro ao buscar status:', error);
+                    console.error('[API] Erro ao buscar status:', error);
                     return {};
                 }
             }
@@ -3582,12 +3583,12 @@ Carregando...
                     const backendStats = await this._get(`/clube/${clubeId}/stats`);
                     
                     if (backendStats && backendStats.clube_id) {
-                        console.log(`[Cartola] ✅ Estatísticas obtidas via backend para clube ${clubeId}`);
+                        console.log(`[API] ✅ Estatísticas obtidas via backend para clube ${clubeId}`);
                         return backendStats;
                     }
                     
                     // FALLBACK: Calcular manualmente (caso backend falhe)
-                    console.log(`[Cartola] 🔄 Calculando estatísticas manualmente para clube ${clubeId}`);
+                    console.log(`[API] 🔄 Calculando estatísticas manualmente para clube ${clubeId}`);
                     const data = await this.getAtletasMercado();
                     const atletas = data.atletas?.filter(a => a.clube_id === clubeId) || [];
                     
@@ -3635,7 +3636,7 @@ Carregando...
                     };
 
                 } catch (error) {
-                    console.error(`[Cartola] Erro ao buscar estatísticas do clube ${clubeId}:`, error);
+                    console.error(`[API] Erro ao buscar estatísticas do clube ${clubeId}:`, error);
                     return {
                         clube_id: clubeId,
                         total_atletas: 0,
@@ -3669,12 +3670,12 @@ Carregando...
                     const response = await this._get('/health');
                     return response;
                 } catch (error) {
-                    console.error('[Cartola] Erro no health check:', error);
+                    console.error('[API] Erro no health check:', error);
                     return { status: 'error', api_response: false };
                 }
             }
 
-            // Mapear nomes de clubes para IDs do Cartola
+            // Mapear nomes de clubes para IDs da API
             getClubeMappings() {
                 return {
                     'corinthians': 8,
@@ -3831,12 +3832,10 @@ Carregando...
 
         // Instâncias globais dos providers
         const centralAdminProvider = new CentralAdminProvider();
-        // cartolaVerificationProvider removido - não mais utilizado
+        // Sistema de verificação de dados integrado
         const internationalProvider = new InternationalProvider();
 
-        // FUNÇÃO REMOVIDA - importarClassificacoesCartola (não mais utilizada)
-
-        // FUNÇÃO REMOVIDA - testarImportacaoCartola (não mais utilizada)
+        // Sistema de importação de dados integrado
 
         // DADOS SIMULADOS PARA ESTATÍSTICAS AVANÇADAS (FALLBACK)
         const advancedStatsData = {
@@ -3902,57 +3901,206 @@ Carregando...
 
         // Função removida - sincronização automática
         
-        // EXTRAIR JOGOS DA ABA 1 (ANÁLISE RÁPIDA) - JOGO 1 E JOGO 2
-        function extrairJogosDaAba1() {
-            console.log('📊 [SYNC] Extraindo JOGO 1 e JOGO 2 da Aba 1...');
+        // EXTRAIR JOGOS DA ABA 1 (ANÁLISE RÁPIDA) - USANDO A MESMA API
+        async function extrairJogosDaAba1() {
+            console.log('📊 [SYNC] Extraindo TODOS OS 14 JOGOS usando a MESMA API da Aba 1...');
             
             const jogos = [];
             
-            // Buscar os primeiros dois game-cards (JOGO 1 e JOGO 2)
-            const gameCards = document.querySelectorAll('#analise-rapida .game-card');
-            
-            // EXTRAIR JOGO 1
-            if (gameCards.length >= 1) {
-                const primeiroCard = gameCards[0];
+            // ✅ USAR A MESMA API QUE A ABA "ANÁLISE RÁPIDA" USA
+            for (let numeroJogo = 1; numeroJogo <= 14; numeroJogo++) {
                 try {
-                    const jogo1 = extrairJogoDoCard(primeiroCard, 1);
-                    if (jogo1) {
-                        jogos.push(jogo1);
-                        console.log(`✅ [SYNC] JOGO 1: ${jogo1.timeCasa} vs ${jogo1.timeVisitante}`);
+                    console.log(`🔍 [SYNC] Buscando JOGO ${numeroJogo} via API...`);
+                    const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1216`);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.success && data.dados) {
+                            const timeCasa = data.dados.time_casa || 'Time Casa';
+                            const timeFora = data.dados.time_fora || 'Time Fora';
+                            
+            // ✅ MAPEAR NOMES PARA A API DE ELENCO
+            const timeCasaMapeado = mapearNomeParaAPI(timeCasa);
+            const timeForaMapeado = mapearNomeParaAPI(timeFora);
+            
+            console.log(`🔍 [SYNC] Mapeamento: "${timeCasa}" → "${timeCasaMapeado}"`);
+            console.log(`🔍 [SYNC] Mapeamento: "${timeFora}" → "${timeForaMapeado}"`);
+                            
+                            jogos.push({
+                                numero: numeroJogo,
+                                timeCasa: timeCasaMapeado,
+                                timeVisitante: timeForaMapeado,
+                                descricao: `Jogo ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`
+                            });
+                            
+                            console.log(`✅ [SYNC] JOGO ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`);
+                        } else {
+                            console.warn(`⚠️ [SYNC] JOGO ${numeroJogo}: Dados não encontrados na API`);
+                        }
+                    } else {
+                        console.warn(`⚠️ [SYNC] JOGO ${numeroJogo}: API retornou ${response.status}`);
                     }
                 } catch (error) {
-                    console.error('❌ [SYNC] Erro ao extrair JOGO 1:', error);
+                    console.error(`❌ [SYNC] Erro ao buscar JOGO ${numeroJogo}:`, error);
                 }
             }
             
-            // EXTRAIR JOGO 2
-            if (gameCards.length >= 2) {
-                const segundoCard = gameCards[1];
-                try {
-                    const jogo2 = extrairJogoDoCard(segundoCard, 2);
-                    if (jogo2) {
-                        jogos.push(jogo2);
-                        console.log(`✅ [SYNC] JOGO 2: ${jogo2.timeCasa} vs ${jogo2.timeVisitante}`);
-                    }
-                } catch (error) {
-                    console.error('❌ [SYNC] Erro ao extrair JOGO 2:', error);
-                }
-            }
-            
-            console.log(`📋 [SYNC] Total de jogos extraídos: ${jogos.length} (JOGO 1 e JOGO 2)`);
+            console.log(`📋 [SYNC] Total de jogos extraídos: ${jogos.length} (JOGO 1 até JOGO 14)`);
             return jogos;
+        }
+        
+        // MAPEAR NOMES DA API PARA A API DE ELENCO
+        function mapearNomeParaAPI(nomeOriginal) {
+            console.log(`🔍 [MAPEAMENTO] Mapeando nome: "${nomeOriginal}"`);
+            console.log(`🔍 [DEBUG] Tipo do nome: ${typeof nomeOriginal}`);
+            console.log(`🔍 [DEBUG] Nome em maiúsculo: "${nomeOriginal.toUpperCase()}"`);
+            
+            // ✅ REMOVER SUFIXOS DE ESTADO/PAÍS
+            let nomeLimpo = nomeOriginal;
+            if (nomeOriginal.includes('/')) {
+                nomeLimpo = nomeOriginal.split('/')[0].trim();
+                console.log(`🔧 [MAPEAMENTO] Removendo sufixo: "${nomeOriginal}" → "${nomeLimpo}"`);
+            }
+            
+            // Mapeamento de nomes da API para a API de elenco
+            const mapeamento = {
+                // Times brasileiros - Variações com estados
+                'Flamengo/RJ': 'Flamengo',
+                'Palmeiras/SP': 'Palmeiras',
+                'Corinthians/SP': 'Corinthians',
+                'São Paulo/SP': 'São Paulo',
+                'Santos/SP': 'Santos',
+                'Vasco/RJ': 'Vasco',
+                'Botafogo/RJ': 'Botafogo',
+                'Fluminense/RJ': 'Fluminense',
+                'Cruzeiro/MG': 'Cruzeiro',
+                'Atlético-MG/MG': 'Atlético-MG',
+                'Internacional/RS': 'Internacional',
+                'Grêmio/RS': 'Grêmio',
+                'Bahia/BA': 'Bahia',
+                'Vitória/BA': 'Vitória',
+                'Fortaleza/CE': 'Fortaleza',
+                'Ceará/CE': 'Ceará',
+                'Sport/PE': 'Sport',
+                'Náutico/PE': 'Náutico',
+                'Goiás/GO': 'Goiás',
+                'Atlético-GO/GO': 'Atlético-GO',
+                'Cuiabá/MT': 'Cuiabá',
+                'Coritiba/PR': 'Coritiba',
+                'América-MG/MG': 'América-MG',
+                'Juventude/RS': 'Juventude',
+                'Caxias/RS': 'Caxias',
+                
+                // Variações de nomes (sem estados)
+                'FLAMENGO': 'Flamengo',
+                'PALMEIRAS': 'Palmeiras',
+                'CORINTHIANS': 'Corinthians',
+                'SÃO PAULO': 'Sao Paulo',
+                'SAO PAULO': 'Sao Paulo',
+                'SANTOS': 'Santos',
+                'VASCO': 'Vasco',
+                'BOTAFOGO': 'Botafogo',
+                'FLUMINENSE': 'Fluminense',
+                'CRUZEIRO': 'Cruzeiro',
+                'ATLÉTICO-MG': 'Atletico-MG',
+                'ATLETICO-MG': 'Atletico-MG',
+                'ATLETICO/MG': 'Atletico-MG',  // Variação com barra
+                'ATLÉTICO/MG': 'Atletico-MG',  // Variação com acento e barra
+                'INTERNACIONAL': 'Internacional',
+                'INTERNACI0NAL': 'Internacional',  // Variação com zero
+                'GRÊMIO': 'Gremio',
+                'GREMIO': 'Gremio',
+                'BAHIA': 'Bahia',
+                'VITÓRIA': 'Vitoria',
+                'VITORIA': 'Vitoria',
+                'FORTALEZA': 'Fortaleza',
+                'CEARÁ': 'Ceara',
+                'CEARA': 'Ceara',
+                'SPORT': 'Sport',
+                'SPORT/PE': 'Sport',  // Variação com estado
+                'SPORTE/PE': 'Sport',  // Variação com E
+                'SPORTE': 'Sport',    // Variação com E
+                'GOIÁS': 'Goiás',
+                'GOIAS': 'Goiás',
+                'ATLÉTICO-GO': 'Atlético-GO',
+                'ATLETICO-GO': 'Atlético-GO',
+                'CUIABÁ': 'Cuiabá',
+                'CUIABA': 'Cuiabá',
+                'CORITIBA': 'Coritiba',
+                'AMÉRICA-MG': 'América-MG',
+                'AMERICA-MG': 'América-MG',
+                'JUVENTUDE': 'Juventude',
+                'CAXIAS': 'Caxias',
+                
+                // Times internacionais (não têm dados na API de elenco)
+                'Roma/IT': 'Roma',
+                'Inter de Milão/IT': 'Inter de Milão',
+                'Milan/IT': 'Milan',
+                'Juventus/IT': 'Juventus',
+                'Napoli/IT': 'Napoli',
+                'Atalanta/IT': 'Atalanta',
+                'Lazio/IT': 'Lazio',
+                'Fiorentina/IT': 'Fiorentina',
+                'Bologna/IT': 'Bologna',
+                'Torino/IT': 'Torino',
+                'Genoa/IT': 'Genoa',
+                'Sassuolo/IT': 'Sassuolo',
+                'Udinese/IT': 'Udinese',
+                'Verona/IT': 'Verona',
+                'Empoli/IT': 'Empoli',
+                'Lecce/IT': 'Lecce',
+                'Monza/IT': 'Monza',
+                'Salernitana/IT': 'Salernitana',
+                'Frosinone/IT': 'Frosinone',
+                'Cagliari/IT': 'Cagliari'
+            };
+            
+            // ✅ USAR NOME LIMPO PARA MAPEAMENTO
+            const nomeMapeado = mapeamento[nomeLimpo] || mapeamento[nomeOriginal] || nomeLimpo;
+            console.log(`✅ [MAPEAMENTO] "${nomeOriginal}" → "${nomeMapeado}"`);
+            console.log(`🔍 [DEBUG] Mapeamento encontrado: ${mapeamento[nomeLimpo] ? 'SIM' : 'NÃO'}`);
+            
+            // ✅ LOG ESPECÍFICO PARA ATLETICO/MG
+            if (nomeOriginal === 'Atletico/MG' || nomeOriginal === 'ATLETICO/MG') {
+                console.log('🎯 [ATLETICO] Nome original detectado:', nomeOriginal);
+                console.log('🎯 [ATLETICO] Nome limpo:', nomeLimpo);
+                console.log('🎯 [ATLETICO] Mapeamento encontrado:', mapeamento[nomeLimpo]);
+                console.log('🎯 [ATLETICO] Nome mapeado será:', nomeMapeado);
+                console.log('🎯 [ATLETICO] Mapeamento completo:', mapeamento);
+            }
+            
+            return nomeMapeado;
         }
         
         // FUNÇÃO AUXILIAR PARA EXTRAIR JOGO DE UM CARD
         function extrairJogoDoCard(card, numeroJogo) {
             try {
-                // CORRIGIDO: Para JOGO 1, usar dados padrão Flamengo vs Palmeiras
-                if (numeroJogo === 1) {
-                    // ✅ JOGO 1: Flamengo vs Palmeiras (dados padrão)
-                    const timeCasa = 'Flamengo';
-                    const timeVisitante = 'Palmeiras';
+                // ✅ DADOS PADRÃO PARA TODOS OS 14 JOGOS DA LOTECA
+                const jogosLoteca = {
+                    1: { casa: 'Flamengo', fora: 'Palmeiras' },
+                    2: { casa: 'Corinthians', fora: 'São Paulo' },
+                    3: { casa: 'Santos', fora: 'Palmeiras' },
+                    4: { casa: 'Flamengo', fora: 'Vasco' },
+                    5: { casa: 'Botafogo', fora: 'Fluminense' },
+                    6: { casa: 'Atlético-MG', fora: 'Cruzeiro' },
+                    7: { casa: 'Internacional', fora: 'Grêmio' },
+                    8: { casa: 'Bahia', fora: 'Vitória' },
+                    9: { casa: 'Fortaleza', fora: 'Ceará' },
+                    10: { casa: 'Sport', fora: 'Náutico' },
+                    11: { casa: 'Goiás', fora: 'Atlético-GO' },
+                    12: { casa: 'Cuiabá', fora: 'Coritiba' },
+                    13: { casa: 'América-MG', fora: 'Atlético-MG' },
+                    14: { casa: 'Juventude', fora: 'Caxias' }
+                };
+                
+                // Usar dados padrão para todos os jogos
+                if (jogosLoteca[numeroJogo]) {
+                    const jogo = jogosLoteca[numeroJogo];
+                    const timeCasa = jogo.casa;
+                    const timeVisitante = jogo.fora;
                     
-                    console.log(`✅ [SYNC] JOGO 1 usando dados padrão: ${timeCasa} vs ${timeVisitante}`);
+                    console.log(`✅ [SYNC] JOGO ${numeroJogo} usando dados padrão: ${timeCasa} vs ${timeVisitante}`);
                     return {
                         numero: numeroJogo,
                         timeCasa: timeCasa,
@@ -4188,9 +4336,9 @@ Carregando...
             console.log('✅ [DROPDOWN] Sistema de carregamento dinâmico inicializado!');
         }
 
-        // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS
+        // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS - TODOS OS 14 JOGOS
         async function carregarTimesLotecaJogos() {
-            console.log('⚽ [TIMES-LOTECA] Carregando dados dos times...');
+            console.log('⚽ [TIMES-LOTECA] Carregando dados dos TODOS OS 14 JOGOS...');
             
             const loadingEl = document.getElementById('loading-times-loteca');
             const containerEl = document.getElementById('jogos-loteca-container');
@@ -4199,17 +4347,17 @@ Carregando...
             if (containerEl) containerEl.innerHTML = '';
             
             try {
-                // Extrair jogos da Aba 1
-                const jogos = extrairJogosDaAba1();
-                console.log(`⚽ [TIMES-LOTECA] ${jogos.length} jogos extraídos`);
+                // ✅ USAR A MESMA API QUE A ABA "ANÁLISE RÁPIDA" USA
+                const jogos = await extrairJogosDaAba1();
+                console.log(`⚽ [TIMES-LOTECA] ${jogos.length} jogos extraídos da MESMA API da Aba 1`);
                 
-                // Buscar dados dos times via Cartola FC
-                const dadosCompletos = await buscarDadosTimesCartola(jogos);
+                // Buscar dados dos times via API
+                const dadosCompletos = await buscarDadosTodosJogos(jogos);
                 
-                // Renderizar jogos
+                // Renderizar todos os jogos
                 renderizarTimesLotecaJogos(dadosCompletos);
                 
-                console.log('✅ [TIMES-LOTECA] Dados carregados com sucesso!');
+                console.log('✅ [TIMES-LOTECA] TODOS OS 14 JOGOS carregados com sucesso usando a MESMA API!');
                 
             } catch (error) {
                 console.error('❌ [TIMES-LOTECA] Erro ao carregar dados:', error);
@@ -4230,49 +4378,62 @@ Carregando...
             }
         }
 
-        // BUSCAR DADOS DOS TIMES VIA CARTOLA FC
-        async function buscarDadosTimesCartola(jogos) {
-            console.log('🔍 [TIMES-LOTECA] Buscando dados no Cartola FC...');
+        // BUSCAR DADOS DOS TIMES VIA API - TODOS OS 14 JOGOS
+        async function buscarDadosTodosJogos(jogos) {
+            console.log('🔍 [TIMES-LOTECA] Buscando dados para TODOS OS 14 JOGOS...');
             
             const dadosCompletos = [];
             
-            for (const jogo of jogos) {
+            // Processar todos os jogos em paralelo para melhor performance
+            const promises = jogos.map(async (jogo) => {
                 try {
+                    console.log(`🔍 [TIMES-LOTECA] Processando JOGO ${jogo.numero}: ${jogo.timeCasa} vs ${jogo.timeVisitante}`);
+                    
                     // Buscar dados do time da casa
                     const dadosCasa = await buscarDadosTime(jogo.timeCasa);
                     
                     // Buscar dados do time visitante  
                     const dadosVisitante = await buscarDadosTime(jogo.timeVisitante);
                     
-                    dadosCompletos.push({
+                    return {
                         numero: jogo.numero,
+                        descricao: jogo.descricao,
                         casa: dadosCasa,
                         visitante: dadosVisitante
-                    });
-                    
-                    console.log(`✅ [TIMES-LOTECA] Jogo ${jogo.numero}: ${jogo.timeCasa} vs ${jogo.timeVisitante}`);
+                    };
                     
                 } catch (error) {
                     console.error(`❌ [TIMES-LOTECA] Erro no Jogo ${jogo.numero}:`, error);
                     
                     // Dados de fallback
-                    dadosCompletos.push({
+                    return {
                         numero: jogo.numero,
+                        descricao: jogo.descricao,
                         casa: criarDadosFallback(jogo.timeCasa),
                         visitante: criarDadosFallback(jogo.timeVisitante)
-                    });
+                    };
                 }
-            }
+            });
             
+            // Aguardar todos os jogos serem processados
+            const resultados = await Promise.all(promises);
+            
+            // Ordenar por número do jogo
+            dadosCompletos.push(...resultados.sort((a, b) => a.numero - b.numero));
+            
+            console.log(`✅ [TIMES-LOTECA] ${dadosCompletos.length} jogos processados com sucesso!`);
             return dadosCompletos;
         }
 
         // BUSCAR DADOS DE UM TIME ESPECÍFICO
         async function buscarDadosTime(nomeTime) {
-            console.log(`📊 [ELENCO] Buscando dados para: ${nomeTime}`);
+            console.log(`📊 [ELENCO] Buscando dados para: "${nomeTime}"`);
+            console.log(`🔍 [DEBUG-BUSCAR] Função buscarDadosTime chamada para: "${nomeTime}"`);
             
             // Verificar se é time brasileiro
             const isBrazilian = isBrazilianTeam(nomeTime);
+            console.log(`🔍 [ELENCO] É brasileiro: ${isBrazilian}`);
+            console.log(`🔍 [DEBUG-BUSCAR] isBrazilian: ${isBrazilian}, nomeTime: "${nomeTime}"`);
             
             if (isBrazilian) {
                 try {
@@ -4335,10 +4496,72 @@ Carregando...
                 } catch (error) {
                     console.error(`❌ [ELENCO] Erro ao buscar dados:`, error);
                 }
+            } else {
+                // ✅ CLUBES INTERNACIONAIS - PROCEDIMENTO SEPARADO
+                console.log(`🌍 [ELENCO] Clube internacional detectado, chamando buscarDadosInternacional para: "${nomeTime}"`);
+                console.log(`🔍 [DEBUG-ELENCO] isBrazilian: ${isBrazilian}, nomeTime: "${nomeTime}"`);
+                return await buscarDadosInternacional(nomeTime);
             }
+        }
+
+        // ✅ FUNÇÃO SEPARADA PARA CLUBES INTERNACIONAIS
+        async function buscarDadosInternacional(nomeTime) {
+            console.log(`🌍 [INTERNACIONAL] Buscando dados para clube internacional: "${nomeTime}"`);
+            console.log(`🔍 [DEBUG-INTERNACIONAL] Nome original: "${nomeTime}"`);
             
-            // Dados simulados para times internacionais
-            return criarDadosFallback(nomeTime);
+            // Lista específica de clubes internacionais com dados conhecidos
+            const dadosInternacionais = {
+                'ROMA': { valor: '€ 700 M', posicao: 26, pais: 'Itália' },
+                'INTER MILAN': { valor: '€ 818 M', posicao: 20, pais: 'Itália' },
+                'INTER DE MILAO': { valor: '€ 818 M', posicao: 20, pais: 'Itália' },
+                'ATLETICO MADRID': { valor: '€ 939 M', posicao: 12, pais: 'Espanha' },
+                'OSASUNA': { valor: '€ 88,70 M', posicao: 101, pais: 'Espanha' },
+                'TOTTENHAM': { valor: '€ 1.108 M', posicao: 9, pais: 'Inglaterra' },
+                'ASTON VILLA': { valor: '€ 838 M', posicao: 18, pais: 'Inglaterra' },
+                'LIVERPOOL': { valor: '€ 1.363 M', posicao: 5, pais: 'Inglaterra' },
+                'MANCHESTER UNITED': { valor: '€ 1.394 M', posicao: 4, pais: 'Inglaterra' },
+                'MILAN': { valor: '€ 893 M', posicao: 15, pais: 'Itália' },
+                'FIORENTINA': { valor: '€ 400 M', posicao: 50, pais: 'Itália' },
+                'ATALANTA': { valor: '€ 500 M', posicao: 40, pais: 'Itália' },
+                'ATALANTA BERGAMAS': { valor: '€ 500 M', posicao: 40, pais: 'Itália' },
+                'LAZIO': { valor: '€ 450 M', posicao: 45, pais: 'Itália' },
+                'GETAFE': { valor: '€ 200 M', posicao: 80, pais: 'Espanha' },
+                'REAL MADRID': { valor: '€ 1.726 M', posicao: 1, pais: 'Espanha' }
+            };
+            
+            // Normalizar nome para busca
+            const nomeNormalizado = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '');
+            console.log(`🔍 [DEBUG-INTERNACIONAL] Nome normalizado: "${nomeNormalizado}"`);
+            console.log(`🔍 [DEBUG-INTERNACIONAL] Chaves disponíveis:`, Object.keys(dadosInternacionais));
+            
+            const dadosClube = dadosInternacionais[nomeNormalizado];
+            console.log(`🔍 [DEBUG-INTERNACIONAL] Dados encontrados:`, dadosClube);
+            
+            if (dadosClube) {
+                console.log(`✅ [INTERNACIONAL] Dados encontrados para: ${nomeNormalizado}`, dadosClube);
+                
+                // Converter valor para número
+                const valorNumerico = parseFloat(dadosClube.valor.replace(/[€\s,]/g, '').replace('M', '')) || 0;
+                
+                return {
+                    nome: nomeTime,
+                    abrev: nomeNormalizado.substring(0, 3).toUpperCase(),
+                    total_atletas: 25, // Valor padrão para internacionais
+                    pct_provaveis: 'S/I',
+                    forca_elenco: (valorNumerico / 100).toFixed(2),
+                    preco_medio: dadosClube.valor,
+                    rating: Math.min(valorNumerico / 1000, 1.0),
+                    badge: gerarBadgeTime(Math.min(valorNumerico / 1000, 1.0)),
+                    fonte: 'top100_internacional',
+                    brasileiro: false,
+                    valor_mm_euros: valorNumerico,
+                    pais: dadosClube.pais,
+                    posicao: dadosClube.posicao
+                };
+            } else {
+                console.log(`⚠️ [INTERNACIONAL] Clube não encontrado na lista: ${nomeNormalizado}`);
+                return criarDadosFallback(nomeTime);
+            }
         }
 
         // CRIAR DADOS DE FALLBACK - MENSAGEM DE ERRO QUANDO API NÃO ENCONTRA DADOS
@@ -4349,16 +4572,16 @@ Carregando...
             return {
                 nome: nomeTime,
                 abrev: nomeTime.substring(0, 3).toUpperCase(),
-                total_atletas: 'N/A',
-                pct_provaveis: 'N/A',
-                forca_elenco: 'N/A',
-                preco_medio: 'N/A',
+                total_atletas: 'S/I',
+                pct_provaveis: 'S/I',
+                forca_elenco: 'S/I',
+                preco_medio: 'S/I',
                 rating: 0,
-                badge: { text: 'Dados não encontrados', class: 'badge-erro' },
+                badge: { text: 'S/I - Sem Informação', class: 'badge-erro' },
                 fonte: 'erro_api',
                 brasileiro: isBrazilianTeam(nomeTime),
                 erro: true,
-                mensagem_erro: `API não conseguiu carregar dados para ${nomeTime}`
+                mensagem_erro: `S/I - Sem Informação para ${nomeTime}`
             };
         }
 
@@ -4371,33 +4594,79 @@ Carregando...
             return { text: 'Elenco em Desenvolvimento', class: 'badge-desenvolvimento' };
         }
 
-        // VERIFICAR SE É TIME BRASILEIRO
+        // VERIFICAR SE É TIME BRASILEIRO - TODOS OS TIMES DA LOTECA
         function isBrazilianTeam(nomeTime) {
-            const brasileiros = [
-                'CORINTHIANS', 'FLAMENGO', 'FORTALEZA', 'SPORT', 'JUVENTUDE',
-                'INTERNACIONAL', 'VASCO', 'CRUZEIRO', 'ATHLETICO', 'OPERARIO',
-                'ATLETICO', 'MIRASSOL', 'GREMIO', 'VITORIA', 'BAHIA',
-                'PALMEIRAS', 'FLUMINENSE', 'BOTAFOGO', 'CRICIUMA', 'PAYSANDU',
-                'BRAGANTINO', 'SANTOS'
+            console.log(`🔍 [BRASILEIRO] Verificando se é brasileiro: "${nomeTime}"`);
+            
+            // ✅ CLUBES INTERNACIONAIS - NÃO SÃO BRASILEIROS
+            const internacionais = [
+                'ROMA', 'INTER MILAN', 'INTER DE MILAO', 'ATLETICO MADRID', 'OSASUNA',
+                'TOTTENHAM', 'ASTON VILLA', 'LIVERPOOL', 'MANCHESTER UNITED',
+                'MILAN', 'FIORENTINA', 'ATALANTA', 'ATALANTA BERGAMAS', 'LAZIO', 'GETAFE', 'REAL MADRID'
             ];
             
-            return brasileiros.includes(nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, ''));
+            const nomeLimpo = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '');
+            if (internacionais.includes(nomeLimpo) || internacionais.includes(nomeTime.toUpperCase())) {
+                console.log(`🌍 [INTERNACIONAL] Clube internacional detectado: "${nomeTime}"`);
+                return false;
+            }
+            
+            const brasileiros = [
+                // Times da Série A
+                'CORINTHIANS', 'FLAMENGO', 'PALMEIRAS', 'SÃO PAULO', 'SANTOS',
+                'VASCO', 'BOTAFOGO', 'FLUMINENSE', 'CRUZEIRO', 'ATLÉTICO-MG',
+                'INTERNACIONAL', 'GRÊMIO', 'BAHIA', 'VITÓRIA', 'FORTALEZA',
+                'CEARÁ', 'SPORT', 'SPORT/PE', 'NÁUTICO', 'GOIÁS', 'ATLÉTICO-GO', 'ATLETICO/MG',
+                'CUIABÁ', 'CORITIBA', 'AMÉRICA-MG', 'JUVENTUDE', 'CAXIAS',
+                // Variações de nomes
+                'ATLETICO', 'ATLETICO-MG', 'ATLETICO-GO', 'AMERICA-MG',
+                'SAO PAULO', 'GREMIO', 'VITORIA', 'NAUTICO', 'ATLETICO-GO',
+                'AMERICA-MG', 'INTERNACIONAL', 'BRAGANTINO',
+                // Times adicionais da Loteca
+                'MIRASSOL', 'CEARA', 'CEARÁ'
+            ];
+            let isBrazilian = brasileiros.includes(nomeLimpo) || brasileiros.includes(nomeTime.toUpperCase());
+            
+            // ✅ LOG ESPECÍFICO PARA ATLETICO/MG
+            if (nomeTime === 'Atletico/MG' || nomeTime === 'ATLETICO/MG') {
+                console.log('🎯 [ATLETICO-BRASILEIRO] Nome original:', nomeTime);
+                console.log('🎯 [ATLETICO-BRASILEIRO] Nome limpo:', nomeLimpo);
+                console.log('🎯 [ATLETICO-BRASILEIRO] Está na lista (limpo):', brasileiros.includes(nomeLimpo));
+                console.log('🎯 [ATLETICO-BRASILEIRO] Está na lista (original):', brasileiros.includes(nomeTime.toUpperCase()));
+                console.log('🎯 [ATLETICO-BRASILEIRO] É brasileiro:', isBrazilian);
+            }
+            
+            
+            console.log(`🔍 [DEBUG] Nome original: "${nomeTime}"`);
+            console.log(`🔍 [DEBUG] Nome limpo: "${nomeLimpo}"`);
+            console.log(`🔍 [DEBUG] Nome em maiúsculo: "${nomeTime.toUpperCase()}"`);
+            console.log(`🔍 [DEBUG] Está na lista (limpo): ${brasileiros.includes(nomeLimpo)}`);
+            console.log(`🔍 [DEBUG] Está na lista (original): ${brasileiros.includes(nomeTime.toUpperCase())}`);
+            
+            console.log(`✅ [BRASILEIRO] "${nomeTime}" → "${nomeLimpo}" → ${isBrazilian ? 'SIM' : 'NÃO'}`);
+            console.log(`🔍 [DEBUG] Nome limpo: "${nomeLimpo}"`);
+            console.log(`🔍 [DEBUG] Está na lista de brasileiros: ${brasileiros.includes(nomeLimpo)}`);
+            console.log(`🔍 [DEBUG] Lista de brasileiros:`, brasileiros.slice(0, 10));
+            
+            return isBrazilian;
         }
 
-        // RENDERIZAR JOGOS DA TIMES LOTECA
+        // RENDERIZAR JOGOS DA TIMES LOTECA - TODOS OS 14 JOGOS
         function renderizarTimesLotecaJogos(dadosCompletos) {
-            console.log('🎨 [TIMES-LOTECA] Renderizando jogos...');
+            console.log('🎨 [TIMES-LOTECA] Renderizando TODOS OS 14 JOGOS...');
             
             const container = document.getElementById('jogos-loteca-container');
             if (!container) return;
             
             container.innerHTML = '';
             
+            // Renderizar todos os 14 jogos
             dadosCompletos.forEach(jogo => {
                 const jogoHtml = `
                     <div class="jogo-confronto">
                         <div class="jogo-header">
                             <div class="jogo-numero">JOGO ${jogo.numero}</div>
+                            <div class="jogo-descricao">${jogo.descricao}</div>
                         </div>
                         
                         <div class="times-confronto">
@@ -4412,6 +4681,8 @@ Carregando...
                 
                 container.innerHTML += jogoHtml;
             });
+            
+            console.log(`✅ [TIMES-LOTECA] ${dadosCompletos.length} jogos renderizados com sucesso!`);
         }
 
         // RENDERIZAR CONTAINER DE UM TIME
@@ -5070,7 +5341,7 @@ Carregando...
         // CARREGAR DADOS REAIS DO CENTRAL ADMIN
         // ORIGEM DOS DADOS: Central Admin → Aba "Estatísticas Detalhadas dos Clubes" + "Ranking Estatísticas"
         // FALLBACK: Dados manuais quando não há representatividade na Central Admin
-        async function loadCartolaData(data) {
+        async function loadElencoData(data) {
             try {
                 // Mostrar loading
                 showLoadingStats();
@@ -6777,8 +7048,8 @@ Carregando...
             }
             
             const sourceMap = {
-                'real_cartola_fc + estimates': '🔥 Dados Reais (Cartola FC)',
-                'cartola_real': '✅ 100% Real',
+                'real_api + estimates': '🔥 Dados Reais (API)',
+                'api_real': '✅ 100% Real',
                 'fallback': '⚠️ Modo Seguro',
                 'error': '❌ Erro na API'
             };
@@ -7049,7 +7320,7 @@ Carregando...
 
                 // 3) Renderizar todos os clubes
                 renderizarClubesSerieB(clubesComStats);
-                atualizarSumarioSerieB(clubesComStats.length, 'Cartola FC API');
+                atualizarSumarioSerieB(clubesComStats.length, 'API de Elenco');
 
             } catch (error) {
                 console.error('[Clubes Série B] ❌ Erro ao carregar dados:', error);
@@ -10201,9 +10472,9 @@ Carregando...
    • Internacional: http://127.0.0.1:5000/api/int
 
 🧪 Para testar, use no console:
-• testCartola.diagnosticar() - DIAGNÓSTICO COMPLETO
-• testCartola.testBackend() - Testa backend Flask
-• testCartola.testAPI() - Testa integração completa
+• testAPI.diagnosticar() - DIAGNÓSTICO COMPLETO
+• testAPI.testBackend() - Testa backend Flask
+• testAPI.testAPI() - Testa integração completa
 
 🎯 Vá para a Aba 2 (Dados Avançados) para ver:
    • Análise detalhada de confrontos brasileiros
@@ -10722,6 +10993,13 @@ Carregando...
                 dadosCasa: forcaElencoData.clubes[chaveCasa],
                 dadosFora: forcaElencoData.clubes[chaveFora]
             });
+            
+            // ✅ LOG ESPECÍFICO PARA JOGO 2 E 3
+            if (timeCasa === 'INTERNACI0NAL' || timeCasa === 'CORINTHIANS/SP') {
+                console.log('🎯 [DEBUG] JOGO 2/3 - Clubes disponíveis:', Object.keys(forcaElencoData.clubes));
+                console.log('🎯 [DEBUG] JOGO 2/3 - Chave casa:', chaveCasa);
+                console.log('🎯 [DEBUG] JOGO 2/3 - Chave fora:', chaveFora);
+            }
             
             const dadosCasa = forcaElencoData.clubes[chaveCasa] || null;
             const dadosFora = forcaElencoData.clubes[chaveFora] || null;
@@ -12076,6 +12354,11 @@ Carregando...
                         carregarForcaElencoDashboard();
                         // Inicializar sub-abas da Força dos Elencos
                         initializeForcaElencoSubTabs();
+                        // Carregar automaticamente os dados da sub-aba "Plantel ($)"
+                        setTimeout(() => {
+                            console.log('⚽ [TIMES-LOTECA] Carregando automaticamente dados dos 14 jogos...');
+                            carregarTimesLotecaJogos();
+                        }, 100);
                     }
                 }
             }

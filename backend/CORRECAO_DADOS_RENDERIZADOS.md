@@ -117,3 +117,4 @@ function gerarBadgeTime(rating) {
 O problema estava na função de fallback que usava dados **aleatórios** quando a API falhava. Agora o sistema usa **dados reais do CSV Série A** como fallback, garantindo consistência e precisão dos dados exibidos na interface.
 
 **Problema resolvido!** 🎯✅
+
