@@ -2313,22 +2313,22 @@ Carregando...
 
         // SISTEMA DE ABAS
         function initializeTabs() {
-            console.log('🔧 [DEBUG] Inicializando tabs principais...');
+            // console.log('🔧 [DEBUG] Inicializando tabs principais...');
             
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
-            console.log('🔧 [DEBUG] Encontrados:', {
-                'botões': tabBtns.length, 
-                'conteúdos': tabContents.length
-            });
+            // console.log('🔧 [DEBUG] Encontrados:', {
+            //     'botões': tabBtns.length, 
+            //     'conteúdos': tabContents.length
+            // });
 
             tabBtns.forEach((btn, index) => {
-                console.log(`🔧 [DEBUG] Botão ${index}:`, btn.dataset.tab);
+                // console.log(`🔧 [DEBUG] Botão ${index}:`, btn.dataset.tab);
                 
                 btn.addEventListener('click', () => {
                     const targetTab = btn.dataset.tab;
-                    console.log(`🔧 [DEBUG] Clique em aba: ${targetTab}`);
+                    // console.log(`🔧 [DEBUG] Clique em aba: ${targetTab}`);
                     
                     // Remover classe active de todos os botões
                     tabBtns.forEach(b => b.classList.remove('active'));
@@ -2342,23 +2342,23 @@ Carregando...
                     
                     // Mostrar aba selecionada
                     const selectedTab = document.getElementById(targetTab);
-                    console.log(`🔧 [DEBUG] Elemento encontrado:`, selectedTab);
+                    // console.log(`🔧 [DEBUG] Elemento encontrado:`, selectedTab);
                     
                     if (selectedTab) {
                         selectedTab.style.display = 'block';
-                        console.log(`🔧 [DEBUG] Aba ${targetTab} exibida com sucesso!`);
+                        // console.log(`🔧 [DEBUG] Aba ${targetTab} exibida com sucesso!`);
                         
                         // INICIALIZAR SISTEMA DE VÍNCULO QUANDO ABA 4 FOR ABERTA
                         if (targetTab === 'otimizador-aposta') {
-                            console.log('🎯 [VÍNCULO] Aba Otimizador aberta - inicializando vínculo...');
+                            // console.log('🎯 [VÍNCULO] Aba Otimizador aberta - inicializando vínculo...');
                             if (typeof window.inicializarVinculoConfrontos === 'function') {
                                 window.inicializarVinculoConfrontos();
                             } else {
-                                console.warn('⚠️ [VÍNCULO] Função inicializarVinculoConfrontos não encontrada');
+                                // console.warn('⚠️ [VÍNCULO] Função inicializarVinculoConfrontos não encontrada');
                             }
                         }
                     } else {
-                        console.error(`🔧 [ERROR] Aba ${targetTab} não encontrada!`);
+                        // console.error(`🔧 [ERROR] Aba ${targetTab} não encontrada!`);
                     }
                 });
             });
@@ -2370,7 +2370,7 @@ Carregando...
 
         // SISTEMA DE SUB-ABAS (ABA 4: PANORAMA DOS CAMPEONATOS)
         function initializeSubTabs() {
-            console.log('🔧 [DEBUG] Inicializando sub-abas Panorama...');
+            // console.log('🔧 [DEBUG] Inicializando sub-abas Panorama...');
             
             // Buscar APENAS os elementos da aba "Panorama dos Campeonatos" (aba 4)
             const panoramaSection = document.getElementById('panorama-campeonatos');
@@ -2383,11 +2383,11 @@ Carregando...
             const subTabBtns = panoramaSection.querySelectorAll('.sub-tab-btn');
             const subTabContents = panoramaSection.querySelectorAll('.sub-tab-content');
 
-            console.log('🔧 [DEBUG] Panorama sub-abas:', {
-                'seção': !!panoramaSection,
-                'botões': subTabBtns.length,
-                'conteúdos': subTabContents.length
-            });
+            // console.log('🔧 [DEBUG] Panorama sub-abas:', {
+            //     'seção': !!panoramaSection,
+            //     'botões': subTabBtns.length,
+            //     'conteúdos': subTabContents.length
+            // });
 
             subTabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -2989,7 +2989,7 @@ Carregando...
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Premier League...</p></div>';
 
             try {
-                console.log('⚽ [Premier League] Carregando dados da API...');
+                // console.log('⚽ [Premier League] Carregando dados da API...');
                 
                 const response = await fetch('/api/int/classificacao/premier-league');
                 
@@ -2998,7 +2998,7 @@ Carregando...
                 }
                 
                 const data = await response.json();
-                console.log('⚽ [Premier League] Dados recebidos:', data);
+                // console.log('⚽ [Premier League] Dados recebidos:', data);
                 
                 if (data.success && data.data && data.data.length > 0) {
                     // Mapear campos do backend para formato da tabela
@@ -3018,8 +3018,8 @@ Carregando...
                         zona: item.zona || ""
                     }));
                     
-                    console.log('⚽ [Premier League] Dados formatados:', dadosFormatados.length, 'times');
-                    console.log('⚽ [Premier League] Primeiro time formatado:', dadosFormatados[0]);
+                    // console.log('⚽ [Premier League] Dados formatados:', dadosFormatados.length, 'times');
+                    // console.log('⚽ [Premier League] Primeiro time formatado:', dadosFormatados[0]);
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'premier-league');
                     
@@ -3046,7 +3046,7 @@ Carregando...
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando La Liga...</p></div>';
 
             try {
-                console.log('🇪🇸 [La Liga] Carregando dados da API...');
+                // console.log('🇪🇸 [La Liga] Carregando dados da API...');
                 
                 const response = await fetch('/api/int/classificacao/la-liga');
                 
@@ -3055,7 +3055,7 @@ Carregando...
                 }
                 
                 const data = await response.json();
-                console.log('🇪🇸 [La Liga] Dados recebidos:', data);
+                // console.log('🇪🇸 [La Liga] Dados recebidos:', data);
                 
                 if (data.success && data.data && data.data.length > 0) {
                     // Mapear campos do backend para formato da tabela
@@ -3075,8 +3075,8 @@ Carregando...
                         zona: item.zona || ""
                     }));
                     
-                    console.log('🇪🇸 [La Liga] Dados formatados:', dadosFormatados.length, 'times');
-                    console.log('🇪🇸 [La Liga] Primeiro time formatado:', dadosFormatados[0]);
+                    // console.log('🇪🇸 [La Liga] Dados formatados:', dadosFormatados.length, 'times');
+                    // console.log('🇪🇸 [La Liga] Primeiro time formatado:', dadosFormatados[0]);
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'la-liga');
                     
@@ -3103,7 +3103,7 @@ Carregando...
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Ligue 1...</p></div>';
 
             try {
-                console.log('🇫🇷 [Ligue 1] Carregando dados da API...');
+                // console.log('🇫🇷 [Ligue 1] Carregando dados da API...');
                 
                 const response = await fetch('/api/int/classificacao/ligue1');
                 
@@ -3112,7 +3112,7 @@ Carregando...
                 }
                 
                 const data = await response.json();
-                console.log('🇫🇷 [Ligue 1] Dados recebidos:', data);
+                // console.log('🇫🇷 [Ligue 1] Dados recebidos:', data);
                 
                 if (data.success && data.data && data.data.length > 0) {
                     // Mapear campos do backend para formato da tabela
@@ -3132,8 +3132,8 @@ Carregando...
                         zona: item.zona || ""
                     }));
                     
-                    console.log('🇫🇷 [Ligue 1] Dados formatados:', dadosFormatados.length, 'times');
-                    console.log('🇫🇷 [Ligue 1] Primeiro time formatado:', dadosFormatados[0]);
+                    // console.log('🇫🇷 [Ligue 1] Dados formatados:', dadosFormatados.length, 'times');
+                    // console.log('🇫🇷 [Ligue 1] Primeiro time formatado:', dadosFormatados[0]);
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'ligue1');
                     

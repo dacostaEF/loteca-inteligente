@@ -168,7 +168,7 @@ def get_leagues():
 def get_classificacao(league):
     """Endpoint para obter classificação de liga internacional específica"""
     try:
-        logger.info(f"🌍 Buscando classificação: {league}")
+        # logger.info(f"🌍 Buscando classificação: {league}")
         
         # Para Premier League, usar dados do CSV
         if league == "premier-league":

@@ -313,7 +313,7 @@ class AutoClassificacao:
         
         resultado['total_clubes'] = len(serie_a) + len(serie_b)
         
-        logger.info(f"✅ Processamento concluído: {len(serie_a)} Série A + {len(serie_b)} Série B")
+        # logger.info(f"✅ Processamento concluído: {len(serie_a)} Série A + {len(serie_b)} Série B")
         
         return resultado
 
@@ -324,8 +324,8 @@ class AutoClassificacao:
         try:
             csv_path = os.path.join(self.base_path, "Serie_A_tabela_tradicional.csv")
             # Debug: mostrar caminho
-            logger.info(f"🔍 Procurando arquivo em: {csv_path}")
-            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            # logger.info(f"🔍 Procurando arquivo em: {csv_path}")
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
             if not os.path.exists(csv_path):
                 logger.error(f"❌ Arquivo não encontrado: {csv_path}")
@@ -370,7 +370,7 @@ class AutoClassificacao:
                     
                     clubes.append(clube)
             
-            logger.info(f"✅ Série A lida do CSV tradicional: {len(clubes)} clubes")
+            # logger.info(f"✅ Série A lida do CSV tradicional: {len(clubes)} clubes")
             return clubes
             
         except Exception as e:
@@ -383,8 +383,8 @@ class AutoClassificacao:
         """
         try:
             csv_path = os.path.join(self.base_path, "Serir_B_tabela_tradicional.csv")
-            logger.info(f"🔍 Procurando arquivo Série B em: {csv_path}")
-            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            # logger.info(f"🔍 Procurando arquivo Série B em: {csv_path}")
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
             if not os.path.exists(csv_path):
                 logger.error(f"❌ Arquivo não encontrado: {csv_path}")
@@ -424,7 +424,7 @@ class AutoClassificacao:
                     
                     clubes.append(clube)
             
-            logger.info(f"✅ Série B lida do CSV tradicional: {len(clubes)} clubes")
+            # logger.info(f"✅ Série B lida do CSV tradicional: {len(clubes)} clubes")
             return clubes
             
         except Exception as e:
@@ -437,8 +437,8 @@ class AutoClassificacao:
         """
         try:
             csv_path = os.path.join(self.base_path, "Serie_C_tabela_tradicional.csv")
-            logger.info(f"🔍 Procurando arquivo Série C em: {csv_path}")
-            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            # logger.info(f"🔍 Procurando arquivo Série C em: {csv_path}")
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
             if not os.path.exists(csv_path):
                 logger.error(f"❌ Arquivo não encontrado: {csv_path}")
@@ -477,7 +477,7 @@ class AutoClassificacao:
                     
                     clubes.append(clube)
             
-            logger.info(f"✅ Série C lida do CSV tradicional: {len(clubes)} clubes")
+            # logger.info(f"✅ Série C lida do CSV tradicional: {len(clubes)} clubes")
             return clubes
             
         except Exception as e:
@@ -501,7 +501,7 @@ class AutoClassificacao:
             # Ordenar por posição (já vem ordenado do CSV)
             clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
             
-            logger.info(f"✅ Série A processada: {len(clubes_ordenados)} clubes")
+            # logger.info(f"✅ Série A processada: {len(clubes_ordenados)} clubes")
             return clubes_ordenados
             
         except Exception as e:
@@ -523,7 +523,7 @@ class AutoClassificacao:
             
             clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
             
-            logger.info(f"✅ Série B processada: {len(clubes_ordenados)} clubes")
+            # logger.info(f"✅ Série B processada: {len(clubes_ordenados)} clubes")
             return clubes_ordenados
             
         except Exception as e:
@@ -546,7 +546,7 @@ class AutoClassificacao:
             # Ordenar por grupo e depois por posição
             clubes_ordenados = sorted(clubes, key=lambda x: (x['grupo'], x['posicao']))
             
-            logger.info(f"✅ Série C processada: {len(clubes_ordenados)} clubes")
+            # logger.info(f"✅ Série C processada: {len(clubes_ordenados)} clubes")
             return clubes_ordenados
             
         except Exception as e:
@@ -559,13 +559,13 @@ class AutoClassificacao:
         """
         try:
             csv_path = os.path.join(self.base_path, "Premier_League_tabela_tradicional.csv")
-            logger.info(f"🔍 Procurando arquivo Premier League em: {csv_path}")
+            # logger.info(f"🔍 Procurando arquivo Premier League em: {csv_path}")
             
             if not os.path.exists(csv_path):
                 logger.error(f"❌ Arquivo não encontrado: {csv_path}")
                 return []
             
-            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
             clubes = []
             with open(csv_path, 'r', encoding='utf-8') as file:
@@ -601,7 +601,7 @@ class AutoClassificacao:
                     
                     clubes.append(clube)
             
-            logger.info(f"✅ Premier League lida do CSV tradicional: {len(clubes)} clubes")
+            # logger.info(f"✅ Premier League lida do CSV tradicional: {len(clubes)} clubes")
             return clubes
             
         except Exception as e:
@@ -623,7 +623,7 @@ class AutoClassificacao:
             # Ordenar por posição
             clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
             
-            logger.info(f"✅ Premier League processada: {len(clubes_ordenados)} clubes")
+            # logger.info(f"✅ Premier League processada: {len(clubes_ordenados)} clubes")
             return clubes_ordenados
             
         except Exception as e:
@@ -636,13 +636,13 @@ class AutoClassificacao:
         """
         try:
             csv_path = os.path.join(self.base_path, "La_Liga_tabela_tradicional.csv")
-            logger.info(f"🔍 Procurando arquivo La Liga em: {csv_path}")
+            # logger.info(f"🔍 Procurando arquivo La Liga em: {csv_path}")
             
             if not os.path.exists(csv_path):
                 logger.error(f"❌ Arquivo não encontrado: {csv_path}")
                 return []
             
-            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
             clubes = []
             with open(csv_path, 'r', encoding='utf-8') as file:
@@ -680,7 +680,7 @@ class AutoClassificacao:
                     
                     clubes.append(clube)
             
-            logger.info(f"✅ La Liga lida do CSV tradicional: {len(clubes)} clubes")
+            # logger.info(f"✅ La Liga lida do CSV tradicional: {len(clubes)} clubes")
             return clubes
             
         except Exception as e:
@@ -702,7 +702,7 @@ class AutoClassificacao:
             # Ordenar por posição
             clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
             
-            logger.info(f"✅ La Liga processada: {len(clubes_ordenados)} clubes")
+            # logger.info(f"✅ La Liga processada: {len(clubes_ordenados)} clubes")
             return clubes_ordenados
             
         except Exception as e:
@@ -715,13 +715,13 @@ class AutoClassificacao:
         """
         try:
             csv_path = os.path.join(self.base_path, "Ligue1_tabela_tradicional.csv")
-            logger.info(f"🔍 Procurando arquivo Ligue 1 em: {csv_path}")
+            # logger.info(f"🔍 Procurando arquivo Ligue 1 em: {csv_path}")
             
             if not os.path.exists(csv_path):
                 logger.error(f"❌ Arquivo não encontrado: {csv_path}")
                 return []
             
-            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
             clubes = []
             with open(csv_path, 'r', encoding='utf-8') as file:
@@ -759,7 +759,7 @@ class AutoClassificacao:
                     
                     clubes.append(clube)
             
-            logger.info(f"✅ Ligue 1 lida do CSV tradicional: {len(clubes)} clubes")
+            # logger.info(f"✅ Ligue 1 lida do CSV tradicional: {len(clubes)} clubes")
             return clubes
             
         except Exception as e:
@@ -781,7 +781,7 @@ class AutoClassificacao:
             # Ordenar por posição
             clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
             
-            logger.info(f"✅ Ligue 1 processada: {len(clubes_ordenados)} clubes")
+            # logger.info(f"✅ Ligue 1 processada: {len(clubes_ordenados)} clubes")
             return clubes_ordenados
             
         except Exception as e:
