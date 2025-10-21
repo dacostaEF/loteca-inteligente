@@ -34,8 +34,14 @@ class AutoClassificacao:
         }
         
         self.zonas_serie_b = {
-            "Acesso": (1, 4),            # 1º ao 4º
-            "Zona de Rebaixamento": (17, 20)  # 17º ao 20º
+            "Acesso": (1, 4),            # 1º ao 4º (azul)
+            "Meio de tabela": (5, 16),   # 5º ao 16º (cinza)
+            "Zona de Rebaixamento": (17, 20)  # 17º ao 20º (vermelho)
+        }
+        
+        self.zonas_serie_c = {
+            "Semi-final": (1, 2),        # 1º ao 2º (azul) - Classificados para semi-final
+            "Eliminados": (3, 4)         # 3º ao 4º (cinza) - Eliminados
         }
     
     def converter_ultimos_jogos(self, ultimos_jogos: str) -> str:
@@ -346,6 +352,113 @@ class AutoClassificacao:
         except Exception as e:
             logger.error(f"❌ Erro ao ler tabela tradicional: {e}")
             return []
+    
+    def ler_tabela_tradicional_serie_b(self) -> List[Dict]:
+        """
+        Lê diretamente do arquivo Serir_B_tabela_tradicional.csv
+        """
+        try:
+            csv_path = os.path.join(self.base_path, "Serir_B_tabela_tradicional.csv")
+            logger.info(f"🔍 Procurando arquivo Série B em: {csv_path}")
+            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            
+            if not os.path.exists(csv_path):
+                logger.error(f"❌ Arquivo não encontrado: {csv_path}")
+                return []
+            
+            clubes = []
+            
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                
+                for row in reader:
+                    clube = {
+                        'time': row['Time'].strip('"'),
+                        'pontos': int(row['Pontos']),
+                        'jogos': int(row['Jogos']),
+                        'vitorias': int(row['Vitórias']),
+                        'empates': int(row['Empates']),
+                        'derrotas': int(row['Derrotas']),
+                        'gols_pro': int(row['Gols Pró']),
+                        'gols_contra': int(row['Gols Contra']),
+                        'saldo_gols': int(row['Saldo Gols']),
+                        'aproveitamento': float(row['Aproveitamento %']),
+                        'ultimos_jogos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'ultimos_confrontos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'posicao': int(row['Posição']),
+                        'variacao': self.determinar_variacao_posicao(int(row['Posição']))
+                    }
+                    
+                    # Determinar zona baseada na posição da Série B
+                    posicao = clube['posicao']
+                    if 1 <= posicao <= 4:
+                        clube['zona'] = 'Acesso'
+                    elif 17 <= posicao <= 20:
+                        clube['zona'] = 'Zona de Rebaixamento'
+                    else:
+                        clube['zona'] = 'Meio de tabela'
+                    
+                    clubes.append(clube)
+            
+            logger.info(f"✅ Série B lida do CSV tradicional: {len(clubes)} clubes")
+            return clubes
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao ler tabela tradicional Série B: {e}")
+            return []
+    
+    def ler_tabela_tradicional_serie_c(self) -> List[Dict]:
+        """
+        Lê diretamente do arquivo Serie_C_tabela_tradicional.csv
+        """
+        try:
+            csv_path = os.path.join(self.base_path, "Serie_C_tabela_tradicional.csv")
+            logger.info(f"🔍 Procurando arquivo Série C em: {csv_path}")
+            logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            
+            if not os.path.exists(csv_path):
+                logger.error(f"❌ Arquivo não encontrado: {csv_path}")
+                return []
+            
+            clubes = []
+            
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                
+                for row in reader:
+                    clube = {
+                        'time': row['Time'].strip('"'),
+                        'grupo': row['Grupo'].strip('"'),
+                        'pontos': int(row['Pontos']),
+                        'jogos': int(row['Jogos']),
+                        'vitorias': int(row['Vitórias']),
+                        'empates': int(row['Empates']),
+                        'derrotas': int(row['Derrotas']),
+                        'gols_pro': int(row['Gols Pró']),
+                        'gols_contra': int(row['Gols Contra']),
+                        'saldo_gols': int(row['Saldo Gols']),
+                        'aproveitamento': float(row['Aproveitamento %']),
+                        'ultimos_jogos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'ultimos_confrontos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'posicao': int(row['Posição']),
+                        'variacao': self.determinar_variacao_posicao(int(row['Posição']))
+                    }
+                    
+                    # Determinar zona baseada na posição da Série C
+                    posicao = clube['posicao']
+                    if 1 <= posicao <= 2:
+                        clube['zona'] = 'Semi-final'
+                    else:
+                        clube['zona'] = 'Eliminados'
+                    
+                    clubes.append(clube)
+            
+            logger.info(f"✅ Série C lida do CSV tradicional: {len(clubes)} clubes")
+            return clubes
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao ler tabela tradicional Série C: {e}")
+            return []
 
     def processar_serie_a_tradicional(self) -> List[Dict]:
         """
@@ -369,6 +482,51 @@ class AutoClassificacao:
             
         except Exception as e:
             logger.error(f"❌ Erro ao processar Série A tradicional: {e}")
+            return []
+    
+    def processar_serie_b_tradicional(self) -> List[Dict]:
+        """
+        Processa Série B usando o arquivo de tabela tradicional
+        """
+        try:
+            logger.info("📊 Processando Série B via tabela tradicional...")
+            
+            clubes = self.ler_tabela_tradicional_serie_b()
+            
+            if not clubes:
+                logger.error("❌ Nenhum clube encontrado na tabela tradicional Série B")
+                return []
+            
+            clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
+            
+            logger.info(f"✅ Série B processada: {len(clubes_ordenados)} clubes")
+            return clubes_ordenados
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar Série B tradicional: {e}")
+            return []
+    
+    def processar_serie_c_tradicional(self) -> List[Dict]:
+        """
+        Processa Série C usando o arquivo de tabela tradicional
+        """
+        try:
+            logger.info("📊 Processando Série C via tabela tradicional...")
+            
+            clubes = self.ler_tabela_tradicional_serie_c()
+            
+            if not clubes:
+                logger.error("❌ Nenhum clube encontrado na tabela tradicional Série C")
+                return []
+            
+            # Ordenar por grupo e depois por posição
+            clubes_ordenados = sorted(clubes, key=lambda x: (x['grupo'], x['posicao']))
+            
+            logger.info(f"✅ Série C processada: {len(clubes_ordenados)} clubes")
+            return clubes_ordenados
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar Série C tradicional: {e}")
             return []
 
 # Função principal para uso externo

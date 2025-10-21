@@ -488,6 +488,41 @@ def api_classificacao_serie_b():
             "error": f"Erro ao carregar classificação Série B: {str(e)}"
         }), 500
 
+@bp_br.route("/classificacao/serie-c", methods=["GET"])
+@cross_origin()
+def api_classificacao_serie_c():
+    """
+    Endpoint para obter classificação da Série C
+    GET /api/br/classificacao/serie-c
+    """
+    try:
+        # Processar dados da Série C via tabela tradicional
+        from services.auto_classificacao import AutoClassificacao
+        
+        auto_class = AutoClassificacao()
+        classificacao = auto_class.processar_serie_c_tradicional()
+        
+        if not classificacao:
+            return jsonify({
+                "success": False,
+                "error": "Nenhum dado de classificação Série C encontrado",
+                "data": []
+            }), 404
+        
+        return jsonify({
+            "success": True,
+            "data": classificacao,
+            "total": len(classificacao),
+            "campeonato": "Brasileirão Série C",
+            "ultima_atualizacao": None
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao carregar classificação Série C: {str(e)}"
+        }), 500
+
 @bp_br.route("/classificacao/atualizar", methods=["POST"])
 @cross_origin()
 def api_atualizar_classificacao():

@@ -57,34 +57,50 @@ class ClassificacaoIntegrador:
     
     def atualizar_serie_b_automatica(self) -> bool:
         """
-        Atualiza a Série B com dados automáticos dos CSVs
+        Atualiza a Série B com dados da tabela tradicional CSV
         """
         try:
-            logger.info("🔄 Atualizando Série B automaticamente...")
+            logger.info("🔄 Atualizando Série B via tabela tradicional...")
             
-            # Processar dados dos CSVs
-            resultado = self.auto_class.processar_serie(
-                self.auto_class.serie_b_path, 
-                "Série B"
-            )
+            resultado = self.auto_class.processar_serie_b_tradicional()
             
             if not resultado:
                 logger.error("❌ Nenhum dado processado para Série B")
                 return False
             
-            # Limpar dados antigos da Série B
             self._limpar_serie_b()
             
-            # Inserir novos dados
             for clube in resultado:
                 self._inserir_clube_serie_b(clube)
             
-            logger.info(f"✅ Série B atualizada: {len(resultado)} clubes")
+            logger.info(f"✅ Série B atualizada via tabela tradicional: {len(resultado)} clubes")
             return True
             
         except Exception as e:
             logger.error(f"❌ Erro ao atualizar Série B: {e}")
             return False
+    
+    def atualizar_serie_c_automatica(self) -> bool:
+        """
+        Atualiza a Série C com dados da tabela tradicional CSV
+        """
+        try:
+            logger.info("🔄 Atualizando Série C via tabela tradicional...")
+            
+            resultado = self.auto_class.processar_serie_c_tradicional()
+            
+            if not resultado:
+                logger.error("❌ Nenhum dado processado para Série C")
+                return False
+            
+            # Nota: Série C não tem tabela no banco ainda, apenas processamento
+            logger.info(f"✅ Série C processada via tabela tradicional: {len(resultado)} clubes")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar Série C: {e}")
+            return False
+    
     
     def _limpar_serie_a(self):
         """Limpa dados antigos da Série A"""
@@ -147,8 +163,8 @@ class ClassificacaoIntegrador:
                     INSERT INTO classificacao_serie_b (
                         posicao, time, pontos, jogos, vitorias, empates, derrotas,
                         gols_pro, gols_contra, saldo_gols, aproveitamento,
-                        ultimos_confrontos, zona, data_atualizacao, rodada, fonte
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ultimos_confrontos, zona
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     clube['posicao'],
                     clube['time'],
@@ -162,11 +178,7 @@ class ClassificacaoIntegrador:
                     clube['saldo_gols'],
                     clube['aproveitamento'],
                     clube.get('ultimos_confrontos', 'N/A'),  # ultimos_confrontos
-                    clube.get('ultimos_jogos', 'N/A'),  # ultimos_jogos
-                    clube['zona'],
-                    datetime.now().strftime('%Y-%m-%d %H:%M:%S'),  # data_atualizacao
-                    None,  # rodada (não aplicável)
-                    'csv_tradicional'  # fonte
+                    clube['zona']
                 ))
                 conn.commit()
         except Exception as e:

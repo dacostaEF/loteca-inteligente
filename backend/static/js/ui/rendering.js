@@ -26,7 +26,7 @@ function determinarZona(posicao, zona) {
 }
 
 // RENDERIZAR TABELA DE CLASSIFICAÇÃO (versão simples)
-function renderTabelaClassificacao(dados) {
+function renderTabelaClassificacao(dados, serie = 'serie-a') {
     const header = `
         <table class="brasileirao-table">
             <thead>
@@ -93,6 +93,75 @@ function renderTabelaClassificacao(dados) {
         `;
     }).join('');
 
+    // Determinar zonas baseadas na série
+    let zonasHTML = '';
+    
+    if (serie === 'serie-a') {
+        // Série A: Todas as zonas
+        zonasHTML = `
+            <div class="zone-item libertadores">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Libertadores (1º-4º)</strong>
+                    <span>Classificação direta para a Copa Libertadores</span>
+                </div>
+            </div>
+            <div class="zone-item pre-libertadores">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Pré-Libertadores (5º-6º)</strong>
+                    <span>Pré-classificação para a Copa Libertadores</span>
+                </div>
+            </div>
+            <div class="zone-item sul-americana">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Sul-Americana (7º-12º)</strong>
+                    <span>Classificação para a Copa Sul-Americana</span>
+                </div>
+            </div>
+            <div class="zone-item meio-tabela">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Meio de Tabela (13º-16º)</strong>
+                    <span>Sem classificação para competições internacionais</span>
+                </div>
+            </div>
+            <div class="zone-item rebaixamento">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Zona de Rebaixamento (17º-20º)</strong>
+                    <span>Rebaixamento para a Série B</span>
+                </div>
+            </div>
+        `;
+    } else if (serie === 'serie-b' || serie === 'serie-c') {
+        // Série B e C: Apenas Acesso, Meio de tabela e Rebaixamento
+        zonasHTML = `
+            <div class="zone-item libertadores">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Acesso (1º-4º)</strong>
+                    <span>Classificação para a Série A</span>
+                </div>
+            </div>
+            <div class="zone-item meio-tabela">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Meio de Tabela (5º-16º)</strong>
+                    <span>Sem classificação para a Série A</span>
+                </div>
+            </div>
+            <div class="zone-item rebaixamento">
+                <div class="zone-bar"></div>
+                <div class="zone-text">
+                    <strong>Zona de Rebaixamento (17º-20º)</strong>
+                    <span>Rebaixamento para a Série C</span>
+                </div>
+            </div>
+        `;
+    }
+
     const footer = `
             </tbody>
         </table>
@@ -100,39 +169,120 @@ function renderTabelaClassificacao(dados) {
             <div class="zones-info">
                 <h4>🏆 Zonas de Classificação</h4>
                 <div class="zones-grid">
-                    <div class="zone-item libertadores">
-                        <div class="zone-bar"></div>
-                        <div class="zone-text">
-                            <strong>Libertadores (1º-4º)</strong>
-                            <span>Classificação direta para a Copa Libertadores</span>
+                    ${zonasHTML}
+                </div>
+            </div>
+        </div>
+    `;
+
+    return header + rows + footer;
+}
+
+// RENDERIZAR TABELA DE CLASSIFICAÇÃO DA SÉRIE C (com grupos)
+function renderTabelaClassificacaoSerieC(dados) {
+    // Separar dados por grupo
+    const grupoB = dados.filter(clube => clube.grupo === 'B');
+    const grupoC = dados.filter(clube => clube.grupo === 'C');
+    
+    // Função para renderizar um grupo
+    const renderizarGrupo = (clubes, nomeGrupo) => {
+        const header = `
+            <div class="grupo-container">
+                <h3 class="grupo-titulo">GRUPO ${nomeGrupo}</h3>
+                <table class="brasileirao-table">
+                    <thead>
+                        <tr>
+                            <th>CLASSIFICAÇÃO</th>
+                            <th>P</th>
+                            <th>J</th>
+                            <th>V</th>
+                            <th>E</th>
+                            <th>D</th>
+                            <th>GP</th>
+                            <th>GC</th>
+                            <th>SG</th>
+                            <th>%</th>
+                            <th>ÚLTIMOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        const rows = clubes.map(time => {
+            // Se os dados já vêm com bolas coloridas, usar diretamente
+            let ultimosJogos;
+            if (time.ultimos && time.ultimos.includes('🟢')) {
+                ultimosJogos = time.ultimos;
+            } else {
+                ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡');
+            }
+
+            // Determinar ícone de variação
+            let variacaoIcon = '';
+            if (time.variacao === 'subiu') {
+                variacaoIcon = '↑';
+            } else if (time.variacao === 'desceu') {
+                variacaoIcon = '↓';
+            } else {
+                variacaoIcon = '■';
+            }
+
+            // Destacar os 2 primeiros
+            const classeEspecial = time.posicao <= 2 ? 'semi-final-destaque' : '';
+
+            return `
+                <tr class="${determinarZona(time.pos, time.zona)} ${classeEspecial}">
+                    <td>
+                        <span class="team-position">${time.pos}</span>
+                        <span class="variacao-icon">${variacaoIcon}</span>
+                        <span class="team-name">${time.time}</span>
+                    </td>
+                    <td><strong>${time.p}</strong></td>
+                    <td>${time.j}</td>
+                    <td>${time.v}</td>
+                    <td>${time.e}</td>
+                    <td>${time.d}</td>
+                    <td>${time.gp}</td>
+                    <td>${time.gc}</td>
+                    <td>${time.sg !== undefined && time.sg !== null ? (time.sg > 0 ? '+' + time.sg : time.sg) : '0'}</td>
+                    <td>${time.aproveitamento}</td>
+                    <td>
+                        <div class="ultimos-jogos">
+                            ${ultimosJogos}
                         </div>
-                    </div>
-                    <div class="zone-item pre-libertadores">
-                        <div class="zone-bar"></div>
-                        <div class="zone-text">
-                            <strong>Pré-Libertadores (5º-6º)</strong>
-                            <span>Pré-classificação para a Copa Libertadores</span>
-                        </div>
-                    </div>
-                    <div class="zone-item sul-americana">
-                        <div class="zone-bar"></div>
-                        <div class="zone-text">
-                            <strong>Sul-Americana (7º-12º)</strong>
-                            <span>Classificação para a Copa Sul-Americana</span>
-                        </div>
-                    </div>
-                    <div class="zone-item meio-tabela">
-                        <div class="zone-bar"></div>
-                        <div class="zone-text">
-                            <strong>Meio de Tabela (13º-16º)</strong>
-                            <span>Sem classificação para competições internacionais</span>
-                        </div>
-                    </div>
-                    <div class="zone-item rebaixamento">
-                        <div class="zone-bar"></div>
-                        <div class="zone-text">
-                            <strong>Zona de Rebaixamento (17º-20º)</strong>
-                            <span>Rebaixamento para a Série B</span>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        const footer = `
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        return header + rows + footer;
+    };
+
+    // Renderizar ambos os grupos
+    const grupoBHTML = renderizarGrupo(grupoB, 'B');
+    const grupoCHTML = renderizarGrupo(grupoC, 'C');
+
+    // Rodapé com informações da final
+    const footer = `
+        <div class="table-footer">
+            <div class="final-info">
+                <h4>🏆 FINAL</h4>
+                <div class="final-details">
+                    <div class="final-match">
+                        <h5>Londrina vs Ponte Preta</h5>
+                        <div class="match-info">
+                            <div class="match-date">
+                                <strong>Jogo 1:</strong> Vitorino Dias - 18/10 • Sábado • 17:00
+                            </div>
+                            <div class="match-date">
+                                <strong>Jogo 2:</strong> Moisés Lucarelli - 25/10 • Sábado • 17:00
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,7 +290,7 @@ function renderTabelaClassificacao(dados) {
         </div>
     `;
 
-    return header + rows + footer;
+    return grupoBHTML + grupoCHTML + footer;
 }
 
 // RENDERIZAR LINHA DE CLASSIFICAÇÃO (versão editável)

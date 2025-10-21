@@ -2449,6 +2449,8 @@ Carregando...
                         carregarTabelaSerieA();
                     } else if (championship === 'serie-b') {
                         carregarTabelaSerieB();
+                    } else if (championship === 'serie-c') {
+                        carregarTabelaSerieC();
                     }
                 });
             });
@@ -2470,6 +2472,9 @@ Carregando...
                         } else if (championship === 'serie-b') {
                             console.log('🔄 [DEBUG] Chamando carregarTabelaSerieB com FORCE REFRESH...');
                             carregarTabelaSerieB(true); // ← FORCE REFRESH
+                        } else if (championship === 'serie-c') {
+                            console.log('🔄 [DEBUG] Chamando carregarTabelaSerieC com FORCE REFRESH...');
+                            carregarTabelaSerieC(true); // ← FORCE REFRESH
                         }
                     } else {
                         console.error('❌ [DEBUG] Nenhum campeonato ativo encontrado!');
@@ -2484,6 +2489,7 @@ Carregando...
                 console.log('🚀 [INIT] Auto-carregamento inicial das tabelas...');
                 carregarTabelaSerieA(true); // ← FORCE REFRESH na inicialização
                 carregarTabelaSerieB(true); // ← FORCE REFRESH na inicialização
+                carregarTabelaSerieC(true); // ← FORCE REFRESH na inicialização
                 console.log('✅ [INIT] Tabelas do Panorama carregadas automaticamente!');
             }, 2000); // ← 2s para garantir que a página carregou
             
@@ -2590,7 +2596,7 @@ Carregando...
                 const nextUpdate = new Date(now + CACHE_DURATION).toLocaleTimeString('pt-BR');
                 const dataUpdate = new Date().toLocaleString('pt-BR');
                 
-                container.innerHTML = renderTabelaClassificacao(dadosSerieA);
+                container.innerHTML = renderTabelaClassificacao(dadosSerieA, 'serie-a');
 
                 // Configurar auto-refresh para próxima vez
                 programarProximaAtualizacao();
@@ -2814,7 +2820,7 @@ Carregando...
                     
                     console.log('🥈 [Série B] Dados formatados:', dadosFormatados.length, 'times');
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-b');
                     
                     // Atualizar fonte
                     const fonteEl = document.getElementById('fonte-serie-b');
@@ -2831,13 +2837,73 @@ Carregando...
                 // FALLBACK: dados simulados
                 console.log('🥈 [Série B] Usando fallback...');
                 const dadosSerieB = gerarDadosSerieBSimulados();
-                container.innerHTML = renderTabelaClassificacao(dadosSerieB);
+                container.innerHTML = renderTabelaClassificacao(dadosSerieB, 'serie-b');
                 
                 // Atualizar fonte para indicar fallback
                 const fonteEl = document.getElementById('fonte-serie-b');
                 if (fonteEl) {
                     fonteEl.textContent = '⚠️ Dados simulados (erro no banco)';
                 }
+            }
+        }
+
+        // CARREGAR DADOS DA SÉRIE C
+        async function carregarTabelaSerieC(forceRefresh = false) {
+            const container = document.getElementById('tabela-serie-c');
+            if (!container) return;
+
+            const loadingMsg = forceRefresh ? 
+                '🔄 Atualizando dados da Série C...' : 
+                '🔄 Carregando Série C...';
+            container.innerHTML = `<div class="table-loading"><p>${loadingMsg}</p></div>`;
+
+            try {
+                console.log('🥉 [Série C] Carregando dados...');
+                
+                // Buscar dados da Série C
+                const response = await fetch('/api/br/classificacao/serie-c');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('🥉 [Série C] Dados recebidos:', data);
+                
+                if (data.success && data.data && data.data.length > 0) {
+                    // Mapear campos do banco para formato da tabela
+                    const dadosFormatados = data.data.map(item => ({
+                        pos: item.posicao,
+                        time: item.time,
+                        grupo: item.grupo,
+                        p: item.pontos,
+                        j: item.jogos,
+                        v: item.vitorias,
+                        e: item.empates,
+                        d: item.derrotas,
+                        gp: item.gols_pro,
+                        gc: item.gols_contra,
+                        sg: item.saldo_gols,
+                        aproveitamento: item.aproveitamento,
+                        ultimos: item.ultimos_confrontos || item.ultimos_jogos,
+                        zona: item.zona || ""
+                    }));
+                    
+                    console.log('🥉 [Série C] Dados formatados:', dadosFormatados.length, 'times');
+                    
+                    container.innerHTML = renderTabelaClassificacaoSerieC(dadosFormatados);
+                    
+                } else {
+                    throw new Error('Dados inválidos recebidos');
+                }
+                
+            } catch (error) {
+                console.error('❌ [Série C] Erro ao carregar:', error);
+                
+                // FALLBACK: dados simulados
+                console.log('🥉 [Série C] Usando fallback...');
+                const dadosSerieC = gerarDadosSerieCSimulados();
+                container.innerHTML = renderTabelaClassificacaoSerieC(dadosSerieC);
             }
         }
 
@@ -2967,7 +3033,7 @@ Carregando...
                     console.log('⚽ [Premier League] Dados formatados:', dadosFormatados.length, 'times');
                     console.log('⚽ [Premier League] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
@@ -3036,7 +3102,7 @@ Carregando...
                     console.log('🇪🇸 [La Liga] Dados formatados:', dadosFormatados.length, 'times');
                     console.log('🇪🇸 [La Liga] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
@@ -3105,7 +3171,7 @@ Carregando...
                     console.log('🇫🇷 [França] Dados formatados:', dadosFormatados.length, 'times');
                     console.log('🇫🇷 [França] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
@@ -3175,7 +3241,7 @@ Carregando...
                     console.log('🏆 [Champions League] Dados formatados:', dadosFormatados.length, 'times');
                     console.log('🏆 [Champions League] Primeiro time formatado:', dadosFormatados[0]);
                     
-                    container.innerHTML = renderTabelaClassificacao(dadosFormatados);
+                    container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
                     
                     // Atualizar informações
                     const fonteEl = document.getElementById('fonte-internacional');
