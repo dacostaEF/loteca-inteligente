@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integração Quadros Comparativos - Exemplo</title>
+    <style>
+        body {
+            background: #0f0f13;
+            color: #e7e8f3;
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #A855F7;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #9aa1bd;
+            font-size: 1.1rem;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #26293a;
+        }
+        
+        .tab-btn {
+            background: #1a1b22;
+            color: #9aa1bd;
+            border: none;
+            padding: 12px 24px;
+            margin: 0 5px;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: #A855F7;
+            color: white;
+        }
+        
+        .tab-btn:hover {
+            background: #7C3AED;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .sub-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .sub-tab-btn {
+            background: #151827;
+            color: #9aa1bd;
+            border: 1px solid #26293a;
+            padding: 8px 16px;
+            margin: 0 3px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .sub-tab-btn.active {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+        
+        .sub-tab-btn:hover {
+            background: #7C3AED;
+            color: white;
+        }
+        
+        .info-box {
+            background: #1a1b22;
+            border: 1px solid #26293a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .info-box h3 {
+            color: #A855F7;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #9aa1bd;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Sistema de Quadros Comparativos</h1>
+            <p>Integração com efeitos neon lilás para todos os 14 jogos</p>
+        </div>
+
+        <!-- Sistema de Abas -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="forca-elenco">Força dos Elencos</button>
+            <button class="tab-btn" data-tab="outras-abas">Outras Abas</button>
+        </div>
+
+        <!-- Conteúdo das Abas -->
+        <div class="tab-content active" id="forca-elenco">
+            <div class="sub-tabs">
+                <button class="sub-tab-btn active" data-subtab="times-loteca">💰 Plantel ($)</button>
+                <button class="sub-tab-btn" data-subtab="serie-a">🇧🇷 Série A</button>
+                <button class="sub-tab-btn" data-subtab="serie-b">🇧🇷 Série B</button>
+                <button class="sub-tab-btn" data-subtab="top100">🌍 Top 100 Mundial</button>
+            </div>
+
+            <!-- Sub-aba Plantel ($) -->
+            <div class="tab-content active" id="times-loteca">
+                <div class="info-box">
+                    <h3>💰 Plantel ($) - Comparação Direta</h3>
+                    <p>Análise detalhada de todos os 14 jogos com dados reais dos CSVs</p>
+                    <p>Efeitos neon lilás e hover destacado</p>
+                </div>
+                
+                <!-- Container para os quadros comparativos -->
+                <div id="jogos-loteca-container">
+                    <!-- Os quadros serão renderizados aqui automaticamente -->
+                </div>
+            </div>
+
+            <!-- Outras sub-abas -->
+            <div class="tab-content" id="serie-a">
+                <div class="info-box">
+                    <h3>🇧🇷 Série A do Brasileirão</h3>
+                    <p>Dados dos clubes da Série A</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="serie-b">
+                <div class="info-box">
+                    <h3>🇧🇷 Série B do Brasileirão</h3>
+                    <p>Dados dos clubes da Série B</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="top100">
+                <div class="info-box">
+                    <h3>🌍 Top 100 Clubes Mundiais</h3>
+                    <p>Ranking mundial dos clubes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="outras-abas">
+            <div class="info-box">
+                <h3>Outras Funcionalidades</h3>
+                <p>Outras abas do sistema...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incluir scripts -->
+    <script src="/static/js/quadro-comparativo.js"></script>
+    <script src="/static/js/integracao-quadros.js"></script>
+    
+    <script>
+        // Sistema de navegação entre abas
+        document.addEventListener('click', function(e) {
+            // Abas principais
+            if (e.target.classList.contains('tab-btn')) {
+                const targetTab = e.target.dataset.tab;
+                
+                // Remover active de todas as abas
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Ativar aba clicada
+                e.target.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            }
+            
+            // Sub-abas
+            if (e.target.classList.contains('sub-tab-btn')) {
+                const targetSubTab = e.target.dataset.subtab;
+                
+                // Remover active de todas as sub-abas
+                document.querySelectorAll('.sub-tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('#forca-elenco .tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Ativar sub-aba clicada
+                e.target.classList.add('active');
+                document.getElementById(targetSubTab).classList.add('active');
+                
+                // Se for a sub-aba "Plantel ($)", integrar quadros
+                if (targetSubTab === 'times-loteca') {
+                    console.log('🎯 [QUADROS] Sub-aba Plantel ($) ativada!');
+                    setTimeout(() => {
+                        if (typeof integrarQuadrosComparativos === 'function') {
+                            integrarQuadrosComparativos();
+                        }
+                    }, 100);
+                }
+            }
+        });
+        
+        // Auto-carregar quadros na inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 [SISTEMA] Inicializando sistema de quadros comparativos...');
+            
+            // Simular ativação da sub-aba "Plantel ($)"
+            setTimeout(() => {
+                if (typeof integrarQuadrosComparativos === 'function') {
+                    integrarQuadrosComparativos();
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

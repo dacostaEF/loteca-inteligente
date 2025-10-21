@@ -1076,6 +1076,15 @@ def api_elenco_clube(clube_nome):
         # Obter dados do clube
         dados_elenco = get_elenco_data(clube_nome)
         
+        # ✅ VERIFICAR SE DADOS FORAM ENCONTRADOS
+        if dados_elenco is None:
+            return jsonify({
+                "success": False,
+                "error": f"Clube '{clube_nome}' não encontrado na base de dados",
+                "clube": clube_nome,
+                "dados": None
+            }), 404
+        
         return jsonify({
             "success": True,
             "clube": clube_nome,

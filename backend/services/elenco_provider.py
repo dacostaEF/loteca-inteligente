@@ -96,7 +96,7 @@ class ElencoProvider:
     
     def _normalizar_nome_clube(self, nome):
         """Normaliza nome do clube para matching"""
-        # Mapeamento de nomes
+        # Mapeamento de nomes - CORRIGIDO PARA MATCH COM FRONTEND
         mapeamento = {
             'SE Palmeiras': 'PALMEIRAS',
             'CR Flamengo': 'FLAMENGO', 
@@ -121,6 +121,34 @@ class ElencoProvider:
         }
         
         return mapeamento.get(nome, nome.upper())
+    
+    def _normalizar_nome_entrada(self, nome_entrada):
+        """Normaliza nome de entrada do frontend para matching com CSV"""
+        # Mapeamento reverso: frontend -> CSV
+        mapeamento_entrada = {
+            'PALMEIRAS': 'PALMEIRAS',
+            'FLAMENGO': 'FLAMENGO',
+            'BOTAFOGO': 'BOTAFOGO',
+            'CRUZEIRO': 'CRUZEIRO',
+            'CORINTHIANS': 'CORINTHIANS',
+            'VASCO': 'VASCO',
+            'BAHIA': 'BAHIA',
+            'ATLETICO-MG': 'ATLETICO-MG',
+            'FLUMINENSE': 'FLUMINENSE',
+            'RED BULL BRAGANTINO': 'RED BULL BRAGANTINO',
+            'SAO PAULO': 'SAO PAULO',
+            'GREMIO': 'GREMIO',
+            'INTERNACIONAL': 'INTERNACIONAL',
+            'SANTOS': 'SANTOS',
+            'FORTALEZA': 'FORTALEZA',
+            'SPORT RECIFE': 'SPORT RECIFE',
+            'VITORIA': 'VITORIA',
+            'CEARA': 'CEARA',
+            'JUVENTUDE': 'JUVENTUDE',
+            'MIRASSOL': 'MIRASSOL'
+        }
+        
+        return mapeamento_entrada.get(nome_entrada.upper(), nome_entrada.upper())
     
     def _calcular_forca_elenco(self, valor_total_str):
         """Calcula força do elenco baseada no valor total em MM Euros"""
@@ -203,31 +231,26 @@ class ElencoProvider:
     
     def obter_dados_clube(self, nome_clube):
         """Obtém dados de um clube específico"""
-        nome_normalizado = nome_clube.upper().strip()
+        # ✅ CORRIGIDO: Usar normalização de entrada
+        nome_normalizado = self._normalizar_nome_entrada(nome_clube)
+        
+        print(f"🔍 [ELENCO] Buscando clube: '{nome_clube}' -> normalizado: '{nome_normalizado}'")
+        print(f"🔍 [ELENCO] Clubes disponíveis: {list(self.dados_elenco.keys())}")
         
         # Tentar match direto
         if nome_normalizado in self.dados_elenco:
+            print(f"✅ [ELENCO] Match direto encontrado: {nome_normalizado}")
             return self.dados_elenco[nome_normalizado]
         
         # Tentar match parcial
         for clube_key, dados in self.dados_elenco.items():
             if nome_normalizado in clube_key or clube_key in nome_normalizado:
+                print(f"✅ [ELENCO] Match parcial encontrado: {clube_key}")
                 return dados
         
-        # Retornar dados padrão se não encontrar
-        return {
-            'nome_original': nome_clube,
-            'serie': 'A',
-            'valor_total': '€ 50 mi.',
-            'valor_mm_euros': 50.0,
-            'valor_mm_formatado': '€ 50.0MM',
-            'plantel': 30,
-            'idade_media': 27.0,
-            'estrangeiros': 5,
-            'valor_medio': '€ 1.5 mi.',
-            'forca_elenco': 5.0,
-            'rating': 0.5
-        }
+        # ❌ NÃO ENCONTRADO - Retornar erro ao invés de dados padrão
+        print(f"❌ [ELENCO] Clube não encontrado: {nome_clube}")
+        return None
     
     def obter_todos_clubes(self):
         """Retorna todos os dados de clubes"""

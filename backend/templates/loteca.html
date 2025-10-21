@@ -3946,26 +3946,19 @@ Carregando...
         // FUNÇÃO AUXILIAR PARA EXTRAIR JOGO DE UM CARD
         function extrairJogoDoCard(card, numeroJogo) {
             try {
-                // CORRIGIDO: Para JOGO 1, ler diretamente dos elementos atualizados pela API
+                // CORRIGIDO: Para JOGO 1, usar dados padrão Flamengo vs Palmeiras
                 if (numeroJogo === 1) {
-                // JOGO 1 REMOVIDO - USAR DADOS PADRÃO
-                const nomeCasa = null; // document.getElementById('time-casa-nome-jogo1');
-                const nomeFora = null; // document.getElementById('time-fora-nome-jogo1');
+                    // ✅ JOGO 1: Flamengo vs Palmeiras (dados padrão)
+                    const timeCasa = 'Flamengo';
+                    const timeVisitante = 'Palmeiras';
                     
-                    if (nomeCasa && nomeFora) {
-                        const timeCasa = nomeCasa.textContent.trim();
-                        const timeVisitante = nomeFora.textContent.trim();
-                        
-                        if (timeCasa && timeVisitante) {
-                            console.log(`✅ [SYNC] JOGO 1 lido dos elementos da API: ${timeCasa} vs ${timeVisitante}`);
-                            return {
-                                numero: numeroJogo,
-                                timeCasa: timeCasa,
-                                timeVisitante: timeVisitante,
-                                descricao: `Jogo ${numeroJogo}: ${timeCasa} vs ${timeVisitante}`
-                            };
-                        }
-                    }
+                    console.log(`✅ [SYNC] JOGO 1 usando dados padrão: ${timeCasa} vs ${timeVisitante}`);
+                    return {
+                        numero: numeroJogo,
+                        timeCasa: timeCasa,
+                        timeVisitante: timeVisitante,
+                        descricao: `Jogo ${numeroJogo}: ${timeCasa} vs ${timeVisitante}`
+                    };
                 }
                 
                 // Método original para outros jogos
@@ -4348,29 +4341,34 @@ Carregando...
             return criarDadosFallback(nomeTime);
         }
 
-        // CRIAR DADOS DE FALLBACK
+        // CRIAR DADOS DE FALLBACK - MENSAGEM DE ERRO QUANDO API NÃO ENCONTRA DADOS
         function criarDadosFallback(nomeTime) {
-            const rating = Math.random() * 0.5 + 0.3; // 0.3 - 0.8
+            // ❌ API NÃO ENCONTROU DADOS - NÃO INVENTAR DADOS!
+            console.error(`❌ [API] Dados não encontrados para: ${nomeTime}`);
             
             return {
                 nome: nomeTime,
                 abrev: nomeTime.substring(0, 3).toUpperCase(),
-                total_atletas: Math.floor(Math.random() * 15) + 25, // 25-40
-                pct_provaveis: Math.floor(Math.random() * 30) + 30, // 30-60%
-                forca_elenco: Math.round(rating * 10 * 100) / 100, // 3.0-8.0
-                preco_medio: Math.round((Math.random() * 3 + 4) * 100) / 100, // 4.0-7.0
-                rating: rating,
-                badge: gerarBadgeTime(rating),
-                fonte: 'simulado',
-                brasileiro: isBrazilianTeam(nomeTime)
+                total_atletas: 'N/A',
+                pct_provaveis: 'N/A',
+                forca_elenco: 'N/A',
+                preco_medio: 'N/A',
+                rating: 0,
+                badge: { text: 'Dados não encontrados', class: 'badge-erro' },
+                fonte: 'erro_api',
+                brasileiro: isBrazilianTeam(nomeTime),
+                erro: true,
+                mensagem_erro: `API não conseguiu carregar dados para ${nomeTime}`
             };
         }
 
-        // GERAR BADGE DO TIME
+        // GERAR BADGE DO TIME - CORRIGIDO PARA DADOS REAIS DO CSV
         function gerarBadgeTime(rating) {
-            if (rating >= 0.7) return { text: 'Elenco Elite', class: 'badge-elite' };
-            if (rating >= 0.5) return { text: 'Atenção a Destaques', class: 'badge-destaque' };
-            return { text: 'Elenco Mediano', class: 'badge-mediano' };
+            // ✅ CORRIGIDO: Thresholds baseados nos dados reais do CSV Série A
+            if (rating >= 0.8) return { text: 'Elenco Elite', class: 'badge-elite' };
+            if (rating >= 0.6) return { text: 'Elenco Forte', class: 'badge-forte' };
+            if (rating >= 0.4) return { text: 'Elenco Sólido', class: 'badge-solido' };
+            return { text: 'Elenco em Desenvolvimento', class: 'badge-desenvolvimento' };
         }
 
         // VERIFICAR SE É TIME BRASILEIRO
@@ -4418,6 +4416,31 @@ Carregando...
 
         // RENDERIZAR CONTAINER DE UM TIME
         function renderizarTimeContainer(dadosTime, tipo) {
+            // ✅ VERIFICAR SE HÁ ERRO NA API
+            if (dadosTime.erro) {
+                return `
+                    <div class="time-container erro-api">
+                        <div class="time-header">
+                            <div class="time-nome">${dadosTime.nome}</div>
+                            <div class="time-abrev">${dadosTime.abrev}</div>
+                        </div>
+                        
+                        <div class="erro-mensagem">
+                            <div class="erro-icon">⚠️</div>
+                            <div class="erro-texto">
+                                <strong>API não conseguiu carregar dados</strong>
+                                <p>${dadosTime.mensagem_erro}</p>
+                                <small>Verifique se o time está cadastrado no sistema</small>
+                            </div>
+                        </div>
+                        
+                        <div class="time-badge badge-erro">
+                            Dados não encontrados
+                        </div>
+                    </div>
+                `;
+            }
+            
             const forcaPercentual = Math.round(dadosTime.rating * 100);
             
             // Determinar ícone e texto baseado na fonte
@@ -4428,6 +4451,9 @@ Carregando...
             } else if (dadosTime.fonte === 'central_admin') {
                 fonteIcon = '📝';
                 fonteText = 'Central Admin';
+            } else if (dadosTime.fonte === 'erro_api') {
+                fonteIcon = '❌';
+                fonteText = 'Erro API';
             } else {
                 fonteIcon = '🎲';
                 fonteText = 'Simulado';
@@ -11598,6 +11624,371 @@ Carregando...
         // Aplica a lógica para todos os jogos
         window.OtimizadorAuto.runAll();
         
+        // CARREGAR SÉRIE A COM DADOS REAIS
+        function carregarSerieAComDados() {
+            console.log('🇧🇷 [SÉRIE-A] Carregando Série A com dados reais...');
+            
+            const container = document.getElementById('serie-a');
+            if (!container) {
+                console.error('❌ [SÉRIE-A] Container não encontrado');
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="info-box blue">
+                    <h3>🇧🇷 Brasileirão Série A - Análise de Elencos</h3>
+                    <p>Carregando dados dos elencos da Série A...</p>
+                </div>
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Analisando força dos elencos...</p>
+                </div>
+            `;
+            
+            // Carregar dados via API
+            fetch('/api/forca-elenco/dashboard')
+                .then(response => response.text())
+                .then(html => {
+                    // Criar elemento temporário para processar o HTML
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    
+                    // Extrair dados injetados
+                    const scripts = tempDiv.querySelectorAll('script');
+                    scripts.forEach(script => {
+                        if (script.textContent.includes('window.__SERIE_A__')) {
+                            eval(script.textContent);
+                        }
+                    });
+                    
+                    // Renderizar tabela da Série A
+                    if (window.__SERIE_A__ && window.__SERIE_A__.length > 0) {
+                        container.innerHTML = `
+                            <h2>Série A do Campeonato Brasileiro</h2>
+                            <div class="info-box green">
+                                <p><strong>Resumo:</strong> ${window.__SERIE_A__.length} clubes da Série A com análise detalhada</p>
+                                <p><strong>Dados:</strong> Plantel, idade média, estrangeiros, valores e estatísticas</p>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="serie-a">
+                                    <thead>
+                                        <tr>
+                                            <th>Posição</th>
+                                            <th>Clube</th>
+                                            <th>Plantel</th>
+                                            <th>Idade Média</th>
+                                            <th>Estrangeiros</th>
+                                            <th>Valor Total</th>
+                                            <th>Posse Bola</th>
+                                            <th>Passes Certos</th>
+                                            <th>Chutes/Jogo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="serieABody">
+                                        ${window.__SERIE_A__.map(r => `
+                                            <tr>
+                                                <td>${r.posicao || ''}</td>
+                                                <td><strong>${r.clube || ''}</strong></td>
+                                                <td>${r.plantel || ''}</td>
+                                                <td>${r.idade_media || ''}</td>
+                                                <td>${r.estrangeiros || ''}</td>
+                                                <td class="valor-cell">${r.valor_total || ''}</td>
+                                                <td>${r.posse_bola || ''}</td>
+                                                <td>${r.passes_certos || ''}</td>
+                                                <td>${r.chutes_jogo || ''}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+                        console.log('✅ [SÉRIE-A] Tabela renderizada com', window.__SERIE_A__.length, 'clubes!');
+                    } else {
+                        container.innerHTML = `
+                            <div class="info-box blue">
+                                <h3>🇧🇷 Brasileirão Série A - Análise de Elencos</h3>
+                                <p>Dados da Série A não encontrados.</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ [SÉRIE-A] Erro ao carregar:', error);
+                    container.innerHTML = `
+                        <div class="info-box blue">
+                            <h3>🇧🇷 Brasileirão Série A - Análise de Elencos</h3>
+                            <p>Erro ao carregar dados da Série A.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // CARREGAR SÉRIE B COM DADOS REAIS
+        function carregarSerieBComDados() {
+            console.log('🇧🇷 [SÉRIE-B] Carregando Série B com dados reais...');
+            
+            const container = document.getElementById('serie-b');
+            if (!container) {
+                console.error('❌ [SÉRIE-B] Container não encontrado');
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="info-box green">
+                    <h3>🇧🇷 Brasileirão Série B - Análise de Elencos</h3>
+                    <p>Carregando dados dos elencos da Série B...</p>
+                </div>
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Analisando força dos elencos...</p>
+                </div>
+            `;
+            
+            // Carregar dados via API
+            fetch('/api/forca-elenco/dashboard')
+                .then(response => response.text())
+                .then(html => {
+                    // Criar elemento temporário para processar o HTML
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    
+                    // Extrair dados injetados
+                    const scripts = tempDiv.querySelectorAll('script');
+                    scripts.forEach(script => {
+                        if (script.textContent.includes('window.__SERIE_B__')) {
+                            eval(script.textContent);
+                        }
+                    });
+                    
+                    // Renderizar tabela da Série B
+                    if (window.__SERIE_B__ && window.__SERIE_B__.length > 0) {
+                        container.innerHTML = `
+                            <h2>Série B do Campeonato Brasileiro</h2>
+                            <div class="info-box yellow">
+                                <p><strong>Resumo:</strong> ${window.__SERIE_B__.length} clubes da Série B com análise detalhada</p>
+                                <p><strong>Dados:</strong> Plantel, idade média, estrangeiros, valores e estatísticas</p>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="serie-b">
+                                    <thead>
+                                        <tr>
+                                            <th>Posição</th>
+                                            <th>Clube</th>
+                                            <th>Plantel</th>
+                                            <th>Idade Média</th>
+                                            <th>Estrangeiros</th>
+                                            <th>Valor Total</th>
+                                            <th>Posse Bola</th>
+                                            <th>Passes Certos</th>
+                                            <th>Chutes/Jogo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="serieBBody">
+                                        ${window.__SERIE_B__.map(r => `
+                                            <tr>
+                                                <td>${r.posicao || ''}</td>
+                                                <td><strong>${r.clube || ''}</strong></td>
+                                                <td>${r.plantel || ''}</td>
+                                                <td>${r.idade_media || ''}</td>
+                                                <td>${r.estrangeiros || ''}</td>
+                                                <td class="valor-cell">${r.valor_total || ''}</td>
+                                                <td>${r.posse_bola || ''}</td>
+                                                <td>${r.passes_certos || ''}</td>
+                                                <td>${r.chutes_jogo || ''}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `;
+                        console.log('✅ [SÉRIE-B] Tabela renderizada com', window.__SERIE_B__.length, 'clubes!');
+                    } else {
+                        container.innerHTML = `
+                            <div class="info-box green">
+                                <h3>🇧🇷 Brasileirão Série B - Análise de Elencos</h3>
+                                <p>Dados da Série B não encontrados.</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ [SÉRIE-B] Erro ao carregar:', error);
+                    container.innerHTML = `
+                        <div class="info-box green">
+                            <h3>🇧🇷 Brasileirão Série B - Análise de Elencos</h3>
+                            <p>Erro ao carregar dados da Série B.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // CARREGAR TOP 100 COM DADOS REAIS
+        function carregarTop100ComDados() {
+            console.log('🌍 [TOP100] Carregando Top 100 Mundial com dados reais...');
+            
+            const loading = document.getElementById('forca-elenco-loading');
+            const content = document.getElementById('forca-elenco-content');
+            
+            if (loading) loading.style.display = 'block';
+            if (content) content.style.display = 'none';
+            
+            // Carregar dados via API
+            fetch('/api/forca-elenco/dashboard')
+                .then(response => response.text())
+                .then(html => {
+                    // Criar elemento temporário para processar o HTML
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    
+                    // Extrair dados injetados
+                    const scripts = tempDiv.querySelectorAll('script');
+                    scripts.forEach(script => {
+                        if (script.textContent.includes('window.__TOP100__')) {
+                            eval(script.textContent);
+                        }
+                    });
+                    
+                    // Renderizar tabela do Top 100
+                    if (window.__TOP100__ && window.__TOP100__.length > 0) {
+                        content.innerHTML = `
+                            <style>
+                            .forca-elenco-dashboard {
+                                max-width: 1400px;
+                                margin: 0 auto;
+                                background: #1a1a1a;
+                                border-radius: 12px;
+                                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+                                overflow: hidden;
+                                border: 1px solid #333;
+                                padding: 20px;
+                            }
+                            
+                            .table-container {
+                                overflow-x: auto;
+                                overflow-y: auto;
+                                max-height: 600px;
+                                border-radius: 8px;
+                                border: 1px solid #333;
+                                background: #2a2a2a;
+                            }
+                            
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                background: #2a2a2a;
+                            }
+                            
+                            th {
+                                background: #00E38C;
+                                color: white;
+                                padding: 12px 16px;
+                                text-align: left;
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 0.05em;
+                                position: sticky;
+                                top: 0;
+                                z-index: 10;
+                            }
+                            
+                            td {
+                                padding: 12px 16px;
+                                border-bottom: 1px solid #333;
+                                font-size: 0.9rem;
+                                color: #ffffff;
+                                background: #2a2a2a;
+                            }
+                            
+                            tr:nth-child(even) td {
+                                background: #1e1e1e;
+                            }
+                            
+                            tr:hover td {
+                                background: #333 !important;
+                            }
+                            
+                            .valor-cell {
+                                font-weight: 600;
+                                color: #00E38C;
+                            }
+                            
+                            .info-box {
+                                padding: 15px;
+                                border-radius: 8px;
+                                margin-bottom: 20px;
+                                font-size: 0.9rem;
+                                border: 1px solid #333;
+                            }
+                            
+                            .info-box.blue {
+                                background: #1e3a8a;
+                                color: #dbeafe;
+                                border-color: #3b82f6;
+                            }
+                            </style>
+                            
+                            <div class="forca-elenco-dashboard">
+                                <h2>Top 100 Clubes Mundiais</h2>
+                                <div class="info-box blue">
+                                    <p><strong>Resumo:</strong> ${window.__TOP100__.length} clubes, valores baseados em gastos com transferências</p>
+                                    <p><strong>Fonte:</strong> Dados atualizados 2025</p>
+                                </div>
+                                
+                                <div class="table-container">
+                                    <table id="top100Table">
+                                        <thead>
+                                            <tr>
+                                                <th>Posição</th>
+                                                <th>Clube</th>
+                                                <th>País</th>
+                                                <th>Valor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="top100Body">
+                                            ${window.__TOP100__.map(r => `
+                                                <tr>
+                                                    <td>${r.posicao || ''}</td>
+                                                    <td><strong>${r.clube || ''}</strong></td>
+                                                    <td>${r.pais || ''}</td>
+                                                    <td class="valor-cell">${r.valor || ''}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `;
+                        content.style.display = 'block';
+                        console.log('✅ [TOP100] Tabela renderizada com', window.__TOP100__.length, 'clubes!');
+                    } else {
+                        content.innerHTML = `
+                            <div class="info-box blue">
+                                <h3>🌍 Top 100 Clubes Mundiais</h3>
+                                <p>Dados do Top 100 não encontrados.</p>
+                            </div>
+                        `;
+                        content.style.display = 'block';
+                    }
+                    if (loading) loading.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('❌ [TOP100] Erro ao carregar:', error);
+                    if (content) {
+                        content.innerHTML = `
+                            <div class="info-box blue">
+                                <h3>🌍 Top 100 Clubes Mundiais</h3>
+                                <p>Erro ao carregar dados do Top 100.</p>
+                            </div>
+                        `;
+                        content.style.display = 'block';
+                    }
+                    if (loading) loading.style.display = 'none';
+                });
+        }
+
         // Sistema de carregamento da aba Força dos Elencos
         function carregarForcaElencoDashboard() {
             console.log('🚀 Carregando dashboard de força dos elencos...');
@@ -11733,13 +12124,13 @@ Carregando...
                             carregarTimesLotecaJogos();
                         } else if (targetSubTab === 'serie-a') {
                             console.log('🇧🇷 [SÉRIE-A] Carregando dados da Série A...');
-                            // Implementar carregamento da Série A
+                            carregarSerieAComDados();
                         } else if (targetSubTab === 'serie-b') {
                             console.log('🇧🇷 [SÉRIE-B] Carregando dados da Série B...');
-                            // Implementar carregamento da Série B
+                            carregarSerieBComDados();
                         } else if (targetSubTab === 'top100') {
                             console.log('🌍 [TOP100] Carregando dashboard Top 100...');
-                            carregarForcaElencoDashboard();
+                            carregarTop100ComDados();
                         }
                     } else {
                         console.error(`🎯 [FORÇA-ELENCOS] Sub-aba ${targetSubTab} não encontrada!`);
