@@ -2156,10 +2156,7 @@ Carregando...
         </div>
     </div>
 
-    <!-- MODAL DE FORÇA DO ELENCO -->
-    <div id="forca-elenco-modal" class="forca-elenco-modal" style="display: none;">
-        <!-- Conteúdo será inserido dinamicamente via JavaScript -->
-    </div>
+    <!-- Modal de força do elenco removido - funcionalidade migrada para aba "Força dos Elencos" -->
 
     <!-- MODAL CONSOLIDADO DE DOCUMENTOS LEGAIS -->
     <div id="legal-modal" class="legal-modal" style="display: none;">
@@ -11012,164 +11009,9 @@ Carregando...
             return { casa: dadosCasa, fora: dadosFora };
         }
 
-        function criarBotoesForcaElenco(containerId, timeCasa, timeFora) {
-            console.log('🎯 Criando botões de força do elenco para:', { containerId, timeCasa, timeFora });
-            
-            const container = document.getElementById(containerId);
-            if (!container) {
-                console.error('❌ Container não encontrado:', containerId);
-                return;
-            }
-            
-            console.log('✅ Container encontrado:', container);
-            
-            const dados = verificarForcaElenco(timeCasa, timeFora);
-            
-            // Remover botões existentes
-            const botoesExistentes = container.querySelectorAll('.forca-elenco-btn');
-            console.log('🗑️ Removendo botões existentes:', botoesExistentes.length);
-            botoesExistentes.forEach(btn => btn.remove());
-            
-            // Criar botão para time da casa
-            if (dados.casa) {
-                console.log('🏠 Criando botão para time da casa:', dados.casa.nome_oficial);
-                const btnCasa = document.createElement('button');
-                btnCasa.className = 'forca-elenco-btn';
-                btnCasa.innerHTML = '💪 Força do Elenco';
-                btnCasa.style.cssText = `
-                    position: absolute;
-                    top: 5px;
-                    left: 5px;
-                    background: linear-gradient(135deg, #A855F7, #7C3AED);
-                    color: white;
-                    border: none;
-                    padding: 3px 6px;
-                    border-radius: 8px;
-                    font-size: 9px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    z-index: 1000;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    transition: all 0.2s ease;
-                    white-space: nowrap;
-                `;
-                btnCasa.onclick = () => abrirModalForcaElenco(dados.casa, 'casa');
-                container.appendChild(btnCasa);
-                console.log('✅ Botão da casa criado e adicionado');
-            } else {
-                console.log('⚠️ Dados da casa não encontrados');
-            }
-            
-            // Criar botão para time visitante
-            if (dados.fora) {
-                console.log('✈️ Criando botão para time visitante:', dados.fora.nome_oficial);
-                const btnFora = document.createElement('button');
-                btnFora.className = 'forca-elenco-btn';
-                btnFora.innerHTML = '💪 Força do Elenco';
-                btnFora.style.cssText = `
-                    position: absolute;
-                    top: 5px;
-                    right: 5px;
-                    background: linear-gradient(135deg, #A855F7, #7C3AED);
-                    color: white;
-                    border: none;
-                    padding: 3px 6px;
-                    border-radius: 8px;
-                    font-size: 9px;
-                    font-weight: 600;
-                    cursor: pointer;
-                    z-index: 1000;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    transition: all 0.2s ease;
-                    white-space: nowrap;
-                `;
-                btnFora.onclick = () => abrirModalForcaElenco(dados.fora, 'fora');
-                container.appendChild(btnFora);
-                console.log('✅ Botão visitante criado e adicionado');
-            } else {
-                console.log('⚠️ Dados do visitante não encontrados');
-            }
-        }
+        // Função removida - funcionalidade migrada para aba "Força dos Elencos"
 
-        function abrirModalForcaElenco(dadosClube, posicao) {
-            const modal = document.getElementById('forca-elenco-modal');
-            if (!modal) return;
-            
-            const categoria = dadosClube.categoria;
-            const corCategoria = {
-                'mundial': '#10B981',
-                'nacional_grande': '#F59E0B', 
-                'nacional_medio': '#EF4444',
-                'regional': '#6B7280'
-            };
-            
-            const iconeCategoria = {
-                'mundial': '🌍',
-                'nacional_grande': '🇧🇷',
-                'nacional_medio': '🏆',
-                'regional': '🏘️'
-            };
-            
-            const descricaoCategoria = {
-                'mundial': 'Top 100 Mundial',
-                'nacional_grande': 'Grande Clube Nacional',
-                'nacional_medio': 'Clube Médio Nacional',
-                'regional': 'Clube Regional'
-            };
-            
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>💪 Força do Elenco - ${dadosClube.nome_oficial}</h4>
-                        <button class="modal-close" onclick="fecharModalForcaElenco()">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="forca-card" style="background: linear-gradient(135deg, ${corCategoria[categoria]}, ${corCategoria[categoria]}88); border-radius: 12px; padding: 20px; margin: 15px 0; color: white;">
-                            <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                                <span style="font-size: 24px; margin-right: 10px;">${iconeCategoria[categoria]}</span>
-                                <div>
-                                    <h3 style="margin: 0; font-size: 18px;">${dadosClube.nome_oficial}</h3>
-                                    <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${descricaoCategoria[categoria]}</p>
-                                </div>
-                            </div>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px;">
-                                    <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">${dadosClube.forca_elenco}</div>
-                                    <div style="font-size: 12px; opacity: 0.9;">Pontos de Força</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px;">
-                                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">R$ ${dadosClube.valor_elenco_reais}M</div>
-                                    <div style="font-size: 12px; opacity: 0.9;">Valor do Elenco</div>
-                                </div>
-                            </div>
-                            
-                            ${dadosClube.posicao_mundial ? `
-                                <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 16px; font-weight: bold;">${dadosClube.posicao_mundial}º</div>
-                                    <div style="font-size: 12px; opacity: 0.9;">Posição Mundial</div>
-                                </div>
-                            ` : ''}
-                            
-                            <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 12px; opacity: 0.9;">
-                                ${dadosClube.observacoes}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function fecharModalForcaElenco() {
-            const modal = document.getElementById('forca-elenco-modal');
-            if (modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        }
+        // Funções do modal removidas - funcionalidade migrada para aba "Força dos Elencos"
 
         // FUNÇÃO DE TESTE MANUAL - Pode ser chamada do console
         function testarForcaElenco() {
@@ -11183,12 +11025,8 @@ Carregando...
                 const dados = verificarForcaElenco('Flamengo/RJ', 'Palmeiras/SP');
                 console.log('📊 Resultado do mapeamento:', dados);
                 
-                if (dados.casa || dados.fora) {
-                    console.log('✅ Dados encontrados, criando botões...');
-                    criarBotoesForcaElenco('jogo1-container', 'Flamengo/RJ', 'Palmeiras/SP');
-                } else {
-                    console.log('❌ Nenhum dado encontrado para os clubes');
-                }
+                // Botões de força do elenco removidos - funcionalidade migrada para aba "Força dos Elencos"
+                console.log('✅ Dados de força do elenco carregados com sucesso');
             } else {
                 console.log('❌ Dados não carregados ainda');
             }
@@ -11223,12 +11061,8 @@ Carregando...
             const timeFora = document.getElementById(`time-fora-nome-jogo${jogo}-novo`)?.textContent?.trim();
             const containerId = `jogo${jogo}-container`;
             
-            if (timeCasa && timeFora) {
-              console.log(`🎯 Forçando Jogo ${jogo}:`, timeCasa, 'vs', timeFora);
-              criarBotoesForcaElenco(containerId, timeCasa, timeFora);
-            } else {
-              console.log(`⚠️ Jogo ${jogo}: Nomes não encontrados`);
-            }
+            // Botões de força do elenco removidos - funcionalidade migrada para aba "Força dos Elencos"
+            console.log(`✅ Jogo ${jogo} processado:`, timeCasa, 'vs', timeFora);
           }
         };
 
@@ -11285,12 +11119,7 @@ Carregando...
 
         // EVENT LISTENER ÚNICO PARA TODOS OS MODAIS (evita conflitos)
         document.addEventListener('click', function(event) {
-            // Verificar modal de força do elenco primeiro (maior prioridade)
-            const forcaModal = document.getElementById('forca-elenco-modal');
-            if (forcaModal && event.target === forcaModal) {
-                fecharModalForcaElenco();
-                return;
-            }
+            // Modal de força do elenco removido - funcionalidade migrada para aba "Força dos Elencos"
             
             // Verificar modal de probabilidades
             const probModal = document.getElementById('probabilities-modal');
@@ -11314,147 +11143,28 @@ Carregando...
             }
         });
 
-        // Fechar modais com tecla ESC (prioridade: força > probabilidades > legal > honestidade)
+        // Fechar modais com tecla ESC (modal de força do elenco removido)
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
-                // Fechar modal de força do elenco primeiro (maior prioridade)
-                const forcaModal = document.getElementById('forca-elenco-modal');
-                if (forcaModal && forcaModal.style.display === 'flex') {
-                    fecharModalForcaElenco();
+                // Modal de força do elenco removido - verificar modal de probabilidades
+                const probModal = document.getElementById('probabilities-modal');
+                if (probModal && probModal.style.display === 'flex') {
+                    closeProbabilitiesModal();
                 } else {
-                    // Se modal de força não estiver aberto, verificar modal de probabilidades
-                    const probModal = document.getElementById('probabilities-modal');
-                    if (probModal && probModal.style.display === 'flex') {
-                        closeProbabilitiesModal();
+                    // Se modal de probabilidades não estiver aberto, verificar modal legal
+                    const legalModal = document.getElementById('legal-modal');
+                    if (legalModal && legalModal.style.display === 'flex') {
+                        closeLegalModal();
                     } else {
-                        // Se modal de probabilidades não estiver aberto, verificar modal legal
-                        const legalModal = document.getElementById('legal-modal');
-                        if (legalModal && legalModal.style.display === 'flex') {
-                            closeLegalModal();
-                        } else {
-                            // Se modal legal não estiver aberto, fechar modal de honestidade
-                            closeHonestyModal();
-                        }
+                        // Se modal legal não estiver aberto, fechar modal de honestidade
+                        closeHonestyModal();
                     }
                 }
             }
         });
     </script>
 
-    <!-- ESTILOS ESPECÍFICOS PARA MODAL DE FORÇA DO ELENCO -->
-    <style>
-        .forca-elenco-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10003; /* Z-index maior que outros modais */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .forca-elenco-modal .modal-content {
-            background: linear-gradient(135deg, #1e1b29, #2a2340);
-            border-radius: 15px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .forca-elenco-modal .modal-header {
-            padding: 20px 25px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .forca-elenco-modal .modal-header h4 {
-            color: #A855F7;
-            font-size: 1.2rem;
-            margin: 0;
-        }
-
-        .forca-elenco-modal .modal-close {
-            background: none;
-            border: none;
-            color: #cbd5e1;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-
-        .forca-elenco-modal .modal-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .forca-elenco-modal .modal-body {
-            padding: 20px 25px 25px;
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-
-        .forca-elenco-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-        }
-
-        /* Garantir que todos os containers dos jogos tenham position relative */
-        #jogo1-container, #jogo2-container, #jogo3-container, #jogo4-container, #jogo5-container,
-        #jogo6-container, #jogo7-container, #jogo8-container, #jogo9-container, #jogo10-container,
-        #jogo11-container, #jogo12-container, #jogo13-container, #jogo14-container {
-            position: relative !important;
-        }
-
-        /* Estilos específicos para os botões de força do elenco */
-        .forca-elenco-btn {
-            position: absolute !important;
-            z-index: 1000 !important;
-            font-size: 9px !important;
-            padding: 3px 6px !important;
-            border-radius: 8px !important;
-            white-space: nowrap !important;
-            background: linear-gradient(135deg, #A855F7, #7C3AED) !important;
-            color: white !important;
-            border: none !important;
-            cursor: pointer !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-            transition: all 0.2s ease !important;
-        }
-
-        @media (max-width: 768px) {
-            .forca-elenco-modal {
-                padding: 10px;
-            }
-
-            .forca-elenco-modal .modal-content {
-                max-height: 90vh;
-            }
-
-            .forca-elenco-modal .modal-header,
-            .forca-elenco-modal .modal-body {
-                padding: 15px 20px;
-            }
-
-            .forca-elenco-modal .modal-header h4 {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
+    <!-- Estilos do modal de força do elenco removidos - funcionalidade migrada para aba "Força dos Elencos" -->
 
     <!-- ESTILOS ESPECÍFICOS PARA MODAL CONSOLIDADO DE DOCUMENTOS LEGAIS -->
     <style>
@@ -12349,9 +12059,8 @@ Carregando...
                     targetContent.style.display = 'block';
                     e.target.classList.add('active');
                     
-                    // Carregar dashboard se for a aba de força dos elencos
+                    // Inicializar sub-abas da Força dos Elencos (SEM carregar dashboard automaticamente)
                     if (targetTab === 'forca-elenco') {
-                        carregarForcaElencoDashboard();
                         // Inicializar sub-abas da Força dos Elencos
                         initializeForcaElencoSubTabs();
                         // Carregar automaticamente os dados da sub-aba "Plantel ($)"
@@ -12451,9 +12160,9 @@ Carregando...
                 container: !!container
               });
               
+              // Botões de força do elenco removidos - funcionalidade migrada para aba "Força dos Elencos"
               if (timeCasa && timeFora && container) {
-                console.log(`🎯 Criando botões para Jogo ${jogo}:`, timeCasa, 'vs', timeFora);
-                criarBotoesForcaElenco(containerId, timeCasa, timeFora);
+                console.log(`✅ Jogo ${jogo} processado:`, timeCasa, 'vs', timeFora);
                 jogosProcessados++;
               } else {
                 console.log(`⚠️ Jogo ${jogo}: Elementos não encontrados - Casa: ${!!timeCasaElement}, Fora: ${!!timeForaElement}, Container: ${!!container}`);
