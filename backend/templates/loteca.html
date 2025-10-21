@@ -2590,13 +2590,7 @@ Carregando...
                 const nextUpdate = new Date(now + CACHE_DURATION).toLocaleTimeString('pt-BR');
                 const dataUpdate = new Date().toLocaleString('pt-BR');
                 
-                container.innerHTML = renderTabelaClassificacao(dadosSerieA) + 
-                    `<div class="table-footer">
-                        <p style="text-align: center; color: var(--cor-texto-secundario); font-size: 0.8rem; margin-top: 1rem;">
-                            📊 ${fonte} | ✅ Últimos jogos atualizados<br>
-                            🔄 Última consulta: ${dataUpdate} | ⏰ Próximo refresh: ${nextUpdate}
-                        </p>
-                    </div>`;
+                container.innerHTML = renderTabelaClassificacao(dadosSerieA);
 
                 // Configurar auto-refresh para próxima vez
                 programarProximaAtualizacao();
@@ -12069,9 +12063,74 @@ Carregando...
                             carregarTimesLotecaJogos();
                         }, 100);
                     }
+                    
+                    // Atualizar tabelas automaticamente quando abrir Panorama dos Campeonatos
+                    if (targetTab === 'panorama-campeonatos') {
+                        console.log('🏆 [PANORAMA] Aba Panorama aberta - atualizando tabelas automaticamente...');
+                        setTimeout(() => {
+                            atualizarTabelasAutomaticamente();
+                        }, 100);
+                    }
                 }
             }
         });
+
+        // FUNÇÃO PARA ATUALIZAR TABELAS AUTOMATICAMENTE
+        async function atualizarTabelasAutomaticamente() {
+            console.log('🔄 [PANORAMA] Iniciando atualização automática das tabelas...');
+            
+            try {
+                // Chamar API para atualizar as tabelas
+                const response = await fetch('/api/auto/classificacao/atualizar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('✅ [PANORAMA] Tabelas atualizadas com sucesso:', result);
+                    
+                    // Recarregar as tabelas na interface
+                    setTimeout(() => {
+                        carregarTabelasPanorama();
+                    }, 500);
+                } else {
+                    console.error('❌ [PANORAMA] Erro ao atualizar tabelas:', response.status);
+                    // Fallback: carregar tabelas existentes
+                    carregarTabelasPanorama();
+                }
+            } catch (error) {
+                console.error('❌ [PANORAMA] Erro na atualização automática:', error);
+                // Fallback: carregar tabelas existentes
+                carregarTabelasPanorama();
+            }
+        }
+        
+        // FUNÇÃO PARA CARREGAR TABELAS DO PANORAMA
+        async function carregarTabelasPanorama() {
+            console.log('📊 [PANORAMA] Carregando tabelas...');
+            
+            try {
+                // Carregar Série A
+                const serieAResponse = await fetch('/api/br/classificacao/serie-a');
+                if (serieAResponse.ok) {
+                    const serieAData = await serieAResponse.json();
+                    console.log('✅ [PANORAMA] Série A carregada:', serieAData.data.length, 'times');
+                }
+                
+                // Carregar Série B
+                const serieBResponse = await fetch('/api/br/classificacao/serie-b');
+                if (serieBResponse.ok) {
+                    const serieBData = await serieBResponse.json();
+                    console.log('✅ [PANORAMA] Série B carregada:', serieBData.data.length, 'times');
+                }
+                
+            } catch (error) {
+                console.error('❌ [PANORAMA] Erro ao carregar tabelas:', error);
+            }
+        }
 
         // INICIALIZAR SUB-ABAS DA FORÇA DOS ELENCOS
         function initializeForcaElencoSubTabs() {

@@ -54,3 +54,4 @@ CREATE INDEX IF NOT EXISTS idx_serie_a_italiana_time ON classificacao_serie_a_it
 
 
 
+

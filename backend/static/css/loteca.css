@@ -1226,11 +1226,110 @@
             font-weight: 600;
         }
 
-        /* Cores de classificação */
-        .libertadores { border-left: 4px solid #00E38C; }
-        .pre-libertadores { border-left: 4px solid #FBBF24; }
-        .sul-americana { border-left: 4px solid #3B82F6; }
-        .rebaixamento { border-left: 4px solid #F43F5E; }
+        /* Cores de classificação - Barras verticais */
+        .libertadores { 
+            border-left: 6px solid #3B82F6; /* Azul */
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+        }
+        .pre-libertadores { 
+            border-left: 6px solid #60A5FA; /* Azul claro */
+            background: linear-gradient(90deg, rgba(96, 165, 250, 0.1), transparent);
+        }
+        .sul-americana { 
+            border-left: 6px solid #10B981; /* Verde */
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), transparent);
+        }
+        .meio-tabela {
+            border-left: 6px solid #6B7280; /* Cinza */
+            background: linear-gradient(90deg, rgba(107, 114, 128, 0.1), transparent);
+        }
+        .rebaixamento { 
+            border-left: 6px solid #EF4444; /* Vermelho */
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1), transparent);
+        }
+
+        /* RODAPÉ COM INFORMAÇÕES DAS ZONAS */
+        .table-footer {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(0, 227, 140, 0.05));
+            border-radius: 12px;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .zones-info h4 {
+            color: var(--cor-destaque-primaria);
+            margin: 0 0 1.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .zone-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--cor-fundo-card);
+            border-radius: 8px;
+            border: 1px solid var(--cor-borda);
+            transition: all 0.3s ease;
+        }
+
+        .zone-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .zone-item .zone-bar {
+            width: 6px;
+            height: 40px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .zone-item.libertadores .zone-bar {
+            background: linear-gradient(180deg, #3B82F6, #1E40AF);
+        }
+
+        .zone-item.pre-libertadores .zone-bar {
+            background: linear-gradient(180deg, #60A5FA, #3B82F6);
+        }
+
+        .zone-item.sul-americana .zone-bar {
+            background: linear-gradient(180deg, #10B981, #059669);
+        }
+
+        .zone-item.meio-tabela .zone-bar {
+            background: linear-gradient(180deg, #6B7280, #4B5563);
+        }
+
+        .zone-item.rebaixamento .zone-bar {
+            background: linear-gradient(180deg, #EF4444, #DC2626);
+        }
+
+        .zone-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .zone-text strong {
+            color: var(--cor-texto-principal);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .zone-text span {
+            color: var(--cor-texto-secundario);
+            font-size: 0.85rem;
+        }
 
         /* Últimos jogos */
         .ultimos-jogos {

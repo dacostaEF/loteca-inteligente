@@ -7,14 +7,22 @@
 
 // FUNÇÃO AUXILIAR PARA DETERMINAR ZONA
 function determinarZona(posicao, zona) {
-    if (zona) return zona; // Se já tem zona definida, usar ela
+    if (zona) {
+        // Converter zona do backend para classe CSS
+        if (zona === 'Libertadores') return 'libertadores';
+        if (zona === 'Pré-Libertadores') return 'pre-libertadores';
+        if (zona === 'Sul-Americana') return 'sul-americana';
+        if (zona === 'Zona de Rebaixamento') return 'rebaixamento';
+        if (zona === 'Meio de tabela') return 'meio-tabela';
+        return zona.toLowerCase().replace(/\s+/g, '-');
+    }
     
-    // Determinar zona baseada na posição
-    if (posicao <= 4) return 'libertadores';
-    if (posicao <= 6) return 'pre-libertadores';
-    if (posicao <= 12) return 'sul-americana';
-    if (posicao >= 17) return 'rebaixamento';
-    return '';
+    // Determinar zona baseada na posição (baseado na tabela do jornal esportivo)
+    if (posicao <= 4) return 'libertadores';      // 1º ao 4º (azul)
+    if (posicao <= 6) return 'pre-libertadores';   // 5º ao 6º (azul claro)
+    if (posicao <= 12) return 'sul-americana';    // 7º ao 12º (verde)
+    if (posicao >= 17) return 'rebaixamento';     // 17º ao 20º (vermelho)
+    return 'meio-tabela'; // 13º ao 16º (preto)
 }
 
 // RENDERIZAR TABELA DE CLASSIFICAÇÃO (versão simples)
@@ -40,15 +48,31 @@ function renderTabelaClassificacao(dados) {
     `;
 
     const rows = dados.map(time => {
-        const ultimosJogos = time.ultimos.split('').map(resultado => {
-            const classe = resultado === 'V' ? 'vitoria' : resultado === 'E' ? 'empate' : 'derrota';
-            return `<div class="resultado ${classe}"></div>`;
-        }).join('');
+        // Se os dados já vêm com bolas coloridas, usar diretamente
+        let ultimosJogos;
+        if (time.ultimos && time.ultimos.includes('🟢')) {
+            // Dados já convertidos com bolas coloridas
+            ultimosJogos = time.ultimos;
+        } else {
+            // Converter V-D-E para bolas coloridas
+            ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡');
+        }
+
+        // Determinar ícone de variação
+        let variacaoIcon = '';
+        if (time.variacao === 'subiu') {
+            variacaoIcon = '↑';
+        } else if (time.variacao === 'desceu') {
+            variacaoIcon = '↓';
+        } else {
+            variacaoIcon = '■';
+        }
 
         return `
-            <tr class="${time.zona}">
+            <tr class="${determinarZona(time.pos, time.zona)}">
                 <td>
                     <span class="team-position">${time.pos}</span>
+                    <span class="variacao-icon">${variacaoIcon}</span>
                     <span class="team-name">${time.time}</span>
                 </td>
                 <td><strong>${time.p}</strong></td>
@@ -58,7 +82,7 @@ function renderTabelaClassificacao(dados) {
                 <td>${time.d}</td>
                 <td>${time.gp}</td>
                 <td>${time.gc}</td>
-                <td>${time.sg > 0 ? '+' + time.sg : time.sg}</td>
+                <td>${time.sg !== undefined && time.sg !== null ? (time.sg > 0 ? '+' + time.sg : time.sg) : '0'}</td>
                 <td>${time.aproveitamento}</td>
                 <td>
                     <div class="ultimos-jogos">
@@ -72,6 +96,48 @@ function renderTabelaClassificacao(dados) {
     const footer = `
             </tbody>
         </table>
+        <div class="table-footer">
+            <div class="zones-info">
+                <h4>🏆 Zonas de Classificação</h4>
+                <div class="zones-grid">
+                    <div class="zone-item libertadores">
+                        <div class="zone-bar"></div>
+                        <div class="zone-text">
+                            <strong>Libertadores (1º-4º)</strong>
+                            <span>Classificação direta para a Copa Libertadores</span>
+                        </div>
+                    </div>
+                    <div class="zone-item pre-libertadores">
+                        <div class="zone-bar"></div>
+                        <div class="zone-text">
+                            <strong>Pré-Libertadores (5º-6º)</strong>
+                            <span>Pré-classificação para a Copa Libertadores</span>
+                        </div>
+                    </div>
+                    <div class="zone-item sul-americana">
+                        <div class="zone-bar"></div>
+                        <div class="zone-text">
+                            <strong>Sul-Americana (7º-12º)</strong>
+                            <span>Classificação para a Copa Sul-Americana</span>
+                        </div>
+                    </div>
+                    <div class="zone-item meio-tabela">
+                        <div class="zone-bar"></div>
+                        <div class="zone-text">
+                            <strong>Meio de Tabela (13º-16º)</strong>
+                            <span>Sem classificação para competições internacionais</span>
+                        </div>
+                    </div>
+                    <div class="zone-item rebaixamento">
+                        <div class="zone-bar"></div>
+                        <div class="zone-text">
+                            <strong>Zona de Rebaixamento (17º-20º)</strong>
+                            <span>Rebaixamento para a Série B</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     `;
 
     return header + rows + footer;

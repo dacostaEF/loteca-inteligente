@@ -63,7 +63,7 @@ class ClassificacaoDB:
                     SELECT 
                         id, posicao, time, pontos, jogos, vitorias, empates, derrotas,
                         gols_pro, gols_contra, saldo_gols, aproveitamento,
-                        ultimos_confrontos, zona, data_atualizacao, rodada, fonte
+                        ultimos_confrontos, ultimos_jogos, zona, data_atualizacao, rodada, fonte
                     FROM classificacao_serie_a 
                     ORDER BY posicao ASC
                 """)

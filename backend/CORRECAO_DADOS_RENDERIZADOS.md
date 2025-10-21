@@ -118,3 +118,4 @@ O problema estava na função de fallback que usava dados **aleatórios** quando
 
 **Problema resolvido!** 🎯✅
 
+

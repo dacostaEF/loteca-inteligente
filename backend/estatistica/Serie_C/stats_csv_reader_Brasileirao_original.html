@@ -389,9 +389,6 @@
             <button class="tab-btn" onclick="showTab('apostas')">
                 💰 Estatísticas para Apostas
             </button>
-            <button class="tab-btn" onclick="exportarCSV()" style="background: #22c55e; color: white;">
-                📊 Exportar CSV
-            </button>
         </div>
 
         <!-- Tabela Tradicional -->
@@ -1641,113 +1638,6 @@
             console.log('✅ DEBUG: Dados limpos com sucesso!');
             console.log('✅ DEBUG: Sistema resetado completamente!');
             showStatus('Dados limpos com sucesso! Sistema pronto para novos dados.', 'success');
-        }
-
-        // Função para exportar dados em CSV
-        function exportarCSV() {
-            if (dadosProcessados.length === 0) {
-                showStatus('⚠️ Nenhum dado para exportar. Carregue os dados primeiro.', 'error');
-                return;
-            }
-
-            // Detectar qual aba está ativa
-            const abaAtiva = document.querySelector('.tab-content.active').id;
-            console.log(`🔍 DEBUG: Aba ativa detectada: ${abaAtiva}`);
-
-            let headers, csvContent, nomeArquivo;
-
-            if (abaAtiva === 'tradicional') {
-                // Exportar dados da tabela tradicional
-                headers = [
-                    'Posição', 'Time', 'Pontos', 'Jogos', 'Vitórias', 'Empates', 'Derrotas',
-                    'Gols Pró', 'Gols Contra', 'Saldo Gols', 'Aproveitamento %', 'Últimos 5 Jogos'
-                ];
-
-                csvContent = [
-                    headers.join(','),
-                    ...dadosProcessados.map(team => [
-                        team.pos,
-                        `"${team.time}"`,
-                        team.pontos,
-                        team.jogos,
-                        team.vitorias,
-                        team.empates,
-                        team.derrotas,
-                        team.golsPro,
-                        team.golsContra,
-                        team.saldoGols,
-                        team.aproveitamento,
-                        `"${team.ultimos5Str}"`
-                    ].join(','))
-                ].join('\n');
-
-                const dataAtual = new Date().toISOString().split('T')[0];
-                nomeArquivo = `tabela_tradicional_${dataAtual}.csv`;
-
-            } else if (abaAtiva === 'apostas') {
-                // Exportar dados das estatísticas para apostas
-                headers = [
-                    'Posição', 'Time', 'Jogos', 'Gols Pró', 'Gols Contra', 'Média Gols Pró', 'Média Gols Contra',
-                    'Over 1.5 %', 'Over 2.5 %', 'Over 3.5 %', 'Under 2.5 %', 'BTTS Sim %', 'BTTS Não %',
-                    'Jogos Casa', 'Vitórias Casa', 'Empates Casa', 'Derrotas Casa', 'Gols Pró Casa', 'Gols Contra Casa', 'Aproveitamento Casa %',
-                    'Jogos Fora', 'Vitórias Fora', 'Empates Fora', 'Derrotas Fora', 'Gols Pró Fora', 'Gols Contra Fora', 'Aproveitamento Fora %',
-                    'Clean Sheets %', 'Últimos 5 Jogos', 'Pontos Últimos 5'
-                ];
-
-                csvContent = [
-                    headers.join(','),
-                    ...dadosProcessados.map(team => [
-                        team.pos,
-                        `"${team.time}"`,
-                        team.jogos,
-                        team.golsPro,
-                        team.golsContra,
-                        team.mediaGolsPro,
-                        team.mediaGolsContra,
-                        team.over15Perc,
-                        team.over25Perc,
-                        team.over35Perc,
-                        team.under25Perc,
-                        team.bttsYesPerc,
-                        team.bttsNoPerc,
-                        team.jogosCasa,
-                        team.vitoriasCasa,
-                        team.empatesCasa,
-                        team.derrotasCasa,
-                        team.golsProCasa,
-                        team.golsContraCasa,
-                        team.aprovCasa,
-                        team.jogosFora,
-                        team.vitoriasFora,
-                        team.empatesFora,
-                        team.derrotasFora,
-                        team.golsProFora,
-                        team.golsContraFora,
-                        team.aprovFora,
-                        team.cleanSheetsPerc,
-                        `"${team.ultimos5Str}"`,
-                        team.pontosUlt5
-                    ].join(','))
-                ].join('\n');
-
-                const dataAtual = new Date().toISOString().split('T')[0];
-                nomeArquivo = `estatisticas_apostas_${dataAtual}.csv`;
-            }
-
-            // Criar e baixar arquivo
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', nomeArquivo);
-            
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            showStatus(`✅ Arquivo ${nomeArquivo} exportado com sucesso!`, 'success');
-            console.log(`📊 CSV exportado: ${dadosProcessados.length} times - Aba: ${abaAtiva}`);
         }
 
         // Função para ordenar dados
