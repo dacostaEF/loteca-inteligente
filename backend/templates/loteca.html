@@ -87,9 +87,6 @@
                 <button class="tab-btn" data-tab="dados-avancados">
                     📊 Dados Avançados
                 </button>
-                <button class="tab-btn" data-tab="plantel">
-                    💰 Plantel ($)
-                </button>
                 <button class="tab-btn" data-tab="panorama-campeonatos">
                     🏆 Panorama dos Campeonatos
                 </button>
@@ -1483,38 +1480,6 @@ Carregando...
             </div>
         </div> <!-- FIM DA ABA 2: DADOS AVANÇADOS -->
 
-        <!-- ABA 3: PLANTEL ($) -->
-        <div class="tab-content" id="plantel" style="display: none;">
-            <div class="plantel-container">
-                
-                <!-- CABEÇALHO DA ABA -->
-                <div class="section-header">
-                    <h2>💰 Plantel ($)</h2>
-                    <p>Análise de elencos e valores de mercado dos times da Loteca</p>
-                </div>
-
-                <!-- SEÇÃO TIMES LOTECA JOGOS -->
-                <div class="times-loteca-section">
-                    <div class="section-header">
-                        <h2>⚽ Times Loteca Jogos - Comparação Direta</h2>
-                        <!-- Botão removido: carregamento automático ativo -->
-                    </div>
-
-                    <!-- LOADING -->
-                    <div class="loading-clubes" id="loading-times-loteca">
-                        <div class="loading-spinner"></div>
-                        <p>Carregando dados dos times...</p>
-                    </div>
-
-                    <!-- CONTAINER DOS JOGOS -->
-                    <div id="jogos-loteca-container" class="jogos-container">
-                        <!-- Os jogos serão carregados dinamicamente aqui -->
-                    </div>
-
-                </div> <!-- Fim da seção Times Loteca -->
-
-            </div>
-        </div> <!-- FIM DA ABA 3: PLANTEL ($) -->
 
         <!-- ABA 4: PANORAMA DOS CAMPEONATOS -->
         <div class="tab-content" id="panorama-campeonatos" style="display: none;">
@@ -2005,15 +1970,75 @@ Carregando...
                     </p>
                 </div>
 
-                <!-- LOADING SPINNER -->
-                <div id="forca-elenco-loading" class="loading-container">
-                    <div class="loading-spinner"></div>
-                    <p>Carregando dados dos elencos...</p>
+                <!-- SUB-ABAS DO DASHBOARD -->
+                <div class="sub-tabs-container">
+                    <div class="sub-tabs-nav">
+                        <button class="sub-tab-btn active" data-subtab="times-loteca">
+                            💰 Plantel ($)
+                        </button>
+                        <button class="sub-tab-btn" data-subtab="serie-a">
+                            🇧🇷 Série A
+                        </button>
+                        <button class="sub-tab-btn" data-subtab="serie-b">
+                            🇧🇷 Série B
+                        </button>
+                        <button class="sub-tab-btn" data-subtab="top100">
+                            🌍 Top 100 Mundial
+                        </button>
+                    </div>
                 </div>
 
-                <!-- CONTEÚDO PRINCIPAL (será carregado via API) -->
-                <div id="forca-elenco-content" style="display: none;">
-                    <!-- Dashboard será inserido aqui via JavaScript -->
+                <!-- SUB-ABA: TIMES LOTECA (PRIMEIRA) -->
+                <div class="sub-tab-content" id="times-loteca" style="display: block;">
+                    <div class="times-loteca-section">
+                        <div class="section-header">
+                            <h2>💰 Plantel ($) - Comparação Direta</h2>
+                            <!-- Botão removido: carregamento automático ativo -->
+                        </div>
+
+                        <!-- LOADING -->
+                        <div class="loading-clubes" id="loading-times-loteca">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando dados dos times...</p>
+                        </div>
+
+                        <!-- CONTAINER DOS JOGOS -->
+                        <div id="jogos-loteca-container" class="jogos-container">
+                            <!-- Os jogos serão carregados dinamicamente aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-ABA: SÉRIE A (SEGUNDA) -->
+                <div class="sub-tab-content" id="serie-a" style="display: none;">
+                    <div class="info-box blue">
+                        <h3>🇧🇷 Brasileirão Série A</h3>
+                        <p>Análise dos elencos dos clubes da Série A do Brasileirão</p>
+                    </div>
+                    <!-- Conteúdo será carregado dinamicamente -->
+                </div>
+
+                <!-- SUB-ABA: SÉRIE B (TERCEIRA) -->
+                <div class="sub-tab-content" id="serie-b" style="display: none;">
+                    <div class="info-box green">
+                        <h3>🇧🇷 Brasileirão Série B</h3>
+                        <p>Análise dos elencos dos clubes da Série B do Brasileirão</p>
+                    </div>
+                    <!-- Conteúdo será carregado dinamicamente -->
+                </div>
+
+                <!-- SUB-ABA: TOP 100 MUNDIAL (ÚLTIMA) -->
+                <div class="sub-tab-content" id="top100" style="display: none;">
+                    <!-- LOADING SPINNER -->
+                    <div id="forca-elenco-loading" class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <p>Carregando dados dos elencos...</p>
+                    </div>
+
+                    <!-- CONTEÚDO PRINCIPAL (será carregado via API) -->
+                    <div id="forca-elenco-content" style="display: none;">
+                        <!-- Dashboard será inserido aqui via JavaScript -->
+                    </div>
                 </div>
 
             </div>
@@ -11658,10 +11683,72 @@ Carregando...
                     // Carregar dashboard se for a aba de força dos elencos
                     if (targetTab === 'forca-elenco') {
                         carregarForcaElencoDashboard();
+                        // Inicializar sub-abas da Força dos Elencos
+                        initializeForcaElencoSubTabs();
                     }
                 }
             }
         });
+
+        // INICIALIZAR SUB-ABAS DA FORÇA DOS ELENCOS
+        function initializeForcaElencoSubTabs() {
+            console.log('🎯 [FORÇA-ELENCOS] Inicializando sub-abas...');
+            
+            const subTabBtns = document.querySelectorAll('#forca-elenco .sub-tab-btn');
+            const subTabContents = document.querySelectorAll('#forca-elenco .sub-tab-content');
+            
+            console.log('🎯 [FORÇA-ELENCOS] Encontrados:', {
+                'botões': subTabBtns.length, 
+                'conteúdos': subTabContents.length
+            });
+            
+            subTabBtns.forEach((btn, index) => {
+                console.log(`🎯 [FORÇA-ELENCOS] Botão ${index}:`, btn.dataset.subtab);
+                
+                btn.addEventListener('click', () => {
+                    const targetSubTab = btn.dataset.subtab;
+                    console.log(`🎯 [FORÇA-ELENCOS] Clique em sub-aba: ${targetSubTab}`);
+                    
+                    // Remover classe active de todos os botões
+                    subTabBtns.forEach(b => b.classList.remove('active'));
+                    // Adicionar classe active ao botão clicado
+                    btn.classList.add('active');
+                    
+                    // Esconder todas as sub-abas
+                    subTabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Mostrar sub-aba selecionada
+                    const selectedSubTab = document.getElementById(targetSubTab);
+                    console.log(`🎯 [FORÇA-ELENCOS] Elemento encontrado:`, selectedSubTab);
+                    
+                    if (selectedSubTab) {
+                        selectedSubTab.style.display = 'block';
+                        console.log(`🎯 [FORÇA-ELENCOS] Sub-aba ${targetSubTab} exibida com sucesso!`);
+                        
+                        // Carregar dados específicos da sub-aba (nova ordem)
+                        if (targetSubTab === 'times-loteca') {
+                            console.log('⚽ [TIMES-LOTECA] Carregando dados dos times da Loteca...');
+                            carregarTimesLotecaJogos();
+                        } else if (targetSubTab === 'serie-a') {
+                            console.log('🇧🇷 [SÉRIE-A] Carregando dados da Série A...');
+                            // Implementar carregamento da Série A
+                        } else if (targetSubTab === 'serie-b') {
+                            console.log('🇧🇷 [SÉRIE-B] Carregando dados da Série B...');
+                            // Implementar carregamento da Série B
+                        } else if (targetSubTab === 'top100') {
+                            console.log('🌍 [TOP100] Carregando dashboard Top 100...');
+                            carregarForcaElencoDashboard();
+                        }
+                    } else {
+                        console.error(`🎯 [FORÇA-ELENCOS] Sub-aba ${targetSubTab} não encontrada!`);
+                    }
+                });
+            });
+            
+            console.log('✅ [FORÇA-ELENCOS] Sub-abas inicializadas com sucesso!');
+        }
 
         // Inicializa o sistema de força do elenco para TODOS os jogos
         console.log('🚀 Iniciando sistema de força do elenco para TODOS os jogos...');
