@@ -62,3 +62,4 @@ def testar_serie_b_tradicional():
 if __name__ == "__main__":
     testar_serie_b_tradicional()
 
+

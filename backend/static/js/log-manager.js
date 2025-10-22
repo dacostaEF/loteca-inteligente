@@ -66,3 +66,4 @@ window.LogManager = new LogManager();
 
 // Exportar para uso
 window.log = window.LogManager;
+
