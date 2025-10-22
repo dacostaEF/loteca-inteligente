@@ -156,6 +156,78 @@
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
+/* ========================================
+   BOTÃO DE RETORNO TEMPORÁRIO
+   ======================================== */
+
+.retorno-otimizador-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    background: linear-gradient(135deg, var(--cor-destaque-primaria) 0%, #7C3AED 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 15px rgba(168, 85, 247, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+}
+
+.retorno-otimizador-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.retorno-otimizador-btn:hover {
+    transform: translateY(0) scale(1.05);
+    box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
+    background: linear-gradient(135deg, #9333EA 0%, #6D28D9 100%);
+}
+
+.retorno-otimizador-btn:active {
+    transform: translateX(0) scale(0.95);
+}
+
+.retorno-otimizador-btn .icon {
+    font-size: 16px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-3px); }
+    60% { transform: translateY(-2px); }
+}
+
+/* DESTAQUE DE RETORNO NO OTIMIZADOR */
+.jogo-destaque-retorno {
+    animation: highlightReturn 0.5s ease-in-out 3;
+    border: 3px solid var(--cor-destaque-primaria) !important;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.6) !important;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%) !important;
+}
+
+/* CONTAINER DO JOGO COM POSIÇÃO RELATIVA PARA BOTÃO */
+.game-card {
+    position: relative;
+}
+
+@keyframes highlightReturn {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
 /* Animação pulse removida - não mais necessária */
 
 /* ANIMAÇÃO DE TRANSIÇÃO ENTRE ABAS */
