@@ -9,7 +9,8 @@ class NavegacaoInteligente {
     }
 
     init() {
-        console.log('🚀 [NAVEGAÇÃO] Inicializando navegação inteligente...');
+        // Log crítico - sempre mantido
+        window.log.navigation('Inicializando navegação inteligente...');
         this.setupEventListeners();
         this.setupHoverEffects();
     }
@@ -47,16 +48,19 @@ class NavegacaoInteligente {
         });
         
         if (missingNavigation > 0) {
-            console.log(`🔧 [VERIFICAÇÃO] ${missingNavigation} jogos tiveram navegação adicionada`);
+            // Log crítico - jogos sem navegação
+            window.log.warning(`${missingNavigation} jogos tiveram navegação adicionada`);
         } else {
-            console.log(`✅ [VERIFICAÇÃO] Todos os ${optimizationRows.length} jogos têm navegação configurada`);
+            // Log de sucesso - apenas em desenvolvimento
+            window.log.debug(`Todos os ${optimizationRows.length} jogos têm navegação configurada`);
         }
     }
 
     attachClickListeners() {
         const optimizationRows = document.querySelectorAll('#optimization-tbody tr');
         
-        console.log(`🔍 [NAVEGAÇÃO] Encontradas ${optimizationRows.length} linhas na tabela`);
+        // Log de debug - apenas em desenvolvimento
+        window.log.debug(`Encontradas ${optimizationRows.length} linhas na tabela`);
         
         optimizationRows.forEach((row, index) => {
             const jogoNumero = index + 1;
@@ -67,7 +71,8 @@ class NavegacaoInteligente {
             // Verificar se já existe área de navegação
             const existingArea = row.querySelector('.analise-navegacao-area');
             if (existingArea) {
-                console.log(`⚠️ [NAVEGAÇÃO] Área já existe para Jogo ${jogoNumero}`);
+                // Log de debug - apenas em desenvolvimento
+                window.log.debug(`Área já existe para Jogo ${jogoNumero}`);
                 return; // Pular se já existe
             }
             
@@ -75,7 +80,8 @@ class NavegacaoInteligente {
             this.createNavigationArea(row, jogoNumero);
         });
 
-        console.log(`✅ [NAVEGAÇÃO] ${optimizationRows.length} jogos configurados para navegação`);
+        // Log crítico - sempre mantido
+        window.log.navigation(`${optimizationRows.length} jogos configurados para navegação`);
     }
 
     createNavigationArea(row, jogoNumero) {
