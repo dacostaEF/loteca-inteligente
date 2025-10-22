@@ -72,28 +72,91 @@
     box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
 }
 
-/* INDICADOR DE NAVEGAÇÃO - ESTILO CONSISTENTE */
-.optimization-table tbody tr:hover::after {
-    content: '🔍 Ver Análise';
+/* ÁREA CLICÁVEL ESPECÍFICA PARA NAVEGAÇÃO */
+.analise-navegacao-area {
+    position: relative;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+    border: 1px solid transparent;
+}
+
+.analise-navegacao-area:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border-color: var(--cor-destaque-primaria);
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2);
+}
+
+.analise-navegacao-area:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border-color: var(--cor-destaque-primaria);
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2);
+}
+
+.analise-navegacao-area:hover::after {
+    content: 'Ver Análise';
     position: absolute;
-    right: 10px;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: linear-gradient(135deg, var(--cor-destaque-primaria) 0%, #7C3AED 100%);
     color: #ffffff;
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: bold;
+    white-space: nowrap;
+    z-index: 1000;
     box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
-    animation: pulse 1.5s infinite;
+    animation: fadeIn 0.3s ease;
 }
 
-@keyframes pulse {
-    0% { opacity: 0.8; transform: translateY(-50%) scale(1); }
-    50% { opacity: 1; transform: translateY(-50%) scale(1.05); }
-    100% { opacity: 0.8; transform: translateY(-50%) scale(1); }
+/* TOOLTIP INTEGRADO - UMA ÚNICA ENTIDADE VISUAL */
+.analise-navegacao-area {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
 }
+
+.analise-navegacao-area:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+    border-color: var(--cor-destaque-primaria);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.analise-navegacao-area:hover::after {
+    content: 'Ver Análise';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, var(--cor-destaque-primaria) 0%, #7C3AED 100%);
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    animation: fadeIn 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Animação pulse removida - não mais necessária */
 
 /* ANIMAÇÃO DE TRANSIÇÃO ENTRE ABAS */
 .tab-transition {

@@ -28,46 +28,62 @@ class NavegacaoInteligente {
             // Adicionar data-jogo para identificação
             row.setAttribute('data-jogo', index + 1);
             
-            // Adicionar listener de clique
-            row.addEventListener('click', (e) => {
-                e.preventDefault();
-                const jogoNumero = row.getAttribute('data-jogo');
-                this.navegarParaAnalise(jogoNumero);
-            });
-
-            // Adicionar efeito de hover personalizado
-            row.addEventListener('mouseenter', () => {
-                this.showHoverEffect(row);
-            });
-
-            row.addEventListener('mouseleave', () => {
-                this.hideHoverEffect(row);
-            });
+            // REMOVER listeners da linha inteira
+            // row.addEventListener('click', ...) - REMOVIDO
+            
+            // CRIAR área específica clicável no canto direito
+            this.createNavigationArea(row, index + 1);
         });
 
         console.log(`✅ [NAVEGAÇÃO] ${optimizationRows.length} jogos configurados para navegação`);
     }
 
-    showHoverEffect(row) {
-        // Adicionar classe de hover personalizada
-        row.classList.add('jogo-hover-active');
+    createNavigationArea(row, jogoNumero) {
+        // Encontrar a última célula (canto direito) onde estão estatísticas
+        const lastCell = row.querySelector('td:last-child');
         
-        // Adicionar tooltip de navegação
-        const tooltip = document.createElement('div');
-        tooltip.className = 'navegacao-tooltip';
-        tooltip.innerHTML = '🔍 Clique para ver análise detalhada';
-        row.appendChild(tooltip);
-    }
-
-    hideHoverEffect(row) {
-        row.classList.remove('jogo-hover-active');
-        
-        // Remover tooltip
-        const tooltip = row.querySelector('.navegacao-tooltip');
-        if (tooltip) {
-            tooltip.remove();
+        if (lastCell) {
+            // Criar área clicável específica com tooltip integrado
+            const navigationArea = document.createElement('div');
+            navigationArea.className = 'analise-navegacao-area';
+            navigationArea.setAttribute('data-jogo', jogoNumero);
+            navigationArea.innerHTML = '🔍';
+            navigationArea.title = 'Clique para ver análise detalhada';
+            
+            // Adicionar à última célula
+            lastCell.appendChild(navigationArea);
+            
+            // Adicionar listener apenas na área específica
+            navigationArea.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Evitar propagação para a linha
+                this.navegarParaAnalise(jogoNumero);
+            });
+            
+            // Adicionar efeito de hover integrado
+            navigationArea.addEventListener('mouseenter', () => {
+                this.showIntegratedTooltip(navigationArea);
+            });
+            
+            navigationArea.addEventListener('mouseleave', () => {
+                this.hideIntegratedTooltip(navigationArea);
+            });
+            
+            console.log(`🎯 [NAVEGAÇÃO] Área específica criada para Jogo ${jogoNumero}`);
         }
     }
+
+    showIntegratedTooltip(area) {
+        // Tooltip já é gerenciado pelo CSS ::after
+        area.classList.add('tooltip-active');
+    }
+
+    hideIntegratedTooltip(area) {
+        // Remover classe de tooltip ativo
+        area.classList.remove('tooltip-active');
+    }
+
+    // Métodos antigos removidos - agora usando área específica
 
     navegarParaAnalise(jogoNumero) {
         console.log(`🎯 [NAVEGAÇÃO] Navegando para análise do Jogo ${jogoNumero}`);
@@ -142,51 +158,8 @@ class NavegacaoInteligente {
     }
 
     setupHoverEffects() {
-        // Adicionar estilos dinâmicos para hover - MESMO ESTILO DA FORÇA DOS ELENCOS
-        const style = document.createElement('style');
-        style.textContent = `
-            .jogo-hover-active {
-                transform: scale(1.02) !important;
-                box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2) !important;
-                border-color: var(--cor-destaque-primaria) !important;
-                background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%) !important;
-            }
-            
-            .navegacao-tooltip {
-                position: absolute;
-                top: -35px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: linear-gradient(135deg, var(--cor-destaque-primaria) 0%, #7C3AED 100%);
-                color: white;
-                padding: 6px 12px;
-                border-radius: 6px;
-                font-size: 12px;
-                font-weight: bold;
-                white-space: nowrap;
-                z-index: 1000;
-                box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
-                animation: fadeIn 0.3s ease;
-            }
-            
-            .jogo-destaque-navegacao {
-                animation: highlightPulse 0.5s ease-in-out 3;
-                transform: scale(1.02) !important;
-                box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4) !important;
-                border-color: var(--cor-destaque-primaria) !important;
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-                to { opacity: 1; transform: translateX(-50%) translateY(0); }
-            }
-            
-            @keyframes highlightPulse {
-                0%, 100% { transform: scale(1.02); }
-                50% { transform: scale(1.05); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Estilos agora são gerenciados pelo CSS - área específica
+        console.log('✅ [NAVEGAÇÃO] Estilos de hover configurados via CSS');
     }
 }
 
