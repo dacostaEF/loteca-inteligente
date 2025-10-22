@@ -206,21 +206,22 @@ class NavegacaoInteligente {
         const gameContainer = document.getElementById(`jogo${jogoNumero}-container`);
         
         if (gameContainer) {
-            // Adicionar efeito de destaque
-            gameContainer.classList.add('jogo-destaque-navegacao');
+            // Adicionar efeito de destaque - MESMO ESTILO DA FORÇA DOS ELENCOS
+            gameContainer.classList.add('destaque-navegacao');
             
             // Remover destaque após 3 segundos
             setTimeout(() => {
-                gameContainer.classList.remove('jogo-destaque-navegacao');
+                gameContainer.classList.remove('destaque-navegacao');
             }, 3000);
             
-            console.log(`✨ [NAVEGAÇÃO] Jogo ${jogoNumero} destacado`);
+            // Log crítico - sempre mantido
+            window.log.navigation(`Jogo ${jogoNumero} destacado na Análise Rápida`);
         }
     }
 
     setupHoverEffects() {
         // Estilos agora são gerenciados pelo CSS - área específica
-        console.log('✅ [NAVEGAÇÃO] Estilos de hover configurados via CSS');
+        window.log.debug('Estilos de hover configurados via CSS');
     }
 
     showRetornoButton() {
@@ -299,7 +300,7 @@ class NavegacaoInteligente {
         const gameRow = document.querySelector(`#optimization-tbody tr[data-jogo="${jogoNumero}"]`);
         
         if (gameRow) {
-            // Adicionar efeito de destaque
+            // Adicionar efeito de destaque - MESMO ESTILO DA FORÇA DOS ELENCOS
             gameRow.classList.add('jogo-destaque-retorno');
             
             // Remover destaque após 3 segundos
@@ -307,7 +308,8 @@ class NavegacaoInteligente {
                 gameRow.classList.remove('jogo-destaque-retorno');
             }, 3000);
             
-            console.log(`✨ [RETORNO] Jogo ${jogoNumero} destacado no Otimizador`);
+            // Log crítico - sempre mantido
+            window.log.navigation(`Jogo ${jogoNumero} destacado no Otimizador`);
         }
     }
 

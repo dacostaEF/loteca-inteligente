@@ -221,6 +221,28 @@
 /* CONTAINER DO JOGO COM POSIÇÃO RELATIVA PARA BOTÃO */
 .game-card {
     position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* HOVER EFFECT NOS CONTAINERS DOS JOGOS - MESMO ESTILO DA FORÇA DOS ELENCOS */
+.game-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
+    border-color: var(--cor-destaque-primaria);
+}
+
+/* DESTAQUE POR NAVEGAÇÃO DO OTIMIZADOR */
+.game-card.destaque-navegacao {
+    animation: highlightGame 0.5s ease-in-out 3;
+    border: 3px solid var(--cor-destaque-primaria) !important;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.6) !important;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%) !important;
+}
+
+@keyframes highlightGame {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
 }
 
 @keyframes highlightReturn {
