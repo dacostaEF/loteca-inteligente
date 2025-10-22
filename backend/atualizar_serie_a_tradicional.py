@@ -49,3 +49,4 @@ if __name__ == "__main__":
         print("\n💥 ALGO DEU ERRADO! Verifique os erros acima.")
 
 
+

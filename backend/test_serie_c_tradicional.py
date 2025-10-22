@@ -70,3 +70,4 @@ if __name__ == "__main__":
     testar_serie_c_tradicional()
 
 
+

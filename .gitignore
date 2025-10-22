@@ -1,4 +1,69 @@
-# Python
+# Arquivos do sistema Windows
+AppData/
+Application Data/
+Contacts/
+Favorites/
+Links/
+Music/
+Saved Games/
+Searches/
+Videos/
+Desktop/
+Documents/
+Menu Iniciar/
+Meus Documentos/
+Modelos/
+Recent/
+SendTo/
+Cookies/
+Dados de Aplicativos/
+
+# Arquivos de configuração do usuário
+.VirtualBox/
+.anaconda/
+.android/
+.cache/
+.codegpt/
+.conda/
+.condarc
+.continuum/
+.cursor/
+.gitconfig
+.glue/
+.ipynb_checkpoints/
+.ipython/
+.jupyter/
+.lesshst
+.matplotlib/
+.node_repl_history
+.od/
+.python_history
+.rfb/
+.spyder-py3/
+.streamlit/
+.vscode/
+.wdm/
+
+# Arquivos do sistema
+NTUSER.DAT*
+ntuser.dat*
+ntuser.ini
+package-lock.json
+
+# Pastas do sistema
+3D Objects/
+IntelGraphicsProfiles/
+Jedi/
+KingdomSuite/
+OneDrive/
+VirtualBox VMs/
+miniconda3/
+
+# Dropbox (se necessário)
+"Dropbox (Versão anterior)/"
+Dropbox/
+
+# Arquivos Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -19,12 +84,11 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Environment
-.env
-.venv
-env/
+# Ambientes virtuais
 venv/
+env/
 ENV/
 env.bak/
 venv.bak/
@@ -36,24 +100,12 @@ venv.bak/
 *.swo
 *~
 
-# OS
-.DS_Store
-Thumbs.db
-
 # Logs
 *.log
+logs/
 
-# Database
-*.db
-*.sqlite3
-
-# Cache
-.cache/
-.pytest_cache/
-
-# Railway
-.railway/
-
-# Local development
-backend/static/uploads/
-*.local
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
