@@ -58,11 +58,11 @@ function renderTabelaClassificacao(dados, serie = 'serie-a') {
         // Se os dados já vêm com bolas coloridas, usar diretamente
         let ultimosJogos;
         if (time.ultimos && time.ultimos.includes('🟢')) {
-            // Dados já convertidos com bolas coloridas
-            ultimosJogos = time.ultimos;
+            // Dados já convertidos com bolas coloridas - remover hífens se existirem
+            ultimosJogos = time.ultimos.replace(/-/g, '');
         } else {
-            // Converter V-D-E para bolas coloridas
-            ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡');
+            // Converter V-D-E para bolas coloridas SEM hífens
+            ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡').replace(/-/g, '');
         }
 
         // Determinar ícone de variação
@@ -329,9 +329,11 @@ function renderTabelaClassificacaoSerieC(dados) {
             // Se os dados já vêm com bolas coloridas, usar diretamente
             let ultimosJogos;
             if (time.ultimos && time.ultimos.includes('🟢')) {
-                ultimosJogos = time.ultimos;
+                // Dados já convertidos com bolas coloridas - remover hífens se existirem
+                ultimosJogos = time.ultimos.replace(/-/g, '');
             } else {
-                ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡');
+                // Converter V-D-E para bolas coloridas SEM hífens
+                ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡').replace(/-/g, '');
             }
 
             // Determinar ícone de variação

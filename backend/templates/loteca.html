@@ -18,245 +18,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- CSS síncrono para evitar FOUC -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
-    
-    <style>
-        /* CSS crítico para evitar FOUC */
-        html, body { 
-            background: #0b0b0f; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 2rem 1rem; 
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        html { 
-            overflow-y: scroll; 
-        }
-        
-        /* CSS crítico para Força dos Elencos */
-        .forca-elenco-container { 
-            max-width: 100%; 
-            margin: 0 auto; 
-            width: 100%; 
-            position: relative; 
-        }
-        
-        .forca-elenco-container .sub-tabs-nav { 
-            max-width: 100%; 
-            margin: 0 auto; 
-            display: flex; 
-            justify-content: center; 
-        }
-        
-        /* CSS crítico para todas as abas */
-        .tab-content {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-        
-        /* CSS crítico para tabelas */
-        table {
-            max-width: 100%;
-            width: 100%;
-            table-layout: fixed;
-        }
-        
-        /* CSS crítico para imagens */
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        /* CSS crítico para elementos que podem ultrapassar */
-        .container * {
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        
-        /* CSS crítico para elementos com position absolute */
-        .confrontos-diretos-button {
-            max-width: calc(100% - 20px);
-        }
-        
-        /* CSS crítico para modais */
-        .modal-content,
-        .honesty-modal .modal-content,
-        .confrontos-modal-content,
-        .estatisticas-modal-content {
-            max-width: 900px;
-            width: 100%;
-        }
-        
-        /* CSS crítico para evitar overflow horizontal */
-        body {
-            overflow-x: hidden;
-        }
-        
-        /* CSS crítico para elementos injetados por JavaScript */
-        .optimization-table-container,
-        .analysis-table-container,
-        .game-card,
-        .forca-elenco-dashboard,
-        .times-loteca-section {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-        
-        /* CSS crítico para tabelas injetadas por JS */
-        .optimization-table,
-        .analysis-table,
-        .brasileirao-table {
-            max-width: 100%;
-            width: 100%;
-            table-layout: fixed;
-        }
-        
-        /* CSS crítico para elementos com largura fixa */
-        .container * {
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        
-        /* CSS crítico para título da sub-aba Plantel ($) */
-        .forca-elenco-container .times-loteca-section .section-header {
-            max-width: 100%;
-            margin: 0 auto;
-            text-align: center;
-            padding: 0 1rem;
-        }
-        
-        .forca-elenco-container .times-loteca-section .section-header h2 {
-            color: #A855F7;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 0 auto 0.5rem;
-            text-align: center;
-            max-width: 100%;
-        }
-        
-        /* CSS crítico para coluna de probabilidades */
-        .optimization-table th:nth-child(6),
-        .optimization-table td:nth-child(6) {
-            min-width: 200px;
-            max-width: 250px;
-            width: 20%;
-            padding: 1rem 0.8rem;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        
-        .optimization-table td:nth-child(6) .prob-content {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-            align-items: center;
-            max-width: 100%;
-        }
-        
-        /* CSS crítico para redistribuição de colunas */
-        .optimization-table th:nth-child(1),
-        .optimization-table td:nth-child(1) {
-            width: 5%;
-            min-width: 50px;
-            max-width: 60px;
-            padding: 0.8rem 0.5rem;
-            text-align: center;
-        }
-        
-        .optimization-table th:nth-child(5),
-        .optimization-table td:nth-child(5) {
-            width: 25%;
-            min-width: 200px;
-            max-width: 300px;
-            padding: 0.8rem 0.5rem;
-            text-align: center;
-        }
-        
-        /* CSS crítico para botões de escolha em duas linhas */
-        .choice-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 0.5rem;
-            max-width: 280px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .choice-btn {
-            padding: 0.4rem 0.6rem;
-            font-size: 0.75rem;
-            min-height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* CSS crítico para 3 caixas em uma linha (Classificação Estratégica) */
-        .classification-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        
-        /* CSS crítico para 4 caixas em uma linha (Sua Aposta) */
-        .user-bet-details {
-            display: grid !important;
-            grid-template-columns: repeat(4, 1fr) !important;
-            gap: 1rem !important;
-        }
-        
-        .classification-card {
-            padding: 1rem;
-            min-height: 120px;
-        }
-        
-        .classification-card h4 {
-            font-size: 1rem;
-            line-height: 1.2;
-            margin: 0 0 0.4rem 0;
-        }
-        
-        .classification-card p {
-            font-size: 0.8rem;
-            line-height: 1.3;
-            margin: 0 0 0.8rem 0;
-        }
-        
-        /* REFORÇO CRÍTICO CONTRA SALTO DE CONTEÚDO INJETADO */
-        .game-card,
-        .optimization-table-container,
-        .analysis-table-container,
-        .classification-grid,
-        .user-bet-details {
-            width: 100%;
-            margin: 0 auto !important;
-            align-self: center;
-            justify-self: center;
-        }
-        
-        /* FORÇAR CENTRALIZAÇÃO IMEDIATA DE ELEMENTOS DINÂMICOS */
-        .tab-content {
-            width: 100%;
-            margin: 0 auto;
-        }
-        
-        .tab-content * {
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-    </style>
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/melhorias-abas.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
+    <!-- Sistema de elenco integrado -->
+    <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
     
     <!-- ===== DOCUMENTAÇÃO DA ESTRUTURA DO ARQUIVO ===== -->
     <!-- 
@@ -315,19 +81,19 @@
         <!-- SISTEMA DE ABAS -->
         <div class="tabs-container">
             <div class="tabs-nav">
-                <button class="tab-btn active" data-tab="otimizador-aposta" title="Passo 1: Monte sua aposta inteligente com sugestões da IA">
+                <button class="tab-btn active" data-tab="otimizador-aposta">
                     🎯 Otimizador de Aposta
                 </button>
-                <button class="tab-btn" data-tab="analise-rapida" title="Passo 2: Analise cada confronto em detalhes">
+                <button class="tab-btn" data-tab="analise-rapida">
                     🎯 Análise Rápida
                 </button>
-                <button class="tab-btn" data-tab="forca-elenco" title="Passo 3: Compare a força dos elencos">
+                <button class="tab-btn" data-tab="forca-elenco">
                     💪 Força dos Elencos
                 </button>
-                <button class="tab-btn" data-tab="dados-avancados" title="Passo 4: Explore dados estatísticos detalhados">
+                <button class="tab-btn" data-tab="dados-avancados">
                     📊 Dados Avançados
                 </button>
-                <button class="tab-btn" data-tab="panorama-campeonatos" title="Passo 5: Veja o panorama geral dos campeonatos">
+                <button class="tab-btn" data-tab="panorama-campeonatos">
                     🏆 Panorama dos Campeonatos
                 </button>
             </div>
@@ -400,7 +166,7 @@
                             <h4>🎯 JOGOS "SECOS" (Alta Confiança)</h4>
                             <p>Favorito claro > 60% - Aposte em 1 resultado apenas</p>
                             <ul id="seco-games">
-                                <!-- Jogos serão preenchidos via JavaScript -->
+                                <li>Aguardando análise dos jogos...</li>
                             </ul>
                         </div>
 
@@ -408,7 +174,7 @@
                             <h4>⚖️ JOGOS PARA "DUPLO" (Incerteza Média)</h4>
                             <p>Favorito claro, mas 2º resultado tem chance > 25%</p>
                             <ul id="duplo-games">
-                                <!-- Jogos serão preenchidos via JavaScript -->
+                                <li>Aguardando análise dos jogos...</li>
                             </ul>
                         </div>
 
@@ -416,7 +182,7 @@
                             <h4>🎲 JOGOS PARA "TRIPLO" (Equilíbrio Total)</h4>
                             <p>Resultados muito equilibrados - Cobertura total recomendada</p>
                             <ul id="triplo-games">
-                                <!-- Jogos serão preenchidos via JavaScript -->
+                                <li>Aguardando análise dos jogos...</li>
                             </ul>
                         </div>
                     </div>
@@ -2270,6 +2036,22 @@ Carregando...
 
             </div>
         </div> <!-- FIM DA ABA 5: PANORAMA DOS CAMPEONATOS -->
+
+        <div class="tab-content" id="otimizador-aposta" style="display: none;">
+            <div class="optimizer-container">
+                
+                <!-- CABEÇALHO DA ABA -->
+                <div class="section-header">
+                    <h2>🎯 Otimizador de Aposta Inteligente</h2>
+                </div>
+
+                <!-- TABELA DE OTIMIZAÇÃO INTERATIVA -->
+                <div class="optimization-table-container">
+                    <p class="table-description">Clique nos resultados para selecionar/desselecionar. A IA sugere, mas você decide!</p>
+                    
+                    <div class="table-responsive">
+                        <table class="optimization-table">
+                            <thead>
                                 <tr>
                                     <th>Jogo</th>
                                     <th>Confronto</th>
@@ -2289,7 +2071,72 @@ Carregando...
                     </div>
                 </div>
 
-        <footer class="footer" style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
+                <!-- APOSTA USUÁRIO - MOVIDA PARA ABAIXO DA PLANILHA -->
+                <div class="user-bet-summary" style="margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); border-radius: 10px; border: 1px solid #444;">
+                    <h4 style="color: #A855F7; margin: 0 0 15px 0; font-size: 1.3em;">📊 Sua Aposta</h4>
+                    <div class="user-bet-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div class="bet-detail" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(168, 85, 247, 0.1); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Duplos:</span>
+                            <span class="bet-value" id="user-duplos" style="color: #A855F7; font-weight: bold; font-size: 1.1em;">0</span>
+                        </div>
+                        <div class="bet-detail" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(168, 85, 247, 0.1); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Triplos:</span>
+                            <span class="bet-value" id="user-triplos" style="color: #A855F7; font-weight: bold; font-size: 1.1em;">0</span>
+                        </div>
+                        <div class="bet-detail" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(168, 85, 247, 0.1); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Nº de Apostas:</span>
+                            <span class="bet-value" id="user-apostas" style="color: #A855F7; font-weight: bold; font-size: 1.1em;">1</span>
+                        </div>
+                        <div class="bet-detail highlight" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%); border-radius: 5px; border: 1px solid #A855F7;">
+                            <span class="bet-label" style="color: #ffffff; font-weight: 500;">Valor:</span>
+                            <span class="bet-value" id="user-valor" style="color: #ffffff; font-weight: bold; font-size: 1.2em;">R$ 4,00</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <!-- CLASSIFICAÇÃO DOS JOGOS -->
+                <div class="games-classification">
+                    <h3>📊 Classificação Estratégica dos Jogos</h3>
+                    
+                    <div class="classification-grid">
+                        <div class="classification-card seco">
+                            <h4>🎯 JOGOS "SECOS" (Alta Confiança)</h4>
+                            <p>Favorito claro > 60% - Aposte em 1 resultado apenas</p>
+                            <ul id="seco-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+
+                        <div class="classification-card duplo">
+                            <h4>⚖️ JOGOS PARA "DUPLO" (Incerteza Média)</h4>
+                            <p>Favorito claro, mas 2º resultado tem chance > 25%</p>
+                            <ul id="duplo-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+
+                        <div class="classification-card triplo">
+                            <h4>🎲 JOGOS PARA "TRIPLO" (Equilíbrio Total)</h4>
+                            <p>Resultados muito equilibrados - Cobertura total recomendada</p>
+                            <ul id="triplo-games">
+                                <li>Aguardando análise dos jogos...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> <!-- FIM DA ABA 5: OTIMIZADOR DE APOSTA -->
+
+
+        <footer class="footer">
             <div class="footer-cta">
                 <h3>📈 Aposte com Inteligência, Jogue com Confiança</h3>
                 <p>Acesse nossa plataforma completa com <strong>+12.000 análises estatísticas</strong>, históricos, Mega Sena, Quina, Lotofácil e muito mais!</p>
@@ -11857,13 +11704,25 @@ Carregando...
 
     <!-- ===== SISTEMA DE VÍNCULO DE CONFRONTOS ===== -->
     <script src="{{ url_for('static', filename='js/vinculo-confrontos.js') }}"></script>
+    
+    <!-- ===== SISTEMA DE LOG PARA NAVEGAÇÃO ===== -->
+    <script>
+        // Sistema de log para navegação
+        window.log = {
+            navigation: (msg) => console.log(`🎯 [NAVEGAÇÃO] ${msg}`),
+            debug: (msg) => console.log(`🔍 [DEBUG] ${msg}`),
+            warning: (msg) => console.warn(`⚠️ [WARNING] ${msg}`),
+            error: (msg) => console.error(`❌ [ERROR] ${msg}`)
+        };
+    </script>
+    
+    <!-- ===== NAVEGAÇÃO INTELIGENTE ENTRE ABAS ===== -->
+    <script src="{{ url_for('static', filename='js/navegacao-inteligente.js') }}"></script>
 
     <!-- ===== MÓDULO OTIMIZADOR (Aba 5) ===== -->
     <script src="{{ url_for('static', filename='js/loteca-otimizador.js') }}"></script>
     <script src="{{ url_for('static', filename='js/otimizador-jogo1.js') }}"></script>
     <script src="{{ url_for('static', filename='js/otimizador-auto.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/log-manager.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/navegacao-inteligente.js') }}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // Inicializa o módulo principal do otimizador
@@ -12573,13 +12432,6 @@ Carregando...
             "0,6": { apostas: 729, valor: 1458.00 }
         };
     </script>
-
-    <!-- Scripts movidos para o final do body para evitar FOUC -->
-    <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/navegacao-inteligente.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/log-manager.js') }}"></script>
 
     </body>
 </html>

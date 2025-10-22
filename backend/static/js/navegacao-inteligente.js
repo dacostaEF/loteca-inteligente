@@ -106,10 +106,21 @@ class NavegacaoInteligente {
             // Adicionar à última célula
             lastCell.appendChild(navigationArea);
             
-            // Adicionar listener apenas na área específica
+            // Tornar TODA a célula clicável
+            lastCell.setAttribute('data-jogo', jogoNumero);
+            lastCell.style.cursor = 'pointer';
+            
+            // Adicionar listener na célula inteira
+            lastCell.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.navegarParaAnalise(jogoNumero);
+            });
+            
+            // Adicionar listener apenas na área específica (ícone)
             navigationArea.addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); // Evitar propagação para a linha
+                e.stopPropagation();
                 this.navegarParaAnalise(jogoNumero);
             });
             
@@ -122,7 +133,7 @@ class NavegacaoInteligente {
                 this.hideIntegratedTooltip(navigationArea);
             });
             
-            console.log(`🎯 [NAVEGAÇÃO] Área específica criada para Jogo ${jogoNumero}`);
+            console.log(`🎯 [NAVEGAÇÃO] Área específica criada para Jogo ${jogoNumero} - TODA a célula é clicável`);
         } else {
             console.warn(`⚠️ [NAVEGAÇÃO] Última célula não encontrada para Jogo ${jogoNumero}`);
         }
