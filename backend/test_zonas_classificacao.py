@@ -69,3 +69,4 @@ def testar_zonas_classificacao():
 
 if __name__ == "__main__":
     testar_zonas_classificacao()
+

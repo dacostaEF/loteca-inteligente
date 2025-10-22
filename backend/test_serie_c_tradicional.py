@@ -68,3 +68,4 @@ def testar_serie_c_tradicional():
 
 if __name__ == "__main__":
     testar_serie_c_tradicional()
+

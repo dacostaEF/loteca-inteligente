@@ -47,3 +47,4 @@ if __name__ == "__main__":
         print("\n🎉 PRONTO! Série A atualizada via tabela tradicional!")
     else:
         print("\n💥 ALGO DEU ERRADO! Verifique os erros acima.")
+

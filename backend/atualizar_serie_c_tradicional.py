@@ -41,3 +41,4 @@ def atualizar_serie_c():
 
 if __name__ == "__main__":
     atualizar_serie_c()
+

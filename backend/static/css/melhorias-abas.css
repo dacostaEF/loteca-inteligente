@@ -2,33 +2,7 @@
    MELHORIAS VISUAIS DAS ABAS
    ======================================== */
 
-/* NÚMEROS DAS ABAS */
-.tab-number {
-    background: linear-gradient(135deg, #A855F7 0%, #7C3AED 100%);
-    color: #ffffff;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3);
-    transition: all 0.3s ease;
-    margin-right: 8px;
-}
-
-.tab-btn.active .tab-number {
-    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-    color: #A855F7;
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
-}
-
-.tab-btn:hover .tab-number {
-    transform: scale(1.1);
-    box-shadow: 0 3px 12px rgba(168, 85, 247, 0.5);
-}
+/* Números das abas removidos para dar mais espaço aos textos */
 
 /* TOOLTIPS DAS ABAS */
 .tab-btn[title] {
