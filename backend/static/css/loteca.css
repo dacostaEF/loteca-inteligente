@@ -4996,8 +4996,591 @@
             }
         }
 
+        /* ===== ESTILOS PARA COMPARAÇÃO ELEGANTE ===== */
+        .comparacao-elegante {
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            margin: 0;
+            border: none;
+            backdrop-filter: none;
+            box-shadow: none;
+        }
+
+        .comparacao-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .comparacao-header h3 {
+            color: var(--cor-destaque-primaria);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #a855f7, #00e38c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .comparacao-header p {
+            color: var(--cor-texto-secundario);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .comparacao-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+
+        .comparacao-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .comparacao-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-header h4 {
+            color: var(--cor-destaque-primaria);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            color: var(--cor-texto-secundario);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .bars-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .team-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .team-name.flamengo {
+            color: #ef4444;
+        }
+
+        .team-name.palmeiras {
+            color: #10b981;
+        }
+
+        .bar-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--cor-texto-primario);
+        }
+
+        .bar-track {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: all 0.6s ease;
+            position: relative;
+        }
+
+        .bar-fill.flamengo {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .bar-fill.palmeiras {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ===== ESTILOS PARA TABELA DE COMPARAÇÃO ESTILO IMAGEM ===== */
+        .comparacao-tabela {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .tabela-comparacao {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .tabela-comparacao thead th {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 3px solid #A855F7;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .categoria-col {
+            text-align: left !important;
+            width: 35%;
+        }
+
+        .time-col {
+            width: 20%;
+            font-weight: 700;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 8px;
+            margin: 4px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .time-col.palmeiras {
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: #ffffff;
+            border: 2px solid #059669;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+        }
+
+        .time-col.flamengo {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: #ffffff;
+            border: 2px solid #b91c1c;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+        }
+
+.vencedor-col {
+    width: 25%;
+    text-align: center;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #1f2937;
+    font-weight: 700;
+    border: 2px solid #d97706;
+    border-radius: 8px;
+    padding: 12px 8px;
+    margin: 4px;
+    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-computar {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #ffffff;
+    border: 2px solid #1e40af;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.btn-computar:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+}
+
+.btn-computar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+/* DOT COLORIDO PARA VANTAGEM */
+.dot.vermelho {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    border: 2px solid #b91c1c;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.4);
+}
+
+.dot.verde {
+    background: linear-gradient(135deg, #10b981, #047857);
+    border: 2px solid #059669;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.4);
+}
+
+.dot.amarelo {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border: 2px solid #b45309;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.4);
+}
+
+        .categoria-header td {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            color: #475569;
+            font-weight: 700;
+            padding: 12px 16px;
+            border-bottom: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-row {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 8px;
+            margin: 4px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-row:hover {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-row td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+            font-weight: 600;
+        }
+
+        .stat-label {
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 2px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-value.palmeiras {
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: #ffffff;
+            border: 2px solid #059669;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+        }
+
+        .stat-value.flamengo {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: #ffffff;
+            border: 2px solid #b91c1c;
+            box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+        }
+
+        .stat-value.vencedor {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .vencedor-indicator {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1f2937;
+            border-radius: 8px;
+            padding: 8px 12px;
+            border: 2px solid #d97706;
+            box-shadow: 0 2px 6px rgba(251, 191, 36, 0.3);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .dot.verde {
+            background: linear-gradient(135deg, #10b981, #047857);
+            border: 2px solid #059669;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.4);
+        }
+
+        .dot.vermelho {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border: 2px solid #b91c1c;
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.4);
+        }
+
+        .dot.amarelo {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: 2px solid #b45309;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.4);
+        }
+
+        .dot.cinza {
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
+            border: 2px solid #6b7280;
+            box-shadow: 0 2px 4px rgba(156, 163, 175, 0.4);
+        }
+
+        .stat-value.vencedor {
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1f2937;
+            border-radius: 8px;
+            padding: 8px 12px;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+            border: 2px solid #d97706;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            animation: pulseVencedor 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseVencedor {
+            0% { transform: scale(1); box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4); }
+            100% { transform: scale(1.05); box-shadow: 0 6px 16px rgba(251, 191, 36, 0.6); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .tabela-comparacao {
+                font-size: 0.8rem;
+            }
+            
+            .tabela-comparacao thead th,
+            .stat-row td,
+            .categoria-header td {
+                padding: 8px 6px;
+            }
+            
+            .categoria-col {
+                width: 40%;
+            }
+            
+            .time-col,
+            .vencedor-col {
+                width: 30%;
+            }
+        }
+
         /* ==========================================
  
        M E L H O R I A S   V I S U A I S   D A S   A B A S 
  
+
+        /* ===== NOVA ESTRUTURA ORGANIZADA ===== */
+        .nova-comparacao {
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+            border: none;
+        }
+
+        .container-secao {
+            background: transparent;
+            border-radius: 0;
+            margin: 8px 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .secao-header {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #475569;
+        }
+
+        .secao-header h4 {
+            color: #f1f5f9;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tabela-secao {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* LINHA DE TÍTULOS */
+        .linha-titulos {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            padding: 16px 12px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 8px;
+            border: 2px solid #475569;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .linha-titulos .coluna {
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            background: transparent;
+            border: 1px solid #334155;
+            border-radius: 6px;
+        }
+
+        .linha-tabela {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 12px;
+            padding: 12px;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 8px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        .linha-tabela:hover {
+            background: rgba(148, 163, 184, 0.05);
+            border-color: #475569;
+        }
+
+        .coluna {
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+        }
+
+        .coluna.categoria {
+            background: transparent;
+            color: #e2e8f0;
+            font-weight: 600;
+            border: 1px solid #334155;
+            border-radius: 6px;
+        }
+
+        .coluna.mandante {
+            background: transparent;
+            color: #e2e8f0;
+            font-weight: 600;
+            border: 1px solid #334155;
+            border-radius: 6px;
+        }
+
+        .coluna.visitante {
+            background: transparent;
+            color: #e2e8f0;
+            font-weight: 600;
+            border: 1px solid #334155;
+            border-radius: 6px;
+        }
+
+        .coluna.vantagem {
+            background: transparent;
+            color: #e2e8f0;
+            font-weight: 600;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        /* Badge da nova estrutura - Minimalista */
+        .coluna.vantagem .vantagem-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0;
+            border-radius: 0;
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font: 500 14px/1.2 Inter, system-ui;
+            white-space: nowrap;
+        }
+
+        .coluna.vantagem .vantagem-badge::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #6b7280;
+        }
+
+        .coluna.vantagem .vantagem-badge.is-flamengo::before {
+            background: #ef4444;
+        }
+
+        .coluna.vantagem .vantagem-badge.is-palmeiras::before {
+            background: #22c55e;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .linha-tabela {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .coluna {
+                min-height: 32px;
+                font-size: 0.9rem;
+            }
+        }
  

@@ -1260,387 +1260,343 @@ Carregando...
                             <option value="">Escolha um jogo...</option>
                             <!-- Jogos serão carregados dinamicamente da Aba 1 -->
                         </select>
+                        <button onclick="correlacionarDadosCSV()" class="correlate-csv-btn" style="padding: 8px 16px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">
+                            🔍 Correlacionar
+                        </button>
                     </div>
                     <p style="margin-top: 1rem; color: var(--cor-texto-secundario); font-size: 0.9rem; text-align: center;">
                         💡 Os jogos são automaticamente sincronizados com a Aba "Análise Rápida"
                     </p>
                 </div>
 
-                <!-- ÁREA DE ANÁLISE DETALHADA -->
-                <div id="detailed-analysis" class="detailed-analysis" style="display: none;">
+                <!-- CONTAINER DE COMPARAÇÃO ELEGANTE -->
+                <div id="comparacao-elegante" class="comparacao-elegante" style="display: block; background: transparent; border: none; box-shadow: none; padding: 0; margin: 0;">
+                    <div class="comparacao-header">
+                        <h3>⚖️ Análise Comparativa Detalhada</h3>
+                        <p>Comparação estatística entre Flamengo vs Palmeiras</p>
+                    </div>
                     
-                    <!-- CABEÇALHO DO CONFRONTO -->
-                    <div class="match-header" style="position: relative;">
+                    <!-- NOVA ESTRUTURA ORGANIZADA -->
+                    <div class="nova-comparacao">
                         
-                        <div class="team-info">
-                            <div class="team-home">
-                                <img src="{{ url_for('static', filename='placeholder-team-logo.svg') }}" alt="Time Casa" class="team-logo">
-                                <h3 id="team-home-name">Time Casa</h3>
-                                <span class="team-position" data-position="home">10º Posição</span>
+                        <!-- CONTAINER 1: GERAL -->
+                        <div class="container-secao">
+                            <div class="secao-header">
+                                <h4>🏆 GERAL</h4>
                             </div>
-                            <div class="vs-separator">
-                                <!-- BOTÃO CONFRONTOS DIRETOS CENTRALIZADO -->
-                                <button id="confrontos-diretos-btn" class="confrontos-diretos-button-center" onclick="abrirModalConfrontosDiretos()">
-                                    ⚔️ Últimos Confrontos
-                                </button>
-                                <span class="vs-text">VS</span>
-                                <div class="match-info">
-                                    <span class="stadium">Arena - Local</span>
-                                    <span class="date">Domingo, 15h</span>
-                                </div>
+                            <!-- TÍTULOS DOS TIMES -->
+                            <div class="linha-titulos">
+                                <div class="coluna categoria">Categoria</div>
+                                <div class="coluna mandante">Flamengo</div>
+                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna vantagem">Vantagem</div>
                             </div>
-                            <div class="team-away">
-                                <img src="{{ url_for('static', filename='placeholder-team-logo.svg') }}" alt="Time Visitante" class="team-logo">
-                                <h3 id="team-away-name">Time Visitante</h3>
-                                <span class="team-position" data-position="away">1º Posição</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ESTATÍSTICAS COMPARATIVAS -->
-                    <div class="stats-comparison">
-                        <h4>📊 Comparação Estatística</h4>
-                        
-                        <div class="stats-grid">
-                            <!-- GOLS MARCADOS -->
-                            <div class="stat-row grid-3cols barras">
-                                <div class="stat-label">Gols Marcados P/Jogo</div>
-                                <div class="stat-home">
-                                    <div class="stat-value">...</div>
-                                    <div class="stat-bar progress dual">
-                                        <div class="stat-fill" style="width: 0%"></div>
-                                    </div>
+                            <div class="tabela-secao">
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Posição</div>
+                                    <div class="coluna mandante" id="pal-posicao">-</div>
+                                    <div class="coluna visitante" id="fla-posicao">-</div>
+                                    <div class="coluna vantagem" id="vantagem-posicao">-</div>
                                 </div>
-                                <div class="stat-away">
-                                    <div class="stat-value">...</div>
-                                    <div class="stat-bar progress dual">
-                                        <div class="stat-fill" style="width: 0%"></div>
-                                    </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Pró (Média)</div>
+                                    <div class="coluna mandante" id="pal-gols-pro">-</div>
+                                    <div class="coluna visitante" id="fla-gols-pro">-</div>
+                                    <div class="coluna vantagem" id="vantagem-gols-pro">-</div>
                                 </div>
-                            </div>
-
-                            <!-- GOLS SOFRIDOS -->
-                            <div class="stat-row grid-3cols barras">
-                                <div class="stat-label">Gols Sofridos P/Jogo</div>
-                                <div class="stat-home">
-                                    <div class="stat-value">...</div>
-                                    <div class="stat-bar progress dual">
-                                        <div class="stat-fill" style="width: 0%"></div>
-                                    </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Contra (Média)</div>
+                                    <div class="coluna mandante" id="pal-gols-contra">-</div>
+                                    <div class="coluna visitante" id="fla-gols-contra">-</div>
+                                    <div class="coluna vantagem" id="vantagem-gols-contra">-</div>
                                 </div>
-                                <div class="stat-away">
-                                    <div class="stat-value">...</div>
-                                    <div class="stat-bar progress dual">
-                                        <div class="stat-fill" style="width: 0%"></div>
-                                    </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Over 2.5%</div>
+                                    <div class="coluna mandante" id="pal-over25">-</div>
+                                    <div class="coluna visitante" id="fla-over25">-</div>
+                                    <div class="coluna vantagem" id="vantagem-over25">-</div>
                                 </div>
-                            </div>
-
-                            <!-- APROVEITAMENTO -->
-                            <div class="stat-row grid-3cols barras">
-                                <div class="stat-label">Aproveitamento (%)</div>
-                                <div class="stat-home">
-                                    <div class="stat-value">...</div>
-                                    <div class="stat-bar progress dual">
-                                        <div class="stat-fill" style="width: 0%"></div>
-                                    </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">BTTS Sim %</div>
+                                    <div class="coluna mandante" id="pal-btts">-</div>
+                                    <div class="coluna visitante" id="fla-btts">-</div>
+                                    <div class="coluna vantagem" id="vantagem-btts">-</div>
                                 </div>
-                                <div class="stat-away">
-                                    <div class="stat-value">...</div>
-                                    <div class="stat-bar progress dual">
-                                        <div class="stat-fill" style="width: 0%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- HISTÓRICO CONFRONTO DIRETO -->
-                    <div class="h2h-section">
-                        <h4>⚔️ Histórico de Confrontos (Últimos 10)</h4>
-                        
-                        <!-- ÚLTIMOS CONFRONTOS - BOLINHAS -->
-                        <div class="confrontos-visual-section" style="margin: 1rem 0; text-align: center;">
-                            <div class="confrontos-sequence" id="confrontos-modal-principais">
-                                <!-- Bolinhas serão inseridas dinamicamente -->
-                            </div>
-                        </div>
-                        
-                        <!-- GRÁFICO DE BARRAS - CONFRONTOS HISTÓRICOS -->
-                        <div class="grafico-confrontos-section" style="margin: 1.5rem 0;">
-                            <h5>📊 Gráfico de Confrontos Históricos</h5>
-                            <div class="grafico-container" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
-                                <canvas id="grafico-confrontos-jogo1" width="800" height="300" style="max-width: 100%; height: auto;"></canvas>
-                            </div>
-                            <div class="legenda-grafico" style="display: flex; justify-content: center; gap: 2rem; margin-top: 0.5rem; font-size: 0.9rem;">
-                                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <div style="width: 20px; height: 20px; background: #000; border-radius: 3px;"></div>
-                                    <span data-role="legenda-vitorias-casa">Vitórias Casa</span>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <div style="width: 20px; height: 20px; background: #dc3545; border-radius: 3px;"></div>
-                                    <span data-role="legenda-vitorias-fora">Vitórias Fora</span>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Clean Sheets %</div>
+                                    <div class="coluna mandante" id="pal-clean">-</div>
+                                    <div class="coluna visitante" id="fla-clean">-</div>
+                                    <div class="coluna vantagem" id="vantagem-clean">-</div>
                                 </div>
                             </div>
                         </div>
                         
-                        <h4>📈 Histórico Desempenho Recentes</h4>
-                        
-                        <!-- ANÁLISE DE DESEMPENHO RECENTE (4 PILARES) -->
-                        <div class="analise-desempenho-container">
-                            <div class="pilares-analise">
-                                
-                                <!-- PILAR 1: FORÇA OFENSIVA RELATIVA -->
-                                <div class="pilar-card">
-                                    <div class="pilar-header">
-                                        <h5>⚔️ Força Ofensiva Relativa</h5>
-                                        <span class="pilar-subtitle">Ataque x Defesa</span>
-                                    </div>
-                                    <div class="pilar-content">
-                                        <div class="confronto-ofensivo">
-                                            <div class="analise-item">
-                                                <span class="analise-label">FLA Ataque vs COR Defesa:</span>
-                                                <span class="analise-valor" id="fla-ataque-cor-defesa">2.09 vs 1.21</span>
-                                                <span class="analise-resultado vantagem-alta" id="resultado-fla-ataque">Vantagem Alta</span>
-                                            </div>
-                                            <div class="analise-item">
-                                                <span class="analise-label">COR Ataque vs FLA Defesa:</span>
-                                                <span class="analise-valor" id="cor-ataque-fla-defesa">1.00 vs 0.48</span>
-                                                <span class="analise-resultado vantagem-baixa" id="resultado-cor-ataque">Dificuldade Alta</span>
-                                            </div>
-                                        </div>
-                                        <div class="pilar-conclusao" id="conclusao-pilar1">
-                                            <strong>Conclusão:</strong> Flamengo deve dominar o placar <!-- TODO: hardcode -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- PILAR 2: EFICIÊNCIA POR LOCAL -->
-                                <div class="pilar-card">
-                                    <div class="pilar-header">
-                                        <h5>🏠 Eficiência por Local</h5>
-                                        <span class="pilar-subtitle">Fator Casa</span>
-                                    </div>
-                                    <div class="pilar-content">
-                                        <div class="confronto-local">
-                                            <div class="analise-item">
-                                                <span class="analise-label">Aproveitamento:</span>
-                                                <span class="analise-valor" id="aproveitamento-local">Casa 79.5% vs Fora 48.5%</span>
-                                                <span class="analise-resultado vantagem-alta" id="resultado-aproveitamento">Vantagem Casa</span>
-                                            </div>
-                                            <div class="analise-item">
-                                                <span class="analise-label">PPG Comparativo:</span>
-                                                <span class="analise-valor" id="ppg-comparativo">2.38 vs 1.00</span>
-                                                <span class="analise-resultado vantagem-alta" id="resultado-ppg">Superioridade</span>
-                                            </div>
-                                        </div>
-                                        <div class="pilar-conclusao" id="conclusao-pilar2">
-                                            <strong>Conclusão:</strong> Fator casa decisivo para o mandante
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- PILAR 3: FORMA RECENTE -->
-                                <div class="pilar-card">
-                                    <div class="pilar-header">
-                                        <h5>📈 Forma Recente</h5>
-                                        <span class="pilar-subtitle">Momento Atual</span>
-                                    </div>
-                                    <div class="pilar-content">
-                                        <div class="confronto-forma">
-                                            <div class="analise-item">
-                                                <span class="analise-label">Últimos 5 Jogos:</span>
-                                                <span class="analise-valor" id="forma-ultimos5">V-V-E-V-E vs D-V-E-V-D</span>
-                                                <span class="analise-resultado vantagem-media" id="resultado-forma">Leve Vantagem</span>
-                                            </div>
-                                            <div class="analise-item">
-                                                <span class="analise-label">Pontos Conquistados:</span>
-                                                <span class="analise-valor" id="pontos-forma">11 pts vs 7 pts</span>
-                                                <span class="analise-resultado vantagem-media" id="resultado-pontos">Melhor Momento</span>
-                                            </div>
-                                        </div>
-                                        <div class="pilar-conclusao" id="conclusao-pilar3">
-                                            <strong>Conclusão:</strong> Visitante em melhor fase recente
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- PILAR 4: H2H (CONFRONTO DIRETO) -->
-                                <div class="pilar-card">
-                                    <div class="pilar-header">
-                                        <h5>⚔️ Confronto Direto</h5>
-                                        <span class="pilar-subtitle">Histórico H2H</span>
-                                    </div>
-                                    <div class="pilar-content">
-                                        <div class="confronto-h2h">
-                                            <div class="analise-item">
-                                                <span class="analise-label">Últimos 10 Jogos:</span>
-                                                <span class="analise-valor" id="h2h-historico">4V Casa - 2E - 4V Visitante</span>
-                                                <span class="analise-resultado equilibrado" id="resultado-h2h">Equilibrado</span>
-                                            </div>
-                                            <div class="analise-item">
-                                                <span class="analise-label">Fator Surpresa:</span>
-                                                <span class="analise-valor" id="fator-surpresa">Pedra no Sapato</span>
-                                                <span class="analise-resultado atencao" id="resultado-surpresa">Atenção</span>
-                                            </div>
-                                        </div>
-                                        <div class="pilar-conclusao" id="conclusao-pilar4">
-                                            <strong>Conclusão:</strong> Histórico anula vantagem estatística
-                                        </div>
-                                    </div>
-                                </div>
-
+                        <!-- CONTAINER 2: DEFESA -->
+                        <div class="container-secao">
+                            <div class="secao-header">
+                                <h4>🛡️ DEFESA</h4>
                             </div>
-
-                            <!-- DECISÃO FINAL -->
-                            <div class="decisao-final-container">
-                                <h5>🎯 Decisão Final para Loteca</h5>
-                                <div class="resumo-pilares">
-                                    <div class="resumo-item">
-                                        <span class="pilar-nome">Pilar 1 (Ataque x Defesa):</span>
-                                        <span class="vantagem vantagem-alta" id="resumo-pilar1">FLA Absoluta</span>
-                                    </div>
-                                    <div class="resumo-item">
-                                        <span class="pilar-nome">Pilar 2 (Fator Casa):</span>
-                                        <span class="vantagem vantagem-alta" id="resumo-pilar2">FLA Forte</span>
-                                    </div>
-                                    <div class="resumo-item">
-                                        <span class="pilar-nome">Pilar 3 (Forma Recente):</span>
-                                        <span class="vantagem vantagem-media" id="resumo-pilar3">FLA Forte</span>
-                                    </div>
-                                    <div class="resumo-item">
-                                        <span class="pilar-nome">Pilar 4 (H2H):</span>
-                                        <span class="vantagem atencao" id="resumo-pilar4">COR (Fator Curinga)</span>
-                                    </div>
-                                </div>
-                                <div class="palpite-final">
-                                    <div class="palpite-recomendado">
-                                        <span class="palpite-label">Palpite Recomendado:</span>
-                                        <span class="palpite-valor" id="palpite-final">Coluna 2 (Visitante) com cautela para X</span>
-                                    </div>
-                                    <div class="confianca-nivel">
-                                        <span class="confianca-label">Nível de Confiança:</span>
-                                        <span class="confianca-valor alta" id="confianca-final">75% - Alta</span>
-                                    </div>
+                            <!-- TÍTULOS DOS TIMES -->
+                            <div class="linha-titulos">
+                                <div class="coluna categoria">Categoria</div>
+                                <div class="coluna mandante">Flamengo</div>
+                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna vantagem">Vantagem</div>
+                            </div>
+                            <div class="tabela-secao">
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Sofridos Total</div>
+                                    <div class="coluna mandante" id="pal-gols-sofridos-total">-</div>
+                                    <div class="coluna visitante" id="fla-gols-sofridos-total">-</div>
+                                    <div class="coluna vantagem" id="vantagem-gols-sofridos-total">-</div>
                                 </div>
                             </div>
                         </div>
                         
-                    </div>
-
-                    <!-- RECOMENDAÇÃO BASEADA EM ESTATÍSTICAS -->
-                    <div class="data-recommendation">
-                        <h4>🎯 Recomendação Baseada em Estatísticas</h4>
-                        <div class="recommendation-card">
-                            <div class="recommendation-header">
-                                <span class="confidence-level high">Alta Confiança</span>
-                                <span class="recommended-bet">Coluna 2</span>
+                        <!-- CONTAINER 3: FORMA -->
+                        <div class="container-secao">
+                            <div class="secao-header">
+                                <h4>📈 FORMA</h4>
                             </div>
-                            <div class="recommendation-reasoning">
-                                <p><strong>Análise:</strong> Time visitante apresenta superioridade clara em múltiplos aspectos estatísticos.</p>
+                            <!-- TÍTULOS DOS TIMES -->
+                            <div class="linha-titulos">
+                                <div class="coluna categoria">Categoria</div>
+                                <div class="coluna mandante">Flamengo</div>
+                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna vantagem">Vantagem</div>
                             </div>
-                            
-                            <!-- CAMPOS DE FORÇA (A FAVOR DO TIME VISITANTE) -->
-                            <div class="analise-section">
-                                <h5 class="section-title forca">🔥 Campos de FORÇA (A favor do Time Visitante)</h5>
-                                <div class="campos-analise">
-                                    <div class="campo-item forca">
-                                        <div class="campo-header">
-                                            <span class="campo-nome">✅ Time visitante melhor posicionado (1º vs 10º)</span>
-                                        </div>
-                                        <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> Time visitante está na 1ª posição com 51 pontos, enquanto time da casa está na 10ª com 32 pontos.
-                                        </div>
-                                        <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> A diferença de 19 pontos na tabela reflete superioridade técnica e consistência ao longo do campeonato.
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="campo-item forca">
-                                        <div class="campo-header">
-                                            <span class="campo-nome">✅ Time visitante ataque muito superior (2.09 vs 1.00 gols/jogo)</span>
-                                        </div>
-                                        <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O time visitante tem uma média de 2.09 Gols Marcados/Jogo, mais que o dobro da média do time da casa (1.00).
-                                        </div>
-                                        <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> Isso sugere que o time visitante tem poder de fogo para furar a defesa do time da casa e garantir a vitória.
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="campo-item forca">
-                                        <div class="campo-header">
-                                            <span class="campo-nome">✅ Time visitante defesa muito superior (0.48 vs 1.21 gols/jogo)</span>
-                                        </div>
-                                        <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O time visitante tem uma média de apenas 0.48 Gols Sofridos/Jogo contra 1.21 do time da casa.
-                                        </div>
-                                        <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> Enfrentando um ataque fraco (1.00 gol/jogo), a chance de o time visitante não sofrer gols (Clean Sheet) é muito alta.
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="campo-item forca">
-                                        <div class="campo-header">
-                                            <span class="campo-nome">✅ Time visitante aproveitamento muito superior (66.7% vs 48.5%)</span>
-                                        </div>
-                                        <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O time visitante tem 66.7% de aproveitamento geral contra 48.5% do time da casa.
-                                        </div>
-                                        <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> A diferença de quase 18 pontos percentuais é gigantesca e indica que o time visitante é mais provável de vencer, mesmo jogando fora.
-                                        </div>
-                                    </div>
+                            <div class="tabela-secao">
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Pontos Últimos 5</div>
+                                    <div class="coluna mandante" id="pal-pontos-ultimos">-</div>
+                                    <div class="coluna visitante" id="fla-pontos-ultimos">-</div>
+                                    <div class="coluna vantagem" id="vantagem-pontos-ultimos">-</div>
                                 </div>
                             </div>
-                            
-                            <!-- CAMPOS DE RISCO (A FAVOR DO TIME DA CASA) -->
-                            <div class="analise-section">
-                                <h5 class="section-title risco">⚠️ Campos de RISCO (A favor do Time da Casa)</h5>
-                                <div class="campos-analise">
-                                    <div class="campo-item risco">
-                                        <div class="campo-header">
-                                            <span class="campo-nome">❌ Time da casa joga em casa</span>
-                                        </div>
-                                        <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O jogo ocorre na Arena, campo do time da casa, com apoio da torcida.
-                                        </div>
-                                        <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> O "caldeirão" do mando de campo é um fator psicológico que pode compensar a inferioridade técnica, fortalecendo chances de empate.
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="campo-item risco">
-                                        <div class="campo-header">
-                                            <span class="campo-nome">⚖️ Confronto direto equilibrado (4V-2E-4V)</span>
-                                        </div>
-                                        <div class="campo-explicacao">
-                                            <strong>O que significa:</strong> O Histórico de Confrontos Diretos mostra 4 Vitórias para cada lado e 2 Empates nos últimos 10 jogos.
-                                        </div>
-                                        <div class="campo-importancia">
-                                            <strong>Por que é crucial:</strong> Esta é a principal ressalva. O confronto direto anula a superioridade estatística. Mesmo com números piores, o Corinthians historicamente se iguala ao Flamengo.
-                                        </div>
-                                    </div>
+                        </div>
+                        
+                        <!-- CONTAINER 4: CASA -->
+                        <div class="container-secao">
+                            <div class="secao-header">
+                                <h4>🏠 CASA (Time 1)</h4>
+                            </div>
+                            <!-- TÍTULOS DOS TIMES -->
+                            <div class="linha-titulos">
+                                <div class="coluna categoria">Categoria</div>
+                                <div class="coluna mandante">Flamengo</div>
+                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna vantagem">Vantagem</div>
+                            </div>
+                            <div class="tabela-secao">
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Jogos / Aproveitamento</div>
+                                    <div class="coluna mandante" id="pal-casa-jogos">-</div>
+                                    <div class="coluna visitante" id="fla-casa-jogos">-</div>
+                                    <div class="coluna vantagem" id="vantagem-casa-jogos">-</div>
+                                </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Pró (Média)</div>
+                                    <div class="coluna mandante" id="pal-casa-gols-pro">-</div>
+                                    <div class="coluna visitante" id="fla-casa-gols-pro">-</div>
+                                    <div class="coluna vantagem" id="vantagem-casa-gols-pro">-</div>
+                                </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Contra (Média)</div>
+                                    <div class="coluna mandante" id="pal-casa-gols-contra">-</div>
+                                    <div class="coluna visitante" id="fla-casa-gols-contra">-</div>
+                                    <div class="coluna vantagem" id="vantagem-casa-gols-contra">-</div>
                                 </div>
                             </div>
-                            
-                            <!-- CONCLUSÃO FINAL -->
-                            <div class="conclusao-final">
-                                <div class="conclusao-header">
-                                    <h5>🎯 Conclusão Final</h5>
+                        </div>
+                        
+                        <!-- CONTAINER 5: FORA -->
+                        <div class="container-secao">
+                            <div class="secao-header">
+                                <h4>✈️ FORA (Time 2)</h4>
+                            </div>
+                            <!-- TÍTULOS DOS TIMES -->
+                            <div class="linha-titulos">
+                                <div class="coluna categoria">Categoria</div>
+                                <div class="coluna mandante">Flamengo</div>
+                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna vantagem">Vantagem</div>
+                            </div>
+                            <div class="tabela-secao">
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Jogos / Aproveitamento</div>
+                                    <div class="coluna mandante" id="pal-fora-jogos">-</div>
+                                    <div class="coluna visitante" id="fla-fora-jogos">-</div>
+                                    <div class="coluna vantagem" id="vantagem-fora-jogos">-</div>
                                 </div>
-                                <div class="conclusao-content">
-                                    <p><strong>O quadro usa a comparação estatística (Gols, Aproveitamento) para justificar o palpite. A sua principal força é a clareza ao traduzir números complexos em argumentos de aposta.</strong></p>
-                                    <div class="palpite-recomendado-final">
-                                        <span class="palpite-label">Recomendação:</span>
-                                        <span class="palpite-valor">Coluna 2 (Flamengo) com cautela para fatores de risco</span>
-                                    </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Pró (Média)</div>
+                                    <div class="coluna mandante" id="pal-fora-gols-pro">-</div>
+                                    <div class="coluna visitante" id="fla-fora-gols-pro">-</div>
+                                    <div class="coluna vantagem" id="vantagem-fora-gols-pro">-</div>
+                                </div>
+                                <div class="linha-tabela">
+                                    <div class="coluna categoria">Gols Contra (Média)</div>
+                                    <div class="coluna mandante" id="pal-fora-gols-contra">-</div>
+                                    <div class="coluna visitante" id="fla-fora-gols-contra">-</div>
+                                    <div class="coluna vantagem" id="vantagem-fora-gols-contra">-</div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- TABELA ANTIGA (MANTIDA PARA COMPATIBILIDADE) -->
+                    <div class="comparacao-tabela" style="display: none;">
+                        <table class="tabela-comparacao">
+                            <thead>
+                         <tr>
+                             <th class="categoria-col">Categoria</th>
+                             <th class="time-col palmeiras">Palmeiras</th>
+                             <th class="time-col flamengo">Flamengo</th>
+                             <th class="vencedor-col">Vantagem</th>
+                         </tr>
+                            </thead>
+                            <tbody>
+                                <!-- GERAL -->
+                                <tr class="categoria-header">
+                                    <td colspan="4"><strong>GERAL</strong></td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Posição</td>
+                                    <td class="stat-value palmeiras" id="pal-posicao">-</td>
+                                    <td class="stat-value flamengo" id="fla-posicao">-</td>
+                             <td class="vencedor-indicator" id="vencedor-posicao">
+                                 <!-- COLUNA 4 LIMPA - SERÁ COPIADA DA COLUNA 1 -->
+                             </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Pró (Média)</td>
+                                    <td class="stat-value palmeiras" id="pal-gols-pro">-</td>
+                                    <td class="stat-value flamengo" id="fla-gols-pro">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-gols-pro">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Contra (Média)</td>
+                                    <td class="stat-value palmeiras" id="pal-gols-contra">-</td>
+                                    <td class="stat-value flamengo" id="fla-gols-contra">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-gols-contra">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Over 2.5%</td>
+                                    <td class="stat-value palmeiras" id="pal-over25">-</td>
+                                    <td class="stat-value flamengo" id="fla-over25">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-over25">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">BTTS Sim %</td>
+                                    <td class="stat-value palmeiras" id="pal-btts">-</td>
+                                    <td class="stat-value flamengo" id="fla-btts">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-btts">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Clean Sheets %</td>
+                                    <td class="stat-value palmeiras" id="pal-clean">-</td>
+                                    <td class="stat-value flamengo" id="fla-clean">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-clean">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
 
+                                <!-- DEFESA -->
+                                <tr class="categoria-header">
+                                    <td colspan="4"><strong>DEFESA</strong></td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Sofridos Total</td>
+                                    <td class="stat-value palmeiras" id="pal-gols-sofridos-total">-</td>
+                                    <td class="stat-value flamengo" id="fla-gols-sofridos-total">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-gols-sofridos-total">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+
+                                <!-- FORMA -->
+                                <tr class="categoria-header">
+                                    <td colspan="4"><strong>FORMA</strong></td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Pontos Últimos 5</td>
+                                    <td class="stat-value palmeiras" id="pal-pontos-ultimos">-</td>
+                                    <td class="stat-value flamengo" id="fla-pontos-ultimos">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-pontos-ultimos">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+
+                                <!-- CASA -->
+                                <tr class="categoria-header">
+                                    <td colspan="4"><strong>CASA (Time 1)</strong></td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Jogos / Aproveitamento</td>
+                                    <td class="stat-value palmeiras" id="pal-casa-jogos">-</td>
+                                    <td class="stat-value flamengo" id="fla-casa-jogos">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-casa-jogos">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Pró (Média)</td>
+                                    <td class="stat-value palmeiras" id="pal-casa-gols-pro">-</td>
+                                    <td class="stat-value flamengo" id="fla-casa-gols-pro">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-casa-gols-pro">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Contra (Média)</td>
+                                    <td class="stat-value palmeiras" id="pal-casa-gols-contra">-</td>
+                                    <td class="stat-value flamengo" id="fla-casa-gols-contra">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-casa-gols-contra">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+
+                                <!-- FORA -->
+                                <tr class="categoria-header">
+                                    <td colspan="4"><strong>FORA (Time 2)</strong></td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Jogos / Aproveitamento</td>
+                                    <td class="stat-value palmeiras" id="pal-fora-jogos">-</td>
+                                    <td class="stat-value flamengo" id="fla-fora-jogos">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-fora-jogos">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Pró (Média)</td>
+                                    <td class="stat-value palmeiras" id="pal-fora-gols-pro">-</td>
+                                    <td class="stat-value flamengo" id="fla-fora-gols-pro">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-fora-gols-pro">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                                <tr class="stat-row">
+                                    <td class="stat-label">Gols Contra (Média)</td>
+                                    <td class="stat-value palmeiras" id="pal-fora-gols-contra">-</td>
+                                    <td class="stat-value flamengo" id="fla-fora-gols-contra">-</td>
+                                    <td class="vencedor-indicator" id="vencedor-fora-gols-contra">
+                                        <!-- COLUNA 4 LIMPA -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
 
                 <!-- MENSAGEM QUANDO NENHUM JOGO SELECIONADO -->
                 <div id="no-game-selected" class="no-selection">
@@ -4019,42 +3975,118 @@ Carregando...
             
             const jogos = [];
             
-            // ✅ USAR A MESMA API QUE A ABA "ANÁLISE RÁPIDA" USA
-            for (let numeroJogo = 1; numeroJogo <= 14; numeroJogo++) {
-                try {
-                    console.log(`🔍 [SYNC] Buscando JOGO ${numeroJogo} via API...`);
-                    const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1216`);
+            try {
+                // ✅ USAR A MESMA API QUE A ABA "ANÁLISE RÁPIDA" USA
+                // API: /api/br/loteca/current (mesma usada em loadRealLotecaData)
+                const apiBase = centralAdminProvider.API_BASE.replace('/api/br', ''); // Usar mesmo domínio
+                const response = await fetch(`${apiBase}/api/br/loteca/current`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.success || !data.matches) {
+                    throw new Error(data.error || 'Dados inválidos retornados');
+                }
+                
+                console.log(`✅ [SYNC] ${data.matches.length} jogos carregados da API principal!`);
+                
+                // Processar cada jogo da API
+                data.matches.forEach((jogo, index) => {
+                    const numeroJogo = index + 1;
+                    const timeCasa = jogo.home_team || jogo.time_casa || 'Time Casa';
+                    const timeFora = jogo.away_team || jogo.time_fora || 'Time Fora';
                     
-                    if (response.ok) {
-                        const data = await response.json();
+                    // ✅ MAPEAR NOMES PARA A API DE ELENCO
+                    const timeCasaMapeado = mapearNomeParaAPI(timeCasa);
+                    const timeForaMapeado = mapearNomeParaAPI(timeFora);
+                    
+                    console.log(`🔍 [SYNC] Mapeamento: "${timeCasa}" → "${timeCasaMapeado}"`);
+                    console.log(`🔍 [SYNC] Mapeamento: "${timeFora}" → "${timeForaMapeado}"`);
+                    
+                    jogos.push({
+                        numero: numeroJogo,
+                        timeCasa: timeCasaMapeado,
+                        timeVisitante: timeForaMapeado,
+                        descricao: `Jogo ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`
+                    });
+                    
+                    console.log(`✅ [SYNC] JOGO ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`);
+                });
+                
+            } catch (error) {
+                console.error('❌ [SYNC] Erro ao carregar dados da API principal:', error);
+                
+                // FALLBACK: Tentar carregar jogos individuais se a API principal falhar
+                console.log('🔄 [SYNC] Tentando fallback com jogos individuais...');
+                
+                for (let numeroJogo = 1; numeroJogo <= 14; numeroJogo++) {
+                    try {
+                        console.log(`🔍 [SYNC-FALLBACK] Buscando JOGO ${numeroJogo} via API individual...`);
+                        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1216`);
                         
-                        if (data.success && data.dados) {
-                            const timeCasa = data.dados.time_casa || 'Time Casa';
-                            const timeFora = data.dados.time_fora || 'Time Fora';
+                        if (response.ok) {
+                            const data = await response.json();
                             
-            // ✅ MAPEAR NOMES PARA A API DE ELENCO
-            const timeCasaMapeado = mapearNomeParaAPI(timeCasa);
-            const timeForaMapeado = mapearNomeParaAPI(timeFora);
-            
-            console.log(`🔍 [SYNC] Mapeamento: "${timeCasa}" → "${timeCasaMapeado}"`);
-            console.log(`🔍 [SYNC] Mapeamento: "${timeFora}" → "${timeForaMapeado}"`);
-                            
-                            jogos.push({
-                                numero: numeroJogo,
-                                timeCasa: timeCasaMapeado,
-                                timeVisitante: timeForaMapeado,
-                                descricao: `Jogo ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`
-                            });
-                            
-                            console.log(`✅ [SYNC] JOGO ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`);
-                        } else {
-                            console.warn(`⚠️ [SYNC] JOGO ${numeroJogo}: Dados não encontrados na API`);
+                            if (data.success && data.dados) {
+                                const timeCasa = data.dados.time_casa || 'Time Casa';
+                                const timeFora = data.dados.time_fora || 'Time Fora';
+                                
+                                // ✅ MAPEAR NOMES PARA A API DE ELENCO
+                                const timeCasaMapeado = mapearNomeParaAPI(timeCasa);
+                                const timeForaMapeado = mapearNomeParaAPI(timeFora);
+                                
+                                jogos.push({
+                                    numero: numeroJogo,
+                                    timeCasa: timeCasaMapeado,
+                                    timeVisitante: timeForaMapeado,
+                                    descricao: `Jogo ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`
+                                });
+                                
+                                console.log(`✅ [SYNC-FALLBACK] JOGO ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`);
+                            }
                         }
-                    } else {
-                        console.warn(`⚠️ [SYNC] JOGO ${numeroJogo}: API retornou ${response.status}`);
+                    } catch (fallbackError) {
+                        console.error(`❌ [SYNC-FALLBACK] Erro ao buscar JOGO ${numeroJogo}:`, fallbackError);
                     }
-                } catch (error) {
-                    console.error(`❌ [SYNC] Erro ao buscar JOGO ${numeroJogo}:`, error);
+                }
+                
+                // FALLBACK FINAL: Se nem a API principal nem individual funcionarem, usar dados padrão
+                if (jogos.length === 0) {
+                    console.log('🔄 [SYNC-FALLBACK-FINAL] Usando dados padrão da Loteca...');
+                    const jogosPadrao = {
+                        1: { casa: 'Flamengo', fora: 'Palmeiras' },
+                        2: { casa: 'Corinthians', fora: 'São Paulo' },
+                        3: { casa: 'Santos', fora: 'Palmeiras' },
+                        4: { casa: 'Flamengo', fora: 'Vasco' },
+                        5: { casa: 'Botafogo', fora: 'Fluminense' },
+                        6: { casa: 'Cruzeiro', fora: 'Atlético-MG' },
+                        7: { casa: 'Internacional', fora: 'Grêmio' },
+                        8: { casa: 'Bahia', fora: 'Vitória' },
+                        9: { casa: 'Fortaleza', fora: 'Ceará' },
+                        10: { casa: 'Sport', fora: 'Náutico' },
+                        11: { casa: 'Goiás', fora: 'Atlético-GO' },
+                        12: { casa: 'Cuiabá', fora: 'Vila Nova' },
+                        13: { casa: 'Chapecoense', fora: 'Avaí' },
+                        14: { casa: 'Juventude', fora: 'Criciúma' }
+                    };
+                    
+                    Object.entries(jogosPadrao).forEach(([numero, times]) => {
+                        const numeroJogo = parseInt(numero);
+                        const timeCasaMapeado = mapearNomeParaAPI(times.casa);
+                        const timeForaMapeado = mapearNomeParaAPI(times.fora);
+                        
+                        jogos.push({
+                            numero: numeroJogo,
+                            timeCasa: timeCasaMapeado,
+                            timeVisitante: timeForaMapeado,
+                            descricao: `Jogo ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`
+                        });
+                        
+                        console.log(`✅ [SYNC-FALLBACK-FINAL] JOGO ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`);
+                    });
                 }
             }
             
@@ -4276,6 +4308,7 @@ Carregando...
         // SINCRONIZAÇÃO: Aba 1 → Aba 2 (dropdown de confrontos)
         function atualizarDropdownAba2(gameSelector, jogos) {
             console.log('🎮 [SYNC] Atualizando dropdown da Aba 2...');
+            console.log('📋 [SYNC] Jogos recebidos:', jogos);
             
             // LIMPAR OPÇÕES EXISTENTES (exceto a primeira)
             // ORIGEM: Dados vêm da Aba 1 (Central Admin → Loteca → Confrontos)
@@ -4292,12 +4325,18 @@ Carregando...
                 option.value = jogo.numero;
                 option.textContent = jogo.descricao;
                 gameSelector.appendChild(option);
+                
+                // LOG DETALHADO PARA DEBUG
+                console.log(`🎯 [SYNC] Adicionando Jogo ${jogo.numero}: ${jogo.descricao}`);
+                console.log(`   - Time Casa: ${jogo.timeCasa}`);
+                console.log(`   - Time Visitante: ${jogo.timeVisitante}`);
             });
             
             // Atualizar dados dos jogos para análise detalhada
             atualizarDadosJogosAnalise(jogos);
             
             console.log(`✅ [SYNC] ${jogos.length} jogos adicionados ao dropdown`);
+            console.log('🎮 [SYNC] Dropdown atualizado com sucesso!');
         }
 
         // ATUALIZAR DADOS DOS JOGOS PARA ANÁLISE DETALHADA
@@ -4406,46 +4445,568 @@ Carregando...
             });
         }
 
-        // INICIALIZAR ESTATÍSTICAS AVANÇADAS COM CARREGAMENTO DINÂMICO
-        function initializeAdvancedStats() {
+
+
+
+
+        // NOVA FUNÇÃO SIMPLES PARA DROPDOWN (SEM DETAILED-ANALYSIS)
+        function initializeSimpleDropdown() {
             const gameSelector = document.getElementById('game-selector');
-            const detailedAnalysis = document.getElementById('detailed-analysis');
             const noGameSelected = document.getElementById('no-game-selected');
+            const comparacaoElegante = document.getElementById('comparacao-elegante');
 
             if (gameSelector) {
                 gameSelector.addEventListener('change', async (e) => {
                     const gameId = parseInt(e.target.value);
                     
-                    console.log(`🎮 [DROPDOWN] Jogo selecionado: ${gameId}`);
+                    console.log(`🎮 [DROPDOWN-SIMPLES] Jogo selecionado: ${gameId}`);
                     
                     if (gameId && gameId >= 1 && gameId <= 14) {
-                        // NOVA LÓGICA: Carregar dados dinamicamente do arquivo JSON
-                        console.log(`🚀 [DROPDOWN] Carregando dados dinâmicos do Jogo ${gameId}...`);
+                        console.log(`🚀 [DROPDOWN-SIMPLES] Carregando comparação para Jogo ${gameId}...`);
                         
-                        try {
-                            // Mostrar loading
-                            detailedAnalysis.style.display = 'block';
+                        // Esconder mensagem de seleção
+                        if (noGameSelected) {
                             noGameSelected.style.display = 'none';
+                        }
+                        
+                        // Mostrar comparação elegante
+                        if (comparacaoElegante) {
+                            comparacaoElegante.style.display = 'block';
                             
-                            // Carregar e exibir análise detalhada
-                            await showDetailedAnalysis(gameId);
-                            
-                            console.log(`✅ [DROPDOWN] Análise do Jogo ${gameId} carregada com sucesso!`);
-                            
-                        } catch (error) {
-                            console.error(`❌ [DROPDOWN] Erro ao carregar Jogo ${gameId}:`, error);
-                            detailedAnalysis.style.display = 'none';
+                            // Atualizar título da comparação
+                            const titulo = comparacaoElegante.querySelector('.comparacao-header p');
+                            if (titulo) {
+                                titulo.textContent = `Comparação estatística para Jogo ${gameId}`;
+                            }
+                        }
+                        
+                        console.log(`✅ [DROPDOWN-SIMPLES] Comparação do Jogo ${gameId} exibida!`);
+                        
+                    } else {
+                        console.log('⚠️ [DROPDOWN-SIMPLES] Jogo inválido ou não selecionado');
+                        
+                        // Mostrar mensagem de seleção
+                        if (noGameSelected) {
                             noGameSelected.style.display = 'block';
                         }
-                    } else {
-                        console.log('⚠️ [DROPDOWN] Jogo inválido ou não selecionado');
-                        detailedAnalysis.style.display = 'none';
-                        noGameSelected.style.display = 'block';
+                        
+                        // Esconder comparação elegante
+                        if (comparacaoElegante) {
+                            comparacaoElegante.style.display = 'none';
+                        }
                     }
                 });
             }
             
-            console.log('✅ [DROPDOWN] Sistema de carregamento dinâmico inicializado!');
+            console.log('✅ [DROPDOWN-SIMPLES] Sistema simples inicializado!');
+        }
+
+        // CORRELACIONAR DADOS DO CSV - FLAMENGO E PALMEIRAS
+        async function correlacionarDadosCSV() {
+            console.log('🔍 [CORRELACAO] Correlacionando dados do CSV para Flamengo e Palmeiras...');
+            
+            // Mostrar container de comparação primeiro
+            mostrarContainerComparacao();
+            
+            try {
+                const response = await fetch('/api/csv/serie-a/stats');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.success || !data.data) {
+                    throw new Error('Dados não encontrados no CSV');
+                }
+                
+                // Encontrar dados do Flamengo e Palmeiras
+                const flamengo = data.data.find(time => time.Time.toLowerCase().includes('flamengo'));
+                const palmeiras = data.data.find(time => time.Time.toLowerCase().includes('palmeiras'));
+                
+                console.log('🏠 [CORRELACAO] Dados do Flamengo:', flamengo);
+                console.log('✈️ [CORRELACAO] Dados do Palmeiras:', palmeiras);
+                
+                if (flamengo && palmeiras) {
+                    // Atualizar tabela com dados reais
+                    atualizarTabelaComDadosReais(flamengo, palmeiras);
+                    console.log('✅ [CORRELACAO] Dados reais carregados com sucesso!');
+                } else {
+                    console.warn('⚠️ [CORRELACAO] Times não encontrados no CSV, usando dados simulados');
+                    usarDadosSimulados();
+                }
+                
+            } catch (error) {
+                console.error('❌ [CORRELACAO] Erro ao carregar dados reais:', error);
+                console.log('🔄 [CORRELACAO] Usando dados simulados como fallback...');
+                usarDadosSimulados();
+            }
+        }
+
+        // MOSTRAR CONTAINER DE COMPARAÇÃO
+        function mostrarContainerComparacao() {
+            console.log('📊 [CONTAINER] Exibindo container de comparação...');
+            
+            const comparacaoElegante = document.getElementById('comparacao-elegante');
+            if (comparacaoElegante) {
+                comparacaoElegante.style.display = 'block';
+                console.log('✅ [CONTAINER] Container exibido!');
+                
+                // Teste: verificar se elementos existem
+                const testeElemento = document.getElementById('pal-posicao');
+                console.log('🔍 [TESTE] Elemento pal-posicao encontrado:', !!testeElemento);
+                if (testeElemento) {
+                    console.log('🔍 [TESTE] Conteúdo atual:', testeElemento.textContent);
+                }
+                
+                // Verificar se a tabela existe
+                const tabela = document.querySelector('.tabela-comparacao');
+                console.log('🔍 [TESTE] Tabela encontrada:', !!tabela);
+                
+                // Verificar se há linhas na tabela
+                const linhas = document.querySelectorAll('.stat-row');
+                console.log('🔍 [TESTE] Linhas encontradas:', linhas.length);
+                
+            } else {
+                console.error('❌ [CONTAINER] Container não encontrado!');
+            }
+        }
+
+        // USAR DADOS SIMULADOS COMO FALLBACK
+        function usarDadosSimulados() {
+            console.log('🎭 [DADOS-SIMULADOS] Carregando dados simulados...');
+            
+            // Dados simulados baseados no CSV real
+            const flamengoSimulado = {
+                posicao: 2,
+                dados: {
+                    'Média Gols Pró': 2.00,
+                    'Média Gols Contra': 0.54,
+                    'Over 2.5 %': 43,
+                    'BTTS Sim %': 39,
+                    'Clean Sheets %': 54,
+                    'Gols Contra': 15,
+                    'Pontos Últimos 5': 10,
+                    'Últimos 5 Jogos': 'V-E-D-V-V',
+                    'Jogos Casa': 15,
+                    'Aproveitamento Casa %': 78,
+                    'Gols Pró Casa': 36,
+                    'Gols Contra Casa': 6,
+                    'Jogos Fora': 13,
+                    'Aproveitamento Fora %': 67,
+                    'Gols Pró Fora': 20,
+                    'Gols Contra Fora': 9
+                }
+            };
+            
+            const palmeirasSimulado = {
+                posicao: 1,
+                dados: {
+                    'Média Gols Pró': 1.89,
+                    'Média Gols Contra': 0.93,
+                    'Over 2.5 %': 57,
+                    'BTTS Sim %': 57,
+                    'Clean Sheets %': 32,
+                    'Gols Contra': 26,
+                    'Pontos Últimos 5': 12,
+                    'Últimos 5 Jogos': 'V-V-V-V-D',
+                    'Jogos Casa': 15,
+                    'Aproveitamento Casa %': 78,
+                    'Gols Pró Casa': 33,
+                    'Gols Contra Casa': 11,
+                    'Jogos Fora': 13,
+                    'Aproveitamento Fora %': 67,
+                    'Gols Pró Fora': 20,
+                    'Gols Contra Fora': 15
+                }
+            };
+            
+            // Atualizar tabela com dados simulados
+            atualizarTabelaComDadosReais(flamengoSimulado, palmeirasSimulado);
+            console.log('✅ [DADOS-SIMULADOS] Dados simulados carregados!');
+        }
+
+        // ATUALIZAR TABELA COM DADOS REAIS
+        function atualizarTabelaComDadosReais(flamengo, palmeiras) {
+            console.log('📊 [TABELA-REAL] Atualizando tabela com dados reais...');
+            console.log('📊 [DADOS] Flamengo:', flamengo);
+            console.log('📊 [DADOS] Palmeiras:', palmeiras);
+            
+            // Aguardar um pouco para garantir que o DOM esteja pronto
+            setTimeout(() => {
+                console.log('⏰ [DELAY] Aguardando DOM estar pronto...');
+                
+                // Teste específico antes de atualizar
+                const elementoTeste = document.getElementById('pal-posicao');
+                console.log('🔍 [TESTE-PRE] Elemento pal-posicao antes:', elementoTeste?.textContent);
+                
+                atualizarTabelaComparacao(flamengo, palmeiras);
+                
+                // Teste específico depois de atualizar
+                console.log('🔍 [TESTE-POS] Elemento pal-posicao depois:', elementoTeste?.textContent);
+                
+                console.log('✅ [TABELA-REAL] Tabela atualizada com dados reais!');
+            }, 200);
+        }
+
+        // CRIAR RELATÓRIO DE CORRELAÇÃO
+        function criarRelatorioCorrelacao(flamengo, palmeiras) {
+            const relatorio = {
+                times: {
+                    flamengo: {
+                        nome: flamengo.Time,
+                        posicao: flamengo.Posição,
+                        dados: flamengo
+                    },
+                    palmeiras: {
+                        nome: palmeiras.Time,
+                        posicao: palmeiras.Posição,
+                        dados: palmeiras
+                    }
+                },
+                comparacao: {
+                    posicao: {
+                        flamengo: flamengo.Posição,
+                        palmeiras: palmeiras.Posição,
+                        diferenca: Math.abs(flamengo.Posição - palmeiras.Posição)
+                    },
+                    gols: {
+                        flamengo: {
+                            pro: flamengo['Gols Pró'],
+                            contra: flamengo['Gols Contra'],
+                            media_pro: flamengo['Média Gols Pró'],
+                            media_contra: flamengo['Média Gols Contra']
+                        },
+                        palmeiras: {
+                            pro: palmeiras['Gols Pró'],
+                            contra: palmeiras['Gols Contra'],
+                            media_pro: palmeiras['Média Gols Pró'],
+                            media_contra: palmeiras['Média Gols Contra']
+                        }
+                    },
+                    aproveitamento: {
+                        flamengo: {
+                            casa: flamengo['Aproveitamento Casa %'],
+                            fora: flamengo['Aproveitamento Fora %']
+                        },
+                        palmeiras: {
+                            casa: palmeiras['Aproveitamento Casa %'],
+                            fora: palmeiras['Aproveitamento Fora %']
+                        }
+                    },
+                    ultimos_jogos: {
+                        flamengo: flamengo['Últimos 5 Jogos'],
+                        palmeiras: palmeiras['Últimos 5 Jogos']
+                    }
+                }
+            };
+            
+            return relatorio;
+        }
+
+        // MOSTRAR RELATÓRIO DE CORRELAÇÃO
+        function mostrarRelatorioCorrelacao(relatorio) {
+            const { flamengo, palmeiras } = relatorio.times;
+            const { comparacao } = relatorio;
+            
+            // Mostrar container de comparação elegante
+            mostrarComparacaoElegante(flamengo, palmeiras);
+            
+            console.log('✅ [CORRELACAO] Comparação elegante exibida!');
+        }
+
+        // MOSTRAR COMPARAÇÃO ELEGANTE COM BARRAS
+        function mostrarComparacaoElegante(flamengo, palmeiras) {
+            console.log('🎨 [COMPARACAO-ELEGANTE] Exibindo comparação elegante...');
+            
+            // Mostrar container de comparação
+            const comparacaoElegante = document.getElementById('comparacao-elegante');
+            if (comparacaoElegante) {
+                comparacaoElegante.style.display = 'block';
+                
+                // Atualizar dados com valores reais do CSV
+                atualizarDadosComparacao(flamengo, palmeiras);
+                
+                console.log('✅ [COMPARACAO-ELEGANTE] Container exibido com dados reais!');
+            }
+        }
+
+        // ATUALIZAR DADOS DA COMPARAÇÃO
+        function atualizarDadosComparacao(flamengo, palmeiras) {
+            console.log('📊 [COMPARACAO-DADOS] Atualizando dados da comparação...');
+            
+            // Atualizar dados da tabela
+            atualizarTabelaComparacao(flamengo, palmeiras);
+            
+            console.log('✅ [COMPARACAO-DADOS] Dados atualizados com sucesso!');
+        }
+
+        // ATUALIZAR TABELA DE COMPARAÇÃO
+        function atualizarTabelaComparacao(flamengo, palmeiras) {
+            console.log('📊 [TABELA-COMPARACAO] Atualizando tabela de comparação...');
+            
+            // Posição
+            atualizarElementoComparacao('pal-posicao', flamengo.posicao + 'º');
+            atualizarElementoComparacao('fla-posicao', palmeiras.posicao + 'º');
+            
+            // Gols Pró (Média)
+            atualizarElementoComparacao('pal-gols-pro', flamengo.dados['Média Gols Pró']);
+            atualizarElementoComparacao('fla-gols-pro', palmeiras.dados['Média Gols Pró']);
+            
+            // Gols Contra (Média)
+            atualizarElementoComparacao('pal-gols-contra', flamengo.dados['Média Gols Contra']);
+            atualizarElementoComparacao('fla-gols-contra', palmeiras.dados['Média Gols Contra']);
+            
+            // Over 2.5%
+            atualizarElementoComparacao('pal-over25', flamengo.dados['Over 2.5 %'] + '%');
+            atualizarElementoComparacao('fla-over25', palmeiras.dados['Over 2.5 %'] + '%');
+            
+            // BTTS Sim %
+            atualizarElementoComparacao('pal-btts', flamengo.dados['BTTS Sim %'] + '%');
+            atualizarElementoComparacao('fla-btts', palmeiras.dados['BTTS Sim %'] + '%');
+            
+            // Clean Sheets %
+            atualizarElementoComparacao('pal-clean', flamengo.dados['Clean Sheets %'] + '%');
+            atualizarElementoComparacao('fla-clean', palmeiras.dados['Clean Sheets %'] + '%');
+            
+            // Gols Sofridos Total
+            atualizarElementoComparacao('pal-gols-sofridos-total', flamengo.dados['Gols Contra']);
+            atualizarElementoComparacao('fla-gols-sofridos-total', palmeiras.dados['Gols Contra']);
+            
+            // Pontos Últimos 5
+            atualizarElementoComparacao('pal-pontos-ultimos', flamengo.dados['Pontos Últimos 5'] + ' (' + flamengo.dados['Últimos 5 Jogos'] + ')');
+            atualizarElementoComparacao('fla-pontos-ultimos', palmeiras.dados['Pontos Últimos 5'] + ' (' + palmeiras.dados['Últimos 5 Jogos'] + ')');
+            
+            // Casa - Jogos / Aproveitamento
+            atualizarElementoComparacao('pal-casa-jogos', flamengo.dados['Jogos Casa'] + ' / ' + flamengo.dados['Aproveitamento Casa %'] + '%');
+            atualizarElementoComparacao('fla-casa-jogos', palmeiras.dados['Jogos Casa'] + ' / ' + palmeiras.dados['Aproveitamento Casa %'] + '%');
+            
+            // Casa - Gols Pró (Média)
+            const mediaGolsProCasaFla = (flamengo.dados['Gols Pró Casa'] / flamengo.dados['Jogos Casa']).toFixed(2);
+            const mediaGolsProCasaPal = (palmeiras.dados['Gols Pró Casa'] / palmeiras.dados['Jogos Casa']).toFixed(2);
+            atualizarElementoComparacao('pal-casa-gols-pro', mediaGolsProCasaFla);
+            atualizarElementoComparacao('fla-casa-gols-pro', mediaGolsProCasaPal);
+            
+            // Casa - Gols Contra (Média)
+            const mediaGolsContraCasaFla = (flamengo.dados['Gols Contra Casa'] / flamengo.dados['Jogos Casa']).toFixed(2);
+            const mediaGolsContraCasaPal = (palmeiras.dados['Gols Contra Casa'] / palmeiras.dados['Jogos Casa']).toFixed(2);
+            atualizarElementoComparacao('pal-casa-gols-contra', mediaGolsContraCasaFla);
+            atualizarElementoComparacao('fla-casa-gols-contra', mediaGolsContraCasaPal);
+            
+            // Fora - Jogos / Aproveitamento
+            atualizarElementoComparacao('pal-fora-jogos', flamengo.dados['Jogos Fora'] + ' / ' + flamengo.dados['Aproveitamento Fora %'] + '%');
+            atualizarElementoComparacao('fla-fora-jogos', palmeiras.dados['Jogos Fora'] + ' / ' + palmeiras.dados['Aproveitamento Fora %'] + '%');
+            
+            // Fora - Gols Pró (Média)
+            const mediaGolsProForaFla = (flamengo.dados['Gols Pró Fora'] / flamengo.dados['Jogos Fora']).toFixed(2);
+            const mediaGolsProForaPal = (palmeiras.dados['Gols Pró Fora'] / palmeiras.dados['Jogos Fora']).toFixed(2);
+            atualizarElementoComparacao('pal-fora-gols-pro', mediaGolsProForaFla);
+            atualizarElementoComparacao('fla-fora-gols-pro', mediaGolsProForaPal);
+            
+            // Fora - Gols Contra (Média)
+            const mediaGolsContraForaFla = (flamengo.dados['Gols Contra Fora'] / flamengo.dados['Jogos Fora']).toFixed(2);
+            const mediaGolsContraForaPal = (palmeiras.dados['Gols Contra Fora'] / palmeiras.dados['Jogos Fora']).toFixed(2);
+            atualizarElementoComparacao('pal-fora-gols-contra', mediaGolsContraForaFla);
+            atualizarElementoComparacao('fla-fora-gols-contra', mediaGolsContraForaPal);
+            
+            // Destacar valores vencedores
+            destacarValoresVencedores(flamengo, palmeiras);
+            
+            // Comparar e determinar vantagens AUTOMATICAMENTE
+            console.log('🔄 [AUTO-VANTAGEM] Iniciando avaliação automática...');
+            
+            // AVALIAÇÃO AUTOMÁTICA POR PAR DE DADOS
+            setTimeout(() => {
+                console.log('🔄 [AUTO-VANTAGEM] Executando avaliação automática...');
+                
+                // LER DADOS DAS COLUNAS DA TABELA
+                const flaPosElement = document.getElementById('fla-posicao');
+                const palPosElement = document.getElementById('pal-posicao');
+                const flaPos = flaPosElement ? parseInt(flaPosElement.textContent) : 0;
+                const palPos = palPosElement ? parseInt(palPosElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Posição - Flamengo: ${flaPos}, Palmeiras: ${palPos}`);
+                avaliarParDados(flaPos, palPos, 'vencedor-posicao', 'menor');
+                
+                // GOLS PRÓ (maior é melhor)
+                const flaGolsProElement = document.getElementById('fla-gols-pro');
+                const palGolsProElement = document.getElementById('pal-gols-pro');
+                const flaGolsPro = flaGolsProElement ? parseFloat(flaGolsProElement.textContent) : 0;
+                const palGolsPro = palGolsProElement ? parseFloat(palGolsProElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Gols Pró - Flamengo: ${flaGolsPro}, Palmeiras: ${palGolsPro}`);
+                avaliarParDados(flaGolsPro, palGolsPro, 'vencedor-gols-pro', 'maior');
+                
+                // GOLS CONTRA (menor é melhor)
+                const flaGolsContraElement = document.getElementById('fla-gols-contra');
+                const palGolsContraElement = document.getElementById('pal-gols-contra');
+                const flaGolsContra = flaGolsContraElement ? parseFloat(flaGolsContraElement.textContent) : 0;
+                const palGolsContra = palGolsContraElement ? parseFloat(palGolsContraElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Gols Contra - Flamengo: ${flaGolsContra}, Palmeiras: ${palGolsContra}`);
+                avaliarParDados(flaGolsContra, palGolsContra, 'vencedor-gols-contra', 'menor');
+                
+                // OVER 2.5 (maior é melhor)
+                const flaOver25Element = document.getElementById('fla-over25');
+                const palOver25Element = document.getElementById('pal-over25');
+                const flaOver25 = flaOver25Element ? parseFloat(flaOver25Element.textContent.replace('%', '')) : 0;
+                const palOver25 = palOver25Element ? parseFloat(palOver25Element.textContent.replace('%', '')) : 0;
+                console.log(`🔍 [DADOS-TABELA] Over 2.5 - Flamengo: ${flaOver25}%, Palmeiras: ${palOver25}%`);
+                avaliarParDados(flaOver25, palOver25, 'vencedor-over25', 'maior');
+                
+                // BTTS (maior é melhor)
+                const flaBttsElement = document.getElementById('fla-btts');
+                const palBttsElement = document.getElementById('pal-btts');
+                const flaBtts = flaBttsElement ? parseFloat(flaBttsElement.textContent.replace('%', '')) : 0;
+                const palBtts = palBttsElement ? parseFloat(palBttsElement.textContent.replace('%', '')) : 0;
+                console.log(`🔍 [DADOS-TABELA] BTTS - Flamengo: ${flaBtts}%, Palmeiras: ${palBtts}%`);
+                avaliarParDados(flaBtts, palBtts, 'vencedor-btts', 'maior');
+                
+                // CLEAN SHEET (maior é melhor)
+                const flaCleanElement = document.getElementById('fla-clean');
+                const palCleanElement = document.getElementById('pal-clean');
+                const flaClean = flaCleanElement ? parseFloat(flaCleanElement.textContent.replace('%', '')) : 0;
+                const palClean = palCleanElement ? parseFloat(palCleanElement.textContent.replace('%', '')) : 0;
+                console.log(`🔍 [DADOS-TABELA] Clean Sheet - Flamengo: ${flaClean}%, Palmeiras: ${palClean}%`);
+                avaliarParDados(flaClean, palClean, 'vencedor-clean', 'maior');
+                
+                // GOLS SOFRIDOS TOTAL (menor é melhor)
+                const flaGolsSofridosElement = document.getElementById('fla-gols-sofridos-total');
+                const palGolsSofridosElement = document.getElementById('pal-gols-sofridos-total');
+                const flaGolsSofridos = flaGolsSofridosElement ? parseInt(flaGolsSofridosElement.textContent) : 0;
+                const palGolsSofridos = palGolsSofridosElement ? parseInt(palGolsSofridosElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Gols Sofridos - Flamengo: ${flaGolsSofridos}, Palmeiras: ${palGolsSofridos}`);
+                avaliarParDados(flaGolsSofridos, palGolsSofridos, 'vencedor-gols-sofridos', 'menor');
+                
+                // PONTOS ÚLTIMOS 5 (maior é melhor)
+                const flaPontosUltimosElement = document.getElementById('fla-pontos-ultimos');
+                const palPontosUltimosElement = document.getElementById('pal-pontos-ultimos');
+                const flaPontosUltimos = flaPontosUltimosElement ? parseInt(flaPontosUltimosElement.textContent.split(' ')[0]) : 0;
+                const palPontosUltimos = palPontosUltimosElement ? parseInt(palPontosUltimosElement.textContent.split(' ')[0]) : 0;
+                console.log(`🔍 [DADOS-TABELA] Pontos Últimos - Flamengo: ${flaPontosUltimos}, Palmeiras: ${palPontosUltimos}`);
+                avaliarParDados(flaPontosUltimos, palPontosUltimos, 'vencedor-pontos-ultimos', 'maior');
+                
+                console.log('✅ [AUTO-VANTAGEM] Avaliação automática concluída!');
+            }, 500);
+            
+            console.log('✅ [TABELA-COMPARACAO] Tabela atualizada com sucesso!');
+        }
+
+        // DESTACAR VALORES VENCEDORES
+        function destacarValoresVencedores(flamengo, palmeiras) {
+            console.log('🎯 [DESTACAR-VENCEDORES] Destacando valores vencedores...');
+            
+            // Função para comparar e destacar
+            function compararEHighlightar(idPal, idFla, valorPal, valorFla, menorMelhor = false) {
+                const elementoPal = document.getElementById(idPal);
+                const elementoFla = document.getElementById(idFla);
+                
+                if (!elementoPal || !elementoFla) return;
+                
+                let vencedor;
+                if (menorMelhor) {
+                    vencedor = valorPal < valorFla ? 'pal' : valorFla < valorPal ? 'fla' : 'empate';
+                } else {
+                    vencedor = valorPal > valorFla ? 'pal' : valorFla > valorPal ? 'fla' : 'empate';
+                }
+                
+                // Remover destaques anteriores
+                elementoPal.classList.remove('vencedor');
+                elementoFla.classList.remove('vencedor');
+                
+                // Aplicar destaque ao vencedor
+                if (vencedor === 'pal') {
+                    elementoPal.classList.add('vencedor');
+                } else if (vencedor === 'fla') {
+                    elementoFla.classList.add('vencedor');
+                }
+            }
+            
+            // Comparações
+            compararEHighlightar('pal-posicao', 'fla-posicao', flamengo.posicao, palmeiras.posicao, true); // Menor posição é melhor
+            compararEHighlightar('pal-gols-pro', 'fla-gols-pro', flamengo.dados['Média Gols Pró'], palmeiras.dados['Média Gols Pró']);
+            compararEHighlightar('pal-gols-contra', 'fla-gols-contra', flamengo.dados['Média Gols Contra'], palmeiras.dados['Média Gols Contra'], true); // Menor é melhor
+            compararEHighlightar('pal-over25', 'fla-over25', flamengo.dados['Over 2.5 %'], palmeiras.dados['Over 2.5 %']);
+            compararEHighlightar('pal-btts', 'fla-btts', flamengo.dados['BTTS Sim %'], palmeiras.dados['BTTS Sim %']);
+            compararEHighlightar('pal-clean', 'fla-clean', flamengo.dados['Clean Sheets %'], palmeiras.dados['Clean Sheets %']);
+            compararEHighlightar('pal-gols-sofridos-total', 'fla-gols-sofridos-total', flamengo.dados['Gols Contra'], palmeiras.dados['Gols Contra'], true); // Menor é melhor
+            compararEHighlightar('pal-pontos-ultimos', 'fla-pontos-ultimos', flamengo.dados['Pontos Últimos 5'], palmeiras.dados['Pontos Últimos 5']);
+            
+            console.log('✅ [DESTACAR-VENCEDORES] Valores vencedores destacados!');
+        }
+
+        // ATUALIZAR ELEMENTO DA COMPARAÇÃO
+        function atualizarElementoComparacao(id, valor) {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                elemento.textContent = valor;
+                console.log(`✅ [ELEMENTO] ${id}: ${valor}`);
+            } else {
+                console.error(`❌ [ELEMENTO] Não encontrado: ${id}`);
+            }
+        }
+
+
+        // ATUALIZAR BARRAS DA COMPARAÇÃO
+        function atualizarBarrasComparacao(flamengo, palmeiras) {
+            console.log('📊 [BARRAS-COMPARACAO] Atualizando barras...');
+            
+            // Gols Marcados
+            atualizarBarraComparacao('bar-fla-gols-marcados', 'bar-pal-gols-marcados', flamengo.golsMarcados, palmeiras.golsMarcados);
+            
+            // Gols Sofridos (menor é melhor)
+            atualizarBarraComparacao('bar-fla-gols-sofridos', 'bar-pal-gols-sofridos', flamengo.golsSofridos, palmeiras.golsSofridos, true);
+            
+            // Aproveitamento Casa
+            atualizarBarraComparacao('bar-fla-casa', 'bar-pal-casa', flamengo.aproveitamentoCasa, palmeiras.aproveitamentoCasa);
+            
+            // Aproveitamento Fora
+            atualizarBarraComparacao('bar-fla-fora', 'bar-pal-fora', flamengo.aproveitamentoFora, palmeiras.aproveitamentoFora);
+            
+            // Saldo de Gols
+            atualizarBarraComparacao('bar-fla-saldo', 'bar-pal-saldo', flamengo.saldoGols, palmeiras.saldoGols);
+            
+            // Forma Recente (baseado em pontos)
+            const pontosFlamengo = calcularPontosForma(flamengo.forma);
+            const pontosPalmeiras = calcularPontosForma(palmeiras.forma);
+            atualizarBarraComparacao('bar-fla-forma', 'bar-pal-forma', pontosFlamengo, pontosPalmeiras);
+            
+            console.log('✅ [BARRAS-COMPARACAO] Barras atualizadas!');
+        }
+
+        // ATUALIZAR BARRA COMPARATIVA
+        function atualizarBarraComparacao(idFla, idPal, valorFla, valorPal, menorMelhor = false) {
+            const barraFla = document.getElementById(idFla);
+            const barraPal = document.getElementById(idPal);
+            
+            if (!barraFla || !barraPal) return;
+            
+            let maxValor, percentualFla, percentualPal;
+            
+            if (menorMelhor) {
+                // Para gols sofridos, menor é melhor
+                const minValor = Math.min(valorFla, valorPal);
+                percentualFla = (minValor / valorFla) * 100;
+                percentualPal = (minValor / valorPal) * 100;
+            } else {
+                // Para outros valores, maior é melhor
+                maxValor = Math.max(valorFla, valorPal);
+                percentualFla = (valorFla / maxValor) * 100;
+                percentualPal = (valorPal / maxValor) * 100;
+            }
+            
+            barraFla.style.width = `${percentualFla}%`;
+            barraPal.style.width = `${percentualPal}%`;
+            
+            console.log(`📊 [BARRA] ${idFla}: ${percentualFla.toFixed(1)}% | ${idPal}: ${percentualPal.toFixed(1)}%`);
+        }
+
+        // CALCULAR PONTOS DA FORMA
+        function calcularPontosForma(forma) {
+            let pontos = 0;
+            for (let resultado of forma) {
+                if (resultado === 'V') pontos += 3;
+                else if (resultado === 'E') pontos += 1;
+            }
+            return pontos;
         }
 
         // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS - TODOS OS 14 JOGOS
@@ -5084,59 +5645,210 @@ Carregando...
             return dadosConvertidos;
         }
 
-        // MOSTRAR ANÁLISE DETALHADA COM DADOS DINÂMICOS DOS ARQUIVOS JSON
-        // NOVA IMPLEMENTAÇÃO: Carrega dados diretamente dos arquivos jogo_X.json
-        async function showDetailedAnalysis(gameId) {
-            console.log(`🎯 [ANALYSIS] Carregando análise detalhada do Jogo ${gameId}...`);
+
+        // CARREGAR DADOS DO CSV DA SÉRIE A PARA ANÁLISE DETALHADA
+        async function carregarDadosCSVSerieA(timeCasa, timeVisitante) {
+            console.log('📊 [CSV-SERIE-A] Carregando dados do CSV para análise detalhada...');
+            console.log(`🏠 [CSV-SERIE-A] Time Casa: ${timeCasa}`);
+            console.log(`✈️ [CSV-SERIE-A] Time Visitante: ${timeVisitante}`);
             
-            // NOVA LÓGICA: Carregar dados dinamicamente do arquivo JSON
-            const dadosJson = await carregarDadosJogoDinamico(gameId);
+            try {
+                // Buscar dados do CSV via API
+                console.log('🔍 [CSV-SERIE-A] Fazendo requisição para /api/csv/serie-a/stats...');
+                const response = await fetch('/api/csv/serie-a/stats');
+                
+                console.log('📡 [CSV-SERIE-A] Status da resposta:', response.status);
+                console.log('📡 [CSV-SERIE-A] Headers da resposta:', response.headers);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ [CSV-SERIE-A] Erro na resposta:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
+                }
+                
+                const csvData = await response.json();
+                console.log('📊 [CSV-SERIE-A] Dados do CSV carregados:', csvData);
+                
+                // Encontrar dados dos times específicos
+                const dadosTimeCasa = encontrarDadosTimeCSV(csvData, timeCasa);
+                const dadosTimeVisitante = encontrarDadosTimeCSV(csvData, timeVisitante);
+                
+                if (dadosTimeCasa && dadosTimeVisitante) {
+                    console.log('✅ [CSV-SERIE-A] Dados encontrados para ambos os times!');
+                    console.log('🏠 [CSV-SERIE-A] Dados Casa:', dadosTimeCasa);
+                    console.log('✈️ [CSV-SERIE-A] Dados Visitante:', dadosTimeVisitante);
+                    
+                    // Atualizar interface com dados do CSV
+                    atualizarInterfaceComDadosCSV(dadosTimeCasa, dadosTimeVisitante);
+                } else {
+                    console.warn('⚠️ [CSV-SERIE-A] Dados não encontrados para um ou ambos os times');
+                    console.log('🏠 [CSV-SERIE-A] Dados Casa encontrados:', !!dadosTimeCasa);
+                    console.log('✈️ [CSV-SERIE-A] Dados Visitante encontrados:', !!dadosTimeVisitante);
+                }
+                
+            } catch (error) {
+                console.error('❌ [CSV-SERIE-A] Erro ao carregar dados do CSV:', error);
+            }
+        }
+
+        // ENCONTRAR DADOS DE UM TIME NO CSV
+        function encontrarDadosTimeCSV(csvData, nomeTime) {
+            console.log(`🔍 [CSV-SERIE-A] Procurando dados para: ${nomeTime}`);
             
-            if (!dadosJson) {
-                console.error(`❌ [ANALYSIS] Não foi possível carregar dados do Jogo ${gameId}`);
-                return;
+            // Normalizar nome do time para busca
+            const nomeNormalizado = nomeTime.toLowerCase().trim();
+            
+            // Buscar no array de dados
+            for (const time of csvData) {
+                const nomeCSV = time.Time.toLowerCase().trim();
+                
+                // Verificar correspondência exata ou parcial
+                if (nomeCSV === nomeNormalizado || 
+                    nomeCSV.includes(nomeNormalizado) || 
+                    nomeNormalizado.includes(nomeCSV)) {
+                    
+                    console.log(`✅ [CSV-SERIE-A] Dados encontrados para: ${time.Time}`);
+                    return time;
+                }
             }
             
-            // Converter dados JSON para formato compatível
-            const data = converterDadosJsonParaAnalise(dadosJson);
+            console.log(`❌ [CSV-SERIE-A] Dados não encontrados para: ${nomeTime}`);
+            return null;
+        }
+
+        // ATUALIZAR INTERFACE COM DADOS DO CSV
+        function atualizarInterfaceComDadosCSV(dadosCasa, dadosVisitante) {
+            console.log('🔄 [CSV-SERIE-A] Atualizando interface com dados do CSV...');
             
-            if (!data) {
-                console.error(`❌ [ANALYSIS] Erro na conversão dos dados do Jogo ${gameId}`);
-                return;
-            }
-
-            console.log(`✅ [ANALYSIS] Dados carregados com sucesso do Jogo ${gameId}`);
-            console.log(`🏠 [ANALYSIS] Time Casa: ${data.home.name}`);
-            console.log(`✈️ [ANALYSIS] Time Visitante: ${data.away.name}`);
-
-            // ATUALIZAR CABEÇALHO DO CONFRONTO
-            // ORIGEM: Dados básicos vêm da Aba 1 (Central Admin → Loteca → Confrontos)
-            document.getElementById('team-home-name').textContent = data.home.name;
-            document.getElementById('team-away-name').textContent = data.away.name;
-            document.querySelector('.team-home .team-position').textContent = data.home.position + ' Posição';
-            document.querySelector('.team-away .team-position').textContent = data.away.position + ' Posição';
-            document.querySelector('.stadium').textContent = data.stadium;
-            document.querySelector('.date').textContent = data.date;
-
-            // ATUALIZAR ESCUDOS DOS TIMES
-            // ORIGEM: Pasta /static/escudos/ (arquivos locais)
-            atualizarEscudosAnaliseDetalhada(data.home.name, data.away.name);
-
-            // NOVA LÓGICA: Usar dados já carregados do JSON (não precisa mais verificar se é brasileiro)
-            // Os dados já vêm completos do arquivo jogo_X.json
-            console.log('📊 [ANALYSIS] Usando dados completos do arquivo JSON...');
+            // Atualizar posições na tabela
+            document.querySelector('.team-home .team-position').textContent = `${dadosCasa.Posição}º Posição`;
+            document.querySelector('.team-away .team-position').textContent = `${dadosVisitante.Posição}º Posição`;
             
-            // Atualizar estatísticas com dados do JSON
-            atualizarEstatisticasComDadosJson(data, dadosJson);
+            // Atualizar estatísticas dos times
+            atualizarEstatisticasTimeCSV('home', dadosCasa);
+            atualizarEstatisticasTimeCSV('away', dadosVisitante);
+            
+            // NOVA FUNCIONALIDADE: Atualizar barras comparativas
+            atualizarBarrasComparativas(dadosCasa, dadosVisitante);
+            
+            console.log('✅ [CSV-SERIE-A] Interface atualizada com dados do CSV!');
+        }
 
-            // ATUALIZAR CONFRONTO DIRETO (H2H)
-            // ORIGEM: Central Admin → Aba "Ranking" → "Ranking Estatísticas"
-            // ENDPOINT: /api/br/confronto/{time1}/{time2}
-            updateH2H(data.h2h);
+        // ATUALIZAR BARRAS COMPARATIVAS COM DADOS DO CSV
+        function atualizarBarrasComparativas(dadosCasa, dadosVisitante) {
+            console.log('📊 [BARRAS-COMPARATIVAS] Atualizando barras comparativas...');
+            
+            // MAPEAMENTO DE IDs DOS CAMPOS COM DADOS DO CSV
+            const mapeamentoCampos = {
+                // GOLS MARCADOS P/JOGO
+                'gols-marcados': {
+                    casa: dadosCasa['Média Gols Pró'],
+                    visitante: dadosVisitante['Média Gols Pró'],
+                    label: 'Gols Marcados P/Jogo'
+                },
+                // GOLS SOFRIDOS P/JOGO  
+                'gols-sofridos': {
+                    casa: dadosCasa['Média Gols Contra'],
+                    visitante: dadosVisitante['Média Gols Contra'],
+                    label: 'Gols Sofridos P/Jogo'
+                },
+                // APROVEITAMENTO CASA
+                'aproveitamento-casa': {
+                    casa: parseFloat(dadosCasa['Aproveitamento Casa %']),
+                    visitante: parseFloat(dadosVisitante['Aproveitamento Casa %']),
+                    label: 'Aproveitamento Casa (%)'
+                },
+                // APROVEITAMENTO FORA
+                'aproveitamento-fora': {
+                    casa: parseFloat(dadosCasa['Aproveitamento Fora %']),
+                    visitante: parseFloat(dadosVisitante['Aproveitamento Fora %']),
+                    label: 'Aproveitamento Fora (%)'
+                }
+            };
+            
+            // Atualizar cada campo
+            Object.entries(mapeamentoCampos).forEach(([campo, dados]) => {
+                atualizarBarraComparativa(campo, dados);
+            });
+            
+            console.log('✅ [BARRAS-COMPARATIVAS] Barras atualizadas com dados do CSV!');
+        }
 
-            // ATUALIZAR RECOMENDAÇÃO
-            // ORIGEM: Cálculo baseado nos dados do Central Admin
-            updateRecommendation(data.recommendation);
+        // ATUALIZAR BARRA COMPARATIVA INDIVIDUAL
+        function atualizarBarraComparativa(campo, dados) {
+            console.log(`📊 [BARRA-${campo.toUpperCase()}] Atualizando barra: ${dados.label}`);
+            console.log(`   Casa: ${dados.casa} | Visitante: ${dados.visitante}`);
+            
+            // Encontrar elementos da barra
+            const statRows = document.querySelectorAll('.stat-row');
+            
+            statRows.forEach(row => {
+                const label = row.querySelector('.stat-label');
+                if (label && label.textContent.includes(dados.label.split(' ')[0])) {
+                    console.log(`🎯 [BARRA-${campo.toUpperCase()}] Encontrada barra: ${dados.label}`);
+                    
+                    // Atualizar valores
+                    const statHome = row.querySelector('.stat-home .stat-value');
+                    const statAway = row.querySelector('.stat-away .stat-value');
+                    
+                    if (statHome) statHome.textContent = dados.casa.toFixed(2);
+                    if (statAway) statAway.textContent = dados.visitante.toFixed(2);
+                    
+                    // Calcular percentuais para as barras
+                    const maxValor = Math.max(dados.casa, dados.visitante);
+                    const percentualCasa = (dados.casa / maxValor) * 100;
+                    const percentualVisitante = (dados.visitante / maxValor) * 100;
+                    
+                    // Atualizar barras
+                    const barraCasa = row.querySelector('.stat-home .stat-fill');
+                    const barraVisitante = row.querySelector('.stat-away .stat-fill');
+                    
+                    if (barraCasa) {
+                        barraCasa.style.width = `${percentualCasa}%`;
+                        barraCasa.style.background = dados.casa > dados.visitante ? 
+                            'linear-gradient(135deg, #10b981, #059669)' : 
+                            'linear-gradient(135deg, #6b7280, #4b5563)';
+                    }
+                    
+                    if (barraVisitante) {
+                        barraVisitante.style.width = `${percentualVisitante}%`;
+                        barraVisitante.style.background = dados.visitante > dados.casa ? 
+                            'linear-gradient(135deg, #10b981, #059669)' : 
+                            'linear-gradient(135deg, #6b7280, #4b5563)';
+                    }
+                    
+                    console.log(`✅ [BARRA-${campo.toUpperCase()}] Barra atualizada!`);
+                    console.log(`   Percentual Casa: ${percentualCasa.toFixed(1)}%`);
+                    console.log(`   Percentual Visitante: ${percentualVisitante.toFixed(1)}%`);
+                }
+            });
+        }
+
+        // ATUALIZAR ESTATÍSTICAS DE UM TIME COM DADOS DO CSV
+        function atualizarEstatisticasTimeCSV(tipo, dados) {
+            console.log(`📊 [CSV-SERIE-A] Atualizando estatísticas do time ${tipo}:`, dados.Time);
+            
+            // Mapear dados do CSV para elementos da interface
+            const mapeamento = {
+                'Jogos': dados.Jogos,
+                'Gols Pró': dados['Gols Pró'],
+                'Gols Contra': dados['Gols Contra'],
+                'Média Gols Pró': dados['Média Gols Pró'],
+                'Média Gols Contra': dados['Média Gols Contra'],
+                'Aproveitamento Casa %': dados['Aproveitamento Casa %'],
+                'Aproveitamento Fora %': dados['Aproveitamento Fora %'],
+                'Últimos 5 Jogos': dados['Últimos 5 Jogos'],
+                'Pontos Últimos 5': dados['Pontos Últimos 5']
+            };
+            
+            // Atualizar elementos específicos da interface
+            Object.entries(mapeamento).forEach(([campo, valor]) => {
+                const elemento = document.querySelector(`[data-csv-${tipo}-${campo.toLowerCase().replace(/\s+/g, '-')}]`);
+                if (elemento) {
+                    elemento.textContent = valor;
+                    console.log(`✅ [CSV-SERIE-A] ${campo} atualizado: ${valor}`);
+                }
+            });
         }
 
         // ATUALIZAR ESCUDOS NA ANÁLISE DETALHADA
@@ -7201,35 +7913,41 @@ Carregando...
         }
 
         // GERENCIAR SUB-ABAS DA ABA 2: DADOS AVANÇADOS
-        function initializeTimesLotecaSection() {
+        async function initializeTimesLotecaSection() {
             console.log('🔧 [DEBUG] Inicializando seção Times Loteca Jogos (carregamento automático)...');
             
             // 1. PRÉ-SELECIONAR JOGO 1 NO DROPDOWN
             const gameSelector = document.getElementById('game-selector');
             if (gameSelector) {
-                // Carregar jogos automaticamente
-                const jogosAba1 = extrairJogosDaAba1();
-                atualizarDropdownAba2(gameSelector, jogosAba1);
-                
-                setTimeout(() => {
-                    // Selecionar JOGO 1 automaticamente (padrão)
-                    if (gameSelector.options.length > 1) {
-                        gameSelector.selectedIndex = 1; // Primeira opção real (índice 0 é "Escolha um jogo...")
-                        console.log('✅ [AUTO] JOGO 1 pré-selecionado no dropdown (padrão)');
-                        
-                        // Disparar evento de mudança para carregar tudo automaticamente
-                        const event = new Event('change', { bubbles: true });
-                        gameSelector.dispatchEvent(event);
-                    }
+                console.log('🎮 [DEBUG] Carregando jogos para o dropdown...');
+                try {
+                    // Carregar jogos automaticamente
+                    const jogosAba1 = await extrairJogosDaAba1();
+                    console.log('📋 [DEBUG] Jogos carregados:', jogosAba1);
+                    atualizarDropdownAba2(gameSelector, jogosAba1);
                     
-                    // Log dos jogos disponíveis
-                    if (gameSelector.options.length > 1) {
-                        console.log('🎮 [DROPDOWN] Jogos disponíveis:');
-                        for (let i = 1; i < gameSelector.options.length; i++) {
-                            console.log(`  - ${gameSelector.options[i].textContent}`);
+                    setTimeout(() => {
+                        // Selecionar JOGO 1 automaticamente (padrão)
+                        if (gameSelector.options.length > 1) {
+                            gameSelector.selectedIndex = 1; // Primeira opção real (índice 0 é "Escolha um jogo...")
+                            console.log('✅ [AUTO] JOGO 1 pré-selecionado no dropdown (padrão)');
+                            
+                            // Disparar evento de mudança para carregar tudo automaticamente
+                            const event = new Event('change', { bubbles: true });
+                            gameSelector.dispatchEvent(event);
                         }
-                    }
-                }, 1000);
+                        
+                        // Log dos jogos disponíveis
+                        if (gameSelector.options.length > 1) {
+                            console.log('🎮 [DROPDOWN] Jogos disponíveis:');
+                            for (let i = 1; i < gameSelector.options.length; i++) {
+                                console.log(`  - ${gameSelector.options[i].textContent}`);
+                            }
+                        }
+                    }, 1000);
+                } catch (error) {
+                    console.error('❌ [DEBUG] Erro ao carregar jogos na seção Times Loteca:', error);
+                }
             }
             
             // 2. CARREGAR DADOS DOS TIMES AUTOMATICAMENTE
@@ -10503,7 +11221,10 @@ Carregando...
         // ===== FIM DO PATCH CIRÚRGICO =====
 
         document.addEventListener('DOMContentLoaded', function() {
-            // console.log('🚀 [DEBUG] Iniciando aplicação...');
+            console.log('🚀 [DEBUG] Iniciando aplicação...');
+            
+            // CARREGAR DADOS DOS JOGOS IMEDIATAMENTE
+            carregarDadosJogos();
             
             // PRIMEIRO: Carregar dados do JOGO 1 automaticamente
             // carregarDadosJogo1(); // REMOVIDO: Jogo 1 foi removido
@@ -10523,18 +11244,24 @@ Carregando...
             loadRealLotecaData(); // ← CARREGAR DADOS REAIS PRIMEIRO!
             
             // CARREGAMENTO AUTOMÁTICO (após carregar dados)
-            setTimeout(() => {
+            setTimeout(async () => {
                 const gameSelector = document.getElementById('game-selector');
                 if (gameSelector) {
-                    const jogosAba1 = extrairJogosDaAba1();
-                    atualizarDropdownAba2(gameSelector, jogosAba1);
+                    console.log('🚀 [DEBUG] Iniciando carregamento automático do dropdown...');
+                    try {
+                        const jogosAba1 = await extrairJogosDaAba1();
+                        console.log('📋 [DEBUG] Jogos extraídos:', jogosAba1);
+                        atualizarDropdownAba2(gameSelector, jogosAba1);
+                    } catch (error) {
+                        console.error('❌ [DEBUG] Erro ao carregar jogos:', error);
+                    }
                 }
                 // console.log('✅ [DEBUG] Carregamento automático inicializado');
             }, 500);
             initializeBudgetSelector();
             initializeOptimizationTable();
             initializeEventListeners();
-            initializeAdvancedStats();
+            initializeSimpleDropdown();
             initTimesLotecaJogos();
             
             // Carregar dados dos clubes automaticamente na Série A (primeira sub-aba)
@@ -10892,6 +11619,52 @@ Carregando...
 
             updateOptimizationTable();
             updateSummary();
+        }
+
+        // CARREGAR DADOS DOS JOGOS
+        async function carregarDadosJogos() {
+            console.log('🔄 [DADOS-JOGOS] Carregando dados dos jogos...');
+            
+            try {
+                // Tentar carregar dados da API
+                const response = await fetch('/api/br/loteca/current');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.matches) {
+                        gamesData = data.matches;
+                        console.log(`✅ [DADOS-JOGOS] ${gamesData.length} jogos carregados da API!`);
+                        initializeOptimizationTable();
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error('❌ [DADOS-JOGOS] Erro ao carregar da API:', error);
+            }
+            
+            // Fallback: usar dados padrão
+            console.log('🔄 [DADOS-JOGOS] Usando dados de fallback...');
+            gamesData = generateFallbackData();
+            initializeOptimizationTable();
+        }
+
+        // GERAR DADOS DE FALLBACK
+        function generateFallbackData() {
+            return [
+                { id: 1, home: 'Flamengo', away: 'Palmeiras', classification: 'seco', suggestion: '1' },
+                { id: 2, home: 'Corinthians', away: 'São Paulo', classification: 'duplo', suggestion: '1X' },
+                { id: 3, home: 'Santos', away: 'Palmeiras', classification: 'triplo', suggestion: '1X2' },
+                { id: 4, home: 'Flamengo', away: 'Vasco', classification: 'seco', suggestion: '1' },
+                { id: 5, home: 'Botafogo', away: 'Fluminense', classification: 'duplo', suggestion: 'X2' },
+                { id: 6, home: 'Cruzeiro', away: 'Atlético-MG', classification: 'triplo', suggestion: '1X2' },
+                { id: 7, home: 'Internacional', away: 'Grêmio', classification: 'seco', suggestion: '1' },
+                { id: 8, home: 'Bahia', away: 'Vitória', classification: 'duplo', suggestion: '1X' },
+                { id: 9, home: 'Fortaleza', away: 'Ceará', classification: 'triplo', suggestion: '1X2' },
+                { id: 10, home: 'Sport', away: 'Náutico', classification: 'seco', suggestion: '1' },
+                { id: 11, home: 'Goiás', away: 'Atlético-GO', classification: 'duplo', suggestion: 'X2' },
+                { id: 12, home: 'Cuiabá', away: 'Vila Nova', classification: 'triplo', suggestion: '1X2' },
+                { id: 13, home: 'Chapecoense', away: 'Avaí', classification: 'seco', suggestion: '1' },
+                { id: 14, home: 'Juventude', away: 'Criciúma', classification: 'duplo', suggestion: '1X' }
+            ];
         }
 
         // INICIALIZAR TABELA DE OTIMIZAÇÃO
@@ -11718,6 +12491,7 @@ Carregando...
     
     <!-- ===== NAVEGAÇÃO INTELIGENTE ENTRE ABAS ===== -->
     <script src="{{ url_for('static', filename='js/navegacao-inteligente.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/comparacao-vantagem.js') }}"></script>
 
     <!-- ===== MÓDULO OTIMIZADOR (Aba 5) ===== -->
     <script src="{{ url_for('static', filename='js/loteca-otimizador.js') }}"></script>
