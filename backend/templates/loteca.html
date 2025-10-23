@@ -1273,7 +1273,7 @@ Carregando...
                 <div id="comparacao-elegante" class="comparacao-elegante" style="display: block; background: transparent; border: none; box-shadow: none; padding: 0; margin: 0;">
                     <div class="comparacao-header">
                         <h3>⚖️ Análise Comparativa Detalhada</h3>
-                        <p>Comparação estatística entre Flamengo vs Palmeiras</p>
+                        <p id="confronto-selecionado">Selecione um jogo para ver a comparação</p>
                     </div>
                     
                     <!-- NOVA ESTRUTURA ORGANIZADA -->
@@ -1287,43 +1287,43 @@ Carregando...
                             <!-- TÍTULOS DOS TIMES -->
                             <div class="linha-titulos">
                                 <div class="coluna categoria">Categoria</div>
-                                <div class="coluna mandante">Flamengo</div>
-                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna mandante" id="nome-time-mandante">Mandante</div>
+                                <div class="coluna visitante" id="nome-time-visitante">Visitante</div>
                                 <div class="coluna vantagem">Vantagem</div>
                             </div>
                             <div class="tabela-secao">
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Posição</div>
+                                    <div class="coluna categoria">Posição <span class="info-icon" onclick="abrirModal('posicao')">?</span></div>
                                     <div class="coluna mandante" id="pal-posicao">-</div>
                                     <div class="coluna visitante" id="fla-posicao">-</div>
                                     <div class="coluna vantagem" id="vantagem-posicao">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Pró (Média)</div>
+                                    <div class="coluna categoria">Gols Pró (Média) <span class="info-icon" onclick="abrirModal('gols-pro')">?</span></div>
                                     <div class="coluna mandante" id="pal-gols-pro">-</div>
                                     <div class="coluna visitante" id="fla-gols-pro">-</div>
                                     <div class="coluna vantagem" id="vantagem-gols-pro">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Contra (Média)</div>
+                                    <div class="coluna categoria">Gols Contra (Média) <span class="info-icon" onclick="abrirModal('gols-contra')">?</span></div>
                                     <div class="coluna mandante" id="pal-gols-contra">-</div>
                                     <div class="coluna visitante" id="fla-gols-contra">-</div>
                                     <div class="coluna vantagem" id="vantagem-gols-contra">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Over 2.5%</div>
+                                    <div class="coluna categoria">Over 2.5% <span class="info-icon" onclick="abrirModal('over25')">?</span></div>
                                     <div class="coluna mandante" id="pal-over25">-</div>
                                     <div class="coluna visitante" id="fla-over25">-</div>
                                     <div class="coluna vantagem" id="vantagem-over25">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">BTTS Sim %</div>
+                                    <div class="coluna categoria">BTTS Sim % <span class="info-icon" onclick="abrirModal('btts')">?</span></div>
                                     <div class="coluna mandante" id="pal-btts">-</div>
                                     <div class="coluna visitante" id="fla-btts">-</div>
                                     <div class="coluna vantagem" id="vantagem-btts">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Clean Sheets %</div>
+                                    <div class="coluna categoria">Clean Sheets % <span class="info-icon" onclick="abrirModal('clean-sheets')">?</span></div>
                                     <div class="coluna mandante" id="pal-clean">-</div>
                                     <div class="coluna visitante" id="fla-clean">-</div>
                                     <div class="coluna vantagem" id="vantagem-clean">-</div>
@@ -1339,13 +1339,13 @@ Carregando...
                             <!-- TÍTULOS DOS TIMES -->
                             <div class="linha-titulos">
                                 <div class="coluna categoria">Categoria</div>
-                                <div class="coluna mandante">Flamengo</div>
-                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna mandante" id="nome-time-mandante-defesa">Mandante</div>
+                                <div class="coluna visitante" id="nome-time-visitante-defesa">Visitante</div>
                                 <div class="coluna vantagem">Vantagem</div>
                             </div>
                             <div class="tabela-secao">
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Sofridos Total</div>
+                                    <div class="coluna categoria">Gols Sofridos Total <span class="info-icon" onclick="abrirModal('gols-sofridos')">?</span></div>
                                     <div class="coluna mandante" id="pal-gols-sofridos-total">-</div>
                                     <div class="coluna visitante" id="fla-gols-sofridos-total">-</div>
                                     <div class="coluna vantagem" id="vantagem-gols-sofridos-total">-</div>
@@ -1361,13 +1361,13 @@ Carregando...
                             <!-- TÍTULOS DOS TIMES -->
                             <div class="linha-titulos">
                                 <div class="coluna categoria">Categoria</div>
-                                <div class="coluna mandante">Flamengo</div>
-                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna mandante" id="nome-time-mandante-forma">Mandante</div>
+                                <div class="coluna visitante" id="nome-time-visitante-forma">Visitante</div>
                                 <div class="coluna vantagem">Vantagem</div>
                             </div>
                             <div class="tabela-secao">
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Pontos Últimos 5</div>
+                                    <div class="coluna categoria">Pontos Últimos 5 <span class="info-icon" onclick="abrirModal('pontos-ultimos')">?</span></div>
                                     <div class="coluna mandante" id="pal-pontos-ultimos">-</div>
                                     <div class="coluna visitante" id="fla-pontos-ultimos">-</div>
                                     <div class="coluna vantagem" id="vantagem-pontos-ultimos">-</div>
@@ -1383,25 +1383,25 @@ Carregando...
                             <!-- TÍTULOS DOS TIMES -->
                             <div class="linha-titulos">
                                 <div class="coluna categoria">Categoria</div>
-                                <div class="coluna mandante">Flamengo</div>
-                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna mandante" id="nome-time-mandante-casa">Mandante</div>
+                                <div class="coluna visitante" id="nome-time-visitante-casa">Visitante</div>
                                 <div class="coluna vantagem">Vantagem</div>
                             </div>
                             <div class="tabela-secao">
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Jogos / Aproveitamento</div>
+                                    <div class="coluna categoria">Jogos / Aproveitamento <span class="info-icon" onclick="abrirModal('casa-jogos')">?</span></div>
                                     <div class="coluna mandante" id="pal-casa-jogos">-</div>
                                     <div class="coluna visitante" id="fla-casa-jogos">-</div>
                                     <div class="coluna vantagem" id="vantagem-casa-jogos">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Pró (Média)</div>
+                                    <div class="coluna categoria">Gols Pró (Média) <span class="info-icon" onclick="abrirModal('casa-gols-pro')">?</span></div>
                                     <div class="coluna mandante" id="pal-casa-gols-pro">-</div>
                                     <div class="coluna visitante" id="fla-casa-gols-pro">-</div>
                                     <div class="coluna vantagem" id="vantagem-casa-gols-pro">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Contra (Média)</div>
+                                    <div class="coluna categoria">Gols Contra (Média) <span class="info-icon" onclick="abrirModal('casa-gols-contra')">?</span></div>
                                     <div class="coluna mandante" id="pal-casa-gols-contra">-</div>
                                     <div class="coluna visitante" id="fla-casa-gols-contra">-</div>
                                     <div class="coluna vantagem" id="vantagem-casa-gols-contra">-</div>
@@ -1417,29 +1417,42 @@ Carregando...
                             <!-- TÍTULOS DOS TIMES -->
                             <div class="linha-titulos">
                                 <div class="coluna categoria">Categoria</div>
-                                <div class="coluna mandante">Flamengo</div>
-                                <div class="coluna visitante">Palmeiras</div>
+                                <div class="coluna mandante" id="nome-time-mandante-fora">Mandante</div>
+                                <div class="coluna visitante" id="nome-time-visitante-fora">Visitante</div>
                                 <div class="coluna vantagem">Vantagem</div>
                             </div>
                             <div class="tabela-secao">
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Jogos / Aproveitamento</div>
+                                    <div class="coluna categoria">Jogos / Aproveitamento <span class="info-icon" onclick="abrirModal('fora-jogos')">?</span></div>
                                     <div class="coluna mandante" id="pal-fora-jogos">-</div>
                                     <div class="coluna visitante" id="fla-fora-jogos">-</div>
                                     <div class="coluna vantagem" id="vantagem-fora-jogos">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Pró (Média)</div>
+                                    <div class="coluna categoria">Gols Pró (Média) <span class="info-icon" onclick="abrirModal('fora-gols-pro')">?</span></div>
                                     <div class="coluna mandante" id="pal-fora-gols-pro">-</div>
                                     <div class="coluna visitante" id="fla-fora-gols-pro">-</div>
                                     <div class="coluna vantagem" id="vantagem-fora-gols-pro">-</div>
                                 </div>
                                 <div class="linha-tabela">
-                                    <div class="coluna categoria">Gols Contra (Média)</div>
+                                    <div class="coluna categoria">Gols Contra (Média) <span class="info-icon" onclick="abrirModal('fora-gols-contra')">?</span></div>
                                     <div class="coluna mandante" id="pal-fora-gols-contra">-</div>
                                     <div class="coluna visitante" id="fla-fora-gols-contra">-</div>
                                     <div class="coluna vantagem" id="vantagem-fora-gols-contra">-</div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- MODAL DE INFORMAÇÃO -->
+                    <div id="modal-info" class="modal-info">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="modal-title">Informação</h3>
+                                <span class="close" onclick="fecharModal()">&times;</span>
+                            </div>
+                            <div class="modal-body" id="modal-body">
+                                <!-- Conteúdo será inserido dinamicamente -->
                             </div>
                         </div>
                     </div>
@@ -4464,6 +4477,22 @@ Carregando...
                     if (gameId && gameId >= 1 && gameId <= 14) {
                         console.log(`🚀 [DROPDOWN-SIMPLES] Carregando comparação para Jogo ${gameId}...`);
                         
+                        // ATUALIZAÇÃO AUTOMÁTICA DOS NOMES DOS TIMES
+                        const jogoTexto = e.target.options[e.target.selectedIndex].text;
+                        console.log(`🎯 [AUTO-UPDATE] Texto do dropdown: ${jogoTexto}`);
+                        
+                        const times = extrairTimesDoDropdown(jogoTexto);
+                        if (times) {
+                            console.log(`🔄 [AUTO-UPDATE] Atualizando nomes: ${times.mandante} vs ${times.visitante}`);
+                            atualizarNomesTimes(times.mandante, times.visitante);
+                            
+                            // Atualizar texto do confronto
+                            const confrontoTexto = document.getElementById('confronto-selecionado');
+                            if (confrontoTexto) {
+                                confrontoTexto.textContent = `Comparação estatística entre ${times.mandante} vs ${times.visitante}`;
+                            }
+                        }
+                        
                         // Esconder mensagem de seleção
                         if (noGameSelected) {
                             noGameSelected.style.display = 'none';
@@ -4476,7 +4505,7 @@ Carregando...
                             // Atualizar título da comparação
                             const titulo = comparacaoElegante.querySelector('.comparacao-header p');
                             if (titulo) {
-                                titulo.textContent = `Comparação estatística para Jogo ${gameId}`;
+                                titulo.textContent = `Comparação estatística entre ${times?.mandante || 'Mandante'} vs ${times?.visitante || 'Visitante'}`;
                             }
                         }
                         
@@ -4501,39 +4530,52 @@ Carregando...
             console.log('✅ [DROPDOWN-SIMPLES] Sistema simples inicializado!');
         }
 
-        // CORRELACIONAR DADOS DO CSV - FLAMENGO E PALMEIRAS
+        // CORRELACIONAR DADOS DO CSV - AUTOMÁTICO
         async function correlacionarDadosCSV() {
-            console.log('🔍 [CORRELACAO] Correlacionando dados do CSV para Flamengo e Palmeiras...');
+            console.log('🔍 [CORRELACAO] Iniciando correlação de dados...');
             
-            // Mostrar container de comparação primeiro
+            // Buscar jogo selecionado
+            const gameSelector = document.getElementById('game-selector');
+            const jogoSelecionado = gameSelector.value;
+            
+            if (!jogoSelecionado) {
+                alert('⚠️ Por favor, selecione um jogo primeiro!');
+                return;
+            }
+            
+            // Extrair nomes dos times do texto do dropdown
+            const jogoTexto = gameSelector.options[gameSelector.selectedIndex].text;
+            console.log(`🎯 [CORRELACAO] Texto do dropdown: ${jogoTexto}`);
+            
+            const times = extrairTimesDoDropdown(jogoTexto);
+            if (!times) {
+                console.error('❌ [CORRELACAO] Não foi possível extrair nomes dos times');
+                alert('❌ Erro: Não foi possível identificar os times!');
+                return;
+            }
+            
+            console.log(`🎯 [CORRELACAO] Times extraídos: ${times.mandante} vs ${times.visitante}`);
+            
+            // Atualizar nomes dos times na interface
+            atualizarNomesTimes(times.mandante, times.visitante);
+            
+            // Atualizar texto do confronto
+            const confrontoTexto = document.getElementById('confronto-selecionado');
+            if (confrontoTexto) {
+                confrontoTexto.textContent = `Comparação estatística entre ${times.mandante} vs ${times.visitante}`;
+            }
+            
+            // Mostrar container de comparação
             mostrarContainerComparacao();
             
             try {
-                const response = await fetch('/api/csv/serie-a/stats');
+                // Tentar carregar dados reais do CSV para os times selecionados
+                const dadosReais = await carregarDadosReaisCSV(times.mandante, times.visitante);
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                if (!data.success || !data.data) {
-                    throw new Error('Dados não encontrados no CSV');
-                }
-                
-                // Encontrar dados do Flamengo e Palmeiras
-                const flamengo = data.data.find(time => time.Time.toLowerCase().includes('flamengo'));
-                const palmeiras = data.data.find(time => time.Time.toLowerCase().includes('palmeiras'));
-                
-                console.log('🏠 [CORRELACAO] Dados do Flamengo:', flamengo);
-                console.log('✈️ [CORRELACAO] Dados do Palmeiras:', palmeiras);
-                
-                if (flamengo && palmeiras) {
-                    // Atualizar tabela com dados reais
-                    atualizarTabelaComDadosReais(flamengo, palmeiras);
+                if (dadosReais) {
                     console.log('✅ [CORRELACAO] Dados reais carregados com sucesso!');
                 } else {
-                    console.warn('⚠️ [CORRELACAO] Times não encontrados no CSV, usando dados simulados');
+                    console.warn('⚠️ [CORRELACAO] Não foi possível carregar dados reais, usando dados simulados');
                     usarDadosSimulados();
                 }
                 
@@ -4542,6 +4584,47 @@ Carregando...
                 console.log('🔄 [CORRELACAO] Usando dados simulados como fallback...');
                 usarDadosSimulados();
             }
+        }
+        
+        // EXTRAIR NOMES DOS TIMES DO DROPDOWN
+        function extrairTimesDoDropdown(textoJogo) {
+            console.log(`🔍 [EXTRAIR] Analisando texto: ${textoJogo}`);
+            
+            // Padrão: "Jogo X: Time1 vs Time2"
+            const padrao = /Jogo \d+:\s*(.+?)\s+vs\s+(.+)/;
+            const match = textoJogo.match(padrao);
+            
+            if (match) {
+                const mandante = match[1].trim();
+                const visitante = match[2].trim();
+                console.log(`✅ [EXTRAIR] Encontrado: ${mandante} vs ${visitante}`);
+                return { mandante, visitante };
+            }
+            
+            console.error('❌ [EXTRAIR] Padrão não encontrado no texto');
+            return null;
+        }
+        
+        // ATUALIZAR NOMES DOS TIMES NA INTERFACE
+        function atualizarNomesTimes(mandante, visitante) {
+            console.log(`🔄 [NOMES-TIMES] Atualizando: Mandante=${mandante}, Visitante=${visitante}`);
+            
+            // Atualizar todos os títulos das seções
+            const secoes = ['', '-defesa', '-forma', '-casa', '-fora'];
+            
+            secoes.forEach(secao => {
+                const elementoMandante = document.getElementById(`nome-time-mandante${secao}`);
+                const elementoVisitante = document.getElementById(`nome-time-visitante${secao}`);
+                
+                if (elementoMandante) {
+                    elementoMandante.textContent = mandante;
+                }
+                if (elementoVisitante) {
+                    elementoVisitante.textContent = visitante;
+                }
+            });
+            
+            console.log('✅ [NOMES-TIMES] Nomes atualizados com sucesso!');
         }
 
         // MOSTRAR CONTAINER DE COMPARAÇÃO
@@ -4627,11 +4710,121 @@ Carregando...
             console.log('✅ [DADOS-SIMULADOS] Dados simulados carregados!');
         }
 
+        // MAPEAMENTO DE IDs PARA CAMPOS DO CSV
+        const MAPEAMENTO_CSV = {
+            // FLAMENGO
+            'fla-posicao': 'Posição',
+            'fla-gols-pro': 'Média Gols Pró',
+            'fla-gols-contra': 'Média Gols Contra',
+            'fla-over25': 'Over 2.5 %',
+            'fla-btts': 'BTTS Sim %',
+            'fla-clean': 'Clean Sheets %',
+            'fla-gols-sofridos-total': 'Gols Contra',
+            'fla-pontos-ultimos': 'Pontos Últimos 5',
+            'fla-casa-jogos': 'Jogos Casa',
+            'fla-casa-gols-pro': 'Gols Pró Casa',
+            'fla-casa-gols-contra': 'Gols Contra Casa',
+            'fla-fora-jogos': 'Jogos Fora',
+            'fla-fora-gols-pro': 'Gols Pró Fora',
+            'fla-fora-gols-contra': 'Gols Contra Fora',
+            
+            // PALMEIRAS
+            'pal-posicao': 'Posição',
+            'pal-gols-pro': 'Média Gols Pró',
+            'pal-gols-contra': 'Média Gols Contra',
+            'pal-over25': 'Over 2.5 %',
+            'pal-btts': 'BTTS Sim %',
+            'pal-clean': 'Clean Sheets %',
+            'pal-gols-sofridos-total': 'Gols Contra',
+            'pal-pontos-ultimos': 'Pontos Últimos 5',
+            'pal-casa-jogos': 'Jogos Casa',
+            'pal-casa-gols-pro': 'Gols Pró Casa',
+            'pal-casa-gols-contra': 'Gols Contra Casa',
+            'pal-fora-jogos': 'Jogos Fora',
+            'pal-fora-gols-pro': 'Gols Pró Fora',
+            'pal-fora-gols-contra': 'Gols Contra Fora'
+        };
+
+        // CARREGAR DADOS REAIS DO CSV (SÉRIE A E SÉRIE B)
+        async function carregarDadosReaisCSV(timeMandante, timeVisitante) {
+            console.log(`🔍 [CSV-REAL] Carregando dados reais do CSV para ${timeMandante} vs ${timeVisitante}...`);
+            
+            // TENTAR PRIMEIRO NA SÉRIE A
+            console.log('🏆 [SERIE-A] Buscando na Série A...');
+            const dadosSerieA = await buscarDadosSerie('serie-a', timeMandante, timeVisitante);
+            if (dadosSerieA) {
+                console.log('✅ [SERIE-A] Times encontrados na Série A!');
+                return true;
+            }
+            
+            // SE NÃO ENCONTRAR, TENTAR NA SÉRIE B
+            console.log('🏆 [SERIE-B] Buscando na Série B...');
+            const dadosSerieB = await buscarDadosSerie('serie-b', timeMandante, timeVisitante);
+            if (dadosSerieB) {
+                console.log('✅ [SERIE-B] Times encontrados na Série B!');
+                return true;
+            }
+            
+            // SE NÃO ENCONTRAR EM NENHUMA SÉRIE
+            console.warn(`⚠️ [CSV-REAL] Times não encontrados em nenhuma série: ${timeMandante} vs ${timeVisitante}`);
+            return false;
+        }
+        
+        // BUSCAR DADOS EM UMA SÉRIE ESPECÍFICA
+        async function buscarDadosSerie(serie, timeMandante, timeVisitante) {
+            try {
+                const endpoint = serie === 'serie-a' ? '/api/csv/serie-a/stats' : '/api/csv/serie-b/stats';
+                console.log(`🔍 [${serie.toUpperCase()}] Buscando em: ${endpoint}`);
+                
+                const response = await fetch(endpoint);
+                
+                if (!response.ok) {
+                    console.warn(`⚠️ [${serie.toUpperCase()}] Endpoint não disponível: ${response.status}`);
+                    return false;
+                }
+                
+                const data = await response.json();
+                console.log(`✅ [${serie.toUpperCase()}] Dados carregados:`, data);
+                
+                if (data.success && data.data) {
+                    // Buscar os times nos dados (busca simplificada)
+                    const mandante = data.data.find(team => {
+                        const nomeTime = team.Time.toUpperCase();
+                        const nomeBusca = timeMandante.toUpperCase();
+                        return nomeTime.includes(nomeBusca) || nomeBusca.includes(nomeTime.split(/[\s/]/)[0]);
+                    });
+                    
+                    const visitante = data.data.find(team => {
+                        const nomeTime = team.Time.toUpperCase();
+                        const nomeBusca = timeVisitante.toUpperCase();
+                        return nomeTime.includes(nomeBusca) || nomeBusca.includes(nomeTime.split(/[\s/]/)[0]);
+                    });
+                    
+                    if (mandante && visitante) {
+                        console.log(`✅ [${serie.toUpperCase()}] Times encontrados: ${mandante.Time} vs ${visitante.Time}`);
+                        atualizarTabelaComDadosReais(mandante, visitante);
+                        return true;
+                    } else {
+                        console.log(`⚠️ [${serie.toUpperCase()}] Times não encontrados nesta série`);
+                        console.log(`🔍 [${serie.toUpperCase()}] Times disponíveis:`, data.data.map(t => t.Time));
+                        return false;
+                    }
+                } else {
+                    console.warn(`⚠️ [${serie.toUpperCase()}] Dados não encontrados na resposta`);
+                    return false;
+                }
+                
+            } catch (error) {
+                console.error(`❌ [${serie.toUpperCase()}] Erro ao carregar dados:`, error);
+                return false;
+            }
+        }
+
         // ATUALIZAR TABELA COM DADOS REAIS
-        function atualizarTabelaComDadosReais(flamengo, palmeiras) {
+        function atualizarTabelaComDadosReais(timeMandante, timeVisitante) {
             console.log('📊 [TABELA-REAL] Atualizando tabela com dados reais...');
-            console.log('📊 [DADOS] Flamengo:', flamengo);
-            console.log('📊 [DADOS] Palmeiras:', palmeiras);
+            console.log('📊 [DADOS] Mandante:', timeMandante);
+            console.log('📊 [DADOS] Visitante:', timeVisitante);
             
             // Aguardar um pouco para garantir que o DOM esteja pronto
             setTimeout(() => {
@@ -4641,7 +4834,7 @@ Carregando...
                 const elementoTeste = document.getElementById('pal-posicao');
                 console.log('🔍 [TESTE-PRE] Elemento pal-posicao antes:', elementoTeste?.textContent);
                 
-                atualizarTabelaComparacao(flamengo, palmeiras);
+                atualizarTabelaComparacao(timeMandante, timeVisitante);
                 
                 // Teste específico depois de atualizar
                 console.log('🔍 [TESTE-POS] Elemento pal-posicao depois:', elementoTeste?.textContent);
@@ -4651,53 +4844,53 @@ Carregando...
         }
 
         // CRIAR RELATÓRIO DE CORRELAÇÃO
-        function criarRelatorioCorrelacao(flamengo, palmeiras) {
+        function criarRelatorioCorrelacao(timeMandante, timeVisitante) {
             const relatorio = {
                 times: {
-                    flamengo: {
-                        nome: flamengo.Time,
-                        posicao: flamengo.Posição,
-                        dados: flamengo
+                    mandante: {
+                        nome: timeMandante.Time,
+                        posicao: timeMandante.Posição,
+                        dados: timeMandante
                     },
-                    palmeiras: {
-                        nome: palmeiras.Time,
-                        posicao: palmeiras.Posição,
-                        dados: palmeiras
+                    visitante: {
+                        nome: timeVisitante.Time,
+                        posicao: timeVisitante.Posição,
+                        dados: timeVisitante
                     }
                 },
                 comparacao: {
                     posicao: {
-                        flamengo: flamengo.Posição,
-                        palmeiras: palmeiras.Posição,
-                        diferenca: Math.abs(flamengo.Posição - palmeiras.Posição)
+                        mandante: timeMandante.Posição,
+                        visitante: timeVisitante.Posição,
+                        diferenca: Math.abs(timeMandante.Posição - timeVisitante.Posição)
                     },
                     gols: {
-                        flamengo: {
-                            pro: flamengo['Gols Pró'],
-                            contra: flamengo['Gols Contra'],
-                            media_pro: flamengo['Média Gols Pró'],
-                            media_contra: flamengo['Média Gols Contra']
+                        mandante: {
+                            pro: timeMandante['Gols Pró'],
+                            contra: timeMandante['Gols Contra'],
+                            media_pro: timeMandante['Média Gols Pró'],
+                            media_contra: timeMandante['Média Gols Contra']
                         },
-                        palmeiras: {
-                            pro: palmeiras['Gols Pró'],
-                            contra: palmeiras['Gols Contra'],
-                            media_pro: palmeiras['Média Gols Pró'],
-                            media_contra: palmeiras['Média Gols Contra']
+                        visitante: {
+                            pro: timeVisitante['Gols Pró'],
+                            contra: timeVisitante['Gols Contra'],
+                            media_pro: timeVisitante['Média Gols Pró'],
+                            media_contra: timeVisitante['Média Gols Contra']
                         }
                     },
                     aproveitamento: {
-                        flamengo: {
-                            casa: flamengo['Aproveitamento Casa %'],
-                            fora: flamengo['Aproveitamento Fora %']
+                        mandante: {
+                            casa: timeMandante['Aproveitamento Casa %'],
+                            fora: timeMandante['Aproveitamento Fora %']
                         },
-                        palmeiras: {
-                            casa: palmeiras['Aproveitamento Casa %'],
-                            fora: palmeiras['Aproveitamento Fora %']
+                        visitante: {
+                            casa: timeVisitante['Aproveitamento Casa %'],
+                            fora: timeVisitante['Aproveitamento Fora %']
                         }
                     },
                     ultimos_jogos: {
-                        flamengo: flamengo['Últimos 5 Jogos'],
-                        palmeiras: palmeiras['Últimos 5 Jogos']
+                        mandante: timeMandante['Últimos 5 Jogos'],
+                        visitante: timeVisitante['Últimos 5 Jogos']
                     }
                 }
             };
@@ -4711,13 +4904,13 @@ Carregando...
             const { comparacao } = relatorio;
             
             // Mostrar container de comparação elegante
-            mostrarComparacaoElegante(flamengo, palmeiras);
+            mostrarComparacaoElegante(timeMandante, timeVisitante);
             
             console.log('✅ [CORRELACAO] Comparação elegante exibida!');
         }
 
         // MOSTRAR COMPARAÇÃO ELEGANTE COM BARRAS
-        function mostrarComparacaoElegante(flamengo, palmeiras) {
+        function mostrarComparacaoElegante(timeMandante, timeVisitante) {
             console.log('🎨 [COMPARACAO-ELEGANTE] Exibindo comparação elegante...');
             
             // Mostrar container de comparação
@@ -4726,92 +4919,92 @@ Carregando...
                 comparacaoElegante.style.display = 'block';
                 
                 // Atualizar dados com valores reais do CSV
-                atualizarDadosComparacao(flamengo, palmeiras);
+                atualizarDadosComparacao(timeMandante, timeVisitante);
                 
                 console.log('✅ [COMPARACAO-ELEGANTE] Container exibido com dados reais!');
             }
         }
 
         // ATUALIZAR DADOS DA COMPARAÇÃO
-        function atualizarDadosComparacao(flamengo, palmeiras) {
+        function atualizarDadosComparacao(timeMandante, timeVisitante) {
             console.log('📊 [COMPARACAO-DADOS] Atualizando dados da comparação...');
             
             // Atualizar dados da tabela
-            atualizarTabelaComparacao(flamengo, palmeiras);
+            atualizarTabelaComparacao(timeMandante, timeVisitante);
             
             console.log('✅ [COMPARACAO-DADOS] Dados atualizados com sucesso!');
         }
 
         // ATUALIZAR TABELA DE COMPARAÇÃO
-        function atualizarTabelaComparacao(flamengo, palmeiras) {
+        function atualizarTabelaComparacao(timeMandante, timeVisitante) {
             console.log('📊 [TABELA-COMPARACAO] Atualizando tabela de comparação...');
             
             // Posição
-            atualizarElementoComparacao('pal-posicao', flamengo.posicao + 'º');
-            atualizarElementoComparacao('fla-posicao', palmeiras.posicao + 'º');
+            atualizarElementoComparacao('pal-posicao', timeMandante['Posição'] + 'º');
+            atualizarElementoComparacao('fla-posicao', timeVisitante['Posição'] + 'º');
             
             // Gols Pró (Média)
-            atualizarElementoComparacao('pal-gols-pro', flamengo.dados['Média Gols Pró']);
-            atualizarElementoComparacao('fla-gols-pro', palmeiras.dados['Média Gols Pró']);
+            atualizarElementoComparacao('pal-gols-pro', timeMandante['Média Gols Pró']);
+            atualizarElementoComparacao('fla-gols-pro', timeVisitante['Média Gols Pró']);
             
             // Gols Contra (Média)
-            atualizarElementoComparacao('pal-gols-contra', flamengo.dados['Média Gols Contra']);
-            atualizarElementoComparacao('fla-gols-contra', palmeiras.dados['Média Gols Contra']);
+            atualizarElementoComparacao('pal-gols-contra', timeMandante['Média Gols Contra']);
+            atualizarElementoComparacao('fla-gols-contra', timeVisitante['Média Gols Contra']);
             
             // Over 2.5%
-            atualizarElementoComparacao('pal-over25', flamengo.dados['Over 2.5 %'] + '%');
-            atualizarElementoComparacao('fla-over25', palmeiras.dados['Over 2.5 %'] + '%');
+            atualizarElementoComparacao('pal-over25', timeMandante['Over 2.5 %'] + '%');
+            atualizarElementoComparacao('fla-over25', timeVisitante['Over 2.5 %'] + '%');
             
             // BTTS Sim %
-            atualizarElementoComparacao('pal-btts', flamengo.dados['BTTS Sim %'] + '%');
-            atualizarElementoComparacao('fla-btts', palmeiras.dados['BTTS Sim %'] + '%');
+            atualizarElementoComparacao('pal-btts', timeMandante['BTTS Sim %'] + '%');
+            atualizarElementoComparacao('fla-btts', timeVisitante['BTTS Sim %'] + '%');
             
             // Clean Sheets %
-            atualizarElementoComparacao('pal-clean', flamengo.dados['Clean Sheets %'] + '%');
-            atualizarElementoComparacao('fla-clean', palmeiras.dados['Clean Sheets %'] + '%');
+            atualizarElementoComparacao('pal-clean', timeMandante['Clean Sheets %'] + '%');
+            atualizarElementoComparacao('fla-clean', timeVisitante['Clean Sheets %'] + '%');
             
             // Gols Sofridos Total
-            atualizarElementoComparacao('pal-gols-sofridos-total', flamengo.dados['Gols Contra']);
-            atualizarElementoComparacao('fla-gols-sofridos-total', palmeiras.dados['Gols Contra']);
+            atualizarElementoComparacao('pal-gols-sofridos-total', timeMandante['Gols Contra']);
+            atualizarElementoComparacao('fla-gols-sofridos-total', timeVisitante['Gols Contra']);
             
             // Pontos Últimos 5
-            atualizarElementoComparacao('pal-pontos-ultimos', flamengo.dados['Pontos Últimos 5'] + ' (' + flamengo.dados['Últimos 5 Jogos'] + ')');
-            atualizarElementoComparacao('fla-pontos-ultimos', palmeiras.dados['Pontos Últimos 5'] + ' (' + palmeiras.dados['Últimos 5 Jogos'] + ')');
+            atualizarElementoComparacao('pal-pontos-ultimos', timeMandante['Pontos Últimos 5'] + ' (' + timeMandante['Últimos 5 Jogos'] + ')');
+            atualizarElementoComparacao('fla-pontos-ultimos', timeVisitante['Pontos Últimos 5'] + ' (' + timeVisitante['Últimos 5 Jogos'] + ')');
             
             // Casa - Jogos / Aproveitamento
-            atualizarElementoComparacao('pal-casa-jogos', flamengo.dados['Jogos Casa'] + ' / ' + flamengo.dados['Aproveitamento Casa %'] + '%');
-            atualizarElementoComparacao('fla-casa-jogos', palmeiras.dados['Jogos Casa'] + ' / ' + palmeiras.dados['Aproveitamento Casa %'] + '%');
+            atualizarElementoComparacao('pal-casa-jogos', timeMandante['Jogos Casa'] + ' / ' + timeMandante['Aproveitamento Casa %'] + '%');
+            atualizarElementoComparacao('fla-casa-jogos', timeVisitante['Jogos Casa'] + ' / ' + timeVisitante['Aproveitamento Casa %'] + '%');
             
             // Casa - Gols Pró (Média)
-            const mediaGolsProCasaFla = (flamengo.dados['Gols Pró Casa'] / flamengo.dados['Jogos Casa']).toFixed(2);
-            const mediaGolsProCasaPal = (palmeiras.dados['Gols Pró Casa'] / palmeiras.dados['Jogos Casa']).toFixed(2);
-            atualizarElementoComparacao('pal-casa-gols-pro', mediaGolsProCasaFla);
-            atualizarElementoComparacao('fla-casa-gols-pro', mediaGolsProCasaPal);
+            const mediaGolsProCasaMandante = (timeMandante['Gols Pró Casa'] / timeMandante['Jogos Casa']).toFixed(2);
+            const mediaGolsProCasaVisitante = (timeVisitante['Gols Pró Casa'] / timeVisitante['Jogos Casa']).toFixed(2);
+            atualizarElementoComparacao('pal-casa-gols-pro', mediaGolsProCasaMandante);
+            atualizarElementoComparacao('fla-casa-gols-pro', mediaGolsProCasaVisitante);
             
             // Casa - Gols Contra (Média)
-            const mediaGolsContraCasaFla = (flamengo.dados['Gols Contra Casa'] / flamengo.dados['Jogos Casa']).toFixed(2);
-            const mediaGolsContraCasaPal = (palmeiras.dados['Gols Contra Casa'] / palmeiras.dados['Jogos Casa']).toFixed(2);
-            atualizarElementoComparacao('pal-casa-gols-contra', mediaGolsContraCasaFla);
-            atualizarElementoComparacao('fla-casa-gols-contra', mediaGolsContraCasaPal);
+            const mediaGolsContraCasaMandante = (timeMandante['Gols Contra Casa'] / timeMandante['Jogos Casa']).toFixed(2);
+            const mediaGolsContraCasaVisitante = (timeVisitante['Gols Contra Casa'] / timeVisitante['Jogos Casa']).toFixed(2);
+            atualizarElementoComparacao('pal-casa-gols-contra', mediaGolsContraCasaMandante);
+            atualizarElementoComparacao('fla-casa-gols-contra', mediaGolsContraCasaVisitante);
             
             // Fora - Jogos / Aproveitamento
-            atualizarElementoComparacao('pal-fora-jogos', flamengo.dados['Jogos Fora'] + ' / ' + flamengo.dados['Aproveitamento Fora %'] + '%');
-            atualizarElementoComparacao('fla-fora-jogos', palmeiras.dados['Jogos Fora'] + ' / ' + palmeiras.dados['Aproveitamento Fora %'] + '%');
+            atualizarElementoComparacao('pal-fora-jogos', timeMandante['Jogos Fora'] + ' / ' + timeMandante['Aproveitamento Fora %'] + '%');
+            atualizarElementoComparacao('fla-fora-jogos', timeVisitante['Jogos Fora'] + ' / ' + timeVisitante['Aproveitamento Fora %'] + '%');
             
             // Fora - Gols Pró (Média)
-            const mediaGolsProForaFla = (flamengo.dados['Gols Pró Fora'] / flamengo.dados['Jogos Fora']).toFixed(2);
-            const mediaGolsProForaPal = (palmeiras.dados['Gols Pró Fora'] / palmeiras.dados['Jogos Fora']).toFixed(2);
-            atualizarElementoComparacao('pal-fora-gols-pro', mediaGolsProForaFla);
-            atualizarElementoComparacao('fla-fora-gols-pro', mediaGolsProForaPal);
+            const mediaGolsProForaMandante = (timeMandante['Gols Pró Fora'] / timeMandante['Jogos Fora']).toFixed(2);
+            const mediaGolsProForaVisitante = (timeVisitante['Gols Pró Fora'] / timeVisitante['Jogos Fora']).toFixed(2);
+            atualizarElementoComparacao('pal-fora-gols-pro', mediaGolsProForaMandante);
+            atualizarElementoComparacao('fla-fora-gols-pro', mediaGolsProForaVisitante);
             
             // Fora - Gols Contra (Média)
-            const mediaGolsContraForaFla = (flamengo.dados['Gols Contra Fora'] / flamengo.dados['Jogos Fora']).toFixed(2);
-            const mediaGolsContraForaPal = (palmeiras.dados['Gols Contra Fora'] / palmeiras.dados['Jogos Fora']).toFixed(2);
-            atualizarElementoComparacao('pal-fora-gols-contra', mediaGolsContraForaFla);
-            atualizarElementoComparacao('fla-fora-gols-contra', mediaGolsContraForaPal);
+            const mediaGolsContraForaMandante = (timeMandante['Gols Contra Fora'] / timeMandante['Jogos Fora']).toFixed(2);
+            const mediaGolsContraForaVisitante = (timeVisitante['Gols Contra Fora'] / timeVisitante['Jogos Fora']).toFixed(2);
+            atualizarElementoComparacao('pal-fora-gols-contra', mediaGolsContraForaMandante);
+            atualizarElementoComparacao('fla-fora-gols-contra', mediaGolsContraForaVisitante);
             
             // Destacar valores vencedores
-            destacarValoresVencedores(flamengo, palmeiras);
+            destacarValoresVencedores(timeMandante, timeVisitante);
             
             // Comparar e determinar vantagens AUTOMATICAMENTE
             console.log('🔄 [AUTO-VANTAGEM] Iniciando avaliação automática...');
@@ -4826,7 +5019,7 @@ Carregando...
                 const flaPos = flaPosElement ? parseInt(flaPosElement.textContent) : 0;
                 const palPos = palPosElement ? parseInt(palPosElement.textContent) : 0;
                 console.log(`🔍 [DADOS-TABELA] Posição - Flamengo: ${flaPos}, Palmeiras: ${palPos}`);
-                avaliarParDados(flaPos, palPos, 'vencedor-posicao', 'menor');
+                avaliarParDados(palPos, flaPos, 'vencedor-posicao', 'menor', timeMandante, timeVisitante);
                 
                 // GOLS PRÓ (maior é melhor)
                 const flaGolsProElement = document.getElementById('fla-gols-pro');
@@ -4834,7 +5027,7 @@ Carregando...
                 const flaGolsPro = flaGolsProElement ? parseFloat(flaGolsProElement.textContent) : 0;
                 const palGolsPro = palGolsProElement ? parseFloat(palGolsProElement.textContent) : 0;
                 console.log(`🔍 [DADOS-TABELA] Gols Pró - Flamengo: ${flaGolsPro}, Palmeiras: ${palGolsPro}`);
-                avaliarParDados(flaGolsPro, palGolsPro, 'vencedor-gols-pro', 'maior');
+                avaliarParDados(palGolsPro, flaGolsPro, 'vencedor-gols-pro', 'maior', timeMandante, timeVisitante);
                 
                 // GOLS CONTRA (menor é melhor)
                 const flaGolsContraElement = document.getElementById('fla-gols-contra');
@@ -4842,7 +5035,7 @@ Carregando...
                 const flaGolsContra = flaGolsContraElement ? parseFloat(flaGolsContraElement.textContent) : 0;
                 const palGolsContra = palGolsContraElement ? parseFloat(palGolsContraElement.textContent) : 0;
                 console.log(`🔍 [DADOS-TABELA] Gols Contra - Flamengo: ${flaGolsContra}, Palmeiras: ${palGolsContra}`);
-                avaliarParDados(flaGolsContra, palGolsContra, 'vencedor-gols-contra', 'menor');
+                avaliarParDados(palGolsContra, flaGolsContra, 'vencedor-gols-contra', 'menor', timeMandante, timeVisitante);
                 
                 // OVER 2.5 (maior é melhor)
                 const flaOver25Element = document.getElementById('fla-over25');
@@ -4850,7 +5043,7 @@ Carregando...
                 const flaOver25 = flaOver25Element ? parseFloat(flaOver25Element.textContent.replace('%', '')) : 0;
                 const palOver25 = palOver25Element ? parseFloat(palOver25Element.textContent.replace('%', '')) : 0;
                 console.log(`🔍 [DADOS-TABELA] Over 2.5 - Flamengo: ${flaOver25}%, Palmeiras: ${palOver25}%`);
-                avaliarParDados(flaOver25, palOver25, 'vencedor-over25', 'maior');
+                avaliarParDados(palOver25, flaOver25, 'vencedor-over25', 'maior', timeMandante, timeVisitante);
                 
                 // BTTS (maior é melhor)
                 const flaBttsElement = document.getElementById('fla-btts');
@@ -4858,7 +5051,7 @@ Carregando...
                 const flaBtts = flaBttsElement ? parseFloat(flaBttsElement.textContent.replace('%', '')) : 0;
                 const palBtts = palBttsElement ? parseFloat(palBttsElement.textContent.replace('%', '')) : 0;
                 console.log(`🔍 [DADOS-TABELA] BTTS - Flamengo: ${flaBtts}%, Palmeiras: ${palBtts}%`);
-                avaliarParDados(flaBtts, palBtts, 'vencedor-btts', 'maior');
+                avaliarParDados(palBtts, flaBtts, 'vencedor-btts', 'maior', timeMandante, timeVisitante);
                 
                 // CLEAN SHEET (maior é melhor)
                 const flaCleanElement = document.getElementById('fla-clean');
@@ -4866,7 +5059,7 @@ Carregando...
                 const flaClean = flaCleanElement ? parseFloat(flaCleanElement.textContent.replace('%', '')) : 0;
                 const palClean = palCleanElement ? parseFloat(palCleanElement.textContent.replace('%', '')) : 0;
                 console.log(`🔍 [DADOS-TABELA] Clean Sheet - Flamengo: ${flaClean}%, Palmeiras: ${palClean}%`);
-                avaliarParDados(flaClean, palClean, 'vencedor-clean', 'maior');
+                avaliarParDados(palClean, flaClean, 'vencedor-clean', 'maior', timeMandante, timeVisitante);
                 
                 // GOLS SOFRIDOS TOTAL (menor é melhor)
                 const flaGolsSofridosElement = document.getElementById('fla-gols-sofridos-total');
@@ -4874,7 +5067,7 @@ Carregando...
                 const flaGolsSofridos = flaGolsSofridosElement ? parseInt(flaGolsSofridosElement.textContent) : 0;
                 const palGolsSofridos = palGolsSofridosElement ? parseInt(palGolsSofridosElement.textContent) : 0;
                 console.log(`🔍 [DADOS-TABELA] Gols Sofridos - Flamengo: ${flaGolsSofridos}, Palmeiras: ${palGolsSofridos}`);
-                avaliarParDados(flaGolsSofridos, palGolsSofridos, 'vencedor-gols-sofridos', 'menor');
+                avaliarParDados(palGolsSofridos, flaGolsSofridos, 'vencedor-gols-sofridos-total', 'menor', timeMandante, timeVisitante);
                 
                 // PONTOS ÚLTIMOS 5 (maior é melhor)
                 const flaPontosUltimosElement = document.getElementById('fla-pontos-ultimos');
@@ -4882,7 +5075,59 @@ Carregando...
                 const flaPontosUltimos = flaPontosUltimosElement ? parseInt(flaPontosUltimosElement.textContent.split(' ')[0]) : 0;
                 const palPontosUltimos = palPontosUltimosElement ? parseInt(palPontosUltimosElement.textContent.split(' ')[0]) : 0;
                 console.log(`🔍 [DADOS-TABELA] Pontos Últimos - Flamengo: ${flaPontosUltimos}, Palmeiras: ${palPontosUltimos}`);
-                avaliarParDados(flaPontosUltimos, palPontosUltimos, 'vencedor-pontos-ultimos', 'maior');
+                avaliarParDados(palPontosUltimos, flaPontosUltimos, 'vencedor-pontos-ultimos', 'maior', timeMandante, timeVisitante);
+                
+                // CASA - JOGOS/APROVEITAMENTO (maior aproveitamento é melhor)
+                const flaCasaJogosElement = document.getElementById('fla-casa-jogos');
+                const palCasaJogosElement = document.getElementById('pal-casa-jogos');
+                if (flaCasaJogosElement && palCasaJogosElement) {
+                    const flaCasaAprov = parseFloat(flaCasaJogosElement.textContent.split('/')[1]?.replace('%', '').trim()) || 0;
+                    const palCasaAprov = parseFloat(palCasaJogosElement.textContent.split('/')[1]?.replace('%', '').trim()) || 0;
+                    console.log(`🔍 [DADOS-TABELA] Casa Aproveitamento - Flamengo: ${flaCasaAprov}%, Palmeiras: ${palCasaAprov}%`);
+                    avaliarParDados(palCasaAprov, flaCasaAprov, 'vencedor-casa-jogos', 'maior', timeMandante, timeVisitante);
+                }
+                
+                // CASA - GOLS PRÓ (maior é melhor)
+                const flaCasaGolsProElement = document.getElementById('fla-casa-gols-pro');
+                const palCasaGolsProElement = document.getElementById('pal-casa-gols-pro');
+                const flaCasaGolsPro = flaCasaGolsProElement ? parseFloat(flaCasaGolsProElement.textContent) : 0;
+                const palCasaGolsPro = palCasaGolsProElement ? parseFloat(palCasaGolsProElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Casa Gols Pró - Flamengo: ${flaCasaGolsPro}, Palmeiras: ${palCasaGolsPro}`);
+                avaliarParDados(palCasaGolsPro, flaCasaGolsPro, 'vencedor-casa-gols-pro', 'maior', timeMandante, timeVisitante);
+                
+                // CASA - GOLS CONTRA (menor é melhor)
+                const flaCasaGolsContraElement = document.getElementById('fla-casa-gols-contra');
+                const palCasaGolsContraElement = document.getElementById('pal-casa-gols-contra');
+                const flaCasaGolsContra = flaCasaGolsContraElement ? parseFloat(flaCasaGolsContraElement.textContent) : 0;
+                const palCasaGolsContra = palCasaGolsContraElement ? parseFloat(palCasaGolsContraElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Casa Gols Contra - Flamengo: ${flaCasaGolsContra}, Palmeiras: ${palCasaGolsContra}`);
+                avaliarParDados(palCasaGolsContra, flaCasaGolsContra, 'vencedor-casa-gols-contra', 'menor', timeMandante, timeVisitante);
+                
+                // FORA - JOGOS/APROVEITAMENTO (maior aproveitamento é melhor)
+                const flaForaJogosElement = document.getElementById('fla-fora-jogos');
+                const palForaJogosElement = document.getElementById('pal-fora-jogos');
+                if (flaForaJogosElement && palForaJogosElement) {
+                    const flaForaAprov = parseFloat(flaForaJogosElement.textContent.split('/')[1]?.replace('%', '').trim()) || 0;
+                    const palForaAprov = parseFloat(palForaJogosElement.textContent.split('/')[1]?.replace('%', '').trim()) || 0;
+                    console.log(`🔍 [DADOS-TABELA] Fora Aproveitamento - Flamengo: ${flaForaAprov}%, Palmeiras: ${palForaAprov}%`);
+                    avaliarParDados(palForaAprov, flaForaAprov, 'vencedor-fora-jogos', 'maior', timeMandante, timeVisitante);
+                }
+                
+                // FORA - GOLS PRÓ (maior é melhor)
+                const flaForaGolsProElement = document.getElementById('fla-fora-gols-pro');
+                const palForaGolsProElement = document.getElementById('pal-fora-gols-pro');
+                const flaForaGolsPro = flaForaGolsProElement ? parseFloat(flaForaGolsProElement.textContent) : 0;
+                const palForaGolsPro = palForaGolsProElement ? parseFloat(palForaGolsProElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Fora Gols Pró - Flamengo: ${flaForaGolsPro}, Palmeiras: ${palForaGolsPro}`);
+                avaliarParDados(palForaGolsPro, flaForaGolsPro, 'vencedor-fora-gols-pro', 'maior', timeMandante, timeVisitante);
+                
+                // FORA - GOLS CONTRA (menor é melhor)
+                const flaForaGolsContraElement = document.getElementById('fla-fora-gols-contra');
+                const palForaGolsContraElement = document.getElementById('pal-fora-gols-contra');
+                const flaForaGolsContra = flaForaGolsContraElement ? parseFloat(flaForaGolsContraElement.textContent) : 0;
+                const palForaGolsContra = palForaGolsContraElement ? parseFloat(palForaGolsContraElement.textContent) : 0;
+                console.log(`🔍 [DADOS-TABELA] Fora Gols Contra - Flamengo: ${flaForaGolsContra}, Palmeiras: ${palForaGolsContra}`);
+                avaliarParDados(palForaGolsContra, flaForaGolsContra, 'vencedor-fora-gols-contra', 'menor', timeMandante, timeVisitante);
                 
                 console.log('✅ [AUTO-VANTAGEM] Avaliação automática concluída!');
             }, 500);
@@ -4891,7 +5136,7 @@ Carregando...
         }
 
         // DESTACAR VALORES VENCEDORES
-        function destacarValoresVencedores(flamengo, palmeiras) {
+        function destacarValoresVencedores(timeMandante, timeVisitante) {
             console.log('🎯 [DESTACAR-VENCEDORES] Destacando valores vencedores...');
             
             // Função para comparar e destacar
@@ -4921,14 +5166,14 @@ Carregando...
             }
             
             // Comparações
-            compararEHighlightar('pal-posicao', 'fla-posicao', flamengo.posicao, palmeiras.posicao, true); // Menor posição é melhor
-            compararEHighlightar('pal-gols-pro', 'fla-gols-pro', flamengo.dados['Média Gols Pró'], palmeiras.dados['Média Gols Pró']);
-            compararEHighlightar('pal-gols-contra', 'fla-gols-contra', flamengo.dados['Média Gols Contra'], palmeiras.dados['Média Gols Contra'], true); // Menor é melhor
-            compararEHighlightar('pal-over25', 'fla-over25', flamengo.dados['Over 2.5 %'], palmeiras.dados['Over 2.5 %']);
-            compararEHighlightar('pal-btts', 'fla-btts', flamengo.dados['BTTS Sim %'], palmeiras.dados['BTTS Sim %']);
-            compararEHighlightar('pal-clean', 'fla-clean', flamengo.dados['Clean Sheets %'], palmeiras.dados['Clean Sheets %']);
-            compararEHighlightar('pal-gols-sofridos-total', 'fla-gols-sofridos-total', flamengo.dados['Gols Contra'], palmeiras.dados['Gols Contra'], true); // Menor é melhor
-            compararEHighlightar('pal-pontos-ultimos', 'fla-pontos-ultimos', flamengo.dados['Pontos Últimos 5'], palmeiras.dados['Pontos Últimos 5']);
+            compararEHighlightar('pal-posicao', 'fla-posicao', timeMandante['Posição'], timeVisitante['Posição'], true); // Menor posição é melhor
+            compararEHighlightar('pal-gols-pro', 'fla-gols-pro', timeMandante['Média Gols Pró'], timeVisitante['Média Gols Pró']);
+            compararEHighlightar('pal-gols-contra', 'fla-gols-contra', timeMandante['Média Gols Contra'], timeVisitante['Média Gols Contra'], true); // Menor é melhor
+            compararEHighlightar('pal-over25', 'fla-over25', timeMandante['Over 2.5 %'], timeVisitante['Over 2.5 %']);
+            compararEHighlightar('pal-btts', 'fla-btts', timeMandante['BTTS Sim %'], timeVisitante['BTTS Sim %']);
+            compararEHighlightar('pal-clean', 'fla-clean', timeMandante['Clean Sheets %'], timeVisitante['Clean Sheets %']);
+            compararEHighlightar('pal-gols-sofridos-total', 'fla-gols-sofridos-total', timeMandante['Gols Contra'], timeVisitante['Gols Contra'], true); // Menor é melhor
+            compararEHighlightar('pal-pontos-ultimos', 'fla-pontos-ultimos', timeMandante['Pontos Últimos 5'], timeVisitante['Pontos Últimos 5']);
             
             console.log('✅ [DESTACAR-VENCEDORES] Valores vencedores destacados!');
         }
@@ -4946,28 +5191,28 @@ Carregando...
 
 
         // ATUALIZAR BARRAS DA COMPARAÇÃO
-        function atualizarBarrasComparacao(flamengo, palmeiras) {
+        function atualizarBarrasComparacao(timeMandante, timeVisitante) {
             console.log('📊 [BARRAS-COMPARACAO] Atualizando barras...');
             
             // Gols Marcados
-            atualizarBarraComparacao('bar-fla-gols-marcados', 'bar-pal-gols-marcados', flamengo.golsMarcados, palmeiras.golsMarcados);
+            atualizarBarraComparacao('bar-fla-gols-marcados', 'bar-pal-gols-marcados', timeMandante.golsMarcados, timeVisitante.golsMarcados);
             
             // Gols Sofridos (menor é melhor)
-            atualizarBarraComparacao('bar-fla-gols-sofridos', 'bar-pal-gols-sofridos', flamengo.golsSofridos, palmeiras.golsSofridos, true);
+            atualizarBarraComparacao('bar-fla-gols-sofridos', 'bar-pal-gols-sofridos', timeMandante.golsSofridos, timeVisitante.golsSofridos, true);
             
             // Aproveitamento Casa
-            atualizarBarraComparacao('bar-fla-casa', 'bar-pal-casa', flamengo.aproveitamentoCasa, palmeiras.aproveitamentoCasa);
+            atualizarBarraComparacao('bar-fla-casa', 'bar-pal-casa', timeMandante.aproveitamentoCasa, timeVisitante.aproveitamentoCasa);
             
             // Aproveitamento Fora
-            atualizarBarraComparacao('bar-fla-fora', 'bar-pal-fora', flamengo.aproveitamentoFora, palmeiras.aproveitamentoFora);
+            atualizarBarraComparacao('bar-fla-fora', 'bar-pal-fora', timeMandante.aproveitamentoFora, timeVisitante.aproveitamentoFora);
             
             // Saldo de Gols
-            atualizarBarraComparacao('bar-fla-saldo', 'bar-pal-saldo', flamengo.saldoGols, palmeiras.saldoGols);
+            atualizarBarraComparacao('bar-fla-saldo', 'bar-pal-saldo', timeMandante.saldoGols, timeVisitante.saldoGols);
             
             // Forma Recente (baseado em pontos)
-            const pontosFlamengo = calcularPontosForma(flamengo.forma);
-            const pontosPalmeiras = calcularPontosForma(palmeiras.forma);
-            atualizarBarraComparacao('bar-fla-forma', 'bar-pal-forma', pontosFlamengo, pontosPalmeiras);
+            const pontosMandante = calcularPontosForma(timeMandante.forma);
+            const pontosVisitante = calcularPontosForma(timeVisitante.forma);
+            atualizarBarraComparacao('bar-fla-forma', 'bar-pal-forma', pontosMandante, pontosVisitante);
             
             console.log('✅ [BARRAS-COMPARACAO] Barras atualizadas!');
         }
@@ -13205,6 +13450,289 @@ Carregando...
             "1,5": { apostas: 486, valor: 972.00 },
             "0,6": { apostas: 729, valor: 1458.00 }
         };
+
+        // FUNÇÃO PARA OS MODAIS DE INFORMAÇÃO
+        const modalData = {
+            'posicao': {
+                title: 'Posição',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Posição atual do time no campeonato (1º a 20º)</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Baseado na pontuação total (3 pontos por vitória, 1 por empate)</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mostra a classificação atual no Brasileirão</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 1º, Palmeiras 2º</p>
+                `
+            },
+            'gols-pro': {
+                title: 'Gols Pró (Média)',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Média de gols marcados por jogo</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Total de gols marcados ÷ Total de jogos</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a força ofensiva do time</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 2.00 gols/jogo, Palmeiras 1.89 gols/jogo</p>
+                `
+            },
+            'gols-contra': {
+                title: 'Gols Contra (Média)',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Média de gols sofridos por jogo</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Total de gols sofridos ÷ Total de jogos</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a qualidade defensiva (menor é melhor)</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 0.54 gols/jogo, Palmeiras 0.93 gols/jogo</p>
+                `
+            },
+            'over25': {
+                title: 'Over 2.5%',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Percentual de jogos com mais de 2.5 gols</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>(Jogos com 3+ gols ÷ Total de jogos) × 100</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Indica se o time joga jogos com muitos gols</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 43%, Palmeiras 57%</p>
+                `
+            },
+            'btts': {
+                title: 'BTTS Sim % (BOTH TEAMS TO SCORE)',
+                content: `
+                    <h4>👉 BTTS vem do inglês "Both Teams To Score", que significa "Ambos os times marcam".</h4>
+                    <p>Então quando você vê:</p>
+                    <p><strong>BTTS Sim %</strong></p>
+                    <p>significa:</p>
+                    <p>✅ a porcentagem de jogos em que os dois times marcaram pelo menos 1 gol no confronto ou nos jogos daquele time.</p>
+                    
+                    <h4>Exemplo prático:</h4>
+                    <p>• Se o TIME_Mandante tem BTTS Sim = 62%,</p>
+                    <p>→ isso quer dizer que em 62% dos jogos analisados, TIME_Mandante e seu adversário marcaram gols.</p>
+                    
+                    <h4>💡 Usos comuns na análise de apostas / estatísticas:</h4>
+                    <p>• BTTS alto (≥60%) → tendência de jogos "abertos", com gols dos dois lados.</p>
+                    <p>• BTTS baixo (≤40%) → tendência de jogos "fechados" ou de um time dominante que não sofre gol.</p>
+                    
+                    <h4>📊 Exemplo de leitura:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #f0f0f0;">
+                            <th style="border: 1px solid #ddd; padding: 8px;">Time</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">BTTS Sim %</th>
+                            <th style="border: 1px solid #ddd; padding: 8px;">Interpretação</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">TIME_Mandante</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">62%</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">Alta chance de ambos marcarem</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">TIME_Visitante</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">41%</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">Jogos mais "controlados"</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ddd; padding: 8px;">Jogo equilibrado</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">50%+</td>
+                            <td style="border: 1px solid #ddd; padding: 8px;">Provável confronto com gols dos dois</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>👉 Por isso esse dado costuma aparecer nas análises avançadas de confronto — ele ajuda a prever se o jogo tende a ter gols para os dois lados ou se um time costuma neutralizar o outro.</strong></p>
+                `
+            },
+            'clean-sheets': {
+                title: 'Clean Sheets %',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Percentual de jogos sem sofrer gols</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>(Jogos sem sofrer gols ÷ Total de jogos) × 100</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a qualidade defensiva (maior é melhor)</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 54%, Palmeiras 32%</p>
+                `
+            },
+            'gols-sofridos': {
+                title: 'Gols Sofridos Total',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Total de gols sofridos no campeonato</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Soma de todos os gols sofridos</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mostra a quantidade total de gols sofridos</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 15 gols, Palmeiras 26 gols</p>
+                `
+            },
+            'pontos-ultimos': {
+                title: 'Pontos Últimos 5',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Pontos conquistados nos últimos 5 jogos</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>3 pontos por vitória + 1 por empate nos últimos 5 jogos</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mostra a forma recente do time</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 12 pontos, Palmeiras 10 pontos</p>
+                `
+            },
+            'casa-jogos': {
+                title: 'Jogos Casa / Aproveitamento',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Número de jogos em casa e aproveitamento</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>(Pontos em casa ÷ Pontos possíveis) × 100</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mostra a força do time jogando em casa</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 15 jogos / 78%, Palmeiras 15 jogos / 78%</p>
+                `
+            },
+            'casa-gols-pro': {
+                title: 'Gols Pró Casa (Média)',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Média de gols marcados em casa</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Gols marcados em casa ÷ Jogos em casa</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a força ofensiva em casa</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 2.20 gols/jogo, Palmeiras 2.40 gols/jogo</p>
+                `
+            },
+            'casa-gols-contra': {
+                title: 'Gols Contra Casa (Média)',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Média de gols sofridos em casa</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Gols sofridos em casa ÷ Jogos em casa</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a qualidade defensiva em casa</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 0.73 gols/jogo, Palmeiras 0.40 gols/jogo</p>
+                `
+            },
+            'fora-jogos': {
+                title: 'Jogos Fora / Aproveitamento',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Número de jogos fora e aproveitamento</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>(Pontos fora ÷ Pontos possíveis) × 100</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mostra a força do time jogando fora</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 13 jogos / 67%, Palmeiras 13 jogos / 67%</p>
+                `
+            },
+            'fora-gols-pro': {
+                title: 'Gols Pró Fora (Média)',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Média de gols marcados fora</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Gols marcados fora ÷ Jogos fora</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a força ofensiva fora de casa</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 1.54 gols/jogo, Palmeiras 1.54 gols/jogo</p>
+                `
+            },
+            'fora-gols-contra': {
+                title: 'Gols Contra Fora (Média)',
+                content: `
+                    <h4>O que é:</h4>
+                    <p>Média de gols sofridos fora</p>
+                    
+                    <h4>Como é calculado:</h4>
+                    <p>Gols sofridos fora ÷ Jogos fora</p>
+                    
+                    <h4>Para que serve:</h4>
+                    <p>Mede a qualidade defensiva fora de casa</p>
+                    
+                    <h4>Exemplo:</h4>
+                    <p>Flamengo 1.15 gols/jogo, Palmeiras 0.69 gols/jogo</p>
+                `
+            }
+        };
+
+        // Função para abrir modal
+        function abrirModal(tipo) {
+            const modal = document.getElementById('modal-info');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            
+            if (modalData[tipo]) {
+                title.textContent = modalData[tipo].title;
+                body.innerHTML = modalData[tipo].content;
+                modal.style.display = 'block';
+            }
+        }
+
+        // Função para fechar modal
+        function fecharModal() {
+            const modal = document.getElementById('modal-info');
+            modal.style.display = 'none';
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-info');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 
     </body>

@@ -5017,10 +5017,6 @@
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, #a855f7, #00e38c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .comparacao-header p {
@@ -5556,11 +5552,7 @@
         }
 
         .coluna.vantagem .vantagem-badge::before {
-            content: "";
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #6b7280;
+            display: none;
         }
 
         .coluna.vantagem .vantagem-badge.is-flamengo::before {
@@ -5582,5 +5574,104 @@
                 min-height: 32px;
                 font-size: 0.9rem;
             }
+        }
+
+        /* Estilos para os ícones de informação */
+        .info-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 18px;
+            cursor: pointer;
+            margin-left: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+
+        .info-icon:hover {
+            background: #dc2626;
+            transform: scale(1.15);
+            box-shadow: 0 4px 8px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Estilos para o modal */
+        .modal-info {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: #1e293b;
+            margin: 5% auto;
+            padding: 24px;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .modal-title {
+            color: #f1f5f9;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .close {
+            color: #94a3b8;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close:hover {
+            color: #f1f5f9;
+        }
+
+        .modal-body {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .modal-body h4 {
+            color: #f1f5f9;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .modal-body p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .modal-body strong {
+            color: #60a5fa;
         }
  

@@ -54,8 +54,10 @@ function atualizarVantagem(id, vencedor, cor) {
 
 
 // COMPARAR E DETERMINAR VANTAGEM
-function compararEAtualizarVantagem(flamengo, palmeiras) {
+function compararEAtualizarVantagem(timeMandante, timeVisitante) {
     console.log('🔍 [COMPARACAO] Comparando dados para determinar vantagens...');
+    console.log('🔍 [COMPARACAO] Mandante:', timeMandante.Time);
+    console.log('🔍 [COMPARACAO] Visitante:', timeVisitante.Time);
     
     // TESTE: Verificar se os elementos existem
     console.log('🔍 [DEBUG-TESTE] Verificando elementos da tabela...');
@@ -76,165 +78,165 @@ function compararEAtualizarVantagem(flamengo, palmeiras) {
     }
     
     // POSIÇÃO (menor é melhor)
-    const flaPos = parseInt(flamengo.dados['Posição']);
-    const palPos = parseInt(palmeiras.dados['Posição']);
-    console.log(`🔍 [POSICAO] Flamengo: ${flaPos}º, Palmeiras: ${palPos}º`);
+    const mandantePos = parseInt(timeMandante['Posição']);
+    const visitantePos = parseInt(timeVisitante['Posição']);
+    console.log(`🔍 [POSICAO] ${timeMandante.Time}: ${mandantePos}º, ${timeVisitante.Time}: ${visitantePos}º`);
     
-    if (flaPos < palPos) {
-        console.log(`✅ [POSICAO] Flamengo tem vantagem (${flaPos}º < ${palPos}º)`);
-        atualizarVantagem('vencedor-posicao', 'Flamengo', 'vermelho');
-    } else if (palPos < flaPos) {
-        console.log(`✅ [POSICAO] Palmeiras tem vantagem (${palPos}º < ${flaPos}º)`);
-        atualizarVantagem('vencedor-posicao', 'Palmeiras', 'verde');
+    if (mandantePos < visitantePos) {
+        console.log(`✅ [POSICAO] ${timeMandante.Time} tem vantagem (${mandantePos}º < ${visitantePos}º)`);
+        atualizarVantagem('vencedor-posicao', timeMandante.Time, 'vermelho');
+    } else if (visitantePos < mandantePos) {
+        console.log(`✅ [POSICAO] ${timeVisitante.Time} tem vantagem (${visitantePos}º < ${mandantePos}º)`);
+        atualizarVantagem('vencedor-posicao', timeVisitante.Time, 'verde');
     } else {
-        console.log(`✅ [POSICAO] Empate (${flaPos}º = ${palPos}º)`);
+        console.log(`✅ [POSICAO] Empate (${mandantePos}º = ${visitantePos}º)`);
         atualizarVantagem('vencedor-posicao', 'Empate', 'amarelo');
     }
 
     // GOLS PRÓ (maior é melhor)
-    const flaGolsPro = parseFloat(flamengo.dados['Gols Pró (Média)']);
-    const palGolsPro = parseFloat(palmeiras.dados['Gols Pró (Média)']);
-    console.log(`🔍 [GOLS-PRO] Flamengo: ${flaGolsPro}, Palmeiras: ${palGolsPro}`);
+    const mandanteGolsPro = parseFloat(timeMandante['Média Gols Pró']);
+    const visitanteGolsPro = parseFloat(timeVisitante['Média Gols Pró']);
+    console.log(`🔍 [GOLS-PRO] ${timeMandante.Time}: ${mandanteGolsPro}, ${timeVisitante.Time}: ${visitanteGolsPro}`);
     
-    if (flaGolsPro > palGolsPro) {
-        console.log(`✅ [GOLS-PRO] Flamengo tem vantagem (${flaGolsPro} > ${palGolsPro})`);
-        atualizarVantagem('vencedor-gols-pro', 'Flamengo', 'vermelho');
-    } else if (palGolsPro > flaGolsPro) {
-        console.log(`✅ [GOLS-PRO] Palmeiras tem vantagem (${palGolsPro} > ${flaGolsPro})`);
-        atualizarVantagem('vencedor-gols-pro', 'Palmeiras', 'verde');
+    if (mandanteGolsPro > visitanteGolsPro) {
+        console.log(`✅ [GOLS-PRO] ${timeMandante.Time} tem vantagem (${mandanteGolsPro} > ${visitanteGolsPro})`);
+        atualizarVantagem('vencedor-gols-pro', timeMandante.Time, 'vermelho');
+    } else if (visitanteGolsPro > mandanteGolsPro) {
+        console.log(`✅ [GOLS-PRO] ${timeVisitante.Time} tem vantagem (${visitanteGolsPro} > ${mandanteGolsPro})`);
+        atualizarVantagem('vencedor-gols-pro', timeVisitante.Time, 'verde');
     } else {
-        console.log(`✅ [GOLS-PRO] Empate (${flaGolsPro} = ${palGolsPro})`);
+        console.log(`✅ [GOLS-PRO] Empate (${mandanteGolsPro} = ${visitanteGolsPro})`);
         atualizarVantagem('vencedor-gols-pro', 'Empate', 'amarelo');
     }
 
     // GOLS CONTRA (menor é melhor)
-    const flaGolsContra = parseFloat(flamengo.dados['Gols Contra (Média)']);
-    const palGolsContra = parseFloat(palmeiras.dados['Gols Contra (Média)']);
-    if (flaGolsContra < palGolsContra) {
-        atualizarVantagem('vencedor-gols-contra', 'Flamengo', 'vermelho');
-    } else if (palGolsContra < flaGolsContra) {
-        atualizarVantagem('vencedor-gols-contra', 'Palmeiras', 'verde');
+    const mandanteGolsContra = parseFloat(timeMandante['Média Gols Contra']);
+    const visitanteGolsContra = parseFloat(timeVisitante['Média Gols Contra']);
+    if (mandanteGolsContra < visitanteGolsContra) {
+        atualizarVantagem('vencedor-gols-contra', timeMandante.Time, 'vermelho');
+    } else if (visitanteGolsContra < mandanteGolsContra) {
+        atualizarVantagem('vencedor-gols-contra', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-gols-contra', 'Empate', 'amarelo');
     }
 
     // OVER 2.5 (maior é melhor)
-    const flaOver25 = parseFloat(flamengo.dados['Over 2.5']);
-    const palOver25 = parseFloat(palmeiras.dados['Over 2.5']);
+    const flaOver25 = parseFloat(timeMandante['Over 2.5']);
+    const palOver25 = parseFloat(timeVisitante['Over 2.5']);
     if (flaOver25 > palOver25) {
-        atualizarVantagem('vencedor-over25', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-over25', timeMandante.Time, 'vermelho');
     } else if (palOver25 > flaOver25) {
-        atualizarVantagem('vencedor-over25', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-over25', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-over25', 'Empate', 'amarelo');
     }
 
     // BTTS (maior é melhor)
-    const flaBtts = parseFloat(flamengo.dados['BTTS']);
-    const palBtts = parseFloat(palmeiras.dados['BTTS']);
+    const flaBtts = parseFloat(timeMandante['BTTS']);
+    const palBtts = parseFloat(timeVisitante['BTTS']);
     if (flaBtts > palBtts) {
-        atualizarVantagem('vencedor-btts', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-btts', timeMandante.Time, 'vermelho');
     } else if (palBtts > flaBtts) {
-        atualizarVantagem('vencedor-btts', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-btts', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-btts', 'Empate', 'amarelo');
     }
 
     // CLEAN SHEET (maior é melhor)
-    const flaClean = parseFloat(flamengo.dados['Clean Sheet']);
-    const palClean = parseFloat(palmeiras.dados['Clean Sheet']);
+    const flaClean = parseFloat(timeMandante['Clean Sheet']);
+    const palClean = parseFloat(timeVisitante['Clean Sheet']);
     if (flaClean > palClean) {
-        atualizarVantagem('vencedor-clean', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-clean', timeMandante.Time, 'vermelho');
     } else if (palClean > flaClean) {
-        atualizarVantagem('vencedor-clean', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-clean', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-clean', 'Empate', 'amarelo');
     }
 
     // GOLS SOFRIDOS TOTAL (menor é melhor)
-    const flaGolsSofridos = parseInt(flamengo.dados['Gols Sofridos Total']);
-    const palGolsSofridos = parseInt(palmeiras.dados['Gols Sofridos Total']);
+    const flaGolsSofridos = parseInt(timeMandante['Gols Sofridos Total']);
+    const palGolsSofridos = parseInt(timeVisitante['Gols Sofridos Total']);
     if (flaGolsSofridos < palGolsSofridos) {
-        atualizarVantagem('vencedor-gols-sofridos', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-gols-sofridos', timeMandante.Time, 'vermelho');
     } else if (palGolsSofridos < flaGolsSofridos) {
-        atualizarVantagem('vencedor-gols-sofridos', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-gols-sofridos', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-gols-sofridos', 'Empate', 'amarelo');
     }
 
     // PONTOS ÚLTIMOS 5 (maior é melhor)
-    const flaPontosUltimos = parseInt(flamengo.dados['Pontos Últimos 5']);
-    const palPontosUltimos = parseInt(palmeiras.dados['Pontos Últimos 5']);
+    const flaPontosUltimos = parseInt(timeMandante['Pontos Últimos 5']);
+    const palPontosUltimos = parseInt(timeVisitante['Pontos Últimos 5']);
     if (flaPontosUltimos > palPontosUltimos) {
-        atualizarVantagem('vencedor-pontos-ultimos', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-pontos-ultimos', timeMandante.Time, 'vermelho');
     } else if (palPontosUltimos > flaPontosUltimos) {
-        atualizarVantagem('vencedor-pontos-ultimos', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-pontos-ultimos', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-pontos-ultimos', 'Empate', 'amarelo');
     }
 
     // CASA - JOGOS (maior é melhor)
-    const flaCasaJogos = parseFloat(flamengo.dados['Casa - Jogos']);
-    const palCasaJogos = parseFloat(palmeiras.dados['Casa - Jogos']);
+    const flaCasaJogos = parseFloat(timeMandante['Casa - Jogos']);
+    const palCasaJogos = parseFloat(timeVisitante['Casa - Jogos']);
     if (flaCasaJogos > palCasaJogos) {
-        atualizarVantagem('vencedor-casa-jogos', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-casa-jogos', timeMandante.Time, 'vermelho');
     } else if (palCasaJogos > flaCasaJogos) {
-        atualizarVantagem('vencedor-casa-jogos', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-casa-jogos', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-casa-jogos', 'Empate', 'amarelo');
     }
 
     // CASA - GOLS PRÓ (maior é melhor)
-    const flaCasaGolsPro = parseFloat(flamengo.dados['Casa - Gols Pró']);
-    const palCasaGolsPro = parseFloat(palmeiras.dados['Casa - Gols Pró']);
+    const flaCasaGolsPro = parseFloat(timeMandante['Casa - Gols Pró']);
+    const palCasaGolsPro = parseFloat(timeVisitante['Casa - Gols Pró']);
     if (flaCasaGolsPro > palCasaGolsPro) {
-        atualizarVantagem('vencedor-casa-gols-pro', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-casa-gols-pro', timeMandante.Time, 'vermelho');
     } else if (palCasaGolsPro > flaCasaGolsPro) {
-        atualizarVantagem('vencedor-casa-gols-pro', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-casa-gols-pro', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-casa-gols-pro', 'Empate', 'amarelo');
     }
 
     // CASA - GOLS CONTRA (menor é melhor)
-    const flaCasaGolsContra = parseFloat(flamengo.dados['Casa - Gols Contra']);
-    const palCasaGolsContra = parseFloat(palmeiras.dados['Casa - Gols Contra']);
+    const flaCasaGolsContra = parseFloat(timeMandante['Casa - Gols Contra']);
+    const palCasaGolsContra = parseFloat(timeVisitante['Casa - Gols Contra']);
     if (flaCasaGolsContra < palCasaGolsContra) {
-        atualizarVantagem('vencedor-casa-gols-contra', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-casa-gols-contra', timeMandante.Time, 'vermelho');
     } else if (palCasaGolsContra < flaCasaGolsContra) {
-        atualizarVantagem('vencedor-casa-gols-contra', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-casa-gols-contra', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-casa-gols-contra', 'Empate', 'amarelo');
     }
 
     // FORA - JOGOS (maior é melhor)
-    const flaForaJogos = parseFloat(flamengo.dados['Fora - Jogos']);
-    const palForaJogos = parseFloat(palmeiras.dados['Fora - Jogos']);
+    const flaForaJogos = parseFloat(timeMandante['Fora - Jogos']);
+    const palForaJogos = parseFloat(timeVisitante['Fora - Jogos']);
     if (flaForaJogos > palForaJogos) {
-        atualizarVantagem('vencedor-fora-jogos', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-fora-jogos', timeMandante.Time, 'vermelho');
     } else if (palForaJogos > flaForaJogos) {
-        atualizarVantagem('vencedor-fora-jogos', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-fora-jogos', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-fora-jogos', 'Empate', 'amarelo');
     }
 
     // FORA - GOLS PRÓ (maior é melhor)
-    const flaForaGolsPro = parseFloat(flamengo.dados['Fora - Gols Pró']);
-    const palForaGolsPro = parseFloat(palmeiras.dados['Fora - Gols Pró']);
+    const flaForaGolsPro = parseFloat(timeMandante['Fora - Gols Pró']);
+    const palForaGolsPro = parseFloat(timeVisitante['Fora - Gols Pró']);
     if (flaForaGolsPro > palForaGolsPro) {
-        atualizarVantagem('vencedor-fora-gols-pro', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-fora-gols-pro', timeMandante.Time, 'vermelho');
     } else if (palForaGolsPro > flaForaGolsPro) {
-        atualizarVantagem('vencedor-fora-gols-pro', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-fora-gols-pro', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-fora-gols-pro', 'Empate', 'amarelo');
     }
 
     // FORA - GOLS CONTRA (menor é melhor)
-    const flaForaGolsContra = parseFloat(flamengo.dados['Fora - Gols Contra']);
-    const palForaGolsContra = parseFloat(palmeiras.dados['Fora - Gols Contra']);
+    const flaForaGolsContra = parseFloat(timeMandante['Fora - Gols Contra']);
+    const palForaGolsContra = parseFloat(timeVisitante['Fora - Gols Contra']);
     if (flaForaGolsContra < palForaGolsContra) {
-        atualizarVantagem('vencedor-fora-gols-contra', 'Flamengo', 'vermelho');
+        atualizarVantagem('vencedor-fora-gols-contra', timeMandante.Time, 'vermelho');
     } else if (palForaGolsContra < flaForaGolsContra) {
-        atualizarVantagem('vencedor-fora-gols-contra', 'Palmeiras', 'verde');
+        atualizarVantagem('vencedor-fora-gols-contra', timeVisitante.Time, 'verde');
     } else {
         atualizarVantagem('vencedor-fora-gols-contra', 'Empate', 'amarelo');
     }
@@ -257,28 +259,28 @@ function compararEAtualizarVantagem(flamengo, palmeiras) {
 }
 
 // AVALIAÇÃO AUTOMÁTICA POR PAR DE DADOS
-function avaliarParDados(flamengoValor, palmeirasValor, categoriaId, tipoComparacao = 'maior') {
-    console.log(`🔍 [AUTO-PAR] ${categoriaId}: Flamengo=${flamengoValor}, Palmeiras=${palmeirasValor} (${tipoComparacao})`);
+function avaliarParDados(mandanteValor, visitanteValor, categoriaId, tipoComparacao = 'maior', timeMandante, timeVisitante) {
+    console.log(`🔍 [AUTO-PAR] ${categoriaId}: ${timeMandante.Time}=${mandanteValor}, ${timeVisitante.Time}=${visitanteValor} (${tipoComparacao})`);
     
     let vencedor, cor;
     
     if (tipoComparacao === 'maior') {
-        if (flamengoValor > palmeirasValor) {
-            vencedor = 'Flamengo';
+        if (mandanteValor > visitanteValor) {
+            vencedor = timeMandante.Time;
             cor = 'vermelho';
-        } else if (palmeirasValor > flamengoValor) {
-            vencedor = 'Palmeiras';
+        } else if (visitanteValor > mandanteValor) {
+            vencedor = timeVisitante.Time;
             cor = 'verde';
         } else {
             vencedor = 'Empate';
             cor = 'amarelo';
         }
     } else if (tipoComparacao === 'menor') {
-        if (flamengoValor < palmeirasValor) {
-            vencedor = 'Flamengo';
+        if (mandanteValor < visitanteValor) {
+            vencedor = timeMandante.Time;
             cor = 'vermelho';
-        } else if (palmeirasValor < flamengoValor) {
-            vencedor = 'Palmeiras';
+        } else if (visitanteValor < mandanteValor) {
+            vencedor = timeVisitante.Time;
             cor = 'verde';
         } else {
             vencedor = 'Empate';

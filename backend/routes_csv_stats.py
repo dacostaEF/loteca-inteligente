@@ -13,18 +13,28 @@ from flask_cors import cross_origin
 # Blueprint para rotas de estatísticas CSV
 csv_stats_bp = Blueprint('csv_stats', __name__)
 
-def load_csv_data():
+def load_csv_data_serie_a():
     """Carregar dados do CSV de estatísticas da Série A"""
     try:
-        csv_path = os.path.join('backend', 'estatistica', 'Seria_A_estatisticas_apostas.csv')
+        # Usar caminho relativo ao diretório backend (onde o Railway executa)
+        csv_path = os.path.join('estatistica', 'Seria_A_estatisticas_apostas.csv')
+        
+        print(f"🔍 [CSV-PATH] Tentando acessar: {csv_path}")
+        print(f"🔍 [CSV-PATH] Arquivo existe: {os.path.exists(csv_path)}")
         
         if not os.path.exists(csv_path):
+            print(f"❌ [CSV-PATH] Arquivo não encontrado: {csv_path}")
             return None
             
         data = []
+        print(f"🔍 [CSV-READ] Abrindo arquivo: {csv_path}")
         with open(csv_path, 'r', encoding='utf-8-sig') as file:
             reader = csv.DictReader(file)
+            print(f"🔍 [CSV-READ] Headers encontrados: {reader.fieldnames}")
+            row_count = 0
             for row in reader:
+                row_count += 1
+                print(f"🔍 [CSV-READ] Linha {row_count}: {row.get('Time', 'N/A')}")
                 # Limpar e converter dados
                 cleaned_row = {}
                 for key, value in row.items():
@@ -67,13 +77,77 @@ def load_csv_data():
         print(f"Erro ao carregar CSV: {e}")
         return None
 
+def load_csv_data_serie_b():
+    """Carregar dados do CSV de estatísticas da Série B"""
+    try:
+        # Usar caminho relativo ao diretório backend (onde o Railway executa)
+        csv_path = os.path.join('estatistica', 'Serie_B_estatisticas_apostas.csv')
+        
+        print(f"🔍 [CSV-PATH-B] Tentando acessar: {csv_path}")
+        print(f"🔍 [CSV-PATH-B] Arquivo existe: {os.path.exists(csv_path)}")
+        
+        if not os.path.exists(csv_path):
+            print(f"❌ [CSV-PATH-B] Arquivo não encontrado: {csv_path}")
+            return None
+            
+        data = []
+        print(f"🔍 [CSV-READ-B] Abrindo arquivo: {csv_path}")
+        with open(csv_path, 'r', encoding='utf-8-sig') as file:
+            reader = csv.DictReader(file)
+            print(f"🔍 [CSV-READ-B] Headers encontrados: {reader.fieldnames}")
+            row_count = 0
+            for row in reader:
+                row_count += 1
+                print(f"🔍 [CSV-READ-B] Linha {row_count}: {row.get('Time', 'N/A')}")
+                # Limpar e converter dados
+                cleaned_row = {}
+                for key, value in row.items():
+                    # Remover aspas e espaços extras
+                    cleaned_value = value.strip().strip('"')
+                    
+                    # Converter números
+                    if key in ['Posição', 'Jogos', 'Gols Pró', 'Gols Contra', 'Jogos Casa', 
+                              'Vitórias Casa', 'Empates Casa', 'Derrotas Casa', 'Gols Pró Casa',
+                              'Gols Contra Casa', 'Jogos Fora', 'Vitórias Fora', 'Empates Fora',
+                              'Derrotas Fora', 'Gols Pró Fora', 'Gols Contra Fora', 'Pontos Últimos 5']:
+                        try:
+                            cleaned_row[key] = int(cleaned_value) if cleaned_value else 0
+                        except ValueError:
+                            cleaned_row[key] = 0
+                    
+                    # Converter decimais
+                    elif key in ['Média Gols Pró', 'Média Gols Contra']:
+                        try:
+                            cleaned_row[key] = float(cleaned_value) if cleaned_value else 0.0
+                        except ValueError:
+                            cleaned_row[key] = 0.0
+                    
+                    # Converter percentuais
+                    elif '%' in key:
+                        try:
+                            cleaned_row[key] = int(cleaned_value) if cleaned_value else 0
+                        except ValueError:
+                            cleaned_row[key] = 0
+                    
+                    # Manter strings
+                    else:
+                        cleaned_row[key] = cleaned_value
+                
+                data.append(cleaned_row)
+        
+        return data
+        
+    except Exception as e:
+        print(f"Erro ao carregar CSV Série B: {e}")
+        return None
+
 @csv_stats_bp.route('/api/csv/serie-a/stats', methods=['GET'])
 @cross_origin()
 def get_serie_a_stats():
     """Endpoint para obter estatísticas da Série A do CSV"""
     try:
         print("🔍 [CSV-API] Tentando carregar dados do CSV...")
-        data = load_csv_data()
+        data = load_csv_data_serie_a()
         
         if not data:
             print("❌ [CSV-API] Dados não encontrados")
@@ -93,6 +167,37 @@ def get_serie_a_stats():
         
     except Exception as e:
         print(f"❌ [CSV-API] Erro: {str(e)}")
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao carregar dados: {str(e)}"
+        }), 500
+
+@csv_stats_bp.route('/api/csv/serie-b/stats', methods=['GET'])
+@cross_origin()
+def get_serie_b_stats():
+    """Endpoint para obter estatísticas da Série B do CSV"""
+    try:
+        print("🔍 [CSV-API-B] Tentando carregar dados do CSV Série B...")
+        data = load_csv_data_serie_b()
+        
+        if not data:
+            print("❌ [CSV-API-B] Dados não encontrados")
+            return jsonify({
+                "success": False,
+                "error": "Dados não encontrados",
+                "data": []
+            }), 404
+        
+        print(f"✅ [CSV-API-B] {len(data)} times carregados com sucesso")
+        return jsonify({
+            "success": True,
+            "data": data,
+            "total": len(data),
+            "source": "CSV - Serie_B_estatisticas_apostas.csv"
+        })
+        
+    except Exception as e:
+        print(f"❌ [CSV-API-B] Erro: {str(e)}")
         return jsonify({
             "success": False,
             "error": f"Erro ao carregar dados: {str(e)}"
