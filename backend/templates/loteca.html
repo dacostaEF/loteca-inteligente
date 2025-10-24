@@ -8467,7 +8467,7 @@
                                 <div class="confronto-data">${confronto.data}</div>
                                 <div class="confronto-placar">${confronto.placar}</div>
                                 <div class="confronto-result casa" title="Vitória ${dados.time_casa}">
-                                    <img src="${dados.escudo_casa}" alt="${dados.time_casa}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>${dados.time_casa.substring(0,3).toUpperCase()}</span>'">
+                                    <img src="${dados.escudo_casa}" alt="${dados.time_casa}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>${dados.time_casa.substring(0,3).toUpperCase()}</span>'">
                                 </div>
                             </div>`;
                         } else if (confronto.resultado === 'D') {
@@ -8475,7 +8475,7 @@
                                 <div class="confronto-data">${confronto.data}</div>
                                 <div class="confronto-placar">${confronto.placar}</div>
                                 <div class="confronto-result fora" title="Vitória ${dados.time_fora}">
-                                    <img src="${dados.escudo_fora}" alt="${dados.time_fora}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 12px; font-weight: bold;\'>${dados.time_fora.substring(0,3).toUpperCase()}</span>'">
+                                    <img src="${dados.escudo_fora}" alt="${dados.time_fora}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>${dados.time_fora.substring(0,3).toUpperCase()}</span>'">
                                 </div>
                             </div>`;
                         } else {
@@ -8487,7 +8487,7 @@
                         }
                     }).join('');
                     
-                    confrontosContainer.innerHTML = confrontos;
+                    // confrontosContainer.innerHTML = confrontos; // DESABILITADO: Conflito com carregarConfrontosAutomatico
                     console.log('✅ [DEBUG] Últimos confrontos jogo 3 atualizados com dados reais do CSV');
                 }
             }
@@ -8505,13 +8505,13 @@
                     // Formato idêntico ao Jogo 2: ESCUDO + NÚMERO - EMPATES - NÚMERO + ESCUDO
                     const confrontoHtml = `
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <img src="${dados.escudo_casa}" alt="${dados.time_casa}" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
+                            <img src="${dados.escudo_casa}" alt="${dados.time_casa}" style="width: 14px; height: 14px;" onerror="this.style.display='none'">
                             <span style="color: #fff; font-weight: bold;">${vitoriasCasa}</span>
                             <span style="color: #94a3b8;">-</span>
                             <span style="color: #FBBF24; font-weight: bold;">${empates}E</span>
                             <span style="color: #94a3b8;">-</span>
                             <span style="color: #fff; font-weight: bold;">${vitoriasFora}</span>
-                            <img src="${dados.escudo_fora}" alt="${dados.time_fora}" style="width: 20px; height: 20px;" onerror="this.style.display='none'">
+                            <img src="${dados.escudo_fora}" alt="${dados.time_fora}" style="width: 14px; height: 14px;" onerror="this.style.display='none'">
                         </div>
                     `;
                     confrontoDiretoContainer.innerHTML = confrontoHtml;
@@ -8740,7 +8740,7 @@
                     `;
                 });
                 
-                confrontosSequence.innerHTML = confrontosHtml;
+                // confrontosSequence.innerHTML = confrontosHtml; // DESABILITADO: Conflito com carregarConfrontosAutomatico
             }
             
             // 7. ATUALIZAR CONFRONTO DIRETO
@@ -8755,11 +8755,11 @@
                     
                     confrontoDireto.innerHTML = `
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <img src="/static/escudos/Roma/roma.png" alt="Roma" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="/static/escudos/Roma/roma.png" alt="Roma" style="width: 16px; height: 16px; border-radius: 50%;">
                             <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
                             <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
                             <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
-                            <img src="/static/escudos/Internazionale/Internazionale.png" alt="Inter" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="/static/escudos/Internazionale/Internazionale.png" alt="Inter" style="width: 16px; height: 16px; border-radius: 50%;">
                         </div>
                     `;
                 }
@@ -9012,7 +9012,7 @@
                     `;
                 });
                 
-                confrontosSequence.innerHTML = confrontosHtml;
+                // confrontosSequence.innerHTML = confrontosHtml; // DESABILITADO: Conflito com carregarConfrontosAutomatico
                 }
             }
             
@@ -9029,11 +9029,11 @@
                     
                     confrontoDireto.innerHTML = `
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <img src="${dados.escudo_casa || '/static/placeholder-team-logo.svg'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_casa || '/static/placeholder-team-logo.svg'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 16px; height: 16px; border-radius: 50%;">
                             <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
                             <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
                             <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
-                            <img src="${dados.escudo_fora || '/static/placeholder-team-logo.svg'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_fora || '/static/placeholder-team-logo.svg'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 16px; height: 16px; border-radius: 50%;">
                         </div>
                     `;
                     }
@@ -10630,13 +10630,13 @@
                     
                     confrontoDireto.innerHTML = `
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 16px; height: 16px; border-radius: 50%;">
                             <span style="font-weight: bold; color: #ffffff;">${vitorias}V</span>
                             <span style="color: #ffffff; font-weight: bold;">-</span>
                             <span style="color: #ffffff; font-weight: bold;">${empates}E</span>
                             <span style="color: #ffffff; font-weight: bold;">-</span>
                             <span style="font-weight: bold; color: #ffffff;">${derrotas}D</span>
-                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 16px; height: 16px; border-radius: 50%;">
                         </div>
                     `;
                     console.log('✅ [JOGO6-NOVO] Confronto direto atualizado:', dados.confronto_direto);
@@ -10733,10 +10733,10 @@
                 }
                 
                 return `
-                    <div style="display: flex; flex-direction: column; align-items: center; padding: 8px; margin: 2px; min-width: 60px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 8px; border-left: 3px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                        <div style="font-size: 10px; color: #888; margin-bottom: 2px;">${confronto.data}</div>
-                        <div style="font-size: 11px; color: #fff; margin-bottom: 4px; font-weight: bold;">${confronto.placar}</div>
-                        <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: ${resultado === 'E' ? 'transparent' : '#343a40'}; border-radius: 50%; color: ${resultado === 'E' ? '#fff' : '#fff'}; font-weight: bold; font-size: 12px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px; margin: 2px; min-width: 45px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 6px; border-left: 2px solid #28a745; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+                        <div style="font-size: 7px; color: #888; margin-bottom: 2px;">${confronto.data}</div>
+                        <div style="font-size: 7px; color: #fff; margin-bottom: 3px; font-weight: bold;">${confronto.placar}</div>
+                        <div style="display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: ${resultado === 'E' ? 'transparent' : '#343a40'}; border-radius: 50%; color: ${resultado === 'E' ? '#fff' : '#fff'}; font-weight: bold; font-size: 7px;">
                             ${conteudo}
                         </div>
                     </div>
@@ -10850,11 +10850,11 @@
                     
                     confrontoDireto.innerHTML = `
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 16px; height: 16px; border-radius: 50%;">
                             <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
                             <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
                             <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
-                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 16px; height: 16px; border-radius: 50%;">
                         </div>
                     `;
                 }
@@ -10991,11 +10991,11 @@
                     
                     confrontoDireto.innerHTML = `
                         <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 16px; height: 16px; border-radius: 50%;">
                             <span style="font-weight: bold; color: #28a745;">${vitorias}</span>
                             <span style="color: #ffc107; font-weight: bold;">${empates}E</span>
                             <span style="font-weight: bold; color: #dc3545;">${derrotas}</span>
-                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                            <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 16px; height: 16px; border-radius: 50%;">
                         </div>
                     `;
                 }
@@ -11074,9 +11074,9 @@
                 let conteudo;
             
                 if (resultado === 'V') {
-                    conteudo = `<img src="/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png" alt="Atlético Madrid" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>ATM</span>'">`;
+                    conteudo = `<img src="/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png" alt="Atlético Madrid" style="width: 16px; height: 16px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>ATM</span>'">`;
                 } else if (resultado === 'D') {
-                    conteudo = `<img src="/static/escudos/Osasuna/osasuna.png" alt="Osasuna" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>OSA</span>'">`;
+                    conteudo = `<img src="/static/escudos/Osasuna/osasuna.png" alt="Osasuna" style="width: 16px; height: 16px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>OSA</span>'">`;
                 } else {
                     conteudo = '<span style="color: #ffc107; font-weight: bold; font-size: 11px;">E</span>';
                 }

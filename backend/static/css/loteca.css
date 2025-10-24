@@ -5,7 +5,7 @@
             --cor-fundo: #12101a;
             --cor-fundo-card: #1e1b29;
             --cor-borda: #3a364f;
-            --cor-texto-principal: #e2e8f0;
+            --cor-texto-principal: #cbd5e1;
             --cor-texto-secundario: #94a3b8;
             --cor-destaque-primaria: #A855F7; /* Lilás */
             --cor-destaque-secundaria: #00E38C; /* Verde */
@@ -42,7 +42,7 @@
             }
             
             .container {
-                padding: 1.5rem 1.5rem;
+                padding: 0; /* Eliminação total do respiro - máximo espaço horizontal */
                 max-width: 100%;
                 overflow-x: hidden;
             }
@@ -50,6 +50,39 @@
             .analysis-mobile-item {
                 padding: 1.2rem 0.8rem;
                 min-height: 70px;
+            }
+            
+            /* Reduzir fontes em 20% para tablets */
+            .header h1 {
+                font-size: 1.6rem; /* 2rem * 0.8 */
+            }
+            
+            .header p {
+                font-size: 0.8rem; /* 1rem * 0.8 */
+            }
+            
+            .game-card-header h2 {
+                font-size: 1.2rem; /* 1.5rem * 0.8 */
+            }
+            
+            .game-card-header .game-info {
+                font-size: 0.72rem; /* 0.9rem * 0.8 */
+            }
+            
+            .prob-item .label {
+                font-size: 0.72rem; /* 0.9rem * 0.8 */
+            }
+            
+            .prob-item .value {
+                font-size: 0.88rem; /* 1.1rem * 0.8 */
+            }
+            
+            .analysis-table th {
+                font-size: 0.72rem; /* 0.9rem * 0.8 */
+            }
+            
+            .analysis-table td {
+                font-size: 0.8rem; /* 1rem * 0.8 */
             }
         }
 
@@ -365,46 +398,171 @@
             .analysis-table .confrontos-sequence {
                 transform-origin: left center;
                 display: grid !important;
-                grid-template-columns: repeat(5, 1fr) !important;
-                grid-template-rows: repeat(2, 1fr) !important;
-                gap: 4px !important;
-                justify-items: start !important;
+                grid-template-columns: repeat(5, 1fr) !important; /* 5 colunas para 2 linhas de 5 boxes */
+                grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
+                gap: 1px !important; /* Gap muito menor para condensar */
+                justify-items: center !important; /* Centralizar para evitar sobreposição */
                 align-items: center !important;
             }
 
             /* Ajustar o conteúdo do chip */
             .confrontos-sequence .confronto-item {
-                gap: 0px !important;
-                padding: 1px !important;
-                font-size: 0.45rem !important;
+                gap: 0px !important; /* Sem gap para condensar */
+                padding: 1px !important; /* Padding mínimo para condensar */
+                font-size: 0.4rem !important; /* Fonte menor para condensar */
+                min-width: 0 !important; /* Remover min-width para usar toda largura disponível */
+                width: 100% !important; /* Usar toda largura do grid */
+                margin: 0 !important; /* Sem margem para condensar */
+                justify-content: center !important; /* Centralizar horizontalmente */
+                align-items: center !important; /* Centralizar verticalmente */
+            }
+            
+            /* Aplicar estilos condensados APENAS em mobile - não afeta desktop */
+            .confrontos-sequence .confronto-item {
+                min-width: 0 !important;
+                width: 100% !important;
+                padding: 1px !important; /* Padding condensado apenas em mobile */
+                margin: 0 !important; /* Sem margem apenas em mobile */
             }
             
             .confrontos-sequence .confronto-data {
-                font-size: 0.4rem !important;
-                line-height: 1 !important;
+                font-size: 0.3rem !important; /* Redução para condensar */
+                line-height: 1 !important; /* Line-height menor para condensar */
             }
             
             .confrontos-sequence .confronto-placar {
-                font-size: 0.45rem !important;
-                line-height: 1 !important;
+                font-size: 0.32rem !important; /* Redução para condensar */
+                line-height: 1 !important; /* Line-height menor para condensar */
                 font-weight: 600 !important;
             }
             
             .confrontos-sequence .confronto-result {
-                width: 12px !important;
-                height: 12px !important;
+                width: 8px !important; /* Redução para condensar */
+                height: 8px !important; /* Redução para condensar */
             }
             
             .confrontos-sequence .confronto-escudo {
-                width: 12px !important;
-                height: 12px !important;
+                width: 8px !important; /* Redução para condensar */
+                height: 8px !important; /* Redução para condensar */
             }
             
             .confrontos-sequence .confronto-result.empate {
-                width: 12px !important;
-                height: 12px !important;
-                font-size: 0.45rem !important;
+                width: 8px !important; /* 12px * 0.67 */
+                height: 8px !important; /* 12px * 0.67 */
+                font-size: 0.32rem !important; /* 0.45rem * 0.7 */
                 line-height: 1 !important;
+            }
+        }
+
+        /* Redução de 30% + 20% adicional para elementos dos confrontos em ambientes responsivos */
+        @media (max-width: 768px) {
+            /* Forçar estilos inline hardcoded a respeitarem media queries */
+            .confronto-item[style*="min-width: 42px"] {
+                min-width: 34px !important; /* 42px * 0.8 */
+            }
+            
+            .confronto-item[style*="padding: 6px"] {
+                padding: 5px !important; /* 6px * 0.83 */
+            }
+            
+            .confronto-item[style*="min-width: 34px"] {
+                min-width: 34px !important; /* Já correto */
+            }
+            
+            .confronto-item[style*="padding: 5px"] {
+                padding: 5px !important; /* Já correto */
+            }
+            
+            /* Estilos gerais para confrontos */
+            .confronto-item {
+                min-width: 34px !important; /* 42px * 0.8 */
+                padding: 2px !important; /* 3px * 0.67 */
+                gap: 1px !important; /* 2px * 0.5 */
+            }
+            
+            .confronto-data {
+                font-size: 0.37rem !important; /* 0.46rem * 0.8 */
+            }
+            
+            .confronto-placar {
+                font-size: 0.39rem !important; /* 0.49rem * 0.8 */
+                margin-bottom: 1px !important; /* 2px * 0.5 */
+                border-radius: 2px !important; /* 3px * 0.67 */
+                padding: 1px 2px !important; /* 1px 3px * 0.67 */
+            }
+            
+            /* Forçar especificidade para confrontos dentro de tabelas */
+            .analysis-table .confronto-item {
+                min-width: 34px !important; /* 42px * 0.8 */
+                padding: 2px !important; /* 3px * 0.67 */
+                gap: 1px !important;
+                font-size: 0.36rem !important; /* 0.45rem * 0.8 */
+            }
+            
+            .analysis-table .confronto-data {
+                font-size: 0.37rem !important; /* 0.46rem * 0.8 */
+            }
+            
+            .analysis-table .confronto-placar {
+                font-size: 0.39rem !important; /* 0.49rem * 0.8 */
+                margin-bottom: 1px !important;
+                border-radius: 2px !important; /* 3px * 0.67 */
+                padding: 1px 2px !important; /* 1px 3px * 0.67 */
+            }
+        }
+
+        @media (max-width: 1024px) {
+            /* Condensar boxes APENAS em tablets - não afeta desktop */
+            .analysis-table .confrontos-sequence {
+                gap: 2px !important; /* Gap menor para condensar */
+                justify-items: center !important; /* Centralizar para evitar sobreposição */
+            }
+            
+            .confrontos-sequence .confronto-item {
+                min-width: 0 !important; /* Remover min-width para usar toda largura */
+                width: 100% !important; /* Usar toda largura disponível */
+                padding: 2px !important; /* Padding menor para condensar */
+                margin: 0 !important; /* Sem margem para condensar */
+            }
+            
+            .confrontos-sequence .confronto-data {
+                font-size: 0.32rem !important; /* Fonte menor para condensar */
+                line-height: 1 !important; /* Line-height menor para condensar */
+            }
+            
+            .confrontos-sequence .confronto-placar {
+                font-size: 0.35rem !important; /* Fonte menor para condensar */
+                line-height: 1 !important; /* Line-height menor para condensar */
+            }
+            
+            .confronto-data {
+                font-size: 0.37rem !important; /* 0.46rem * 0.8 */
+            }
+            
+            .confronto-placar {
+                font-size: 0.39rem !important; /* 0.49rem * 0.8 */
+                margin-bottom: 1px !important; /* 2px * 0.5 */
+                border-radius: 2px !important; /* 3px * 0.67 */
+                padding: 1px 2px !important; /* 1px 3px * 0.67 */
+            }
+            
+            /* Forçar especificidade para confrontos dentro de tabelas */
+            .analysis-table .confronto-item {
+                min-width: 34px !important; /* 42px * 0.8 */
+                padding: 2px !important; /* 3px * 0.67 */
+                gap: 1px !important;
+                font-size: 0.36rem !important; /* 0.45rem * 0.8 */
+            }
+            
+            .analysis-table .confronto-data {
+                font-size: 0.37rem !important; /* 0.46rem * 0.8 */
+            }
+            
+            .analysis-table .confronto-placar {
+                font-size: 0.39rem !important; /* 0.49rem * 0.8 */
+                margin-bottom: 1px !important;
+                border-radius: 2px !important; /* 3px * 0.67 */
+                padding: 1px 2px !important; /* 1px 3px * 0.67 */
             }
         }
 
@@ -756,7 +914,7 @@
         }
 
         .confronto-data {
-            font-size: 0.65rem;
+            font-size: 0.715rem; /* 0.65rem * 1.1 - Aumento de 10% para desktop */
             color: #888;
             font-weight: 600;
             white-space: nowrap;
@@ -764,7 +922,7 @@
         }
 
         .confronto-placar {
-            font-size: 0.7rem;
+            font-size: 0.77rem; /* 0.7rem * 1.1 - Aumento de 10% para desktop */
             font-weight: 700;
             white-space: nowrap;
             text-align: center;
@@ -3417,18 +3575,25 @@
 
         /* RESPONSIVIDADE MOBILE FORTE */
         @media (max-width: 768px) {
+            /* 1. REMOVE A MARGEM DO CORPO DA PÁGINA */
+            body {
+                margin: 0 !important; /* Força a margem para zero, removendo folgas padrão do navegador */
+                padding: 0 !important;
+            }
+
+            /* 2. AJUSTA O CONTAINER PRINCIPAL */
             .container {
-                padding: 1rem 1rem;
+                padding: 2rem 0.125rem; /* 2rem no topo/fundo e apenas 0.125rem (2px) nas laterais */
                 max-width: 100%;
                 overflow-x: hidden;
             }
 
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 1.44rem; /* 1.8rem * 0.8 */
             }
 
             .header p {
-                font-size: 0.95rem;
+                font-size: 0.76rem; /* 0.95rem * 0.8 */
                 padding: 0 1rem;
             }
 
@@ -3438,17 +3603,31 @@
                 border-radius: 8px;
             }
 
+            .game-card-header {
+                padding: 2rem; /* Aumento para mais respiro em mobile */
+            }
+
             .game-card-header h2 {
-                font-size: 1.2rem;
+                font-size: 0.96rem; /* 1.2rem * 0.8 */
                 line-height: 1.3;
             }
 
             .game-card-header .game-info {
-                font-size: 0.8rem;
+                font-size: 0.64rem; /* 0.8rem * 0.8 */
+            }
+
+            /* 3. REDUZ O PADDING INTERNO DE CADA CARD DE JOGO (Jogo 1 a 14) */
+            .game-card {
+                padding: 8px 5px; /* Reduz o padding interno do card para aproximar o conteúdo da borda do card */
             }
 
             .game-card-body {
-                padding: 1.5rem;
+                padding: 1rem; /* Reduzido para dar mais espaço horizontal */
+            }
+
+            /* 3. REDUZ O PADDING INTERNO DE CADA CARD DE JOGO */
+            .game-card {
+                padding: 8px 5px; /* Reduz o padding interno do card para aproximar o conteúdo da borda do card */
             }
 
             /* Probabilidades - Stack Vertical no Mobile */
@@ -3464,13 +3643,13 @@
             }
 
             .prob-item .label {
-                font-size: 0.7rem;
+                font-size: 0.56rem; /* 0.7rem * 0.8 */
                 margin-bottom: 0.2rem;
                 display: block;
             }
 
             .prob-item .value {
-                font-size: 1.1rem;
+                font-size: 0.88rem; /* 1.1rem * 0.8 */
                 font-weight: 900;
             }
 
@@ -3478,14 +3657,14 @@
             .analysis-table {
                 display: table;
                 width: 100%;
-                font-size: 0.9rem;
+                font-size: 0.72rem; /* 0.9rem * 0.8 */
                 table-layout: fixed;
             }
 
             .analysis-table th,
             .analysis-table td {
                 padding: 0.8rem 0.5rem;
-                font-size: 0.85rem;
+                font-size: 0.68rem; /* 0.85rem * 0.8 */
                 word-wrap: break-word;
                 overflow-wrap: break-word;
                 white-space: normal;
@@ -3501,16 +3680,44 @@
                 max-width: 80px;
             }
 
+            /* 4. AJUSTE FINO NA TABELA DE ANÁLISE (Para resolver o overlap, mantendo as larguras) */
+            .analysis-table {
+                table-layout: fixed;
+                width: 100%;
+                font-size: 0.7rem; /* Reduz ligeiramente a fonte */
+            }
+            
+            .analysis-table th, 
+            .analysis-table td {
+                padding: 0.2rem 0.1rem; /* Reduz o espaçamento interno das células ao mínimo (1.6px) */
+                vertical-align: top;
+            }
+
+            /* Distribuição das colunas dentro da Media Query */
+            .analysis-table tr td:first-child {
+                width: 30%; 
+                min-width: 60px;
+            }
+
+            .analysis-table tr td:last-child {
+                width: 30%; 
+                min-width: 70px;
+                text-align: right;
+            }
+
+            .analysis-table tr td[colspan="2"] {
+                width: 40%; 
+            }
+
             .analysis-table .confrontos-sequence {
                 display: flex;
-                flex-wrap: wrap;
-                gap: 0.5rem;
+                flex-wrap: nowrap;
                 justify-content: center;
-                max-width: 100%;
+                gap: 1px; /* Espaçamento mínimo entre os boxes */
             }
 
             .analysis-table .confronto-item {
-                font-size: 0.8rem;
+                font-size: 0.64rem; /* 0.8rem * 0.8 */
                 padding: 0.4rem;
                 min-width: 40px;
                 text-align: center;
@@ -4216,7 +4423,7 @@
         /* RESPONSIVIDADE EXTRA PARA CELULARES PEQUENOS */
         @media (max-width: 480px) {
             .container {
-                padding: 0.5rem 0.75rem;
+                padding: 0; /* Eliminação total do respiro - máximo espaço horizontal */
                 max-width: 100%;
                 overflow-x: hidden;
             }
@@ -4227,18 +4434,27 @@
             }
             
             .analysis-mobile-label {
-                font-size: 0.9rem;
+                font-size: 0.72rem; /* 0.9rem * 0.8 */
                 min-width: 70px;
             }
             
             .analysis-mobile-teams {
-                font-size: 0.8rem;
+                font-size: 0.64rem; /* 0.8rem * 0.8 */
                 gap: 0.3rem;
             }
             
             .analysis-mobile-result {
-                font-size: 0.8rem;
+                font-size: 0.64rem; /* 0.8rem * 0.8 */
                 min-width: 50px;
+            }
+
+            /* Game Cards - Pequenos Smartphones */
+            .game-card-header {
+                padding: 1.5rem; /* Respiro adequado para telas pequenas */
+            }
+
+            .game-card-body {
+                padding: 1.5rem; /* Respiro adequado para telas pequenas */
             }
 
             .clubes-brasileirao-section {
@@ -4277,7 +4493,7 @@
             }
 
             .game-card-header {
-                padding: 1.2rem;
+                padding: 1.5rem; /* Aumento de 1.2rem para 1.5rem - mais respiro */
             }
 
             .game-card-header h2 {
@@ -4285,7 +4501,7 @@
             }
 
             .game-card-body {
-                padding: 1.2rem;
+                padding: 1.5rem; /* Aumento de 1.2rem para 1.5rem - mais respiro */
             }
 
             .prob-item {
@@ -4295,7 +4511,7 @@
 
             .recommendation {
                 padding: 1rem;
-                font-size: 0.9rem;
+                font-size: 0.72rem; /* 0.9rem * 0.8 */
             }
 
             .analyst-conclusion {

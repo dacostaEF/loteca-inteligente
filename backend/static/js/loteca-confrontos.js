@@ -125,9 +125,9 @@ async function carregarConfrontosJogo5() {
         let conteudo;
         
         if (resultado === 'V') {
-            conteudo = `<img src="${escudoCasa}" alt="Atlético Madrid" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>ATM</span>'">`;
+            conteudo = `<img src="${escudoCasa}" alt="Atlético Madrid" style="width: 11px; height: 11px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 5.5px; font-weight: bold;\'>ATM</span>'">`;
         } else if (resultado === 'D') {
-            conteudo = `<img src="${escudoFora}" alt="Osasuna" style="width: 17px; height: 17px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>OSA</span>'">`;
+            conteudo = `<img src="${escudoFora}" alt="Osasuna" style="width: 11px; height: 11px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 5.5px; font-weight: bold;\'>OSA</span>'">`;
         } else {
             conteudo = 'E'; // PADRONIZADO: Apenas letra 'E' simples
         }
@@ -437,11 +437,11 @@ async function carregarConfrontosAutomatico(numeroJogo) {
         if (resultado === 'V') {
             // V = Vitória do TIME CASA → Mostra escudo do time casa
             classe = configJogo.timeCasa.toLowerCase().replace(/\s+/g, '-');
-            conteudo = `<img src="${configJogo.escudoCasa}" alt="${configJogo.timeCasa}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.outerHTML='${configJogo.timeCasa.substring(0,3).toUpperCase()}'">`;
+            conteudo = `<img src="${configJogo.escudoCasa}" alt="${configJogo.timeCasa}" style="width: 12px; height: 12px; border-radius: 50%;" onerror="this.outerHTML='${configJogo.timeCasa.substring(0,3).toUpperCase()}'">`;
         } else if (resultado === 'D') {
             // D = Vitória do TIME FORA → Mostra escudo do time fora
             classe = configJogo.timeFora.toLowerCase().replace(/\s+/g, '-');
-            conteudo = `<img src="${configJogo.escudoFora}" alt="${configJogo.timeFora}" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.outerHTML='${configJogo.timeFora.substring(0,3).toUpperCase()}'">`;
+            conteudo = `<img src="${configJogo.escudoFora}" alt="${configJogo.timeFora}" style="width: 12px; height: 12px; border-radius: 50%;" onerror="this.outerHTML='${configJogo.timeFora.substring(0,3).toUpperCase()}'">`;
         } else {
             // E = Empate → Mostra letra 'E'
             classe = 'empate';
@@ -464,10 +464,10 @@ async function carregarConfrontosAutomatico(numeroJogo) {
         }
         
         return `
-            <div style="display: flex; flex-direction: column; align-items: center; padding: 8px; margin: 2px; min-width: 60px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 8px; border-left: 3px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                <div style="font-size: 10px; color: #888; margin-bottom: 4px;">${dataFormatada}</div>
-                <div style="font-size: 11px; color: #fff; margin-bottom: 4px; font-weight: bold;">${confronto.placar}</div>
-                <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #343a40; border-radius: 50%; color: #fff; font-weight: bold; font-size: 12px;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px; margin: 2px; min-width: 45px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 6px; border-left: 2px solid #28a745; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+                <div style="font-size: 7px; color: #888; margin-bottom: 2px;">${dataFormatada}</div>
+                <div style="font-size: 7px; color: #fff; margin-bottom: 3px; font-weight: bold;">${confronto.placar}</div>
+                <div style="display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: #343a40; border-radius: 50%; color: #fff; font-weight: bold; font-size: 7px;">
                     ${conteudo}
                 </div>
             </div>

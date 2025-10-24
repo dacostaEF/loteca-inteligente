@@ -344,13 +344,13 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
                 
                 confrontoDireto.innerHTML = `
                     <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 15px; height: 15px; border-radius: 50%;">
                         <span style="font-weight: bold; color: #ffffff;">${vitorias}V</span>
                         <span style="color: #ffffff; font-weight: bold;">-</span>
                         <span style="color: #ffffff; font-weight: bold;">${empates}E</span>
                         <span style="color: #ffffff; font-weight: bold;">-</span>
                         <span style="font-weight: bold; color: #ffffff;">${derrotas}D</span>
-                        <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 24px; height: 24px; border-radius: 50%;">
+                        <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 15px; height: 15px; border-radius: 50%;">
                     </div>
                 `;
                 console.log(`✅ [JOGO${numeroJogo}] Confronto direto atualizado com dados reais!`);

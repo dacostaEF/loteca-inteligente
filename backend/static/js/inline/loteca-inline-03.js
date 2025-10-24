@@ -58,9 +58,9 @@
       const h2hEl = document.getElementById('confronto-direto-principais');
       if (h2hEl) h2hEl.innerHTML = `
         <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
-          <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:24px;height:24px;">
+          <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:15px;height:15px;">
           <span>${src.confronto_direto}</span>
-          <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:24px;height:24px;">
+          <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:15px;height:15px;">
         </div>`;
     }
     const h2hAnal = document.getElementById('h2h-analise-1');
@@ -100,9 +100,9 @@
       const h2hEl2 = document.getElementById('confronto-direto-principais-2');
       if (h2hEl2) h2hEl2.innerHTML = `
         <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
-          <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:24px;height:24px;">
+          <img src="${src.escudo_casa||''}" alt="${src.time_casa||''}" style="width:15px;height:15px;">
           <span>${src.confronto_direto}</span>
-          <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:24px;height:24px;">
+          <img src="${src.escudo_fora||''}" alt="${src.time_fora||''}" style="width:15px;height:15px;">
         </div>`;
     }
     const h2hAnal = document.getElementById('h2h-analise-2');
