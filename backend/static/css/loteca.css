@@ -20,6 +20,7 @@
             color: var(--cor-texto-principal);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
             
             /* MOLDURA NEON LILÁS - EFEITO LOTERIAS INTELIGENTE */
             box-shadow: 
@@ -38,6 +39,17 @@
                     inset 0 0 25px rgba(168, 85, 247, 0.35),
                     0 0 50px rgba(168, 85, 247, 0.25);
                 animation: neonPulse 4s ease-in-out infinite alternate;
+            }
+            
+            .container {
+                padding: 1.5rem 1rem;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .analysis-mobile-item {
+                padding: 1.2rem 0.8rem;
+                min-height: 70px;
             }
         }
 
@@ -3407,6 +3419,8 @@
         @media (max-width: 768px) {
             .container {
                 padding: 1rem 0.5rem;
+                max-width: 100%;
+                overflow-x: hidden;
             }
 
             .header h1 {
@@ -3464,30 +3478,47 @@
             .analysis-table {
                 display: table;
                 width: 100%;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
+                table-layout: fixed;
             }
 
             .analysis-table th,
             .analysis-table td {
-                padding: 0.5rem;
-                font-size: 0.75rem;
+                padding: 0.8rem 0.5rem;
+                font-size: 0.85rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+            }
+            
+            .analysis-table th:first-child {
+                min-width: 120px;
+                max-width: 120px;
+            }
+            
+            .analysis-table th.team-header {
+                min-width: 80px;
+                max-width: 80px;
             }
 
             .analysis-table .confrontos-sequence {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.3rem;
+                gap: 0.5rem;
                 justify-content: center;
+                max-width: 100%;
             }
 
             .analysis-table .confronto-item {
-                font-size: 0.7rem;
-                padding: 0.2rem;
+                font-size: 0.8rem;
+                padding: 0.4rem;
+                min-width: 40px;
+                text-align: center;
             }
 
-            /* Nova estrutura mobile para análise - Esconder */
+            /* Nova estrutura mobile para análise - Mostrar */
             .analysis-mobile {
-                display: none;
+                display: block;
                 background-color: rgba(0,0,0,0.1);
                 border-radius: 8px;
                 padding: 1rem;
@@ -3542,18 +3573,23 @@
 
             /* Conclusão Mobile */
             .analyst-conclusion {
-                padding: 1.2rem;
+                padding: 1.5rem;
                 border-radius: 8px;
+                margin-top: 1rem;
             }
 
             .analyst-conclusion h4 {
-                font-size: 1rem;
-                margin-bottom: 0.8rem;
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+                color: var(--cor-destaque-primaria);
             }
 
             .analyst-conclusion p {
-                font-size: 0.9rem;
-                line-height: 1.5;
+                font-size: 1rem;
+                line-height: 1.6;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
             }
 
             /* Otimizador Mobile */
@@ -4181,6 +4217,28 @@
         @media (max-width: 480px) {
             .container {
                 padding: 0.5rem 0.25rem;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .analysis-mobile-item {
+                padding: 0.8rem 0.3rem;
+                min-height: 50px;
+            }
+            
+            .analysis-mobile-label {
+                font-size: 0.9rem;
+                min-width: 70px;
+            }
+            
+            .analysis-mobile-teams {
+                font-size: 0.8rem;
+                gap: 0.3rem;
+            }
+            
+            .analysis-mobile-result {
+                font-size: 0.8rem;
+                min-width: 50px;
             }
 
             .clubes-brasileirao-section {
@@ -4314,7 +4372,52 @@
 
         @media (max-width: 768px) {
             .analysis-mobile {
-                display: none !important;
+                display: block;
+                background-color: rgba(0,0,0,0.1);
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .analysis-mobile-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 0.5rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                min-height: 60px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .analysis-mobile-item:last-child {
+                border-bottom: none;
+            }
+            
+            .analysis-mobile-label {
+                font-weight: 600;
+                color: var(--cor-texto-secundario);
+                font-size: 1rem;
+                flex: 1;
+                min-width: 80px;
+            }
+            
+            .analysis-mobile-teams {
+                display: flex;
+                gap: 0.5rem;
+                flex: 2;
+                justify-content: center;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+                min-width: 0;
+                overflow: hidden;
+            }
+            
+            .analysis-mobile-result {
+                flex: 1;
+                text-align: right;
+                font-size: 0.9rem;
+                min-width: 60px;
             }
         }
 
@@ -5673,5 +5776,4 @@
 
         .modal-body strong {
             color: #60a5fa;
-        }
- 
+        } 
