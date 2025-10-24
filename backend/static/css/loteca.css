@@ -42,7 +42,7 @@
             }
             
             .container {
-                padding: 1.5rem 1rem;
+                padding: 1.5rem 1.5rem;
                 max-width: 100%;
                 overflow-x: hidden;
             }
@@ -83,7 +83,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2rem 2rem;
         }
 
         /* GARANTIR QUE TODOS OS ELEMENTOS RESPEITEM O CONTAINER PAI */
@@ -189,7 +189,7 @@
         }
 
         .game-card-header {
-            padding: 1.5rem;
+            padding: 2rem;
             background: linear-gradient(135deg, rgba(42,35,64,.95), rgba(30,27,41,.95));
         }
 
@@ -263,7 +263,7 @@
         }
 
         .game-card-body {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         /* Seção de Probabilidades */
@@ -3418,7 +3418,7 @@
         /* RESPONSIVIDADE MOBILE FORTE */
         @media (max-width: 768px) {
             .container {
-                padding: 1rem 0.5rem;
+                padding: 1rem 1rem;
                 max-width: 100%;
                 overflow-x: hidden;
             }
@@ -3448,7 +3448,7 @@
             }
 
             .game-card-body {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             /* Probabilidades - Stack Vertical no Mobile */
@@ -4216,7 +4216,7 @@
         /* RESPONSIVIDADE EXTRA PARA CELULARES PEQUENOS */
         @media (max-width: 480px) {
             .container {
-                padding: 0.5rem 0.25rem;
+                padding: 0.5rem 0.75rem;
                 max-width: 100%;
                 overflow-x: hidden;
             }
@@ -4277,7 +4277,7 @@
             }
 
             .game-card-header {
-                padding: 1rem;
+                padding: 1.2rem;
             }
 
             .game-card-header h2 {
@@ -4285,7 +4285,7 @@
             }
 
             .game-card-body {
-                padding: 0.8rem;
+                padding: 1.2rem;
             }
 
             .prob-item {
@@ -5776,4 +5776,10 @@
 
         .modal-body strong {
             color: #60a5fa;
+        }
+
+        /* Espaçamento adicional para containers */
+        .game-card {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
         } 
