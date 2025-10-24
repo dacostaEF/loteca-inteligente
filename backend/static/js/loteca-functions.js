@@ -269,7 +269,7 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
         const elementoProbCasa = document.getElementById(ids.probCasa);
         if (elementoProbCasa) {
             elementoProbCasa.classList.remove('loading');
-            elementoProbCasa.innerHTML = `<span class="probability-value">${probCasa}</span>`;
+            elementoProbCasa.innerHTML = `<span class="probability-value">${probCasa}%</span>`;
         }
     }
     
@@ -277,7 +277,7 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
         const elementoProbEmpate = document.getElementById(ids.probEmpate);
         if (elementoProbEmpate) {
             elementoProbEmpate.classList.remove('loading');
-            elementoProbEmpate.innerHTML = `<span class="probability-value">${probEmpate}</span>`;
+            elementoProbEmpate.innerHTML = `<span class="probability-value">${probEmpate}%</span>`;
         }
     }
     
@@ -285,7 +285,7 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
         const elementoProbFora = document.getElementById(ids.probFora);
         if (elementoProbFora) {
             elementoProbFora.classList.remove('loading');
-            elementoProbFora.innerHTML = `<span class="probability-value">${probFora}</span>`;
+            elementoProbFora.innerHTML = `<span class="probability-value">${probFora}%</span>`;
         }
     }
     

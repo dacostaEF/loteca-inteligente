@@ -465,8 +465,8 @@ async function carregarConfrontosAutomatico(numeroJogo) {
         
         return `
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px; margin: 2px; min-width: 45px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 6px; border-left: 2px solid #28a745; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">
-                <div style="font-size: 7px; color: #888; margin-bottom: 2px;">${dataFormatada}</div>
-                <div style="font-size: 7px; color: #fff; margin-bottom: 3px; font-weight: bold;">${confronto.placar}</div>
+                <div style="font-size: 5px; color: #888; margin-bottom: 2px;">${dataFormatada}</div>
+                <div style="font-size: 5px; color: #fff; margin-bottom: 3px; font-weight: bold;">${confronto.placar}</div>
                 <div style="display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: #343a40; border-radius: 50%; color: #fff; font-weight: bold; font-size: 7px;">
                     ${conteudo}
                 </div>
