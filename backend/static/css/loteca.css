@@ -2,6 +2,7 @@
         /* CSS EMBUTIDO PARA UMA PÁGINA INDEPENDENTE */
         
         :root {
+            /* VARIÁVEIS DE COR EXISTENTES (PRESERVADAS) */
             --cor-fundo: #12101a;
             --cor-fundo-card: #1e1b29;
             --cor-borda: #3a364f;
@@ -12,6 +13,16 @@
             --cor-vantagem: #00E38C;
             --cor-desvantagem: #F43F5E; /* Vermelho/Rosa */
             --cor-equilibrio: #FBBF24; /* Amarelo */
+            
+            /* NOVAS VARIÁVEIS GLOBAIS (KIT GUARDA-CORPO) */
+            --container-max: 1200px;     /* largura desktop */
+            --gutter: 16px;
+
+            /* Breakpoints (mobile-first) */
+            --bp-sm: 480px;   /* telefones em pé */
+            --bp-md: 768px;   /* tablets */
+            --bp-lg: 1024px;  /* notebooks */
+            --bp-xl: 1280px;  /* desktop amplo */
         }
 
         body {
@@ -29,6 +40,13 @@
                 0 0 40px rgba(168, 85, 247, 0.2);
             min-height: 100vh;
             position: relative;
+        }
+
+        /* CONTAINER PADRÃO (KIT GUARDA-CORPO) - COMPLEMENTAR */
+        .container-kit {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--gutter);
         }
         
         /* MOLDURA NEON PARA TABLETS */
@@ -5998,4 +6016,37 @@
         .game-card {
             margin-left: 0.5rem;
             margin-right: 0.5rem;
-        } 
+        }
+
+/* ========================================
+   PASSO 3: KIT GUARDA-CORPO - COMPONENTES
+   ======================================== */
+
+/* 3.1 Últimos Confrontos (10 pills) - NOVO CSS COM ESCOPO */
+/* Base (mobile) */
+.page--analise-rapida .confrontos-sequence{
+  display:grid;
+  grid-template-columns: repeat(5, minmax(42px,1fr)); /* 2 linhas no celular */
+  gap:6px; justify-content:center; align-items:center;
+  padding:4px 0;
+}
+.page--analise-rapida .confrontos-sequence > .pill{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  min-width:42px; height:30px; padding:6px 8px; border-radius:8px;
+  font:600 11px/1 Inter,system-ui;
+}
+.page--analise-rapida .confrontos-sequence > .pill img{ width:14px; height:14px; }
+
+/* Desktop (2 linhas de 5 boxes) */
+@media (min-width: 768px){
+  .page--analise-rapida .confrontos-sequence{
+    grid-template-columns: repeat(5, minmax(56px,1fr)); /* 2 linhas de 5 boxes */
+    grid-template-rows: repeat(2, 1fr); /* 2 linhas */
+    gap:10px;
+  }
+  .page--analise-rapida .confrontos-sequence > .pill{
+    min-width:56px; height:36px; padding:8px 10px; border-radius:10px; font-size:12px;
+  }
+  .page--analise-rapida .confrontos-sequence > .pill img{ width:18px; height:18px; }
+}
+ 
