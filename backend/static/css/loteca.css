@@ -4272,6 +4272,16 @@
             border-bottom: 2px solid transparent;
         }
         
+        /* ALINHAR CATEGORIAS À ESQUERDA TAMBÉM NO DESKTOP */
+        @media (min-width: 769px) {
+            .page--dados-avancados .linha-tabela .coluna.categoria {
+                text-align: left !important; /* Alinhar categorias à esquerda no desktop */
+                display: flex !important; /* Flexbox para centralização vertical */
+                align-items: center !important; /* Centralizar verticalmente */
+                justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
+            }
+        }
+
         /* SOBRESCREVER REGRAS BASE PARA MOBILE - DADOS AVANÇADOS */
         @media (max-width: 768px) {
             
@@ -4448,21 +4458,25 @@
                 justify-content: center !important; /* Centralizar horizontalmente */
             }
             
-            /* AJUSTAR ESPECIFICAMENTE AS COLUNAS DE DADOS - MAIS ESPAÇO */
-            .page--dados-avancados .linha-tabela .coluna.mandante,
-            .page--dados-avancados .linha-tabela .coluna.visitante,
-            .page--dados-avancados .linha-tabela .coluna.vantagem {
-                flex: 0 0 25% !important; /* Largura maior para dados */
-                max-width: 25% !important; /* Máxima largura */
-            }
-            
+            /* AJUSTAR ESPECIFICAMENTE AS COLUNAS DE DADOS - NOVA DISTRIBUIÇÃO 30-20-20-30 */
             .page--dados-avancados .linha-tabela .coluna.categoria {
-                flex: 0 0 25% !important; /* Largura igual para categoria */
-                max-width: 25% !important; /* Máxima largura */
+                flex: 0 0 30% !important; /* Largura 30% para categoria */
+                max-width: 30% !important; /* Máxima largura */
                 text-align: left !important; /* Alinhar categorias à esquerda */
                 display: flex !important; /* Flexbox para centralização vertical */
                 align-items: center !important; /* Centralizar verticalmente */
                 justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
+            }
+            
+            .page--dados-avancados .linha-tabela .coluna.mandante,
+            .page--dados-avancados .linha-tabela .coluna.visitante {
+                flex: 0 0 20% !important; /* Largura 20% para mandante e visitante */
+                max-width: 20% !important; /* Máxima largura */
+            }
+            
+            .page--dados-avancados .linha-tabela .coluna.vantagem {
+                flex: 0 0 30% !important; /* Largura 30% para vantagem */
+                max-width: 30% !important; /* Máxima largura */
             }
             
             /* AJUSTAR CONTAINER PRINCIPAL */
@@ -4514,20 +4528,24 @@
                     padding: 0.1rem !important; /* Padding mínimo */
                 }
                 
-                .page--dados-avancados .linha-tabela .coluna.mandante,
-                .page--dados-avancados .linha-tabela .coluna.visitante,
-                .page--dados-avancados .linha-tabela .coluna.vantagem {
-                    flex: 0 0 22% !important; /* Largura maior para telas pequenas */
-                    max-width: 22% !important;
-                }
-                
                 .page--dados-avancados .linha-tabela .coluna.categoria {
-                    flex: 0 0 34% !important; /* Largura maior para categoria */
-                    max-width: 34% !important;
+                    flex: 0 0 30% !important; /* Largura 30% para categoria */
+                    max-width: 30% !important;
                     text-align: left !important; /* Alinhar categorias à esquerda */
                     display: flex !important; /* Flexbox para centralização vertical */
                     align-items: center !important; /* Centralizar verticalmente */
                     justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
+                }
+                
+                .page--dados-avancados .linha-tabela .coluna.mandante,
+                .page--dados-avancados .linha-tabela .coluna.visitante {
+                    flex: 0 0 20% !important; /* Largura 20% para mandante e visitante */
+                    max-width: 20% !important;
+                }
+                
+                .page--dados-avancados .linha-tabela .coluna.vantagem {
+                    flex: 0 0 30% !important; /* Largura 30% para vantagem */
+                    max-width: 30% !important;
                 }
             }
             
@@ -4579,6 +4597,50 @@
             /* AJUSTAR ESPAÇAMENTO ENTRE SEÇÕES */
             .page--dados-avancados .container-secao + .container-secao {
                 margin-top: 0.5rem !important; /* Espaço mínimo entre seções */
+            }
+            
+            /* ELIMINAR TODAS AS BORDAS DOS CONTAINERS E LINHAS - MOBILE */
+            .page--dados-avancados .container-secao,
+            .page--dados-avancados .secao-header,
+            .page--dados-avancados .tabela-secao,
+            .page--dados-avancados .linha-tabela,
+            .page--dados-avancados .linha-titulos,
+            .page--dados-avancados .linha-tabela .coluna,
+            .page--dados-avancados .linha-titulos .coluna {
+                border: none !important; /* Eliminar todas as bordas */
+                border-top: none !important; /* Eliminar borda superior */
+                border-bottom: none !important; /* Eliminar borda inferior */
+                border-left: none !important; /* Eliminar borda esquerda */
+                border-right: none !important; /* Eliminar borda direita */
+                border-radius: 0 !important; /* Eliminar bordas arredondadas */
+                box-shadow: none !important; /* Eliminar sombras */
+                outline: none !important; /* Eliminar contornos */
+            }
+            
+            /* ELIMINAR BORDAS DOS CONTAINERS PRINCIPAIS */
+            .page--dados-avancados .comparacao-elegante,
+            .page--dados-avancados .nova-comparacao,
+            .page--dados-avancados .comparacao-header {
+                border: none !important; /* Eliminar todas as bordas */
+                border-radius: 0 !important; /* Eliminar bordas arredondadas */
+                box-shadow: none !important; /* Eliminar sombras */
+                outline: none !important; /* Eliminar contornos */
+            }
+            
+            /* ELIMINAR BORDAS DOS ELEMENTOS INTERNOS */
+            .page--dados-avancados .linha-tabela {
+                border: none !important; /* Eliminar bordas das linhas */
+                border-radius: 0 !important; /* Eliminar bordas arredondadas */
+                box-shadow: none !important; /* Eliminar sombras */
+            }
+            
+            /* ELIMINAR BORDAS DOS HEADERS DAS SEÇÕES */
+            .page--dados-avancados .secao-header h4,
+            .page--dados-avancados .secao-header h3,
+            .page--dados-avancados .secao-header h2 {
+                border: none !important; /* Eliminar bordas dos títulos */
+                border-radius: 0 !important; /* Eliminar bordas arredondadas */
+                box-shadow: none !important; /* Eliminar sombras */
             }
             
             /* FORÇAR CONTAINERS PAI A FICAREM COLADOS NAS LATERAIS */
