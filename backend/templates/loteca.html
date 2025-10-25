@@ -7018,10 +7018,10 @@
                 
                 if (resultado === 'V') {
                     classe = 'time-casa';
-                    conteudo = `<img src="${escudoCasa}" alt="${timeCasa}" class="confronto-escudo" onerror="this.outerHTML='${timeCasa.substring(0,3).toUpperCase()}'">`;
+                    conteudo = timeCasa.substring(0,3).toUpperCase();
                 } else if (resultado === 'D') {
                     classe = 'time-fora';
-                    conteudo = `<img src="${escudoFora}" alt="${timeFora}" class="confronto-escudo" onerror="this.outerHTML='${timeFora.substring(0,3).toUpperCase()}'">`;
+                    conteudo = timeFora.substring(0,3).toUpperCase();
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -7133,10 +7133,10 @@
                 
                 if (resultado === 'V') {
                     classe = 'time-casa';
-                    conteudo = `<img src="${escudoCasa}" alt="${timeCasa}" class="confronto-escudo" onerror="this.outerHTML='${timeCasa.substring(0,3).toUpperCase()}'">`;
+                    conteudo = timeCasa.substring(0,3).toUpperCase();
                 } else if (resultado === 'D') {
                     classe = 'time-fora';
-                    conteudo = `<img src="${escudoFora}" alt="${timeFora}" class="confronto-escudo" onerror="this.outerHTML='${timeFora.substring(0,3).toUpperCase()}'">`;
+                    conteudo = timeFora.substring(0,3).toUpperCase();
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -7242,10 +7242,10 @@
                 
                 if (resultado === 'V') {
                     classe = 'time-casa';
-                    conteudo = `<img src="${escudoCasa}" alt="${timeCasa}" class="confronto-escudo" onerror="this.outerHTML='${timeCasa.substring(0,3).toUpperCase()}'">`;
+                    conteudo = timeCasa.substring(0,3).toUpperCase();
                 } else if (resultado === 'D') {
                     classe = 'time-fora';
-                    conteudo = `<img src="${escudoFora}" alt="${timeFora}" class="confronto-escudo" onerror="this.outerHTML='${timeFora.substring(0,3).toUpperCase()}'">`;
+                    conteudo = timeFora.substring(0,3).toUpperCase();
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -7521,10 +7521,10 @@
                 
                 if (resultado === 'V') {
                     classe = 'corinthians';
-                    conteudo = '<img src="/static/placeholder-team-logo.svg"COR_Corinthians/Corinthians.png" alt="Corinthians" class="confronto-escudo" onerror="this.outerHTML=\'COR\'">';
+                    conteudo = 'COR';
                 } else if (resultado === 'D') {
                     classe = 'flamengo';
-                    conteudo = '<img src="/static/placeholder-team-logo.svg"FLA_Flamengo/Flamengo.png" alt="Flamengo" class="confronto-escudo" onerror="this.outerHTML=\'FLA\'">';
+                    conteudo = 'FLA';
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -7568,10 +7568,10 @@
                 
                 if (resultado === 'V') {
                     classe = 'corinthians';
-                    conteudo = '<img src="https://logodetimes.com/times/corinthians/logo-corinthians-256.png" alt="Corinthians" class="confronto-escudo" onerror="this.outerHTML=\'Cor\'">';
+                    conteudo = 'COR';
                 } else if (resultado === 'D') {
                     classe = 'flamengo';
-                    conteudo = '<img src="https://logodetimes.com/times/flamengo/logo-flamengo-256.png" alt="Flamengo" class="confronto-escudo" onerror="this.outerHTML=\'Fla\'">';
+                    conteudo = 'FLA';
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -7905,7 +7905,7 @@
             // Gerar HTML do resumo com escudos
             const resumoHtml = `
                 <div class="confronto-direto-item">
-                    <img src="/static/placeholder-team-logo.svg"COR_Corinthians/Corinthians.png" alt="Corinthians" class="confronto-direto-escudo" onerror="this.style.display='none'">
+                    <span class="confronto-direto-sigla">COR</span>
                     <span class="confronto-direto-count">${vitoriasCor}</span>
                 </div>
                 <span class="confronto-direto-separador">-</span>
@@ -7915,7 +7915,7 @@
                 <span class="confronto-direto-separador">-</span>
                 <div class="confronto-direto-item">
                     <span class="confronto-direto-count">${vitoriasFla}</span>
-                    <img src="/static/placeholder-team-logo.svg"FLA_Flamengo/Flamengo.png" alt="Flamengo" class="confronto-direto-escudo" onerror="this.style.display='none'">
+                    <span class="confronto-direto-sigla">FLA</span>
                 </div>
             `;
 
@@ -8376,7 +8376,7 @@
                                 <div class="confronto-data">${confronto.data}</div>
                                 <div class="confronto-placar">${confronto.placar}</div>
                                 <div class="confronto-result casa" title="Vitória ${dados.time_casa}">
-                                    <img src="${dados.escudo_casa}" alt="${dados.time_casa}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>${dados.time_casa.substring(0,3).toUpperCase()}</span>'">
+                                    ${dados.time_casa.substring(0,3).toUpperCase()}
                                 </div>
                             </div>`;
                         } else if (confronto.resultado === 'D') {
@@ -8384,7 +8384,7 @@
                                 <div class="confronto-data">${confronto.data}</div>
                                 <div class="confronto-placar">${confronto.placar}</div>
                                 <div class="confronto-result fora" title="Vitória ${dados.time_fora}">
-                                    <img src="${dados.escudo_fora}" alt="${dados.time_fora}" class="confronto-escudo" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>${dados.time_fora.substring(0,3).toUpperCase()}</span>'">
+                                    ${dados.time_fora.substring(0,3).toUpperCase()}
                                 </div>
                             </div>`;
                         } else {
@@ -10632,10 +10632,10 @@
                 
                 if (resultado === 'V') {
                     classe = 'cruzeiro';
-                    conteudo = '<img src="/static/escudos/Cruzeiro/cruzeiro.png" alt="Cruzeiro" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.outerHTML=\'CRU\'">';
+                    conteudo = 'CRU';
                 } else if (resultado === 'D') {
                     classe = 'fortaleza';
-                    conteudo = '<img src="/static/escudos/Fortaleza/fortaleza.png" alt="Fortaleza" style="width: 20px; height: 20px; border-radius: 50%;" onerror="this.outerHTML=\'FOR\'">';
+                    conteudo = 'FOR';
                 } else {
                     classe = 'empate';
                     conteudo = 'E';
@@ -10983,11 +10983,11 @@
                 let conteudo;
             
                 if (resultado === 'V') {
-                    conteudo = `<img src="/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png" alt="Atlético Madrid" style="width: 16px; height: 16px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>ATM</span>'">`;
+                    conteudo = 'ATM';
                 } else if (resultado === 'D') {
-                    conteudo = `<img src="/static/escudos/Osasuna/osasuna.png" alt="Osasuna" style="width: 16px; height: 16px; border-radius: 50%;" onerror="this.outerHTML='<span style=\'color: #fff; font-size: 8px; font-weight: bold;\'>OSA</span>'">`;
+                    conteudo = 'OSA';
                 } else {
-                    conteudo = '<span style="color: #ffc107; font-weight: bold; font-size: 11px;">E</span>';
+                    conteudo = 'E';
                 }
             
                 return `

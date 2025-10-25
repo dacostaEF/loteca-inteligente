@@ -277,9 +277,13 @@ function renderTabelaClassificacao(dados, serie = 'serie-a') {
                 </div>
             </div>
         `;
+    } else if (serie === 'champions-league') {
+        // Champions League: Sem zonas de classificação (removido)
+        zonasHTML = '';
     }
 
-    const footer = `
+    // Só renderizar o footer com zonas se houver conteúdo
+    const footer = zonasHTML ? `
             </tbody>
         </table>
         <div class="table-footer">
@@ -290,6 +294,9 @@ function renderTabelaClassificacao(dados, serie = 'serie-a') {
                 </div>
             </div>
         </div>
+    ` : `
+            </tbody>
+        </table>
     `;
 
     return header + rows + footer;
