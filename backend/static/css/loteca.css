@@ -2353,10 +2353,10 @@
         }
         
         .optimization-table tbody tr:hover {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 227, 140, 0.08));
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
-            border-left: 4px solid var(--cor-destaque-primaria);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 227, 140, 0.08)) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15) !important;
+            border-left: 4px solid var(--cor-destaque-primaria) !important;
         }
         
         /* Relevo FORTE na coluna de Probabilidades com contorno grosso */
@@ -2367,13 +2367,13 @@
         }
         
         .optimization-table tbody tr td:last-child:hover {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(0, 227, 140, 0.15));
-            transform: scale(1.05) translateY(-3px);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(0, 227, 140, 0.15)) !important;
+            transform: scale(1.05) translateY(-3px) !important;
             box-shadow: 
                 0 8px 25px rgba(168, 85, 247, 0.4),
-                inset 0 2px 10px rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            border: 3px solid var(--cor-destaque-primaria);
+                inset 0 2px 10px rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            border: 3px solid var(--cor-destaque-primaria) !important;
         }
         
         /* Texto "Ver Análise" na área de destaque */
@@ -2471,9 +2471,10 @@
         
         /* Destaque FORTE do ícone quando hover na coluna de probabilidades */
         .optimization-table tbody tr td:last-child:hover .analise-navegacao-area {
-            animation: pulseStrong 1.2s infinite;
-            transform: scale(1.3);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+            animation: pulseStrong 1.2s infinite !important;
+            transform: scale(1.3) !important;
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6) !important;
+            background: linear-gradient(135deg, var(--cor-destaque-secundaria), var(--cor-destaque-primaria)) !important;
         }
         
         @keyframes pulse {
@@ -2567,20 +2568,68 @@
             }
         }
         
-        /* Responsividade para mobile */
-        @media (max-width: 768px) {
-            .analise-navegacao-area {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
-                margin-left: 4px;
+            /* Responsividade para mobile */
+            @media (max-width: 768px) {
+                .analise-navegacao-area {
+                    width: 20px;
+                    height: 20px;
+                    font-size: 10px;
+                    margin-left: 4px;
+                }
+                
+                .analise-navegacao-area::after {
+                    font-size: 10px;
+                    padding: 6px 10px;
+                }
+                
+                /* DESTAQUE FORTE DA ÚLTIMA COLUNA PARA MOBILE - COMO NO DESKTOP */
+                .optimization-table tbody tr td:last-child:hover {
+                    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(0, 227, 140, 0.15)) !important;
+                    transform: scale(1.05) translateY(-3px) !important; /* Movimento mais acentuado */
+                    box-shadow: 
+                        0 8px 25px rgba(168, 85, 247, 0.4),
+                        inset 0 2px 10px rgba(255, 255, 255, 0.1) !important; /* Sombra dupla como desktop */
+                    border-radius: 6px !important;
+                }
+                
+                /* HOVER DO ÍCONE "VER ANÁLISE" PARA MOBILE */
+                .analise-navegacao-area:hover {
+                    transform: scale(1.1) !important;
+                    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4) !important;
+                }
+                
+                /* DESTAQUE FORTE DO ÍCONE "VER ANÁLISE" QUANDO HOVER NA ÚLTIMA COLUNA */
+                .optimization-table tbody tr td:last-child:hover .analise-navegacao-area {
+                    animation: pulseStrong 1.2s infinite !important; /* Animação pulsante */
+                    transform: scale(1.3) !important; /* Escala maior */
+                    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6) !important; /* Sombra forte */
+                    background: linear-gradient(135deg, var(--cor-destaque-secundaria), var(--cor-destaque-primaria)) !important; /* Gradiente invertido */
+                }
+                
+                /* HOVER DAS LINHAS DA TABELA PARA MOBILE - COM DESTAQUE DA ÚLTIMA COLUNA */
+                .optimization-table tbody tr:hover {
+                    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 227, 140, 0.08)) !important;
+                    transform: translateY(-1px) !important;
+                    box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2) !important;
+                }
+                
+                /* DESTAQUE FORTE DA ÚLTIMA COLUNA QUANDO HOVER NA LINHA INTEIRA */
+                .optimization-table tbody tr:hover td:last-child {
+                    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(0, 227, 140, 0.2)) !important;
+                    transform: scale(1.03) translateY(-2px) !important;
+                    box-shadow: 
+                        0 6px 20px rgba(168, 85, 247, 0.3),
+                        inset 0 1px 5px rgba(255, 255, 255, 0.1) !important;
+                    border-radius: 6px !important;
+                }
+                
+                /* DESTAQUE DO ÍCONE "VER ANÁLISE" QUANDO HOVER NA LINHA */
+                .optimization-table tbody tr:hover .analise-navegacao-area {
+                    transform: scale(1.2) !important;
+                    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.5) !important;
+                    background: linear-gradient(135deg, var(--cor-destaque-secundaria), var(--cor-destaque-primaria)) !important;
+                }
             }
-            
-            .analise-navegacao-area::after {
-                font-size: 10px;
-                padding: 6px 10px;
-            }
-        }
 
         /* Coming Soon */
         .coming-soon {
