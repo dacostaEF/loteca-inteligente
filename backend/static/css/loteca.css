@@ -297,7 +297,408 @@
         }
 
         @media (max-width: 768px) {
-            /* Reduzir logo em mobile */
+            /* OTIMIZADOR DE APOSTAS - MOBILE RESPONSIVE */
+            
+            /* 1. TÍTULO PRINCIPAL - MESMO TAMANHO DA CONCLUSÃO DO ANALISTA */
+            .section-header h2 {
+                font-size: 14px !important; /* Mesmo tamanho do .analyst-conclusion h4 */
+                color: var(--cor-destaque-primaria) !important; /* Mesma cor da conclusão */
+            }
+            
+            .section-description {
+                font-size: 12px !important; /* Mesmo tamanho do .analyst-conclusion p */
+                color: var(--cor-texto-secundario) !important; /* Mesma cor da conclusão */
+            }
+            
+            /* TEXTO "Clique nos resultados..." - MESMO PADRÃO DO "Fator Analisado" */
+            .table-description {
+                font-size: 9px !important; /* Mesmo tamanho do "Fator Analisado" em mobile */
+                color: var(--cor-texto-secundario) !important; /* Mesma cor do "Fator Analisado" */
+            }
+            
+            /* CABEÇALHOS DA TABELA - MESMO PADRÃO DO "Fator Analisado" */
+            .page--otimizador-aposta .optimization-table th {
+                font-size: 9px !important; /* Mesmo tamanho do "Fator Analisado" em mobile */
+                color: var(--cor-texto-secundario) !important; /* Mesma cor do "Fator Analisado" */
+            }
+            
+            /* TODOS OS TEXTOS DA TABELA - MESMO PADRÃO */
+            .page--otimizador-aposta .optimization-table td {
+                font-size: 9px !important; /* Mesmo tamanho do "Fator Analisado" em mobile */
+                color: var(--cor-texto-secundario) !important; /* Mesma cor do "Fator Analisado" */
+            }
+            
+            /* PRESERVAR CORES DE CONFIANÇA NA COLUNA DE PROBABILIDADES */
+            .page--otimizador-aposta .optimization-table td .prob-confidence {
+                font-size: 9px !important; /* Mesmo tamanho, mas mantém cores de confiança */
+                /* Cores de confiança são preservadas via classes CSS existentes */
+            }
+            
+            /* 2. TABELA OTIMIZADOR - PADDING AJUSTADO */
+            .page--otimizador-aposta .optimization-table th {
+                padding: 0.5rem 0.3rem !important;
+            }
+            
+            .page--otimizador-aposta .optimization-table td {
+                padding: 0.4rem 0.3rem !important;
+            }
+            
+            /* PADDING ESPECÍFICO PARA COLUNA 4 (SUGESTÃO) - MAIS COMPACTO */
+            .page--otimizador-aposta .optimization-table td:nth-child(4) {
+                padding: 0.2rem 0.05rem 0.2rem 0.02rem !important; /* Padding mínimo esquerdo para colar na borda */
+            }
+            
+            /* 3. ELEMENTOS ESPECÍFICOS - MESMO PADRÃO (9px) */
+            .jogo-numero {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            .confronto-times {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                line-height: 1.2 !important;
+            }
+            
+            .classificacao-badge {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                padding: 0.2rem 0.4rem !important;
+            }
+            
+            .sugestao-valor {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            .escolha-buttons {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                padding: 0.2rem 0.3rem !important;
+            }
+            
+            .probabilidade-percentual {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                font-weight: 700 !important;
+            }
+            
+            .confianca-label {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.1rem 0.3rem !important;
+                /* Cores de confiança são preservadas via classes CSS existentes */
+            }
+            
+            .cobertura-risco {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            /* 4. AJUSTES DE LAYOUT - SELETOR MAIS ESPECÍFICO */
+            .page--otimizador-aposta .optimization-table {
+                table-layout: auto !important; /* Mudado para auto em mobile */
+                width: max-content !important; /* Largura baseada no conteúdo */
+                min-width: 100% !important; /* Largura mínima */
+            }
+            
+            /* 4.1 SCROLL HORIZONTAL PARA MOBILE */
+            .page--otimizador-aposta .table-responsive {
+                overflow-x: auto !important; /* Scroll horizontal */
+                overflow-y: visible !important; /* Scroll vertical normal */
+                -webkit-overflow-scrolling: touch !important; /* Scroll suave no iOS */
+                scrollbar-width: thin !important; /* Scrollbar fina no Firefox */
+                scrollbar-color: var(--cor-destaque-primaria) var(--cor-fundo-card) !important; /* Cores da scrollbar */
+            }
+            
+            /* 4.2 ESTILIZAÇÃO DA SCROLLBAR PARA WEBKIT (Chrome, Safari) */
+            .page--otimizador-aposta .table-responsive::-webkit-scrollbar {
+                height: 8px !important; /* Altura da scrollbar horizontal */
+            }
+            
+            .page--otimizador-aposta .table-responsive::-webkit-scrollbar-track {
+                background: var(--cor-fundo-card) !important; /* Cor do fundo */
+                border-radius: 4px !important;
+            }
+            
+            .page--otimizador-aposta .table-responsive::-webkit-scrollbar-thumb {
+                background: var(--cor-destaque-primaria) !important; /* Cor do indicador */
+                border-radius: 4px !important;
+                border: 1px solid var(--cor-borda) !important;
+            }
+            
+            .page--otimizador-aposta .table-responsive::-webkit-scrollbar-thumb:hover {
+                background: var(--cor-destaque-secundaria) !important; /* Cor no hover */
+            }
+            
+            /* 5. OTIMIZAÇÃO DOS BOTÕES "SUA ESCOLHA" PARA MOBILE */
+            .page--otimizador-aposta .choice-buttons {
+                display: grid !important;
+                grid-template-columns: repeat(3, 0.8fr) !important; /* 3 colunas com largura reduzida */
+                grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
+                gap: 0px !important; /* Eliminar gap completamente */
+                width: 80% !important; /* Reduzir largura total do container */
+                justify-content: flex-end !important; /* Alinhar à direita para ficar próximo da borda */
+                margin-left: auto !important; /* Empurrar para a direita */
+            }
+            
+            .page--otimizador-aposta .choice-btn[data-game][data-choice] {
+                width: 90% !important; /* Aumentar largura para reduzir respiro horizontal */
+                height: 80% !important; /* Reduzir altura em 20% */
+                transform: scale(0.8) !important; /* Reduzir dimensões em 20% */
+                transform-origin: center !important;
+                margin: 0 !important; /* Remover margem para reduzir respiro */
+                padding: 2px 4px !important; /* Padding mínimo para botões mais compactos */
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            /* 6. REMOVER TEXTO "JOGO" DA COLUNA 1 EM MOBILE */
+            .page--otimizador-aposta .optimization-table th:nth-child(1) {
+                font-size: 0 !important; /* Esconder texto "Jogo" */
+                line-height: 0 !important;
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(1)::after {
+                content: "Nº" !important; /* Substituir por "Nº" mais compacto */
+                font-size: 9px !important;
+                color: var(--cor-texto-secundario) !important;
+                display: block !important;
+            }
+            
+            /* 7. AFASTAMENTO ENTRE PALAVRAS DOS TÍTULOS */
+            .page--otimizador-aposta .optimization-table th:nth-child(3) {
+                word-spacing: 0.3em !important; /* Espaçamento entre "Classificação" */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(4) {
+                word-spacing: 0.3em !important; /* Espaçamento entre "Sugestão" */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(5) {
+                word-spacing: 0.3em !important; /* Espaçamento entre "Sua Escolha" */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(6) {
+                word-spacing: 0.3em !important; /* Espaçamento entre "Probabilidades" */
+            }
+            
+            /* 8. AJUSTAR TAMANHO DOS BADGES DE CLASSIFICAÇÃO */
+            .page--otimizador-aposta .optimization-table .status-badge {
+                font-size: 9px !important; /* Mesmo tamanho dos outros textos */
+                padding: 2px 4px !important; /* Padding reduzido para mobile */
+            }
+            
+            /* 9. SUBSTITUIR TÍTULOS "CLASSIFICAÇÃO" E "SUGESTÃO" POR "RECOMENDAÇÃO" */
+            .page--otimizador-aposta .optimization-table th:nth-child(3) {
+                font-size: 0 !important; /* Esconder "Classificação" */
+                line-height: 0 !important;
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(3)::after {
+                content: "Recomendação" !important; /* Substituir por "Recomendação" */
+                font-size: 9px !important;
+                color: var(--cor-texto-secundario) !important;
+                display: block !important;
+                word-spacing: 0.3em !important; /* Manter espaçamento */
+            }
+            
+            /* Esconder apenas o TÍTULO da coluna "Sugestão" em mobile */
+            .page--otimizador-aposta .optimization-table th:nth-child(4) {
+                font-size: 0 !important; /* Esconder título "Sugestão" */
+                line-height: 0 !important;
+            }
+            
+            /* Manter o CONTEÚDO da coluna "Sugestão" visível */
+            .page--otimizador-aposta .optimization-table td:nth-child(4) {
+                display: table-cell !important; /* Mostrar conteúdo */
+            }
+            
+            /* 10. LARGURAS MÍNIMAS PARA FORÇAR SCROLL HORIZONTAL */
+            .page--otimizador-aposta .optimization-table th:nth-child(1),
+            .page--otimizador-aposta .optimization-table td:nth-child(1) {
+                min-width: 60px !important; /* Nº */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(2),
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                min-width: 120px !important; /* Confronto - reduzido de 200px para 120px */
+            }
+            
+            /* ALINHAR TÍTULO DA COLUNA CONFRONTO AO CENTRO */
+            .page--otimizador-aposta .optimization-table th:nth-child(2) {
+                text-align: center !important; /* Centralizar título "Confronto" */
+            }
+            
+            /* QUEBRAR NOMES DOS CLUBES EM DUAS LINHAS - COLUNA CONFRONTOS */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                white-space: normal !important; /* Permitir quebra de linha */
+                line-height: 1.2 !important; /* Espaçamento entre linhas */
+                text-align: center !important; /* Centralizar texto */
+                padding: 0.3rem 0.2rem !important; /* Padding reduzido */
+            }
+            
+            /* ESTILO PARA NOMES DOS TIMES EM MOBILE */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) .time-name {
+                display: block !important; /* Cada time em uma linha */
+                font-size: 8px !important; /* Fonte menor para caber */
+                margin: 1px 0 !important; /* Margem entre os times */
+                line-height: 1.1 !important; /* Espaçamento compacto */
+            }
+            
+            /* QUEBRAR TEXTO GERAL NA COLUNA CONFRONTOS */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                word-break: break-word !important; /* Quebrar palavras longas */
+                hyphens: auto !important; /* Hifenização automática */
+                max-width: 120px !important; /* Largura máxima para forçar quebra */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(3),
+            .page--otimizador-aposta .optimization-table td:nth-child(3) {
+                min-width: 80px !important; /* Recomendação - reduzido de 120px para 80px */
+            }
+            
+            /* ALINHAR TÍTULO DA COLUNA RECOMENDAÇÃO À DIREITA */
+            .page--otimizador-aposta .optimization-table th:nth-child(3) {
+                text-align: right !important; /* Alinhar título "Recomendação" à direita */
+            }
+            
+            /* CENTRALIZAR TEXTOS DA COLUNA RECOMENDAÇÃO */
+            .page--otimizador-aposta .optimization-table td:nth-child(3) {
+                text-align: center !important; /* Centralizar textos */
+                padding: 0.4rem 0.2rem !important; /* Padding balanceado */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(4),
+            .page--otimizador-aposta .optimization-table td:nth-child(4) {
+                min-width: 32px !important; /* Sugestão - reduzido em 60%: 80px * 0.4 = 32px */
+            }
+            
+            /* APROXIMAR VISUALMENTE AS COLUNAS RECOMENDAÇÃO E SUGESTÃO */
+            .page--otimizador-aposta .optimization-table td:nth-child(3) {
+                padding: 0.4rem 0.2rem !important; /* Padding balanceado para centralização */
+                text-align: center !important; /* Centralizar textos */
+            }
+            
+            .page--otimizador-aposta .optimization-table td:nth-child(4) {
+                padding: 0.2rem 0.1rem 0.2rem 0.05rem !important; /* Padding mínimo esquerdo */
+                text-align: left !important; /* Alinhar à esquerda */
+                font-size: 8px !important; /* Fonte menor para caber na coluna estreita */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(5),
+            .page--otimizador-aposta .optimization-table td:nth-child(5) {
+                min-width: 180px !important; /* Sua Escolha */
+            }
+            
+            /* REDUZIR PADDING DIREITO DA COLUNA SUA ESCOLHA PARA APROXIMAR BOTÕES DA BORDA */
+            .page--otimizador-aposta .optimization-table td:nth-child(5) {
+                padding-right: 0.1rem !important; /* Padding mínimo à direita */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(6),
+            .page--otimizador-aposta .optimization-table td:nth-child(6) {
+                min-width: 120px !important; /* Probabilidades */
+            }
+            
+        }
+        
+        /* DESKTOP - GARANTIR LAYOUT ORIGINAL DOS BOTÕES */
+        @media (min-width: 769px) {
+            .page--otimizador-aposta .choice-buttons {
+                display: grid !important; /* Layout grid para desktop também */
+                grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas */
+                grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
+                gap: 4px !important; /* Espaçamento original */
+                width: 100% !important;
+            }
+            
+            .page--otimizador-aposta .choice-btn {
+                padding: 8px 12px !important; /* Tamanho original */
+                margin: 2px !important; /* Margem original */
+                font-size: inherit !important; /* Fonte original */
+                border-radius: 4px !important; /* Border radius original */
+                min-width: auto !important; /* Largura automática */
+                height: auto !important; /* Altura automática */
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            /* RESTAURAR TEXTO "JOGO" NO DESKTOP */
+            .page--otimizador-aposta .optimization-table th:nth-child(1) {
+                font-size: inherit !important; /* Tamanho original */
+                line-height: inherit !important; /* Altura original */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(1)::after {
+                content: none !important; /* Remover "Nº" no desktop */
+            }
+            
+            /* REMOVER ESPAÇAMENTO EXTRA NO DESKTOP */
+            .page--otimizador-aposta .optimization-table th:nth-child(3),
+            .page--otimizador-aposta .optimization-table th:nth-child(4),
+            .page--otimizador-aposta .optimization-table th:nth-child(5),
+            .page--otimizador-aposta .optimization-table th:nth-child(6) {
+                word-spacing: normal !important; /* Espaçamento normal no desktop */
+            }
+            
+            /* RESTAURAR TAMANHO ORIGINAL DOS BADGES NO DESKTOP */
+            .page--otimizador-aposta .optimization-table .status-badge {
+                font-size: inherit !important; /* Tamanho original */
+                padding: inherit !important; /* Padding original */
+            }
+            
+            /* RESTAURAR LAYOUT ORIGINAL DAS COLUNAS NO DESKTOP */
+            .page--otimizador-aposta .optimization-table th:nth-child(3) {
+                font-size: inherit !important; /* Mostrar "Classificação" */
+                line-height: inherit !important;
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(3)::after {
+                content: none !important; /* Remover "Recomendação" */
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(4) {
+                font-size: inherit !important; /* Mostrar título "Sugestão" */
+                line-height: inherit !important;
+            }
+            
+            .page--otimizador-aposta .optimization-table th:nth-child(4),
+            .page--otimizador-aposta .optimization-table td:nth-child(4) {
+                display: table-cell !important; /* Mostrar coluna "Sugestão" */
+            }
+            
+            /* RESTAURAR LAYOUT ORIGINAL DA TABELA NO DESKTOP */
+            .page--otimizador-aposta .optimization-table {
+                table-layout: fixed !important; /* Layout fixo no desktop */
+                width: 100% !important; /* Largura total no desktop */
+            }
+            
+            /* REMOVER LARGURAS MÍNIMAS NO DESKTOP */
+            .page--otimizador-aposta .optimization-table th:nth-child(1),
+            .page--otimizador-aposta .optimization-table td:nth-child(1),
+            .page--otimizador-aposta .optimization-table th:nth-child(2),
+            .page--otimizador-aposta .optimization-table td:nth-child(2),
+            .page--otimizador-aposta .optimization-table th:nth-child(3),
+            .page--otimizador-aposta .optimization-table td:nth-child(3),
+            .page--otimizador-aposta .optimization-table th:nth-child(4),
+            .page--otimizador-aposta .optimization-table td:nth-child(4),
+            .page--otimizador-aposta .optimization-table th:nth-child(5),
+            .page--otimizador-aposta .optimization-table td:nth-child(5),
+            .page--otimizador-aposta .optimization-table th:nth-child(6),
+            .page--otimizador-aposta .optimization-table td:nth-child(6) {
+                min-width: auto !important; /* Larguras automáticas no desktop */
+            }
+            
+            /* REMOVER SCROLL HORIZONTAL NO DESKTOP */
+            .page--otimizador-aposta .table-responsive {
+                overflow-x: visible !important; /* Sem scroll horizontal no desktop */
+            }
+            
+        }
+        
+        /* Reduzir logo em mobile */
             .header img.logo {
                 max-width: 150px; /* Reduzido de 200px para 150px em mobile */
             }
@@ -3565,6 +3966,55 @@
             color: var(--cor-texto-secundario);
             font-weight: 500;
         }
+        
+        /* SOBRESCREVER ESTILOS INLINE PARA MOBILE - MÁXIMA ESPECIFICIDADE */
+        @media (max-width: 768px) {
+            /* SOBRESCREVER ESTILOS INLINE DO CONTAINER SUA APOSTA */
+            .page--otimizador-aposta .user-bet-summary h4[style*="font-size: 1.3em"] {
+                font-size: 12px !important; /* Sobrescrever inline 1.3em */
+            }
+            
+            .page--otimizador-aposta .user-bet-summary .bet-value[style*="font-size: 1.1em"] {
+                font-size: 9px !important; /* Sobrescrever inline 1.1em */
+            }
+            
+            .page--otimizador-aposta .user-bet-summary .bet-value[style*="font-size: 1.2em"] {
+                font-size: 10px !important; /* Sobrescrever inline 1.2em */
+            }
+            
+            .page--otimizador-aposta .user-bet-summary .bet-label {
+                font-size: 9px !important; /* Labels menores */
+            }
+            
+            /* SOBRESCREVER GRID INLINE - 4 COLUNAS EM UMA LINHA */
+            .page--otimizador-aposta .user-bet-details[style*="grid-template-columns"] {
+                grid-template-columns: repeat(4, 1fr) !important; /* 4 colunas em uma linha */
+                gap: 4px !important; /* Gap mínimo para caber */
+            }
+            
+            /* SOBRESCREVER PADDING INLINE */
+            .page--otimizador-aposta .user-bet-summary[style*="padding: 20px"] {
+                padding: 8px !important; /* Padding menor para caber 4 colunas */
+            }
+            
+            /* COMPACTAR CAIXAS INDIVIDUAIS */
+            .page--otimizador-aposta .user-bet-summary .bet-detail[style*="padding: 10px"] {
+                padding: 4px 6px !important; /* Padding mínimo para caber */
+            }
+            
+            /* AJUSTAR LARGURA MÍNIMA DAS CAIXAS */
+            .page--otimizador-aposta .user-bet-summary .bet-detail {
+                min-width: 0 !important; /* Remover largura mínima */
+                flex-shrink: 1 !important; /* Permitir encolher */
+                flex-direction: column !important; /* Empilhar label e valor */
+                text-align: center !important; /* Centralizar conteúdo */
+            }
+            
+            /* AJUSTAR ESPAÇAMENTO DOS ELEMENTOS INTERNOS */
+            .page--otimizador-aposta .user-bet-summary .bet-detail .bet-label {
+                margin-bottom: 2px !important; /* Espaço mínimo entre label e valor */
+            }
+        }
 
         .action-buttons {
             display: flex;
@@ -3893,6 +4343,36 @@
                 font-size: 0.85rem;
                 padding: 0.6rem 0;
             }
+            
+            /* OTIMIZAR SEÇÃO CLASSIFICAÇÃO ESTRATÉGICA DOS JOGOS PARA MOBILE */
+            .page--otimizador-aposta .games-classification h3 {
+                font-size: 12px !important; /* Título menor para mobile */
+            }
+            
+            .page--otimizador-aposta .classification-grid {
+                grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas em uma linha */
+                gap: 4px !important; /* Gap mínimo */
+            }
+            
+            .page--otimizador-aposta .classification-card {
+                padding: 6px 8px !important; /* Padding mínimo para caber */
+                min-height: 80px !important; /* Altura reduzida */
+            }
+            
+            .page--otimizador-aposta .classification-card h4 {
+                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                margin-bottom: 2px !important; /* Margem mínima */
+            }
+            
+            .page--otimizador-aposta .classification-card p {
+                font-size: 8px !important; /* Fonte menor para caber */
+                margin-bottom: 4px !important; /* Margem mínima */
+            }
+            
+            .page--otimizador-aposta .classification-card li {
+                font-size: 8px !important; /* Fonte menor para caber */
+                padding: 2px 0 !important; /* Padding mínimo */
+            }
 
             /* Tabela de Otimização Mobile */
             .optimization-table-container {
@@ -3936,6 +4416,19 @@
             .bet-summary {
                 padding: 1.5rem;
             }
+            
+            /* AJUSTAR TAMANHOS DO CONTAINER SUA APOSTA PARA COERÊNCIA COM A TABELA */
+            .page--otimizador-aposta .bet-summary h3 {
+                font-size: 12px !important; /* Título menor para mobile */
+            }
+            
+            .page--otimizador-aposta .bet-summary p {
+                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+            }
+            
+            .page--otimizador-aposta .bet-summary h2 {
+                font-size: 14px !important; /* Título principal menor */
+            }
 
             .summary-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -3947,17 +4440,28 @@
                 padding: 1rem 0.8rem;
             }
 
-            .summary-value {
-                font-size: 1.6rem;
+            .page--otimizador-aposta .summary-value {
+                font-size: 1.2rem !important; /* Reduzido de 1.6rem para 1.2rem */
             }
 
-            .summary-label {
-                font-size: 0.8rem;
+            .page--otimizador-aposta .summary-label {
+                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
             }
 
             .action-buttons {
                 flex-direction: column;
                 gap: 0.8rem;
+            }
+            
+            /* AJUSTAR BOTÕES DO CONTAINER SUA APOSTA */
+            .page--otimizador-aposta .action-buttons button {
+                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                padding: 0.4rem 0.8rem !important; /* Padding reduzido */
+            }
+            
+            .page--otimizador-aposta .action-buttons .btn {
+                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                padding: 0.4rem 0.8rem !important; /* Padding reduzido */
             }
 
             .btn-primary,
@@ -6340,5 +6844,4 @@
     width: 28.8px !important; /* 24px * 1.2 - Aumento de 20% */
     height: 28.8px !important; /* 24px * 1.2 - Aumento de 20% */
   }
-}
- 
+} 
