@@ -1759,6 +1759,7 @@
             margin: 0 auto;
         }
 
+
         /* RESPONSIVIDADE ESPECÍFICA PARA FORÇA DOS ELENCOS */
         @media (max-width: 768px) {
             
@@ -4269,6 +4270,195 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
             border-bottom: 2px solid transparent;
+        }
+        
+        /* SOBRESCREVER REGRAS BASE PARA MOBILE - DADOS AVANÇADOS */
+        @media (max-width: 768px) {
+            
+            /* SOBRESCREVER ESTILOS INLINE DA ABA DADOS AVANÇADOS */
+            .page--dados-avancados h3[style*="font-size"],
+            .page--dados-avancados h4[style*="font-size"],
+            .page--dados-avancados p[style*="font-size"],
+            .page--dados-avancados span[style*="font-size"],
+            .page--dados-avancados div[style*="font-size"] {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados button[style*="font-size"],
+            .page--dados-avancados .btn[style*="font-size"] {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.4rem 0.8rem !important; /* Padding compacto */
+            }
+            
+            .page--dados-avancados select[style*="font-size"] {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            /* SOBRESCREVER ESTILOS INLINE ESPECÍFICOS ENCONTRADOS NO HTML */
+            .page--dados-avancados .game-selector h3 {
+                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .game-selector p {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .correlate-csv-btn {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.4rem 0.8rem !important; /* Padding compacto */
+            }
+            
+            .page--dados-avancados .comparacao-header h3 {
+                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .comparacao-header p {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .secao-header h4 {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .coluna {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .linha-tabela {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .info-icon {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            /* SOBRESCREVER ESTILOS INLINE ESPECÍFICOS ENCONTRADOS NO HTML */
+            .page--dados-avancados .game-selector div[style*="display: flex"] {
+                gap: 0.5rem !important; /* Gap menor para mobile */
+            }
+            
+            .page--dados-avancados .game-select {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                min-width: 200px !important; /* Largura menor para mobile */
+            }
+            
+            .page--dados-avancados .correlate-csv-btn[style*="padding: 8px 16px"] {
+                padding: 0.4rem 0.8rem !important; /* Padding compacto */
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .game-selector p[style*="font-size: 0.9rem"] {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .comparacao-elegante[style*="display: block"] {
+                padding: 0.5rem !important; /* Padding menor para mobile */
+            }
+            
+            .page--dados-avancados .nova-comparacao {
+                padding: 0.5rem !important; /* Padding menor para mobile */
+            }
+            
+            .page--dados-avancados .container-secao {
+                padding: 0.5rem !important; /* Padding menor para mobile */
+            }
+            
+            .page--dados-avancados .linha-titulos {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .tabela-secao {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .page--dados-avancados .sub-tab-btn {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.4rem 0.8rem !important; /* Padding compacto */
+            }
+            
+            .dados-avancados-container .section-header h2 {
+                font-size: 12px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-principal) !important;
+                font-weight: 600 !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .dados-avancados-container .section-header h3 {
+                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                font-weight: 500 !important;
+                margin-bottom: 0.3rem !important;
+            }
+            
+            .dados-avancados-container h1,
+            .dados-avancados-container h2,
+            .dados-avancados-container h3,
+            .dados-avancados-container h4,
+            .dados-avancados-container h5,
+            .dados-avancados-container h6 {
+                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-principal) !important;
+                font-weight: 600 !important;
+                margin-bottom: 0.3rem !important;
+            }
+            
+            .dados-avancados-container p,
+            .dados-avancados-container span,
+            .dados-avancados-container div {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-principal) !important;
+                line-height: 1.3 !important;
+            }
+            
+            .dados-avancados-container .label,
+            .dados-avancados-container .badge,
+            .dados-avancados-container .tag {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.2rem 0.4rem !important; /* Padding compacto */
+            }
+            
+            .dados-avancados-container button,
+            .dados-avancados-container .btn {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.4rem 0.8rem !important; /* Padding compacto */
+            }
+            
+            .dados-avancados-container table th,
+            .dados-avancados-container table td {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.3rem 0.2rem !important; /* Padding compacto */
+            }
+            
+            .dados-avancados-container table th {
+                color: var(--cor-texto-secundario) !important;
+                font-weight: 600 !important;
+            }
+            
+            .dados-avancados-container table td {
+                color: var(--cor-texto-principal) !important;
+            }
+            
+            .dados-avancados-container .card {
+                padding: 0.8rem !important; /* Padding menor */
+            }
+            
+            .dados-avancados-content {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+            }
+            
+            .dados-avancados-content h4,
+            .dados-avancados-content h5,
+            .dados-avancados-content h6 {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-principal) !important;
+                font-weight: 600 !important;
+            }
+            
+            .dados-avancados-content p,
+            .dados-avancados-content span {
+                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+            }
         }
 
         .sub-tab-btn:hover {
