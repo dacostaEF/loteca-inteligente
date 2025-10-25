@@ -31,7 +31,7 @@
             color: var(--cor-texto-principal);
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             
             /* MOLDURA NEON LILÁS - EFEITO LOTERIAS INTELIGENTE */
             box-shadow: 
@@ -39,7 +39,7 @@
                 inset 0 0 20px rgba(168, 85, 247, 0.3),
                 0 0 40px rgba(168, 85, 247, 0.2);
             min-height: 100vh;
-            position: relative;
+            /* position: relative; REMOVIDO - IMPEDIA STICKY */
         }
 
         /* CONTAINER PADRÃO (KIT GUARDA-CORPO) - COMPLEMENTAR */
@@ -62,7 +62,7 @@
             .container {
                 padding: 0; /* Eliminação total do respiro - máximo espaço horizontal */
                 max-width: 100%;
-                overflow-x: hidden;
+                /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             }
             
             .analysis-mobile-item {
@@ -2648,6 +2648,33 @@
             margin: 2rem 0;
             border-bottom: 1px solid var(--cor-borda);
         }
+        
+        /* CONTAINER DAS ABAS STICKY - DESKTOP E MOBILE */
+        .tabs-container {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 100 !important;
+            background: linear-gradient(135deg, 
+                rgba(18, 16, 26, 0.95) 0%, 
+                rgba(30, 27, 41, 0.95) 50%, 
+                rgba(18, 16, 26, 0.95) 100%) !important;
+            backdrop-filter: blur(8px) !important;
+            border-bottom: 1px solid var(--cor-borda) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        /* STICKY SIMPLES - SEM INTERFERÊNCIAS */
+        @media (max-width: 768px) {
+            .tabs-container {
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 1000 !important;
+                background: rgba(18, 16, 26, 0.95) !important;
+                backdrop-filter: blur(10px) !important;
+                border-bottom: 1px solid var(--cor-borda) !important;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+            }
+        }
 
         .tabs-nav {
             display: flex;
@@ -4128,7 +4155,7 @@
             .container {
                 padding: 2rem 0.125rem; /* 2rem no topo/fundo e apenas 0.125rem (2px) nas laterais */
                 max-width: 100%;
-                overflow-x: hidden;
+                /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             }
 
             .header h1 {
@@ -4560,6 +4587,22 @@
                 gap: 0.2rem;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
+            }
+            
+            /* FORÇAR STICKY MOBILE - REGRA ULTRA ESPECÍFICA */
+            .container .tabs-container {
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 999 !important;
+                background: linear-gradient(135deg, 
+                    rgba(18, 16, 26, 0.95) 0%, 
+                    rgba(30, 27, 41, 0.95) 50%, 
+                    rgba(18, 16, 26, 0.95) 100%) !important;
+                backdrop-filter: blur(8px) !important;
+                border-bottom: 1px solid var(--cor-borda) !important;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+                transform: none !important;
+                will-change: auto !important;
             }
 
             .tab-btn {
@@ -5038,7 +5081,7 @@
             .container {
                 padding: 0; /* Eliminação total do respiro - máximo espaço horizontal */
                 max-width: 100%;
-                overflow-x: hidden;
+                /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             }
             
             .analysis-mobile-item {
