@@ -1391,13 +1391,13 @@
                         <h3>📊 Selecione o Campeonato</h3>
                         <div class="championship-buttons">
                             <button class="champ-btn active" data-championship="serie-a">
-                                Brasileirão Série A
+                                Série A
                             </button>
                             <button class="champ-btn" data-championship="serie-b">
-                                Brasileirão Série B
+                                Série B
                             </button>
                             <button class="champ-btn" data-championship="serie-c">
-                                Brasileirão Série C
+                                Série C
                             </button>
                         </div>
                     </div>
@@ -1405,26 +1405,20 @@
                     <!-- TABELA DE CLASSIFICAÇÃO -->
                     <div class="classification-table-container">
                         <div class="table-header">
-                            <h4 id="current-championship-title">Brasileirão Série A - Classificação</h4>
-                            <div class="table-controls">
-                                <button id="refresh-table-btn" class="refresh-btn">
-                                    <span class="refresh-icon">🔄</span>
-                                    Atualizar
-                                </button>
-                            </div>
+                            <h4 id="current-championship-title">Série A - Classificação</h4>
                         </div>
 
                         <!-- TABELA BRASILEIRÃO SÉRIE A -->
                         <div id="tabela-serie-a" class="classification-table active">
                             <div class="table-loading">
-                                <p>🔄 Carregando classificação da Série A...</p>
+                                <p>🔄 Carregando Série A...</p>
                             </div>
                         </div>
 
                         <!-- TABELA BRASILEIRÃO SÉRIE B -->
                         <div id="tabela-serie-b" class="classification-table">
                             <div class="table-loading">
-                                <p>🔄 Carregando classificação da Série B...</p>
+                                <p>🔄 Carregando Série B...</p>
                             </div>
                         </div>
 
@@ -1653,9 +1647,6 @@
                     <div class="championship-section">
                         <div class="section-header">
                             <h3 id="current-international-title">🌍 Campeonatos Internacionais</h3>
-                            <button id="refresh-international-btn" class="refresh-btn">
-                                🔄 Atualizar
-                            </button>
                         </div>
 
                         <!-- SELETOR DE CAMPEONATOS INTERNACIONAIS -->
@@ -1702,17 +1693,6 @@
                             </div>
                         </div>
 
-                        <!-- INFORMAÇÕES DA FONTE -->
-                        <div class="table-info">
-                            <div class="info-item">
-                                <span class="info-label">📊 Fonte:</span>
-                                <span class="info-value" id="fonte-internacional">📝 Dados manuais (Central Admin)</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">🕒 Última Atualização:</span>
-                                <span class="info-value" id="update-internacional">-</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -2219,9 +2199,9 @@
                     
                     // Atualizar título
                     const titles = {
-                        'serie-a': 'Brasileirão Série A - Classificação',
-                        'serie-b': 'Brasileirão Série B - Classificação',
-                        'serie-c': 'Brasileirão Série C - Segunda Fase'
+                        'serie-a': 'Série A - Classificação',
+                        'serie-b': 'Série B - Classificação',
+                        'serie-c': 'Série C - Segunda Fase'
                     };
                     
                     if (titleElement && titles[championship]) {
@@ -2239,34 +2219,6 @@
                 });
             });
 
-            // Configurar botão de refresh
-            const refreshBtn = document.getElementById('refresh-table-btn');
-            console.log('🔧 [DEBUG] Botão refresh encontrado:', !!refreshBtn);
-            if (refreshBtn) {
-                refreshBtn.addEventListener('click', () => {
-                    console.log('🔄 [DEBUG] Clique no botão Atualizar detectado!');
-                    const activeChamp = document.querySelector('.champ-btn.active');
-                    console.log('🔧 [DEBUG] Campeonato ativo:', activeChamp ? activeChamp.dataset.championship : 'NENHUM');
-                    if (activeChamp) {
-                        const championship = activeChamp.dataset.championship;
-                        console.log('🔄 [DEBUG] Carregando dados para:', championship);
-                        if (championship === 'serie-a') {
-                            console.log('🔄 [DEBUG] Chamando carregarTabelaSerieA com FORCE REFRESH...');
-                            carregarTabelaSerieA(true); // ← FORCE REFRESH
-                        } else if (championship === 'serie-b') {
-                            console.log('🔄 [DEBUG] Chamando carregarTabelaSerieB com FORCE REFRESH...');
-                            carregarTabelaSerieB(true); // ← FORCE REFRESH
-                        } else if (championship === 'serie-c') {
-                            console.log('🔄 [DEBUG] Chamando carregarTabelaSerieC com FORCE REFRESH...');
-                            carregarTabelaSerieC(true); // ← FORCE REFRESH
-                        }
-                    } else {
-                        console.error('❌ [DEBUG] Nenhum campeonato ativo encontrado!');
-                    }
-                });
-            } else {
-                console.error('❌ [DEBUG] Botão refresh-table-btn não encontrado!');
-            }
 
             // AUTO-CARREGAMENTO INICIAL: Carregar dados frescos ao iniciar sessão
             setTimeout(() => {
@@ -2293,7 +2245,7 @@
 
             console.log('🏆 [DEBUG] Definindo loading...');
             const loadingMsg = forceRefresh ? 
-                '🔄 Atualizando dados da Série A...' : 
+                '🔄 Atualizando Série A...' : 
                 '🔄 Carregando Série A...';
             container.innerHTML = `<div class="table-loading"><p>${loadingMsg}</p></div>`;
 
@@ -2388,7 +2340,7 @@
             } catch (error) {
                 console.error('🚨 [DEBUG] ERRO GERAL na carregarTabelaSerieA:', error);
                 console.error('🚨 [DEBUG] Stack trace:', error.stack);
-                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar dados da Série A</p></div>';
+                container.innerHTML = '<div class="table-loading"><p>❌ Erro ao carregar Série A</p></div>';
             }
         }
 
@@ -2405,7 +2357,7 @@
             const REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutos
             
             refreshTimer = setTimeout(() => {
-                console.log('🔄 Auto-refresh: Atualizando dados da Série A...');
+                console.log('🔄 Auto-refresh: Atualizando Série A...');
                 
                 // Só atualizar se a aba estiver ativa e visível
                 if (!document.hidden && document.getElementById('tabela-serie-a')) {
@@ -2433,7 +2385,7 @@
         window.testAutoRefresh = {
             // Forçar atualização imediata
             forcarAtualizacao: () => {
-                console.log('🔄 Teste: Forçando atualização da Série A...');
+                console.log('🔄 Teste: Forçando atualização Série A...');
                 localStorage.removeItem('brasileirao_serie_a');
                 localStorage.removeItem('brasileirao_serie_a_time');
                 carregarTabelaSerieA();
@@ -2563,7 +2515,7 @@
             if (!container) return;
 
             const loadingMsg = forceRefresh ? 
-                '🔄 Atualizando dados da Série B...' : 
+                '🔄 Atualizando Série B...' : 
                 '🔄 Carregando Série B...';
             container.innerHTML = `<div class="table-loading"><p>${loadingMsg}</p></div>`;
 
@@ -2637,7 +2589,7 @@
             if (!container) return;
 
             const loadingMsg = forceRefresh ? 
-                '🔄 Atualizando dados da Série C...' : 
+                '🔄 Atualizando Série C...' : 
                 '🔄 Carregando Série C...';
             container.innerHTML = `<div class="table-loading"><p>${loadingMsg}</p></div>`;
 
@@ -2741,25 +2693,6 @@
                 });
             });
 
-            // Configurar botão de refresh internacional
-            const refreshIntlBtn = document.getElementById('refresh-international-btn');
-            if (refreshIntlBtn) {
-                refreshIntlBtn.addEventListener('click', () => {
-                    const activeIntlChamp = document.querySelector('.intl-champ-btn.active');
-                    if (activeIntlChamp) {
-                        const championship = activeIntlChamp.dataset.championship;
-                        if (championship === 'premier-league') {
-                            carregarTabelaPremierLeague();
-                        } else if (championship === 'la-liga') {
-                            carregarTabelaLaLiga();
-                        } else if (championship === 'ligue1') {
-                            carregarTabelaLigue1();
-                        } else if (championship === 'champions-league') {
-                            carregarTabelaChampionsLeague();
-                        }
-                    }
-                });
-            }
 
             // Carregar Premier League por padrão
             setTimeout(() => carregarTabelaPremierLeague(), 1500);
@@ -2807,11 +2740,6 @@
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'premier-league');
                     
-                    // Atualizar informações
-                    const fonteEl = document.getElementById('fonte-internacional');
-                    const updateEl = document.getElementById('update-internacional');
-                    if (fonteEl) fonteEl.textContent = '📊 Dados simulados (API Internacional)';
-                    if (updateEl) updateEl.textContent = new Date().toLocaleString();
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
@@ -2864,11 +2792,6 @@
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'la-liga');
                     
-                    // Atualizar informações
-                    const fonteEl = document.getElementById('fonte-internacional');
-                    const updateEl = document.getElementById('update-internacional');
-                    if (fonteEl) fonteEl.textContent = '📊 Dados simulados (API Internacional)';
-                    if (updateEl) updateEl.textContent = new Date().toLocaleString();
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
@@ -2921,11 +2844,6 @@
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'ligue1');
                     
-                    // Atualizar informações
-                    const fonteEl = document.getElementById('fonte-internacional');
-                    const updateEl = document.getElementById('update-internacional');
-                    if (fonteEl) fonteEl.textContent = '📊 Dados simulados (API Internacional)';
-                    if (updateEl) updateEl.textContent = new Date().toLocaleString();
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
@@ -2991,11 +2909,6 @@
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-a');
                     
-                    // Atualizar informações
-                    const fonteEl = document.getElementById('fonte-internacional');
-                    if (fonteEl) {
-                        fonteEl.textContent = '📝 Dados manuais (Central Admin)';
-                    }
                 } else {
                     throw new Error('Dados inválidos recebidos');
                 }
@@ -3040,7 +2953,7 @@
             const html = `
                 <div class="table-container">
                     <div class="table-header">
-                        <h3>🏆 ${serie === 'serie-a' ? 'Brasileirão Série A' : 'Brasileirão Série B'} - Classificação</h3>
+                        <h3>🏆 ${serie === 'serie-a' ? 'Série A' : 'Série B'} - Classificação</h3>
                         <button class="refresh-btn" onclick="salvarAlteracoes('${serie}')">
                             <i class="fas fa-save"></i> Salvar Alterações
                         </button>

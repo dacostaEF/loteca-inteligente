@@ -736,33 +736,32 @@
         }
         
         /* Reduzir logo em mobile */
-            .header img.logo {
-                max-width: 150px; /* Reduzido de 200px para 150px em mobile */
-            }
-            
-            /* Reduzir textos do cabeçalho em mobile - FORÇAR COM !important */
-            .header h1 {
-                font-size: 1.25rem !important; /* Reduzido para 20px (1.25rem) */
-            }
-            
-            .header p {
-                font-size: 0.625rem !important; /* Reduzido para 10px (0.625rem) */
-            }
-            
-            .escudo-time {
-                width: 40px;
-                height: 40px;
-                margin: 0 8px;
-            }
-            
-            .time-info {
-                font-size: 14px;
-            }
-            
-            .vs-divider {
-                font-size: 18px;
-                margin: 0 10px;
-            }
+        .header img.logo {
+            max-width: 150px; /* Reduzido de 200px para 150px em mobile */
+        }
+        
+        /* Reduzir textos do cabeçalho em mobile - FORÇAR COM !important */
+        .header h1 {
+            font-size: 1.25rem !important; /* Reduzido para 20px (1.25rem) */
+        }
+        
+        .header p {
+            font-size: 0.625rem !important; /* Reduzido para 10px (0.625rem) */
+        }
+        
+        .escudo-time {
+            width: 40px;
+            height: 40px;
+            margin: 0 8px;
+        }
+        
+        .time-info {
+            font-size: 14px;
+        }
+        
+        .vs-divider {
+            font-size: 18px;
+            margin: 0 10px;
         }
 
         .game-card-body {
@@ -2057,7 +2056,7 @@
                 min-width: 0 !important; /* Largura mínima flexível */
                 flex: 1 !important; /* Distribuir igualmente */
                 padding: 0.6rem 0.4rem !important; /* Padding menor para mobile */
-                font-size: 0.7rem !important; /* Fonte menor para caber */
+                font-size: 10px !important; /* Padronizado para 10px */
                 text-align: center !important; /* Centralizar texto */
                 white-space: nowrap !important; /* Não quebrar texto */
                 overflow: hidden !important; /* Cortar texto se necessário */
@@ -2076,7 +2075,7 @@
             /* AJUSTAR ESPECIFICAMENTE PARA TELAS MUITO PEQUENAS */
             @media (max-width: 480px) {
                 .forca-elenco-container .sub-tab-btn {
-                    font-size: 0.6rem !important; /* Fonte ainda menor para telas muito pequenas */
+                    font-size: 10px !important; /* Padronizado para 10px */
                     padding: 0.5rem 0.3rem !important; /* Padding ainda menor */
                 }
                 
@@ -2107,11 +2106,12 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            align-items: center;
         }
 
         .champ-btn {
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             background-color: var(--cor-fundo);
             color: var(--cor-texto-secundario);
             border: 2px solid var(--cor-borda);
@@ -2120,6 +2120,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex: 1;
+            max-width: 120px;
         }
 
         .champ-btn:hover {
@@ -4726,7 +4728,7 @@
             }
             
             .page--dados-avancados .sub-tab-btn {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 10px !important; /* Padronizado para 10px */
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
             }
             
@@ -5526,7 +5528,7 @@
 
             .tab-btn {
                 padding: 0.6rem 0.5rem;
-                font-size: 0.625rem; /* 10px - Reduzido de 0.75rem para 0.625rem */
+                font-size: 10px !important; /* Padronizado para 10px */
                 max-width: none;
                 flex: 1;
                 min-width: 0;
@@ -6819,8 +6821,8 @@
         }
 
         .resultado-dot {
-            width: 12px;
-            height: 12px;
+            width: 7.78px; /* Reduzido mais 10% de 8.64px */
+            height: 7.78px; /* Reduzido mais 10% de 8.64px */
             border-radius: 50%;
             display: inline-block;
         }
@@ -6859,8 +6861,8 @@
             }
 
             .resultado-dot {
-                width: 10px;
-                height: 10px;
+                width: 6.48px; /* Reduzido mais 10% de 7.2px */
+                height: 6.48px; /* Reduzido mais 10% de 7.2px */
             }
         }
 
@@ -6877,8 +6879,8 @@
             }
 
             .resultado-dot {
-                width: 8px;
-                height: 8px;
+                width: 5.18px; /* Reduzido mais 10% de 5.76px */
+                height: 5.18px; /* Reduzido mais 10% de 5.76px */
             }
 
             .serie-c-phase h4 {
@@ -7232,8 +7234,8 @@
 
         .dot {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 5.18px; /* Reduzido mais 10% de 5.76px */
+            height: 5.18px; /* Reduzido mais 10% de 5.76px */
             border-radius: 50%;
             margin-right: 6px;
             vertical-align: middle;
@@ -7805,15 +7807,15 @@
   }
   
 }
-  
-  /* Colunas 2 e 3 - Nomes dos Times */
-  .analysis-table tr td.team-header {
-    font-size: 9px !important;
-    text-transform: none !important; /* Remove caps locks */
-  }
-  
-  
-  /* REDUZIR FONTES DA CONCLUSÃO DO ANALISTA - APENAS MOBILE */
+
+/* Colunas 2 e 3 - Nomes dos Times */
+.analysis-table tr td.team-header {
+  font-size: 9px !important;
+  text-transform: none !important; /* Remove caps locks */
+}
+
+/* REDUZIR FONTES DA CONCLUSÃO DO ANALISTA - APENAS MOBILE */
+@media (max-width: 768px) {
   .analyst-conclusion h4 {
     font-size: 14px !important; /* Reduzido de 1.1rem (17.6px) para 14px */
   }
@@ -7851,6 +7853,574 @@
   }
 }
 
+/* RESPONSIVIDADE ESPECÍFICA PARA PANORAMA DOS CAMPEONATOS - MOBILE */
+@media (max-width: 768px) {
+    .page--panorama-campeonatos .section-header h2 {
+        font-size: 12px !important;
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos .section-header p {
+        font-size: 9px !important;
+        color: var(--cor-texto-secundario) !important;
+    }
+    .page--panorama-campeonatos h3 {
+        font-size: 10px !important;
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos h4, .page--panorama-campeonatos h5, .page--panorama-campeonatos h6 {
+        font-size: 9px !important;
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos p, .page--panorama-campeonatos span, .page--panorama-campeonatos div {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .label, .page--panorama-campeonatos .badge, .page--panorama-campeonatos .tag {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos button, .page--panorama-campeonatos .btn {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos table th, .page--panorama-campeonatos table td {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .sub-tab-btn {
+        font-size: 10px !important; /* Padronizado para 10px */
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .championship-selector h3 {
+        font-size: 10px !important; /* Já estava 10px - mantido */
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos .championship-buttons button {
+        font-size: 10px !important; /* Padronizado para 10px */
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .info-box h3 {
+        font-size: 10px !important; /* Já estava 10px - mantido */
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos .info-box p {
+        font-size: 8px !important;
+        color: var(--cor-texto-secundario) !important;
+    }
+    .page--panorama-campeonatos .coming-soon h3 {
+        font-size: 10px !important; /* Já estava 10px - mantido */
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos .coming-soon p {
+        font-size: 8px !important;
+        color: var(--cor-texto-secundario) !important;
+    }
+    .page--panorama-campeonatos .feature-item {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .refresh-btn {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .loading-container p {
+        font-size: 8px !important;
+        color: var(--cor-texto-secundario) !important;
+    }
+    .page--panorama-campeonatos .brasileirao-table th,
+    .page--panorama-campeonatos .brasileirao-table td {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .zones-info h4 {
+        font-size: 10px !important; /* Padronizado para 10px */
+        color: var(--cor-destaque-primaria) !important;
+    }
+    .page--panorama-campeonatos .zone-item strong {
+        font-size: 8px !important;
+        color: var(--cor-texto-principal) !important;
+    }
+    .page--panorama-campeonatos .zone-item span {
+        font-size: 7px !important;
+        color: var(--cor-texto-secundario) !important;
+    }
+
+    /* REDUZIR RESPIRAÇÃO LATERAL DAS TABELAS DE CLASSIFICAÇÃO - MOBILE */
+    .page--panorama-campeonatos .classification-table-container {
+        padding: 0.2rem !important; /* Reduzir padding lateral drasticamente */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table {
+        margin: 0 !important; /* Remover margens da tabela */
+        width: 100% !important; /* Usar toda a largura disponível */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th,
+    .page--panorama-campeonatos .brasileirao-table td {
+        padding: 0.2rem 0.1rem !important; /* Padding mínimo nas células */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th:first-child,
+    .page--panorama-campeonatos .brasileirao-table td:first-child {
+        padding-left: 0.2rem !important; /* Padding mínimo na primeira coluna */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th:last-child,
+    .page--panorama-campeonatos .brasileirao-table td:last-child {
+        padding-right: 0.2rem !important; /* Padding mínimo na última coluna */
+    }
+    
+    /* REDUZIR RESPIRAÇÃO DOS CONTAINERS DE SEÇÃO */
+    .page--panorama-campeonatos .championship-section {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    .page--panorama-campeonatos .championship-selector {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    .page--panorama-campeonatos .championship-buttons {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    /* REDUZIR RESPIRAÇÃO DOS CONTAINERS DE INFO */
+    .page--panorama-campeonatos .info-box {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    .page--panorama-campeonatos .coming-soon {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    /* REDUZIR RESPIRAÇÃO DOS CONTAINERS DE ZONAS */
+    .page--panorama-campeonatos .zones-info {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    .page--panorama-campeonatos .zone-item {
+        padding: 0.1rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+}
+
+/* REDUZIR AINDA MAIS O RESPIRAÇÃO PARA TELAS MUITO PEQUENAS */
+@media (max-width: 480px) {
+    .page--panorama-campeonatos .classification-table-container {
+        padding: 0.1rem !important; /* Padding ainda menor */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th,
+    .page--panorama-campeonatos .brasileirao-table td {
+        padding: 0.1rem 0.05rem !important; /* Padding mínimo nas células */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th:first-child,
+    .page--panorama-campeonatos .brasileirao-table td:first-child {
+        padding-left: 0.1rem !important; /* Padding mínimo na primeira coluna */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th:last-child,
+    .page--panorama-campeonatos .brasileirao-table td:last-child {
+        padding-right: 0.1rem !important; /* Padding mínimo na última coluna */
+    }
+    
+    .page--panorama-campeonatos .championship-section,
+    .page--panorama-campeonatos .championship-selector,
+    .page--panorama-campeonatos .championship-buttons,
+    .page--panorama-campeonatos .info-box,
+    .page--panorama-campeonatos .coming-soon,
+    .page--panorama-campeonatos .zones-info {
+        padding: 0.1rem !important; /* Padding ainda menor */
+    }
+    
+    .page--panorama-campeonatos .zone-item {
+        padding: 0.05rem !important; /* Padding mínimo */
+    }
+
+    /* OTIMIZAR ESPAÇAMENTO DE TODAS AS TABELAS DE CLASSIFICAÇÃO - MOBILE */
+    /* Aplicar para Série C e todas as tabelas internacionais */
+    .page--panorama-campeonatos .serie-c-container,
+    .page--panorama-campeonatos .serie-c-phase,
+    .page--panorama-campeonatos .grupo-container,
+    .page--panorama-campeonatos .grupo-row,
+    .page--panorama-campeonatos .international-table-container,
+    .page--panorama-campeonatos .premier-league-table,
+    .page--panorama-campeonatos .la-liga-table,
+    .page--panorama-campeonatos .ligue1-table,
+    .page--panorama-campeonatos .serie-a-italiana-table,
+    .page--panorama-campeonatos .bundesliga-table,
+    .page--panorama-campeonatos .champions-league-table {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    /* Reduzir espaçamento das células de todas as tabelas */
+    .page--panorama-campeonatos .serie-c-container table th,
+    .page--panorama-campeonatos .serie-c-container table td,
+    .page--panorama-campeonatos .grupo-container table th,
+    .page--panorama-campeonatos .grupo-container table td,
+    .page--panorama-campeonatos .international-table-container table th,
+    .page--panorama-campeonatos .international-table-container table td,
+    .page--panorama-campeonatos .premier-league-table table th,
+    .page--panorama-campeonatos .premier-league-table table td,
+    .page--panorama-campeonatos .la-liga-table table th,
+    .page--panorama-campeonatos .la-liga-table table td,
+    .page--panorama-campeonatos .ligue1-table table th,
+    .page--panorama-campeonatos .ligue1-table table td,
+    .page--panorama-campeonatos .serie-a-italiana-table table th,
+    .page--panorama-campeonatos .serie-a-italiana-table table td,
+    .page--panorama-campeonatos .bundesliga-table table th,
+    .page--panorama-campeonatos .bundesliga-table table td,
+    .page--panorama-campeonatos .champions-league-table table th,
+    .page--panorama-campeonatos .champions-league-table table td {
+        padding: 0.2rem 0.1rem !important; /* Padding mínimo nas células */
+    }
+    
+    /* Reduzir espaçamento da primeira e última coluna */
+    .page--panorama-campeonatos .serie-c-container table th:first-child,
+    .page--panorama-campeonatos .serie-c-container table td:first-child,
+    .page--panorama-campeonatos .grupo-container table th:first-child,
+    .page--panorama-campeonatos .grupo-container table td:first-child,
+    .page--panorama-campeonatos .international-table-container table th:first-child,
+    .page--panorama-campeonatos .international-table-container table td:first-child,
+    .page--panorama-campeonatos .premier-league-table table th:first-child,
+    .page--panorama-campeonatos .premier-league-table table td:first-child,
+    .page--panorama-campeonatos .la-liga-table table th:first-child,
+    .page--panorama-campeonatos .la-liga-table table td:first-child,
+    .page--panorama-campeonatos .ligue1-table table th:first-child,
+    .page--panorama-campeonatos .ligue1-table table td:first-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table th:first-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table td:first-child,
+    .page--panorama-campeonatos .bundesliga-table table th:first-child,
+    .page--panorama-campeonatos .bundesliga-table table td:first-child,
+    .page--panorama-campeonatos .champions-league-table table th:first-child,
+    .page--panorama-campeonatos .champions-league-table table td:first-child {
+        padding-left: 0.2rem !important; /* Padding mínimo na primeira coluna */
+    }
+    
+    .page--panorama-campeonatos .serie-c-container table th:last-child,
+    .page--panorama-campeonatos .serie-c-container table td:last-child,
+    .page--panorama-campeonatos .grupo-container table th:last-child,
+    .page--panorama-campeonatos .grupo-container table td:last-child,
+    .page--panorama-campeonatos .international-table-container table th:last-child,
+    .page--panorama-campeonatos .international-table-container table td:last-child,
+    .page--panorama-campeonatos .premier-league-table table th:last-child,
+    .page--panorama-campeonatos .premier-league-table table td:last-child,
+    .page--panorama-campeonatos .la-liga-table table th:last-child,
+    .page--panorama-campeonatos .la-liga-table table td:last-child,
+    .page--panorama-campeonatos .ligue1-table table th:last-child,
+    .page--panorama-campeonatos .ligue1-table table td:last-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table th:last-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table td:last-child,
+    .page--panorama-campeonatos .bundesliga-table table th:last-child,
+    .page--panorama-campeonatos .bundesliga-table table td:last-child,
+    .page--panorama-campeonatos .champions-league-table table th:last-child,
+    .page--panorama-campeonatos .champions-league-table table td:last-child {
+        padding-right: 0.2rem !important; /* Padding mínimo na última coluna */
+    }
+    
+    /* Reduzir espaçamento dos títulos das seções */
+    .page--panorama-campeonatos .serie-c-phase h4,
+    .page--panorama-campeonatos .grupo-container h4,
+    .page--panorama-campeonatos .international-table-container h4,
+    .page--panorama-campeonatos .premier-league-table h4,
+    .page--panorama-campeonatos .la-liga-table h4,
+    .page--panorama-campeonatos .ligue1-table h4,
+    .page--panorama-campeonatos .serie-a-italiana-table h4,
+    .page--panorama-campeonatos .bundesliga-table h4,
+    .page--panorama-campeonatos .champions-league-table h4 {
+        padding: 0.2rem !important; /* Padding mínimo nos títulos */
+        margin: 0 !important; /* Remover margens */
+    }
+
+    /* OTIMIZAR AINDA MAIS O ESPAÇAMENTO PARA TELAS MUITO PEQUENAS */
+    .page--panorama-campeonatos .serie-c-container,
+    .page--panorama-campeonatos .serie-c-phase,
+    .page--panorama-campeonatos .grupo-container,
+    .page--panorama-campeonatos .grupo-row,
+    .page--panorama-campeonatos .international-table-container,
+    .page--panorama-campeonatos .premier-league-table,
+    .page--panorama-campeonatos .la-liga-table,
+    .page--panorama-campeonatos .ligue1-table,
+    .page--panorama-campeonatos .serie-a-italiana-table,
+    .page--panorama-campeonatos .bundesliga-table,
+    .page--panorama-campeonatos .champions-league-table {
+        padding: 0.1rem !important; /* Padding ainda menor */
+    }
+    
+    /* Reduzir ainda mais o espaçamento das células */
+    .page--panorama-campeonatos .serie-c-container table th,
+    .page--panorama-campeonatos .serie-c-container table td,
+    .page--panorama-campeonatos .grupo-container table th,
+    .page--panorama-campeonatos .grupo-container table td,
+    .page--panorama-campeonatos .international-table-container table th,
+    .page--panorama-campeonatos .international-table-container table td,
+    .page--panorama-campeonatos .premier-league-table table th,
+    .page--panorama-campeonatos .premier-league-table table td,
+    .page--panorama-campeonatos .la-liga-table table th,
+    .page--panorama-campeonatos .la-liga-table table td,
+    .page--panorama-campeonatos .ligue1-table table th,
+    .page--panorama-campeonatos .ligue1-table table td,
+    .page--panorama-campeonatos .serie-a-italiana-table table th,
+    .page--panorama-campeonatos .serie-a-italiana-table table td,
+    .page--panorama-campeonatos .bundesliga-table table th,
+    .page--panorama-campeonatos .bundesliga-table table td,
+    .page--panorama-campeonatos .champions-league-table table th,
+    .page--panorama-campeonatos .champions-league-table table td {
+        padding: 0.1rem 0.05rem !important; /* Padding ultra-mínimo nas células */
+    }
+    
+    /* Reduzir ainda mais o espaçamento da primeira e última coluna */
+    .page--panorama-campeonatos .serie-c-container table th:first-child,
+    .page--panorama-campeonatos .serie-c-container table td:first-child,
+    .page--panorama-campeonatos .grupo-container table th:first-child,
+    .page--panorama-campeonatos .grupo-container table td:first-child,
+    .page--panorama-campeonatos .international-table-container table th:first-child,
+    .page--panorama-campeonatos .international-table-container table td:first-child,
+    .page--panorama-campeonatos .premier-league-table table th:first-child,
+    .page--panorama-campeonatos .premier-league-table table td:first-child,
+    .page--panorama-campeonatos .la-liga-table table th:first-child,
+    .page--panorama-campeonatos .la-liga-table table td:first-child,
+    .page--panorama-campeonatos .ligue1-table table th:first-child,
+    .page--panorama-campeonatos .ligue1-table table td:first-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table th:first-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table td:first-child,
+    .page--panorama-campeonatos .bundesliga-table table th:first-child,
+    .page--panorama-campeonatos .bundesliga-table table td:first-child,
+    .page--panorama-campeonatos .champions-league-table table th:first-child,
+    .page--panorama-campeonatos .champions-league-table table td:first-child {
+        padding-left: 0.1rem !important; /* Padding ultra-mínimo na primeira coluna */
+    }
+    
+    .page--panorama-campeonatos .serie-c-container table th:last-child,
+    .page--panorama-campeonatos .serie-c-container table td:last-child,
+    .page--panorama-campeonatos .grupo-container table th:last-child,
+    .page--panorama-campeonatos .grupo-container table td:last-child,
+    .page--panorama-campeonatos .international-table-container table th:last-child,
+    .page--panorama-campeonatos .international-table-container table td:last-child,
+    .page--panorama-campeonatos .premier-league-table table th:last-child,
+    .page--panorama-campeonatos .premier-league-table table td:last-child,
+    .page--panorama-campeonatos .la-liga-table table th:last-child,
+    .page--panorama-campeonatos .la-liga-table table td:last-child,
+    .page--panorama-campeonatos .ligue1-table table th:last-child,
+    .page--panorama-campeonatos .ligue1-table table td:last-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table th:last-child,
+    .page--panorama-campeonatos .serie-a-italiana-table table td:last-child,
+    .page--panorama-campeonatos .bundesliga-table table th:last-child,
+    .page--panorama-campeonatos .bundesliga-table table td:last-child,
+    .page--panorama-campeonatos .champions-league-table table th:last-child,
+    .page--panorama-campeonatos .champions-league-table table td:last-child {
+        padding-right: 0.1rem !important; /* Padding ultra-mínimo na última coluna */
+    }
+    
+    /* Reduzir ainda mais o espaçamento dos títulos das seções */
+    .page--panorama-campeonatos .serie-c-phase h4,
+    .page--panorama-campeonatos .grupo-container h4,
+    .page--panorama-campeonatos .international-table-container h4,
+    .page--panorama-campeonatos .premier-league-table h4,
+    .page--panorama-campeonatos .la-liga-table h4,
+    .page--panorama-campeonatos .ligue1-table h4,
+    .page--panorama-campeonatos .serie-a-italiana-table h4,
+    .page--panorama-campeonatos .bundesliga-table h4,
+    .page--panorama-campeonatos .champions-league-table h4 {
+        padding: 0.1rem !important; /* Padding ultra-mínimo nos títulos */
+    }
+
+    /* OTIMIZAR ESPAÇAMENTO DAS TABELAS INTERNACIONAIS - MOBILE */
+    /* Premier League, La Liga, França, Champions League */
+    .page--panorama-campeonatos #tabela-premier-league,
+    .page--panorama-campeonatos #tabela-la-liga,
+    .page--panorama-campeonatos #tabela-ligue1,
+    .page--panorama-campeonatos #tabela-champions-league,
+    .page--panorama-campeonatos .premier-league-container,
+    .page--panorama-campeonatos .la-liga-container,
+    .page--panorama-campeonatos .ligue1-container,
+    .page--panorama-campeonatos .champions-league-container,
+    .page--panorama-campeonatos .international-championship-section {
+        padding: 0.2rem !important; /* Padding mínimo */
+        margin: 0 !important; /* Remover margens */
+    }
+    
+    /* Reduzir espaçamento das células das tabelas internacionais */
+    .page--panorama-campeonatos #tabela-premier-league table th,
+    .page--panorama-campeonatos #tabela-premier-league table td,
+    .page--panorama-campeonatos #tabela-la-liga table th,
+    .page--panorama-campeonatos #tabela-la-liga table td,
+    .page--panorama-campeonatos #tabela-ligue1 table th,
+    .page--panorama-campeonatos #tabela-ligue1 table td,
+    .page--panorama-campeonatos #tabela-champions-league table th,
+    .page--panorama-campeonatos #tabela-champions-league table td,
+    .page--panorama-campeonatos .premier-league-container table th,
+    .page--panorama-campeonatos .premier-league-container table td,
+    .page--panorama-campeonatos .la-liga-container table th,
+    .page--panorama-campeonatos .la-liga-container table td,
+    .page--panorama-campeonatos .ligue1-container table th,
+    .page--panorama-campeonatos .ligue1-container table td,
+    .page--panorama-campeonatos .champions-league-container table th,
+    .page--panorama-campeonatos .champions-league-container table td {
+        padding: 0.2rem 0.1rem !important; /* Padding mínimo nas células */
+    }
+    
+    /* Reduzir espaçamento da primeira e última coluna das tabelas internacionais */
+    .page--panorama-campeonatos #tabela-premier-league table th:first-child,
+    .page--panorama-campeonatos #tabela-premier-league table td:first-child,
+    .page--panorama-campeonatos #tabela-la-liga table th:first-child,
+    .page--panorama-campeonatos #tabela-la-liga table td:first-child,
+    .page--panorama-campeonatos #tabela-ligue1 table th:first-child,
+    .page--panorama-campeonatos #tabela-ligue1 table td:first-child,
+    .page--panorama-campeonatos #tabela-champions-league table th:first-child,
+    .page--panorama-campeonatos #tabela-champions-league table td:first-child,
+    .page--panorama-campeonatos .premier-league-container table th:first-child,
+    .page--panorama-campeonatos .premier-league-container table td:first-child,
+    .page--panorama-campeonatos .la-liga-container table th:first-child,
+    .page--panorama-campeonatos .la-liga-container table td:first-child,
+    .page--panorama-campeonatos .ligue1-container table th:first-child,
+    .page--panorama-campeonatos .ligue1-container table td:first-child,
+    .page--panorama-campeonatos .champions-league-container table th:first-child,
+    .page--panorama-campeonatos .champions-league-container table td:first-child {
+        padding-left: 0.2rem !important; /* Padding mínimo na primeira coluna */
+    }
+    
+    .page--panorama-campeonatos #tabela-premier-league table th:last-child,
+    .page--panorama-campeonatos #tabela-premier-league table td:last-child,
+    .page--panorama-campeonatos #tabela-la-liga table th:last-child,
+    .page--panorama-campeonatos #tabela-la-liga table td:last-child,
+    .page--panorama-campeonatos #tabela-ligue1 table th:last-child,
+    .page--panorama-campeonatos #tabela-ligue1 table td:last-child,
+    .page--panorama-campeonatos #tabela-champions-league table th:last-child,
+    .page--panorama-campeonatos #tabela-champions-league table td:last-child,
+    .page--panorama-campeonatos .premier-league-container table th:last-child,
+    .page--panorama-campeonatos .premier-league-container table td:last-child,
+    .page--panorama-campeonatos .la-liga-container table th:last-child,
+    .page--panorama-campeonatos .la-liga-container table td:last-child,
+    .page--panorama-campeonatos .ligue1-container table th:last-child,
+    .page--panorama-campeonatos .ligue1-container table td:last-child,
+    .page--panorama-campeonatos .champions-league-container table th:last-child,
+    .page--panorama-campeonatos .champions-league-container table td:last-child {
+        padding-right: 0.2rem !important; /* Padding mínimo na última coluna */
+    }
+    
+    /* Reduzir espaçamento dos títulos das seções internacionais */
+    .page--panorama-campeonatos #tabela-premier-league h3,
+    .page--panorama-campeonatos #tabela-premier-league h4,
+    .page--panorama-campeonatos #tabela-la-liga h3,
+    .page--panorama-campeonatos #tabela-la-liga h4,
+    .page--panorama-campeonatos #tabela-ligue1 h3,
+    .page--panorama-campeonatos #tabela-ligue1 h4,
+    .page--panorama-campeonatos #tabela-champions-league h3,
+    .page--panorama-campeonatos #tabela-champions-league h4,
+    .page--panorama-campeonatos .premier-league-container h3,
+    .page--panorama-campeonatos .premier-league-container h4,
+    .page--panorama-campeonatos .la-liga-container h3,
+    .page--panorama-campeonatos .la-liga-container h4,
+    .page--panorama-campeonatos .ligue1-container h3,
+    .page--panorama-campeonatos .ligue1-container h4,
+    .page--panorama-campeonatos .champions-league-container h3,
+    .page--panorama-campeonatos .champions-league-container h4 {
+        padding: 0.2rem !important; /* Padding mínimo nos títulos */
+        margin: 0 !important; /* Remover margens */
+    }
+
+    /* OTIMIZAR AINDA MAIS O ESPAÇAMENTO DAS TABELAS INTERNACIONAIS PARA TELAS MUITO PEQUENAS */
+    .page--panorama-campeonatos #tabela-premier-league,
+    .page--panorama-campeonatos #tabela-la-liga,
+    .page--panorama-campeonatos #tabela-ligue1,
+    .page--panorama-campeonatos #tabela-champions-league,
+    .page--panorama-campeonatos .premier-league-container,
+    .page--panorama-campeonatos .la-liga-container,
+    .page--panorama-campeonatos .ligue1-container,
+    .page--panorama-campeonatos .champions-league-container,
+    .page--panorama-campeonatos .international-championship-section {
+        padding: 0.1rem !important; /* Padding ultra-mínimo */
+    }
+    
+    /* Reduzir ainda mais o espaçamento das células das tabelas internacionais */
+    .page--panorama-campeonatos #tabela-premier-league table th,
+    .page--panorama-campeonatos #tabela-premier-league table td,
+    .page--panorama-campeonatos #tabela-la-liga table th,
+    .page--panorama-campeonatos #tabela-la-liga table td,
+    .page--panorama-campeonatos #tabela-ligue1 table th,
+    .page--panorama-campeonatos #tabela-ligue1 table td,
+    .page--panorama-campeonatos #tabela-champions-league table th,
+    .page--panorama-campeonatos #tabela-champions-league table td,
+    .page--panorama-campeonatos .premier-league-container table th,
+    .page--panorama-campeonatos .premier-league-container table td,
+    .page--panorama-campeonatos .la-liga-container table th,
+    .page--panorama-campeonatos .la-liga-container table td,
+    .page--panorama-campeonatos .ligue1-container table th,
+    .page--panorama-campeonatos .ligue1-container table td,
+    .page--panorama-campeonatos .champions-league-container table th,
+    .page--panorama-campeonatos .champions-league-container table td {
+        padding: 0.1rem 0.05rem !important; /* Padding ultra-mínimo nas células */
+    }
+    
+    /* Reduzir ainda mais o espaçamento da primeira e última coluna das tabelas internacionais */
+    .page--panorama-campeonatos #tabela-premier-league table th:first-child,
+    .page--panorama-campeonatos #tabela-premier-league table td:first-child,
+    .page--panorama-campeonatos #tabela-la-liga table th:first-child,
+    .page--panorama-campeonatos #tabela-la-liga table td:first-child,
+    .page--panorama-campeonatos #tabela-ligue1 table th:first-child,
+    .page--panorama-campeonatos #tabela-ligue1 table td:first-child,
+    .page--panorama-campeonatos #tabela-champions-league table th:first-child,
+    .page--panorama-campeonatos #tabela-champions-league table td:first-child,
+    .page--panorama-campeonatos .premier-league-container table th:first-child,
+    .page--panorama-campeonatos .premier-league-container table td:first-child,
+    .page--panorama-campeonatos .la-liga-container table th:first-child,
+    .page--panorama-campeonatos .la-liga-container table td:first-child,
+    .page--panorama-campeonatos .ligue1-container table th:first-child,
+    .page--panorama-campeonatos .ligue1-container table td:first-child,
+    .page--panorama-campeonatos .champions-league-container table th:first-child,
+    .page--panorama-campeonatos .champions-league-container table td:first-child {
+        padding-left: 0.1rem !important; /* Padding ultra-mínimo na primeira coluna */
+    }
+    
+    .page--panorama-campeonatos #tabela-premier-league table th:last-child,
+    .page--panorama-campeonatos #tabela-premier-league table td:last-child,
+    .page--panorama-campeonatos #tabela-la-liga table th:last-child,
+    .page--panorama-campeonatos #tabela-la-liga table td:last-child,
+    .page--panorama-campeonatos #tabela-ligue1 table th:last-child,
+    .page--panorama-campeonatos #tabela-ligue1 table td:last-child,
+    .page--panorama-campeonatos #tabela-champions-league table th:last-child,
+    .page--panorama-campeonatos #tabela-champions-league table td:last-child,
+    .page--panorama-campeonatos .premier-league-container table th:last-child,
+    .page--panorama-campeonatos .premier-league-container table td:last-child,
+    .page--panorama-campeonatos .la-liga-container table th:last-child,
+    .page--panorama-campeonatos .la-liga-container table td:last-child,
+    .page--panorama-campeonatos .ligue1-container table th:last-child,
+    .page--panorama-campeonatos .ligue1-container table td:last-child,
+    .page--panorama-campeonatos .champions-league-container table th:last-child,
+    .page--panorama-campeonatos .champions-league-container table td:last-child {
+        padding-right: 0.1rem !important; /* Padding ultra-mínimo na última coluna */
+    }
+    
+    /* Reduzir ainda mais o espaçamento dos títulos das seções internacionais */
+    .page--panorama-campeonatos #tabela-premier-league h3,
+    .page--panorama-campeonatos #tabela-premier-league h4,
+    .page--panorama-campeonatos #tabela-la-liga h3,
+    .page--panorama-campeonatos #tabela-la-liga h4,
+    .page--panorama-campeonatos #tabela-ligue1 h3,
+    .page--panorama-campeonatos #tabela-ligue1 h4,
+    .page--panorama-campeonatos #tabela-champions-league h3,
+    .page--panorama-campeonatos #tabela-champions-league h4,
+    .page--panorama-campeonatos .premier-league-container h3,
+    .page--panorama-campeonatos .premier-league-container h4,
+    .page--panorama-campeonatos .la-liga-container h3,
+    .page--panorama-campeonatos .la-liga-container h4,
+    .page--panorama-campeonatos .ligue1-container h3,
+    .page--panorama-campeonatos .ligue1-container h4,
+    .page--panorama-campeonatos .champions-league-container h3,
+    .page--panorama-campeonatos .champions-league-container h4 {
+        padding: 0.1rem !important; /* Padding ultra-mínimo nos títulos */
+    }
+}
+
 /* AUMENTAR 20% FONTES E ESCUDOS DOS BOXES - APENAS DESKTOP */
 @media (min-width: 769px) {
   /* SELETORES MAIS ESPECÍFICOS PARA SOBRESCREVER REGRAS MOBILE */
@@ -7867,4 +8437,4 @@
     width: 28.8px !important; /* 24px * 1.2 - Aumento de 20% */
     height: 28.8px !important; /* 24px * 1.2 - Aumento de 20% */
   }
-} 
+}
