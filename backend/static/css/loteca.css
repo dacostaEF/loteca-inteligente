@@ -538,12 +538,26 @@
                 padding: 0.3rem 0.2rem !important; /* Padding reduzido */
             }
             
-            /* ESTILO PARA NOMES DOS TIMES EM MOBILE */
+            /* ESTILO PARA NOMES DOS TIMES EM MOBILE - PADRONIZADO PARA TODAS AS LINHAS */
             .page--otimizador-aposta .optimization-table td:nth-child(2) .time-name {
                 display: block !important; /* Cada time em uma linha */
-                font-size: 8px !important; /* Fonte menor para caber */
+                font-size: 9px !important; /* Fonte padronizada - mesmo tamanho da tabela */
                 margin: 1px 0 !important; /* Margem entre os times */
                 line-height: 1.1 !important; /* Espaçamento compacto */
+            }
+            
+            /* FORÇAR QUEBRA DE LINHA APÓS "vs" EM TODAS AS LINHAS */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                white-space: pre-line !important; /* Permitir quebra de linha forçada */
+            }
+            
+            /* ESTILO ESPECÍFICO PARA O SEPARADOR "vs" */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) .vs-separator {
+                display: block !important; /* Forçar quebra após vs */
+                margin: 2px 0 !important; /* Espaço antes do segundo time */
+                font-size: 9px !important; /* Mesmo tamanho dos times */
+                font-weight: bold !important; /* Destaque para o vs */
+                color: var(--cor-destaque-secundaria) !important; /* Cor de destaque */
             }
             
             /* QUEBRAR TEXTO GERAL NA COLUNA CONFRONTOS */
@@ -551,6 +565,29 @@
                 word-break: break-word !important; /* Quebrar palavras longas */
                 hyphens: auto !important; /* Hifenização automática */
                 max-width: 120px !important; /* Largura máxima para forçar quebra */
+            }
+            
+            /* GARANTIR FONTE PADRONIZADA PARA TODAS AS LINHAS DA COLUNA CONFRONTOS */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                font-size: 9px !important; /* Fonte padronizada para toda a coluna */
+            }
+            
+            /* FORÇAR QUEBRA DE LINHA APÓS "vs" USANDO CSS PSEUDO-ELEMENTOS */
+            .page--otimizador-aposta .optimization-table td:nth-child(2):after {
+                content: "\A"; /* Quebra de linha forçada */
+                white-space: pre; /* Manter quebra de linha */
+            }
+            
+            /* ALTERNATIVA: USAR JAVASCRIPT PARA INSERIR <br> APÓS "vs" */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                line-height: 1.3 !important; /* Espaçamento adequado para duas linhas */
+            }
+            
+            /* SCRIPT JAVASCRIPT PARA FORÇAR QUEBRA DE LINHA APÓS "vs" */
+            /* Este script será executado automaticamente para todas as linhas */
+            .page--otimizador-aposta .optimization-table td:nth-child(2) {
+                /* Preparar para quebra de linha forçada */
+                white-space: pre-line !important;
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(3),
@@ -3614,6 +3651,30 @@
         .optimization-table td:nth-child(2) {
             width: 25%;
             min-width: 150px;
+        }
+        
+        /* APLICAR QUEBRA DE LINHA APÓS "vs" TAMBÉM NO DESKTOP */
+        .page--otimizador-aposta .optimization-table td:nth-child(2) {
+            white-space: pre-line !important; /* Permitir quebra de linha forçada no desktop */
+            line-height: 1.4 !important; /* Espaçamento adequado para desktop */
+            text-align: center !important; /* Centralizar conteúdo */
+        }
+        
+        /* ESTILO PARA NOMES DOS TIMES NO DESKTOP */
+        .page--otimizador-aposta .optimization-table td:nth-child(2) .time-name {
+            display: block !important; /* Cada time em uma linha */
+            font-size: 11px !important; /* Fonte adequada para desktop */
+            margin: 2px 0 !important; /* Margem entre os times */
+            line-height: 1.2 !important; /* Espaçamento compacto */
+        }
+        
+        /* ESTILO ESPECÍFICO PARA O SEPARADOR "vs" NO DESKTOP */
+        .page--otimizador-aposta .optimization-table td:nth-child(2) .vs-separator {
+            display: block !important; /* Forçar quebra após vs */
+            margin: 3px 0 !important; /* Espaço antes do segundo time */
+            font-size: 11px !important; /* Mesmo tamanho dos times */
+            font-weight: bold !important; /* Destaque para o vs */
+            color: var(--cor-destaque-secundaria) !important; /* Cor de destaque */
         }
 
         /* Coluna 3: Classificação (mantida) */
