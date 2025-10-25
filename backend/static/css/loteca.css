@@ -4332,6 +4332,56 @@
                 font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
             }
             
+            /* TORNAR ÍCONES DE INTERROGAÇÃO MAIS DISCRETOS NO MOBILE */
+            .page--dados-avancados .info-icon {
+                background: none !important; /* Remover fundo vermelho */
+                color: #ff4444 !important; /* Apenas interrogação vermelha */
+                border: none !important; /* Remover borda */
+                border-radius: 0 !important; /* Remover bordas arredondadas */
+                padding: 0 !important; /* Remover padding */
+                margin: 0 0.2rem !important; /* Margem mínima */
+                font-size: 10px !important; /* Tamanho menor */
+                font-weight: bold !important; /* Negrito para visibilidade */
+                text-shadow: none !important; /* Remover sombra */
+                box-shadow: none !important; /* Remover sombra */
+                width: auto !important; /* Largura automática */
+                height: auto !important; /* Altura automática */
+                display: inline !important; /* Display inline */
+                vertical-align: middle !important; /* Alinhar verticalmente */
+            }
+            
+            /* REMOVER CÍRCULO VERMELHO DOS ÍCONES */
+            .page--dados-avancados .info-icon::before,
+            .page--dados-avancados .info-icon::after {
+                display: none !important; /* Remover pseudo-elementos */
+            }
+            
+            /* ESTILO ALTERNATIVO PARA ÍCONES MAIS DISCRETOS */
+            .page--dados-avancados .info-icon:hover {
+                background: rgba(255, 68, 68, 0.1) !important; /* Fundo sutil no hover */
+                border-radius: 50% !important; /* Círculo sutil no hover */
+                padding: 0.1rem !important; /* Padding mínimo no hover */
+            }
+            
+            /* SOBRESCREVER ESTILOS INLINE DOS ÍCONES */
+            .page--dados-avancados .info-icon[style*="background"],
+            .page--dados-avancados .info-icon[style*="border"],
+            .page--dados-avancados .info-icon[style*="padding"] {
+                background: none !important; /* Forçar remoção do fundo */
+                border: none !important; /* Forçar remoção da borda */
+                padding: 0 !important; /* Forçar remoção do padding */
+                color: #ff4444 !important; /* Forçar cor vermelha */
+                font-size: 10px !important; /* Forçar tamanho menor */
+            }
+            
+            /* REGRAS ESPECÍFICAS PARA TELAS MUITO PEQUENAS */
+            @media (max-width: 480px) {
+                .page--dados-avancados .info-icon {
+                    font-size: 8px !important; /* Ainda menor em telas pequenas */
+                    margin: 0 0.1rem !important; /* Margem mínima */
+                }
+            }
+            
             /* SOBRESCREVER ESTILOS INLINE ESPECÍFICOS ENCONTRADOS NO HTML */
             .page--dados-avancados .game-selector div[style*="display: flex"] {
                 gap: 0.5rem !important; /* Gap menor para mobile */
@@ -4389,7 +4439,7 @@
                 min-width: 0 !important; /* Permitir encolhimento */
                 padding: 0.2rem !important; /* Padding interno menor */
                 text-align: center !important; /* Centralizar texto */
-                font-size: 7px !important; /* Fonte ainda menor para caber */
+                font-size: 9px !important; /* Fonte maior para melhor legibilidade */
                 white-space: nowrap !important; /* Não quebrar linha */
                 overflow: hidden !important; /* Cortar texto se necessário */
                 text-overflow: ellipsis !important; /* ... se texto for muito longo */
@@ -4454,7 +4504,7 @@
                 }
                 
                 .page--dados-avancados .linha-tabela .coluna {
-                    font-size: 6px !important; /* Fonte ainda menor */
+                    font-size: 8px !important; /* Fonte maior para melhor legibilidade */
                     padding: 0.1rem !important; /* Padding mínimo */
                 }
                 
