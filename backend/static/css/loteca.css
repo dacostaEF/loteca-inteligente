@@ -7897,71 +7897,6 @@
     }
 }
 
-/* RESTAURAR TAMANHOS ORIGINAIS DAS TABELAS NO DESKTOP */
-@media (min-width: 769px) {
-    .page--panorama-campeonatos table th, 
-    .page--panorama-campeonatos table td {
-        font-size: 14px !important; /* Tamanho original para desktop */
-        color: var(--cor-texto-principal) !important;
-    }
-    
-    .page--panorama-campeonatos .brasileirao-table th,
-    .page--panorama-campeonatos .brasileirao-table td {
-        font-size: 14px !important; /* Tamanho original para desktop */
-        color: var(--cor-texto-principal) !important;
-    }
-    
-    .page--panorama-campeonatos .brasileirao-table th,
-    .page--panorama-campeonatos .brasileirao-table td {
-        padding: 0.5rem 0.3rem !important; /* Padding original para desktop */
-    }
-    
-    .page--panorama-campeonatos .brasileirao-table th:first-child,
-    .page--panorama-campeonatos .brasileirao-table td:first-child {
-        padding-left: 0.5rem !important; /* Padding original para desktop */
-    }
-    
-    .page--panorama-campeonatos .brasileirao-table th:last-child,
-    .page--panorama-campeonatos .brasileirao-table td:last-child {
-        padding-right: 0.5rem !important; /* Padding original para desktop */
-    }
-    
-    /* RESTAURAR TAMANHOS ORIGINAIS DAS TABELAS INTERNACIONAIS NO DESKTOP */
-    .page--panorama-campeonatos .premier-league-table th,
-    .page--panorama-campeonatos .premier-league-table td,
-    .page--panorama-campeonatos .la-liga-table th,
-    .page--panorama-campeonatos .la-liga-table td,
-    .page--panorama-campeonatos .ligue1-table th,
-    .page--panorama-campeonatos .ligue1-table td,
-    .page--panorama-campeonatos .champions-league-table th,
-    .page--panorama-campeonatos .champions-league-table td {
-        font-size: 14px !important; /* Tamanho original para desktop */
-        color: var(--cor-texto-principal) !important;
-        padding: 0.5rem 0.3rem !important; /* Padding original para desktop */
-    }
-    
-    .page--panorama-campeonatos .premier-league-table th:first-child,
-    .page--panorama-campeonatos .premier-league-table td:first-child,
-    .page--panorama-campeonatos .la-liga-table th:first-child,
-    .page--panorama-campeonatos .la-liga-table td:first-child,
-    .page--panorama-campeonatos .ligue1-table th:first-child,
-    .page--panorama-campeonatos .ligue1-table td:first-child,
-    .page--panorama-campeonatos .champions-league-table th:first-child,
-    .page--panorama-campeonatos .champions-league-table td:first-child {
-        padding-left: 0.5rem !important; /* Padding original para desktop */
-    }
-    
-    .page--panorama-campeonatos .premier-league-table th:last-child,
-    .page--panorama-campeonatos .premier-league-table td:last-child,
-    .page--panorama-campeonatos .la-liga-table th:last-child,
-    .page--panorama-campeonatos .la-liga-table td:last-child,
-    .page--panorama-campeonatos .ligue1-table th:last-child,
-    .page--panorama-campeonatos .ligue1-table td:last-child,
-    .page--panorama-campeonatos .champions-league-table th:last-child,
-    .page--panorama-campeonatos .champions-league-table td:last-child {
-        padding-right: 0.5rem !important; /* Padding original para desktop */
-    }
-}
 
 @media (max-width: 480px) {
     .page--panorama-campeonatos .intl-champ-btn {
@@ -8548,4 +8483,70 @@
     width: 28.8px !important; /* 24px * 1.2 - Aumento de 20% */
     height: 28.8px !important; /* 24px * 1.2 - Aumento de 20% */
   }
+}
+
+/* ============================================
+   RESTAURAR TAMANHOS ORIGINAIS DAS TABELAS NO DESKTOP
+   ============================================ */
+@media (min-width: 769px) {
+    /* TABELAS GERAIS - DESKTOP */
+    .page--panorama-campeonatos table th, 
+    .page--panorama-campeonatos table td {
+        font-size: 14px !important; /* Tamanho original para desktop */
+        color: var(--cor-texto-principal) !important;
+    }
+    
+    /* TABELAS NACIONAIS - DESKTOP */
+    .page--panorama-campeonatos .brasileirao-table th,
+    .page--panorama-campeonatos .brasileirao-table td {
+        font-size: 14px !important; /* Tamanho original para desktop */
+        color: var(--cor-texto-principal) !important;
+        padding: 0.5rem 0.3rem !important; /* Padding original para desktop */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th:first-child,
+    .page--panorama-campeonatos .brasileirao-table td:first-child {
+        padding-left: 0.5rem !important; /* Padding original para desktop */
+    }
+    
+    .page--panorama-campeonatos .brasileirao-table th:last-child,
+    .page--panorama-campeonatos .brasileirao-table td:last-child {
+        padding-right: 0.5rem !important; /* Padding original para desktop */
+    }
+    
+    /* TABELAS INTERNACIONAIS - DESKTOP */
+    .page--panorama-campeonatos .premier-league-table th,
+    .page--panorama-campeonatos .premier-league-table td,
+    .page--panorama-campeonatos .la-liga-table th,
+    .page--panorama-campeonatos .la-liga-table td,
+    .page--panorama-campeonatos .ligue1-table th,
+    .page--panorama-campeonatos .ligue1-table td,
+    .page--panorama-campeonatos .champions-league-table th,
+    .page--panorama-campeonatos .champions-league-table td {
+        font-size: 14px !important; /* Tamanho original para desktop */
+        color: var(--cor-texto-principal) !important;
+        padding: 0.5rem 0.3rem !important; /* Padding original para desktop */
+    }
+    
+    .page--panorama-campeonatos .premier-league-table th:first-child,
+    .page--panorama-campeonatos .premier-league-table td:first-child,
+    .page--panorama-campeonatos .la-liga-table th:first-child,
+    .page--panorama-campeonatos .la-liga-table td:first-child,
+    .page--panorama-campeonatos .ligue1-table th:first-child,
+    .page--panorama-campeonatos .ligue1-table td:first-child,
+    .page--panorama-campeonatos .champions-league-table th:first-child,
+    .page--panorama-campeonatos .champions-league-table td:first-child {
+        padding-left: 0.5rem !important; /* Padding original para desktop */
+    }
+    
+    .page--panorama-campeonatos .premier-league-table th:last-child,
+    .page--panorama-campeonatos .premier-league-table td:last-child,
+    .page--panorama-campeonatos .la-liga-table th:last-child,
+    .page--panorama-campeonatos .la-liga-table td:last-child,
+    .page--panorama-campeonatos .ligue1-table th:last-child,
+    .page--panorama-campeonatos .ligue1-table td:last-child,
+    .page--panorama-campeonatos .champions-league-table th:last-child,
+    .page--panorama-campeonatos .champions-league-table td:last-child {
+        padding-right: 0.5rem !important; /* Padding original para desktop */
+    }
 }
