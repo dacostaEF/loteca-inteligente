@@ -4443,6 +4443,9 @@
                 white-space: nowrap !important; /* Não quebrar linha */
                 overflow: hidden !important; /* Cortar texto se necessário */
                 text-overflow: ellipsis !important; /* ... se texto for muito longo */
+                display: flex !important; /* Flexbox para centralização vertical */
+                align-items: center !important; /* Centralizar verticalmente */
+                justify-content: center !important; /* Centralizar horizontalmente */
             }
             
             /* AJUSTAR ESPECIFICAMENTE AS COLUNAS DE DADOS - MAIS ESPAÇO */
@@ -4456,7 +4459,10 @@
             .page--dados-avancados .linha-tabela .coluna.categoria {
                 flex: 0 0 25% !important; /* Largura igual para categoria */
                 max-width: 25% !important; /* Máxima largura */
-                text-align: left !important; /* Alinhar à esquerda */
+                text-align: left !important; /* Alinhar categorias à esquerda */
+                display: flex !important; /* Flexbox para centralização vertical */
+                align-items: center !important; /* Centralizar verticalmente */
+                justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
             }
             
             /* AJUSTAR CONTAINER PRINCIPAL */
@@ -4518,6 +4524,10 @@
                 .page--dados-avancados .linha-tabela .coluna.categoria {
                     flex: 0 0 34% !important; /* Largura maior para categoria */
                     max-width: 34% !important;
+                    text-align: left !important; /* Alinhar categorias à esquerda */
+                    display: flex !important; /* Flexbox para centralização vertical */
+                    align-items: center !important; /* Centralizar verticalmente */
+                    justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
                 }
             }
             
