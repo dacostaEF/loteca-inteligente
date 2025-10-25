@@ -4371,6 +4371,212 @@
                 font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
             }
             
+            /* LAYOUT HORIZONTAL PARA DADOS - MOBILE */
+            .page--dados-avancados .linha-tabela {
+                display: flex !important; /* Forçar layout horizontal */
+                flex-direction: row !important; /* Dados lado a lado */
+                gap: 0.3rem !important; /* Espaçamento entre dados */
+                align-items: center !important; /* Centralizar verticalmente */
+                margin-bottom: 0.5rem !important; /* Espaço entre linhas */
+                padding: 0.3rem !important; /* Padding interno */
+                background: rgba(255, 255, 255, 0.05) !important; /* Fundo sutil */
+                border-radius: 6px !important; /* Bordas arredondadas */
+            }
+            
+            /* AJUSTAR TAMANHO DOS BOXES DE DADOS */
+            .page--dados-avancados .linha-tabela .coluna {
+                flex: 1 !important; /* Distribuir igualmente */
+                min-width: 0 !important; /* Permitir encolhimento */
+                padding: 0.2rem !important; /* Padding interno menor */
+                text-align: center !important; /* Centralizar texto */
+                font-size: 7px !important; /* Fonte ainda menor para caber */
+                white-space: nowrap !important; /* Não quebrar linha */
+                overflow: hidden !important; /* Cortar texto se necessário */
+                text-overflow: ellipsis !important; /* ... se texto for muito longo */
+            }
+            
+            /* AJUSTAR ESPECIFICAMENTE AS COLUNAS DE DADOS - MAIS ESPAÇO */
+            .page--dados-avancados .linha-tabela .coluna.mandante,
+            .page--dados-avancados .linha-tabela .coluna.visitante,
+            .page--dados-avancados .linha-tabela .coluna.vantagem {
+                flex: 0 0 25% !important; /* Largura maior para dados */
+                max-width: 25% !important; /* Máxima largura */
+            }
+            
+            .page--dados-avancados .linha-tabela .coluna.categoria {
+                flex: 0 0 25% !important; /* Largura igual para categoria */
+                max-width: 25% !important; /* Máxima largura */
+                text-align: left !important; /* Alinhar à esquerda */
+            }
+            
+            /* AJUSTAR CONTAINER PRINCIPAL */
+            .page--dados-avancados .tabela-secao {
+                display: flex !important; /* Layout flexível */
+                flex-direction: column !important; /* Linhas verticais */
+                gap: 0.3rem !important; /* Espaçamento entre linhas */
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0 !important; /* Eliminar padding */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DOS CONTAINERS PRINCIPAIS */
+            .page--dados-avancados .comparacao-elegante,
+            .page--dados-avancados .nova-comparacao,
+            .page--dados-avancados .container-secao {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.2rem !important; /* Padding mínimo */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* AJUSTAR LINHA DE TÍTULOS */
+            .page--dados-avancados .linha-titulos {
+                display: flex !important; /* Layout horizontal */
+                gap: 0.3rem !important; /* Espaçamento entre colunas */
+                margin-bottom: 0.5rem !important; /* Espaço abaixo */
+                padding: 0.3rem !important; /* Padding interno */
+                background: rgba(255, 255, 255, 0.1) !important; /* Fundo mais claro */
+                border-radius: 6px !important; /* Bordas arredondadas */
+            }
+            
+            .page--dados-avancados .linha-titulos .coluna {
+                flex: 1 !important; /* Distribuir igualmente */
+                text-align: center !important; /* Centralizar texto */
+                font-size: 8px !important; /* Fonte menor */
+                font-weight: 600 !important; /* Negrito */
+                color: var(--cor-texto-principal) !important; /* Cor principal */
+            }
+            
+            /* REGRAS ESPECÍFICAS PARA TELAS MUITO PEQUENAS */
+            @media (max-width: 480px) {
+                .page--dados-avancados .linha-tabela {
+                    gap: 0.2rem !important; /* Espaçamento ainda menor */
+                    padding: 0.2rem !important; /* Padding menor */
+                }
+                
+                .page--dados-avancados .linha-tabela .coluna {
+                    font-size: 6px !important; /* Fonte ainda menor */
+                    padding: 0.1rem !important; /* Padding mínimo */
+                }
+                
+                .page--dados-avancados .linha-tabela .coluna.mandante,
+                .page--dados-avancados .linha-tabela .coluna.visitante,
+                .page--dados-avancados .linha-tabela .coluna.vantagem {
+                    flex: 0 0 22% !important; /* Largura maior para telas pequenas */
+                    max-width: 22% !important;
+                }
+                
+                .page--dados-avancados .linha-tabela .coluna.categoria {
+                    flex: 0 0 34% !important; /* Largura maior para categoria */
+                    max-width: 34% !important;
+                }
+            }
+            
+            /* ELIMINAR COMPLETAMENTE O RESPIRRO - SEGUINDO PADRÃO DO DROPDOWN */
+            .page--dados-avancados .game-selector,
+            .page--dados-avancados .comparacao-header,
+            .page--dados-avancados .secao-header {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.3rem 0.2rem !important; /* Padding mínimo */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DOS CONTAINERS PAI - DISTÂNCIA MÍNIMA DAS LATERAIS */
+            .page--dados-avancados .container-secao {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.1rem 0.05rem !important; /* Padding mínimo - quase zero */
+                width: 100% !important; /* Ocupar toda a largura */
+                max-width: 100% !important; /* Máxima largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DOS HEADERS DAS SEÇÕES */
+            .page--dados-avancados .secao-header {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.2rem 0.05rem !important; /* Padding mínimo */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DAS TABELAS DE DADOS */
+            .page--dados-avancados .tabela-secao {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.05rem !important; /* Padding quase zero */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DAS LINHAS DE DADOS */
+            .page--dados-avancados .linha-tabela {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.1rem 0.05rem !important; /* Padding mínimo */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DAS LINHAS DE TÍTULOS */
+            .page--dados-avancados .linha-titulos {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.1rem 0.05rem !important; /* Padding mínimo */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* AJUSTAR ESPAÇAMENTO ENTRE SEÇÕES */
+            .page--dados-avancados .container-secao + .container-secao {
+                margin-top: 0.5rem !important; /* Espaço mínimo entre seções */
+            }
+            
+            /* FORÇAR CONTAINERS PAI A FICAREM COLADOS NAS LATERAIS */
+            .page--dados-avancados .nova-comparacao {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0 !important; /* Eliminar padding */
+                width: 100% !important; /* Ocupar toda a largura */
+                max-width: 100% !important; /* Máxima largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DOS CONTAINERS DE COMPARAÇÃO */
+            .page--dados-avancados .comparacao-elegante {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0 !important; /* Eliminar padding */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* ELIMINAR RESPIRRO DOS CONTAINERS DE CABEÇALHO */
+            .page--dados-avancados .comparacao-header {
+                margin: 0 !important; /* Eliminar margens */
+                padding: 0.2rem 0.05rem !important; /* Padding mínimo */
+                width: 100% !important; /* Ocupar toda a largura */
+            }
+            
+            /* REGRAS ESPECÍFICAS PARA TELAS MUITO PEQUENAS - RESPIRRO MÍNIMO */
+            @media (max-width: 480px) {
+                .page--dados-avancados .container-secao {
+                    padding: 0.05rem !important; /* Padding quase zero */
+                }
+                
+                .page--dados-avancados .secao-header {
+                    padding: 0.1rem 0.02rem !important; /* Padding mínimo */
+                }
+                
+                .page--dados-avancados .tabela-secao {
+                    padding: 0.02rem !important; /* Padding quase zero */
+                }
+                
+                .page--dados-avancados .linha-tabela {
+                    padding: 0.05rem 0.02rem !important; /* Padding mínimo */
+                }
+                
+                .page--dados-avancados .linha-titulos {
+                    padding: 0.05rem 0.02rem !important; /* Padding mínimo */
+                }
+            }
+            
+            /* FORÇAR LAYOUT HORIZONTAL EM TODAS AS LINHAS */
+            .page--dados-avancados .linha-tabela > * {
+                display: inline-block !important; /* Forçar inline */
+                vertical-align: top !important; /* Alinhar ao topo */
+            }
+            
+            /* AJUSTAR ESPAÇAMENTO ENTRE ELEMENTOS */
+            .page--dados-avancados .linha-tabela .coluna + .coluna {
+                margin-left: 0.2rem !important; /* Espaçamento entre colunas */
+            }
+            
             .page--dados-avancados .sub-tab-btn {
                 font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
