@@ -1761,18 +1761,326 @@
 
         /* RESPONSIVIDADE ESPECÍFICA PARA FORÇA DOS ELENCOS */
         @media (max-width: 768px) {
+            
+            /* APLICAR MESMAS CONFIGURAÇÕES DE FONTE DA ABA OTIMIZADOR DE APOSTA */
+            
+            /* 1. TÍTULOS DAS SEÇÕES - MESMO PADRÃO DO OTIMIZADOR */
+            .forca-elenco-container .section-header h2 {
+                font-size: 12px !important; /* Mesmo tamanho dos títulos do Otimizador */
+                color: var(--cor-destaque-primaria) !important;
+                font-weight: 700 !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .forca-elenco-container .section-header h3 {
+                font-size: 10px !important; /* Subtítulos menores */
+                color: var(--cor-texto-secundario) !important;
+                font-weight: 600 !important;
+            }
+            
+            /* 2. TEXTOS DAS CAIXAS - MESMO PADRÃO (9px) */
+            .forca-elenco-container .card h4,
+            .forca-elenco-container .card h5 {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                font-weight: 600 !important;
+                margin-bottom: 0.3rem !important;
+            }
+            
+            .forca-elenco-container .card p,
+            .forca-elenco-container .card span {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+                line-height: 1.2 !important;
+            }
+            
+            /* 3. VALORES E ESTATÍSTICAS - MESMO PADRÃO */
+            .forca-elenco-container .stat-value {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-principal) !important;
+                font-weight: bold !important;
+            }
+            
+            .forca-elenco-container .stat-subvalue {
+                font-size: 8px !important; /* Valores secundários menores */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            /* 4. BADGES E LABELS - MESMO PADRÃO */
+            .forca-elenco-container .time-badge,
+            .forca-elenco-container .badge-mediano,
+            .forca-elenco-container .badge-destaque,
+            .forca-elenco-container .badge-elite {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.2rem 0.4rem !important; /* Padding compacto */
+            }
+            
+            /* 5. BARRAS DE PROGRESSO - MESMO PADRÃO */
+            .forca-elenco-container .forca-bar {
+                height: 4px !important; /* Barra mais fina */
+                margin-top: 0.2rem !important;
+            }
+            
+            /* 6. TABELAS E GRIDS - MESMO PADRÃO */
+            .forca-elenco-container table th,
+            .forca-elenco-container table td {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.3rem 0.2rem !important; /* Padding compacto */
+            }
+            
+            .forca-elenco-container table th {
+                color: var(--cor-texto-secundario) !important;
+                font-weight: 600 !important;
+            }
+            
+            .forca-elenco-container table td {
+                color: var(--cor-texto-principal) !important;
+            }
+            
+            /* 7. BOTÕES E LINKS - MESMO PADRÃO */
+            .forca-elenco-container .ver-detalhes-btn {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                padding: 0.4rem 0.8rem !important; /* Padding compacto */
+            }
+            
+            /* 8. CONTAINERS E CARDS - PADDING COMPACTO */
+            .forca-elenco-container .card {
+                padding: 0.8rem !important; /* Padding menor */
+            }
+            
+            .forca-elenco-container .campo-item {
+                padding: 1rem !important; /* Padding menor */
+            }
+            
+            /* 9. ELEMENTOS ESPECÍFICOS - MESMO PADRÃO */
+            .forca-elenco-container .vs-divider-confronto {
+                font-size: 12px !important; /* Tamanho adequado para mobile */
+                width: 40px !important;
+                height: 40px !important;
+            }
+            
+            /* 10. CAMPOS DE ANÁLISE - MESMO PADRÃO */
+            .forca-elenco-container .campo-nome {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-weight: 700 !important;
+            }
+            
+            .forca-elenco-container .campo-explicacao,
+            .forca-elenco-container .campo-importancia {
+                font-size: 8px !important; /* Texto menor para mobile */
+                padding: 0.5rem !important; /* Padding menor */
+            }
+            
+            /* 11. ELEMENTOS ESPECÍFICOS DA FORÇA DOS ELENCOS */
+            .forca-elenco-container .team-name,
+            .forca-elenco-container .team-value,
+            .forca-elenco-container .team-stats {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            .forca-elenco-container .team-name {
+                font-weight: 600 !important;
+            }
+            
+            .forca-elenco-container .team-value {
+                font-weight: bold !important;
+                color: var(--cor-texto-principal) !important;
+            }
+            
+            /* 12. GRIDS E LAYOUTS - MESMO PADRÃO */
+            .forca-elenco-container .grid {
+                gap: 0.5rem !important; /* Gap menor */
+            }
+            
+            .forca-elenco-container .grid-item {
+                padding: 0.5rem !important; /* Padding menor */
+            }
+            
+            /* 13. ELEMENTOS DE COMPARAÇÃO - MESMO PADRÃO */
+            .forca-elenco-container .comparison-item,
+            .forca-elenco-container .comparison-value {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            .forca-elenco-container .comparison-value {
+                font-weight: bold !important;
+                color: var(--cor-texto-principal) !important;
+            }
+            
+            /* 14. ELEMENTOS DE ANÁLISE - MESMO PADRÃO */
+            .forca-elenco-container .analysis-item,
+            .forca-elenco-container .analysis-text {
+                font-size: 8px !important; /* Texto menor para mobile */
+                color: var(--cor-texto-secundario) !important;
+                line-height: 1.3 !important;
+            }
+            
+            /* 15. ELEMENTOS DE RESULTADO - MESMO PADRÃO */
+            .forca-elenco-container .result-item,
+            .forca-elenco-container .result-value {
+                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                color: var(--cor-texto-principal) !important;
+                font-weight: 600 !important;
+            }
+            
+            /* 16. CONTAINERS DOS TIMES - AJUSTAR PARA MOBILE */
+            .forca-elenco-container .team-comparison-container {
+                display: flex !important; /* Layout flex para lado a lado */
+                gap: 0.5rem !important; /* Gap menor entre os times */
+                margin-bottom: 1rem !important; /* Espaço entre confrontos */
+            }
+            
+            .forca-elenco-container .team-card {
+                flex: 1 !important; /* Distribuir igualmente */
+                max-width: 48% !important; /* Máximo 48% para cada time */
+                padding: 0.8rem !important; /* Padding menor */
+                margin: 0 !important; /* Remover margens */
+            }
+            
+            /* 17. ELEMENTOS DENTRO DOS CARDS DOS TIMES */
+            .forca-elenco-container .team-card .team-name {
+                font-size: 10px !important; /* Nome do time menor */
+                font-weight: 700 !important;
+                margin-bottom: 0.3rem !important;
+            }
+            
+            .forca-elenco-container .team-card .team-badge {
+                font-size: 8px !important; /* Badge menor */
+                padding: 0.2rem 0.4rem !important; /* Padding menor */
+            }
+            
+            .forca-elenco-container .team-card .team-stats {
+                font-size: 8px !important; /* Estatísticas menores */
+                margin-bottom: 0.2rem !important; /* Margem menor */
+            }
+            
+            .forca-elenco-container .team-card .team-stats .stat-label {
+                font-size: 7px !important; /* Labels menores */
+                color: var(--cor-texto-secundario) !important;
+            }
+            
+            .forca-elenco-container .team-card .team-stats .stat-value {
+                font-size: 8px !important; /* Valores menores */
+                font-weight: 600 !important;
+            }
+            
+            /* 18. BARRAS DE PROGRESSO DOS TIMES */
+            .forca-elenco-container .team-card .strength-bar {
+                height: 3px !important; /* Barra mais fina */
+                margin: 0.2rem 0 !important; /* Margem menor */
+            }
+            
+            .forca-elenco-container .team-card .strength-value {
+                font-size: 9px !important; /* Valor da força menor */
+                font-weight: bold !important;
+            }
+            
+            /* 19. BOTÕES DOS TIMES */
+            .forca-elenco-container .team-card .team-buttons {
+                margin-top: 0.5rem !important; /* Margem menor */
+            }
+            
+            .forca-elenco-container .team-card .team-buttons button {
+                font-size: 7px !important; /* Botões menores */
+                padding: 0.3rem 0.5rem !important; /* Padding menor */
+                margin: 0.1rem 0 !important; /* Margem menor entre botões */
+                width: 100% !important; /* Largura total */
+            }
+            
+            /* 20. VS DIVIDER ENTRE OS TIMES */
+            .forca-elenco-container .vs-divider {
+                width: 30px !important; /* VS menor */
+                height: 30px !important;
+                font-size: 10px !important; /* Fonte do VS menor */
+                margin: 0 0.3rem !important; /* Margem menor */
+            }
+            
+            /* 21. CONFIGURAÇÕES ESPECÍFICAS PARA LAYOUT LADO A LADO */
+            .forca-elenco-container .game-comparison {
+                display: flex !important; /* Layout flex para lado a lado */
+                align-items: center !important; /* Centralizar verticalmente */
+                justify-content: space-between !important; /* Distribuir espaço */
+                margin-bottom: 1.5rem !important; /* Espaço entre jogos */
+            }
+            
+            .forca-elenco-container .game-comparison .team-container {
+                flex: 1 !important; /* Distribuir igualmente */
+                max-width: 45% !important; /* Máximo 45% para cada time */
+                margin: 0 !important; /* Remover margens */
+            }
+            
+            /* 22. AJUSTAR ESPECIFICAMENTE PARA TELAS MUITO PEQUENAS */
+            @media (max-width: 480px) {
+                .forca-elenco-container .team-card {
+                    padding: 0.6rem !important; /* Padding ainda menor */
+                }
+                
+                .forca-elenco-container .team-card .team-name {
+                    font-size: 9px !important; /* Nome ainda menor */
+                }
+                
+                .forca-elenco-container .team-card .team-stats {
+                    font-size: 7px !important; /* Estatísticas ainda menores */
+                }
+                
+                .forca-elenco-container .team-card .team-buttons button {
+                    font-size: 6px !important; /* Botões ainda menores */
+                    padding: 0.2rem 0.3rem !important; /* Padding ainda menor */
+                }
+                
+                .forca-elenco-container .vs-divider {
+                    width: 25px !important; /* VS ainda menor */
+                    height: 25px !important;
+                    font-size: 8px !important; /* Fonte do VS ainda menor */
+                }
+            }
             .forca-elenco-container {
                 padding: 0 0.5rem;
             }
             
             .forca-elenco-container .sub-tabs-nav {
-                flex-direction: column;
-                gap: 0.25rem;
+                flex-direction: row !important; /* Manter em linha horizontal como desktop */
+                gap: 0.3rem !important; /* Gap menor para mobile */
+                padding: 0.3rem !important; /* Padding menor */
+                flex-wrap: wrap !important; /* Permitir quebra se necessário */
+                justify-content: center !important; /* Centralizar */
             }
             
             .forca-elenco-container .sub-tab-btn {
-                max-width: 100%;
-                width: 100%;
+                max-width: none !important;
+                width: auto !important; /* Largura automática */
+                min-width: 0 !important; /* Largura mínima flexível */
+                flex: 1 !important; /* Distribuir igualmente */
+                padding: 0.6rem 0.4rem !important; /* Padding menor para mobile */
+                font-size: 0.7rem !important; /* Fonte menor para caber */
+                text-align: center !important; /* Centralizar texto */
+                white-space: nowrap !important; /* Não quebrar texto */
+                overflow: hidden !important; /* Cortar texto se necessário */
+                text-overflow: ellipsis !important; /* ... se texto for muito longo */
+            }
+            
+            /* CONFIGURAÇÕES ESPECÍFICAS PARA SUB-ABAS EM MOBILE */
+            .forca-elenco-container .sub-tabs-nav {
+                display: flex !important; /* Garantir display flex */
+                align-items: center !important; /* Centralizar verticalmente */
+                background-color: rgba(0,0,0,0.2) !important; /* Fundo sutil */
+                border-radius: 8px !important; /* Bordas arredondadas */
+                margin-bottom: 1rem !important; /* Espaço abaixo */
+            }
+            
+            /* AJUSTAR ESPECIFICAMENTE PARA TELAS MUITO PEQUENAS */
+            @media (max-width: 480px) {
+                .forca-elenco-container .sub-tab-btn {
+                    font-size: 0.6rem !important; /* Fonte ainda menor para telas muito pequenas */
+                    padding: 0.5rem 0.3rem !important; /* Padding ainda menor */
+                }
+                
+                .forca-elenco-container .sub-tabs-nav {
+                    gap: 0.2rem !important; /* Gap ainda menor */
+                    padding: 0.2rem !important; /* Padding ainda menor */
+                }
             }
         }
 
