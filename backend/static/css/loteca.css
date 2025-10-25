@@ -8056,7 +8056,7 @@
     }
 }
 
-/* REDUZIR AINDA MAIS O RESPIRAÇÃO PARA TELAS MUITO PEQUENAS */
+/* REDUZIR AINDA MAIS O RESPIRACAO PARA TELAS MUITO PEQUENAS */
 @media (max-width: 480px) {
     .page--panorama-campeonatos .classification-table-container {
         padding: 0.1rem !important; /* Padding ainda menor */
@@ -8548,5 +8548,24 @@
     .page--panorama-campeonatos .champions-league-table th:last-child,
     .page--panorama-campeonatos .champions-league-table td:last-child {
         padding-right: 0.5rem !important; /* Padding original para desktop */
+    }
+    
+    /* RESTAURAR TAMANHO DOS NOMES DOS TIMES NO DESKTOP */
+    .page--panorama-campeonatos .brasileirao-table td:first-child,
+    .page--panorama-campeonatos .brasileirao-table th:first-child {
+        font-size: 14px !important; /* Tamanho original para nomes dos times */
+        font-weight: 600 !important; /* Negrito para nomes dos times */
+    }
+    
+    .page--panorama-campeonatos .premier-league-table td:first-child,
+    .page--panorama-campeonatos .premier-league-table th:first-child,
+    .page--panorama-campeonatos .la-liga-table td:first-child,
+    .page--panorama-campeonatos .la-liga-table th:first-child,
+    .page--panorama-campeonatos .ligue1-table td:first-child,
+    .page--panorama-campeonatos .ligue1-table th:first-child,
+    .page--panorama-campeonatos .champions-league-table td:first-child,
+    .page--panorama-campeonatos .champions-league-table th:first-child {
+        font-size: 14px !important; /* Tamanho original para nomes dos times */
+        font-weight: 600 !important; /* Negrito para nomes dos times */
     }
 }
