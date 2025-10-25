@@ -1071,7 +1071,7 @@
             padding: 2rem 1rem;
             border-top: 1px solid var(--cor-borda);
             margin-top: 2rem;
-            font-size: 0.9rem;
+            font-size: 0.9rem; /* Tamanho original do desktop */
             color: var(--cor-texto-secundario);
         }
         
@@ -1083,8 +1083,8 @@
 
         /* ESTILOS DO RODAPÉ CTA */
         .footer-cta {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 227, 140, 0.1));
-            border: 1px solid var(--cor-borda);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 227, 140, 0.1)); /* Fundo levemente transparente */
+            border: none; /* Sem borda no container pai */
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -1093,14 +1093,14 @@
 
         .footer-cta h3 {
             color: var(--cor-destaque-primaria);
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Tamanho original do desktop */
             font-weight: 700;
             margin: 0 0 1rem 0;
         }
 
         .footer-cta p {
             color: var(--cor-texto-secundario);
-            font-size: 1.1rem;
+            font-size: 1.1rem; /* Tamanho original do desktop */
             margin: 0 0 1.5rem 0;
             max-width: 600px;
             margin-left: auto;
@@ -1109,20 +1109,22 @@
 
         .footer-cta-btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--cor-destaque-secundaria), #00B377);
-            color: white !important;
+            background: transparent; /* Fundo transparente */
+            border: 1px solid #00E38C; /* Borda mais fina e discreta */
+            color: #00E38C !important; /* Texto verde neon */
             padding: 1rem 2rem;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.1rem; /* Tamanho original do desktop */
             text-decoration: none !important;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 227, 140, 0.3);
+            box-shadow: 0 0 5px rgba(0, 227, 140, 0.2); /* Sombra mais sutil */
         }
 
         .footer-cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 227, 140, 0.4);
+            background: rgba(0, 227, 140, 0.1); /* Fundo sutil verde no hover */
+            box-shadow: 0 0 8px rgba(0, 227, 140, 0.3); /* Sombra mais sutil no hover */
             filter: brightness(1.1);
         }
 
@@ -1141,7 +1143,7 @@
             background: linear-gradient(135deg, rgba(30,27,41,.95), rgba(42,35,64,.95));
             border-top: 1px solid rgba(255,255,255,0.08);
             padding: 10px 16px;
-            font-size: 0.84rem;
+            font-size: 0.84rem; /* Tamanho original do desktop */
             color: #cbd5e1;
             margin-top: 1rem;
         }
@@ -5465,18 +5467,36 @@
             }
 
             .footer-cta h3 {
-                font-size: 1.3rem;
+                font-size: 10px !important; /* Tamanho de fonte 10px para título do rodapé mobile */
             }
 
             .footer-cta p {
-                font-size: 1rem;
+                font-size: 10px !important; /* Tamanho de fonte 10px para parágrafos do rodapé mobile */
             }
 
             .footer-cta-btn {
                 padding: 1rem 1.5rem;
-                font-size: 1rem;
+                font-size: 10px !important; /* Tamanho de fonte 10px para botão do rodapé mobile */
                 width: 100%;
                 text-align: center;
+            }
+            
+            /* APLICAR REDUÇÃO DE FONTE PARA TEXTOS ESPECÍFICOS DO RODAPÉ - MOBILE */
+            .footer-legal p,
+            .footer-legal,
+            .honesty-footer,
+            .honesty-footer p,
+            .honesty-footer strong,
+            .honesty-footer a {
+                font-size: 10px !important; /* Tamanho de fonte 10px para textos legais do rodapé mobile */
+            }
+            
+            /* APLICAR REDUÇÃO PARA TODOS OS ELEMENTOS DO RODAPÉ - MOBILE */
+            .footer *,
+            .footer-cta *,
+            .footer-legal *,
+            .honesty-footer * {
+                font-size: 10px !important; /* Tamanho de fonte 10px para todos os elementos do rodapé mobile */
             }
 
             /* Responsividade das Abas */
