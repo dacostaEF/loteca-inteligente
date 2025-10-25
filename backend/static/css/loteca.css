@@ -4477,6 +4477,18 @@
             .page--dados-avancados .linha-tabela .coluna.vantagem {
                 flex: 0 0 30% !important; /* Largura 30% para vantagem */
                 max-width: 30% !important; /* Máxima largura */
+                font-size: 9px !important; /* Forçar tamanho da fonte igual às outras colunas */
+            }
+            
+            /* FORÇAR TAMANHO DA FONTE ESPECÍFICO PARA COLUNA VANTAGEM */
+            .page--dados-avancados .linha-tabela .coluna.vantagem * {
+                font-size: 9px !important; /* Forçar tamanho para todos os elementos filhos */
+            }
+            
+            /* SOBRESCREVER ESTILOS INLINE NA COLUNA VANTAGEM */
+            .page--dados-avancados .linha-tabela .coluna.vantagem[style*="font-size"],
+            .page--dados-avancados .linha-tabela .coluna.vantagem *[style*="font-size"] {
+                font-size: 9px !important; /* Forçar tamanho correto */
             }
             
             /* AJUSTAR CONTAINER PRINCIPAL */
@@ -4546,6 +4558,18 @@
                 .page--dados-avancados .linha-tabela .coluna.vantagem {
                     flex: 0 0 30% !important; /* Largura 30% para vantagem */
                     max-width: 30% !important;
+                    font-size: 8px !important; /* Forçar tamanho da fonte para telas pequenas */
+                }
+                
+                /* FORÇAR TAMANHO DA FONTE ESPECÍFICO PARA COLUNA VANTAGEM - TELAS PEQUENAS */
+                .page--dados-avancados .linha-tabela .coluna.vantagem * {
+                    font-size: 8px !important; /* Forçar tamanho para todos os elementos filhos */
+                }
+                
+                /* SOBRESCREVER ESTILOS INLINE NA COLUNA VANTAGEM - TELAS PEQUENAS */
+                .page--dados-avancados .linha-tabela .coluna.vantagem[style*="font-size"],
+                .page--dados-avancados .linha-tabela .coluna.vantagem *[style*="font-size"] {
+                    font-size: 8px !important; /* Forçar tamanho correto */
                 }
             }
             
