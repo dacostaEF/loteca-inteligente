@@ -204,11 +204,11 @@ async function carregarConfrontosAutomatico(numeroJogo) {
     // MAPEAMENTO CLARO: Define qual time é CASA e qual é FORA para cada jogo
     const mapeamentoJogos = {
         1: {
-            csv: 'Flamengo_vs_Palmeiras.csv',
-            timeCasa: 'FLAMENGO',           // ← TIME CASA (resultado 'V' = vitória do Flamengo)
-            timeFora: 'PALMEIRAS',          // ← TIME FORA (resultado 'D' = vitória do Palmeiras)
-            escudoCasa: '/static/escudos/FLA_Flamengo/Flamengo.png',
-            escudoFora: '/static/escudos/PAL_Palmeiras/Palmeiras.png'
+            csv: 'corinthians_gremio.csv',
+            timeCasa: 'CORINTHIANS',        // ← TIME CASA (resultado 'V' = vitória do Corinthians)
+            timeFora: 'GREMIO',             // ← TIME FORA (resultado 'D' = vitória do Gremio)
+            escudoCasa: '/static/escudos/COR_Corinthians/Corinthians.png',
+            escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
         },
         2: {
             csv: 'Internacional_vs_Sport.csv',

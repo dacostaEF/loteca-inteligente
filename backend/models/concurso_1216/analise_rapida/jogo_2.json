@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "2",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "2",
+    "time_casa": "SANTOS/SP",
+    "time_fora": "FORTALEZA/CE",
+    "arena": "Vila Belmiro - Santos/ SP",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/SAN_Santos\\Santos.png",
+    "escudo_fora": "/static/escudos/FOR_Fortaleza\\Fortaleza.png",
+    "probabilidade_casa": "40",
+    "probabilidade_empate": "40",
+    "probabilidade_fora": "20",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (SANTOS) - Risco Alto",
+    "conclusao_analista": "Este confronto é definido pela instabilidade, refletida na alta taxa de Empates (40%) e no equilíbrio geral de vitórias. A situação atual dos times na Série A (ambos na zona de rebaixamento ou perto dela) sugere um jogo nervoso e fechado, o que favorece ainda mais a Coluna do Meio. O fator campo é determinante neste duelo.Dica BET: Desespero pode gerar erros defensivos = favorece over 2.5 gols\n\n",
+    "confrontos_sequence": "D-D-V-D-E-V-E-V-E-V",
+    "posicao_casa": "16",
+    "posicao_fora": "18",
+    "confronto_direto": "4V-3E-3D",
+    "fator_casa": "60",
+    "fator_fora": "40",
+    "analise_posicao": "Vantagem Santos",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Vantagem Santos",
+    "sincronizado_em": "2025-10-29T13:44:56.193Z"
+  },
+  "admin_key": "loteca2024admin"
+}

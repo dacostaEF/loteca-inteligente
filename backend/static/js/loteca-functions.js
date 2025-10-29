@@ -6,7 +6,7 @@
 
 // MAPEAMENTO DOS JOGOS - CSV E TIMES
 const jogosMap = {
-    1: { csv: 'Flamengo_vs_Palmeiras.csv', casa: 'Flamengo', fora: 'Palmeiras' },
+    1: { csv: 'corinthians_gremio.csv', casa: 'Corinthians', fora: 'Gremio' },
     2: { csv: 'Internacional_vs_Sport.csv', casa: 'Internacional', fora: 'Sport' },
     3: { csv: 'Corinthians_vs_Atletico-MG.csv', casa: 'Corinthians', fora: 'Atletico-MG' },
     4: { csv: 'Roma_vs_Internazionale.csv', casa: 'Roma', fora: 'Internazionale' },
