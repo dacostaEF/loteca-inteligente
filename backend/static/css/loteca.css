@@ -1812,7 +1812,10 @@
             .forca-elenco-container .time-badge,
             .forca-elenco-container .badge-mediano,
             .forca-elenco-container .badge-destaque,
-            .forca-elenco-container .badge-elite {
+            .forca-elenco-container .badge-elite,
+            .forca-elenco-container .badge-forte,
+            .forca-elenco-container .badge-desenvolvimento,
+            .forca-elenco-container .badge-erro {
                 font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
                 padding: 0.2rem 0.4rem !important; /* Padding compacto */
             }
@@ -3179,10 +3182,16 @@
         .jogo-numero {
             font-size: 1.2rem;
             font-weight: bold;
-            color: var(--cor-destaque-primaria);
-            background: rgba(168, 85, 247, 0.1);
+            color: #00e38c; /* Verde neon */
+            background: rgba(0, 227, 140, 0.1);
             padding: 0.5rem 1rem;
             border-radius: 8px;
+        }
+        
+        .jogo-descricao {
+            font-size: 0.9rem;
+            color: #cbd5e1; /* Cinza claro */
+            margin-left: 1rem;
         }
 
         .times-confronto {
@@ -3219,12 +3228,12 @@
         .time-nome {
             font-size: 1.1rem;
             font-weight: bold;
-            color: var(--cor-texto-principal);
+            color: #cbd5e1; /* Cinza claro */
         }
 
         .time-abrev {
             font-size: 0.9rem;
-            color: var(--cor-texto-secundario);
+            color: #cbd5e1; /* Cinza claro */
             background: rgba(168, 85, 247, 0.1);
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -3243,7 +3252,7 @@
 
         .stat-label {
             font-size: 0.8rem;
-            color: var(--cor-texto-secundario);
+            color: #cbd5e1; /* Cinza claro */
             text-transform: none;
             margin-bottom: 0.3rem;
             display: block;
@@ -3252,12 +3261,38 @@
         .stat-value {
             font-size: 1.1rem;
             font-weight: bold;
-            color: var(--cor-texto-principal);
+            color: #e2e8f0; /* Cinza claro mais forte para valores */
         }
 
         .stat-subvalue {
             font-size: 0.9rem;
-            color: var(--cor-texto-secundario);
+            color: #cbd5e1; /* Cinza claro */
+        }
+        
+        /* Estilos para mensagens de erro nos containers */
+        .erro-mensagem {
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .erro-texto {
+            color: #cbd5e1; /* Cinza claro */
+        }
+        
+        .erro-texto strong {
+            color: #ef4444; /* Vermelho para destaque */
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .erro-texto p {
+            color: #cbd5e1; /* Cinza claro */
+            margin: 0.5rem 0;
+        }
+        
+        .erro-texto small {
+            color: #94a3b8; /* Cinza mais suave */
+            font-size: 0.8rem;
         }
 
         .forca-bar {
@@ -3298,9 +3333,27 @@
         }
 
         .badge-elite {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: rgba(6, 182, 212, 0.1);
+            color: #06b6d4; /* Cyan */
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        
+        .badge-forte {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b; /* Laranja/Dourado */
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .badge-desenvolvimento {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280; /* Cinza */
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+        
+        .badge-erro {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444; /* Vermelho */
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         .vs-divider-confronto {
