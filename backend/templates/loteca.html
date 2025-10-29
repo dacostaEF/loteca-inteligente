@@ -12325,16 +12325,45 @@
         if (probColX) probColX.textContent = src.probabilidade_empate || '';
         if (probCol2) probCol2.textContent = src.probabilidade_fora || '';
         
-        // Atualizar análise
-        const analise = document.getElementById(`analise-posicao-${jogo}-novo`);
-        if (analise) analise.textContent = src.analise_posicao || '';
+        // Atualizar análise de posição
+        const analisePos = document.getElementById(`posicao-analise-${jogo}-novo`);
+        if (analisePos) analisePos.textContent = src.analise_posicao || '';
+        
+        // Atualizar posições na tabela
+        const posCasa = document.getElementById(`posicao-casa-${jogo}-novo`);
+        const posFora = document.getElementById(`posicao-fora-${jogo}-novo`);
+        if (posCasa) posCasa.textContent = src.posicao_casa || '-';
+        if (posFora) posFora.textContent = src.posicao_fora || '-';
+        
+        // Atualizar análise de confronto direto
+        const h2hAnalise = document.getElementById(`h2h-analise-${jogo}-novo`);
+        if (h2hAnalise) h2hAnalise.textContent = src.analise_confronto_direto || '';
+        
+        // Atualizar análise de forma/últimos confrontos
+        const formaAnalise = document.getElementById(`forma-analise-${jogo}-novo`);
+        if (formaAnalise) formaAnalise.textContent = src.analise_forma || 'Baseado nos últimos 10 jogos';
+        
+        // Atualizar Fator Casa (valores numéricos e análise)
+        const fatorCasa = document.getElementById(`fator-casa-${jogo}-novo`);
+        const fatorFora = document.getElementById(`fator-fora-${jogo}-novo`);
+        const fatorAnalise = document.getElementById(`fator-analise-${jogo}-novo`);
+        if (fatorCasa) fatorCasa.textContent = src.fator_casa || '-';
+        if (fatorFora) fatorFora.textContent = src.fator_fora || '-';
+        if (fatorAnalise) fatorAnalise.textContent = src.analise_fator_casa || '';
+        
+        // Atualizar conclusão do analista
+        const conclusao = document.getElementById(`conclusao-analista-jogo${jogo}-novo`);
+        if (conclusao) conclusao.textContent = src.conclusao_analista || '';
         
         console.log(`✅ [JOGO${jogo}-NOVO] Dados carregados com sucesso!`);
       }
       
       document.addEventListener('DOMContentLoaded', () => {
-        carregarDados(1);
-        carregarDados(2);
+        // Carregar dados de TODOS os 14 jogos
+        for (let jogo = 1; jogo <= 14; jogo++) {
+          carregarDados(jogo);
+        }
+        console.log('✅ [ANÁLISE RÁPIDA] Carregamento de todos os 14 jogos iniciado');
       });
     })();
     </script>

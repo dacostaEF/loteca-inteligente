@@ -1784,7 +1784,7 @@
             .forca-elenco-container .card h4,
             .forca-elenco-container .card h5 {
                 font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
-                color: var(--cor-texto-secundario) !important;
+                color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
                 font-weight: 600 !important;
                 margin-bottom: 0.3rem !important;
             }
@@ -1792,20 +1792,20 @@
             .forca-elenco-container .card p,
             .forca-elenco-container .card span {
                 font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
-                color: var(--cor-texto-secundario) !important;
+                color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
                 line-height: 1.2 !important;
             }
             
             /* 3. VALORES E ESTATÍSTICAS - MESMO PADRÃO */
             .forca-elenco-container .stat-value {
                 font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
-                color: var(--cor-texto-principal) !important;
+                color: #e2e8f0 !important; /* Cinza claro forte para valores */
                 font-weight: bold !important;
             }
             
             .forca-elenco-container .stat-subvalue {
                 font-size: 8px !important; /* Valores secundários menores */
-                color: var(--cor-texto-secundario) !important;
+                color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
             }
             
             /* 4. BADGES E LABELS - MESMO PADRÃO */
@@ -1963,12 +1963,13 @@
             
             .forca-elenco-container .team-card .team-stats .stat-label {
                 font-size: 7px !important; /* Labels menores */
-                color: var(--cor-texto-secundario) !important;
+                color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
             }
             
             .forca-elenco-container .team-card .team-stats .stat-value {
                 font-size: 8px !important; /* Valores menores */
                 font-weight: 600 !important;
+                color: #e2e8f0 !important; /* Cinza claro forte para valores */
             }
             
             /* 18. BARRAS DE PROGRESSO DOS TIMES */
@@ -3401,12 +3402,12 @@
 
         .stat-label {
             font-weight: 500;
-            color: var(--cor-texto-secundario);
+            color: #cbd5e1; /* Cinza claro */
         }
 
         .stat-value {
             font-weight: bold;
-            color: var(--cor-destaque-primaria);
+            color: #e2e8f0; /* Cinza claro forte */
             font-size: 1.1rem;
         }
 
@@ -3533,7 +3534,7 @@
 
         .stat-label {
             font-weight: 600;
-            color: var(--cor-texto-secundario);
+            color: #cbd5e1; /* Cinza claro */
         }
 
         .stat-home, .stat-away {
