@@ -211,95 +211,95 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
         },
         2: {
-            csv: 'Internacional_vs_Sport.csv',
-            timeCasa: 'INTERNACIONAL',      // ← TIME CASA (resultado 'V' = vitória do Internacional)
-            timeFora: 'SPORT',              // ← TIME FORA (resultado 'D' = vitória do Sport)
-            escudoCasa: '/static/escudos/INT_Internacional/Internacional.png',
-            escudoFora: '/static/escudos/SPT_Sport/Sport.png'
-        },
-        3: {
-            csv: 'Corinthians_vs_Atletico-MG.csv',
-            timeCasa: 'CORINTHIANS',        // ← TIME CASA (resultado 'V' = vitória do Corinthians)
-            timeFora: 'ATLETICO-MG',        // ← TIME FORA (resultado 'D' = vitória do Atlético-MG)
-            escudoCasa: '/static/escudos/COR_Corinthians/Corinthians.png',
-            escudoFora: '/static/escudos/CAM_Atletico-MG/Atletico_MG.png'
-        },
-        5: {
-            csv: 'Atletico-de-Madrid_vs_Osasuna.csv',
-            timeCasa: 'ATLÉTICO DE MADRID',  // ← NOME EXATO DO CSV (com acentos)
-            timeFora: 'OSASUNA',             // ← TIME FORA (resultado 'D' = vitória deste time)
-            escudoCasa: '/static/escudos/Atletico-de-Madrid/atletico-de-madrid.png',
-            escudoFora: '/static/escudos/Osasuna/osasuna.png'
-        },
-        6: {
-            csv: 'Cruzeiro_vs_Fortaleza.csv',
-            timeCasa: 'CRUZEIRO',         // ← TIME CASA (resultado 'V' = vitória do Cruzeiro)
-            timeFora: 'FORTALEZA',        // ← TIME FORA (resultado 'D' = vitória da Fortaleza)
-            escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
+            csv: 'santos_fortaleza.csv',
+            timeCasa: 'SANTOS',             // ← TIME CASA (resultado 'V' = vitória do Santos)
+            timeFora: 'FORTALEZA',          // ← TIME FORA (resultado 'D' = vitória do Fortaleza)
+            escudoCasa: '/static/escudos/SAN_Santos/Santos.png',
             escudoFora: '/static/escudos/FOR_Fortaleza/Fortaleza.png'
         },
-        4: {
-            csv: 'Roma_vs_Internazionale.csv',
-            timeCasa: 'ROMA',             // ← TIME CASA (resultado 'V' = vitória da Roma)
-            timeFora: 'INTERNAZIONALE',   // ← TIME FORA (resultado 'D' = vitória do Internazionale)
-            escudoCasa: '/static/escudos/Roma/Roma.png',
-            escudoFora: '/static/escudos/Internazionale/Internazionale.png'
+        3: {
+            csv: 'cruzeiro_vitoria.csv',
+            timeCasa: 'CRUZEIRO',           // ← TIME CASA (resultado 'V' = vitória do Cruzeiro)
+            timeFora: 'VITORIA',            // ← TIME FORA (resultado 'D' = vitória do Vitória)
+            escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
+            escudoFora: '/static/escudos/VIT_Vitoria/Vitoria.png'
         },
-        7: {
-            csv: 'Tottenham_vs_Aston-Villa.csv',
-            timeCasa: 'TOTTENHAM',        // ← TIME CASA (resultado 'V' = vitória do Tottenham)
-            timeFora: 'ASTON VILLA',      // ← TIME FORA (resultado 'D' = vitória do Aston Villa)
-            escudoCasa: '/static/escudos/Tottenham/Tottenham.png',
-            escudoFora: '/static/escudos/Aston_Villa/Aston_Villa.PNG'
-        },
-        8: {
-            csv: 'Mirassol_vs_Sao-Paulo.csv',
-            timeCasa: 'MIRASSOL',         // ← TIME CASA (resultado 'V' = vitória do Mirassol)
-            timeFora: 'Sao_Paulo',        // ← TIME FORA (resultado 'D' = vitória do São Paulo) - EXATO DO CSV CORRIGIDO
+        5: {
+            csv: 'mirassol_botafogo.csv',
+            timeCasa: 'MIRASSOL',            // ← TIME CASA (resultado 'V' = vitória do Mirassol)
+            timeFora: 'BOTAFOGO',            // ← TIME FORA (resultado 'D' = vitória do Botafogo)
             escudoCasa: '/static/escudos/MIR_Mirassol/Mirassol.png',
-            escudoFora: '/static/escudos/SAP_SaoPaulo/SaoPaulo.png'
-        },
-        9: {
-            csv: 'Ceara_vs_Botafogo-RJ.csv',
-            timeCasa: 'Ceará',            // ← TIME CASA (resultado 'V' = vitória do Ceará)
-            timeFora: 'Botafogo',         // ← TIME FORA (resultado 'D' = vitória do Botafogo)
-            escudoCasa: '/static/escudos/Ceara/Ceara.png',
             escudoFora: '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
         },
+        6: {
+            csv: 'avai_athetic-mg.csv',
+            timeCasa: 'AVAI',             // ← TIME CASA (resultado 'V' = vitória do Avaí)
+            timeFora: 'ATHLETIC-MG',      // ← TIME FORA (resultado 'D' = vitória do Athletic-MG)
+            escudoCasa: '/static/escudos/Avaí/Avaí.PNG',
+            escudoFora: '/static/escudos/Athletic-MG/Athletic-MG.PNG'
+        },
+        4: {
+            csv: 'goias_athletico-pr.csv',
+            timeCasa: 'GOIAS',            // ← TIME CASA (resultado 'V' = vitória do Goiás)
+            timeFora: 'ATHLETICO-PR',     // ← TIME FORA (resultado 'D' = vitória do Athletico-PR)
+            escudoCasa: '/static/escudos/GOI_Goias/Goias.png',
+            escudoFora: '/static/escudos/Athletico-PR/Athletico_PR.png'
+        },
+        7: {
+            csv: 'flamengo_sport.csv',
+            timeCasa: 'FLAMENGO',         // ← TIME CASA (resultado 'V' = vitória do Flamengo)
+            timeFora: 'SPORT',            // ← TIME FORA (resultado 'D' = vitória do Sport)
+            escudoCasa: '/static/escudos/FLA_Flamengo/Flamengo.png',
+            escudoFora: '/static/escudos/SPT_Sport/Sport.png'
+        },
+        8: {
+            csv: 'bahia_bragantino.csv',
+            timeCasa: 'BAHIA',            // ← TIME CASA (resultado 'V' = vitória do Bahia)
+            timeFora: 'RED BULL BRAGANTINO', // ← TIME FORA (resultado 'D' = vitória do Red Bull Bragantino) - NOME EXATO DO CSV
+            escudoCasa: '/static/escudos/BAH_Bahia/Bahia.PNG',
+            escudoFora: '/static/escudos/RBB_Bragantino/RedBull_Bragantino.png'
+        },
+        9: {
+            csv: 'ceara_fluminense.csv',
+            timeCasa: 'Ceará',            // ← TIME CASA (resultado 'V' = vitória do Ceará) - NOME EXATO DO CSV
+            timeFora: 'Fluminense',       // ← TIME FORA (resultado 'D' = vitória do Fluminense) - NOME EXATO DO CSV
+            escudoCasa: '/static/escudos/Ceara/ceara.png',
+            escudoFora: '/static/escudos/FLU_Fluminense/Fluminense.PNG'
+        },
         10: {
-            csv: 'Liverpool_vs_Mancheter-United.csv',
-            timeCasa: 'Liverpool',        // ← TIME CASA (resultado 'V' = vitória do Liverpool)
-            timeFora: 'Manchester United', // ← TIME FORA (resultado 'D' = vitória do Manchester United)
-            escudoCasa: '/static/escudos/Liverpool/Liverpool.png',
-            escudoFora: '/static/escudos/Manchester_United/Manchester_United.png'
+            csv: 'juventude_palmeiras.csv',
+            timeCasa: 'Juventude',        // ← TIME CASA (resultado 'V' = vitória do Juventude) - NOME EXATO DO CSV
+            timeFora: 'Palmeiras',        // ← TIME FORA (resultado 'D' = vitória do Palmeiras) - NOME EXATO DO CSV
+            escudoCasa: '/static/escudos/JUV_Juventude/Juventude.PNG',
+            escudoFora: '/static/escudos/PAL_Palmeiras/Palmeiras.png'
         },
         11: {
-            csv: 'Atalanta_vs_Lazio.csv',
-            timeCasa: 'Atalanta',         // ← TIME CASA (resultado 'V' = vitória do Atalanta)
-            timeFora: 'Lazio',            // ← TIME FORA (resultado 'D' = vitória do Lazio)
-            escudoCasa: '/static/escudos/Atalanta-IT/atalanta.png',
-            escudoFora: '/static/escudos/Lazio-IT/lazio.png'
+            csv: 'internacional_atletico-mg.csv',
+            timeCasa: 'Internacional',    // ← TIME CASA (resultado 'V' = vitória do Internacional) - NOME EXATO DO CSV
+            timeFora: 'Atlético-MG',      // ← TIME FORA (resultado 'D' = vitória do Atlético-MG) - NOME EXATO DO CSV
+            escudoCasa: '/static/escudos/INT_Internacional/Internacional.png',
+            escudoFora: '/static/escudos/CAM_Atletico-MG/Atletico_MG.png'
         },
         12: {
-            csv: 'Bahia_vs_Gremio.csv',
-            timeCasa: 'Bahia',            // ← TIME CASA (resultado 'V' = vitória do Bahia)
-            timeFora: 'Gremio',           // ← TIME FORA (resultado 'D' = vitória do Grêmio)
-            escudoCasa: '/static/escudos/BAH_Bahia/Bahia.PNG',
-            escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
+            csv: 'remo_chapecoense.csv',
+            timeCasa: 'remo',             // ← TIME CASA (resultado 'V' = vitória do Remo) - NOME EXATO DO CSV (minúscula)
+            timeFora: 'chapecoense',      // ← TIME FORA (resultado 'D' = vitória da Chapecoense) - NOME EXATO DO CSV (minúscula)
+            escudoCasa: '/static/escudos/Remo/Remo.PNG',
+            escudoFora: '/static/escudos/Chapecoense/Chapecoense.PNG'
         },
         13: {
-            csv: 'Milan_vs_Fiorentina.csv',
-            timeCasa: 'Milan',            // ← TIME CASA (resultado 'V' = vitória do Milan)
-            timeFora: 'Fiorentina',       // ← TIME FORA (resultado 'D' = vitória da Fiorentina)
-            escudoCasa: '/static/escudos/Milan_IT/milan.png',
-            escudoFora: '/static/escudos/Fiorentina_IT/fiorentina.png'
+            csv: 'vasco_sao_paulo.csv',
+            timeCasa: 'Vasco',            // ← TIME CASA (resultado 'V' = vitória do Vasco) - NOME EXATO DO CSV
+            timeFora: 'São Paulo',        // ← TIME FORA (resultado 'D' = vitória do São Paulo) - NOME EXATO DO CSV
+            escudoCasa: '/static/escudos/VAS_Vasco/Vasco.png',
+            escudoFora: '/static/escudos/SAP_SaoPaulo/SaoPaulo.png'
         },
         14: {
-            csv: 'Getafe_vs_Real-Madrid.csv',
-            timeCasa: 'Getafe',           // ← TIME CASA (resultado 'V' = vitória do Getafe)
-            timeFora: 'Real Madrid',      // ← TIME FORA (resultado 'D' = vitória do Real Madrid)
-            escudoCasa: '/static/escudos/Getafe/getafe.png',
-            escudoFora: '/static/escudos/Real_Madrid/real_madrid.png'
+            csv: 'operario-pr_vilanova.csv',
+            timeCasa: 'Operário-PR',      // ← TIME CASA (resultado 'V' = vitória do Operário-PR) - NOME EXATO DO CSV
+            timeFora: 'Vila Nova',        // ← TIME FORA (resultado 'D' = vitória do Vila Nova) - NOME EXATO DO CSV
+            escudoCasa: '/static/escudos/OPE_Operário-PR/Operario_PR.PNG',
+            escudoFora: '/static/escudos/Vila Nova/Vila Nova.PNG'
         }
         // Adicionar mais jogos conforme necessário
     };

@@ -7,19 +7,19 @@
 // MAPEAMENTO DOS JOGOS - CSV E TIMES
 const jogosMap = {
     1: { csv: 'corinthians_gremio.csv', casa: 'Corinthians', fora: 'Gremio' },
-    2: { csv: 'Internacional_vs_Sport.csv', casa: 'Internacional', fora: 'Sport' },
-    3: { csv: 'Corinthians_vs_Atletico-MG.csv', casa: 'Corinthians', fora: 'Atletico-MG' },
-    4: { csv: 'Roma_vs_Internazionale.csv', casa: 'Roma', fora: 'Internazionale' },
-    5: { csv: 'Atletico-Madrid_vs_Osasuna.csv', casa: 'Atletico Madrid', fora: 'Osasuna' },
-    6: { csv: 'Cruzeiro_vs_Fortaleza.csv', casa: 'Cruzeiro', fora: 'Fortaleza' },
-    7: { csv: 'Tottenham_vs_Aston-Villa.csv', casa: 'Tottenham', fora: 'Aston Villa' },
-    8: { csv: 'Mirassol_vs_Sao-Paulo.csv', casa: 'Mirassol', fora: 'Sao_Paulo' },
-    9: { csv: 'Ceara_vs_Botafogo-RJ.csv', casa: 'Ceará', fora: 'Botafogo' },
-    10: { csv: 'Liverpool_vs_Mancheter-United.csv', casa: 'Liverpool', fora: 'Manchester United' },
-    11: { csv: 'Atalanta_vs_Lazio.csv', casa: 'Atalanta', fora: 'Lazio' },
-    12: { csv: 'Bahia_vs_Gremio.csv', casa: 'Bahia', fora: 'Gremio' },
-    13: { csv: 'Milan_vs_Fiorentina.csv', casa: 'Milan', fora: 'Fiorentina' },
-    14: { csv: 'Getafe_vs_Real-Madrid.csv', casa: 'Getafe', fora: 'Real Madrid' }
+    2: { csv: 'santos_fortaleza.csv', casa: 'Santos', fora: 'Fortaleza' },
+    3: { csv: 'cruzeiro_vitoria.csv', casa: 'Cruzeiro', fora: 'Vitoria' },
+    4: { csv: 'goias_athletico-pr.csv', casa: 'Goias', fora: 'Athletico-PR' },
+    5: { csv: 'mirassol_botafogo.csv', casa: 'Mirassol', fora: 'Botafogo' },
+    6: { csv: 'avai_athetic-mg.csv', casa: 'Avai', fora: 'Athletic-MG' },
+    7: { csv: 'flamengo_sport.csv', casa: 'Flamengo', fora: 'Sport' },
+    8: { csv: 'bahia_bragantino.csv', casa: 'Bahia', fora: 'Bragantino' },
+    9: { csv: 'ceara_fluminense.csv', casa: 'Ceara', fora: 'Fluminense' },
+    10: { csv: 'juventude_palmeiras.csv', casa: 'Juventude', fora: 'Palmeiras' },
+    11: { csv: 'internacional_atletico-mg.csv', casa: 'Internacional', fora: 'Atletico-MG' },
+    12: { csv: 'remo_chapecoense.csv', casa: 'Remo', fora: 'Chapecoense' },
+    13: { csv: 'vasco_sao_paulo.csv', casa: 'Vasco', fora: 'Sao Paulo' },
+    14: { csv: 'operario-pr_vilanova.csv', casa: 'Operario-PR', fora: 'Vila Nova' }
 };
 
 /**
