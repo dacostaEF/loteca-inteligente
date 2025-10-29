@@ -6,7 +6,7 @@
   "dados": {
     "numero": "13",
     "time_casa": "VASCO DA GAMA/RJ",
-    "time_fora": "SÃO PAULO?SP",
+    "time_fora": "SÃO PAULO/SP",
     "arena": "São Januario/RJ",
     "campeonato": "Brasileirão Serie A ",
     "dia": "Domingo",
@@ -27,7 +27,7 @@
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-29T19:25:51.447Z"
+    "sincronizado_em": "2025-10-29T19:39:18.774Z"
   },
   "admin_key": "loteca2024admin"
 }
