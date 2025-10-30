@@ -1,25 +1,25 @@
-﻿
-        /* CSS EMBUTIDO PARA UMA PÁGINA INDEPENDENTE */
+
+        /* CSS EMBUTIDO PARA UMA P�GINA INDEPENDENTE */
         
         :root {
-            /* VARIÁVEIS DE COR EXISTENTES (PRESERVADAS) */
+            /* VARI�VEIS DE COR EXISTENTES (PRESERVADAS) */
             --cor-fundo: #12101a;
             --cor-fundo-card: #1e1b29;
             --cor-borda: #3a364f;
             --cor-texto-principal: #cbd5e1;
             --cor-texto-secundario: #94a3b8;
-            --cor-destaque-primaria: #A855F7; /* Lilás */
+            --cor-destaque-primaria: #A855F7; /* Lil�s */
             --cor-destaque-secundaria: #00E38C; /* Verde */
             --cor-vantagem: #00E38C;
             --cor-desvantagem: #F43F5E; /* Vermelho/Rosa */
             --cor-equilibrio: #FBBF24; /* Amarelo */
             
-            /* NOVAS VARIÁVEIS GLOBAIS (KIT GUARDA-CORPO) */
+            /* NOVAS VARI�VEIS GLOBAIS (KIT GUARDA-CORPO) */
             --container-max: 1200px;     /* largura desktop */
             --gutter: 16px;
 
             /* Breakpoints (mobile-first) */
-            --bp-sm: 480px;   /* telefones em pé */
+            --bp-sm: 480px;   /* telefones em p� */
             --bp-md: 768px;   /* tablets */
             --bp-lg: 1024px;  /* notebooks */
             --bp-xl: 1280px;  /* desktop amplo */
@@ -33,7 +33,7 @@
             padding: 0;
             /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             
-            /* MOLDURA NEON LILÁS - EFEITO LOTERIAS INTELIGENTE */
+            /* MOLDURA NEON LIL�S - EFEITO LOTERIAS INTELIGENTE */
             box-shadow: 
                 inset 0 0 0 3px var(--cor-destaque-primaria),
                 inset 0 0 20px rgba(168, 85, 247, 0.3),
@@ -42,7 +42,7 @@
             /* position: relative; REMOVIDO - IMPEDIA STICKY */
         }
 
-        /* CONTAINER PADRÃO (KIT GUARDA-CORPO) - COMPLEMENTAR */
+        /* CONTAINER PADR�O (KIT GUARDA-CORPO) - COMPLEMENTAR */
         .container-kit {
             max-width: var(--container-max);
             margin: 0 auto;
@@ -60,7 +60,7 @@
             }
             
             .container {
-                padding: 0; /* Eliminação total do respiro - máximo espaço horizontal */
+                padding: 0; /* Elimina��o total do respiro - m�ximo espa�o horizontal */
                 max-width: 100%;
                 /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             }
@@ -104,7 +104,7 @@
             }
         }
 
-        /* MOLDURA NEON ADICIONAL PARA DISPOSITIVOS MÓVEIS */
+        /* MOLDURA NEON ADICIONAL PARA DISPOSITIVOS M�VEIS */
         @media (max-width: 768px) {
             body {
                 box-shadow: 
@@ -115,7 +115,7 @@
             }
         }
         
-        /* ANIMAÇÃO NEON PULSANTE */
+        /* ANIMA��O NEON PULSANTE */
         @keyframes neonPulse {
             0% {
                 box-shadow: 
@@ -143,7 +143,7 @@
             box-sizing: border-box;
         }
 
-        /* ESPECÍFICO PARA ELEMENTOS QUE PODEM ULTRAPASSAR */
+        /* ESPEC�FICO PARA ELEMENTOS QUE PODEM ULTRAPASSAR */
         .container table {
             max-width: 100%;
             table-layout: fixed;
@@ -157,7 +157,7 @@
             max-width: 900px;
         }
 
-        /* Cabeçalho */
+        /* Cabe�alho */
         .header {
             text-align: center;
             padding-bottom: 2rem;
@@ -229,7 +229,7 @@
             margin: 0.5rem auto 0;
         }
 
-        /* Card de Análise do Jogo */
+        /* Card de An�lise do Jogo */
         .game-card {
             background-color: var(--cor-fundo-card);
             border: 1px solid var(--cor-borda);
@@ -293,39 +293,39 @@
         @media (max-width: 768px) {
             /* OTIMIZADOR DE APOSTAS - MOBILE RESPONSIVE */
             
-            /* 1. TÍTULO PRINCIPAL - MESMO TAMANHO DA CONCLUSÃO DO ANALISTA */
+            /* 1. T�TULO PRINCIPAL - MESMO TAMANHO DA CONCLUS�O DO ANALISTA */
             .section-header h2 {
                 font-size: 14px !important; /* Mesmo tamanho do .analyst-conclusion h4 */
-                color: var(--cor-destaque-primaria) !important; /* Mesma cor da conclusão */
+                color: var(--cor-destaque-primaria) !important; /* Mesma cor da conclus�o */
             }
             
             .section-description {
                 font-size: 12px !important; /* Mesmo tamanho do .analyst-conclusion p */
-                color: var(--cor-texto-secundario) !important; /* Mesma cor da conclusão */
+                color: var(--cor-texto-secundario) !important; /* Mesma cor da conclus�o */
             }
             
-            /* TEXTO "Clique nos resultados..." - MESMO PADRÃO DO "Fator Analisado" */
+            /* TEXTO "Clique nos resultados..." - MESMO PADR�O DO "Fator Analisado" */
             .table-description {
                 font-size: 9px !important; /* Mesmo tamanho do "Fator Analisado" em mobile */
                 color: var(--cor-texto-secundario) !important; /* Mesma cor do "Fator Analisado" */
             }
             
-            /* CABEÇALHOS DA TABELA - MESMO PADRÃO DO "Fator Analisado" */
+            /* CABE�ALHOS DA TABELA - MESMO PADR�O DO "Fator Analisado" */
             .page--otimizador-aposta .optimization-table th {
                 font-size: 9px !important; /* Mesmo tamanho do "Fator Analisado" em mobile */
                 color: var(--cor-texto-secundario) !important; /* Mesma cor do "Fator Analisado" */
             }
             
-            /* TODOS OS TEXTOS DA TABELA - MESMO PADRÃO */
+            /* TODOS OS TEXTOS DA TABELA - MESMO PADR�O */
             .page--otimizador-aposta .optimization-table td {
                 font-size: 9px !important; /* Mesmo tamanho do "Fator Analisado" em mobile */
                 color: var(--cor-texto-secundario) !important; /* Mesma cor do "Fator Analisado" */
             }
             
-            /* PRESERVAR CORES DE CONFIANÇA NA COLUNA DE PROBABILIDADES */
+            /* PRESERVAR CORES DE CONFIAN�A NA COLUNA DE PROBABILIDADES */
             .page--otimizador-aposta .optimization-table td .prob-confidence {
-                font-size: 9px !important; /* Mesmo tamanho, mas mantém cores de confiança */
-                /* Cores de confiança são preservadas via classes CSS existentes */
+                font-size: 9px !important; /* Mesmo tamanho, mas mant�m cores de confian�a */
+                /* Cores de confian�a s�o preservadas via classes CSS existentes */
             }
             
             /* 2. TABELA OTIMIZADOR - PADDING AJUSTADO */
@@ -337,62 +337,62 @@
                 padding: 0.4rem 0.3rem !important;
             }
             
-            /* PADDING ESPECÍFICO PARA COLUNA 4 (SUGESTÃO) - MAIS COMPACTO */
+            /* PADDING ESPEC�FICO PARA COLUNA 4 (SUGEST�O) - MAIS COMPACTO */
             .page--otimizador-aposta .optimization-table td:nth-child(4) {
-                padding: 0.2rem 0.05rem 0.2rem 0.02rem !important; /* Padding mínimo esquerdo para colar na borda */
+                padding: 0.2rem 0.05rem 0.2rem 0.02rem !important; /* Padding m�nimo esquerdo para colar na borda */
             }
             
-            /* 3. ELEMENTOS ESPECÍFICOS - MESMO PADRÃO (9px) */
+            /* 3. ELEMENTOS ESPEC�FICOS - MESMO PADR�O (9px) */
             .jogo-numero {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
             }
             
             .confronto-times {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
                 line-height: 1.2 !important;
             }
             
             .classificacao-badge {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
                 padding: 0.2rem 0.4rem !important;
             }
             
             .sugestao-valor {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
             }
             
             .escolha-buttons {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
                 padding: 0.2rem 0.3rem !important;
             }
             
             .probabilidade-percentual {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
                 font-weight: 700 !important;
             }
             
             .confianca-label {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.1rem 0.3rem !important;
-                /* Cores de confiança são preservadas via classes CSS existentes */
+                /* Cores de confian�a s�o preservadas via classes CSS existentes */
             }
             
             .cobertura-risco {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
             }
             
-            /* 4. AJUSTES DE LAYOUT - SELETOR MAIS ESPECÍFICO */
+            /* 4. AJUSTES DE LAYOUT - SELETOR MAIS ESPEC�FICO */
             .page--otimizador-aposta .optimization-table {
                 table-layout: auto !important; /* Mudado para auto em mobile */
-                width: max-content !important; /* Largura baseada no conteúdo */
-                min-width: 100% !important; /* Largura mínima */
+                width: max-content !important; /* Largura baseada no conte�do */
+                min-width: 100% !important; /* Largura m�nima */
             }
             
             /* 4.1 SCROLL HORIZONTAL PARA MOBILE */
@@ -404,7 +404,7 @@
                 scrollbar-color: var(--cor-destaque-primaria) var(--cor-fundo-card) !important; /* Cores da scrollbar */
             }
             
-            /* 4.2 ESTILIZAÇÃO DA SCROLLBAR PARA WEBKIT (Chrome, Safari) */
+            /* 4.2 ESTILIZA��O DA SCROLLBAR PARA WEBKIT (Chrome, Safari) */
             .page--otimizador-aposta .table-responsive::-webkit-scrollbar {
                 height: 8px !important; /* Altura da scrollbar horizontal */
             }
@@ -424,24 +424,24 @@
                 background: var(--cor-destaque-secundaria) !important; /* Cor no hover */
             }
             
-            /* 5. OTIMIZAÇÃO DOS BOTÕES "SUA ESCOLHA" PARA MOBILE */
+            /* 5. OTIMIZA��O DOS BOT�ES "SUA ESCOLHA" PARA MOBILE */
             .page--otimizador-aposta .choice-buttons {
                 display: grid !important;
                 grid-template-columns: repeat(3, 0.8fr) !important; /* 3 colunas com largura reduzida */
                 grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
                 gap: 0px !important; /* Eliminar gap completamente */
                 width: 80% !important; /* Reduzir largura total do container */
-                justify-content: flex-end !important; /* Alinhar à direita para ficar próximo da borda */
+                justify-content: flex-end !important; /* Alinhar � direita para ficar pr�ximo da borda */
                 margin-left: auto !important; /* Empurrar para a direita */
             }
             
             .page--otimizador-aposta .choice-btn[data-game][data-choice] {
                 width: 90% !important; /* Aumentar largura para reduzir respiro horizontal */
                 height: 80% !important; /* Reduzir altura em 20% */
-                transform: scale(0.8) !important; /* Reduzir dimensões em 20% */
+                transform: scale(0.8) !important; /* Reduzir dimens�es em 20% */
                 transform-origin: center !important;
                 margin: 0 !important; /* Remover margem para reduzir respiro */
-                padding: 2px 4px !important; /* Padding mínimo para botões mais compactos */
+                padding: 2px 4px !important; /* Padding m�nimo para bot�es mais compactos */
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -454,64 +454,64 @@
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(1)::after {
-                content: "Nº" !important; /* Substituir por "Nº" mais compacto */
+                content: "N�" !important; /* Substituir por "N�" mais compacto */
                 font-size: 9px !important;
                 color: var(--cor-texto-secundario) !important;
                 display: block !important;
             }
             
-            /* 7. AFASTAMENTO ENTRE PALAVRAS DOS TÍTULOS */
+            /* 7. AFASTAMENTO ENTRE PALAVRAS DOS T�TULOS */
             .page--otimizador-aposta .optimization-table th:nth-child(3) {
-                word-spacing: 0.3em !important; /* Espaçamento entre "Classificação" */
+                word-spacing: 0.3em !important; /* Espa�amento entre "Classifica��o" */
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(4) {
-                word-spacing: 0.3em !important; /* Espaçamento entre "Sugestão" */
+                word-spacing: 0.3em !important; /* Espa�amento entre "Sugest�o" */
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(5) {
-                word-spacing: 0.3em !important; /* Espaçamento entre "Sua Escolha" */
+                word-spacing: 0.3em !important; /* Espa�amento entre "Sua Escolha" */
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(6) {
-                word-spacing: 0.3em !important; /* Espaçamento entre "Probabilidades" */
+                word-spacing: 0.3em !important; /* Espa�amento entre "Probabilidades" */
             }
             
-            /* 8. AJUSTAR TAMANHO DOS BADGES DE CLASSIFICAÇÃO */
+            /* 8. AJUSTAR TAMANHO DOS BADGES DE CLASSIFICA��O */
             .page--otimizador-aposta .optimization-table .status-badge {
                 font-size: 9px !important; /* Mesmo tamanho dos outros textos */
                 padding: 2px 4px !important; /* Padding reduzido para mobile */
             }
             
-            /* 9. SUBSTITUIR TÍTULOS "CLASSIFICAÇÃO" E "SUGESTÃO" POR "RECOMENDAÇÃO" */
+            /* 9. SUBSTITUIR T�TULOS "CLASSIFICA��O" E "SUGEST�O" POR "RECOMENDA��O" */
             .page--otimizador-aposta .optimization-table th:nth-child(3) {
-                font-size: 0 !important; /* Esconder "Classificação" */
+                font-size: 0 !important; /* Esconder "Classifica��o" */
                 line-height: 0 !important;
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(3)::after {
-                content: "Recomendação" !important; /* Substituir por "Recomendação" */
+                content: "Recomenda��o" !important; /* Substituir por "Recomenda��o" */
                 font-size: 9px !important;
                 color: var(--cor-texto-secundario) !important;
                 display: block !important;
-                word-spacing: 0.3em !important; /* Manter espaçamento */
+                word-spacing: 0.3em !important; /* Manter espa�amento */
             }
             
-            /* Esconder apenas o TÍTULO da coluna "Sugestão" em mobile */
+            /* Esconder apenas o T�TULO da coluna "Sugest�o" em mobile */
             .page--otimizador-aposta .optimization-table th:nth-child(4) {
-                font-size: 0 !important; /* Esconder título "Sugestão" */
+                font-size: 0 !important; /* Esconder t�tulo "Sugest�o" */
                 line-height: 0 !important;
             }
             
-            /* Manter o CONTEÚDO da coluna "Sugestão" visível */
+            /* Manter o CONTE�DO da coluna "Sugest�o" vis�vel */
             .page--otimizador-aposta .optimization-table td:nth-child(4) {
-                display: table-cell !important; /* Mostrar conteúdo */
+                display: table-cell !important; /* Mostrar conte�do */
             }
             
-            /* 10. LARGURAS MÍNIMAS PARA FORÇAR SCROLL HORIZONTAL */
+            /* 10. LARGURAS M�NIMAS PARA FOR�AR SCROLL HORIZONTAL */
             .page--otimizador-aposta .optimization-table th:nth-child(1),
             .page--otimizador-aposta .optimization-table td:nth-child(1) {
-                min-width: 60px !important; /* Nº */
+                min-width: 60px !important; /* N� */
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(2),
@@ -519,15 +519,15 @@
                 min-width: 120px !important; /* Confronto - reduzido de 200px para 120px */
             }
             
-            /* ALINHAR TÍTULO DA COLUNA CONFRONTO AO CENTRO */
+            /* ALINHAR T�TULO DA COLUNA CONFRONTO AO CENTRO */
             .page--otimizador-aposta .optimization-table th:nth-child(2) {
-                text-align: center !important; /* Centralizar título "Confronto" */
+                text-align: center !important; /* Centralizar t�tulo "Confronto" */
             }
             
             /* QUEBRAR NOMES DOS CLUBES EM DUAS LINHAS - COLUNA CONFRONTOS */
             .page--otimizador-aposta .optimization-table td:nth-child(2) {
                 white-space: normal !important; /* Permitir quebra de linha */
-                line-height: 1.2 !important; /* Espaçamento entre linhas */
+                line-height: 1.2 !important; /* Espa�amento entre linhas */
                 text-align: center !important; /* Centralizar texto */
                 padding: 0.3rem 0.2rem !important; /* Padding reduzido */
             }
@@ -537,18 +537,18 @@
                 display: block !important; /* Cada time em uma linha */
                 font-size: 9px !important; /* Fonte padronizada - mesmo tamanho da tabela */
                 margin: 1px 0 !important; /* Margem entre os times */
-                line-height: 1.1 !important; /* Espaçamento compacto */
+                line-height: 1.1 !important; /* Espa�amento compacto */
             }
             
-            /* FORÇAR QUEBRA DE LINHA APÓS "vs" EM TODAS AS LINHAS */
+            /* FOR�AR QUEBRA DE LINHA AP�S "vs" EM TODAS AS LINHAS */
             .page--otimizador-aposta .optimization-table td:nth-child(2) {
-                white-space: pre-line !important; /* Permitir quebra de linha forçada */
+                white-space: pre-line !important; /* Permitir quebra de linha for�ada */
             }
             
-            /* ESTILO ESPECÍFICO PARA O SEPARADOR "vs" */
+            /* ESTILO ESPEC�FICO PARA O SEPARADOR "vs" */
             .page--otimizador-aposta .optimization-table td:nth-child(2) .vs-separator {
-                display: block !important; /* Forçar quebra após vs */
-                margin: 2px 0 !important; /* Espaço antes do segundo time */
+                display: block !important; /* For�ar quebra ap�s vs */
+                margin: 2px 0 !important; /* Espa�o antes do segundo time */
                 font-size: 9px !important; /* Mesmo tamanho dos times */
                 font-weight: bold !important; /* Destaque para o vs */
                 color: var(--cor-destaque-secundaria) !important; /* Cor de destaque */
@@ -557,8 +557,8 @@
             /* QUEBRAR TEXTO GERAL NA COLUNA CONFRONTOS */
             .page--otimizador-aposta .optimization-table td:nth-child(2) {
                 word-break: break-word !important; /* Quebrar palavras longas */
-                hyphens: auto !important; /* Hifenização automática */
-                max-width: 120px !important; /* Largura máxima para forçar quebra */
+                hyphens: auto !important; /* Hifeniza��o autom�tica */
+                max-width: 120px !important; /* Largura m�xima para for�ar quebra */
             }
             
             /* GARANTIR FONTE PADRONIZADA PARA TODAS AS LINHAS DA COLUNA CONFRONTOS */
@@ -566,35 +566,35 @@
                 font-size: 9px !important; /* Fonte padronizada para toda a coluna */
             }
             
-            /* FORÇAR QUEBRA DE LINHA APÓS "vs" USANDO CSS PSEUDO-ELEMENTOS */
+            /* FOR�AR QUEBRA DE LINHA AP�S "vs" USANDO CSS PSEUDO-ELEMENTOS */
             .page--otimizador-aposta .optimization-table td:nth-child(2):after {
-                content: "\A"; /* Quebra de linha forçada */
+                content: "\A"; /* Quebra de linha for�ada */
                 white-space: pre; /* Manter quebra de linha */
             }
             
-            /* ALTERNATIVA: USAR JAVASCRIPT PARA INSERIR <br> APÓS "vs" */
+            /* ALTERNATIVA: USAR JAVASCRIPT PARA INSERIR <br> AP�S "vs" */
             .page--otimizador-aposta .optimization-table td:nth-child(2) {
-                line-height: 1.3 !important; /* Espaçamento adequado para duas linhas */
+                line-height: 1.3 !important; /* Espa�amento adequado para duas linhas */
             }
             
-            /* SCRIPT JAVASCRIPT PARA FORÇAR QUEBRA DE LINHA APÓS "vs" */
-            /* Este script será executado automaticamente para todas as linhas */
+            /* SCRIPT JAVASCRIPT PARA FOR�AR QUEBRA DE LINHA AP�S "vs" */
+            /* Este script ser� executado automaticamente para todas as linhas */
             .page--otimizador-aposta .optimization-table td:nth-child(2) {
-                /* Preparar para quebra de linha forçada */
+                /* Preparar para quebra de linha for�ada */
                 white-space: pre-line !important;
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(3),
             .page--otimizador-aposta .optimization-table td:nth-child(3) {
-                min-width: 80px !important; /* Recomendação - reduzido de 120px para 80px */
+                min-width: 80px !important; /* Recomenda��o - reduzido de 120px para 80px */
             }
             
-            /* ALINHAR TÍTULO DA COLUNA RECOMENDAÇÃO À DIREITA */
+            /* ALINHAR T�TULO DA COLUNA RECOMENDA��O � DIREITA */
             .page--otimizador-aposta .optimization-table th:nth-child(3) {
-                text-align: right !important; /* Alinhar título "Recomendação" à direita */
+                text-align: right !important; /* Alinhar t�tulo "Recomenda��o" � direita */
             }
             
-            /* CENTRALIZAR TEXTOS DA COLUNA RECOMENDAÇÃO */
+            /* CENTRALIZAR TEXTOS DA COLUNA RECOMENDA��O */
             .page--otimizador-aposta .optimization-table td:nth-child(3) {
                 text-align: center !important; /* Centralizar textos */
                 padding: 0.4rem 0.2rem !important; /* Padding balanceado */
@@ -602,18 +602,18 @@
             
             .page--otimizador-aposta .optimization-table th:nth-child(4),
             .page--otimizador-aposta .optimization-table td:nth-child(4) {
-                min-width: 32px !important; /* Sugestão - reduzido em 60%: 80px * 0.4 = 32px */
+                min-width: 32px !important; /* Sugest�o - reduzido em 60%: 80px * 0.4 = 32px */
             }
             
-            /* APROXIMAR VISUALMENTE AS COLUNAS RECOMENDAÇÃO E SUGESTÃO */
+            /* APROXIMAR VISUALMENTE AS COLUNAS RECOMENDA��O E SUGEST�O */
             .page--otimizador-aposta .optimization-table td:nth-child(3) {
-                padding: 0.4rem 0.2rem !important; /* Padding balanceado para centralização */
+                padding: 0.4rem 0.2rem !important; /* Padding balanceado para centraliza��o */
                 text-align: center !important; /* Centralizar textos */
             }
             
             .page--otimizador-aposta .optimization-table td:nth-child(4) {
-                padding: 0.2rem 0.1rem 0.2rem 0.05rem !important; /* Padding mínimo esquerdo */
-                text-align: left !important; /* Alinhar à esquerda */
+                padding: 0.2rem 0.1rem 0.2rem 0.05rem !important; /* Padding m�nimo esquerdo */
+                text-align: left !important; /* Alinhar � esquerda */
                 font-size: 8px !important; /* Fonte menor para caber na coluna estreita */
             }
             
@@ -622,9 +622,9 @@
                 min-width: 180px !important; /* Sua Escolha */
             }
             
-            /* REDUZIR PADDING DIREITO DA COLUNA SUA ESCOLHA PARA APROXIMAR BOTÕES DA BORDA */
+            /* REDUZIR PADDING DIREITO DA COLUNA SUA ESCOLHA PARA APROXIMAR BOT�ES DA BORDA */
             .page--otimizador-aposta .optimization-table td:nth-child(5) {
-                padding-right: 0.1rem !important; /* Padding mínimo à direita */
+                padding-right: 0.1rem !important; /* Padding m�nimo � direita */
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(6),
@@ -634,13 +634,13 @@
             
         }
         
-        /* DESKTOP - GARANTIR LAYOUT ORIGINAL DOS BOTÕES */
+        /* DESKTOP - GARANTIR LAYOUT ORIGINAL DOS BOT�ES */
         @media (min-width: 769px) {
             .page--otimizador-aposta .choice-buttons {
-                display: grid !important; /* Layout grid para desktop também */
+                display: grid !important; /* Layout grid para desktop tamb�m */
                 grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas */
                 grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
-                gap: 4px !important; /* Espaçamento original */
+                gap: 4px !important; /* Espa�amento original */
                 width: 100% !important;
             }
             
@@ -649,8 +649,8 @@
                 margin: 2px !important; /* Margem original */
                 font-size: inherit !important; /* Fonte original */
                 border-radius: 4px !important; /* Border radius original */
-                min-width: auto !important; /* Largura automática */
-                height: auto !important; /* Altura automática */
+                min-width: auto !important; /* Largura autom�tica */
+                height: auto !important; /* Altura autom�tica */
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -663,15 +663,15 @@
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(1)::after {
-                content: none !important; /* Remover "Nº" no desktop */
+                content: none !important; /* Remover "N�" no desktop */
             }
             
-            /* REMOVER ESPAÇAMENTO EXTRA NO DESKTOP */
+            /* REMOVER ESPA�AMENTO EXTRA NO DESKTOP */
             .page--otimizador-aposta .optimization-table th:nth-child(3),
             .page--otimizador-aposta .optimization-table th:nth-child(4),
             .page--otimizador-aposta .optimization-table th:nth-child(5),
             .page--otimizador-aposta .optimization-table th:nth-child(6) {
-                word-spacing: normal !important; /* Espaçamento normal no desktop */
+                word-spacing: normal !important; /* Espa�amento normal no desktop */
             }
             
             /* RESTAURAR TAMANHO ORIGINAL DOS BADGES NO DESKTOP */
@@ -682,22 +682,22 @@
             
             /* RESTAURAR LAYOUT ORIGINAL DAS COLUNAS NO DESKTOP */
             .page--otimizador-aposta .optimization-table th:nth-child(3) {
-                font-size: inherit !important; /* Mostrar "Classificação" */
+                font-size: inherit !important; /* Mostrar "Classifica��o" */
                 line-height: inherit !important;
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(3)::after {
-                content: none !important; /* Remover "Recomendação" */
+                content: none !important; /* Remover "Recomenda��o" */
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(4) {
-                font-size: inherit !important; /* Mostrar título "Sugestão" */
+                font-size: inherit !important; /* Mostrar t�tulo "Sugest�o" */
                 line-height: inherit !important;
             }
             
             .page--otimizador-aposta .optimization-table th:nth-child(4),
             .page--otimizador-aposta .optimization-table td:nth-child(4) {
-                display: table-cell !important; /* Mostrar coluna "Sugestão" */
+                display: table-cell !important; /* Mostrar coluna "Sugest�o" */
             }
             
             /* RESTAURAR LAYOUT ORIGINAL DA TABELA NO DESKTOP */
@@ -706,7 +706,7 @@
                 width: 100% !important; /* Largura total no desktop */
             }
             
-            /* REMOVER LARGURAS MÍNIMAS NO DESKTOP */
+            /* REMOVER LARGURAS M�NIMAS NO DESKTOP */
             .page--otimizador-aposta .optimization-table th:nth-child(1),
             .page--otimizador-aposta .optimization-table td:nth-child(1),
             .page--otimizador-aposta .optimization-table th:nth-child(2),
@@ -719,7 +719,7 @@
             .page--otimizador-aposta .optimization-table td:nth-child(5),
             .page--otimizador-aposta .optimization-table th:nth-child(6),
             .page--otimizador-aposta .optimization-table td:nth-child(6) {
-                min-width: auto !important; /* Larguras automáticas no desktop */
+                min-width: auto !important; /* Larguras autom�ticas no desktop */
             }
             
             /* REMOVER SCROLL HORIZONTAL NO DESKTOP */
@@ -734,7 +734,7 @@
             max-width: 150px; /* Reduzido de 200px para 150px em mobile */
         }
         
-        /* Reduzir textos do cabeçalho em mobile - FORÇAR COM !important */
+        /* Reduzir textos do cabe�alho em mobile - FOR�AR COM !important */
         .header h1 {
             font-size: 1.25rem !important; /* Reduzido para 20px (1.25rem) */
         }
@@ -762,7 +762,7 @@
             padding: 2rem;
         }
 
-        /* Seção de Probabilidades */
+        /* Se��o de Probabilidades */
         .probabilities {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -811,7 +811,7 @@
             font-weight: 500;
         }
 
-        /* Recomendação */
+        /* Recomenda��o */
         .recommendation {
             background-color: rgba(0, 227, 140, 0.1);
             border: 1px solid var(--cor-destaque-secundaria);
@@ -856,7 +856,7 @@
             text-align: center;
         }
 
-        /* Ajuste dos chips para mobile - Últimos Confrontos */
+        /* Ajuste dos chips para mobile - �ltimos Confrontos */
         @media (max-width: 768px) {
             .analysis-table .confrontos-sequence {
                 transform-origin: left center;
@@ -864,23 +864,23 @@
                 grid-template-columns: repeat(5, 1fr) !important; /* 5 colunas para 2 linhas de 5 boxes */
                 grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
                 gap: 1px !important; /* Gap muito menor para condensar */
-                justify-items: center !important; /* Centralizar para evitar sobreposição */
+                justify-items: center !important; /* Centralizar para evitar sobreposi��o */
                 align-items: center !important;
             }
 
-            /* Ajustar o conteúdo do chip */
+            /* Ajustar o conte�do do chip */
             .confrontos-sequence .confronto-item {
                 gap: 0px !important; /* Sem gap para condensar */
-                padding: 1px !important; /* Padding mínimo para condensar */
+                padding: 1px !important; /* Padding m�nimo para condensar */
                 font-size: 0.4rem !important; /* Fonte menor para condensar */
-                min-width: 0 !important; /* Remover min-width para usar toda largura disponível */
+                min-width: 0 !important; /* Remover min-width para usar toda largura dispon�vel */
                 width: 100% !important; /* Usar toda largura do grid */
                 margin: 0 !important; /* Sem margem para condensar */
                 justify-content: center !important; /* Centralizar horizontalmente */
                 align-items: center !important; /* Centralizar verticalmente */
             }
             
-            /* Aplicar estilos condensados APENAS em mobile - não afeta desktop */
+            /* Aplicar estilos condensados APENAS em mobile - n�o afeta desktop */
             .confrontos-sequence .confronto-item {
                 min-width: 0 !important;
                 width: 100% !important;
@@ -889,19 +889,19 @@
             }
             
             .confrontos-sequence .confronto-data {
-                font-size: 0.3rem !important; /* Redução para condensar */
+                font-size: 0.3rem !important; /* Redu��o para condensar */
                 line-height: 1 !important; /* Line-height menor para condensar */
             }
             
             .confrontos-sequence .confronto-placar {
-                font-size: 0.32rem !important; /* Redução para condensar */
+                font-size: 0.32rem !important; /* Redu��o para condensar */
                 line-height: 1 !important; /* Line-height menor para condensar */
                 font-weight: 600 !important;
             }
             
             .confrontos-sequence .confronto-result {
-                width: 8px !important; /* Redução para condensar */
-                height: 8px !important; /* Redução para condensar */
+                width: 8px !important; /* Redu��o para condensar */
+                height: 8px !important; /* Redu��o para condensar */
             }
             
             .confrontos-sequence .confronto-escudo {
@@ -916,9 +916,9 @@
             }
         }
 
-        /* Redução de 30% + 20% adicional para elementos dos confrontos em ambientes responsivos */
+        /* Redu��o de 30% + 20% adicional para elementos dos confrontos em ambientes responsivos */
         @media (max-width: 768px) {
-            /* Forçar estilos inline hardcoded a respeitarem media queries */
+            /* For�ar estilos inline hardcoded a respeitarem media queries */
             .confronto-item[style*="min-width: 42px"] {
                 min-width: 34px !important; /* 42px * 0.8 */
             }
@@ -928,11 +928,11 @@
             }
             
             .confronto-item[style*="min-width: 34px"] {
-                min-width: 34px !important; /* Já correto */
+                min-width: 34px !important; /* J� correto */
             }
             
             .confronto-item[style*="padding: 5px"] {
-                padding: 5px !important; /* Já correto */
+                padding: 5px !important; /* J� correto */
             }
             
             /* Estilos gerais para confrontos */
@@ -953,7 +953,7 @@
                 padding: 1px 2px !important; /* 1px 3px * 0.67 */
             }
             
-            /* Forçar especificidade para confrontos dentro de tabelas */
+            /* For�ar especificidade para confrontos dentro de tabelas */
             .analysis-table .confronto-item {
                 min-width: 34px !important; /* 42px * 0.8 */
                 padding: 2px !important; /* 3px * 0.67 */
@@ -974,15 +974,15 @@
         }
 
         @media (max-width: 1024px) {
-            /* Condensar boxes APENAS em tablets - não afeta desktop */
+            /* Condensar boxes APENAS em tablets - n�o afeta desktop */
             .analysis-table .confrontos-sequence {
                 gap: 2px !important; /* Gap menor para condensar */
-                justify-items: center !important; /* Centralizar para evitar sobreposição */
+                justify-items: center !important; /* Centralizar para evitar sobreposi��o */
             }
             
             .confrontos-sequence .confronto-item {
                 min-width: 0 !important; /* Remover min-width para usar toda largura */
-                width: 100% !important; /* Usar toda largura disponível */
+                width: 100% !important; /* Usar toda largura dispon�vel */
                 padding: 2px !important; /* Padding menor para condensar */
                 margin: 0 !important; /* Sem margem para condensar */
             }
@@ -1008,7 +1008,7 @@
                 padding: 1px 2px !important; /* 1px 3px * 0.67 */
             }
             
-            /* Forçar especificidade para confrontos dentro de tabelas */
+            /* For�ar especificidade para confrontos dentro de tabelas */
             .analysis-table .confronto-item {
                 min-width: 34px !important; /* 42px * 0.8 */
                 padding: 2px !important; /* 3px * 0.67 */
@@ -1037,7 +1037,7 @@
         .status-icon.desvantagem { color: var(--cor-desvantagem); }
         .status-icon.equilibrio { color: var(--cor-equilibrio); }
 
-        /* Conclusão do Analista */
+        /* Conclus�o do Analista */
         .analyst-conclusion {
             background-color: rgba(0,0,0,0.2);
             padding: 1.5rem;
@@ -1057,7 +1057,7 @@
             color: var(--cor-texto-secundario);
         }
         
-        /* Rodapé */
+        /* Rodap� */
         .footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -1073,7 +1073,7 @@
             font-weight: 600;
         }
 
-        /* ESTILOS DO RODAPÉ CTA */
+        /* ESTILOS DO RODAP� CTA */
         .footer-cta {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 227, 140, 0.1)); /* Fundo levemente transparente */
             border: none; /* Sem borda no container pai */
@@ -1130,7 +1130,7 @@
             margin-bottom: 0.5rem;
         }
 
-        /* ESTILOS DO RODAPÉ DE POLÍTICA DE HONESTIDADE */
+        /* ESTILOS DO RODAP� DE POL�TICA DE HONESTIDADE */
         .honesty-footer {
             background: linear-gradient(135deg, rgba(30,27,41,.95), rgba(42,35,64,.95));
             border-top: 1px solid rgba(255,255,255,0.08);
@@ -1185,7 +1185,7 @@
             background: rgba(168,85,247,.1);
         }
 
-        /* ESTILOS DO MODAL DE POLÍTICA DE HONESTIDADE */
+        /* ESTILOS DO MODAL DE POL�TICA DE HONESTIDADE */
         .honesty-modal {
             position: fixed;
             top: 0;
@@ -1349,7 +1349,7 @@
             text-align: right;
         }
 
-        /* Bolinhas dos Últimos Confrontos */
+        /* Bolinhas dos �ltimos Confrontos */
         .confrontos-sequence {
             display: flex;
             gap: 6px;
@@ -1397,7 +1397,7 @@
             padding: 2px 4px;
         }
 
-        /* Modal de Estatísticas Detalhadas */
+        /* Modal de Estat�sticas Detalhadas */
         .estatisticas-modal-content {
             background: linear-gradient(135deg, #1e1b29, #2a2340);
             border-radius: 15px;
@@ -1523,12 +1523,12 @@
         .confronto-result.empate {
             width: 24px;
             height: 24px;
-            /* border-radius: 50%; ← REMOVIDO: não queremos círculo */
-            /* background: #FFD700; ← REMOVIDO: não queremos fundo */
+            /* border-radius: 50%; ? REMOVIDO: n�o queremos c�rculo */
+            /* background: #FFD700; ? REMOVIDO: n�o queremos fundo */
             font-weight: 700;
             font-size: 0.7rem;
             color: #ffc107; /* Cor amarela apenas para a letra */
-            /* border: 2px solid #FFA500; ← REMOVIDO: não queremos borda */
+            /* border: 2px solid #FFA500; ? REMOVIDO: n�o queremos borda */
         }
 
         .honesty-modal .modal-header {
@@ -1592,7 +1592,7 @@
         }
 
         .honesty-modal details summary::before {
-            content: "▶ ";
+            content: "? ";
             margin-right: 8px;
             transition: transform 0.2s;
         }
@@ -1677,7 +1677,7 @@
             animation: fadeIn 0.3s ease-in-out;
         }
 
-        /* FORÇA DOS ELENCOS - CENTRALIZAÇÃO E LARGURA */
+        /* FOR�A DOS ELENCOS - CENTRALIZA��O E LARGURA */
         .forca-elenco-container {
             max-width: 100%;
             margin: 0 auto;
@@ -1709,7 +1709,7 @@
             box-sizing: border-box;
         }
 
-        /* ESPECÍFICO PARA CONTEÚDO DINÂMICO */
+        /* ESPEC�FICO PARA CONTE�DO DIN�MICO */
         .forca-elenco-container .forca-elenco-dashboard {
             max-width: 100%;
             margin: 0 auto;
@@ -1720,7 +1720,7 @@
             margin: 0 auto;
         }
 
-        /* CSS específico para o título da sub-aba Plantel ($) */
+        /* CSS espec�fico para o t�tulo da sub-aba Plantel ($) */
         .forca-elenco-container .times-loteca-section .section-header {
             max-width: 100%;
             margin: 0 auto;
@@ -1743,7 +1743,7 @@
             text-align: center;
         }
 
-        /* TABELAS E GRIDS DENTRO DA ABA FORÇA DOS ELENCOS */
+        /* TABELAS E GRIDS DENTRO DA ABA FOR�A DOS ELENCOS */
         .forca-elenco-container table {
             max-width: 100%;
             margin: 0 auto;
@@ -1761,29 +1761,29 @@
         }
 
 
-        /* RESPONSIVIDADE ESPECÍFICA PARA FORÇA DOS ELENCOS */
+        /* RESPONSIVIDADE ESPEC�FICA PARA FOR�A DOS ELENCOS */
         @media (max-width: 768px) {
             
-            /* APLICAR MESMAS CONFIGURAÇÕES DE FONTE DA ABA OTIMIZADOR DE APOSTA */
+            /* APLICAR MESMAS CONFIGURA��ES DE FONTE DA ABA OTIMIZADOR DE APOSTA */
             
-            /* 1. TÍTULOS DAS SEÇÕES - MESMO PADRÃO DO OTIMIZADOR */
+            /* 1. T�TULOS DAS SE��ES - MESMO PADR�O DO OTIMIZADOR */
             .forca-elenco-container .section-header h2 {
-                font-size: 12px !important; /* Mesmo tamanho dos títulos do Otimizador */
+                font-size: 12px !important; /* Mesmo tamanho dos t�tulos do Otimizador */
                 color: var(--cor-destaque-primaria) !important;
                 font-weight: 700 !important;
                 margin-bottom: 0.5rem !important;
             }
             
             .forca-elenco-container .section-header h3 {
-                font-size: 10px !important; /* Subtítulos menores */
+                font-size: 10px !important; /* Subt�tulos menores */
                 color: var(--cor-texto-secundario) !important;
                 font-weight: 600 !important;
             }
             
-            /* 2. TEXTOS DAS CAIXAS - MESMO PADRÃO (9px) */
+            /* 2. TEXTOS DAS CAIXAS - MESMO PADR�O (9px) */
             .forca-elenco-container .card h4,
             .forca-elenco-container .card h5 {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
                 font-weight: 600 !important;
                 margin-bottom: 0.3rem !important;
@@ -1791,12 +1791,12 @@
             
             .forca-elenco-container .card p,
             .forca-elenco-container .card span {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
                 line-height: 1.2 !important;
             }
             
-            /* 3. VALORES E ESTATÍSTICAS - MESMO PADRÃO */
+            /* 3. VALORES E ESTAT�STICAS - MESMO PADR�O */
             .forca-elenco-container .stat-value {
                 font-size: 10px !important; /* Todos com 10px */
                 color: #e2e8f0 !important; /* Cinza claro forte para valores */
@@ -1808,7 +1808,7 @@
                 color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
             }
             
-            /* 4. BADGES E LABELS - MESMO PADRÃO */
+            /* 4. BADGES E LABELS - MESMO PADR�O */
             .forca-elenco-container .time-badge,
             .forca-elenco-container .badge-mediano,
             .forca-elenco-container .badge-destaque,
@@ -1816,20 +1816,20 @@
             .forca-elenco-container .badge-forte,
             .forca-elenco-container .badge-desenvolvimento,
             .forca-elenco-container .badge-erro {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.2rem 0.4rem !important; /* Padding compacto */
             }
             
-            /* 5. BARRAS DE PROGRESSO - MESMO PADRÃO */
+            /* 5. BARRAS DE PROGRESSO - MESMO PADR�O */
             .forca-elenco-container .forca-bar {
                 height: 4px !important; /* Barra mais fina */
                 margin-top: 0.2rem !important;
             }
             
-            /* 6. TABELAS E GRIDS - MESMO PADRÃO */
+            /* 6. TABELAS E GRIDS - MESMO PADR�O */
             .forca-elenco-container table th,
             .forca-elenco-container table td {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.3rem 0.2rem !important; /* Padding compacto */
             }
             
@@ -1842,9 +1842,9 @@
                 color: var(--cor-texto-principal) !important;
             }
             
-            /* 7. BOTÕES E LINKS - MESMO PADRÃO */
+            /* 7. BOT�ES E LINKS - MESMO PADR�O */
             .forca-elenco-container .ver-detalhes-btn {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
             }
             
@@ -1857,16 +1857,16 @@
                 padding: 1rem !important; /* Padding menor */
             }
             
-            /* 9. ELEMENTOS ESPECÍFICOS - MESMO PADRÃO */
+            /* 9. ELEMENTOS ESPEC�FICOS - MESMO PADR�O */
             .forca-elenco-container .vs-divider-confronto {
                 font-size: 12px !important; /* Tamanho adequado para mobile */
                 width: 40px !important;
                 height: 40px !important;
             }
             
-            /* 10. CAMPOS DE ANÁLISE - MESMO PADRÃO */
+            /* 10. CAMPOS DE AN�LISE - MESMO PADR�O */
             .forca-elenco-container .campo-nome {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 font-weight: 700 !important;
             }
             
@@ -1876,11 +1876,11 @@
                 padding: 0.5rem !important; /* Padding menor */
             }
             
-            /* 11. ELEMENTOS ESPECÍFICOS DA FORÇA DOS ELENCOS */
+            /* 11. ELEMENTOS ESPEC�FICOS DA FOR�A DOS ELENCOS */
             .forca-elenco-container .team-name,
             .forca-elenco-container .team-value,
             .forca-elenco-container .team-stats {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
             }
             
@@ -1893,7 +1893,7 @@
                 color: var(--cor-texto-principal) !important;
             }
             
-            /* 12. GRIDS E LAYOUTS - MESMO PADRÃO */
+            /* 12. GRIDS E LAYOUTS - MESMO PADR�O */
             .forca-elenco-container .grid {
                 gap: 0.5rem !important; /* Gap menor */
             }
@@ -1902,10 +1902,10 @@
                 padding: 0.5rem !important; /* Padding menor */
             }
             
-            /* 13. ELEMENTOS DE COMPARAÇÃO - MESMO PADRÃO */
+            /* 13. ELEMENTOS DE COMPARA��O - MESMO PADR�O */
             .forca-elenco-container .comparison-item,
             .forca-elenco-container .comparison-value {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
             }
             
@@ -1914,7 +1914,7 @@
                 color: var(--cor-texto-principal) !important;
             }
             
-            /* 14. ELEMENTOS DE ANÁLISE - MESMO PADRÃO */
+            /* 14. ELEMENTOS DE AN�LISE - MESMO PADR�O */
             .forca-elenco-container .analysis-item,
             .forca-elenco-container .analysis-text {
                 font-size: 8px !important; /* Texto menor para mobile */
@@ -1922,10 +1922,10 @@
                 line-height: 1.3 !important;
             }
             
-            /* 15. ELEMENTOS DE RESULTADO - MESMO PADRÃO */
+            /* 15. ELEMENTOS DE RESULTADO - MESMO PADR�O */
             .forca-elenco-container .result-item,
             .forca-elenco-container .result-value {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-principal) !important;
                 font-weight: 600 !important;
             }
@@ -1934,12 +1934,12 @@
             .forca-elenco-container .team-comparison-container {
                 display: flex !important; /* Layout flex para lado a lado */
                 gap: 0.5rem !important; /* Gap menor entre os times */
-                margin-bottom: 1rem !important; /* Espaço entre confrontos */
+                margin-bottom: 1rem !important; /* Espa�o entre confrontos */
             }
             
             .forca-elenco-container .team-card {
                 flex: 1 !important; /* Distribuir igualmente */
-                max-width: 48% !important; /* Máximo 48% para cada time */
+                max-width: 48% !important; /* M�ximo 48% para cada time */
                 padding: 0.8rem !important; /* Padding menor */
                 margin: 0 !important; /* Remover margens */
             }
@@ -1957,7 +1957,7 @@
             }
             
             .forca-elenco-container .team-card .team-stats {
-                font-size: 8px !important; /* Estatísticas menores */
+                font-size: 8px !important; /* Estat�sticas menores */
                 margin-bottom: 0.2rem !important; /* Margem menor */
             }
             
@@ -1979,19 +1979,19 @@
             }
             
             .forca-elenco-container .team-card .strength-value {
-                font-size: 9px !important; /* Valor da força menor */
+                font-size: 9px !important; /* Valor da for�a menor */
                 font-weight: bold !important;
             }
             
-            /* 19. BOTÕES DOS TIMES */
+            /* 19. BOT�ES DOS TIMES */
             .forca-elenco-container .team-card .team-buttons {
                 margin-top: 0.5rem !important; /* Margem menor */
             }
             
             .forca-elenco-container .team-card .team-buttons button {
-                font-size: 7px !important; /* Botões menores */
+                font-size: 7px !important; /* Bot�es menores */
                 padding: 0.3rem 0.5rem !important; /* Padding menor */
-                margin: 0.1rem 0 !important; /* Margem menor entre botões */
+                margin: 0.1rem 0 !important; /* Margem menor entre bot�es */
                 width: 100% !important; /* Largura total */
             }
             
@@ -2003,17 +2003,17 @@
                 margin: 0 0.3rem !important; /* Margem menor */
             }
             
-            /* 21. CONFIGURAÇÕES ESPECÍFICAS PARA LAYOUT LADO A LADO */
+            /* 21. CONFIGURA��ES ESPEC�FICAS PARA LAYOUT LADO A LADO */
             .forca-elenco-container .game-comparison {
                 display: flex !important; /* Layout flex para lado a lado */
                 align-items: center !important; /* Centralizar verticalmente */
-                justify-content: space-between !important; /* Distribuir espaço */
-                margin-bottom: 1.5rem !important; /* Espaço entre jogos */
+                justify-content: space-between !important; /* Distribuir espa�o */
+                margin-bottom: 1.5rem !important; /* Espa�o entre jogos */
             }
             
             .forca-elenco-container .game-comparison .team-container {
                 flex: 1 !important; /* Distribuir igualmente */
-                max-width: 45% !important; /* Máximo 45% para cada time */
+                max-width: 45% !important; /* M�ximo 45% para cada time */
                 margin: 0 !important; /* Remover margens */
             }
             
@@ -2028,11 +2028,11 @@
                 }
                 
                 .forca-elenco-container .team-card .team-stats {
-                    font-size: 7px !important; /* Estatísticas ainda menores */
+                    font-size: 7px !important; /* Estat�sticas ainda menores */
                 }
                 
                 .forca-elenco-container .team-card .team-buttons button {
-                    font-size: 6px !important; /* Botões ainda menores */
+                    font-size: 6px !important; /* Bot�es ainda menores */
                     padding: 0.2rem 0.3rem !important; /* Padding ainda menor */
                 }
                 
@@ -2050,30 +2050,30 @@
                 flex-direction: row !important; /* Manter em linha horizontal como desktop */
                 gap: 0.3rem !important; /* Gap menor para mobile */
                 padding: 0.3rem !important; /* Padding menor */
-                flex-wrap: wrap !important; /* Permitir quebra se necessário */
+                flex-wrap: wrap !important; /* Permitir quebra se necess�rio */
                 justify-content: center !important; /* Centralizar */
             }
             
             .forca-elenco-container .sub-tab-btn {
                 max-width: none !important;
-                width: auto !important; /* Largura automática */
-                min-width: 0 !important; /* Largura mínima flexível */
+                width: auto !important; /* Largura autom�tica */
+                min-width: 0 !important; /* Largura m�nima flex�vel */
                 flex: 1 !important; /* Distribuir igualmente */
                 padding: 0.6rem 0.4rem !important; /* Padding menor para mobile */
                 font-size: 10px !important; /* Padronizado para 10px */
                 text-align: center !important; /* Centralizar texto */
-                white-space: nowrap !important; /* Não quebrar texto */
-                overflow: hidden !important; /* Cortar texto se necessário */
+                white-space: nowrap !important; /* N�o quebrar texto */
+                overflow: hidden !important; /* Cortar texto se necess�rio */
                 text-overflow: ellipsis !important; /* ... se texto for muito longo */
             }
             
-            /* CONFIGURAÇÕES ESPECÍFICAS PARA SUB-ABAS EM MOBILE */
+            /* CONFIGURA��ES ESPEC�FICAS PARA SUB-ABAS EM MOBILE */
             .forca-elenco-container .sub-tabs-nav {
                 display: flex !important; /* Garantir display flex */
                 align-items: center !important; /* Centralizar verticalmente */
                 background-color: rgba(0,0,0,0.2) !important; /* Fundo sutil */
                 border-radius: 8px !important; /* Bordas arredondadas */
-                margin-bottom: 1rem !important; /* Espaço abaixo */
+                margin-bottom: 1rem !important; /* Espa�o abaixo */
             }
             
             /* AJUSTAR ESPECIFICAMENTE PARA TELAS MUITO PEQUENAS */
@@ -2139,7 +2139,7 @@
             border-color: var(--cor-destaque-primaria);
         }
 
-        /* === BOTÕES INTERNACIONAIS (MESMO ESTILO DOS NACIONAIS) === */
+        /* === BOT�ES INTERNACIONAIS (MESMO ESTILO DOS NACIONAIS) === */
         .intl-champ-btn {
             padding: 0.8rem 1.5rem;
             background-color: var(--cor-fundo);
@@ -2186,7 +2186,7 @@
             display: block;
         }
 
-        /* Título das seções internacionais */
+        /* T�tulo das se��es internacionais */
         #current-international-title {
             color: var(--cor-texto-principal);
             font-size: 1.5rem;
@@ -2194,7 +2194,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Informações da fonte internacional */
+        /* Informa��es da fonte internacional */
         #internacionais .table-info {
             display: flex;
             gap: 2rem;
@@ -2220,7 +2220,7 @@
             font-size: 0.85rem;
         }
 
-        /* Container da Tabela de Classificação */
+        /* Container da Tabela de Classifica��o */
         .classification-table-container {
             background-color: var(--cor-fundo-card);
             border: 1px solid var(--cor-borda);
@@ -2245,7 +2245,7 @@
             font-weight: 700;
         }
 
-        /* Tabela de Classificação */
+        /* Tabela de Classifica��o */
         .classification-table {
             display: none;
         }
@@ -2254,7 +2254,8 @@
             display: block;
         }
 
-        .brasileirao-table {
+        .brasileirao-table,
+        .standings-table {
             width: 100%;
             max-width: 100%;
             border-collapse: collapse;
@@ -2264,11 +2265,12 @@
             table-layout: fixed;
         }
 
-        .brasileirao-table thead {
+        .brasileirao-table th, .standings-table thead,
+        .standings-table thead {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 227, 140, 0.1));
         }
 
-        .brasileirao-table th {
+        .brasileirao-table th, .standings-table th {
             padding: 1rem 0.8rem;
             text-align: center;
             color: var(--cor-texto-principal);
@@ -2277,28 +2279,28 @@
             border-bottom: 1px solid var(--cor-borda);
         }
 
-        .brasileirao-table th:first-child {
+        .brasileirao-table th, .standings-table th:first-child {
             text-align: left;
             padding-left: 1.5rem;
         }
 
-        .brasileirao-table td {
+        .brasileirao-table td, .standings-table td {
             padding: 0.8rem;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 0.9rem;
         }
 
-        .brasileirao-table td:first-child {
+        .brasileirao-table td, .standings-table td:first-child {
             text-align: left;
             padding-left: 1.5rem;
         }
 
-        .brasileirao-table tr:hover {
+        .brasileirao-table tr, .standings-table tr:hover {
             background-color: rgba(168, 85, 247, 0.05);
         }
 
-        /* Posição na tabela */
+        /* Posi��o na tabela */
         .team-position {
             color: var(--cor-destaque-primaria);
             font-weight: 700;
@@ -2310,29 +2312,29 @@
             font-weight: 600;
         }
 
-        /* Cores de classificação - Barras verticais */
+        /* Cores de classifica��o - Barras verticais */
         .libertadores { 
-            border-left: 6px solid #3B82F6; /* Azul */
-            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+            border-left: 6px solid #10B981; /* Verde - G4 Libertadores Direto */
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), transparent);
         }
         .pre-libertadores { 
-            border-left: 6px solid #60A5FA; /* Azul claro */
-            background: linear-gradient(90deg, rgba(96, 165, 250, 0.1), transparent);
+            border-left: 6px solid #3B82F6; /* Azul - Pr�-Libertadores */
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), transparent);
         }
         .sul-americana { 
-            border-left: 6px solid #10B981; /* Verde */
-            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), transparent);
+            border-left: 6px solid #F59E0B; /* Laranja - Sul-Americana */
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), transparent);
         }
         .meio-tabela {
-            border-left: 6px solid #6B7280; /* Cinza */
+            border-left: 6px solid #6B7280; /* Cinza - Zona Neutra */
             background: linear-gradient(90deg, rgba(107, 114, 128, 0.1), transparent);
         }
         .rebaixamento { 
-            border-left: 6px solid #EF4444; /* Vermelho */
-            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1), transparent);
+            border-left: 6px solid #EF4444; /* Vermelho - Z4 Rebaixamento */
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), transparent);
         }
 
-        /* RODAPÉ COM INFORMAÇÕES DAS ZONAS */
+        /* RODAP� COM INFORMA��ES DAS ZONAS */
         .table-footer {
             margin-top: 2rem;
             padding: 1.5rem;
@@ -2379,23 +2381,23 @@
         }
 
         .zone-item.libertadores .zone-bar {
-            background: linear-gradient(180deg, #3B82F6, #1E40AF);
+            background: linear-gradient(180deg, #10B981, #059669); /* Verde - G4 */
         }
 
         .zone-item.pre-libertadores .zone-bar {
-            background: linear-gradient(180deg, #60A5FA, #3B82F6);
+            background: linear-gradient(180deg, #3B82F6, #1E40AF); /* Azul - Pr�-Libertadores */
         }
 
         .zone-item.sul-americana .zone-bar {
-            background: linear-gradient(180deg, #10B981, #059669);
+            background: linear-gradient(180deg, #F59E0B, #D97706); /* Laranja - Sul-Americana */
         }
 
         .zone-item.meio-tabela .zone-bar {
-            background: linear-gradient(180deg, #6B7280, #4B5563);
+            background: linear-gradient(180deg, #6B7280, #4B5563); /* Cinza - Zona Neutra */
         }
 
         .zone-item.rebaixamento .zone-bar {
-            background: linear-gradient(180deg, #EF4444, #DC2626);
+            background: linear-gradient(180deg, #EF4444, #DC2626); /* Vermelho - Z4 */
         }
 
         .zone-text {
@@ -2415,7 +2417,7 @@
             font-size: 0.85rem;
         }
 
-        /* ESTILOS PARA SÉRIE C */
+        /* ESTILOS PARA S�RIE C */
         .grupo-container {
             margin-bottom: 2rem;
             background: var(--cor-fundo-card);
@@ -2516,11 +2518,13 @@
             background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), transparent);
         }
 
-        /* Últimos jogos */
+        /* �ltimos jogos */
         .ultimos-jogos {
             display: flex;
-            gap: 2px;
+            gap: 3px;
             justify-content: center;
+            align-items: center;  /* ⬅️ CENTRALIZAR VERTICALMENTE */
+            flex-wrap: nowrap;    /* ⬅️ NÃO QUEBRAR LINHA */
         }
 
         .resultado {
@@ -2532,6 +2536,43 @@
         .resultado.vitoria { background-color: #00E38C; }
         .resultado.empate { background-color: #FBBF24; }
         .resultado.derrota { background-color: #F43F5E; }
+
+        /* ✅ BOLINHAS DOS ÚLTIMOS JOGOS - TABELAS DE CLASSIFICAÇÃO */
+        .resultado-bolinha {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;   /* ⬅️ GARANTIR largura mínima */
+            min-height: 18px;  /* ⬅️ GARANTIR altura mínima */
+            max-width: 18px;   /* ⬅️ GARANTIR largura máxima */
+            max-height: 18px;  /* ⬅️ GARANTIR altura máxima */
+            border-radius: 50%;
+            text-align: center;
+            font-size: 0;  /* ⬅️ ESCONDE O TEXTO (V, E, D) */
+            line-height: 18px;
+            margin: 0 3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            flex-shrink: 0;  /* ⬅️ NÃO ENCOLHER */
+        }
+
+        .resultado-bolinha.vitoria { 
+            background-color: #10B981; /* Verde */
+        }
+
+        .resultado-bolinha.empate { 
+            background-color: #F59E0B; /* Amarelo */
+        }
+
+        .resultado-bolinha.derrota { 
+            background-color: #EF4444; /* Vermelho */
+        }
+
+        /* Efeito hover */
+        .resultado-bolinha:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
 
         /* ===== LAYOUT ELEGANTE DAS TABELAS DE CAMPEONATOS ===== */
         
@@ -2559,20 +2600,20 @@
             max-width: 100%;
         }
 
-        /* Cabeçalho da tabela com gradiente intenso */
-        .brasileirao-table thead {
+        /* Cabe�alho da tabela com gradiente intenso */
+        .brasileirao-table th, .standings-table thead {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(0, 227, 140, 0.15));
             backdrop-filter: blur(5px);
         }
 
         /* Hover nas linhas com efeito elegante */
-        .brasileirao-table tr:hover {
+        .brasileirao-table tr, .standings-table tr:hover {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 227, 140, 0.08));
             transform: translateY(-1px);
             transition: all 0.3s ease;
         }
 
-        /* Rodapé com design elegante */
+        /* Rodap� com design elegante */
         .table-footer {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 227, 140, 0.08));
             border-radius: 16px;
@@ -2587,36 +2628,36 @@
 
         /* Barras coloridas para zonas */
         .libertadores {
-            border-left: 6px solid #00E38C;
-            background: linear-gradient(90deg, rgba(0, 227, 140, 0.15), transparent);
-            box-shadow: 0 0 10px rgba(0, 227, 140, 0.2);
+            border-left: 6px solid #10B981; /* Verde - G4 Libertadores */
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), transparent);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
         }
 
         .pre-libertadores {
-            border-left: 6px solid #3B82F6;
+            border-left: 6px solid #3B82F6; /* Azul - Pr�-Libertadores */
             background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), transparent);
             box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
         }
 
         .sul-americana {
-            border-left: 6px solid #F59E0B;
+            border-left: 6px solid #F59E0B; /* Laranja - Sul-Americana */
             background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), transparent);
             box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
         }
 
         .meio-tabela {
-            border-left: 6px solid #8B5CF6;
-            background: linear-gradient(90deg, rgba(139, 92, 246, 0.15), transparent);
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+            border-left: 6px solid #6B7280; /* Cinza - Zona Neutra */
+            background: linear-gradient(90deg, rgba(107, 114, 128, 0.1), transparent);
+            box-shadow: 0 0 10px rgba(107, 114, 128, 0.2);
         }
 
         .rebaixamento {
-            border-left: 6px solid #EF4444;
+            border-left: 6px solid #EF4444; /* Vermelho - Z4 Rebaixamento */
             background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), transparent);
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
         }
 
-        /* Bolinhas dos últimos jogos - layout elegante */
+        /* Bolinhas dos �ltimos jogos - layout elegante */
         .ultimos-jogos {
             display: flex;
             gap: 1px;
@@ -2637,31 +2678,31 @@
         }
 
         /* Ajustes de colunas para layout elegante */
-        .brasileirao-table th:nth-child(1), 
-        .brasileirao-table td:nth-child(1) {
+        .brasileirao-table th, .standings-table th:nth-child(1), 
+        .brasileirao-table td, .standings-table td:nth-child(1) {
             width: 25%;
             text-align: left;
             padding: 0.8rem 1rem;
         }
 
-        .brasileirao-table th:nth-child(2) { width: 6%; }
-        .brasileirao-table th:nth-child(3) { width: 5%; }
-        .brasileirao-table th:nth-child(4) { width: 5%; }
-        .brasileirao-table th:nth-child(5) { width: 5%; }
-        .brasileirao-table th:nth-child(6) { width: 5%; }
-        .brasileirao-table th:nth-child(7) { width: 6%; }
-        .brasileirao-table th:nth-child(8) { width: 6%; }
-        .brasileirao-table th:nth-child(9) { width: 6%; }
-        .brasileirao-table th:nth-child(10) { width: 6%; }
+        .brasileirao-table th, .standings-table th:nth-child(2) { width: 6%; }
+        .brasileirao-table th, .standings-table th:nth-child(3) { width: 5%; }
+        .brasileirao-table th, .standings-table th:nth-child(4) { width: 5%; }
+        .brasileirao-table th, .standings-table th:nth-child(5) { width: 5%; }
+        .brasileirao-table th, .standings-table th:nth-child(6) { width: 5%; }
+        .brasileirao-table th, .standings-table th:nth-child(7) { width: 6%; }
+        .brasileirao-table th, .standings-table th:nth-child(8) { width: 6%; }
+        .brasileirao-table th, .standings-table th:nth-child(9) { width: 6%; }
+        .brasileirao-table th, .standings-table th:nth-child(10) { width: 6%; }
 
-        .brasileirao-table th:nth-child(11), 
-        .brasileirao-table td:nth-child(11) {
+        .brasileirao-table th, .standings-table th:nth-child(11), 
+        .brasileirao-table td, .standings-table td:nth-child(11) {
             width: 10%;
             white-space: nowrap;
             text-align: center;
         }
 
-        /* ===== HOVER E NAVEGAÇÃO ENTRE ABAS ===== */
+        /* ===== HOVER E NAVEGA��O ENTRE ABAS ===== */
         
         /* Hover elegante em TODO o container da linha */
         .optimization-table tbody tr {
@@ -2693,9 +2734,9 @@
             border: 3px solid var(--cor-destaque-primaria) !important;
         }
         
-        /* Texto "Ver Análise" na área de destaque */
+        /* Texto "Ver An�lise" na �rea de destaque */
         .optimization-table tbody tr td:last-child::after {
-            content: 'Ver Análise';
+            content: 'Ver An�lise';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -2719,7 +2760,7 @@
             visibility: visible;
         }
         
-        /* Área de navegação integrada */
+        /* �rea de navega��o integrada */
         .analise-navegacao-area {
             position: relative;
             display: inline-flex;
@@ -2745,7 +2786,7 @@
         
         /* Tooltip integrado */
         .analise-navegacao-area::after {
-            content: 'Ver análise detalhada';
+            content: 'Ver an�lise detalhada';
             position: absolute;
             bottom: 100%;
             left: 50%;
@@ -2786,7 +2827,7 @@
             visibility: visible;
         }
         
-        /* Destaque FORTE do ícone quando hover na coluna de probabilidades */
+        /* Destaque FORTE do �cone quando hover na coluna de probabilidades */
         .optimization-table tbody tr td:last-child:hover .analise-navegacao-area {
             animation: pulseStrong 1.2s infinite !important;
             transform: scale(1.3) !important;
@@ -2810,7 +2851,7 @@
             }
         }
         
-        /* Destaque do jogo na Análise Rápida */
+        /* Destaque do jogo na An�lise R�pida */
         .destaque-navegacao {
             animation: destaquePulse 2s ease-in-out;
             border: 3px solid var(--cor-destaque-primaria) !important;
@@ -2821,7 +2862,7 @@
             border-radius: 12px;
         }
         
-        /* Botão de retorno delicado */
+        /* Bot�o de retorno delicado */
         .retorno-otimizador-btn {
             position: absolute;
             top: 15px;
@@ -2860,7 +2901,7 @@
             font-size: 14px;
         }
         
-        /* Responsividade do botão */
+        /* Responsividade do bot�o */
         @media (max-width: 768px) {
             .retorno-otimizador-btn {
                 top: 10px;
@@ -2899,7 +2940,7 @@
                     padding: 6px 10px;
                 }
                 
-                /* DESTAQUE FORTE DA ÚLTIMA COLUNA PARA MOBILE - COMO NO DESKTOP */
+                /* DESTAQUE FORTE DA �LTIMA COLUNA PARA MOBILE - COMO NO DESKTOP */
                 .optimization-table tbody tr td:last-child:hover {
                     background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(0, 227, 140, 0.15)) !important;
                     transform: scale(1.05) translateY(-3px) !important; /* Movimento mais acentuado */
@@ -2909,28 +2950,28 @@
                     border-radius: 6px !important;
                 }
                 
-                /* HOVER DO ÍCONE "VER ANÁLISE" PARA MOBILE */
+                /* HOVER DO �CONE "VER AN�LISE" PARA MOBILE */
                 .analise-navegacao-area:hover {
                     transform: scale(1.1) !important;
                     box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4) !important;
                 }
                 
-                /* DESTAQUE FORTE DO ÍCONE "VER ANÁLISE" QUANDO HOVER NA ÚLTIMA COLUNA */
+                /* DESTAQUE FORTE DO �CONE "VER AN�LISE" QUANDO HOVER NA �LTIMA COLUNA */
                 .optimization-table tbody tr td:last-child:hover .analise-navegacao-area {
-                    animation: pulseStrong 1.2s infinite !important; /* Animação pulsante */
+                    animation: pulseStrong 1.2s infinite !important; /* Anima��o pulsante */
                     transform: scale(1.3) !important; /* Escala maior */
                     box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6) !important; /* Sombra forte */
                     background: linear-gradient(135deg, var(--cor-destaque-secundaria), var(--cor-destaque-primaria)) !important; /* Gradiente invertido */
                 }
                 
-                /* HOVER DAS LINHAS DA TABELA PARA MOBILE - COM DESTAQUE DA ÚLTIMA COLUNA */
+                /* HOVER DAS LINHAS DA TABELA PARA MOBILE - COM DESTAQUE DA �LTIMA COLUNA */
                 .optimization-table tbody tr:hover {
                     background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 227, 140, 0.08)) !important;
                     transform: translateY(-1px) !important;
                     box-shadow: 0 2px 8px rgba(168, 85, 247, 0.2) !important;
                 }
                 
-                /* DESTAQUE FORTE DA ÚLTIMA COLUNA QUANDO HOVER NA LINHA INTEIRA */
+                /* DESTAQUE FORTE DA �LTIMA COLUNA QUANDO HOVER NA LINHA INTEIRA */
                 .optimization-table tbody tr:hover td:last-child {
                     background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(0, 227, 140, 0.2)) !important;
                     transform: scale(1.03) translateY(-2px) !important;
@@ -2940,7 +2981,7 @@
                     border-radius: 6px !important;
                 }
                 
-                /* DESTAQUE DO ÍCONE "VER ANÁLISE" QUANDO HOVER NA LINHA */
+                /* DESTAQUE DO �CONE "VER AN�LISE" QUANDO HOVER NA LINHA */
                 .optimization-table tbody tr:hover .analise-navegacao-area {
                     transform: scale(1.2) !important;
                     box-shadow: 0 4px 15px rgba(168, 85, 247, 0.5) !important;
@@ -2975,7 +3016,7 @@
             color: var(--cor-texto-secundario);
         }
 
-        /* Responsividade para o rodapé de honestidade */
+        /* Responsividade para o rodap� de honestidade */
         @media (max-width: 768px) {
             .honesty-footer {
                 padding: 10px 12px;
@@ -3029,7 +3070,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
         }
         
-        /* STICKY SIMPLES - SEM INTERFERÊNCIAS */
+        /* STICKY SIMPLES - SEM INTERFER�NCIAS */
         @media (max-width: 768px) {
             .tabs-container {
                 position: sticky !important;
@@ -3096,7 +3137,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ESTILOS DA ABA 2: DADOS AVANÇADOS */
+        /* ESTILOS DA ABA 2: DADOS AVAN�ADOS */
         .advanced-stats-container {
             padding: 2rem 0;
         }
@@ -3134,7 +3175,7 @@
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
         }
 
-        /* BOTÃO DE SINCRONIZAÇÃO */
+        /* BOT�O DE SINCRONIZA��O */
         #sync-games-btn:hover {
             background: var(--cor-destaque-secundaria) !important;
             transform: translateY(-2px);
@@ -3253,13 +3294,13 @@
 
         .stat-label {
             font-size: 10px;
-            color: #e2e8f0 !important; /* FORÇAR - Mesma cor dos outros textos principais */
+            color: #e2e8f0 !important; /* FOR�AR - Mesma cor dos outros textos principais */
             text-transform: none;
             margin-bottom: 0.3rem;
             display: block;
         }
         
-        /* FORÇAR cor específica para os labels dos containers */
+        /* FOR�AR cor espec�fica para os labels dos containers */
         .stat-group .stat-label,
         .time-stats .stat-label,
         .clube-stats .stat-label {
@@ -3409,7 +3450,7 @@
 
         .stat-label {
             font-weight: 500;
-            color: #e2e8f0 !important; /* FORÇAR - Mesma cor dos outros textos principais */
+            color: #e2e8f0 !important; /* FOR�AR - Mesma cor dos outros textos principais */
             font-size: 10px;
         }
 
@@ -3436,7 +3477,7 @@
 
         }
 
-        /* ANÁLISE DETALHADA */
+        /* AN�LISE DETALHADA */
         .detailed-analysis {
             background-color: var(--cor-fundo-card);
             border: 1px solid var(--cor-borda);
@@ -3445,7 +3486,7 @@
             margin-bottom: 2rem;
         }
 
-        /* CABEÇALHO DO CONFRONTO */
+        /* CABE�ALHO DO CONFRONTO */
         .match-header {
             margin-bottom: 2rem;
             padding-bottom: 1.5rem;
@@ -3513,7 +3554,7 @@
             color: var(--cor-texto-secundario);
         }
 
-        /* ESTATÍSTICAS COMPARATIVAS */
+        /* ESTAT�STICAS COMPARATIVAS */
         .stats-comparison {
             margin-bottom: 2rem;
         }
@@ -3542,7 +3583,7 @@
 
         .stat-label {
             font-weight: 600;
-            color: #e2e8f0 !important; /* FORÇAR - Mesma cor dos outros textos principais */
+            color: #e2e8f0 !important; /* FOR�AR - Mesma cor dos outros textos principais */
             font-size: 10px;
         }
 
@@ -3571,17 +3612,17 @@
             transition: width 0.3s ease;
         }
 
-        /* Barra verde - cenário favorável */
+        /* Barra verde - cen�rio favor�vel */
         .stat-fill.favorable {
             background: linear-gradient(90deg, #32CD32, #00FF00);
         }
 
-        /* Barra vermelha - cenário desfavorável */
+        /* Barra vermelha - cen�rio desfavor�vel */
         .stat-fill.unfavorable {
             background: linear-gradient(90deg, #FF6B6B, #FF4444);
         }
 
-        /* Barra padrão (compatibilidade) */
+        /* Barra padr�o (compatibilidade) */
         .stat-fill:not(.favorable):not(.unfavorable) {
             background: linear-gradient(90deg, var(--cor-destaque-secundaria), #00B377);
         }
@@ -3623,7 +3664,7 @@
             color: white;
         }
 
-        /* HISTÓRICO CONFRONTO DIRETO */
+        /* HIST�RICO CONFRONTO DIRETO */
         .h2h-section {
             margin-bottom: 2rem;
         }
@@ -3700,7 +3741,7 @@
             color: var(--cor-equilibrio);
         }
 
-        /* RECOMENDAÇÃO BASEADA EM DADOS */
+        /* RECOMENDA��O BASEADA EM DADOS */
         .data-recommendation h4 {
             color: var(--cor-destaque-primaria);
             margin-bottom: 1.5rem;
@@ -3743,7 +3784,7 @@
             color: #F59E0B;
         }
 
-        /* BOTÃO CONFRONTOS DIRETOS */
+        /* BOT�O CONFRONTOS DIRETOS */
         .confrontos-diretos-button {
             position: absolute;
             top: 10px;
@@ -3767,7 +3808,7 @@
             box-shadow: 0 6px 16px rgba(50, 205, 50, 0.4);
         }
 
-        /* BOTÃO CONFRONTOS DIRETOS CENTRALIZADO */
+        /* BOT�O CONFRONTOS DIRETOS CENTRALIZADO */
         .confrontos-diretos-button-center {
             background: linear-gradient(135deg, #32CD32, #00FF00);
             color: #000;
@@ -3829,7 +3870,7 @@
             color: var(--cor-equilibrio);
         }
 
-        /* MENSAGEM SEM SELEÇÃO */
+        /* MENSAGEM SEM SELE��O */
         .no-selection {
             text-align: center;
             padding: 4rem 2rem;
@@ -3890,7 +3931,7 @@
             margin: 0 auto;
         }
 
-        /* Seletor de Orçamento */
+        /* Seletor de Or�amento */
         .budget-selector {
             background-color: var(--cor-fundo-card);
             border: 1px solid var(--cor-borda);
@@ -3964,7 +4005,7 @@
             font-weight: 500;
         }
 
-        /* Classificação dos Jogos */
+        /* Classifica��o dos Jogos */
         .games-classification {
             margin-bottom: 2.5rem;
         }
@@ -4034,7 +4075,7 @@
             border-bottom: none;
         }
 
-        /* CSS específico para container "Sua Aposta" */
+        /* CSS espec�fico para container "Sua Aposta" */
         .user-bet-details {
             display: grid !important;
             grid-template-columns: repeat(4, 1fr) !important;
@@ -4061,7 +4102,7 @@
             font-weight: bold !important;
         }
 
-        /* Tabela de Otimização */
+        /* Tabela de Otimiza��o */
         .optimization-table-container {
             margin-bottom: 2.5rem;
         }
@@ -4087,7 +4128,7 @@
             table-layout: fixed;
         }
 
-        /* REDISTRIBUIÇÃO DE LARGURAS DAS COLUNAS */
+        /* REDISTRIBUI��O DE LARGURAS DAS COLUNAS */
         /* Coluna 1: Jogo (reduzida pela metade) */
         .optimization-table th:nth-child(1),
         .optimization-table td:nth-child(1) {
@@ -4105,11 +4146,11 @@
             min-width: 150px;
         }
         
-        /* APLICAR QUEBRA DE LINHA APÓS "vs" TAMBÉM NO DESKTOP */
+        /* APLICAR QUEBRA DE LINHA AP�S "vs" TAMB�M NO DESKTOP */
         .page--otimizador-aposta .optimization-table td:nth-child(2) {
-            white-space: pre-line !important; /* Permitir quebra de linha forçada no desktop */
-            line-height: 1.4 !important; /* Espaçamento adequado para desktop */
-            text-align: center !important; /* Centralizar conteúdo */
+            white-space: pre-line !important; /* Permitir quebra de linha for�ada no desktop */
+            line-height: 1.4 !important; /* Espa�amento adequado para desktop */
+            text-align: center !important; /* Centralizar conte�do */
         }
         
         /* ESTILO PARA NOMES DOS TIMES NO DESKTOP */
@@ -4117,26 +4158,26 @@
             display: block !important; /* Cada time em uma linha */
             font-size: 11px !important; /* Fonte adequada para desktop */
             margin: 2px 0 !important; /* Margem entre os times */
-            line-height: 1.2 !important; /* Espaçamento compacto */
+            line-height: 1.2 !important; /* Espa�amento compacto */
         }
         
-        /* ESTILO ESPECÍFICO PARA O SEPARADOR "vs" NO DESKTOP */
+        /* ESTILO ESPEC�FICO PARA O SEPARADOR "vs" NO DESKTOP */
         .page--otimizador-aposta .optimization-table td:nth-child(2) .vs-separator {
-            display: block !important; /* Forçar quebra após vs */
-            margin: 3px 0 !important; /* Espaço antes do segundo time */
+            display: block !important; /* For�ar quebra ap�s vs */
+            margin: 3px 0 !important; /* Espa�o antes do segundo time */
             font-size: 11px !important; /* Mesmo tamanho dos times */
             font-weight: bold !important; /* Destaque para o vs */
             color: var(--cor-destaque-secundaria) !important; /* Cor de destaque */
         }
 
-        /* Coluna 3: Classificação (mantida) */
+        /* Coluna 3: Classifica��o (mantida) */
         .optimization-table th:nth-child(3),
         .optimization-table td:nth-child(3) {
             width: 15%;
             min-width: 100px;
         }
 
-        /* Coluna 4: Sugestão (mantida) */
+        /* Coluna 4: Sugest�o (mantida) */
         .optimization-table th:nth-child(4),
         .optimization-table td:nth-child(4) {
             width: 10%;
@@ -4144,7 +4185,7 @@
             text-align: center;
         }
 
-        /* Coluna 5: Sua Escolha (AMPLIADA com o espaço ganho) */
+        /* Coluna 5: Sua Escolha (AMPLIADA com o espa�o ganho) */
         .optimization-table th:nth-child(5),
         .optimization-table td:nth-child(5) {
             width: 25%;
@@ -4173,7 +4214,7 @@
             border-bottom: 1px solid var(--cor-borda);
         }
 
-        /* CSS específico para coluna de probabilidades */
+        /* CSS espec�fico para coluna de probabilidades */
         .optimization-table th:nth-child(6),
         .optimization-table td:nth-child(6) {
             min-width: 200px;
@@ -4313,7 +4354,7 @@
             text-align: center;
         }
 
-        /* Sub-abas para Dados Avançados */
+        /* Sub-abas para Dados Avan�ados */
         .dados-avancados-container {
             width: 100%;
         }
@@ -4339,143 +4380,143 @@
             border-bottom: 2px solid transparent;
         }
         
-        /* ALINHAR CATEGORIAS À ESQUERDA TAMBÉM NO DESKTOP */
+        /* ALINHAR CATEGORIAS � ESQUERDA TAMB�M NO DESKTOP */
         @media (min-width: 769px) {
             .page--dados-avancados .linha-tabela .coluna.categoria {
-                text-align: left !important; /* Alinhar categorias à esquerda no desktop */
-                display: flex !important; /* Flexbox para centralização vertical */
+                text-align: left !important; /* Alinhar categorias � esquerda no desktop */
+                display: flex !important; /* Flexbox para centraliza��o vertical */
                 align-items: center !important; /* Centralizar verticalmente */
-                justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
+                justify-content: flex-start !important; /* Alinhar � esquerda horizontalmente */
             }
         }
 
-        /* SOBRESCREVER REGRAS BASE PARA MOBILE - DADOS AVANÇADOS */
+        /* SOBRESCREVER REGRAS BASE PARA MOBILE - DADOS AVAN�ADOS */
         @media (max-width: 768px) {
             
-            /* SOBRESCREVER ESTILOS INLINE DA ABA DADOS AVANÇADOS */
+            /* SOBRESCREVER ESTILOS INLINE DA ABA DADOS AVAN�ADOS */
             .page--dados-avancados h3[style*="font-size"],
             .page--dados-avancados h4[style*="font-size"],
             .page--dados-avancados p[style*="font-size"],
             .page--dados-avancados span[style*="font-size"],
             .page--dados-avancados div[style*="font-size"] {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados button[style*="font-size"],
             .page--dados-avancados .btn[style*="font-size"] {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
             }
             
             .page--dados-avancados select[style*="font-size"] {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
-            /* SOBRESCREVER ESTILOS INLINE ESPECÍFICOS ENCONTRADOS NO HTML */
+            /* SOBRESCREVER ESTILOS INLINE ESPEC�FICOS ENCONTRADOS NO HTML */
             .page--dados-avancados .game-selector h3 {
-                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 10px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .game-selector p {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .correlate-csv-btn {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
             }
             
             .page--dados-avancados .comparacao-header h3 {
-                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 10px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .comparacao-header p {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .secao-header h4 {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .coluna {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .linha-tabela {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .info-icon {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
-            /* TORNAR ÍCONES DE INTERROGAÇÃO MAIS DISCRETOS NO MOBILE */
+            /* TORNAR �CONES DE INTERROGA��O MAIS DISCRETOS NO MOBILE */
             .page--dados-avancados .info-icon {
                 background: none !important; /* Remover fundo vermelho */
-                color: #ff4444 !important; /* Apenas interrogação vermelha */
+                color: #ff4444 !important; /* Apenas interroga��o vermelha */
                 border: none !important; /* Remover borda */
                 border-radius: 0 !important; /* Remover bordas arredondadas */
                 padding: 0 !important; /* Remover padding */
-                margin: 0 0.2rem !important; /* Margem mínima */
+                margin: 0 0.2rem !important; /* Margem m�nima */
                 font-size: 10px !important; /* Tamanho menor */
                 font-weight: bold !important; /* Negrito para visibilidade */
                 text-shadow: none !important; /* Remover sombra */
                 box-shadow: none !important; /* Remover sombra */
-                width: auto !important; /* Largura automática */
-                height: auto !important; /* Altura automática */
+                width: auto !important; /* Largura autom�tica */
+                height: auto !important; /* Altura autom�tica */
                 display: inline !important; /* Display inline */
                 vertical-align: middle !important; /* Alinhar verticalmente */
             }
             
-            /* REMOVER CÍRCULO VERMELHO DOS ÍCONES */
+            /* REMOVER C�RCULO VERMELHO DOS �CONES */
             .page--dados-avancados .info-icon::before,
             .page--dados-avancados .info-icon::after {
                 display: none !important; /* Remover pseudo-elementos */
             }
             
-            /* ESTILO ALTERNATIVO PARA ÍCONES MAIS DISCRETOS */
+            /* ESTILO ALTERNATIVO PARA �CONES MAIS DISCRETOS */
             .page--dados-avancados .info-icon:hover {
                 background: rgba(255, 68, 68, 0.1) !important; /* Fundo sutil no hover */
-                border-radius: 50% !important; /* Círculo sutil no hover */
-                padding: 0.1rem !important; /* Padding mínimo no hover */
+                border-radius: 50% !important; /* C�rculo sutil no hover */
+                padding: 0.1rem !important; /* Padding m�nimo no hover */
             }
             
-            /* SOBRESCREVER ESTILOS INLINE DOS ÍCONES */
+            /* SOBRESCREVER ESTILOS INLINE DOS �CONES */
             .page--dados-avancados .info-icon[style*="background"],
             .page--dados-avancados .info-icon[style*="border"],
             .page--dados-avancados .info-icon[style*="padding"] {
-                background: none !important; /* Forçar remoção do fundo */
-                border: none !important; /* Forçar remoção da borda */
-                padding: 0 !important; /* Forçar remoção do padding */
-                color: #ff4444 !important; /* Forçar cor vermelha */
-                font-size: 10px !important; /* Forçar tamanho menor */
+                background: none !important; /* For�ar remo��o do fundo */
+                border: none !important; /* For�ar remo��o da borda */
+                padding: 0 !important; /* For�ar remo��o do padding */
+                color: #ff4444 !important; /* For�ar cor vermelha */
+                font-size: 10px !important; /* For�ar tamanho menor */
             }
             
-            /* REGRAS ESPECÍFICAS PARA TELAS MUITO PEQUENAS */
+            /* REGRAS ESPEC�FICAS PARA TELAS MUITO PEQUENAS */
             @media (max-width: 480px) {
                 .page--dados-avancados .info-icon {
                     font-size: 8px !important; /* Ainda menor em telas pequenas */
-                    margin: 0 0.1rem !important; /* Margem mínima */
+                    margin: 0 0.1rem !important; /* Margem m�nima */
                 }
             }
             
-            /* SOBRESCREVER ESTILOS INLINE ESPECÍFICOS ENCONTRADOS NO HTML */
+            /* SOBRESCREVER ESTILOS INLINE ESPEC�FICOS ENCONTRADOS NO HTML */
             .page--dados-avancados .game-selector div[style*="display: flex"] {
                 gap: 0.5rem !important; /* Gap menor para mobile */
             }
             
             .page--dados-avancados .game-select {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 min-width: 200px !important; /* Largura menor para mobile */
             }
             
             .page--dados-avancados .correlate-csv-btn[style*="padding: 8px 16px"] {
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .game-selector p[style*="font-size: 0.9rem"] {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .comparacao-elegante[style*="display: block"] {
@@ -4491,20 +4532,20 @@
             }
             
             .page--dados-avancados .linha-titulos {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .page--dados-avancados .tabela-secao {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             /* LAYOUT HORIZONTAL PARA DADOS - MOBILE */
             .page--dados-avancados .linha-tabela {
-                display: flex !important; /* Forçar layout horizontal */
+                display: flex !important; /* For�ar layout horizontal */
                 flex-direction: row !important; /* Dados lado a lado */
-                gap: 0.3rem !important; /* Espaçamento entre dados */
+                gap: 0.3rem !important; /* Espa�amento entre dados */
                 align-items: center !important; /* Centralizar verticalmente */
-                margin-bottom: 0.5rem !important; /* Espaço entre linhas */
+                margin-bottom: 0.5rem !important; /* Espa�o entre linhas */
                 padding: 0.3rem !important; /* Padding interno */
                 background: rgba(255, 255, 255, 0.05) !important; /* Fundo sutil */
                 border-radius: 6px !important; /* Bordas arredondadas */
@@ -4517,52 +4558,52 @@
                 padding: 0.2rem !important; /* Padding interno menor */
                 text-align: center !important; /* Centralizar texto */
                 font-size: 9px !important; /* Fonte maior para melhor legibilidade */
-                white-space: nowrap !important; /* Não quebrar linha */
-                overflow: hidden !important; /* Cortar texto se necessário */
+                white-space: nowrap !important; /* N�o quebrar linha */
+                overflow: hidden !important; /* Cortar texto se necess�rio */
                 text-overflow: ellipsis !important; /* ... se texto for muito longo */
-                display: flex !important; /* Flexbox para centralização vertical */
+                display: flex !important; /* Flexbox para centraliza��o vertical */
                 align-items: center !important; /* Centralizar verticalmente */
                 justify-content: center !important; /* Centralizar horizontalmente */
             }
             
-            /* AJUSTAR ESPECIFICAMENTE AS COLUNAS DE DADOS - NOVA DISTRIBUIÇÃO 30-20-20-30 */
+            /* AJUSTAR ESPECIFICAMENTE AS COLUNAS DE DADOS - NOVA DISTRIBUI��O 30-20-20-30 */
             .page--dados-avancados .linha-tabela .coluna.categoria {
                 flex: 0 0 30% !important; /* Largura 30% para categoria */
-                max-width: 30% !important; /* Máxima largura */
-                text-align: left !important; /* Alinhar categorias à esquerda */
-                display: flex !important; /* Flexbox para centralização vertical */
+                max-width: 30% !important; /* M�xima largura */
+                text-align: left !important; /* Alinhar categorias � esquerda */
+                display: flex !important; /* Flexbox para centraliza��o vertical */
                 align-items: center !important; /* Centralizar verticalmente */
-                justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
+                justify-content: flex-start !important; /* Alinhar � esquerda horizontalmente */
             }
             
             .page--dados-avancados .linha-tabela .coluna.mandante,
             .page--dados-avancados .linha-tabela .coluna.visitante {
                 flex: 0 0 20% !important; /* Largura 20% para mandante e visitante */
-                max-width: 20% !important; /* Máxima largura */
+                max-width: 20% !important; /* M�xima largura */
             }
             
             .page--dados-avancados .linha-tabela .coluna.vantagem {
                 flex: 0 0 30% !important; /* Largura 30% para vantagem */
-                max-width: 30% !important; /* Máxima largura */
-                font-size: 9px !important; /* Forçar tamanho da fonte igual às outras colunas */
+                max-width: 30% !important; /* M�xima largura */
+                font-size: 9px !important; /* For�ar tamanho da fonte igual �s outras colunas */
             }
             
-            /* FORÇAR TAMANHO DA FONTE ESPECÍFICO PARA COLUNA VANTAGEM */
+            /* FOR�AR TAMANHO DA FONTE ESPEC�FICO PARA COLUNA VANTAGEM */
             .page--dados-avancados .linha-tabela .coluna.vantagem * {
-                font-size: 9px !important; /* Forçar tamanho para todos os elementos filhos */
+                font-size: 9px !important; /* For�ar tamanho para todos os elementos filhos */
             }
             
             /* SOBRESCREVER ESTILOS INLINE NA COLUNA VANTAGEM */
             .page--dados-avancados .linha-tabela .coluna.vantagem[style*="font-size"],
             .page--dados-avancados .linha-tabela .coluna.vantagem *[style*="font-size"] {
-                font-size: 9px !important; /* Forçar tamanho correto */
+                font-size: 9px !important; /* For�ar tamanho correto */
             }
             
             /* AJUSTAR CONTAINER PRINCIPAL */
             .page--dados-avancados .tabela-secao {
-                display: flex !important; /* Layout flexível */
+                display: flex !important; /* Layout flex�vel */
                 flex-direction: column !important; /* Linhas verticais */
-                gap: 0.3rem !important; /* Espaçamento entre linhas */
+                gap: 0.3rem !important; /* Espa�amento entre linhas */
                 margin: 0 !important; /* Eliminar margens */
                 padding: 0 !important; /* Eliminar padding */
                 width: 100% !important; /* Ocupar toda a largura */
@@ -4573,15 +4614,15 @@
             .page--dados-avancados .nova-comparacao,
             .page--dados-avancados .container-secao {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.2rem !important; /* Padding mínimo */
+                padding: 0.2rem !important; /* Padding m�nimo */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
-            /* AJUSTAR LINHA DE TÍTULOS */
+            /* AJUSTAR LINHA DE T�TULOS */
             .page--dados-avancados .linha-titulos {
                 display: flex !important; /* Layout horizontal */
-                gap: 0.3rem !important; /* Espaçamento entre colunas */
-                margin-bottom: 0.5rem !important; /* Espaço abaixo */
+                gap: 0.3rem !important; /* Espa�amento entre colunas */
+                margin-bottom: 0.5rem !important; /* Espa�o abaixo */
                 padding: 0.3rem !important; /* Padding interno */
                 background: rgba(255, 255, 255, 0.1) !important; /* Fundo mais claro */
                 border-radius: 6px !important; /* Bordas arredondadas */
@@ -4595,25 +4636,25 @@
                 color: var(--cor-texto-principal) !important; /* Cor principal */
             }
             
-            /* REGRAS ESPECÍFICAS PARA TELAS MUITO PEQUENAS */
+            /* REGRAS ESPEC�FICAS PARA TELAS MUITO PEQUENAS */
             @media (max-width: 480px) {
                 .page--dados-avancados .linha-tabela {
-                    gap: 0.2rem !important; /* Espaçamento ainda menor */
+                    gap: 0.2rem !important; /* Espa�amento ainda menor */
                     padding: 0.2rem !important; /* Padding menor */
                 }
                 
                 .page--dados-avancados .linha-tabela .coluna {
                     font-size: 8px !important; /* Fonte maior para melhor legibilidade */
-                    padding: 0.1rem !important; /* Padding mínimo */
+                    padding: 0.1rem !important; /* Padding m�nimo */
                 }
                 
                 .page--dados-avancados .linha-tabela .coluna.categoria {
                     flex: 0 0 30% !important; /* Largura 30% para categoria */
                     max-width: 30% !important;
-                    text-align: left !important; /* Alinhar categorias à esquerda */
-                    display: flex !important; /* Flexbox para centralização vertical */
+                    text-align: left !important; /* Alinhar categorias � esquerda */
+                    display: flex !important; /* Flexbox para centraliza��o vertical */
                     align-items: center !important; /* Centralizar verticalmente */
-                    justify-content: flex-start !important; /* Alinhar à esquerda horizontalmente */
+                    justify-content: flex-start !important; /* Alinhar � esquerda horizontalmente */
                 }
                 
                 .page--dados-avancados .linha-tabela .coluna.mandante,
@@ -4625,42 +4666,42 @@
                 .page--dados-avancados .linha-tabela .coluna.vantagem {
                     flex: 0 0 30% !important; /* Largura 30% para vantagem */
                     max-width: 30% !important;
-                    font-size: 8px !important; /* Forçar tamanho da fonte para telas pequenas */
+                    font-size: 8px !important; /* For�ar tamanho da fonte para telas pequenas */
                 }
                 
-                /* FORÇAR TAMANHO DA FONTE ESPECÍFICO PARA COLUNA VANTAGEM - TELAS PEQUENAS */
+                /* FOR�AR TAMANHO DA FONTE ESPEC�FICO PARA COLUNA VANTAGEM - TELAS PEQUENAS */
                 .page--dados-avancados .linha-tabela .coluna.vantagem * {
-                    font-size: 8px !important; /* Forçar tamanho para todos os elementos filhos */
+                    font-size: 8px !important; /* For�ar tamanho para todos os elementos filhos */
                 }
                 
                 /* SOBRESCREVER ESTILOS INLINE NA COLUNA VANTAGEM - TELAS PEQUENAS */
                 .page--dados-avancados .linha-tabela .coluna.vantagem[style*="font-size"],
                 .page--dados-avancados .linha-tabela .coluna.vantagem *[style*="font-size"] {
-                    font-size: 8px !important; /* Forçar tamanho correto */
+                    font-size: 8px !important; /* For�ar tamanho correto */
                 }
             }
             
-            /* ELIMINAR COMPLETAMENTE O RESPIRRO - SEGUINDO PADRÃO DO DROPDOWN */
+            /* ELIMINAR COMPLETAMENTE O RESPIRRO - SEGUINDO PADR�O DO DROPDOWN */
             .page--dados-avancados .game-selector,
             .page--dados-avancados .comparacao-header,
             .page--dados-avancados .secao-header {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.3rem 0.2rem !important; /* Padding mínimo */
+                padding: 0.3rem 0.2rem !important; /* Padding m�nimo */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
-            /* ELIMINAR RESPIRRO DOS CONTAINERS PAI - DISTÂNCIA MÍNIMA DAS LATERAIS */
+            /* ELIMINAR RESPIRRO DOS CONTAINERS PAI - DIST�NCIA M�NIMA DAS LATERAIS */
             .page--dados-avancados .container-secao {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.1rem 0.05rem !important; /* Padding mínimo - quase zero */
+                padding: 0.1rem 0.05rem !important; /* Padding m�nimo - quase zero */
                 width: 100% !important; /* Ocupar toda a largura */
-                max-width: 100% !important; /* Máxima largura */
+                max-width: 100% !important; /* M�xima largura */
             }
             
-            /* ELIMINAR RESPIRRO DOS HEADERS DAS SEÇÕES */
+            /* ELIMINAR RESPIRRO DOS HEADERS DAS SE��ES */
             .page--dados-avancados .secao-header {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.2rem 0.05rem !important; /* Padding mínimo */
+                padding: 0.2rem 0.05rem !important; /* Padding m�nimo */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
@@ -4674,20 +4715,20 @@
             /* ELIMINAR RESPIRRO DAS LINHAS DE DADOS */
             .page--dados-avancados .linha-tabela {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.1rem 0.05rem !important; /* Padding mínimo */
+                padding: 0.1rem 0.05rem !important; /* Padding m�nimo */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
-            /* ELIMINAR RESPIRRO DAS LINHAS DE TÍTULOS */
+            /* ELIMINAR RESPIRRO DAS LINHAS DE T�TULOS */
             .page--dados-avancados .linha-titulos {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.1rem 0.05rem !important; /* Padding mínimo */
+                padding: 0.1rem 0.05rem !important; /* Padding m�nimo */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
-            /* AJUSTAR ESPAÇAMENTO ENTRE SEÇÕES */
+            /* AJUSTAR ESPA�AMENTO ENTRE SE��ES */
             .page--dados-avancados .container-secao + .container-secao {
-                margin-top: 0.5rem !important; /* Espaço mínimo entre seções */
+                margin-top: 0.5rem !important; /* Espa�o m�nimo entre se��es */
             }
             
             /* ELIMINAR TODAS AS BORDAS DOS CONTAINERS E LINHAS - MOBILE */
@@ -4725,45 +4766,45 @@
                 box-shadow: none !important; /* Eliminar sombras */
             }
             
-            /* ELIMINAR BORDAS DOS HEADERS DAS SEÇÕES */
+            /* ELIMINAR BORDAS DOS HEADERS DAS SE��ES */
             .page--dados-avancados .secao-header h4,
             .page--dados-avancados .secao-header h3,
             .page--dados-avancados .secao-header h2 {
-                border: none !important; /* Eliminar bordas dos títulos */
+                border: none !important; /* Eliminar bordas dos t�tulos */
                 border-radius: 0 !important; /* Eliminar bordas arredondadas */
                 box-shadow: none !important; /* Eliminar sombras */
             }
             
-            /* FORÇAR CONTAINERS PAI A FICAREM COLADOS NAS LATERAIS */
+            /* FOR�AR CONTAINERS PAI A FICAREM COLADOS NAS LATERAIS */
             .page--dados-avancados .nova-comparacao {
                 margin: 0 !important; /* Eliminar margens */
                 padding: 0 !important; /* Eliminar padding */
                 width: 100% !important; /* Ocupar toda a largura */
-                max-width: 100% !important; /* Máxima largura */
+                max-width: 100% !important; /* M�xima largura */
             }
             
-            /* ELIMINAR RESPIRRO DOS CONTAINERS DE COMPARAÇÃO */
+            /* ELIMINAR RESPIRRO DOS CONTAINERS DE COMPARA��O */
             .page--dados-avancados .comparacao-elegante {
                 margin: 0 !important; /* Eliminar margens */
                 padding: 0 !important; /* Eliminar padding */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
-            /* ELIMINAR RESPIRRO DOS CONTAINERS DE CABEÇALHO */
+            /* ELIMINAR RESPIRRO DOS CONTAINERS DE CABE�ALHO */
             .page--dados-avancados .comparacao-header {
                 margin: 0 !important; /* Eliminar margens */
-                padding: 0.2rem 0.05rem !important; /* Padding mínimo */
+                padding: 0.2rem 0.05rem !important; /* Padding m�nimo */
                 width: 100% !important; /* Ocupar toda a largura */
             }
             
-            /* REGRAS ESPECÍFICAS PARA TELAS MUITO PEQUENAS - RESPIRRO MÍNIMO */
+            /* REGRAS ESPEC�FICAS PARA TELAS MUITO PEQUENAS - RESPIRRO M�NIMO */
             @media (max-width: 480px) {
                 .page--dados-avancados .container-secao {
                     padding: 0.05rem !important; /* Padding quase zero */
                 }
                 
                 .page--dados-avancados .secao-header {
-                    padding: 0.1rem 0.02rem !important; /* Padding mínimo */
+                    padding: 0.1rem 0.02rem !important; /* Padding m�nimo */
                 }
                 
                 .page--dados-avancados .tabela-secao {
@@ -4771,23 +4812,23 @@
                 }
                 
                 .page--dados-avancados .linha-tabela {
-                    padding: 0.05rem 0.02rem !important; /* Padding mínimo */
+                    padding: 0.05rem 0.02rem !important; /* Padding m�nimo */
                 }
                 
                 .page--dados-avancados .linha-titulos {
-                    padding: 0.05rem 0.02rem !important; /* Padding mínimo */
+                    padding: 0.05rem 0.02rem !important; /* Padding m�nimo */
                 }
             }
             
-            /* FORÇAR LAYOUT HORIZONTAL EM TODAS AS LINHAS */
+            /* FOR�AR LAYOUT HORIZONTAL EM TODAS AS LINHAS */
             .page--dados-avancados .linha-tabela > * {
-                display: inline-block !important; /* Forçar inline */
+                display: inline-block !important; /* For�ar inline */
                 vertical-align: top !important; /* Alinhar ao topo */
             }
             
-            /* AJUSTAR ESPAÇAMENTO ENTRE ELEMENTOS */
+            /* AJUSTAR ESPA�AMENTO ENTRE ELEMENTOS */
             .page--dados-avancados .linha-tabela .coluna + .coluna {
-                margin-left: 0.2rem !important; /* Espaçamento entre colunas */
+                margin-left: 0.2rem !important; /* Espa�amento entre colunas */
             }
             
             .page--dados-avancados .sub-tab-btn {
@@ -4796,14 +4837,14 @@
             }
             
             .dados-avancados-container .section-header h2 {
-                font-size: 12px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 12px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-principal) !important;
                 font-weight: 600 !important;
                 margin-bottom: 0.5rem !important;
             }
             
             .dados-avancados-container .section-header h3 {
-                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 10px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
                 font-weight: 500 !important;
                 margin-bottom: 0.3rem !important;
@@ -4815,7 +4856,7 @@
             .dados-avancados-container h4,
             .dados-avancados-container h5,
             .dados-avancados-container h6 {
-                font-size: 10px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 10px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-principal) !important;
                 font-weight: 600 !important;
                 margin-bottom: 0.3rem !important;
@@ -4824,7 +4865,7 @@
             .dados-avancados-container p,
             .dados-avancados-container span,
             .dados-avancados-container div {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-principal) !important;
                 line-height: 1.3 !important;
             }
@@ -4832,19 +4873,19 @@
             .dados-avancados-container .label,
             .dados-avancados-container .badge,
             .dados-avancados-container .tag {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.2rem 0.4rem !important; /* Padding compacto */
             }
             
             .dados-avancados-container button,
             .dados-avancados-container .btn {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.4rem 0.8rem !important; /* Padding compacto */
             }
             
             .dados-avancados-container table th,
             .dados-avancados-container table td {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 padding: 0.3rem 0.2rem !important; /* Padding compacto */
             }
             
@@ -4862,20 +4903,20 @@
             }
             
             .dados-avancados-content {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
             }
             
             .dados-avancados-content h4,
             .dados-avancados-content h5,
             .dados-avancados-content h6 {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 9px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-principal) !important;
                 font-weight: 600 !important;
             }
             
             .dados-avancados-content p,
             .dados-avancados-content span {
-                font-size: 8px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 8px !important; /* Mesmo padr�o do "Fator Analisado" */
                 color: var(--cor-texto-secundario) !important;
             }
         }
@@ -4900,7 +4941,7 @@
             display: block;
         }
 
-        /* Estilos específicos para sub-abas de Dados Avançados */
+        /* Estilos espec�ficos para sub-abas de Dados Avan�ados */
         .dados-avancados-content {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -4960,7 +5001,7 @@
             color: var(--cor-texto-secundario);
         }
 
-        /* Botão de detalhes dos clubes */
+        /* Bot�o de detalhes dos clubes */
         .btn-detalhes {
             background: linear-gradient(135deg, var(--cor-destaque-primaria), var(--cor-destaque-secundaria));
             border: none;
@@ -5021,7 +5062,7 @@
             font-weight: 500;
         }
         
-        /* SOBRESCREVER ESTILOS INLINE PARA MOBILE - MÁXIMA ESPECIFICIDADE */
+        /* SOBRESCREVER ESTILOS INLINE PARA MOBILE - M�XIMA ESPECIFICIDADE */
         @media (max-width: 768px) {
             /* SOBRESCREVER ESTILOS INLINE DO CONTAINER SUA APOSTA */
             .page--otimizador-aposta .user-bet-summary h4[style*="font-size: 1.3em"] {
@@ -5043,7 +5084,7 @@
             /* SOBRESCREVER GRID INLINE - 4 COLUNAS EM UMA LINHA */
             .page--otimizador-aposta .user-bet-details[style*="grid-template-columns"] {
                 grid-template-columns: repeat(4, 1fr) !important; /* 4 colunas em uma linha */
-                gap: 4px !important; /* Gap mínimo para caber */
+                gap: 4px !important; /* Gap m�nimo para caber */
             }
             
             /* SOBRESCREVER PADDING INLINE */
@@ -5053,20 +5094,20 @@
             
             /* COMPACTAR CAIXAS INDIVIDUAIS */
             .page--otimizador-aposta .user-bet-summary .bet-detail[style*="padding: 10px"] {
-                padding: 4px 6px !important; /* Padding mínimo para caber */
+                padding: 4px 6px !important; /* Padding m�nimo para caber */
             }
             
-            /* AJUSTAR LARGURA MÍNIMA DAS CAIXAS */
+            /* AJUSTAR LARGURA M�NIMA DAS CAIXAS */
             .page--otimizador-aposta .user-bet-summary .bet-detail {
-                min-width: 0 !important; /* Remover largura mínima */
+                min-width: 0 !important; /* Remover largura m�nima */
                 flex-shrink: 1 !important; /* Permitir encolher */
                 flex-direction: column !important; /* Empilhar label e valor */
-                text-align: center !important; /* Centralizar conteúdo */
+                text-align: center !important; /* Centralizar conte�do */
             }
             
-            /* AJUSTAR ESPAÇAMENTO DOS ELEMENTOS INTERNOS */
+            /* AJUSTAR ESPA�AMENTO DOS ELEMENTOS INTERNOS */
             .page--otimizador-aposta .user-bet-summary .bet-detail .bet-label {
-                margin-bottom: 2px !important; /* Espaço mínimo entre label e valor */
+                margin-bottom: 2px !important; /* Espa�o m�nimo entre label e valor */
             }
         }
 
@@ -5111,9 +5152,9 @@
 
         /* RESPONSIVIDADE MOBILE FORTE */
         @media (max-width: 768px) {
-            /* 1. REMOVE A MARGEM DO CORPO DA PÁGINA */
+            /* 1. REMOVE A MARGEM DO CORPO DA P�GINA */
             body {
-                margin: 0 !important; /* Força a margem para zero, removendo folgas padrão do navegador */
+                margin: 0 !important; /* For�a a margem para zero, removendo folgas padr�o do navegador */
                 padding: 0 !important;
             }
 
@@ -5154,16 +5195,16 @@
 
             /* 3. REDUZ O PADDING INTERNO DE CADA CARD DE JOGO (Jogo 1 a 14) */
             .game-card {
-                padding: 8px 5px; /* Reduz o padding interno do card para aproximar o conteúdo da borda do card */
+                padding: 8px 5px; /* Reduz o padding interno do card para aproximar o conte�do da borda do card */
             }
 
             .game-card-body {
-                padding: 1rem; /* Reduzido para dar mais espaço horizontal */
+                padding: 1rem; /* Reduzido para dar mais espa�o horizontal */
             }
 
             /* 3. REDUZ O PADDING INTERNO DE CADA CARD DE JOGO */
             .game-card {
-                padding: 8px 5px; /* Reduz o padding interno do card para aproximar o conteúdo da borda do card */
+                padding: 8px 5px; /* Reduz o padding interno do card para aproximar o conte�do da borda do card */
             }
 
             /* Probabilidades - Stack Vertical no Mobile */
@@ -5189,7 +5230,7 @@
                 font-weight: 900;
             }
 
-            /* Tabela de Análise - Responsiva no mobile */
+            /* Tabela de An�lise - Responsiva no mobile */
             .analysis-table {
                 display: table;
                 width: 100%;
@@ -5216,7 +5257,7 @@
                 max-width: 80px;
             }
 
-            /* 4. AJUSTE FINO NA TABELA DE ANÁLISE (Para resolver o overlap, mantendo as larguras) */
+            /* 4. AJUSTE FINO NA TABELA DE AN�LISE (Para resolver o overlap, mantendo as larguras) */
             .analysis-table {
                 table-layout: fixed;
                 width: 100%;
@@ -5225,13 +5266,13 @@
             
             .analysis-table th, 
             .analysis-table td {
-                padding: 0.2rem 0.1rem; /* Reduz o espaçamento interno das células ao mínimo (1.6px) */
+                padding: 0.2rem 0.1rem; /* Reduz o espa�amento interno das c�lulas ao m�nimo (1.6px) */
                 vertical-align: top;
-                min-height: 40px !important; /* FORÇA altura mínima para 40px - TESTE COM !important */
-                height: 40px !important; /* FORÇA altura fixa também */
+                min-height: 40px !important; /* FOR�A altura m�nima para 40px - TESTE COM !important */
+                height: 40px !important; /* FOR�A altura fixa tamb�m */
             }
 
-            /* Distribuição das colunas dentro da Media Query */
+            /* Distribui��o das colunas dentro da Media Query */
             .analysis-table tr td:first-child {
                 width: 30%; 
                 min-width: 60px;
@@ -5251,7 +5292,7 @@
                 display: flex;
                 flex-wrap: nowrap;
                 justify-content: center;
-                gap: 1px; /* Espaçamento mínimo entre os boxes */
+                gap: 1px; /* Espa�amento m�nimo entre os boxes */
             }
 
             .analysis-table .confronto-item {
@@ -5261,7 +5302,7 @@
                 text-align: center;
             }
 
-            /* Nova estrutura mobile para análise - Mostrar */
+            /* Nova estrutura mobile para an�lise - Mostrar */
             .analysis-mobile {
                 display: block;
                 background-color: rgba(0,0,0,0.1);
@@ -5303,7 +5344,7 @@
                 font-size: 0.8rem;
             }
 
-            /* Recomendação Mobile */
+            /* Recomenda��o Mobile */
             .recommendation {
                 padding: 0.8rem;
                 font-size: 0.75rem;
@@ -5316,7 +5357,7 @@
                 font-weight: 700;
             }
 
-            /* Conclusão Mobile */
+            /* Conclus�o Mobile */
             .analyst-conclusion {
                 padding: 1.5rem;
                 border-radius: 8px;
@@ -5398,37 +5439,37 @@
                 padding: 0.6rem 0;
             }
             
-            /* OTIMIZAR SEÇÃO CLASSIFICAÇÃO ESTRATÉGICA DOS JOGOS PARA MOBILE */
+            /* OTIMIZAR SE��O CLASSIFICA��O ESTRAT�GICA DOS JOGOS PARA MOBILE */
             .page--otimizador-aposta .games-classification h3 {
-                font-size: 12px !important; /* Título menor para mobile */
+                font-size: 12px !important; /* T�tulo menor para mobile */
             }
             
             .page--otimizador-aposta .classification-grid {
                 grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas em uma linha */
-                gap: 4px !important; /* Gap mínimo */
+                gap: 4px !important; /* Gap m�nimo */
             }
             
             .page--otimizador-aposta .classification-card {
-                padding: 6px 8px !important; /* Padding mínimo para caber */
+                padding: 6px 8px !important; /* Padding m�nimo para caber */
                 min-height: 80px !important; /* Altura reduzida */
             }
             
             .page--otimizador-aposta .classification-card h4 {
-                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
-                margin-bottom: 2px !important; /* Margem mínima */
+                font-size: 9px !important; /* Mesmo padr�o da tabela - 9px */
+                margin-bottom: 2px !important; /* Margem m�nima */
             }
             
             .page--otimizador-aposta .classification-card p {
                 font-size: 8px !important; /* Fonte menor para caber */
-                margin-bottom: 4px !important; /* Margem mínima */
+                margin-bottom: 4px !important; /* Margem m�nima */
             }
             
             .page--otimizador-aposta .classification-card li {
                 font-size: 8px !important; /* Fonte menor para caber */
-                padding: 2px 0 !important; /* Padding mínimo */
+                padding: 2px 0 !important; /* Padding m�nimo */
             }
 
-            /* Tabela de Otimização Mobile */
+            /* Tabela de Otimiza��o Mobile */
             .optimization-table-container {
                 margin-bottom: 2rem;
             }
@@ -5471,17 +5512,17 @@
                 padding: 1.5rem;
             }
             
-            /* AJUSTAR TAMANHOS DO CONTAINER SUA APOSTA PARA COERÊNCIA COM A TABELA */
+            /* AJUSTAR TAMANHOS DO CONTAINER SUA APOSTA PARA COER�NCIA COM A TABELA */
             .page--otimizador-aposta .bet-summary h3 {
-                font-size: 12px !important; /* Título menor para mobile */
+                font-size: 12px !important; /* T�tulo menor para mobile */
             }
             
             .page--otimizador-aposta .bet-summary p {
-                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                font-size: 9px !important; /* Mesmo padr�o da tabela - 9px */
             }
             
             .page--otimizador-aposta .bet-summary h2 {
-                font-size: 14px !important; /* Título principal menor */
+                font-size: 14px !important; /* T�tulo principal menor */
             }
 
             .summary-grid {
@@ -5499,7 +5540,7 @@
             }
 
             .page--otimizador-aposta .summary-label {
-                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                font-size: 9px !important; /* Mesmo padr�o da tabela - 9px */
             }
 
             .action-buttons {
@@ -5507,14 +5548,14 @@
                 gap: 0.8rem;
             }
             
-            /* AJUSTAR BOTÕES DO CONTAINER SUA APOSTA */
+            /* AJUSTAR BOT�ES DO CONTAINER SUA APOSTA */
             .page--otimizador-aposta .action-buttons button {
-                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                font-size: 9px !important; /* Mesmo padr�o da tabela - 9px */
                 padding: 0.4rem 0.8rem !important; /* Padding reduzido */
             }
             
             .page--otimizador-aposta .action-buttons .btn {
-                font-size: 9px !important; /* Mesmo padrão da tabela - 9px */
+                font-size: 9px !important; /* Mesmo padr�o da tabela - 9px */
                 padding: 0.4rem 0.8rem !important; /* Padding reduzido */
             }
 
@@ -5532,36 +5573,36 @@
             }
 
             .footer-cta h3 {
-                font-size: 10px !important; /* Tamanho de fonte 10px para título do rodapé mobile */
+                font-size: 10px !important; /* Tamanho de fonte 10px para t�tulo do rodap� mobile */
             }
 
             .footer-cta p {
-                font-size: 10px !important; /* Tamanho de fonte 10px para parágrafos do rodapé mobile */
+                font-size: 10px !important; /* Tamanho de fonte 10px para par�grafos do rodap� mobile */
             }
 
             .footer-cta-btn {
                 padding: 1rem 1.5rem;
-                font-size: 10px !important; /* Tamanho de fonte 10px para botão do rodapé mobile */
+                font-size: 10px !important; /* Tamanho de fonte 10px para bot�o do rodap� mobile */
                 width: 100%;
                 text-align: center;
             }
             
-            /* APLICAR REDUÇÃO DE FONTE PARA TEXTOS ESPECÍFICOS DO RODAPÉ - MOBILE */
+            /* APLICAR REDU��O DE FONTE PARA TEXTOS ESPEC�FICOS DO RODAP� - MOBILE */
             .footer-legal p,
             .footer-legal,
             .honesty-footer,
             .honesty-footer p,
             .honesty-footer strong,
             .honesty-footer a {
-                font-size: 10px !important; /* Tamanho de fonte 10px para textos legais do rodapé mobile */
+                font-size: 10px !important; /* Tamanho de fonte 10px para textos legais do rodap� mobile */
             }
             
-            /* APLICAR REDUÇÃO PARA TODOS OS ELEMENTOS DO RODAPÉ - MOBILE */
+            /* APLICAR REDU��O PARA TODOS OS ELEMENTOS DO RODAP� - MOBILE */
             .footer *,
             .footer-cta *,
             .footer-legal *,
             .honesty-footer * {
-                font-size: 10px !important; /* Tamanho de fonte 10px para todos os elementos do rodapé mobile */
+                font-size: 10px !important; /* Tamanho de fonte 10px para todos os elementos do rodap� mobile */
             }
 
             /* Responsividade das Abas */
@@ -5573,7 +5614,7 @@
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* FORÇAR STICKY MOBILE - REGRA ULTRA ESPECÍFICA */
+            /* FOR�AR STICKY MOBILE - REGRA ULTRA ESPEC�FICA */
             .container .tabs-container {
                 position: sticky !important;
                 top: 0 !important;
@@ -5605,7 +5646,7 @@
                 padding: 1rem 0;
             }
 
-            /* ABA 2 - DADOS AVANÇADOS - RESPONSIVIDADE */
+            /* ABA 2 - DADOS AVAN�ADOS - RESPONSIVIDADE */
             .game-selector {
                 padding: 1rem;
             }
@@ -5660,7 +5701,7 @@
                 font-size: 0.6rem;
             }
 
-            /* Títulos das seções - mesmo padrão da Aba 1 */
+            /* T�tulos das se��es - mesmo padr�o da Aba 1 */
             .stats-comparison h4 {
                 font-size: 0.75rem;
                 margin-bottom: 1rem;
@@ -5787,7 +5828,7 @@
             }
         }
 
-        /* PAINEL DE CLUBES BRASILEIRÃO */
+        /* PAINEL DE CLUBES BRASILEIR�O */
         .clubes-brasileirao-section {
             margin-top: 3rem;
             padding: 2rem;
@@ -6053,7 +6094,7 @@
                 max-width: 120px; /* Reduzido de 150px para 120px em celulares pequenos */
             }
             
-            /* Reduzir textos ainda mais em celulares pequenos - FORÇAR COM !important */
+            /* Reduzir textos ainda mais em celulares pequenos - FOR�AR COM !important */
             .header h1 {
                 font-size: 1.125rem !important; /* Reduzido para 18px (1.125rem) */
             }
@@ -6063,7 +6104,7 @@
             }
             
             .container {
-                padding: 0; /* Eliminação total do respiro - máximo espaço horizontal */
+                padding: 0; /* Elimina��o total do respiro - m�ximo espa�o horizontal */
                 max-width: 100%;
                 /* overflow-x: hidden; REMOVIDO - IMPEDIA STICKY */
             }
@@ -6277,18 +6318,18 @@
             }
         }
 
-        /* MOBILE ONLY: não afeta desktop */
+        /* MOBILE ONLY: n�o afeta desktop */
         @media (max-width:520px){
-            /* container que hoje tem 3 colunas (e uma delas está vazia) */
+            /* container que hoje tem 3 colunas (e uma delas est� vazia) */
             [data-rx="aba2"] .grid-3cols.barras{
                 display:grid;
                 /* duas colunas: uma para cada time */
                 grid-template-columns: 1fr 1fr;
-                gap: 12px; /* espaço entre as duas barras */
+                gap: 12px; /* espa�o entre as duas barras */
                 align-items: center;
             }
             
-            /* cada barra ocupa sua própria coluna */
+            /* cada barra ocupa sua pr�pria coluna */
             [data-rx="aba2"] .grid-3cols.barras .stat-home,
             [data-rx="aba2"] .grid-3cols.barras .stat-away {
                 display: flex;
@@ -6318,18 +6359,18 @@
                 font-size: 0.7rem;
             }
             
-            /* reduzir espaçamento entre as linhas das estatísticas */
+            /* reduzir espa�amento entre as linhas das estat�sticas */
             [data-rx="aba2"] .stat-row {
                 margin: 1px 0; /* reduzido em 80% - de 4px para 1px */
             }
             
-            /* reduzir espaçamento entre containers de estatísticas */
+            /* reduzir espa�amento entre containers de estat�sticas */
             [data-rx="aba2"] .stats-grid {
                 gap: 2px; /* reduzido drasticamente o gap entre containers */
             }
         }
 
-        /* Análise de Desempenho Recente (4 Pilares) */
+        /* An�lise de Desempenho Recente (4 Pilares) */
         .analise-desempenho-container {
             margin: 2rem 0;
             background: rgba(255, 255, 255, 0.02);
@@ -6458,7 +6499,7 @@
             text-align: center;
         }
 
-        /* Decisão Final */
+        /* Decis�o Final */
         .decisao-final-container {
             background: rgba(168, 85, 247, 0.05);
             border-radius: 12px;
@@ -6553,7 +6594,7 @@
             color: #ef4444;
         }
 
-        /* Responsividade da Análise */
+        /* Responsividade da An�lise */
         @media (max-width: 768px) {
             .pilares-analise {
                 grid-template-columns: 1fr;
@@ -6575,7 +6616,7 @@
             }
         }
 
-        /* Recomendação Baseada em Estatísticas - Nova Estrutura */
+        /* Recomenda��o Baseada em Estat�sticas - Nova Estrutura */
         .analise-section {
             margin: 2rem 0;
             background: rgba(255, 255, 255, 0.02);
@@ -6668,7 +6709,7 @@
             font-weight: 600;
         }
 
-        /* Conclusão Final */
+        /* Conclus�o Final */
         .conclusao-final {
             margin-top: 2rem;
             background: rgba(168, 85, 247, 0.1);
@@ -6716,7 +6757,7 @@
             font-weight: 700;
         }
 
-        /* Responsividade da Nova Recomendação */
+        /* Responsividade da Nova Recomenda��o */
         @media (max-width: 768px) {
             .analise-section {
                 padding: 1rem;
@@ -6773,7 +6814,7 @@
             margin: 0 0.5rem;
         }
 
-        /* ESTILOS SÉRIE C - GRUPOS */
+        /* ESTILOS S�RIE C - GRUPOS */
         .serie-c-container {
             width: 100%;
         }
@@ -6914,7 +6955,7 @@
             margin-left: 0.25rem;
         }
 
-        /* Responsividade Série C */
+        /* Responsividade S�rie C */
         @media (max-width: 1024px) {
             .grupo-row {
                 grid-template-columns: 25px 120px 35px 25px 25px 25px 25px 35px 35px 35px 45px 100px;
@@ -6955,7 +6996,7 @@
             }
         }
 
-        /* ===== ESTILOS PARA COMPARAÇÃO ELEGANTE ===== */
+        /* ===== ESTILOS PARA COMPARA��O ELEGANTE ===== */
         .comparacao-elegante {
             background: transparent;
             border-radius: 0;
@@ -7101,7 +7142,7 @@
             100% { transform: translateX(100%); }
         }
 
-        /* ===== ESTILOS PARA TABELA DE COMPARAÇÃO ESTILO IMAGEM ===== */
+        /* ===== ESTILOS PARA TABELA DE COMPARA��O ESTILO IMAGEM ===== */
         .comparacao-tabela {
             background: white;
             border-radius: 12px;
@@ -7412,7 +7453,7 @@
             gap: 8px;
         }
 
-        /* LINHA DE TÍTULOS */
+        /* LINHA DE T�TULOS */
         .linha-titulos {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -7535,7 +7576,7 @@
             }
         }
 
-        /* Estilos para os ícones de informação */
+        /* Estilos para os �cones de informa��o */
         .info-icon {
             display: inline-block;
             width: 18px;
@@ -7634,7 +7675,7 @@
             color: #60a5fa;
         }
 
-        /* Espaçamento adicional para containers */
+        /* Espa�amento adicional para containers */
         .game-card {
             margin-left: 0.5rem;
             margin-right: 0.5rem;
@@ -7648,19 +7689,19 @@
 /* Esta regra deve ser aplicada a TODOS os tamanhos de tela (Mobile-First) */
 .page--analise-rapida .analysis-table td {
     /* 1. Alinhamento Vertical Centralizado */
-    /* Garante que o texto fique no meio da linha, e não no topo. */
+    /* Garante que o texto fique no meio da linha, e n�o no topo. */
     vertical-align: middle !important; 
     
-    /* 2. Redução do Padding para otimizar o espaço */
-    padding: 6px 4px; /* Mais compacto que o padrão, se for a célula da tabela */
+    /* 2. Redu��o do Padding para otimizar o espa�o */
+    padding: 6px 4px; /* Mais compacto que o padr�o, se for a c�lula da tabela */
 }
 
-/* Garante que o container interno dos textos também ajude no alinhamento */
+/* Garante que o container interno dos textos tamb�m ajude no alinhamento */
 .page--analise-rapida .analysis-table .stat-label,
 .page--analise-rapida .analysis-table .stat-analise {
-    /* Flexbox ajuda no alinhamento se o conteúdo for complexo, mas vertical-align já deve resolver */
+    /* Flexbox ajuda no alinhamento se o conte�do for complexo, mas vertical-align j� deve resolver */
     display: flex;
-    align-items: center; /* Alinha o conteúdo ao centro vertical do seu container */
+    align-items: center; /* Alinha o conte�do ao centro vertical do seu container */
     min-height: 40px; /* Aumentado de 36px para 40px - TESTE */
 }
 
@@ -7670,14 +7711,14 @@
     /* Exemplo: Reduzir para 8px laterais */
     padding: 10px 8px; 
     
-    /* Se você tiver margens laterais no game-card, zere-as dentro da media query */
+    /* Se voc� tiver margens laterais no game-card, zere-as dentro da media query */
     margin-left: 0;
     margin-right: 0;
 }
 
-/* Garante que o container principal também esteja compacto (já fizemos antes, só para revisar) */
+/* Garante que o container principal tamb�m esteja compacto (j� fizemos antes, s� para revisar) */
 .page--analise-rapida.container {
-    padding-left: var(--gutter, 16px); /* Use a variável se for Mobile-First, ou defina um valor baixo no @media */
+    padding-left: var(--gutter, 16px); /* Use a vari�vel se for Mobile-First, ou defina um valor baixo no @media */
     padding-right: var(--gutter, 16px);
 }
 
@@ -7693,40 +7734,40 @@
     }
 }
 
-/* AJUSTE NA TABELA DE ANÁLISE (@media (max-width: 768px) ou regra base mobile) */
+/* AJUSTE NA TABELA DE AN�LISE (@media (max-width: 768px) ou regra base mobile) */
 
-/* 2.1 Distribuição das colunas da Tabela (Crucial para o Overlap) */
+/* 2.1 Distribui��o das colunas da Tabela (Crucial para o Overlap) */
 .page--analise-rapida .analysis-table tr td:first-child {
-    /* Coluna "Fator Analisado" (ex: Últimos Confrontos) */
+    /* Coluna "Fator Analisado" (ex: �ltimos Confrontos) */
     width: 30%; 
     min-width: 70px; /* Garante que o texto caiba, mas deixa a coluna apertada */
 }
 
 .page--analise-rapida .analysis-table tr td[colspan="2"] {
-    /* Coluna Central (os 10 boxes) - Dando um pouco mais de espaço aqui */
+    /* Coluna Central (os 10 boxes) - Dando um pouco mais de espa�o aqui */
     width: 45%; /* Aumenta a largura para caber os boxes */
 }
 
 .page--analise-rapida .analysis-table tr td:last-child {
-    /* Coluna "Análise" (ex: Confronto Equilibrado) */
-    width: 25%; /* Diminui a largura para liberar espaço para o centro */
+    /* Coluna "An�lise" (ex: Confronto Equilibrado) */
+    width: 25%; /* Diminui a largura para liberar espa�o para o centro */
     min-width: 60px;
 }
 
-/* 3.1 Últimos Confrontos (10 pills) - FOCO APENAS NA ABA ANÁLISE RÁPIDA */
-/* MOBILE - APENAS NA ABA ANÁLISE RÁPIDA */
+/* 3.1 �ltimos Confrontos (10 pills) - FOCO APENAS NA ABA AN�LISE R�PIDA */
+/* MOBILE - APENAS NA ABA AN�LISE R�PIDA */
 @media (max-width: 768px) {
   .page--analise-rapida .confrontos-sequence{
     display:grid;
     grid-template-columns: repeat(5, minmax(40px,1fr)); /* Ajustado para 40px */ 
-    column-gap: 4px; /* SEPARAÇÃO HORIZONTAL entre boxes */
-    row-gap: 10px; /* SEPARAÇÃO VERTICAL ENTRE AS LINHAS - MAIS ESPAÇO */
+    column-gap: 4px; /* SEPARA��O HORIZONTAL entre boxes */
+    row-gap: 10px; /* SEPARA��O VERTICAL ENTRE AS LINHAS - MAIS ESPA�O */
     justify-content:center; 
     align-items:center;
     padding:4px 0;
   }
   
-  /* FORÇAR ESTILOS INLINE A RESPEITAREM MEDIA QUERIES */
+  /* FOR�AR ESTILOS INLINE A RESPEITAREM MEDIA QUERIES */
   .page--analise-rapida .confrontos-sequence > div[style*="min-width: 45px"] {
     min-width: 40px !important;    /* Aumentado de 30px para 40px */
     padding: 3px 4px !important;   /* Aumentado de 2px 3px para 3px 4px */
@@ -7775,10 +7816,10 @@
   .page--analise-rapida .confrontos-sequence > .confronto-item img{ width:18px; height:18px; }
 }
 
-/* === S20 / mobile: Últimos Confrontos (2x5), com espaçamento vertical real === */
+/* === S20 / mobile: �ltimos Confrontos (2x5), com espa�amento vertical real === */
 @media (max-width: 380px){
 
-  /* Centralizar verticalmente as células da linha dos 10 pills */
+  /* Centralizar verticalmente as c�lulas da linha dos 10 pills */
   .analysis-table tr:has(.confrontos-sequence) td{
     vertical-align: middle;
   }
@@ -7789,20 +7830,20 @@
     text-align: center;
   }
 
-  /* A grade dos pills — 2 linhas x 5, com ROW-GAP explícito */
+  /* A grade dos pills � 2 linhas x 5, com ROW-GAP expl�cito */
   .analysis-table .confrontos-sequence{
     display: grid !important;
     grid-auto-flow: row !important;
     grid-template-columns: repeat(5, minmax(38px, 1fr)) !important;
-    column-gap: 6px !important;     /* espaço entre colunas */
-    row-gap: 8px !important;        /* *** espaço entre as LINHAS *** */
+    column-gap: 6px !important;     /* espa�o entre colunas */
+    row-gap: 8px !important;        /* *** espa�o entre as LINHAS *** */
     justify-items: center !important;
     align-items: center !important;
     width: 100%;
-    padding: 4px 0;                 /* dá "ar" e evita encostar no topo */
+    padding: 4px 0;                 /* d� "ar" e evita encostar no topo */
   }
 
-  /* Os pills compactos (não invadem colunas 1 e 4) */
+  /* Os pills compactos (n�o invadem colunas 1 e 4) */
   .analysis-table .confrontos-sequence .confronto-item{
     min-width: 38px !important;
     height: 28px !important;
@@ -7830,16 +7871,16 @@
 }
 
 /* ========================================
-   FORÇA ALTURA 40px - APENAS LINHA ÚLTIMOS CONFRONTOS
+   FOR�A ALTURA 40px - APENAS LINHA �LTIMOS CONFRONTOS
    ======================================== */
 @media (max-width: 768px) {
-  /* APENAS a linha que contém os 10 boxes */
+  /* APENAS a linha que cont�m os 10 boxes */
   .analysis-table tr:has(.confrontos-sequence) td {
     min-height: 40px !important;
     height: 40px !important;
   }
   
-  /* TESTE: Elemento específico forma-analise-1-novo com 46px */
+  /* TESTE: Elemento espec�fico forma-analise-1-novo com 46px */
   #forma-analise-1-novo {
     min-height: 46px !important;
     height: 46px !important;
@@ -7847,23 +7888,23 @@
   
   /* REDUZIR FONTES DAS COLUNAS 1, 2, 3 E 4 PARA 9px - APENAS MOBILE */
   .analysis-table tr td:first-child,    /* Coluna 1 - Fator Analisado */
-  .analysis-table tr td:last-child {   /* Coluna 4 - Análise */
+  .analysis-table tr td:last-child {   /* Coluna 4 - An�lise */
     font-size: 9px !important;
     text-transform: none !important; /* Remove caps locks */
   }
   
-  /* ALINHAR APENAS O TÍTULO "ANÁLISE" À DIREITA - APENAS MOBILE */
+  /* ALINHAR APENAS O T�TULO "AN�LISE" � DIREITA - APENAS MOBILE */
   .analysis-table thead th:last-child {
     text-align: right !important;
   }
   
-  /* ALINHAR CONTEÚDO DAS CÉLULAS DA COLUNA 4 À DIREITA - APENAS MOBILE */
+  /* ALINHAR CONTE�DO DAS C�LULAS DA COLUNA 4 � DIREITA - APENAS MOBILE */
   .analysis-table tr td:last-child {
     text-align: right !important;
   }
 }
 
-/* ALINHAR TÍTULO "ANÁLISE" NO CENTRO - DESKTOP */
+/* ALINHAR T�TULO "AN�LISE" NO CENTRO - DESKTOP */
 @media (min-width: 769px) {
   .analysis-table thead th:last-child {
     text-align: center !important;
@@ -7877,7 +7918,7 @@
   text-transform: none !important; /* Remove caps locks */
 }
 
-/* REDUZIR FONTES DA CONCLUSÃO DO ANALISTA - APENAS MOBILE */
+/* REDUZIR FONTES DA CONCLUS�O DO ANALISTA - APENAS MOBILE */
 @media (max-width: 768px) {
   .analyst-conclusion h4 {
     font-size: 14px !important; /* Reduzido de 1.1rem (17.6px) para 14px */
@@ -7894,7 +7935,7 @@
   }
 }
 
-/* RESTAURAR TAMANHOS ORIGINAIS DA CONCLUSÃO DO ANALISTA - DESKTOP */
+/* RESTAURAR TAMANHOS ORIGINAIS DA CONCLUS�O DO ANALISTA - DESKTOP */
 @media (min-width: 769px) {
   .analyst-conclusion h4 {
     font-size: 1.1rem !important; /* Restaurar tamanho original (17.6px) */
@@ -7905,25 +7946,25 @@
   }
 }
 
-/* FORÇAR TAMANHOS ORIGINAIS PARA DESKTOP AMPLO - SOBRESCREVER REGRA GLOBAL */
+/* FOR�AR TAMANHOS ORIGINAIS PARA DESKTOP AMPLO - SOBRESCREVER REGRA GLOBAL */
 @media (min-width: 1025px) {
   .analyst-conclusion h4 {
-    font-size: 1.1rem !important; /* Forçar tamanho original (17.6px) */
+    font-size: 1.1rem !important; /* For�ar tamanho original (17.6px) */
   }
   
   .analyst-conclusion p {
-    font-size: 1rem !important; /* Forçar tamanho original (16px) */
+    font-size: 1rem !important; /* For�ar tamanho original (16px) */
   }
 }
 
-/* RESPONSIVIDADE ESPECÍFICA PARA PANORAMA DOS CAMPEONATOS - MOBILE */
+/* RESPONSIVIDADE ESPEC�FICA PARA PANORAMA DOS CAMPEONATOS - MOBILE */
 @media (max-width: 768px) {
     .page--panorama-campeonatos .section-header h2 {
         font-size: 12px !important;
         color: var(--cor-destaque-primaria) !important;
     }
     
-    /* AJUSTE DOS BOTÕES INTERNACIONAIS PARA MOBILE */
+    /* AJUSTE DOS BOT�ES INTERNACIONAIS PARA MOBILE */
     .page--panorama-campeonatos .international-selector {
         display: flex !important;
         flex-direction: row !important;
@@ -7993,7 +8034,7 @@
         color: var(--cor-texto-principal) !important;
     }
     .page--panorama-campeonatos .championship-selector h3 {
-        font-size: 10px !important; /* Já estava 10px - mantido */
+        font-size: 10px !important; /* J� estava 10px - mantido */
         color: var(--cor-destaque-primaria) !important;
     }
     .page--panorama-campeonatos .championship-buttons button {
@@ -8001,7 +8042,7 @@
         color: var(--cor-texto-principal) !important;
     }
     .page--panorama-campeonatos .info-box h3 {
-        font-size: 10px !important; /* Já estava 10px - mantido */
+        font-size: 10px !important; /* J� estava 10px - mantido */
         color: var(--cor-destaque-primaria) !important;
     }
     .page--panorama-campeonatos .info-box p {
@@ -8009,7 +8050,7 @@
         color: var(--cor-texto-secundario) !important;
     }
     .page--panorama-campeonatos .coming-soon h3 {
-        font-size: 10px !important; /* Já estava 10px - mantido */
+        font-size: 10px !important; /* J� estava 10px - mantido */
         color: var(--cor-destaque-primaria) !important;
     }
     .page--panorama-campeonatos .coming-soon p {
@@ -8028,8 +8069,8 @@
         font-size: 8px !important;
         color: var(--cor-texto-secundario) !important;
     }
-    .page--panorama-campeonatos .brasileirao-table th,
-    .page--panorama-campeonatos .brasileirao-table td {
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td {
         font-size: 8px !important;
         color: var(--cor-texto-principal) !important;
     }
@@ -8055,7 +8096,7 @@
     }
 }
 
-    /* REDUZIR RESPIRAÇÃO LATERAL DAS TABELAS DE CLASSIFICAÇÃO - MOBILE */
+    /* REDUZIR RESPIRA��O LATERAL DAS TABELAS DE CLASSIFICA��O - MOBILE */
     .page--panorama-campeonatos .classification-table-container {
         padding: 0.2rem !important; /* Reduzir padding lateral drasticamente */
         margin: 0 !important; /* Remover margens */
@@ -8063,59 +8104,59 @@
     
     .page--panorama-campeonatos .brasileirao-table {
         margin: 0 !important; /* Remover margens da tabela */
-        width: 100% !important; /* Usar toda a largura disponível */
+        width: 100% !important; /* Usar toda a largura dispon�vel */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th,
-    .page--panorama-campeonatos .brasileirao-table td {
-        padding: 0.2rem 0.1rem !important; /* Padding mínimo nas células */
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td {
+        padding: 0.2rem 0.1rem !important; /* Padding m�nimo nas c�lulas */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th:first-child,
-    .page--panorama-campeonatos .brasileirao-table td:first-child {
-        padding-left: 0.2rem !important; /* Padding mínimo na primeira coluna */
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:first-child,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:first-child {
+        padding-left: 0.2rem !important; /* Padding m�nimo na primeira coluna */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th:last-child,
-    .page--panorama-campeonatos .brasileirao-table td:last-child {
-        padding-right: 0.2rem !important; /* Padding mínimo na última coluna */
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:last-child,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:last-child {
+        padding-right: 0.2rem !important; /* Padding m�nimo na �ltima coluna */
     }
     
-    /* REDUZIR RESPIRAÇÃO DOS CONTAINERS DE SEÇÃO */
+    /* REDUZIR RESPIRA��O DOS CONTAINERS DE SE��O */
     .page--panorama-campeonatos .championship-section {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
     .page--panorama-campeonatos .championship-selector {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
     .page--panorama-campeonatos .championship-buttons {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
-    /* REDUZIR RESPIRAÇÃO DOS CONTAINERS DE INFO */
+    /* REDUZIR RESPIRA��O DOS CONTAINERS DE INFO */
     .page--panorama-campeonatos .info-box {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
     .page--panorama-campeonatos .coming-soon {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
-    /* REDUZIR RESPIRAÇÃO DOS CONTAINERS DE ZONAS */
+    /* REDUZIR RESPIRA��O DOS CONTAINERS DE ZONAS */
     .page--panorama-campeonatos .zones-info {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
     .page--panorama-campeonatos .zone-item {
-        padding: 0.1rem !important; /* Padding mínimo */
+        padding: 0.1rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
 }
@@ -8126,19 +8167,19 @@
         padding: 0.1rem !important; /* Padding ainda menor */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th,
-    .page--panorama-campeonatos .brasileirao-table td {
-        padding: 0.1rem 0.05rem !important; /* Padding mínimo nas células */
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td {
+        padding: 0.1rem 0.05rem !important; /* Padding m�nimo nas c�lulas */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th:first-child,
-    .page--panorama-campeonatos .brasileirao-table td:first-child {
-        padding-left: 0.1rem !important; /* Padding mínimo na primeira coluna */
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:first-child,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:first-child {
+        padding-left: 0.1rem !important; /* Padding m�nimo na primeira coluna */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th:last-child,
-    .page--panorama-campeonatos .brasileirao-table td:last-child {
-        padding-right: 0.1rem !important; /* Padding mínimo na última coluna */
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:last-child,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:last-child {
+        padding-right: 0.1rem !important; /* Padding m�nimo na �ltima coluna */
     }
     
     .page--panorama-campeonatos .championship-section,
@@ -8151,11 +8192,11 @@
     }
     
     .page--panorama-campeonatos .zone-item {
-        padding: 0.05rem !important; /* Padding mínimo */
+        padding: 0.05rem !important; /* Padding m�nimo */
     }
 
-    /* OTIMIZAR ESPAÇAMENTO DE TODAS AS TABELAS DE CLASSIFICAÇÃO - MOBILE */
-    /* Aplicar para Série C e todas as tabelas internacionais */
+    /* OTIMIZAR ESPA�AMENTO DE TODAS AS TABELAS DE CLASSIFICA��O - MOBILE */
+    /* Aplicar para S�rie C e todas as tabelas internacionais */
     .page--panorama-campeonatos .serie-c-container,
     .page--panorama-campeonatos .serie-c-phase,
     .page--panorama-campeonatos .grupo-container,
@@ -8167,11 +8208,11 @@
     .page--panorama-campeonatos .serie-a-italiana-table,
     .page--panorama-campeonatos .bundesliga-table,
     .page--panorama-campeonatos .champions-league-table {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
-    /* Reduzir espaçamento das células de todas as tabelas */
+    /* Reduzir espa�amento das c�lulas de todas as tabelas */
     .page--panorama-campeonatos .serie-c-container table th,
     .page--panorama-campeonatos .serie-c-container table td,
     .page--panorama-campeonatos .grupo-container table th,
@@ -8190,10 +8231,10 @@
     .page--panorama-campeonatos .bundesliga-table table td,
     .page--panorama-campeonatos .champions-league-table table th,
     .page--panorama-campeonatos .champions-league-table table td {
-        padding: 0.2rem 0.1rem !important; /* Padding mínimo nas células */
+        padding: 0.2rem 0.1rem !important; /* Padding m�nimo nas c�lulas */
     }
     
-    /* Reduzir espaçamento da primeira e última coluna */
+    /* Reduzir espa�amento da primeira e �ltima coluna */
     .page--panorama-campeonatos .serie-c-container table th:first-child,
     .page--panorama-campeonatos .serie-c-container table td:first-child,
     .page--panorama-campeonatos .grupo-container table th:first-child,
@@ -8212,7 +8253,7 @@
     .page--panorama-campeonatos .bundesliga-table table td:first-child,
     .page--panorama-campeonatos .champions-league-table table th:first-child,
     .page--panorama-campeonatos .champions-league-table table td:first-child {
-        padding-left: 0.2rem !important; /* Padding mínimo na primeira coluna */
+        padding-left: 0.2rem !important; /* Padding m�nimo na primeira coluna */
     }
     
     .page--panorama-campeonatos .serie-c-container table th:last-child,
@@ -8233,10 +8274,10 @@
     .page--panorama-campeonatos .bundesliga-table table td:last-child,
     .page--panorama-campeonatos .champions-league-table table th:last-child,
     .page--panorama-campeonatos .champions-league-table table td:last-child {
-        padding-right: 0.2rem !important; /* Padding mínimo na última coluna */
+        padding-right: 0.2rem !important; /* Padding m�nimo na �ltima coluna */
     }
     
-    /* Reduzir espaçamento dos títulos das seções */
+    /* Reduzir espa�amento dos t�tulos das se��es */
     .page--panorama-campeonatos .serie-c-phase h4,
     .page--panorama-campeonatos .grupo-container h4,
     .page--panorama-campeonatos .international-table-container h4,
@@ -8246,11 +8287,11 @@
     .page--panorama-campeonatos .serie-a-italiana-table h4,
     .page--panorama-campeonatos .bundesliga-table h4,
     .page--panorama-campeonatos .champions-league-table h4 {
-        padding: 0.2rem !important; /* Padding mínimo nos títulos */
+        padding: 0.2rem !important; /* Padding m�nimo nos t�tulos */
         margin: 0 !important; /* Remover margens */
     }
 
-    /* OTIMIZAR AINDA MAIS O ESPAÇAMENTO PARA TELAS MUITO PEQUENAS */
+    /* OTIMIZAR AINDA MAIS O ESPA�AMENTO PARA TELAS MUITO PEQUENAS */
     .page--panorama-campeonatos .serie-c-container,
     .page--panorama-campeonatos .serie-c-phase,
     .page--panorama-campeonatos .grupo-container,
@@ -8265,7 +8306,7 @@
         padding: 0.1rem !important; /* Padding ainda menor */
     }
     
-    /* Reduzir ainda mais o espaçamento das células */
+    /* Reduzir ainda mais o espa�amento das c�lulas */
     .page--panorama-campeonatos .serie-c-container table th,
     .page--panorama-campeonatos .serie-c-container table td,
     .page--panorama-campeonatos .grupo-container table th,
@@ -8284,10 +8325,10 @@
     .page--panorama-campeonatos .bundesliga-table table td,
     .page--panorama-campeonatos .champions-league-table table th,
     .page--panorama-campeonatos .champions-league-table table td {
-        padding: 0.1rem 0.05rem !important; /* Padding ultra-mínimo nas células */
+        padding: 0.1rem 0.05rem !important; /* Padding ultra-m�nimo nas c�lulas */
     }
     
-    /* Reduzir ainda mais o espaçamento da primeira e última coluna */
+    /* Reduzir ainda mais o espa�amento da primeira e �ltima coluna */
     .page--panorama-campeonatos .serie-c-container table th:first-child,
     .page--panorama-campeonatos .serie-c-container table td:first-child,
     .page--panorama-campeonatos .grupo-container table th:first-child,
@@ -8306,7 +8347,7 @@
     .page--panorama-campeonatos .bundesliga-table table td:first-child,
     .page--panorama-campeonatos .champions-league-table table th:first-child,
     .page--panorama-campeonatos .champions-league-table table td:first-child {
-        padding-left: 0.1rem !important; /* Padding ultra-mínimo na primeira coluna */
+        padding-left: 0.1rem !important; /* Padding ultra-m�nimo na primeira coluna */
     }
     
     .page--panorama-campeonatos .serie-c-container table th:last-child,
@@ -8327,10 +8368,10 @@
     .page--panorama-campeonatos .bundesliga-table table td:last-child,
     .page--panorama-campeonatos .champions-league-table table th:last-child,
     .page--panorama-campeonatos .champions-league-table table td:last-child {
-        padding-right: 0.1rem !important; /* Padding ultra-mínimo na última coluna */
+        padding-right: 0.1rem !important; /* Padding ultra-m�nimo na �ltima coluna */
     }
     
-    /* Reduzir ainda mais o espaçamento dos títulos das seções */
+    /* Reduzir ainda mais o espa�amento dos t�tulos das se��es */
     .page--panorama-campeonatos .serie-c-phase h4,
     .page--panorama-campeonatos .grupo-container h4,
     .page--panorama-campeonatos .international-table-container h4,
@@ -8340,11 +8381,11 @@
     .page--panorama-campeonatos .serie-a-italiana-table h4,
     .page--panorama-campeonatos .bundesliga-table h4,
     .page--panorama-campeonatos .champions-league-table h4 {
-        padding: 0.1rem !important; /* Padding ultra-mínimo nos títulos */
+        padding: 0.1rem !important; /* Padding ultra-m�nimo nos t�tulos */
     }
 
-    /* OTIMIZAR ESPAÇAMENTO DAS TABELAS INTERNACIONAIS - MOBILE */
-    /* Premier League, La Liga, França, Champions League */
+    /* OTIMIZAR ESPA�AMENTO DAS TABELAS INTERNACIONAIS - MOBILE */
+    /* Premier League, La Liga, Fran�a, Champions League */
     .page--panorama-campeonatos #tabela-premier-league,
     .page--panorama-campeonatos #tabela-la-liga,
     .page--panorama-campeonatos #tabela-ligue1,
@@ -8354,11 +8395,11 @@
     .page--panorama-campeonatos .ligue1-container,
     .page--panorama-campeonatos .champions-league-container,
     .page--panorama-campeonatos .international-championship-section {
-        padding: 0.2rem !important; /* Padding mínimo */
+        padding: 0.2rem !important; /* Padding m�nimo */
         margin: 0 !important; /* Remover margens */
     }
     
-    /* Reduzir espaçamento das células das tabelas internacionais */
+    /* Reduzir espa�amento das c�lulas das tabelas internacionais */
     .page--panorama-campeonatos #tabela-premier-league table th,
     .page--panorama-campeonatos #tabela-premier-league table td,
     .page--panorama-campeonatos #tabela-la-liga table th,
@@ -8375,10 +8416,10 @@
     .page--panorama-campeonatos .ligue1-container table td,
     .page--panorama-campeonatos .champions-league-container table th,
     .page--panorama-campeonatos .champions-league-container table td {
-        padding: 0.2rem 0.1rem !important; /* Padding mínimo nas células */
+        padding: 0.2rem 0.1rem !important; /* Padding m�nimo nas c�lulas */
     }
     
-    /* Reduzir espaçamento da primeira e última coluna das tabelas internacionais */
+    /* Reduzir espa�amento da primeira e �ltima coluna das tabelas internacionais */
     .page--panorama-campeonatos #tabela-premier-league table th:first-child,
     .page--panorama-campeonatos #tabela-premier-league table td:first-child,
     .page--panorama-campeonatos #tabela-la-liga table th:first-child,
@@ -8395,7 +8436,7 @@
     .page--panorama-campeonatos .ligue1-container table td:first-child,
     .page--panorama-campeonatos .champions-league-container table th:first-child,
     .page--panorama-campeonatos .champions-league-container table td:first-child {
-        padding-left: 0.2rem !important; /* Padding mínimo na primeira coluna */
+        padding-left: 0.2rem !important; /* Padding m�nimo na primeira coluna */
     }
     
     .page--panorama-campeonatos #tabela-premier-league table th:last-child,
@@ -8414,10 +8455,10 @@
     .page--panorama-campeonatos .ligue1-container table td:last-child,
     .page--panorama-campeonatos .champions-league-container table th:last-child,
     .page--panorama-campeonatos .champions-league-container table td:last-child {
-        padding-right: 0.2rem !important; /* Padding mínimo na última coluna */
+        padding-right: 0.2rem !important; /* Padding m�nimo na �ltima coluna */
     }
     
-    /* Reduzir espaçamento dos títulos das seções internacionais */
+    /* Reduzir espa�amento dos t�tulos das se��es internacionais */
     .page--panorama-campeonatos #tabela-premier-league h3,
     .page--panorama-campeonatos #tabela-premier-league h4,
     .page--panorama-campeonatos #tabela-la-liga h3,
@@ -8434,11 +8475,11 @@
     .page--panorama-campeonatos .ligue1-container h4,
     .page--panorama-campeonatos .champions-league-container h3,
     .page--panorama-campeonatos .champions-league-container h4 {
-        padding: 0.2rem !important; /* Padding mínimo nos títulos */
+        padding: 0.2rem !important; /* Padding m�nimo nos t�tulos */
         margin: 0 !important; /* Remover margens */
     }
 
-    /* OTIMIZAR AINDA MAIS O ESPAÇAMENTO DAS TABELAS INTERNACIONAIS PARA TELAS MUITO PEQUENAS */
+    /* OTIMIZAR AINDA MAIS O ESPA�AMENTO DAS TABELAS INTERNACIONAIS PARA TELAS MUITO PEQUENAS */
     .page--panorama-campeonatos #tabela-premier-league,
     .page--panorama-campeonatos #tabela-la-liga,
     .page--panorama-campeonatos #tabela-ligue1,
@@ -8448,10 +8489,10 @@
     .page--panorama-campeonatos .ligue1-container,
     .page--panorama-campeonatos .champions-league-container,
     .page--panorama-campeonatos .international-championship-section {
-        padding: 0.1rem !important; /* Padding ultra-mínimo */
+        padding: 0.1rem !important; /* Padding ultra-m�nimo */
     }
     
-    /* Reduzir ainda mais o espaçamento das células das tabelas internacionais */
+    /* Reduzir ainda mais o espa�amento das c�lulas das tabelas internacionais */
     .page--panorama-campeonatos #tabela-premier-league table th,
     .page--panorama-campeonatos #tabela-premier-league table td,
     .page--panorama-campeonatos #tabela-la-liga table th,
@@ -8468,10 +8509,10 @@
     .page--panorama-campeonatos .ligue1-container table td,
     .page--panorama-campeonatos .champions-league-container table th,
     .page--panorama-campeonatos .champions-league-container table td {
-        padding: 0.1rem 0.05rem !important; /* Padding ultra-mínimo nas células */
+        padding: 0.1rem 0.05rem !important; /* Padding ultra-m�nimo nas c�lulas */
     }
     
-    /* Reduzir ainda mais o espaçamento da primeira e última coluna das tabelas internacionais */
+    /* Reduzir ainda mais o espa�amento da primeira e �ltima coluna das tabelas internacionais */
     .page--panorama-campeonatos #tabela-premier-league table th:first-child,
     .page--panorama-campeonatos #tabela-premier-league table td:first-child,
     .page--panorama-campeonatos #tabela-la-liga table th:first-child,
@@ -8488,7 +8529,7 @@
     .page--panorama-campeonatos .ligue1-container table td:first-child,
     .page--panorama-campeonatos .champions-league-container table th:first-child,
     .page--panorama-campeonatos .champions-league-container table td:first-child {
-        padding-left: 0.1rem !important; /* Padding ultra-mínimo na primeira coluna */
+        padding-left: 0.1rem !important; /* Padding ultra-m�nimo na primeira coluna */
     }
     
     .page--panorama-campeonatos #tabela-premier-league table th:last-child,
@@ -8507,10 +8548,10 @@
     .page--panorama-campeonatos .ligue1-container table td:last-child,
     .page--panorama-campeonatos .champions-league-container table th:last-child,
     .page--panorama-campeonatos .champions-league-container table td:last-child {
-        padding-right: 0.1rem !important; /* Padding ultra-mínimo na última coluna */
+        padding-right: 0.1rem !important; /* Padding ultra-m�nimo na �ltima coluna */
     }
     
-    /* Reduzir ainda mais o espaçamento dos títulos das seções internacionais */
+    /* Reduzir ainda mais o espa�amento dos t�tulos das se��es internacionais */
     .page--panorama-campeonatos #tabela-premier-league h3,
     .page--panorama-campeonatos #tabela-premier-league h4,
     .page--panorama-campeonatos #tabela-la-liga h3,
@@ -8527,13 +8568,13 @@
     .page--panorama-campeonatos .ligue1-container h4,
     .page--panorama-campeonatos .champions-league-container h3,
     .page--panorama-campeonatos .champions-league-container h4 {
-        padding: 0.1rem !important; /* Padding ultra-mínimo nos títulos */
+        padding: 0.1rem !important; /* Padding ultra-m�nimo nos t�tulos */
     }
 }
 
 /* AUMENTAR 20% FONTES E ESCUDOS DOS BOXES - APENAS DESKTOP */
 @media (min-width: 769px) {
-  /* SELETORES MAIS ESPECÍFICOS PARA SOBRESCREVER REGRAS MOBILE */
+  /* SELETORES MAIS ESPEC�FICOS PARA SOBRESCREVER REGRAS MOBILE */
   .analysis-table .confrontos-sequence .confronto-data {
     font-size: 0.858rem !important; /* 0.715rem * 1.2 - Aumento de 20% */
   }
@@ -8561,20 +8602,20 @@
     }
     
     /* TABELAS NACIONAIS - DESKTOP */
-    .page--panorama-campeonatos .brasileirao-table th,
-    .page--panorama-campeonatos .brasileirao-table td {
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td {
         font-size: 14px !important; /* Tamanho original para desktop */
         color: var(--cor-texto-principal) !important;
         padding: 0.5rem 0.3rem !important; /* Padding original para desktop */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th:first-child,
-    .page--panorama-campeonatos .brasileirao-table td:first-child {
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:first-child,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:first-child {
         padding-left: 0.5rem !important; /* Padding original para desktop */
     }
     
-    .page--panorama-campeonatos .brasileirao-table th:last-child,
-    .page--panorama-campeonatos .brasileirao-table td:last-child {
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:last-child,
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:last-child {
         padding-right: 0.5rem !important; /* Padding original para desktop */
     }
     
@@ -8592,14 +8633,14 @@
             padding: 0.5rem 0.3rem !important; /* Padding original para desktop */
         }
         
-        /* APLICAR MESMA OTIMIZAÇÃO DE ESPAÇO LATERAL PARA TODAS AS TABELAS RESPONSIVAS */
+        /* APLICAR MESMA OTIMIZA��O DE ESPA�O LATERAL PARA TODAS AS TABELAS RESPONSIVAS */
         @media (max-width: 768px) {
-            /* SÉRIE C - OTIMIZAÇÃO DE ESPAÇO LATERAL */
+            /* S�RIE C - OTIMIZA��O DE ESPA�O LATERAL */
             .page--panorama-campeonatos .serie-c-container,
             .page--panorama-campeonatos .serie-c-phase,
             .page--panorama-campeonatos .grupo-container,
             .page--panorama-campeonatos .grupo-row {
-                padding: 0.2rem !important; /* Gap mínimo nas laterais */
+                padding: 0.2rem !important; /* Gap m�nimo nas laterais */
                 margin: 0 !important;
             }
             
@@ -8607,30 +8648,30 @@
             .page--panorama-campeonatos .serie-c-table td,
             .page--panorama-campeonatos .grupo-table th,
             .page--panorama-campeonatos .grupo-table td {
-                padding: 0.2rem 0.1rem !important; /* Padding mínimo */
-                font-size: 10px !important; /* Fonte pequena mas legível */
+                padding: 0.2rem 0.1rem !important; /* Padding m�nimo */
+                font-size: 10px !important; /* Fonte pequena mas leg�vel */
             }
             
             .page--panorama-campeonatos .serie-c-table th:first-child,
             .page--panorama-campeonatos .serie-c-table td:first-child,
             .page--panorama-campeonatos .grupo-table th:first-child,
             .page--panorama-campeonatos .grupo-table td:first-child {
-                padding-left: 0.2rem !important; /* Gap mínimo esquerda */
+                padding-left: 0.2rem !important; /* Gap m�nimo esquerda */
             }
             
             .page--panorama-campeonatos .serie-c-table th:last-child,
             .page--panorama-campeonatos .serie-c-table td:last-child,
             .page--panorama-campeonatos .grupo-table th:last-child,
             .page--panorama-campeonatos .grupo-table td:last-child {
-                padding-right: 0.2rem !important; /* Gap mínimo direita */
+                padding-right: 0.2rem !important; /* Gap m�nimo direita */
             }
             
-            /* PREMIER LEAGUE - OTIMIZAÇÃO DE ESPAÇO LATERAL */
+            /* PREMIER LEAGUE - OTIMIZA��O DE ESPA�O LATERAL */
             .page--panorama-campeonatos #tabela-premier-league,
             .page--panorama-campeonatos #tabela-la-liga,
             .page--panorama-campeonatos #tabela-ligue1,
             .page--panorama-campeonatos #tabela-champions-league {
-                padding: 0.2rem !important; /* Gap mínimo nas laterais */
+                padding: 0.2rem !important; /* Gap m�nimo nas laterais */
                 margin: 0 !important;
             }
             
@@ -8642,8 +8683,8 @@
             .page--panorama-campeonatos #tabela-ligue1 table td,
             .page--panorama-campeonatos #tabela-champions-league table th,
             .page--panorama-campeonatos #tabela-champions-league table td {
-                padding: 0.2rem 0.1rem !important; /* Padding mínimo */
-                font-size: 10px !important; /* Fonte pequena mas legível */
+                padding: 0.2rem 0.1rem !important; /* Padding m�nimo */
+                font-size: 10px !important; /* Fonte pequena mas leg�vel */
             }
             
             .page--panorama-campeonatos #tabela-premier-league table th:first-child,
@@ -8654,7 +8695,7 @@
             .page--panorama-campeonatos #tabela-ligue1 table td:first-child,
             .page--panorama-campeonatos #tabela-champions-league table th:first-child,
             .page--panorama-campeonatos #tabela-champions-league table td:first-child {
-                padding-left: 0.2rem !important; /* Gap mínimo esquerda */
+                padding-left: 0.2rem !important; /* Gap m�nimo esquerda */
             }
             
             .page--panorama-campeonatos #tabela-premier-league table th:last-child,
@@ -8665,14 +8706,14 @@
             .page--panorama-campeonatos #tabela-ligue1 table td:last-child,
             .page--panorama-campeonatos #tabela-champions-league table th:last-child,
             .page--panorama-campeonatos #tabela-champions-league table td:last-child {
-                padding-right: 0.2rem !important; /* Gap mínimo direita */
+                padding-right: 0.2rem !important; /* Gap m�nimo direita */
             }
             
         }
         
-        /* OTIMIZAÇÃO ADICIONAL PARA TELAS AINDA MENORES (480px) */
+        /* OTIMIZA��O ADICIONAL PARA TELAS AINDA MENORES (480px) */
         @media (max-width: 480px) {
-            /* SÉRIE C - OTIMIZAÇÃO EXTREMA */
+            /* S�RIE C - OTIMIZA��O EXTREMA */
             .page--panorama-campeonatos .serie-c-container,
             .page--panorama-campeonatos .serie-c-phase,
             .page--panorama-campeonatos .grupo-container,
@@ -8692,17 +8733,17 @@
             .page--panorama-campeonatos .serie-c-table td:first-child,
             .page--panorama-campeonatos .grupo-table th:first-child,
             .page--panorama-campeonatos .grupo-table td:first-child {
-                padding-left: 0.1rem !important; /* Gap mínimo esquerda */
+                padding-left: 0.1rem !important; /* Gap m�nimo esquerda */
             }
             
             .page--panorama-campeonatos .serie-c-table th:last-child,
             .page--panorama-campeonatos .serie-c-table td:last-child,
             .page--panorama-campeonatos .grupo-table th:last-child,
             .page--panorama-campeonatos .grupo-table td:last-child {
-                padding-right: 0.1rem !important; /* Gap mínimo direita */
+                padding-right: 0.1rem !important; /* Gap m�nimo direita */
             }
             
-            /* TABELAS INTERNACIONAIS - OTIMIZAÇÃO EXTREMA */
+            /* TABELAS INTERNACIONAIS - OTIMIZA��O EXTREMA */
             .page--panorama-campeonatos #tabela-premier-league,
             .page--panorama-campeonatos #tabela-la-liga,
             .page--panorama-campeonatos #tabela-ligue1,
@@ -8730,7 +8771,7 @@
             .page--panorama-campeonatos #tabela-ligue1 table td:first-child,
             .page--panorama-campeonatos #tabela-champions-league table th:first-child,
             .page--panorama-campeonatos #tabela-champions-league table td:first-child {
-                padding-left: 0.1rem !important; /* Gap mínimo esquerda */
+                padding-left: 0.1rem !important; /* Gap m�nimo esquerda */
             }
             
             .page--panorama-campeonatos #tabela-premier-league table th:last-child,
@@ -8741,7 +8782,7 @@
             .page--panorama-campeonatos #tabela-ligue1 table td:last-child,
             .page--panorama-campeonatos #tabela-champions-league table th:last-child,
             .page--panorama-campeonatos #tabela-champions-league table td:last-child {
-                padding-right: 0.1rem !important; /* Gap mínimo direita */
+                padding-right: 0.1rem !important; /* Gap m�nimo direita */
             }
         }
     
@@ -8768,8 +8809,8 @@
     }
     
     /* RESTAURAR TAMANHO DOS NOMES DOS TIMES NO DESKTOP */
-    .page--panorama-campeonatos .brasileirao-table td:first-child,
-    .page--panorama-campeonatos .brasileirao-table th:first-child {
+    .page--panorama-campeonatos .brasileirao-table td, .standings-table td:first-child,
+    .page--panorama-campeonatos .brasileirao-table th, .standings-table th:first-child {
         font-size: 14px !important; /* Tamanho original para nomes dos times */
         font-weight: 600 !important; /* Negrito para nomes dos times */
     }
@@ -8799,7 +8840,9 @@
     .page--panorama-campeonatos .champions-league-table .escudo-time {
         width: 24px !important; /* Tamanho original dos escudos */
         height: 24px !important; /* Tamanho original dos escudos */
-        object-fit: contain !important; /* Manter proporção */
+        object-fit: contain !important; /* Manter propor��o */
         border-radius: 4px !important; /* Bordas levemente arredondadas */
     }
 }
+
+

@@ -493,6 +493,236 @@ def api_classificacao_serie_b():
             "error": f"Erro ao carregar classificação Série B: {str(e)}"
         }), 500
 
+@bp_br.route("/classificacao/atualizar-csv", methods=["POST"])
+@cross_origin()
+def api_atualizar_classificacao_csv():
+    """
+    Endpoint para atualizar classificação lendo CSV consolidado
+    POST /api/br/classificacao/atualizar-csv
+    Body: {"serie": "A" | "B" | "TODAS"}
+    """
+    try:
+        import csv
+        import sqlite3
+        
+        # Pegar série do body (default: TODAS)
+        data = request.get_json() if request.is_json else {}
+        serie = data.get('serie', 'TODAS').upper()
+        
+        print(f"🔄 [API-UPDATE-CSV] Recebido pedido para atualizar série: {serie}")
+        print(f"🔄 [API-UPDATE-CSV] Body completo: {data}")
+        
+        if serie not in ['A', 'B', 'TODAS']:
+            return jsonify({
+                "success": False,
+                "error": "Série inválida. Use: A, B ou TODAS"
+            }), 400
+        
+        # Caminhos
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        estatistica_dir = os.path.join(base_dir, 'estatistica')
+        db_path = os.path.join(base_dir, 'models', 'tabelas_classificacao.db')
+        
+        resultados = {
+            "serie_a": None,
+            "serie_b": None,
+            "mensagens": []
+        }
+        
+        # FUNÇÃO AUXILIAR: Limpar valores
+        def limpar_valor(valor):
+            if isinstance(valor, str):
+                return valor.strip().strip('"').strip()
+            return valor
+        
+        # ATUALIZAR SÉRIE A
+        if serie in ['A', 'TODAS']:
+            csv_path = os.path.join(estatistica_dir, 'Serie_A_tabela_tradicional.csv')
+            
+            if not os.path.exists(csv_path):
+                resultados["mensagens"].append(f"❌ Arquivo não encontrado: {csv_path}")
+            else:
+                try:
+                    # Ler CSV
+                    with open(csv_path, 'r', encoding='utf-8') as file:
+                        reader = csv.DictReader(file)
+                        dados = list(reader)
+                    
+                    # Atualizar banco
+                    conn = sqlite3.connect(db_path)
+                    cursor = conn.cursor()
+                    cursor.execute("DELETE FROM classificacao_serie_a")
+                    
+                    for time in dados:
+                        posicao = limpar_valor(time.get('Posição', ''))
+                        nome = limpar_valor(time.get('Time', ''))
+                        pontos = limpar_valor(time.get('Pontos', '0'))
+                        jogos = limpar_valor(time.get('Jogos', '0'))
+                        vitorias = limpar_valor(time.get('Vitórias', '0'))
+                        empates = limpar_valor(time.get('Empates', '0'))
+                        derrotas = limpar_valor(time.get('Derrotas', '0'))
+                        gols_pro = limpar_valor(time.get('Gols Pró', '0'))
+                        gols_contra = limpar_valor(time.get('Gols Contra', '0'))
+                        saldo_gols = limpar_valor(time.get('Saldo Gols', '0'))
+                        aproveitamento = limpar_valor(time.get('Aproveitamento %', '0'))
+                        ultimos_5 = limpar_valor(time.get('Últimos 5 Jogos', ''))
+                        
+                        # DEBUG: Ver se está lendo os últimos jogos
+                        if nome in ['Palmeiras', 'Flamengo', 'Cruzeiro']:
+                            print(f"🔍 [CSV-A] {nome}: ultimos_5 = '{ultimos_5}'")
+                        
+                        # Determinar zona
+                        pos_num = int(posicao)
+                        if pos_num <= 4:
+                            zona = 'libertadores-direto'
+                        elif pos_num <= 6:
+                            zona = 'libertadores-preliminar'
+                        elif pos_num <= 12:
+                            zona = 'sulamericana'
+                        elif pos_num <= 16:
+                            zona = 'neutro'
+                        else:
+                            zona = 'rebaixamento'
+                        
+                        cursor.execute("""
+                            INSERT INTO classificacao_serie_a 
+                            (posicao, time, pontos, jogos, vitorias, empates, derrotas, 
+                             gols_pro, gols_contra, saldo_gols, aproveitamento, 
+                             ultimos_jogos, zona, data_atualizacao, rodada, fonte)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 28, 'CSV Consolidado')
+                        """, (
+                            posicao, nome, pontos, jogos, vitorias, empates, derrotas,
+                            gols_pro, gols_contra, saldo_gols, aproveitamento,
+                            ultimos_5, zona
+                        ))
+                    
+                    conn.commit()
+                    conn.close()
+                    
+                    resultados["serie_a"] = {
+                        "sucesso": True,
+                        "times_atualizados": len(dados)
+                    }
+                    resultados["mensagens"].append(f"✅ Série A atualizada: {len(dados)} times")
+                    
+                except Exception as e:
+                    resultados["serie_a"] = {
+                        "sucesso": False,
+                        "erro": str(e)
+                    }
+                    resultados["mensagens"].append(f"❌ Erro na Série A: {str(e)}")
+        
+        # ATUALIZAR SÉRIE B
+        if serie in ['B', 'TODAS']:
+            print(f"🥈 [API-UPDATE-CSV] Iniciando atualização da Série B...")
+            csv_path = os.path.join(estatistica_dir, 'Serie_B_tabela_tradicional.csv')
+            print(f"🥈 [API-UPDATE-CSV] Caminho do CSV: {csv_path}")
+            print(f"🥈 [API-UPDATE-CSV] Arquivo existe? {os.path.exists(csv_path)}")
+            
+            if not os.path.exists(csv_path):
+                resultados["mensagens"].append(f"❌ Arquivo não encontrado: {csv_path}")
+            else:
+                try:
+                    # Ler CSV
+                    with open(csv_path, 'r', encoding='utf-8') as file:
+                        reader = csv.DictReader(file)
+                        dados = list(reader)
+                    
+                    # Atualizar banco
+                    conn = sqlite3.connect(db_path)
+                    cursor = conn.cursor()
+                    
+                    # Verificar se tabela existe
+                    cursor.execute("""
+                        SELECT name FROM sqlite_master 
+                        WHERE type='table' AND name='classificacao_serie_b'
+                    """)
+                    
+                    if cursor.fetchone():
+                        print(f"🥈 [API-UPDATE-CSV] Tabela classificacao_serie_b encontrada!")
+                        print(f"🥈 [API-UPDATE-CSV] Limpando tabela...")
+                        cursor.execute("DELETE FROM classificacao_serie_b")
+                        print(f"🥈 [API-UPDATE-CSV] Inserindo {len(dados)} times...")
+                        
+                        for time in dados:
+                            posicao = limpar_valor(time.get('Posição', ''))
+                            nome = limpar_valor(time.get('Time', ''))
+                            pontos = limpar_valor(time.get('Pontos', '0'))
+                            jogos = limpar_valor(time.get('Jogos', '0'))
+                            vitorias = limpar_valor(time.get('Vitórias', '0'))
+                            empates = limpar_valor(time.get('Empates', '0'))
+                            derrotas = limpar_valor(time.get('Derrotas', '0'))
+                            gols_pro = limpar_valor(time.get('Gols Pró', '0'))
+                            gols_contra = limpar_valor(time.get('Gols Contra', '0'))
+                            saldo_gols = limpar_valor(time.get('Saldo Gols', '0'))
+                            aproveitamento = limpar_valor(time.get('Aproveitamento %', '0'))
+                            ultimos_5 = limpar_valor(time.get('Últimos 5 Jogos', ''))
+                            
+                            # Determinar zona
+                            pos_num = int(posicao)
+                            if pos_num <= 4:
+                                zona = 'acesso-direto'
+                            elif pos_num <= 8:
+                                zona = 'acesso-playoff'
+                            elif pos_num <= 16:
+                                zona = 'neutro'
+                            else:
+                                zona = 'rebaixamento'
+                            
+                            cursor.execute("""
+                                INSERT INTO classificacao_serie_b 
+                                (posicao, time, pontos, jogos, vitorias, empates, derrotas, 
+                                 gols_pro, gols_contra, saldo_gols, aproveitamento, 
+                                 ultimos_confrontos, zona, updated_at)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+                            """, (
+                                posicao, nome, pontos, jogos, vitorias, empates, derrotas,
+                                gols_pro, gols_contra, saldo_gols, aproveitamento,
+                                ultimos_5, zona
+                            ))
+                        
+                        conn.commit()
+                        conn.close()
+                        
+                        print(f"🥈 [API-UPDATE-CSV] ✅ Série B atualizada com sucesso! {len(dados)} times")
+                        
+                        resultados["serie_b"] = {
+                            "sucesso": True,
+                            "times_atualizados": len(dados)
+                        }
+                        resultados["mensagens"].append(f"✅ Série B atualizada: {len(dados)} times")
+                    else:
+                        resultados["mensagens"].append("⚠️ Tabela classificacao_serie_b não existe")
+                    
+                except Exception as e:
+                    resultados["serie_b"] = {
+                        "sucesso": False,
+                        "erro": str(e)
+                    }
+                    resultados["mensagens"].append(f"❌ Erro na Série B: {str(e)}")
+        
+        # Verificar sucesso geral
+        sucesso_geral = (
+            (serie == 'A' and resultados["serie_a"] and resultados["serie_a"]["sucesso"]) or
+            (serie == 'B' and resultados["serie_b"] and resultados["serie_b"]["sucesso"]) or
+            (serie == 'TODAS' and 
+             resultados["serie_a"] and resultados["serie_a"]["sucesso"] and
+             resultados["serie_b"] and resultados["serie_b"]["sucesso"])
+        )
+        
+        return jsonify({
+            "success": sucesso_geral,
+            "serie": serie,
+            "resultados": resultados,
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao atualizar classificação: {str(e)}"
+        }), 500
+
 @bp_br.route("/classificacao/serie-c", methods=["GET"])
 @cross_origin()
 def api_classificacao_serie_c():

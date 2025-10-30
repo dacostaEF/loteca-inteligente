@@ -21,8 +21,9 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
     <!-- Sistema de elenco integrado -->
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
+    <!-- ✅ Scripts com suporte a ES6 modules (imports/exports) -->
+    <script type="module" src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
     <script src="{{ url_for('static', filename='js/confrontos-break.js') }}"></script>
     <script src="{{ url_for('static', filename='js/sticky-tabs-mobile.js') }}"></script>
     
@@ -1404,8 +1405,24 @@
 
                     <!-- TABELA DE CLASSIFICAÇÃO -->
                     <div class="classification-table-container">
-                        <div class="table-header">
+                        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
                             <h4 id="current-championship-title">Série A - Classificação</h4>
+                            <button id="btn-atualizar-classificacao" class="btn-atualizar-tabela" onclick="atualizarClassificacaoCSV()" title="Atualizar tabela do CSV" style="
+                                background: rgba(128, 128, 0, 0.5);
+                                border: 1px solid rgba(128, 128, 0, 0.8);
+                                color: #fff;
+                                padding: 8px 16px;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                font-weight: 500;
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                transition: all 0.3s ease;
+                            " onmouseover="this.style.background='rgba(128, 128, 0, 0.7)';" onmouseout="this.style.background='rgba(128, 128, 0, 0.5)';">
+                                <span class="btn-icon">🔄</span>
+                                <span class="btn-text">Atualizar</span>
+                            </button>
                         </div>
 
                         <!-- TABELA BRASILEIRÃO SÉRIE A -->
@@ -2179,22 +2196,56 @@
         // SELETOR DE CAMPEONATO (SÉRIE A / SÉRIE B)
         function initializeChampionshipSelector() {
             const champBtns = document.querySelectorAll('.champ-btn');
-            const tables = document.querySelectorAll('.classification-table');
+            // ✅ FIX: Selecionar APENAS as tabelas do Brasileirão (Série A, B, C)
+            const tabelasBrasileiras = [
+                document.getElementById('tabela-serie-a'),
+                document.getElementById('tabela-serie-b'),
+                document.getElementById('tabela-serie-c')
+            ].filter(Boolean);
             const titleElement = document.getElementById('current-championship-title');
 
             champBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const championship = btn.dataset.championship;
                     
+                    console.log('🎯 [ABAS] Clicou em:', championship);
+                    
                     // Atualizar botões
                     champBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     
-                    // Atualizar tabelas
-                    tables.forEach(table => table.classList.remove('active'));
+                    // ⚠️ FIX CRÍTICO: LIMPAR E OCULTAR todas as tabelas antes de mostrar a nova
+                    console.log('🔄 [ABAS] Removendo active de todas as tabelas brasileiras...');
+                    tabelasBrasileiras.forEach(table => {
+                        console.log('   - Removendo active de:', table.id);
+                        table.classList.remove('active');
+                        // FORÇAR display:none para garantir que está escondida
+                        table.style.display = 'none';
+                    });
+                    
                     const targetTable = document.getElementById(`tabela-${championship}`);
                     if (targetTable) {
+                        console.log('✅ [ABAS] Adicionando active em:', targetTable.id);
                         targetTable.classList.add('active');
+                        // FORÇAR display:block para garantir que está visível
+                        targetTable.style.display = 'block';
+                        
+                        // DEBUG: Verificar estado das 3 divs
+                        console.log('📊 [ABAS] Estado final das divs:');
+                        const serieA = document.getElementById('tabela-serie-a');
+                        const serieB = document.getElementById('tabela-serie-b');
+                        const serieC = document.getElementById('tabela-serie-c');
+                        
+                        console.log('   Série A:', serieA.classList.contains('active') ? '✅ VISÍVEL' : '❌ OCULTA');
+                        console.log('   Série A HTML length:', serieA.innerHTML.length, 'chars');
+                        console.log('   Série A tem tabela?', serieA.querySelector('.standings-table') ? 'SIM' : 'NÃO');
+                        
+                        console.log('   Série B:', serieB.classList.contains('active') ? '✅ VISÍVEL' : '❌ OCULTA');
+                        console.log('   Série B HTML length:', serieB.innerHTML.length, 'chars');
+                        console.log('   Série B tem tabela?', serieB.querySelector('.standings-table') ? 'SIM' : 'NÃO');
+                        
+                        console.log('   Série C:', serieC.classList.contains('active') ? '✅ VISÍVEL' : '❌ OCULTA');
+                        console.log('   Série C HTML length:', serieC.innerHTML.length, 'chars');
                     }
                     
                     // Atualizar título
@@ -2222,9 +2273,9 @@
 
             // AUTO-CARREGAMENTO INICIAL: Carregar dados frescos ao iniciar sessão
             setTimeout(() => {
-                console.log('🚀 [INIT] Auto-carregamento inicial das tabelas...');
-                carregarTabelaSerieA(true); // ← FORCE REFRESH na inicialização
-                carregarTabelaSerieB(true); // ← FORCE REFRESH na inicialização
+                console.log('🚀 [INIT] Auto-carregamento inicial das tabelas (método correto - CSV)...');
+                carregarTabelaSerieA(true); // ← FORCE REFRESH na inicialização (usa API /api/br/classificacao/serie-a)
+                carregarTabelaSerieB(true); // ← FORCE REFRESH na inicialização (usa API /api/br/classificacao/serie-b)
                 carregarTabelaSerieC(true); // ← FORCE REFRESH na inicialização
                 console.log('✅ [INIT] Tabelas do Panorama carregadas automaticamente!');
             }, 2000); // ← 2s para garantir que a página carregou
@@ -2232,6 +2283,115 @@
             // Inicializar campeonatos internacionais
             initializeInternationalChampionships();
         }
+
+        // ========== FUNÇÃO PARA ATUALIZAR CLASSIFICAÇÃO DO CSV ==========
+        async function atualizarClassificacaoCSV() {
+            console.log('🔄 [UPDATE-CSV] Iniciando atualização do CSV...');
+            
+            const btn = document.getElementById('btn-atualizar-classificacao');
+            const btnIcon = btn.querySelector('.btn-icon');
+            const btnText = btn.querySelector('.btn-text');
+            
+            // Desabilitar botão e mostrar loading
+            btn.disabled = true;
+            btnIcon.textContent = '⏳';
+            btnText.textContent = 'Atualizando...';
+            btn.classList.add('loading');
+            
+            // Verificar qual série está ativa
+            const champBtns = document.querySelectorAll('.champ-btn');
+            console.log('🔍 [UPDATE-CSV] Total de botões encontrados:', champBtns.length);
+            
+            let serieAtiva = 'A';
+            champBtns.forEach((b, index) => {
+                const hasActive = b.classList.contains('active');
+                const champ = b.dataset.championship;
+                console.log(`🔍 [UPDATE-CSV] Botão ${index}: ${champ} - Active: ${hasActive}`);
+                
+                if (hasActive) {
+                    if (champ === 'serie-b') serieAtiva = 'B';
+                    else if (champ === 'serie-c') serieAtiva = 'C';
+                    else serieAtiva = 'A';
+                }
+            });
+            
+            console.log(`📊 [UPDATE-CSV] Série ativa detectada: ${serieAtiva}`);
+            
+            try {
+                // Fazer requisição POST para atualizar
+                const response = await fetch('/api/br/classificacao/atualizar-csv', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ serie: serieAtiva })
+                });
+                
+                const data = await response.json();
+                
+                console.log('📊 [UPDATE-CSV] Resposta da API:', data);
+                
+                if (data.success) {
+                    // Sucesso! Atualizar a tabela
+                    btnIcon.textContent = '✅';
+                    btnText.textContent = 'Atualizado!';
+                    
+                    // Mostrar mensagens de sucesso
+                    if (data.resultados && data.resultados.mensagens) {
+                        data.resultados.mensagens.forEach(msg => {
+                            console.log(`📊 [UPDATE-CSV] ${msg}`);
+                        });
+                    }
+                    
+                    // Recarregar a tabela correspondente
+                    setTimeout(() => {
+                        if (serieAtiva === 'A') {
+                            carregarTabelaSerieA(true);
+                        } else if (serieAtiva === 'B') {
+                            carregarTabelaSerieB(true);
+                        }
+                        
+                        // Resetar botão
+                        btnIcon.textContent = '🔄';
+                        btnText.textContent = 'Atualizar';
+                        btn.disabled = false;
+                        btn.classList.remove('loading');
+                    }, 1500);
+                    
+                } else {
+                    // Erro
+                    btnIcon.textContent = '❌';
+                    btnText.textContent = 'Erro!';
+                    console.error('❌ [UPDATE-CSV] Erro:', data.error);
+                    
+                    alert(`Erro ao atualizar: ${data.error || 'Erro desconhecido'}`);
+                    
+                    // Resetar botão
+                    setTimeout(() => {
+                        btnIcon.textContent = '🔄';
+                        btnText.textContent = 'Atualizar';
+                        btn.disabled = false;
+                        btn.classList.remove('loading');
+                    }, 2000);
+                }
+                
+            } catch (error) {
+                console.error('❌ [UPDATE-CSV] Erro na requisição:', error);
+                btnIcon.textContent = '❌';
+                btnText.textContent = 'Erro!';
+                
+                alert(`Erro ao atualizar: ${error.message}`);
+                
+                // Resetar botão
+                setTimeout(() => {
+                    btnIcon.textContent = '🔄';
+                    btnText.textContent = 'Atualizar';
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+                }, 2000);
+            }
+        }
+        // ========== FIM FUNÇÃO ATUALIZAR CSV ==========
 
         // CARREGAR DADOS DA SÉRIE A (com sistema de cache e auto-refresh)
         async function carregarTabelaSerieA(forceRefresh = false) {
@@ -2294,6 +2454,12 @@
                             
                             if (apiResponse.success && dadosArray && dadosArray.length > 0) {
                                 console.log('🏆 [DEBUG] Processando dados válidos...');
+                                
+                                // DEBUG: Ver os primeiros 3 times e seus campos de ultimos jogos
+                                dadosArray.slice(0, 3).forEach(time => {
+                                    console.log(`🔍 [SERIE-A] ${time.time}: ultimos_jogos="${time.ultimos_jogos}", ultimos_confrontos="${time.ultimos_confrontos}", ultimas_5="${time.ultimas_5}"`);
+                                });
+                                
                                 // Dados já vêm no formato correto da API pública
                                 dadosSerieA = dadosArray.map(time => ({
                                     pos: time.posicao,
@@ -2307,7 +2473,7 @@
                                     gc: time.gols_contra || time.gc,
                                     sg: time.saldo_gols || time.sg,
                                     aproveitamento: time.aproveitamento || Math.round((time.pts / (time.pj * 3)) * 100),
-                                    ultimos: time.ultimos_confrontos || time.ultimos_jogos || time.ultimas_5 || '-----',
+                                    ultimos: time.ultimos_jogos || time.ultimos_confrontos || time.ultimas_5 || '-----',  // ✅ MUDEI A ORDEM!
                                     zona: time.zona || ''
                                 }));
                                 
@@ -2332,7 +2498,24 @@
                 const nextUpdate = new Date(now + CACHE_DURATION).toLocaleTimeString('pt-BR');
                 const dataUpdate = new Date().toLocaleString('pt-BR');
                 
-                container.innerHTML = renderTabelaClassificacao(dadosSerieA, 'serie-a');
+                const htmlTabela = renderTabelaClassificacao(dadosSerieA, 'serie-a');
+                console.log('🎨 [DEBUG] Tamanho do HTML gerado:', htmlTabela ? htmlTabela.length : 0, 'caracteres');
+                console.log('🎨 [DEBUG] Primeiros 200 chars:', htmlTabela ? htmlTabela.substring(0, 200) : 'NULL');
+                console.log('🎨 [DEBUG] Container antes:', container.id, container.innerHTML.substring(0, 100));
+                
+                container.innerHTML = htmlTabela;
+                
+                console.log('🎨 [DEBUG] Container depois:', container.id, container.innerHTML.substring(0, 100));
+                console.log('🎨 [DEBUG] Container classes:', container.className);
+                console.log('🎨 [DEBUG] Container display:', window.getComputedStyle(container).display);
+                console.log('🎨 [DEBUG] Container visível?', container.offsetHeight > 0, 'Height:', container.offsetHeight);
+                
+                // Forçar display se necessário
+                if (container.offsetHeight === 0) {
+                    console.warn('⚠️ [DEBUG] Container com height 0! Forçando display...');
+                    container.classList.add('active');
+                    container.style.display = 'block';
+                }
 
                 // Configurar auto-refresh para próxima vez
                 programarProximaAtualizacao();
@@ -2512,7 +2695,13 @@
         // CARREGAR DADOS DA SÉRIE B
         async function carregarTabelaSerieB(forceRefresh = false) {
             const container = document.getElementById('tabela-serie-b');
-            if (!container) return;
+            console.log('🥈 [DEBUG-B] Container ID:', container ? container.id : 'NULL');
+            console.log('🥈 [DEBUG-B] Container classes:', container ? container.className : 'NULL');
+            
+            if (!container) {
+                console.error('❌ [Série B] Container tabela-serie-b não encontrado!');
+                return;
+            }
 
             const loadingMsg = forceRefresh ? 
                 '🔄 Atualizando Série B...' : 
@@ -2535,6 +2724,7 @@
                 
                 const data = await response.json();
                 console.log('🥈 [Série B] Dados recebidos:', data);
+                console.log('🥈 [DEBUG-B] Primeiro time:', data.data ? data.data[0]?.time : 'NULL');
                 
                 if (data.success && data.data && data.data.length > 0) {
                     // Mapear campos do banco para formato da tabela
@@ -2555,6 +2745,8 @@
                     }));
                     
                     console.log('🥈 [Série B] Dados formatados:', dadosFormatados.length, 'times');
+                    console.log('🥈 [DEBUG-B] Primeiro time formatado:', dadosFormatados[0]?.time);
+                    console.log('🥈 [DEBUG-B] Renderizando em container:', container.id);
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'serie-b');
                     
@@ -2649,7 +2841,13 @@
             console.log('🌍 [DEBUG] Inicializando campeonatos internacionais...');
             
             const intlBtns = document.querySelectorAll('.intl-champ-btn');
-            const intlTables = document.querySelectorAll('#internacionais .classification-table');
+            // ✅ FIX: Selecionar APENAS as tabelas internacionais (não as do Brasileirão)
+            const tabelasInternacionais = [
+                document.getElementById('tabela-premier-league'),
+                document.getElementById('tabela-la-liga'),
+                document.getElementById('tabela-ligue1'),
+                document.getElementById('tabela-champions-league')
+            ].filter(Boolean);
             const titleElement = document.getElementById('current-international-title');
 
             intlBtns.forEach(btn => {
@@ -2661,11 +2859,15 @@
                     intlBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     
-                    // Atualizar tabelas
-                    intlTables.forEach(table => table.classList.remove('active'));
+                    // Atualizar tabelas - APENAS internacionais
+                    tabelasInternacionais.forEach(table => {
+                        table.classList.remove('active');
+                        table.style.display = 'none'; // Forçar ocultar
+                    });
                     const targetTable = document.getElementById(`tabela-${championship}`);
                     if (targetTable) {
                         targetTable.classList.add('active');
+                        targetTable.style.display = 'block'; // Forçar exibir
                     }
                     
                     // Atualizar título
@@ -2946,6 +3148,162 @@
             ];
         }
 
+        // DETERMINAR CLASSE DE ZONA BASEADA NA POSIÇÃO
+        function getClasseZona(posicao, serie) {
+            const pos = parseInt(posicao);
+            
+            if (serie === 'serie-a') {
+                if (pos <= 4) return 'libertadores';           // 1º ao 4º - Verde (G4 Libertadores Direto)
+                if (pos <= 6) return 'pre-libertadores';       // 5º e 6º - Azul (Pré-Libertadores)
+                if (pos <= 12) return 'sul-americana';         // 7º ao 12º - Laranja (Sul-Americana)
+                if (pos <= 16) return 'meio-tabela';           // 13º ao 16º - Cinza (Zona Neutra)
+                return 'rebaixamento';                         // 17º ao 20º - Vermelho (Z4 Rebaixamento)
+            } else if (serie === 'serie-b') {
+                if (pos <= 4) return 'libertadores';           // 1º ao 4º - Verde (Acesso Direto)
+                if (pos <= 8) return 'pre-libertadores';       // 5º ao 8º - Azul (Acesso Playoff)
+                if (pos <= 16) return 'meio-tabela';           // 9º ao 16º - Cinza (Zona Neutra)
+                return 'rebaixamento';                         // 17º ao 20º - Vermelho (Rebaixamento)
+            }
+            
+            return 'meio-tabela'; // Padrão
+        }
+
+        // RENDERIZAR UMA LINHA DA TABELA DE CLASSIFICAÇÃO
+        function renderLinhaClassificacao(time, isEditable) {
+            try {
+                const serie = time.serie || 'serie-a';
+                const classeZona = getClasseZona(time.posicao || time.pos, serie);
+                
+                // Preparar últimos jogos (APENAS 5 BOLINHAS)
+                let ultimosHTML = '';
+                const ultimos = time.ultimos_jogos || time.ultimos || '';
+                
+                // DEBUG: Ver o que está vindo
+                if (!ultimos || ultimos === '') {
+                    console.warn(`⚠️ [ULTIMOS] Time: ${time.time || time.clube}, SEM DADOS! time.ultimos_jogos="${time.ultimos_jogos}", time.ultimos="${time.ultimos}"`);
+                }
+                
+                if (ultimos && typeof ultimos === 'string') {
+                    console.log(`🔍 [ULTIMOS] Time: ${time.time || time.clube}, Original: "${ultimos}"`);
+                    
+                    // ✅ LIMPAR: Remover hífens, espaços, vírgulas
+                    const ultimosLimpo = ultimos.replace(/[-\s,]/g, '').toUpperCase();
+                    console.log(`🔍 [ULTIMOS] Limpo: "${ultimosLimpo}"`);
+                    
+                    // ✅ VALIDAR: Só pegar V, E, D
+                    const resultadosValidos = [];
+                    for (let i = 0; i < ultimosLimpo.length; i++) {
+                        const char = ultimosLimpo[i];
+                        if (char === 'V' || char === 'E' || char === 'D') {
+                            resultadosValidos.push(char);
+                        }
+                    }
+                    
+                    // ✅ LIMITAR: APENAS OS 5 PRIMEIROS (ou menos se tiver menos de 5)
+                    const ultimos5 = resultadosValidos.slice(0, 5);
+                    
+                    if (ultimos5.length > 0) {
+                        ultimosHTML = '<div class="ultimos-jogos">';
+                        ultimos5.forEach(result => {
+                            const classe = result === 'V' ? 'vitoria' : result === 'E' ? 'empate' : 'derrota';
+                            const titulo = result === 'V' ? 'Vitória' : result === 'E' ? 'Empate' : 'Derrota';
+                            ultimosHTML += `<span class="resultado-bolinha ${classe}" title="${titulo}"></span>`;
+                        });
+                        ultimosHTML += '</div>';
+                    }
+                }
+                
+                const posicao = time.posicao || time.pos || 0;
+                const nome = time.time || time.clube || 'N/A';
+                const pontos = time.pontos || time.p || 0;
+                const jogos = time.jogos || time.j || 0;
+                const vitorias = time.vitorias || time.v || 0;
+                const empates = time.empates || time.e || 0;
+                const derrotas = time.derrotas || time.d || 0;
+                const golsPro = time.gols_pro || time.gp || 0;
+                const golsContra = time.gols_contra || time.gc || 0;
+                const saldoGols = time.saldo_gols || time.sg || 0;
+                const aproveitamento = time.aproveitamento || time.aprov || 0;
+                
+                return `
+                    <tr class="${classeZona}">
+                        <td class="position-cell">${posicao}</td>
+                        <td class="team-name">${nome}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="pontos"' : ''}>${pontos}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="jogos"' : ''}>${jogos}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="vitorias"' : ''}>${vitorias}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="empates"' : ''}>${empates}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="derrotas"' : ''}>${derrotas}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="gols_pro"' : ''}>${golsPro}</td>
+                        <td ${isEditable ? 'class="editable" contenteditable="true" data-field="gols_contra"' : ''}>${golsContra}</td>
+                        <td class="saldo-gols ${saldoGols >= 0 ? 'positivo' : 'negativo'}">${saldoGols >= 0 ? '+' : ''}${saldoGols}</td>
+                        <td>${aproveitamento}</td>
+                        <td>${ultimosHTML}</td>
+                    </tr>
+                `;
+            } catch (error) {
+                console.error('❌ Erro ao renderizar linha:', error, time);
+                return '<tr><td colspan="12">Erro ao renderizar</td></tr>';
+            }
+        }
+
+        // RENDERIZAR TABELA DE CLASSIFICAÇÃO (PRINCIPAL)
+        function renderTabelaClassificacao(dados, serie) {
+            console.log('🎨 [RENDER] Renderizando tabela:', serie, 'com', dados ? dados.length : 0, 'times');
+            
+            if (!dados || dados.length === 0) {
+                console.error('❌ [RENDER] Dados vazios ou undefined!');
+                return '<div class="table-loading"><p>⚠️ Nenhum dado disponível</p></div>';
+            }
+            
+            try {
+                const isEditable = false; // Somente visualização
+                
+                const linhas = dados.map(time => {
+                    time.serie = serie; // Garantir que 'serie' seja passado
+                    return renderLinhaClassificacao(time, isEditable);
+                }).join('');
+                
+                console.log('✅ [RENDER] Tabela renderizada com sucesso!');
+                
+                const html = `
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>🏆 ${serie === 'serie-a' ? 'Série A' : 'Série B'} - Classificação</h3>
+                        </div>
+                        <div class="classification-wrapper">
+                            <table class="standings-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pos</th>
+                                        <th>Time</th>
+                                        <th>P</th>
+                                        <th>J</th>
+                                        <th>V</th>
+                                        <th>E</th>
+                                        <th>D</th>
+                                        <th>GP</th>
+                                        <th>GC</th>
+                                        <th>SG</th>
+                                        <th>%</th>
+                                        <th>Últimos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${linhas}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                
+                return html;
+            } catch (error) {
+                console.error('❌ [RENDER] Erro ao renderizar tabela:', error);
+                return '<div class="table-loading"><p>❌ Erro ao renderizar tabela</p></div>';
+            }
+        }
+
         // RENDERIZAR TABELA EDITÁVEL COM DADOS REAIS
         function renderTabelaClassificacaoReal(dados, serie) {
             const isEditable = true; // Tornar editável
@@ -2959,7 +3317,7 @@
                         </button>
                     </div>
                     <div class="classification-wrapper">
-                        <table class="classification-table">
+                        <table class="standings-table">
                             <thead>
                                 <tr>
                                     <th>Pos</th>
@@ -2977,7 +3335,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                ${dados.map(time => renderLinhaClassificacao(time, isEditable)).join('')}
+                                ${dados.map(time => {
+                                    time.serie = serie;
+                                    return renderLinhaClassificacao(time, isEditable);
+                                }).join('')}
                             </tbody>
                         </table>
                     </div>
@@ -13083,13 +13444,14 @@
                         }, 100);
                     }
                     
-                    // Atualizar tabelas automaticamente quando abrir Panorama dos Campeonatos
-                    if (targetTab === 'panorama-campeonatos') {
-                        console.log('🏆 [PANORAMA] Aba Panorama aberta - atualizando tabelas automaticamente...');
-                        setTimeout(() => {
-                            atualizarTabelasAutomaticamente();
-                        }, 100);
-                    }
+                    // ⚠️ ATUALIZAÇÃO AUTOMÁTICA DESABILITADA - Use o botão "Atualizar" manualmente
+                    // Motivo: A API automática tem bugs com parsing de CSV
+                    // if (targetTab === 'panorama-campeonatos') {
+                    //     console.log('🏆 [PANORAMA] Aba Panorama aberta - atualizando tabelas automaticamente...');
+                    //     setTimeout(() => {
+                    //         atualizarTabelasAutomaticamente();
+                    //     }, 100);
+                    // }
                 }
             }
         });

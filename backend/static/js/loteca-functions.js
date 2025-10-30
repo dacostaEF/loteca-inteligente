@@ -4,23 +4,11 @@
  * Contém todas as funções para carregar dados dos jogos
  */
 
-// MAPEAMENTO DOS JOGOS - CSV E TIMES
-const jogosMap = {
-    1: { csv: 'corinthians_gremio.csv', casa: 'Corinthians', fora: 'Gremio' },
-    2: { csv: 'santos_fortaleza.csv', casa: 'Santos', fora: 'Fortaleza' },
-    3: { csv: 'cruzeiro_vitoria.csv', casa: 'Cruzeiro', fora: 'Vitoria' },
-    4: { csv: 'goias_athletico-pr.csv', casa: 'Goias', fora: 'Athletico-PR' },
-    5: { csv: 'mirassol_botafogo.csv', casa: 'Mirassol', fora: 'Botafogo' },
-    6: { csv: 'avai_athetic-mg.csv', casa: 'Avai', fora: 'Athletic-MG' },
-    7: { csv: 'flamengo_sport.csv', casa: 'Flamengo', fora: 'Sport' },
-    8: { csv: 'bahia_bragantino.csv', casa: 'Bahia', fora: 'Bragantino' },
-    9: { csv: 'ceara_fluminense.csv', casa: 'Ceara', fora: 'Fluminense' },
-    10: { csv: 'juventude_palmeiras.csv', casa: 'Juventude', fora: 'Palmeiras' },
-    11: { csv: 'internacional_atletico-mg.csv', casa: 'Internacional', fora: 'Atletico-MG' },
-    12: { csv: 'remo_chapecoense.csv', casa: 'Remo', fora: 'Chapecoense' },
-    13: { csv: 'vasco_sao_paulo.csv', casa: 'Vasco', fora: 'Sao Paulo' },
-    14: { csv: 'operario-pr_vilanova.csv', casa: 'Operario-PR', fora: 'Vila Nova' }
-};
+// ✅ IMPORTAR CONFIGURAÇÃO CENTRALIZADA DOS JOGOS
+import { JOGOS_LOTECA, getJogosMapCompat } from './jogos-config.js';
+
+// COMPATIBILIDADE: Manter referência jogosMap para código legado
+const jogosMap = getJogosMapCompat();
 
 /**
  * FUNÇÃO DE NORMALIZAÇÃO DE TEXTO PARA COMPARAÇÃO DE TIMES
