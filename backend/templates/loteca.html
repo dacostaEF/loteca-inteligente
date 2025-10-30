@@ -5108,14 +5108,64 @@
                         };
                     }
                     
+                    // ✅ FALLBACK FINAL: Buscar diretamente no JSON local
+                    console.log(`🔄 [ELENCO] Tentando fallback final com JSON local para: "${nomeTime}"`);
+                    return await buscarDadosDoJSON(nomeTime);
+                    
                 } catch (error) {
                     console.error(`❌ [ELENCO] Erro ao buscar dados:`, error);
+                    // Tentar JSON mesmo em caso de erro
+                    return await buscarDadosDoJSON(nomeTime);
                 }
             } else {
                 // ✅ CLUBES INTERNACIONAIS - PROCEDIMENTO SEPARADO
                 console.log(`🌍 [ELENCO] Clube internacional detectado, chamando buscarDadosInternacional para: "${nomeTime}"`);
                 console.log(`🔍 [DEBUG-ELENCO] isBrazilian: ${isBrazilian}, nomeTime: "${nomeTime}"`);
                 return await buscarDadosInternacional(nomeTime);
+            }
+        }
+        
+        // ✅ BUSCAR DADOS DIRETAMENTE DO JSON LOCAL
+        async function buscarDadosDoJSON(nomeTime) {
+            console.log(`📁 [JSON] Buscando "${nomeTime}" no JSON local...`);
+            
+            try {
+                // Buscar dados do JSON de força de elenco
+                const response = await fetch('/static/valor_elenco/forca_elenco_unificado.json');
+                const jsonData = await response.json();
+                const clubes = jsonData.clubes || {};
+                
+                // Mapear nome para chave JSON
+                const chaveBusca = mapeamentoNomes[nomeTime.toUpperCase()] || nomeTime.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                console.log(`🔍 [JSON] Chave de busca: "${chaveBusca}"`);
+                
+                const dadosClube = clubes[chaveBusca];
+                
+                if (dadosClube) {
+                    console.log(`✅ [JSON] Dados encontrados no JSON:`, dadosClube);
+                    
+                    return {
+                        nome: dadosClube.nome_oficial || nomeTime,
+                        abrev: nomeTime.substring(0, 3).toUpperCase(),
+                        total_atletas: 30,
+                        pct_provaveis: '24/8',
+                        forca_elenco: dadosClube.forca_elenco || 5.0,
+                        preco_medio: `€ ${dadosClube.valor_elenco_euros}MM`,
+                        rating: (dadosClube.forca_elenco || 5.0) / 10,
+                        badge: gerarBadgeTime((dadosClube.forca_elenco || 5.0) / 10),
+                        fonte: 'json_local',
+                        brasileiro: true,
+                        valor_mm_euros: dadosClube.valor_elenco_euros,
+                        serie: dadosClube.liga
+                    };
+                } else {
+                    console.warn(`⚠️ [JSON] Clube "${nomeTime}" não encontrado (chave: "${chaveBusca}")`);
+                    return criarDadosFallback(nomeTime);
+                }
+                
+            } catch (error) {
+                console.error(`❌ [JSON] Erro ao buscar no JSON:`, error);
+                return criarDadosFallback(nomeTime);
             }
         }
 
