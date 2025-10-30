@@ -2279,21 +2279,13 @@
             border-bottom: 1px solid var(--cor-borda);
         }
 
-        .brasileirao-table th, .standings-table th:first-child {
-            text-align: left;
-            padding-left: 1.5rem;
-        }
-
+        /* ⚠️ REMOVIDO: Regras de :first-child conflitavam com nth-child específicos */
+        
         .brasileirao-table td, .standings-table td {
             padding: 0.8rem;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 0.9rem;
-        }
-
-        .brasileirao-table td, .standings-table td:first-child {
-            text-align: left;
-            padding-left: 1.5rem;
         }
 
         .brasileirao-table tr, .standings-table tr:hover {
@@ -2537,21 +2529,21 @@
         .resultado.empate { background-color: #FBBF24; }
         .resultado.derrota { background-color: #F43F5E; }
 
-        /* ✅ BOLINHAS DOS ÚLTIMOS JOGOS - TABELAS DE CLASSIFICAÇÃO */
+        /* ✅ BOLINHAS DOS ÚLTIMOS JOGOS - TABELAS DE CLASSIFICAÇÃO (40% MENOR) */
         .resultado-bolinha {
             display: inline-block;
-            width: 18px;
-            height: 18px;
-            min-width: 18px;   /* ⬅️ GARANTIR largura mínima */
-            min-height: 18px;  /* ⬅️ GARANTIR altura mínima */
-            max-width: 18px;   /* ⬅️ GARANTIR largura máxima */
-            max-height: 18px;  /* ⬅️ GARANTIR altura máxima */
+            width: 11px;       /* ⬅️ 40% menor (18px → 11px) */
+            height: 11px;      /* ⬅️ 40% menor (18px → 11px) */
+            min-width: 11px;   
+            min-height: 11px;  
+            max-width: 11px;   
+            max-height: 11px;  
             border-radius: 50%;
             text-align: center;
             font-size: 0;  /* ⬅️ ESCONDE O TEXTO (V, E, D) */
-            line-height: 18px;
-            margin: 0 3px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 11px;
+            margin: 0 2px;     /* ⬅️ Menos espaçamento entre bolinhas */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);  /* ⬅️ Sombra menor */
             transition: all 0.3s ease;
             flex-shrink: 0;  /* ⬅️ NÃO ENCOLHER */
         }
@@ -2677,27 +2669,39 @@
             display: inline-block;
         }
 
-        /* Ajustes de colunas para layout elegante */
-        .brasileirao-table th, .standings-table th:nth-child(1), 
-        .brasileirao-table td, .standings-table td:nth-child(1) {
-            width: 25%;
-            text-align: left;
-            padding: 0.8rem 1rem;
+        /* ✅ AJUSTES DE LARGURA DAS COLUNAS (Pos menor, Time maior) */
+        .brasileirao-table th:nth-child(1), 
+        .brasileirao-table td:nth-child(1),
+        .standings-table th:nth-child(1), 
+        .standings-table td:nth-child(1) {
+            width: 5%;   /* ⬅️ Pos: MENOR (era 25%) */
+            text-align: center;
+            padding: 0.8rem 0.5rem;
         }
 
-        .brasileirao-table th, .standings-table th:nth-child(2) { width: 6%; }
-        .brasileirao-table th, .standings-table th:nth-child(3) { width: 5%; }
-        .brasileirao-table th, .standings-table th:nth-child(4) { width: 5%; }
-        .brasileirao-table th, .standings-table th:nth-child(5) { width: 5%; }
-        .brasileirao-table th, .standings-table th:nth-child(6) { width: 5%; }
-        .brasileirao-table th, .standings-table th:nth-child(7) { width: 6%; }
-        .brasileirao-table th, .standings-table th:nth-child(8) { width: 6%; }
-        .brasileirao-table th, .standings-table th:nth-child(9) { width: 6%; }
-        .brasileirao-table th, .standings-table th:nth-child(10) { width: 6%; }
+        .brasileirao-table th:nth-child(2), 
+        .brasileirao-table td:nth-child(2),
+        .standings-table th:nth-child(2), 
+        .standings-table td:nth-child(2) {
+            width: 20%;  /* ⬅️ Time: MAIOR (era 6%) */
+            text-align: left;
+            padding: 0.8rem 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-        .brasileirao-table th, .standings-table th:nth-child(11), 
-        .brasileirao-table td, .standings-table td:nth-child(11) {
-            width: 10%;
+        .brasileirao-table th:nth-child(3), .standings-table th:nth-child(3) { width: 5%; }
+        .brasileirao-table th:nth-child(4), .standings-table th:nth-child(4) { width: 5%; }
+        .brasileirao-table th:nth-child(5), .standings-table th:nth-child(5) { width: 5%; }
+        .brasileirao-table th:nth-child(6), .standings-table th:nth-child(6) { width: 5%; }
+        .brasileirao-table th:nth-child(7), .standings-table th:nth-child(7) { width: 5%; }
+        .brasileirao-table th:nth-child(8), .standings-table th:nth-child(8) { width: 5%; }
+        .brasileirao-table th:nth-child(9), .standings-table th:nth-child(9) { width: 5%; }
+        .brasileirao-table th:nth-child(10), .standings-table th:nth-child(10) { width: 5%; }
+        .brasileirao-table th:nth-child(11), .standings-table th:nth-child(11) { width: 5%; }
+        .brasileirao-table th:nth-child(12), .standings-table th:nth-child(12) { 
+            width: 10%;  /* ⬅️ Últimos jogos: Um pouco maior para as bolinhas */
             white-space: nowrap;
             text-align: center;
         }
