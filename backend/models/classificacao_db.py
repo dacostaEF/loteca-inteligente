@@ -18,11 +18,12 @@ class ClassificacaoDB:
     
     def __init__(self, db_path: str = None):
         if db_path is None:
-            # Tentar diferentes caminhos possíveis
+            # Tentar caminhos baseado em onde o script está rodando
+            # Se rodar de dentro do backend/, usa models/
+            # Se rodar da raiz, usa backend/models/
             possible_paths = [
-                "models/tabelas_classificacao.db",
-                "backend/models/tabelas_classificacao.db",
-                "tabelas_classificacao.db"
+                "models/tabelas_classificacao.db",           # Rodando de backend/
+                "backend/models/tabelas_classificacao.db"    # Rodando da raiz
             ]
             
             for path in possible_paths:
@@ -30,7 +31,7 @@ class ClassificacaoDB:
                     self.db_path = path
                     break
             else:
-                # Se nenhum caminho funcionar, usar o padrão
+                # Se nenhum existir, usar o padrão (será criado se necessário)
                 self.db_path = "models/tabelas_classificacao.db"
         else:
             self.db_path = db_path

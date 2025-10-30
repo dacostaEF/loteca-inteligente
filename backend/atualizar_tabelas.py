@@ -168,10 +168,13 @@ def atualizar_banco(serie_a=None, serie_b=None):
     print("\n💾 Atualizando banco de dados...")
     
     try:
-        # Determinar caminho do banco
+        # Caminho do banco (sempre no diretório models/)
         db_path = 'models/tabelas_classificacao.db'
+        
         if not os.path.exists(db_path):
-            db_path = 'tabelas_classificacao.db'
+            print(f"❌ ERRO: Banco de dados não encontrado: {db_path}")
+            print("   Certifique-se de que o arquivo existe no diretório correto.")
+            return
         
         # Conectar ao banco
         conn = sqlite3.connect(db_path)
