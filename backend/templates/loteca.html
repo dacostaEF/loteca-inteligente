@@ -5229,16 +5229,24 @@
             const brasileiros = [
                 // Times da Série A
                 'CORINTHIANS', 'FLAMENGO', 'PALMEIRAS', 'SÃO PAULO', 'SANTOS',
-                'VASCO', 'BOTAFOGO', 'FLUMINENSE', 'CRUZEIRO', 'ATLÉTICO-MG',
+                'VASCO', 'VASCO DA GAMA', 'BOTAFOGO', 'FLUMINENSE', 'CRUZEIRO', 'ATLÉTICO-MG',
                 'INTERNACIONAL', 'GRÊMIO', 'BAHIA', 'VITÓRIA', 'FORTALEZA',
-                'CEARÁ', 'SPORT', 'SPORT/PE', 'NÁUTICO', 'GOIÁS', 'ATLÉTICO-GO', 'ATLETICO/MG',
+                'CEARÁ', 'SPORT', 'SPORT/PE', 'SPORTE', 'SPORTE/PE', 'NÁUTICO', 'GOIÁS', 'ATLÉTICO-GO', 'ATLETICO/MG',
                 'CUIABÁ', 'CORITIBA', 'AMÉRICA-MG', 'JUVENTUDE', 'CAXIAS',
                 // Variações de nomes
                 'ATLETICO', 'ATLETICO-MG', 'ATLETICO-GO', 'AMERICA-MG',
                 'SAO PAULO', 'GREMIO', 'VITORIA', 'NAUTICO', 'ATLETICO-GO',
-                'AMERICA-MG', 'INTERNACIONAL', 'BRAGANTINO',
-                // Times adicionais da Loteca
-                'MIRASSOL', 'CEARA', 'CEARÁ'
+                'AMERICA-MG', 'INTERNACIONAL', 'BRAGANTINO', 'RED BULL BRAGANTINO',
+                // ✅ TIMES ADICIONADOS 2025 (Série A e B)
+                'MIRASSOL', 'CEARA', 'CEARÁ',
+                'ATHLETICO-PR', 'ATHLETICO/PR', 'ATLHETICO', 'ATLHETICO-PR',  // ← Inclui erro de digitação!
+                'AVAÍ', 'AVAI',
+                'ATHLETIC-MG', 'ATHLETIC CLUB', 'ATHLETIC CLUB/MG', 'ATHLETIC MG',
+                'REMO',
+                'CHAPECOENSE', 'CHAPE',
+                'OPERÁRIO-PR', 'OPERARIO-PR', 'OPERARIO', 'OPERÁRIO',
+                'VILA NOVA', 'VILA-NOVA', 'VILA NOVA/GO',
+                'GOIAS'  // ← Sem acento também!
             ];
             let isBrazilian = brasileiros.includes(nomeLimpo) || brasileiros.includes(nomeTime.toUpperCase());
             
