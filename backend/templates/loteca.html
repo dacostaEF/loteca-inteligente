@@ -11865,8 +11865,17 @@
             const timeCasaKey = timeCasa.toLowerCase().trim();
             const timeForaKey = timeFora.toLowerCase().trim();
             
-            const chaveCasa = mapeamentoNomes[timeCasaKey] || timeCasaKey.replace(/[^a-z]/g, '_');
-            const chaveFora = mapeamentoNomes[timeForaKey] || timeForaKey.replace(/[^a-z]/g, '_');
+            // ✅ FORÇAR uso do mapeamento (fallback estava estragando acentos!)
+            const chaveCasa = mapeamentoNomes[timeCasaKey] || null;
+            const chaveFora = mapeamentoNomes[timeForaKey] || null;
+            
+            // DEBUG: Se não encontrar no mapeamento, logar
+            if (!chaveCasa) {
+                console.warn(`⚠️ Time casa "${timeCasa}" (lowercase: "${timeCasaKey}") não está no mapeamento!`);
+            }
+            if (!chaveFora) {
+                console.warn(`⚠️ Time fora "${timeFora}" (lowercase: "${timeForaKey}") não está no mapeamento!`);
+            }
             
             console.log('🔍 Verificando clubes:', { 
                 timeCasa, 
