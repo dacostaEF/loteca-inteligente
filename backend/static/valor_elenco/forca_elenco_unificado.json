@@ -195,6 +195,149 @@
       "forca_elenco": 4.0,
       "liga": "Brasileirão Série A",
       "observacoes": "Estimativa mínima - Clube regional"
+    },
+    "mirassol": {
+      "nome_oficial": "Mirassol",
+      "nomes_alternativos": ["leão do interior", "mirassol fc"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 21.0,
+      "valor_elenco_reais": 131.88,
+      "forca_elenco": 8.4,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados Transfermarkt 2025 - Sensação da Série A (4º lugar com elenco mais barato)"
+    },
+    "red_bull_bragantino": {
+      "nome_oficial": "Red Bull Bragantino",
+      "nomes_alternativos": ["bragantino", "red bull", "massa bruta"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 70.1,
+      "valor_elenco_reais": 440.23,
+      "forca_elenco": 42.06,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados Transfermarkt 2025 - Investimento Red Bull"
+    },
+    "ceara": {
+      "nome_oficial": "Ceará",
+      "nomes_alternativos": ["vozão", "ceará sc"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 30.0,
+      "valor_elenco_reais": 188.40,
+      "forca_elenco": 18.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados Transfermarkt 2025"
+    },
+    "sport": {
+      "nome_oficial": "Sport Recife",
+      "nomes_alternativos": ["leão da ilha", "sport"],
+      "categoria": "nacional_medio",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 36.65,
+      "valor_elenco_reais": 230.16,
+      "forca_elenco": 21.99,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados Transfermarkt 2025 - Lanterna da Série A"
+    },
+    "juventude": {
+      "nome_oficial": "Juventude",
+      "nomes_alternativos": ["ju", "juventude rs"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 17.38,
+      "valor_elenco_reais": 109.14,
+      "forca_elenco": 6.95,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Dados Transfermarkt 2025"
+    },
+    "remo": {
+      "nome_oficial": "Remo",
+      "nomes_alternativos": ["leão azul", "clube do remo"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 16.5,
+      "valor_elenco_reais": 103.62,
+      "forca_elenco": 6.6,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Dados Transfermarkt 2025 - Brigando pelo acesso (3º lugar)"
+    },
+    "chapecoense": {
+      "nome_oficial": "Chapecoense",
+      "nomes_alternativos": ["chape", "verdão do oeste"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 6.4,
+      "valor_elenco_reais": 40.19,
+      "forca_elenco": 2.56,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Dados Transfermarkt 2025 - Melhor custo-benefício Série B (2º lugar com elenco barato)"
+    },
+    "operario_pr": {
+      "nome_oficial": "Operário-PR",
+      "nomes_alternativos": ["fantasma", "operário", "operario"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 7.48,
+      "valor_elenco_reais": 46.97,
+      "forca_elenco": 2.99,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Dados Transfermarkt 2025"
+    },
+    "vila_nova": {
+      "nome_oficial": "Vila Nova",
+      "nomes_alternativos": ["tigre", "vila nova go"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 8.0,
+      "valor_elenco_reais": 50.24,
+      "forca_elenco": 3.2,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Dados Transfermarkt 2025"
+    },
+    "avai": {
+      "nome_oficial": "Avaí",
+      "nomes_alternativos": ["leão da ilha", "avaí fc"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 8.5,
+      "valor_elenco_reais": 53.38,
+      "forca_elenco": 3.4,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Dados Transfermarkt 2025"
+    },
+    "athletic_mg": {
+      "nome_oficial": "Athletic-MG",
+      "nomes_alternativos": ["coelho", "athletic", "athletic club"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 8.6,
+      "valor_elenco_reais": 54.01,
+      "forca_elenco": 3.44,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Dados Transfermarkt 2025"
+    },
+    "vitoria": {
+      "nome_oficial": "Vitória",
+      "nomes_alternativos": ["leão da barra", "vitória ba"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 12.5,
+      "valor_elenco_reais": 78.50,
+      "forca_elenco": 5.0,
+      "liga": "Brasileirão Série A",
+      "observacoes": "Estimativa baseada em clubes similares Série A"
+    },
+    "goias": {
+      "nome_oficial": "Goiás",
+      "nomes_alternativos": ["esmeraldino", "goiás ec"],
+      "categoria": "regional",
+      "posicao_mundial": null,
+      "valor_elenco_euros": 11.0,
+      "valor_elenco_reais": 69.08,
+      "forca_elenco": 4.4,
+      "liga": "Brasileirão Série B",
+      "observacoes": "Estimativa baseada em clubes similares Série B"
     }
   },
   "formulas": {

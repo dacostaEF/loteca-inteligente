@@ -42,6 +42,110 @@
       "liga": "Brasileirão Série B",
       "observacao": "Estimativa baseada em clubes similares"
     },
+    "mirassol": {
+      "nome_oficial": "Mirassol",
+      "nomes_alternativos": ["leão do interior", "mirassol fc"],
+      "valor_elenco_euros": 21.0,
+      "valor_elenco_reais": 131.88,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série A"
+    },
+    "red_bull_bragantino": {
+      "nome_oficial": "Red Bull Bragantino",
+      "nomes_alternativos": ["bragantino", "red bull", "massa bruta"],
+      "valor_elenco_euros": 70.1,
+      "valor_elenco_reais": 440.23,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série A"
+    },
+    "ceara": {
+      "nome_oficial": "Ceará",
+      "nomes_alternativos": ["vozão", "ceará sc"],
+      "valor_elenco_euros": 30.0,
+      "valor_elenco_reais": 188.40,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série A"
+    },
+    "sport": {
+      "nome_oficial": "Sport Recife",
+      "nomes_alternativos": ["leão da ilha", "sport"],
+      "valor_elenco_euros": 36.65,
+      "valor_elenco_reais": 230.16,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série A"
+    },
+    "juventude": {
+      "nome_oficial": "Juventude",
+      "nomes_alternativos": ["ju", "juventude rs"],
+      "valor_elenco_euros": 17.38,
+      "valor_elenco_reais": 109.14,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série A"
+    },
+    "remo": {
+      "nome_oficial": "Remo",
+      "nomes_alternativos": ["leão azul", "clube do remo"],
+      "valor_elenco_euros": 16.5,
+      "valor_elenco_reais": 103.62,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
+    "chapecoense": {
+      "nome_oficial": "Chapecoense",
+      "nomes_alternativos": ["chape", "verdão do oeste"],
+      "valor_elenco_euros": 6.4,
+      "valor_elenco_reais": 40.19,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
+    "operario_pr": {
+      "nome_oficial": "Operário-PR",
+      "nomes_alternativos": ["fantasma", "operário", "operario"],
+      "valor_elenco_euros": 7.48,
+      "valor_elenco_reais": 46.97,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
+    "vila_nova": {
+      "nome_oficial": "Vila Nova",
+      "nomes_alternativos": ["tigre", "vila nova go"],
+      "valor_elenco_euros": 8.0,
+      "valor_elenco_reais": 50.24,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
+    "avai": {
+      "nome_oficial": "Avaí",
+      "nomes_alternativos": ["leão da ilha", "avaí fc"],
+      "valor_elenco_euros": 8.5,
+      "valor_elenco_reais": 53.38,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
+    "athletic_mg": {
+      "nome_oficial": "Athletic-MG",
+      "nomes_alternativos": ["coelho", "athletic", "athletic club"],
+      "valor_elenco_euros": 8.6,
+      "valor_elenco_reais": 54.01,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
+    "vitoria": {
+      "nome_oficial": "Vitória",
+      "nomes_alternativos": ["leão da barra", "vitória ba"],
+      "valor_elenco_euros": 12.5,
+      "valor_elenco_reais": 78.50,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série A"
+    },
+    "goias": {
+      "nome_oficial": "Goiás",
+      "nomes_alternativos": ["esmeraldino", "goiás ec"],
+      "valor_elenco_euros": 11.0,
+      "valor_elenco_reais": 69.08,
+      "posicao_mundial": null,
+      "liga": "Brasileirão Série B"
+    },
     "chelsea": {
       "nome_oficial": "Chelsea FC",
       "nomes_alternativos": ["chelsea", "blues"],
