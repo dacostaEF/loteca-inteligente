@@ -298,8 +298,8 @@ async function carregarConfrontosAutomatico(numeroJogo) {
             csv: 'operario-pr_vilanova.csv',
             timeCasa: 'Operário-PR',      // ← TIME CASA (resultado 'V' = vitória do Operário-PR) - NOME EXATO DO CSV
             timeFora: 'Vila Nova',        // ← TIME FORA (resultado 'D' = vitória do Vila Nova) - NOME EXATO DO CSV
-            escudoCasa: '/static/escudos/OPE_Operário-PR/Operario_PR.PNG',
-            escudoFora: '/static/escudos/Vila Nova/Vila Nova.PNG'
+            escudoCasa: '/static/escudos/OPE_Operario-PR/Operario_PR.PNG',
+            escudoFora: '/static/escudos/Vila_Nova/Vila_Nova.PNG'
         }
         // Adicionar mais jogos conforme necessário
     };

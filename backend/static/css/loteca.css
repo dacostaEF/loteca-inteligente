@@ -1453,7 +1453,7 @@
         .stat-value {
             color: var(--cor-texto-principal);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 10px;
         }
 
         .stat-value.destaque {
@@ -1798,13 +1798,13 @@
             
             /* 3. VALORES E ESTATÍSTICAS - MESMO PADRÃO */
             .forca-elenco-container .stat-value {
-                font-size: 9px !important; /* Mesmo padrão do "Fator Analisado" */
+                font-size: 10px !important; /* Todos com 10px */
                 color: #e2e8f0 !important; /* Cinza claro forte para valores */
                 font-weight: bold !important;
             }
             
             .forca-elenco-container .stat-subvalue {
-                font-size: 8px !important; /* Valores secundários menores */
+                font-size: 10px !important; /* Todos com 10px */
                 color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
             }
             
@@ -1962,12 +1962,12 @@
             }
             
             .forca-elenco-container .team-card .team-stats .stat-label {
-                font-size: 7px !important; /* Labels menores */
-                color: #cbd5e1 !important; /* Cinza claro para melhor legibilidade */
+                font-size: 10px !important; /* Todos com 10px */
+                color: #e2e8f0 !important; /* Mesma cor dos valores - mais claro */
             }
             
             .forca-elenco-container .team-card .team-stats .stat-value {
-                font-size: 8px !important; /* Valores menores */
+                font-size: 10px !important; /* Todos com 10px */
                 font-weight: 600 !important;
                 color: #e2e8f0 !important; /* Cinza claro forte para valores */
             }
@@ -3252,21 +3252,28 @@
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            color: #cbd5e1; /* Cinza claro */
+            font-size: 10px;
+            color: #e2e8f0 !important; /* FORÇAR - Mesma cor dos outros textos principais */
             text-transform: none;
             margin-bottom: 0.3rem;
             display: block;
         }
+        
+        /* FORÇAR cor específica para os labels dos containers */
+        .stat-group .stat-label,
+        .time-stats .stat-label,
+        .clube-stats .stat-label {
+            color: #e2e8f0 !important;
+        }
 
         .stat-value {
-            font-size: 1.1rem;
+            font-size: 10px;
             font-weight: bold;
             color: #e2e8f0; /* Cinza claro mais forte para valores */
         }
 
         .stat-subvalue {
-            font-size: 0.9rem;
+            font-size: 10px;
             color: #cbd5e1; /* Cinza claro */
         }
         
@@ -3402,13 +3409,14 @@
 
         .stat-label {
             font-weight: 500;
-            color: #cbd5e1; /* Cinza claro */
+            color: #e2e8f0 !important; /* FORÇAR - Mesma cor dos outros textos principais */
+            font-size: 10px;
         }
 
         .stat-value {
             font-weight: bold;
             color: #e2e8f0; /* Cinza claro forte */
-            font-size: 1.1rem;
+            font-size: 10px;
         }
 
         /* RESPONSIVIDADE */
@@ -3534,7 +3542,8 @@
 
         .stat-label {
             font-weight: 600;
-            color: #cbd5e1; /* Cinza claro */
+            color: #e2e8f0 !important; /* FORÇAR - Mesma cor dos outros textos principais */
+            font-size: 10px;
         }
 
         .stat-home, .stat-away {
@@ -3544,7 +3553,7 @@
         }
 
         .stat-value {
-            font-size: 1.2rem;
+            font-size: 10px;
             font-weight: 700;
             color: var(--cor-texto-principal);
         }
