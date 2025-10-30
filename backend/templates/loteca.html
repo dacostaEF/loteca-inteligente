@@ -5310,6 +5310,21 @@
 
         // RENDERIZAR CONTAINER DE UM TIME
         function renderizarTimeContainer(dadosTime, tipo) {
+            // ✅ VERIFICAR SE dadosTime existe
+            if (!dadosTime) {
+                return `
+                    <div class="time-container erro-api">
+                        <div class="erro-mensagem">
+                            <div class="erro-icon">⚠️</div>
+                            <div class="erro-texto">
+                                <strong>Dados não disponíveis</strong>
+                                <p>Time não encontrado no sistema</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
             // ✅ VERIFICAR SE HÁ ERRO NA API
             if (dadosTime.erro) {
                 return `
