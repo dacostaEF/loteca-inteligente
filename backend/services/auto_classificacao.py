@@ -70,21 +70,22 @@ class AutoClassificacao:
     
     def converter_ultimos_jogos(self, ultimos_jogos: str) -> str:
         """
-        Converte os últimos jogos de formato V-D-E para bolas coloridas
-        V = 🟢 (vitória), D = 🔴 (derrota), E = 🟡 (empate)
+        Normaliza os últimos jogos para formato V-D-E (sem conversão para emojis)
+        O frontend renderizará as bolinhas CSS
         """
         if not ultimos_jogos:
             return ""
         
-        # Converter cada resultado para bola colorida
-        resultado = ultimos_jogos.replace('V', '🟢').replace('D', '🔴').replace('E', '🟡')
+        # Remover aspas e espaços extras
+        ultimos_limpo = ultimos_jogos.strip().strip('"').strip()
         
-        # Garantir que temos exatamente 5 bolas (pegar apenas os últimos 5)
-        bolas = resultado.split('-')
-        if len(bolas) > 5:
-            bolas = bolas[-5:]  # Pegar apenas os últimos 5
+        # Garantir que temos no máximo 5 resultados
+        resultados = ultimos_limpo.split('-')
+        if len(resultados) > 5:
+            resultados = resultados[-5:]  # Pegar apenas os últimos 5
         
-        return '-'.join(bolas)
+        # Retornar formato V-D-E (letras) para o frontend processar
+        return '-'.join(resultados)
     
     def determinar_variacao_posicao(self, posicao: int) -> str:
         """
@@ -786,6 +787,81 @@ class AutoClassificacao:
             
         except Exception as e:
             logger.error(f"❌ Erro ao processar Ligue 1 tradicional: {e}")
+            return []
+
+    def ler_tabela_tradicional_champions_league(self) -> List[Dict]:
+        """
+        Lê tabela tradicional da Champions League
+        """
+        try:
+            csv_path = os.path.join(self.base_path, "Champions_League_tabela_tradicional.csv")
+            # logger.info(f"🔍 Procurando arquivo Champions League em: {csv_path}")
+            
+            if not os.path.exists(csv_path):
+                logger.error(f"❌ Arquivo não encontrado: {csv_path}")
+                return []
+            
+            # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
+            
+            clubes = []
+            with open(csv_path, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    clube = {
+                        'time': row['Time'].strip('"'),
+                        'pontos': int(row['Pontos']),
+                        'jogos': int(row['Jogos']),
+                        'vitorias': int(row['Vitórias']),
+                        'empates': int(row['Empates']),
+                        'derrotas': int(row['Derrotas']),
+                        'gols_pro': int(row['Gols Pró']),
+                        'gols_contra': int(row['Gols Contra']),
+                        'saldo_gols': int(row['Saldo Gols']),
+                        'aproveitamento': float(row['Aproveitamento %']),
+                        'ultimos_jogos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'ultimos_confrontos': self.converter_ultimos_jogos(row['Últimos 5 Jogos'].strip('"')),
+                        'posicao': int(row['Posição']),
+                        'variacao': self.determinar_variacao_posicao(int(row['Posição']))
+                    }
+                    
+                    # Determinar zona baseada na posição (Champions League - Fase de Liga)
+                    posicao = clube['posicao']
+                    if 1 <= posicao <= 8:
+                        clube['zona'] = 'Oitavas (direto)'
+                    elif 9 <= posicao <= 24:
+                        clube['zona'] = 'Playoffs'
+                    else:
+                        clube['zona'] = 'Eliminado'
+                    
+                    clubes.append(clube)
+            
+            # logger.info(f"✅ Champions League lida do CSV tradicional: {len(clubes)} clubes")
+            return clubes
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao ler tabela tradicional Champions League: {e}")
+            return []
+
+    def processar_champions_league_tradicional(self) -> List[Dict]:
+        """
+        Processa Champions League via tabela tradicional
+        """
+        try:
+            logger.info("📊 Processando Champions League via tabela tradicional...")
+            clubes = self.ler_tabela_tradicional_champions_league()
+            
+            if not clubes:
+                logger.error("❌ Nenhum clube encontrado na tabela tradicional Champions League")
+                return []
+            
+            # Ordenar por posição
+            clubes_ordenados = sorted(clubes, key=lambda x: x['posicao'])
+            
+            # logger.info(f"✅ Champions League processada: {len(clubes_ordenados)} clubes")
+            return clubes_ordenados
+            
+        except Exception as e:
+            logger.error(f"❌ Erro ao processar Champions League tradicional: {e}")
             return []
 
 # Função principal para uso externo

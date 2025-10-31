@@ -55,14 +55,35 @@ function renderTabelaClassificacao(dados, serie = 'serie-a') {
     `;
 
     const rows = dados.map(time => {
-        // Se os dados já vêm com bolas coloridas, usar diretamente
-        let ultimosJogos;
-        if (time.ultimos && time.ultimos.includes('🟢')) {
-            // Dados já convertidos com bolas coloridas - remover hífens se existirem
-            ultimosJogos = time.ultimos.replace(/-/g, '');
-        } else {
-            // Converter V-D-E para bolas coloridas SEM hífens
-            ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡').replace(/-/g, '');
+        // Converter V-D-E para bolinhas CSS (padrão Brasileirão)
+        let ultimosHTML = '';
+        const ultimos = time.ultimos || '';
+        
+        if (ultimos && typeof ultimos === 'string') {
+            // Limpar: remover hífens, espaços, vírgulas, emojis
+            const ultimosLimpo = ultimos
+                .replace(/[-\s,🟢🔴🟡]/g, '')
+                .toUpperCase();
+            
+            // Validar: só pegar V, E, D (máximo 5)
+            const resultadosValidos = [];
+            for (let i = 0; i < ultimosLimpo.length && resultadosValidos.length < 5; i++) {
+                const char = ultimosLimpo[i];
+                if (char === 'V' || char === 'E' || char === 'D') {
+                    resultadosValidos.push(char);
+                }
+            }
+            
+            // Criar bolinhas CSS
+            resultadosValidos.forEach(result => {
+                const classe = result === 'V' ? 'vitoria' : result === 'E' ? 'empate' : 'derrota';
+                ultimosHTML += `<span class="resultado-dot ${classe}"></span>`;
+            });
+        }
+        
+        // Se não tiver nenhum resultado válido, mostrar 5 bolinhas cinzas
+        if (ultimosHTML === '') {
+            ultimosHTML = '<span class="resultado-dot" style="background:#666;"></span>'.repeat(5);
         }
 
         // Determinar ícone de variação
@@ -92,8 +113,8 @@ function renderTabelaClassificacao(dados, serie = 'serie-a') {
                 <td>${time.sg !== undefined && time.sg !== null ? (time.sg > 0 ? '+' + time.sg : time.sg) : '0'}</td>
                 <td>${time.aproveitamento}</td>
                 <td>
-                    <div class="ultimos-jogos">
-                        ${ultimosJogos}
+                    <div class="ultimos-jogos" style="display: flex; gap: 4px; justify-content: center;">
+                        ${ultimosHTML}
                     </div>
                 </td>
             </tr>
@@ -333,14 +354,35 @@ function renderTabelaClassificacaoSerieC(dados) {
         `;
 
         const rows = clubes.map(time => {
-            // Se os dados já vêm com bolas coloridas, usar diretamente
-            let ultimosJogos;
-            if (time.ultimos && time.ultimos.includes('🟢')) {
-                // Dados já convertidos com bolas coloridas - remover hífens se existirem
-                ultimosJogos = time.ultimos.replace(/-/g, '');
-            } else {
-                // Converter V-D-E para bolas coloridas SEM hífens
-                ultimosJogos = (time.ultimos || '-----').replace(/V/g, '🟢').replace(/D/g, '🔴').replace(/E/g, '🟡').replace(/-/g, '');
+            // Converter V-D-E para bolinhas CSS (padrão Brasileirão)
+            let ultimosHTML = '';
+            const ultimos = time.ultimos || '';
+            
+            if (ultimos && typeof ultimos === 'string') {
+                // Limpar: remover hífens, espaços, vírgulas, emojis
+                const ultimosLimpo = ultimos
+                    .replace(/[-\s,🟢🔴🟡]/g, '')
+                    .toUpperCase();
+                
+                // Validar: só pegar V, E, D (máximo 5)
+                const resultadosValidos = [];
+                for (let i = 0; i < ultimosLimpo.length && resultadosValidos.length < 5; i++) {
+                    const char = ultimosLimpo[i];
+                    if (char === 'V' || char === 'E' || char === 'D') {
+                        resultadosValidos.push(char);
+                    }
+                }
+                
+                // Criar bolinhas CSS
+                resultadosValidos.forEach(result => {
+                    const classe = result === 'V' ? 'vitoria' : result === 'E' ? 'empate' : 'derrota';
+                    ultimosHTML += `<span class="resultado-dot ${classe}"></span>`;
+                });
+            }
+            
+            // Se não tiver nenhum resultado válido, mostrar 5 bolinhas cinzas
+            if (ultimosHTML === '') {
+                ultimosHTML = '<span class="resultado-dot" style="background:#666;"></span>'.repeat(5);
             }
 
             // Determinar ícone de variação
@@ -373,8 +415,8 @@ function renderTabelaClassificacaoSerieC(dados) {
                     <td>${time.sg !== undefined && time.sg !== null ? (time.sg > 0 ? '+' + time.sg : time.sg) : '0'}</td>
                     <td>${time.aproveitamento}</td>
                     <td>
-                        <div class="ultimos-jogos">
-                            ${ultimosJogos}
+                        <div class="ultimos-jogos" style="display: flex; gap: 4px; justify-content: center;">
+                            ${ultimosHTML}
                         </div>
                     </td>
                 </tr>

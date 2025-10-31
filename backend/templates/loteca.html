@@ -3160,50 +3160,37 @@
             container.innerHTML = '<div class="table-loading"><p>🔄 Carregando Champions League...</p></div>';
 
             try {
-                console.log('🏆 [Champions League] Carregando dados do banco...');
+                // console.log('🏆 [Champions League] Carregando dados da API...');
                 
-                const response = await fetch('/api/admin/classificacao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        campeonato: 'champions-league',
-                        admin_key: 'loteca2024admin'
-                    })
-                });
+                const response = await fetch('/api/int/classificacao/champions-league');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
                 
                 const data = await response.json();
-                console.log('🏆 [Champions League] Dados recebidos:', data);
+                // console.log('🏆 [Champions League] Dados recebidos:', data);
                 
-                const dadosArray = data.classificacao || data.data || [];
-                
-                if (data.success && dadosArray && dadosArray.length > 0) {
-                    // Formatar dados para o renderizador
-                    const dadosFormatados = dadosArray.map(item => ({
+                if (data.success && data.data && data.data.length > 0) {
+                    // Mapear campos do backend para formato da tabela
+                    const dadosFormatados = data.data.map(item => ({
                         pos: item.posicao,
-                        time: item.clube,
-                        pais: item.pais,
-                        p: item.pts,
-                        j: item.pj,
-                        v: item.vit,
-                        e: item.e,
-                        d: item.der,
-                        gp: item.gm,
-                        gc: item.gc,
-                        sg: item.sg,
-                        aproveitamento: Math.round((item.pts / (item.pj * 3)) * 100),
-                        ultimos: item.ultimas_5 || "-----",
-                        zona: item.zona || "",
-                        mudanca: item.mudanca || 0
+                        time: item.time,
+                        p: item.pontos,
+                        j: item.jogos,
+                        v: item.vitorias,
+                        e: item.empates,
+                        d: item.derrotas,
+                        gp: item.gols_pro,
+                        gc: item.gols_contra,
+                        sg: item.saldo_gols,
+                        aproveitamento: item.aproveitamento,
+                        ultimos: item.ultimos_jogos || item.ultimos_confrontos,
+                        zona: item.zona || ""
                     }));
                     
-                    console.log('🏆 [Champions League] Dados formatados:', dadosFormatados.length, 'times');
-                    console.log('🏆 [Champions League] Primeiro time formatado:', dadosFormatados[0]);
+                    // console.log('🏆 [Champions League] Dados formatados:', dadosFormatados.length, 'times');
+                    // console.log('🏆 [Champions League] Primeiro time formatado:', dadosFormatados[0]);
                     
                     container.innerHTML = renderTabelaClassificacao(dadosFormatados, 'champions-league');
                     

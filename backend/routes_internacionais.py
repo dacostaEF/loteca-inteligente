@@ -233,10 +233,29 @@ def get_classificacao(league):
                 "source": "csv_tradicional"
             })
         
-        # Para outras ligas, usar dados simulados (temporário)
-        league_functions = {
-            "champions-league": get_champions_league_data
-        }
+        # Para Champions League, usar dados do CSV
+        if league == "champions-league":
+            from services.auto_classificacao import AutoClassificacao
+            auto_class = AutoClassificacao()
+            dados = auto_class.processar_champions_league_tradicional()
+            
+            if not dados:
+                return jsonify({
+                    "success": False,
+                    "error": "Nenhum dado encontrado para Champions League"
+                }), 404
+            
+            return jsonify({
+                "success": True,
+                "data": dados,
+                "total": len(dados),
+                "league": "Champions League",
+                "last_updated": datetime.now().isoformat(),
+                "source": "csv_tradicional"
+            })
+        
+        # Para outras ligas não implementadas
+        league_functions = {}
         
         if league not in league_functions:
             return jsonify({
