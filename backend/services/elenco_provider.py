@@ -10,6 +10,10 @@ import re
 import json
 from pathlib import Path
 
+# ===== OTIMIZAÇÃO: DEBUG MODE =====
+# Ativar logs apenas em desenvolvimento (localhost/127.0.0.1)
+DEBUG = os.getenv('FLASK_ENV') == 'development' or os.getenv('DEBUG') == 'True'
+
 class ElencoProvider:
     def __init__(self):
         self.dados_elenco = {}
@@ -234,22 +238,27 @@ class ElencoProvider:
         # ✅ CORRIGIDO: Usar normalização de entrada
         nome_normalizado = self._normalizar_nome_entrada(nome_clube)
         
-        print(f"🔍 [ELENCO] Buscando clube: '{nome_clube}' -> normalizado: '{nome_normalizado}'")
-        print(f"🔍 [ELENCO] Clubes disponíveis: {list(self.dados_elenco.keys())}")
+        # ===== LOGS APENAS EM DEBUG =====
+        if DEBUG:
+            print(f"🔍 [ELENCO] Buscando clube: '{nome_clube}' -> normalizado: '{nome_normalizado}'")
+            print(f"🔍 [ELENCO] Clubes disponíveis: {list(self.dados_elenco.keys())}")
         
         # Tentar match direto
         if nome_normalizado in self.dados_elenco:
-            print(f"✅ [ELENCO] Match direto encontrado: {nome_normalizado}")
+            if DEBUG:
+                print(f"✅ [ELENCO] Match direto encontrado: {nome_normalizado}")
             return self.dados_elenco[nome_normalizado]
         
         # Tentar match parcial
         for clube_key, dados in self.dados_elenco.items():
             if nome_normalizado in clube_key or clube_key in nome_normalizado:
-                print(f"✅ [ELENCO] Match parcial encontrado: {clube_key}")
+                if DEBUG:
+                    print(f"✅ [ELENCO] Match parcial encontrado: {clube_key}")
                 return dados
         
         # ❌ NÃO ENCONTRADO - Retornar erro ao invés de dados padrão
-        print(f"❌ [ELENCO] Clube não encontrado: {nome_clube}")
+        if DEBUG:
+            print(f"❌ [ELENCO] Clube não encontrado: {nome_clube}")
         return None
     
     def obter_todos_clubes(self):

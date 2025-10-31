@@ -9,6 +9,10 @@ import os
 import csv
 import unicodedata
 
+# ===== OTIMIZAÇÃO: DEBUG MODE =====
+# Ativar logs apenas em desenvolvimento (localhost/127.0.0.1)
+DEBUG = os.getenv('FLASK_ENV') == 'development' or os.getenv('DEBUG') == 'True'
+
 # Blueprint para a API de força dos elencos
 forca_elenco_bp = Blueprint('forca_elenco', __name__, url_prefix='/api/forca-elenco')
 
@@ -22,7 +26,9 @@ def _normalize_headers(d):
 @forca_elenco_bp.route('/dashboard')
 def dashboard():
     """Renderiza o dashboard de força dos elencos"""
-    print("🚀 [API-FORCA-ELENCO] Dashboard solicitado!")
+    # ===== LOG APENAS EM DEBUG =====
+    if DEBUG:
+        print("🚀 [API-FORCA-ELENCO] Dashboard solicitado!")
     try:
         # Caminho configurável para os arquivos CSV
         base_dir = os.environ.get('FORCA_ELENCO_CSV_DIR') or os.path.join(os.path.dirname(__file__), 'models', 'EstatisticasElenco')
@@ -658,14 +664,20 @@ def dashboard():
             </style>
             """
             
-            print("✅ [API-FORCA-ELENCO] HTML gerado com sucesso!")
+            # ===== LOG APENAS EM DEBUG =====
+            if DEBUG:
+                print("✅ [API-FORCA-ELENCO] HTML gerado com sucesso!")
             return css_styles + dashboard_html
         else:
-            print("❌ [API-FORCA-ELENCO] Nenhum arquivo CSV encontrado")
+            # ===== LOG APENAS EM DEBUG =====
+            if DEBUG:
+                print("❌ [API-FORCA-ELENCO] Nenhum arquivo CSV encontrado")
             return f"<div class='error-message'>Nenhum arquivo CSV encontrado</div>", 500
     
     except Exception as e:
-        print(f"❌ [API-FORCA-ELENCO] Erro: {str(e)}")
+        # ===== LOG APENAS EM DEBUG =====
+        if DEBUG:
+            print(f"❌ [API-FORCA-ELENCO] Erro: {str(e)}")
         return f"<div class='error-message'>Erro ao carregar dados: {str(e)}</div>", 500
 
 @forca_elenco_bp.route('/dados')
