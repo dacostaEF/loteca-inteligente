@@ -4843,17 +4843,64 @@
                 console.log(`✅ [${serie.toUpperCase()}] Dados carregados:`, data);
                 
                 if (data.success && data.data) {
-                    // Buscar os times nos dados (busca simplificada)
+                    // ✅ USAR MAPEAMENTO CENTRALIZADO PARA NORMALIZAR NOMES
+                    const normalizarNomeTime = (nome) => {
+                        if (!nome) return '';
+                        const nomeKey = nome.toLowerCase().trim();
+                        // Tentar buscar no mapeamento primeiro
+                        if (window.MAPEAMENTO_TIMES_BR && window.MAPEAMENTO_TIMES_BR[nomeKey]) {
+                            return window.MAPEAMENTO_TIMES_BR[nomeKey];
+                        }
+                        // Fallback: normalizar manualmente
+                        return nome.toLowerCase()
+                            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                            .replace(/[^a-z0-9]/g, '_')
+                            .replace(/_+/g, '_')
+                            .replace(/^_|_$/g, '');
+                    };
+                    
+                    const mandanteNorm = normalizarNomeTime(timeMandante);
+                    const visitanteNorm = normalizarNomeTime(timeVisitante);
+                    
+                    console.log(`🔍 [${serie.toUpperCase()}] Buscando: "${timeMandante}" → "${mandanteNorm}" | "${timeVisitante}" → "${visitanteNorm}"`);
+                    
+                    // Buscar os times nos dados com múltiplas estratégias
                     const mandante = data.data.find(team => {
-                        const nomeTime = team.Time.toUpperCase();
-                        const nomeBusca = timeMandante.toUpperCase();
-                        return nomeTime.includes(nomeBusca) || nomeBusca.includes(nomeTime.split(/[\s/]/)[0]);
+                        const nomeTimeNorm = normalizarNomeTime(team.Time);
+                        const nomeTimeUpper = team.Time.toUpperCase();
+                        const buscaUpper = timeMandante.toUpperCase();
+                        
+                        // Estratégia 1: Comparação normalizada
+                        if (nomeTimeNorm === mandanteNorm) return true;
+                        
+                        // Estratégia 2: Comparação parcial (ex: "OPERARIO" matches "OPERARIO-PR")
+                        if (nomeTimeUpper.includes(buscaUpper) || buscaUpper.includes(nomeTimeUpper)) return true;
+                        
+                        // Estratégia 3: Comparação da primeira palavra (ex: "GOIAS" matches "GOIAS/GO")
+                        const primeirapalavra = nomeTimeUpper.split(/[\s/-]/)[0];
+                        const primeirapalavraBusca = buscaUpper.split(/[\s/-]/)[0];
+                        if (primeirapalavra === primeirapalavraBusca && primeirapalavra.length >= 4) return true;
+                        
+                        return false;
                     });
                     
                     const visitante = data.data.find(team => {
-                        const nomeTime = team.Time.toUpperCase();
-                        const nomeBusca = timeVisitante.toUpperCase();
-                        return nomeTime.includes(nomeBusca) || nomeBusca.includes(nomeTime.split(/[\s/]/)[0]);
+                        const nomeTimeNorm = normalizarNomeTime(team.Time);
+                        const nomeTimeUpper = team.Time.toUpperCase();
+                        const buscaUpper = timeVisitante.toUpperCase();
+                        
+                        // Estratégia 1: Comparação normalizada
+                        if (nomeTimeNorm === visitanteNorm) return true;
+                        
+                        // Estratégia 2: Comparação parcial
+                        if (nomeTimeUpper.includes(buscaUpper) || buscaUpper.includes(nomeTimeUpper)) return true;
+                        
+                        // Estratégia 3: Comparação da primeira palavra
+                        const primeirapalavra = nomeTimeUpper.split(/[\s/-]/)[0];
+                        const primeirapalavraBusca = buscaUpper.split(/[\s/-]/)[0];
+                        if (primeirapalavra === primeirapalavraBusca && primeirapalavra.length >= 4) return true;
+                        
+                        return false;
                     });
                     
                     if (mandante && visitante) {
@@ -4861,7 +4908,9 @@
                         atualizarTabelaComDadosReais(mandante, visitante);
                         return true;
                     } else {
-                        console.log(`⚠️ [${serie.toUpperCase()}] Times não encontrados nesta série`);
+                        console.warn(`⚠️ [${serie.toUpperCase()}] Times não encontrados nesta série`);
+                        console.log(`🔍 [${serie.toUpperCase()}] Mandante buscado: "${timeMandante}" (norm: "${mandanteNorm}") → ${mandante ? 'ENCONTRADO' : 'NÃO ENCONTRADO'}`);
+                        console.log(`🔍 [${serie.toUpperCase()}] Visitante buscado: "${timeVisitante}" (norm: "${visitanteNorm}") → ${visitante ? 'ENCONTRADO' : 'NÃO ENCONTRADO'}`);
                         console.log(`🔍 [${serie.toUpperCase()}] Times disponíveis:`, data.data.map(t => t.Time));
                         return false;
                     }
