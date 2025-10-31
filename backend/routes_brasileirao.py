@@ -7,6 +7,7 @@ from models.classificacao_db import classificacao_db
 from models.jogos_manager import JogosManager
 from datetime import datetime
 from services.elenco_provider import get_elenco_data, get_all_elenco_data
+from services.auto_classificacao import AutoClassificacao
 
 # Blueprint para rotas do Brasileirão
 bp_br = Blueprint("br", __name__, url_prefix="/api/br")
@@ -444,14 +445,18 @@ def api_classificacao_serie_a():
     """
     Endpoint para obter classificação da Série A
     GET /api/br/classificacao/serie-a
+    
+    🔥 LÊ DIRETO DO CSV: backend/estatistica/Serie_A_tabela_tradicional.csv
     """
     try:
-        classificacao = classificacao_db.get_classificacao_serie_a()
+        # Ler DIRETO do CSV usando AutoClassificacao
+        auto_class = AutoClassificacao()
+        classificacao = auto_class.processar_serie_a_tradicional()
         
         if not classificacao:
             return jsonify({
                 "success": False,
-                "error": "Nenhum dado de classificação encontrado",
+                "error": "Nenhum dado de classificação encontrado no CSV",
                 "data": []
             }), 404
         
@@ -460,7 +465,8 @@ def api_classificacao_serie_a():
             "data": classificacao,
             "total": len(classificacao),
             "campeonato": "Brasileirão Série A",
-            "ultima_atualizacao": classificacao[0].get('data_atualizacao') if classificacao else None
+            "fonte": "CSV Atualizado",
+            "ultima_atualizacao": datetime.now().isoformat()
         })
         
     except Exception as e:
@@ -475,16 +481,28 @@ def api_classificacao_serie_b():
     """
     Endpoint para obter classificação da Série B
     GET /api/br/classificacao/serie-b
+    
+    🔥 LÊ DIRETO DO CSV: backend/estatistica/Serie_B_tabela_tradicional.csv
     """
     try:
-        classificacao = classificacao_db.get_classificacao_serie_b()
+        # Ler DIRETO do CSV usando AutoClassificacao
+        auto_class = AutoClassificacao()
+        classificacao = auto_class.processar_serie_b_tradicional()
+        
+        if not classificacao:
+            return jsonify({
+                "success": False,
+                "error": "Nenhum dado de classificação encontrado no CSV",
+                "data": []
+            }), 404
         
         return jsonify({
             "success": True,
             "data": classificacao,
             "total": len(classificacao),
             "campeonato": "Brasileirão Série B",
-            "ultima_atualizacao": classificacao[0].get('data_atualizacao') if classificacao else None
+            "fonte": "CSV Atualizado",
+            "ultima_atualizacao": datetime.now().isoformat()
         })
         
     except Exception as e:
