@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "8",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "8",
+    "time_casa": "Bahia/BA",
+    "time_fora": "Bragantino/SP",
+    "arena": "Arena Fonte Nova /BA",
+    "campeonato": "Brasileirão Série A",
+    "dia": "Domingo",
+    "escudo_casa": "/static/escudos/BAH_Bahia/Bahia.png",
+    "escudo_fora": "/static/escudos/RBB_Bragantino/RedBull_Bragantino.png",
+    "probabilidade_casa": "60",
+    "probabilidade_empate": "30",
+    "probabilidade_fora": "10",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Bahia) - Risco Médio",
+    "conclusao_analista": "Este confronto é fortemente desequilibrado em favor do mandante. O Bahia (5º) tem uma campanha excelente, contra o Bragantino (12º), o que já confere favoritismo pela tabela. O histórico em Salvador é ainda mais categórico: o Bahia tem 60% de vitórias e NENHUMA derrota (0%) nos confrontos em casa contra o Bragantino. Apesar do domínio do Bahia, 60% dos jogos analisados (12 de 20) terminaram com gols de ambos os lados, e o histórico de gols é alto. A tendência é que o Bragantino, mesmo perdendo, consiga marcar.",
+    "confrontos_sequence": "D-V-V-V-V-E-E-V-V-V",
+    "posicao_casa": "5",
+    "posicao_fora": "12",
+    "confronto_direto": "7V-2E-1D",
+    "fator_casa": "60",
+    "fator_fora": "40",
+    "analise_posicao": "Vantagem Bahia",
+    "analise_posicao_tabelas": "Vantagem Bahia",
+    "analise_confronto_direto": "Vantagem Bahia",
+    "analise_fator_casa": "Vantagem Bahia",
+    "sincronizado_em": "2025-10-29T18:29:44.411Z"
+  },
+  "admin_key": "loteca2024admin"
+}

@@ -1625,7 +1625,7 @@ def sincronizar_analise_site():
         
         # Salvar dados em arquivo JSON para a página do usuário
         # ESTRUTURA FIXA: Usar APENAS concurso 1216
-        pasta_concurso = 'models/concurso_1216'
+        pasta_concurso = 'models/concurso_1218'
         pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
         os.makedirs(pasta_analise, exist_ok=True)
         
@@ -1696,7 +1696,7 @@ def obter_dados_analise_jogo(jogo_numero):
         return BACKEND_DIR / "models" / concurso / "analise_rapida"
     
     # Parâmetros
-    concurso = request.args.get("concurso", "concurso_1216")
+    concurso = request.args.get("concurso", "concurso_1218")
     # print(f"[NOVA-API] Concurso recebido: '{concurso}'")
     
     pasta = _dir_analise(concurso)

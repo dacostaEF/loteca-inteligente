@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "12",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "12",
+    "time_casa": "REMO/PA",
+    "time_fora": "CHAPECOENSE/SC",
+    "arena": "Mangueirão/PA",
+    "campeonato": "Brasileirão Série B",
+    "dia": "Domingo",
+    "escudo_casa": "/static/escudos/Remo/remo.png",
+    "escudo_fora": "/static/escudos/Chapecoense/chapecoense.png",
+    "probabilidade_casa": "33",
+    "probabilidade_empate": "34",
+    "probabilidade_fora": "33",
+    "recomendacao": "Recomendação Estatística: Triplo- Risco ALTO",
+    "conclusao_analista": "Confronto inédito em termos de histórico, mas os dados da tabela Série B revelam informações importantes sobre as equipes.Pontos-chave: DIFERENÇA PEQUENA NA TABELA:\n\nRemo: 3º lugar Série B (57pts) - ZONA DE ACESSO DIRETO \nChapecoense: 2º lugar Série B (57pts) - ZONA DE ACESSO DIRETO \nCONFRONTO DIRETO PELO G-4! Ambos com 57 pontos - JOGO DE 6 PONTOS! Único jogo foi empate: 1-1 na Arena Condá - ambos competitivos Remo forte em casa: Mando no Norte é sempre difícil (calor, altitude, torcida) Chapecoense sólida: Time tradicional da Série B, joga bem em casa Sem padrão histórico = Alta imprevisibilidade! Momento decisivo: Reta final da Série B, cada ponto vale ouro!",
+    "confrontos_sequence": "E",
+    "posicao_casa": "3",
+    "posicao_fora": "2",
+    "confronto_direto": "0V-1E-0D",
+    "fator_casa": "50",
+    "fator_fora": "50",
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Confronto Equilibrado",
+    "sincronizado_em": "2025-10-31T14:50:02.203Z"
+  },
+  "admin_key": "loteca2024admin"
+}

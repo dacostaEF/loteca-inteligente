@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "5",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "5",
+    "time_casa": "Mirassol/SP",
+    "time_fora": "Botafogo/RJ",
+    "arena": "estádio Mauro Scarpellini/Mirassol - SP",
+    "campeonato": "Brasaileiro Seria A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/MIR_Mirassol/mirassol.png",
+    "escudo_fora": "/static/escudos/Botafogo-RJ/Botafogo_rj.png",
+    "probabilidade_casa": "40",
+    "probabilidade_empate": "30",
+    "probabilidade_fora": "30",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Mirassol) - Risco Alto",
+    "conclusao_analista": "O Mirassol, por jogar em casa e estar em posição superior (G-4), recebe o favoritismo. O único confronto direto terminou em um empate eletrizante (3 a 3), indicando que é um duelo de ataque contra ataque. A tendência é de um jogo decidido por detalhes.",
+    "confrontos_sequence": "E",
+    "posicao_casa": "4",
+    "posicao_fora": "6",
+    "confronto_direto": "0V-1E-0D",
+    "fator_casa": "55",
+    "fator_fora": "45",
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Confronto Equilibrado",
+    "sincronizado_em": "2025-10-29T16:06:35.460Z"
+  },
+  "admin_key": "loteca2024admin"
+}

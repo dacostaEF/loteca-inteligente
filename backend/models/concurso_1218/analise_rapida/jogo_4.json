@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "4",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "4",
+    "time_casa": "Goias/GO",
+    "time_fora": "Atlhetico/PR",
+    "arena": "Estádio Serrinha/GO",
+    "campeonato": "Brasileiro Série B",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/GOI_Goias/Goias.png",
+    "escudo_fora": "/static/escudos/Athletico-PR\\Athletico_PR.png",
+    "probabilidade_casa": "40",
+    "probabilidade_empate": "35",
+    "probabilidade_fora": "25",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Goias) - Risco Médio",
+    "conclusao_analista": "O padrão histórico do confronto é de pouquíssimos empates (apenas 5% em 20 jogos), indicando que este é um jogo de \"tudo ou nada\". O Athletico-PR detém a vantagem geral (60% de vitórias) e é um time de Série A, enquanto o Goiás é forte em seus domínios na Série B.\nDicas BET: OVER 2.5 GOLS 70% dos jogos têm 3+ gols. Ambas equipes atacam bem. Cotação média: 1.75-1.90",
+    "confrontos_sequence": "D-E-V-V-E-D-V-V-E-V",
+    "posicao_casa": "4",
+    "posicao_fora": "7",
+    "confronto_direto": "5V-3E-2D",
+    "fator_casa": "65%",
+    "fator_fora": "35%",
+    "analise_posicao": "Vantagem Goias",
+    "analise_posicao_tabelas": "Vantagem Goias",
+    "analise_confronto_direto": "Vantagem Goias",
+    "analise_fator_casa": "Vantagem Goias",
+    "sincronizado_em": "2025-10-31T14:41:36.208Z"
+  },
+  "admin_key": "loteca2024admin"
+}

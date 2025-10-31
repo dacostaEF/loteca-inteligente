@@ -1,0 +1,33 @@
+{
+  "metadados": {
+    "jogo_numero": "7",
+    "concurso_numero": "1216"
+  },
+  "dados": {
+    "numero": "7",
+    "time_casa": "FLAMENGO/RJ",
+    "time_fora": "SPORTE/PE",
+    "arena": "Maracanã/RJ",
+    "campeonato": "Brasileirãso Seire A",
+    "dia": "Sábado",
+    "escudo_casa": "/static/escudos/FLA_Flamengo/Flamengo.png",
+    "escudo_fora": "/static/escudos/SPT_Sport/Sport.png",
+    "probabilidade_casa": "80",
+    "probabilidade_empate": "15",
+    "probabilidade_fora": "5",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Flamengo) - Risco Baixo",
+    "conclusao_analista": "Este é um jogo com um favoritismo estatístico e de desempenho atual avassalador para o Flamengo. O time carioca (2º) detém 65% das vitórias históricas, contra apenas 15% do Sport (20º e lanterna da Série A). A diferença de qualidade e objetivos na tabela é enorme. Aposta Principal Sugerida (Flamengo Mandante): Handicap Asiático -1.5 para o Flamengo\n\nJustificativa: Com 80% de chance de vitória em casa e enfrentando o lanterna, espera-se que o Flamengo vença por uma margem de pelo menos dois gols. ",
+    "confrontos_sequence": "E-V-D-V-D-V-V-V-V-V",
+    "posicao_casa": "2",
+    "posicao_fora": "20",
+    "confronto_direto": "7V-1E-2D",
+    "fator_casa": "90",
+    "fator_fora": "10",
+    "analise_posicao": "Vantagem Flamengo",
+    "analise_posicao_tabelas": "Vantagem Flamengo",
+    "analise_confronto_direto": "Vantagem Flamengo",
+    "analise_fator_casa": "Vantagem Flamengo",
+    "sincronizado_em": "2025-10-29T18:10:18.156Z"
+  },
+  "admin_key": "loteca2024admin"
+}
