@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Raio-X da Loteca - Loterias Inteligente</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon_LI.png') }}">
-    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='Favicon_LI.png') }}">
     
     <!-- META TAGS PARA AMBIENTE MÓVEL COM DESTAQUE LILÁS -->
     <meta name="theme-color" content="#A855F7">
@@ -26,27 +25,6 @@
     <script type="module" src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
     <script src="{{ url_for('static', filename='js/confrontos-break.js') }}"></script>
     <script src="{{ url_for('static', filename='js/sticky-tabs-mobile.js') }}"></script>
-    
-    <!-- ===== DOCUMENTAÇÃO DA ESTRUTURA DO ARQUIVO ===== -->
-    <!-- 
-    ESTRUTURA ATUAL DO ARQUIVO:
-    - 13.200+ linhas em um único arquivo HTML
-    - Múltiplas funções duplicadas para jogos 1-14
-    - Código morto comentado espalhado pelo arquivo
-    - Funções genéricas misturadas com específicas
-    
-    PROBLEMAS IDENTIFICADOS:
-    - Funções duplicadas: carregarJogo1Novo(), carregarJogo2Novo(), etc.
-    - Código morto: funções _OLD(), _REMOVIDA(), comentadas
-    - Lógica repetitiva: mesma estrutura para todos os jogos
-    - Arquivo muito grande: difícil manutenção
-    
-    RECOMENDAÇÕES PARA REFATORAÇÃO:
-    - Consolidar funções duplicadas em uma função genérica
-    - Remover código morto após validação
-    - Modularizar em arquivos .js separados
-    - Manter apenas HTML neste arquivo
-    -->
     
     <!-- SAFETY SHIM ADDED BY SCRIPT -->
     <script>
@@ -11245,18 +11223,12 @@
             // CARREGAR DADOS DOS JOGOS IMEDIATAMENTE
             carregarDadosJogos();
             
-            // PRIMEIRO: Carregar dados do JOGO 1 automaticamente
-            // carregarDadosJogo1(); // REMOVIDO: Jogo 1 foi removido
-            // console.log('✅ [DEBUG] Jogo 1 removido - pulando carregamento');
-            
             // PRIMEIRO: Inicializar abas principais
             initializeTabs();
-            // console.log('✅ [DEBUG] Abas principais inicializadas');
             
             // DEPOIS: Inicializar seção Times Loteca Jogos
             setTimeout(() => {
                 initializeTimesLotecaSection(); // Seção simplificada
-                // console.log('✅ [DEBUG] Seção Times Loteca inicializada');
                 
             }, 100);
             
