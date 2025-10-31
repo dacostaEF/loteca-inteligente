@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Raio-X da Loteca - Loterias Inteligente</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon_LI.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='Favicon_LI.png') }}">
     
     <!-- META TAGS PARA AMBIENTE MÓVEL COM DESTAQUE LILÁS -->
     <meta name="theme-color" content="#A855F7">
@@ -23,8 +24,30 @@
     <!-- ✅ Scripts com suporte a ES6 modules (imports/exports) -->
     <script type="module" src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/loteca/dados-times.js') }}"></script>
     <script src="{{ url_for('static', filename='js/confrontos-break.js') }}"></script>
     <script src="{{ url_for('static', filename='js/sticky-tabs-mobile.js') }}"></script>
+    
+    <!-- ===== DOCUMENTAÇÃO DA ESTRUTURA DO ARQUIVO ===== -->
+    <!-- 
+    ESTRUTURA ATUAL DO ARQUIVO:
+    - 13.200+ linhas em um único arquivo HTML
+    - Múltiplas funções duplicadas para jogos 1-14
+    - Código morto comentado espalhado pelo arquivo
+    - Funções genéricas misturadas com específicas
+    
+    PROBLEMAS IDENTIFICADOS:
+    - Funções duplicadas: carregarJogo1Novo(), carregarJogo2Novo(), etc.
+    - Código morto: funções _OLD(), _REMOVIDA(), comentadas
+    - Lógica repetitiva: mesma estrutura para todos os jogos
+    - Arquivo muito grande: difícil manutenção
+    
+    RECOMENDAÇÕES PARA REFATORAÇÃO:
+    - Consolidar funções duplicadas em uma função genérica
+    - Remover código morto após validação
+    - Modularizar em arquivos .js separados
+    - Manter apenas HTML neste arquivo
+    -->
     
     <!-- SAFETY SHIM ADDED BY SCRIPT -->
     <script>
@@ -2186,12 +2209,16 @@
                 btn.addEventListener('click', () => {
                     const championship = btn.dataset.championship;
                     
+                    console.log('🎯 [ABAS] Clicou em:', championship);
+                    
                     // Atualizar botões
                     champBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     
                     // ⚠️ FIX CRÍTICO: LIMPAR E OCULTAR todas as tabelas antes de mostrar a nova
+                    console.log('🔄 [ABAS] Removendo active de todas as tabelas brasileiras...');
                     tabelasBrasileiras.forEach(table => {
+                        console.log('   - Removendo active de:', table.id);
                         table.classList.remove('active');
                         // FORÇAR display:none para garantir que está escondida
                         table.style.display = 'none';
@@ -2199,9 +2226,27 @@
                     
                     const targetTable = document.getElementById(`tabela-${championship}`);
                     if (targetTable) {
+                        console.log('✅ [ABAS] Adicionando active em:', targetTable.id);
                         targetTable.classList.add('active');
                         // FORÇAR display:block para garantir que está visível
                         targetTable.style.display = 'block';
+                        
+                        // DEBUG: Verificar estado das 3 divs
+                        console.log('📊 [ABAS] Estado final das divs:');
+                        const serieA = document.getElementById('tabela-serie-a');
+                        const serieB = document.getElementById('tabela-serie-b');
+                        const serieC = document.getElementById('tabela-serie-c');
+                        
+                        console.log('   Série A:', serieA.classList.contains('active') ? '✅ VISÍVEL' : '❌ OCULTA');
+                        console.log('   Série A HTML length:', serieA.innerHTML.length, 'chars');
+                        console.log('   Série A tem tabela?', serieA.querySelector('.standings-table') ? 'SIM' : 'NÃO');
+                        
+                        console.log('   Série B:', serieB.classList.contains('active') ? '✅ VISÍVEL' : '❌ OCULTA');
+                        console.log('   Série B HTML length:', serieB.innerHTML.length, 'chars');
+                        console.log('   Série B tem tabela?', serieB.querySelector('.standings-table') ? 'SIM' : 'NÃO');
+                        
+                        console.log('   Série C:', serieC.classList.contains('active') ? '✅ VISÍVEL' : '❌ OCULTA');
+                        console.log('   Série C HTML length:', serieC.innerHTML.length, 'chars');
                     }
                     
                     // Atualizar título
@@ -2229,9 +2274,11 @@
 
             // AUTO-CARREGAMENTO INICIAL: Carregar dados frescos ao iniciar sessão
             setTimeout(() => {
+                console.log('🚀 [INIT] Auto-carregamento inicial das tabelas (método correto - CSV)...');
                 carregarTabelaSerieA(true); // ← FORCE REFRESH na inicialização (usa API /api/br/classificacao/serie-a)
                 carregarTabelaSerieB(true); // ← FORCE REFRESH na inicialização (usa API /api/br/classificacao/serie-b)
                 carregarTabelaSerieC(true); // ← FORCE REFRESH na inicialização
+                console.log('✅ [INIT] Tabelas do Panorama carregadas automaticamente!');
             }, 2000); // ← 2s para garantir que a página carregou
             
             // Inicializar campeonatos internacionais
@@ -2240,6 +2287,7 @@
 
         // ========== FUNÇÃO PARA ATUALIZAR CLASSIFICAÇÃO DO CSV ==========
         async function atualizarClassificacaoCSV() {
+            console.log('🔄 [UPDATE-CSV] Iniciando atualização do CSV...');
             
             const btn = document.getElementById('btn-atualizar-classificacao');
             const btnIcon = btn.querySelector('.btn-icon');
@@ -2253,6 +2301,7 @@
             
             // Verificar qual série está ativa
             const champBtns = document.querySelectorAll('.champ-btn');
+            console.log('🔍 [UPDATE-CSV] Total de botões encontrados:', champBtns.length);
             
             let serieAtiva = 'A';
             champBtns.forEach((b, index) => {
@@ -2347,18 +2396,22 @@
 
         // CARREGAR DADOS DA SÉRIE A (com sistema de cache e auto-refresh)
         async function carregarTabelaSerieA(forceRefresh = false) {
+            console.log('🏆 [DEBUG] === INICIANDO carregarTabelaSerieA ===');
             const container = document.getElementById('tabela-serie-a');
+            console.log('🏆 [DEBUG] Container encontrado:', !!container);
             if (!container) {
                 console.error('❌ [DEBUG] Container tabela-serie-a não encontrado!');
                 return;
             }
 
+            console.log('🏆 [DEBUG] Definindo loading...');
             const loadingMsg = forceRefresh ? 
                 '🔄 Atualizando Série A...' : 
                 '🔄 Carregando Série A...';
             container.innerHTML = `<div class="table-loading"><p>${loadingMsg}</p></div>`;
 
             try {
+                console.log('🏆 [DEBUG] Iniciando sistema de cache...');
                 // Sistema de cache inteligente (válido por 30 minutos)
                 const cacheKey = 'brasileirao_serie_a';
                 const cached = localStorage.getItem(cacheKey);
@@ -2366,10 +2419,19 @@
                 const now = Date.now();
                 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutos
 
+                console.log('🏆 [DEBUG] Cache info:', {
+                    cached: !!cached,
+                    cacheTime: cacheTime,
+                    now: now,
+                    age: cacheTime ? (now - parseInt(cacheTime)) : 'N/A',
+                    duration: CACHE_DURATION
+                });
+
                 let dadosSerieA;
                 let fonte = '🌐 Dados atualizados';
 
                 if (cached && cacheTime && (now - parseInt(cacheTime)) < CACHE_DURATION && !forceRefresh) {
+                    console.log('🏆 [DEBUG] Usando cache local...');
                     dadosSerieA = JSON.parse(cached);
                     fonte = '💾 Cache local';
                 } else {
@@ -5432,10 +5494,8 @@
                 const jsonData = await response.json();
                 const clubes = jsonData.clubes || {};
                 
-                // Mapear nome para chave JSON (usando dicionário externo)
-                const mapeamento = window.MAPEAMENTO_TIMES_BR || {};
-                const nomeKey = nomeTime.toLowerCase().trim();
-                const chaveBusca = mapeamento[nomeKey] || nomeTime.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                // Mapear nome para chave JSON usando arquivo externo
+                const chaveBusca = window.MAPEAMENTO_TIMES_BR[nomeTime.toLowerCase().trim()] || nomeTime.toLowerCase().replace(/[^a-z0-9]/g, '_');
                 console.log(`🔍 [JSON] Chave de busca: "${chaveBusca}"`);
                 
                 const dadosClube = clubes[chaveBusca];
@@ -11181,15 +11241,23 @@
         // ===== FIM DO PATCH CIRÚRGICO =====
 
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 [DEBUG] Iniciando aplicação...');
+            
             // CARREGAR DADOS DOS JOGOS IMEDIATAMENTE
             carregarDadosJogos();
             
+            // PRIMEIRO: Carregar dados do JOGO 1 automaticamente
+            // carregarDadosJogo1(); // REMOVIDO: Jogo 1 foi removido
+            // console.log('✅ [DEBUG] Jogo 1 removido - pulando carregamento');
+            
             // PRIMEIRO: Inicializar abas principais
             initializeTabs();
+            // console.log('✅ [DEBUG] Abas principais inicializadas');
             
             // DEPOIS: Inicializar seção Times Loteca Jogos
             setTimeout(() => {
                 initializeTimesLotecaSection(); // Seção simplificada
+                // console.log('✅ [DEBUG] Seção Times Loteca inicializada');
                 
             }, 100);
             
@@ -11787,15 +11855,15 @@
                 return { casa: null, fora: null };
             }
             
-            // ✅ Usar dicionário centralizado (dados-times.js)
-            const mapeamento = window.MAPEAMENTO_TIMES_BR || {};
+            // ✅ MAPEAMENTO MOVIDO PARA: backend/static/js/loteca/dados-times.js
+            // Agora está disponível em: window.MAPEAMENTO_TIMES_BR
             
             const timeCasaKey = timeCasa.toLowerCase().trim();
             const timeForaKey = timeFora.toLowerCase().trim();
             
-            // ✅ FORÇAR uso do mapeamento (fallback estava estragando acentos!)
-            const chaveCasa = mapeamento[timeCasaKey] || null;
-            const chaveFora = mapeamento[timeForaKey] || null;
+            // ✅ USAR MAPEAMENTO DO ARQUIVO EXTERNO
+            const chaveCasa = window.MAPEAMENTO_TIMES_BR[timeCasaKey] || null;
+            const chaveFora = window.MAPEAMENTO_TIMES_BR[timeForaKey] || null;
             
             // DEBUG: Se não encontrar no mapeamento, logar
             if (!chaveCasa) {
