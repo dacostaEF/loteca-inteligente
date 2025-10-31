@@ -69,6 +69,38 @@
     // Funções helper agora disponíveis globalmente via loteca-functions.js
     // const $, val, setText, setHTML já exportadas em window
     </script>
+
+    <!-- ===== OTIMIZAÇÃO: DESABILITAR CONSOLE.LOGS EM PRODUÇÃO ===== -->
+    <script>
+    (() => {
+        // Desabilitar console logs em produção (quando NÃO é localhost)
+        const isProduction = window.location.hostname !== 'localhost' && 
+                             window.location.hostname !== '127.0.0.1' &&
+                             !window.location.hostname.includes('192.168.');
+        
+        if (isProduction) {
+            // Salvar referências originais para debug se necessário
+            window.__console = {
+                log: console.log,
+                warn: console.warn,
+                error: console.error,
+                debug: console.debug,
+                info: console.info
+            };
+            
+            // Desabilitar console em produção
+            console.log = () => {};
+            console.warn = () => {};
+            console.debug = () => {};
+            console.info = () => {};
+            // Mantemos console.error ativo para debug crítico
+            
+            console.log('[PROD] Console logs desabilitados para melhor performance');
+        } else {
+            console.log('🚀 [DEV] Console ativo - Ambiente de desenvolvimento');
+        }
+    })();
+    </script>
 </head>
 <body>
 
@@ -1976,6 +2008,12 @@
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
 
+            // ===== OTIMIZAÇÃO: FLAGS DE LAZY LOAD =====
+            window.__lazyLoadFlags = {
+                panoramaLoaded: false,
+                forcaElencoLoaded: false
+            };
+
             // console.log('🔧 [DEBUG] Encontrados:', {
             //     'botões': tabBtns.length, 
             //     'conteúdos': tabContents.length
@@ -2013,6 +2051,39 @@
                                 window.inicializarVinculoConfrontos();
                             } else {
                                 // console.warn('⚠️ [VÍNCULO] Função inicializarVinculoConfrontos não encontrada');
+                            }
+                        }
+                        
+                        // ===== OTIMIZAÇÃO: LAZY LOAD PANORAMA DOS CAMPEONATOS =====
+                        if (targetTab === 'panorama-campeonatos' && !window.__lazyLoadFlags.panoramaLoaded) {
+                            console.log('⚡ [LAZY] Carregando Panorama dos Campeonatos pela primeira vez...');
+                            window.__lazyLoadFlags.panoramaLoaded = true;
+                            
+                            // Carregar classificações brasileiras
+                            setTimeout(() => {
+                                carregarTabelaSerieA(true);
+                                carregarTabelaSerieB(true);
+                                console.log('✅ [LAZY] Classificações brasileiras carregadas!');
+                            }, 300);
+                            
+                            // Carregar Premier League (padrão internacional)
+                            setTimeout(() => {
+                                carregarTabelaPremierLeague();
+                                console.log('✅ [LAZY] Premier League carregada!');
+                            }, 500);
+                        }
+                        
+                        // ===== OTIMIZAÇÃO: LAZY LOAD FORÇA DOS ELENCOS =====
+                        if (targetTab === 'forca-elenco' && !window.__lazyLoadFlags.forcaElencoLoaded) {
+                            console.log('⚡ [LAZY] Carregando Força dos Elencos pela primeira vez...');
+                            window.__lazyLoadFlags.forcaElencoLoaded = true;
+                            
+                            // Carregar dados da Série A (já deve estar carregado)
+                            if (typeof carregarSerieAComDados === 'function') {
+                                setTimeout(() => {
+                                    carregarSerieAComDados();
+                                    console.log('✅ [LAZY] Força dos Elencos carregada!');
+                                }, 300);
                             }
                         }
                     } else {
@@ -2140,15 +2211,16 @@
             });
 
 
-            // AUTO-CARREGAMENTO INICIAL: Carregar dados frescos ao iniciar sessão
-            setTimeout(() => {
-                console.log('🚀 [INIT] Auto-carregamento inicial das tabelas (método correto - CSV)...');
-                carregarTabelaSerieA(true); // ← FORCE REFRESH na inicialização (usa API /api/br/classificacao/serie-a)
-                carregarTabelaSerieB(true); // ← FORCE REFRESH na inicialização (usa API /api/br/classificacao/serie-b)
-                console.log('✅ [INIT] Tabelas do Panorama carregadas automaticamente!');
-            }, 2000); // ← 2s para garantir que a página carregou
+            // ===== OTIMIZAÇÃO: AUTO-CARREGAMENTO DESABILITADO =====
+            // Tabelas agora são carregadas sob demanda (lazy load) quando o usuário clica na aba
+            // setTimeout(() => {
+            //     console.log('🚀 [INIT] Auto-carregamento inicial das tabelas (método correto - CSV)...');
+            //     carregarTabelaSerieA(true);
+            //     carregarTabelaSerieB(true);
+            //     console.log('✅ [INIT] Tabelas do Panorama carregadas automaticamente!');
+            // }, 2000);
             
-            // Inicializar campeonatos internacionais
+            // Inicializar campeonatos internacionais (só setup, sem carregar dados)
             initializeInternationalChampionships();
         }
 
@@ -2703,8 +2775,9 @@
             });
 
 
-            // Carregar Premier League por padrão
-            setTimeout(() => carregarTabelaPremierLeague(), 1500);
+            // ===== OTIMIZAÇÃO: LAZY LOAD =====
+            // Premier League agora é carregada quando o usuário clica na aba Panorama
+            // setTimeout(() => carregarTabelaPremierLeague(), 1500);
         }
 
         // CARREGAR DADOS DA PREMIER LEAGUE
