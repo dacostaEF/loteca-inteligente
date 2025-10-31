@@ -121,7 +121,7 @@ async function carregarDadosCompletosJogo(numeroJogo) {
     try {
         // 1. CARREGAR DADOS DO JSON (ANÁLISE)
         // console.log(`📊 [JOGO${numeroJogo}] Carregando análise JSON...`);
-        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1216`);
+        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1218`);
         
         if (!response.ok) {
             throw new Error(`Erro na API: ${response.status}`);
@@ -214,13 +214,14 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
             nomeCasa.textContent = dados.time_casa.toUpperCase();
         }
         
-        // ATUALIZAR NOME DO TIME CASA NO CABEÇALHO DA TABELA
+        // ✅ O mapeamento de IDs (loteca.html linha ~9462) JÁ remove "-novo" ANTES desta função ser chamada
+        // Portanto, ids.nomeCasa aponta para o elemento correto (título do jogo)
+        
+        // ATUALIZAR NOME DO TIME CASA NO CABEÇALHO DA TABELA (se existir um elemento separado)
         const nomeCasaTabela = document.getElementById(`time-casa-nome-${numeroJogo}-novo`);
         if (nomeCasaTabela) {
             nomeCasaTabela.textContent = dados.time_casa.toUpperCase();
             console.log(`✅ [JOGO${numeroJogo}] Nome time casa na tabela: ${dados.time_casa.toUpperCase()}`);
-        } else {
-            console.warn(`⚠️ [JOGO${numeroJogo}] Elemento não encontrado: time-casa-nome-${numeroJogo}-novo`);
         }
     }
     
@@ -230,13 +231,14 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
             nomeFora.textContent = dados.time_fora.toUpperCase();
         }
         
-        // ATUALIZAR NOME DO TIME FORA NO CABEÇALHO DA TABELA
+        // ✅ O mapeamento de IDs (loteca.html linha ~9462) JÁ remove "-novo" ANTES desta função ser chamada
+        // Portanto, ids.nomeFora aponta para o elemento correto (título do jogo)
+        
+        // ATUALIZAR NOME DO TIME FORA NO CABEÇALHO DA TABELA (se existir um elemento separado)
         const nomeForaTabela = document.getElementById(`time-fora-nome-${numeroJogo}-novo`);
         if (nomeForaTabela) {
             nomeForaTabela.textContent = dados.time_fora.toUpperCase();
             console.log(`✅ [JOGO${numeroJogo}] Nome time fora na tabela: ${dados.time_fora.toUpperCase()}`);
-        } else {
-            console.warn(`⚠️ [JOGO${numeroJogo}] Elemento não encontrado: time-fora-nome-${numeroJogo}-novo`);
         }
     }
     
