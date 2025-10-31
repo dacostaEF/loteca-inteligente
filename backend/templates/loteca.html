@@ -8082,48 +8082,72 @@
 
         // CARREGAR DADOS REAIS DA LOTECA VIA API
         async function loadRealLotecaData() {
-            console.log('🎯 Carregando dados REAIS da Loteca...');
+            console.log('🎯 Carregando dados REAIS da Loteca via API individual...');
             
             try {
                 // Mostrar loading
                 showLotecaLoading(true);
                 
-                // Buscar dados da API
-                const apiBase = centralAdminProvider.API_BASE.replace('/api/br', ''); // Usar mesmo domínio
-                const response = await fetch(`${apiBase}/api/br/loteca/current`);
+                // Determinar concurso atual
+                const concursoMatch = document.querySelector('h1')?.textContent.match(/Concurso (\d+)/);
+                const concursoAtual = concursoMatch ? `concurso_${concursoMatch[1]}` : 'concurso_1216';
+                console.log(`📡 [LOAD-REAL] Concurso: ${concursoAtual}`);
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                // Buscar todos os 14 jogos em paralelo
+                const promises = [];
+                for (let i = 1; i <= 14; i++) {
+                    promises.push(
+                        fetch(`/api/analise/jogo/${i}?concurso=${concursoAtual}`)
+                            .then(res => res.ok ? res.json() : null)
+                            .then(data => ({
+                                id: i,
+                                home: data?.time_casa || data?.timeCasa || 'Carregando...',
+                                away: data?.time_fora || data?.timeFora || 'Carregando...',
+                                prob1: data?.prob_casa || data?.probabilidade_1 || 33,
+                                probX: data?.prob_empate || data?.probabilidade_x || 33,
+                                prob2: data?.prob_fora || data?.probabilidade_2 || 34,
+                                classification: data?.classificacao || 'triplo',
+                                suggestion: data?.sugestao || '1X2'
+                            }))
+                            .catch(err => {
+                                console.error(`❌ [LOAD-REAL] Erro no jogo ${i}:`, err);
+                                return null;
+                            })
+                    );
                 }
                 
-                const data = await response.json();
+                // Aguardar todos os jogos carregarem
+                const results = await Promise.all(promises);
+                gamesData = results.filter(game => game !== null);
                 
-                if (!data.success || !data.matches) {
-                    throw new Error(data.error || 'Dados inválidos retornados');
-                }
-                
-                // Atualizar gamesData global com dados reais
-                gamesData = data.matches;
-                
-                console.log(`✅ ${gamesData.length} jogos carregados com dados REAIS!`);
-                console.log('📊 Fonte dos dados:', data.data_source);
+                console.log(`✅ [LOAD-REAL] ${gamesData.length} jogos carregados com sucesso!`);
                 
                 // Atualizar interface
                 updateUIWithRealData();
-                showDataSourceIndicator(data.data_source);
+                showDataSourceIndicator('api');
                 
                 // Esconder loading
                 showLotecaLoading(false);
                 
             } catch (error) {
-                console.error('❌ Erro ao carregar dados reais:', error);
+                console.error('❌ [LOAD-REAL] Erro geral ao carregar:', error);
                 
-                // Fallback: usar dados básicos se a API falhar
-                console.log('🔄 Usando dados de fallback...');
-                gamesData = generateFallbackData();
+                // Mostrar mensagem de erro
+                gamesData = [];
+                const tbody = document.getElementById('optimization-tbody');
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px 20px; color: #ff6b6b; background: rgba(255, 107, 107, 0.1); border-radius: 8px;">
+                                <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
+                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">Erro ao carregar os dados dos jogos</div>
+                                <div style="font-size: 14px; opacity: 0.8;">Por favor, recarregue a página</div>
+                            </td>
+                        </tr>
+                    `;
+                }
                 
-                updateUIWithRealData();
-                showDataSourceIndicator('fallback');
+                showDataSourceIndicator('error');
                 showLotecaLoading(false);
             }
         }
@@ -8192,25 +8216,25 @@
             }, 5000);
         }
         
-        // Dados de fallback caso API falhe
-        function generateFallbackData() {
-            return [
-                { id: 1, home: "Corinthians", away: "Flamengo", prob1: 40, probX: 30, prob2: 30, classification: "triplo", suggestion: "1X2" },
-                { id: 2, home: "Fortaleza", away: "Sport", prob1: 55, probX: 25, prob2: 20, classification: "duplo", suggestion: "1X" },
-                { id: 3, home: "Juventude", away: "Internacional", prob1: 25, probX: 35, prob2: 40, classification: "duplo", suggestion: "X2" },
-                { id: 4, home: "Vasco", away: "Cruzeiro", prob1: 45, probX: 30, prob2: 25, classification: "duplo", suggestion: "1X" },
-                { id: 5, home: "Athletico/PR", away: "Operário/PR", prob1: 65, probX: 25, prob2: 10, classification: "seco", suggestion: "1" },
-                { id: 6, home: "Atlético/MG", away: "Mirassol", prob1: 60, probX: 25, prob2: 15, classification: "seco", suggestion: "1" },
-                { id: 7, home: "Grêmio", away: "Vitória", prob1: 50, probX: 30, prob2: 20, classification: "duplo", suggestion: "1X" },
-                { id: 8, home: "Carregando...", away: "Carregando...", prob1: 45, probX: 30, prob2: 25, classification: "duplo", suggestion: "1X" },
-                { id: 9, home: "Bahia", away: "Palmeiras", prob1: 30, probX: 30, prob2: 40, classification: "duplo", suggestion: "X2" },
-                { id: 10, home: "Fluminense", away: "Botafogo", prob1: 40, probX: 35, prob2: 25, classification: "triplo", suggestion: "1X2" },
-                { id: 11, home: "Criciúma", away: "Paysandu", prob1: 50, probX: 30, prob2: 20, classification: "duplo", suggestion: "1X" },
-                { id: 12, home: "Carregando...", away: "Carregando...", prob1: 35, probX: 30, prob2: 35, classification: "triplo", suggestion: "1X2" },
-                { id: 13, home: "Bragantino", away: "Santos", prob1: 45, probX: 30, prob2: 25, classification: "duplo", suggestion: "1X" },
-                { id: 14, home: "Barcelona", away: "Carregando...", prob1: 55, probX: 25, prob2: 20, classification: "duplo", suggestion: "1X" }
-            ];
-        }
+        // ❌ HARDCODE REMOVIDO - Dados de fallback comentados (não usar dados falsos)
+        // function generateFallbackData() {
+        //     return [
+        //         { id: 1, home: "Corinthians", away: "Flamengo", prob1: 40, probX: 30, prob2: 30, classification: "triplo", suggestion: "1X2" },
+        //         { id: 2, home: "Fortaleza", away: "Sport", prob1: 55, probX: 25, prob2: 20, classification: "duplo", suggestion: "1X" },
+        //         { id: 3, home: "Juventude", away: "Internacional", prob1: 25, probX: 35, prob2: 40, classification: "duplo", suggestion: "X2" },
+        //         { id: 4, home: "Vasco", away: "Cruzeiro", prob1: 45, probX: 30, prob2: 25, classification: "duplo", suggestion: "1X" },
+        //         { id: 5, home: "Athletico/PR", away: "Operário/PR", prob1: 65, probX: 25, prob2: 10, classification: "seco", suggestion: "1" },
+        //         { id: 6, home: "Atlético/MG", away: "Mirassol", prob1: 60, probX: 25, prob2: 15, classification: "seco", suggestion: "1" },
+        //         { id: 7, home: "Grêmio", away: "Vitória", prob1: 50, probX: 30, prob2: 20, classification: "duplo", suggestion: "1X" },
+        //         { id: 8, home: "Carregando...", away: "Carregando...", prob1: 45, probX: 30, prob2: 25, classification: "duplo", suggestion: "1X" },
+        //         { id: 9, home: "Bahia", away: "Palmeiras", prob1: 30, probX: 30, prob2: 40, classification: "duplo", suggestion: "X2" },
+        //         { id: 10, home: "Fluminense", away: "Botafogo", prob1: 40, probX: 35, prob2: 25, classification: "triplo", suggestion: "1X2" },
+        //         { id: 11, home: "Criciúma", away: "Paysandu", prob1: 50, probX: 30, prob2: 20, classification: "duplo", suggestion: "1X" },
+        //         { id: 12, home: "Carregando...", away: "Carregando...", prob1: 35, probX: 30, prob2: 35, classification: "triplo", suggestion: "1X2" },
+        //         { id: 13, home: "Bragantino", away: "Santos", prob1: 45, probX: 30, prob2: 25, classification: "duplo", suggestion: "1X" },
+        //         { id: 14, home: "Barcelona", away: "Carregando...", prob1: 55, probX: 25, prob2: 20, classification: "duplo", suggestion: "1X" }
+        //     ];
+        // }
         
         // Atualizar cards de análise rápida
         function updateQuickAnalysisCards() {
@@ -11692,49 +11716,96 @@
 
         // CARREGAR DADOS DOS JOGOS
         async function carregarDadosJogos() {
-            console.log('🔄 [DADOS-JOGOS] Carregando dados dos jogos...');
+            console.log('🔄 [DADOS-JOGOS] Carregando dados dos 14 jogos via API...');
+            
+            // Mostrar spinner enquanto carrega
+            initializeOptimizationTable(); // Vai mostrar o spinner
             
             try {
-                // Tentar carregar dados da API
-                const response = await fetch('/api/br/loteca/current');
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.success && data.matches) {
-                        gamesData = data.matches;
-                        console.log(`✅ [DADOS-JOGOS] ${gamesData.length} jogos carregados da API!`);
-                        initializeOptimizationTable();
-                        return;
-                    }
+                // Determinar concurso atual
+                const concursoMatch = document.querySelector('h1')?.textContent.match(/Concurso (\d+)/);
+                const concursoAtual = concursoMatch ? `concurso_${concursoMatch[1]}` : 'concurso_1216';
+                console.log(`📡 [DADOS-JOGOS] Concurso: ${concursoAtual}`);
+                
+                // Buscar todos os 14 jogos em paralelo
+                const promises = [];
+                for (let i = 1; i <= 14; i++) {
+                    promises.push(
+                        fetch(`/api/analise/jogo/${i}?concurso=${concursoAtual}`)
+                            .then(res => res.ok ? res.json() : null)
+                            .then(data => ({
+                                id: i,
+                                home: data?.time_casa || data?.timeCasa || 'Carregando...',
+                                away: data?.time_fora || data?.timeFora || 'Carregando...',
+                                prob1: data?.prob_casa || data?.probabilidade_1 || 33,
+                                probX: data?.prob_empate || data?.probabilidade_x || 33,
+                                prob2: data?.prob_fora || data?.probabilidade_2 || 34,
+                                classification: data?.classificacao || 'triplo',
+                                suggestion: data?.sugestao || '1X2'
+                            }))
+                            .catch(err => {
+                                console.error(`❌ [DADOS-JOGOS] Erro no jogo ${i}:`, err);
+                                return {
+                                    id: i,
+                                    home: 'Erro',
+                                    away: 'Erro',
+                                    prob1: 0,
+                                    probX: 0,
+                                    prob2: 0,
+                                    classification: 'triplo',
+                                    suggestion: '?'
+                                };
+                            })
+                    );
                 }
+                
+                // Aguardar todos os jogos carregarem
+                gamesData = await Promise.all(promises);
+                console.log(`✅ [DADOS-JOGOS] ${gamesData.length} jogos carregados com sucesso!`);
+                console.log('📊 [DADOS-JOGOS] Dados:', gamesData);
+                
+                // Renderizar tabela com dados reais
+                initializeOptimizationTable();
+                
             } catch (error) {
-                console.error('❌ [DADOS-JOGOS] Erro ao carregar da API:', error);
+                console.error('❌ [DADOS-JOGOS] Erro geral ao carregar:', error);
+                
+                // Mostrar mensagem de erro
+                gamesData = [];
+                const tbody = document.getElementById('optimization-tbody');
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px 20px; color: #ff6b6b; background: rgba(255, 107, 107, 0.1); border-radius: 8px;">
+                                <div style="font-size: 24px; margin-bottom: 10px;">❌</div>
+                                <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">Erro ao carregar os dados dos jogos</div>
+                                <div style="font-size: 14px; opacity: 0.8;">Por favor, recarregue a página</div>
+                            </td>
+                        </tr>
+                    `;
+                }
             }
-            
-            // Fallback: usar dados padrão
-            console.log('🔄 [DADOS-JOGOS] Usando dados de fallback...');
-            gamesData = generateFallbackData();
-            initializeOptimizationTable();
         }
 
-        // GERAR DADOS DE FALLBACK
-        function generateFallbackData() {
-            return [
-                { id: 1, home: 'Flamengo', away: 'Palmeiras', classification: 'seco', suggestion: '1' },
-                { id: 2, home: 'Corinthians', away: 'São Paulo', classification: 'duplo', suggestion: '1X' },
-                { id: 3, home: 'Santos', away: 'Palmeiras', classification: 'triplo', suggestion: '1X2' },
-                { id: 4, home: 'Flamengo', away: 'Vasco', classification: 'seco', suggestion: '1' },
-                { id: 5, home: 'Botafogo', away: 'Fluminense', classification: 'duplo', suggestion: 'X2' },
-                { id: 6, home: 'Cruzeiro', away: 'Atlético-MG', classification: 'triplo', suggestion: '1X2' },
-                { id: 7, home: 'Internacional', away: 'Grêmio', classification: 'seco', suggestion: '1' },
-                { id: 8, home: 'Bahia', away: 'Vitória', classification: 'duplo', suggestion: '1X' },
-                { id: 9, home: 'Fortaleza', away: 'Ceará', classification: 'triplo', suggestion: '1X2' },
-                { id: 10, home: 'Sport', away: 'Náutico', classification: 'seco', suggestion: '1' },
-                { id: 11, home: 'Goiás', away: 'Atlético-GO', classification: 'duplo', suggestion: 'X2' },
-                { id: 12, home: 'Cuiabá', away: 'Vila Nova', classification: 'triplo', suggestion: '1X2' },
-                { id: 13, home: 'Chapecoense', away: 'Avaí', classification: 'seco', suggestion: '1' },
-                { id: 14, home: 'Juventude', away: 'Criciúma', classification: 'duplo', suggestion: '1X' }
-            ];
-        }
+        // ❌ HARDCODE REMOVIDO - Dados de fallback comentados (não usar dados falsos)
+        // function generateFallbackData() {
+        //     return [
+        //         { id: 1, home: 'Flamengo', away: 'Palmeiras', classification: 'seco', suggestion: '1' },
+        //         { id: 2, home: 'Corinthians', away: 'São Paulo', classification: 'duplo', suggestion: '1X' },
+        //         { id: 3, home: 'Santos', away: 'Palmeiras', classification: 'triplo', suggestion: '1X2' },
+        //         { id: 4, home: 'Flamengo', away: 'Vasco', classification: 'seco', suggestion: '1' },
+        //         { id: 5, home: 'Botafogo', away: 'Fluminense', classification: 'duplo', suggestion: 'X2' },
+        //         { id: 6, home: 'Cruzeiro', away: 'Atlético-MG', classification: 'triplo', suggestion: '1X2' },
+        //         { id: 7, home: 'Internacional', away: 'Grêmio', classification: 'seco', suggestion: '1' },
+        //         { id: 8, home: 'Bahia', away: 'Vitória', classification: 'duplo', suggestion: '1X' },
+        //         { id: 9, home: 'Fortaleza', away: 'Ceará', classification: 'triplo', suggestion: '1X2' },
+        //         { id: 10, home: 'Sport', away: 'Náutico', classification: 'seco', suggestion: '1' },
+        //         { id: 11, home: 'Goiás', away: 'Atlético-GO', classification: 'duplo', suggestion: 'X2' },
+        //         { id: 12, home: 'Cuiabá', away: 'Vila Nova', classification: 'triplo', suggestion: '1X2' },
+        //         { id: 13, home: 'Chapecoense', away: 'Avaí', classification: 'seco', suggestion: '1' },
+        //         { id: 14, home: 'Juventude', away: 'Criciúma', classification: 'duplo', suggestion: '1X' }
+        //     ];
+        // }
 
         // INICIALIZAR TABELA DE OTIMIZAÇÃO
         function initializeOptimizationTable() {
@@ -11748,6 +11819,27 @@
             
             console.log('🏗️ [TABLE] Tbody encontrado, limpando...');
             tbody.innerHTML = '';
+            
+            // ✅ Se não houver dados, mostrar spinner de loading
+            if (!gamesData || gamesData.length === 0) {
+                console.log('⏳ [TABLE] Aguardando dados dos jogos...');
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px 20px;">
+                            <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #333; border-top-color: #00ff88; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <div style="margin-top: 15px; font-size: 16px; color: #ffffff;">⏳ Carregando dados dos jogos...</div>
+                            <div style="margin-top: 8px; font-size: 14px; color: #888;">Aguarde enquanto buscamos as informações</div>
+                        </td>
+                    </tr>
+                    <style>
+                        @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                    </style>
+                `;
+                return;
+            }
             
             console.log('🏗️ [TABLE] Dados dos jogos:', gamesData.length);
             
