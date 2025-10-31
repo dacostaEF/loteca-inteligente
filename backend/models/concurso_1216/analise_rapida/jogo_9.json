@@ -12,22 +12,22 @@
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/Ceara/Ceara.png",
     "escudo_fora": "/static/escudos/FLU_FLuminense/Fluminense.png",
-    "probabilidade_casa": "30",
+    "probabilidade_casa": "40",
     "probabilidade_empate": "40",
-    "probabilidade_fora": "30",
+    "probabilidade_fora": "20",
     "recomendacao": "Recomendação Estatística: Duplo Chance 1X (Ceará ou Empate) - Risco Médio",
     "conclusao_analista": "A análise é marcada pelo conflito entre a excelente campanha do Fluminense (7º) e a força do Ceará (14º) em seus domínios. Historicamente, no geral, o Fluminense tem a vantagem (40% de vitórias). Contudo, jogando em casa, o Ceará tem 50% de chance de Coluna 1, tornando-se o favorito estatístico.\nA aposta mais forte é no Ceará (Coluna 1). Uma alternativa segura é o Duplo 1X (Ceará ou Empate), já que o Ceará vence ou empata em 70% dos jogos como mandante contra o Fluminense.\nDicas BET: UNDER 2.5 GOLS = FORTE TENDÊNCIA! 🔒\nÚltimos jogos: 0-1, 1-0, 0-0, 1-0, 2-0\n70% dos confrontos em Fortaleza têm menos de 3 gols\nCOTAÇÃO: 1.60-1.80\nCONFIANÇA: 65-70%",
     "confrontos_sequence": "D-V-V-E-D-E-V-E-E-V",
     "posicao_casa": "14",
     "posicao_fora": "7",
     "confronto_direto": "4V-4E-2D",
-    "fator_casa": "50",
-    "fator_fora": "50",
+    "fator_casa": "65",
+    "fator_fora": "35",
     "analise_posicao": "confronto Equilibrado",
     "analise_posicao_tabelas": "Vantagem Botafogo",
     "analise_confronto_direto": "confronto Equilibrado",
     "analise_fator_casa": "confronto Equilibrado",
-    "sincronizado_em": "2025-10-29T18:40:21.371Z"
+    "sincronizado_em": "2025-10-31T15:22:21.416Z"
   },
   "admin_key": "loteca2024admin"
 }

@@ -12,22 +12,22 @@
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/VAS_Vasco/vasco.png",
     "escudo_fora": "/static/escudos/SAP_SaoPaulo/SaoPaulo.png",
-    "probabilidade_casa": "40",
+    "probabilidade_casa": "45",
     "probabilidade_empate": "30",
-    "probabilidade_fora": "30",
+    "probabilidade_fora": "25",
     "recomendacao": "Recomendação Estatística: Coluna 1 (Vasco) - Risco Médio",
     "conclusao_analista": "Os números da Série A 2025 reforçam essa leve vantagem vascaína. Com 42 pontos na 8ª colocação, o Vasco está à frente do São Paulo (9º, 41 pontos) não apenas na tabela, mas em confiança e momento de equipe. Enquanto o Cruzmaltino sonha com vaga na Sul-Americana ou até Libertadores, o Tricolor amarga uma temporada irregular, oscilando entre bons e maus resultados.\nOVER 2.5 GOLS = CERTEZA! \nÚltimos confrontos: 3-1, 3-0, 4-1, 0-0, 4-2\n80% dos últimos 5 jogos tiveram 3+ gols!\nAmbos atacam bem\nVasco: 49 gols (8º ataque)\nSão Paulo: 33 gols (9º ataque)\nCOTAÇÃO: 1.65-1.85\nCONFIANÇA: 65-70%",
     "confrontos_sequence": "D-V-V-E-V-D-V-E-V-V",
     "posicao_casa": "3",
     "posicao_fora": "17",
     "confronto_direto": "6V-2E-2D",
-    "fator_casa": "55",
-    "fator_fora": "45",
+    "fator_casa": "65",
+    "fator_fora": "35",
     "analise_posicao": "Confronto Equilibrado",
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-30T00:16:48.756Z"
+    "sincronizado_em": "2025-10-31T15:14:56.963Z"
   },
   "admin_key": "loteca2024admin"
 }

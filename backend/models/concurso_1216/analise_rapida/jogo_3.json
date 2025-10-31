@@ -22,12 +22,12 @@
     "posicao_fora": "17",
     "confronto_direto": "3V-6E-1D",
     "fator_casa": "80",
-    "fator_fora": "80",
+    "fator_fora": "20",
     "analise_posicao": "Vantagem Cruzeiro",
     "analise_posicao_tabelas": "Vantagem Cruzeiro",
     "analise_confronto_direto": "Vantagem Cruzeiro",
     "analise_fator_casa": "Vantagem Cruzeiro",
-    "sincronizado_em": "2025-10-29T15:29:48.624Z"
+    "sincronizado_em": "2025-10-31T14:20:18.384Z"
   },
   "admin_key": "loteca2024admin"
 }

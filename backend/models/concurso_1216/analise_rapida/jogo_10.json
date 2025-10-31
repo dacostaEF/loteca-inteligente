@@ -21,13 +21,13 @@
     "posicao_casa": "19",
     "posicao_fora": "1",
     "confronto_direto": "4V-2E-4D",
-    "fator_casa": "30",
-    "fator_fora": "70",
+    "fator_casa": "20",
+    "fator_fora": "80",
     "analise_posicao": "Vantagem Palmeiras",
     "analise_posicao_tabelas": "Vantagem Palmeiras",
     "analise_confronto_direto": "Vantagem Palmeiras",
     "analise_fator_casa": "Vantagem Palmeiras",
-    "sincronizado_em": "2025-10-29T19:38:51.086Z"
+    "sincronizado_em": "2025-10-31T15:20:09.648Z"
   },
   "admin_key": "loteca2024admin"
 }

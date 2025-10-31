@@ -12,22 +12,22 @@
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/INT_Internacional/Internacional.png",
     "escudo_fora": "/static/escudos/CAM_Atletico-MG/Atletico_MG.png",
-    "probabilidade_casa": "33",
-    "probabilidade_empate": "34",
-    "probabilidade_fora": "33",
+    "probabilidade_casa": "45",
+    "probabilidade_empate": "34.9",
+    "probabilidade_fora": "20",
     "recomendacao": "Recomendação Estatística: DUPLO (Empate e Internacional) - Risco Médio",
     "conclusao_analista": "Apesar do equilíbrio de pontuação na tabela (15º vs 13º), o Atlético-MG (Coluna 2) é o favorito estatístico neste confronto específico. Jogando no Beira-Rio, o time mineiro tem 60% de vitórias na amostra fornecida, invertendo completamente o fator mando de campo. O jogo é historicamente decidido, com 0% de chance de Empate no histórico com mando do Inter. Fator Emocional INtermacional, pode derar ansiedade e descontrole do jogo, nem sempre vontade é tudo",
     "confrontos_sequence": "V-D-D-D-V-V-V-V-D-E",
     "posicao_casa": "13",
     "posicao_fora": "15",
     "confronto_direto": "5V-1E-4D",
-    "fator_casa": "45",
-    "fator_fora": "55",
+    "fator_casa": "70",
+    "fator_fora": "30",
     "analise_posicao": "Confronto Equilibrado",
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-10-29T19:09:18.465Z"
+    "sincronizado_em": "2025-10-31T15:18:56.080Z"
   },
   "admin_key": "loteca2024admin"
 }
