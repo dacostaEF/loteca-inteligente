@@ -892,6 +892,97 @@
 
         <!-- ABA 3: FORÇA DOS ELENCOS -->
         <div class="tab-content page page--forca-elenco" id="forca-elenco" style="display: none;">
+            
+            <!-- ✅ ESTILOS GLOBAIS PARA TODAS AS SUB-ABAS -->
+            <style>
+            .forca-elenco-dashboard {
+                max-width: 1400px;
+                margin: 0 auto;
+                background: #1a1a1a;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+                overflow: hidden;
+                border: 1px solid #333;
+                padding: 20px;
+            }
+            
+            .table-container {
+                overflow-x: auto;
+                overflow-y: auto;
+                max-height: 600px;
+                border-radius: 8px;
+                border: 1px solid #333;
+                background: #2a2a2a;
+            }
+            
+            .forca-elenco-container table {
+                width: 100%;
+                border-collapse: collapse;
+                background: #2a2a2a;
+            }
+            
+            .forca-elenco-container th {
+                background: #00E38C;
+                color: white;
+                padding: 12px 16px;
+                text-align: left;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+            
+            .forca-elenco-container td {
+                padding: 12px 16px;
+                border-bottom: 1px solid #333;
+                font-size: 0.9rem;
+                color: #ffffff;
+                background: #2a2a2a;
+            }
+            
+            .forca-elenco-container tr:nth-child(even) td {
+                background: #1e1e1e;
+            }
+            
+            .forca-elenco-container tr:hover td {
+                background: #333 !important;
+            }
+            
+            .forca-elenco-container .valor-cell {
+                font-weight: 600;
+                color: #00E38C;
+            }
+            
+            .forca-elenco-container .info-box {
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 0.9rem;
+                border: 1px solid #333;
+            }
+            
+            .forca-elenco-container .info-box.blue {
+                background: #1e3a8a;
+                color: #dbeafe;
+                border-color: #3b82f6;
+            }
+            
+            .forca-elenco-container .info-box.green {
+                background: #064e3b;
+                color: #d1fae5;
+                border-color: #10b981;
+            }
+            
+            .forca-elenco-container .info-box.yellow {
+                background: #713f12;
+                color: #fef3c7;
+                border-color: #f59e0b;
+            }
+            </style>
+            
             <div class="forca-elenco-container">
                 
                 <!-- CABEÇALHO DA ABA -->
@@ -12729,14 +12820,15 @@
                     // Renderizar tabela da Série A
                     if (window.__SERIE_A__ && window.__SERIE_A__.length > 0) {
                         container.innerHTML = `
-                            <h2>Série A do Campeonato Brasileiro</h2>
-                            <div class="info-box green">
-                                <p><strong>Resumo:</strong> ${window.__SERIE_A__.length} clubes da Série A com análise detalhada</p>
-                                <p><strong>Dados:</strong> Plantel, idade média, estrangeiros, valores e estatísticas</p>
-                            </div>
-                            
-                            <div class="table-container">
-                                <table class="serie-a">
+                            <div class="forca-elenco-dashboard">
+                                <h2>Série A do Campeonato Brasileiro</h2>
+                                <div class="info-box green">
+                                    <p><strong>Resumo:</strong> ${window.__SERIE_A__.length} clubes da Série A com análise detalhada</p>
+                                    <p><strong>Dados:</strong> Plantel, idade média, estrangeiros, valores e estatísticas</p>
+                                </div>
+                                
+                                <div class="table-container">
+                                    <table class="serie-a">
                                     <thead>
                                         <tr>
                                             <th>Posição</th>
@@ -12767,6 +12859,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
                         `;
                         console.log('✅ [SÉRIE-A] Tabela renderizada com', window.__SERIE_A__.length, 'clubes!');
                     } else {
@@ -12829,14 +12922,15 @@
                     // Renderizar tabela da Série B
                     if (window.__SERIE_B__ && window.__SERIE_B__.length > 0) {
                         container.innerHTML = `
-                            <h2>Série B do Campeonato Brasileiro</h2>
-                            <div class="info-box yellow">
-                                <p><strong>Resumo:</strong> ${window.__SERIE_B__.length} clubes da Série B com análise detalhada</p>
-                                <p><strong>Dados:</strong> Plantel, idade média, estrangeiros, valores e estatísticas</p>
-                            </div>
-                            
-                            <div class="table-container">
-                                <table class="serie-b">
+                            <div class="forca-elenco-dashboard">
+                                <h2>Série B do Campeonato Brasileiro</h2>
+                                <div class="info-box yellow">
+                                    <p><strong>Resumo:</strong> ${window.__SERIE_B__.length} clubes da Série B com análise detalhada</p>
+                                    <p><strong>Dados:</strong> Plantel, idade média, estrangeiros, valores e estatísticas</p>
+                                </div>
+                                
+                                <div class="table-container">
+                                    <table class="serie-b">
                                     <thead>
                                         <tr>
                                             <th>Posição</th>
@@ -12867,6 +12961,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
                         `;
                         console.log('✅ [SÉRIE-B] Tabela renderizada com', window.__SERIE_B__.length, 'clubes!');
                     } else {
@@ -12918,83 +13013,7 @@
                     // Renderizar tabela do Top 100
                     if (window.__TOP100__ && window.__TOP100__.length > 0) {
                         content.innerHTML = `
-                            <style>
-                            .forca-elenco-dashboard {
-                                max-width: 1400px;
-                                margin: 0 auto;
-                                background: #1a1a1a;
-                                border-radius: 12px;
-                                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-                                overflow: hidden;
-                                border: 1px solid #333;
-                                padding: 20px;
-                            }
-                            
-                            .table-container {
-                                overflow-x: auto;
-                                overflow-y: auto;
-                                max-height: 600px;
-                                border-radius: 8px;
-                                border: 1px solid #333;
-                                background: #2a2a2a;
-                            }
-                            
-                            table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                background: #2a2a2a;
-                            }
-                            
-                            th {
-                                background: #00E38C;
-                                color: white;
-                                padding: 12px 16px;
-                                text-align: left;
-                                font-size: 0.75rem;
-                                font-weight: 600;
-                                text-transform: uppercase;
-                                letter-spacing: 0.05em;
-                                position: sticky;
-                                top: 0;
-                                z-index: 10;
-                            }
-                            
-                            td {
-                                padding: 12px 16px;
-                                border-bottom: 1px solid #333;
-                                font-size: 0.9rem;
-                                color: #ffffff;
-                                background: #2a2a2a;
-                            }
-                            
-                            tr:nth-child(even) td {
-                                background: #1e1e1e;
-                            }
-                            
-                            tr:hover td {
-                                background: #333 !important;
-                            }
-                            
-                            .valor-cell {
-                                font-weight: 600;
-                                color: #00E38C;
-                            }
-                            
-                            .info-box {
-                                padding: 15px;
-                                border-radius: 8px;
-                                margin-bottom: 20px;
-                                font-size: 0.9rem;
-                                border: 1px solid #333;
-                            }
-                            
-                            .info-box.blue {
-                                background: #1e3a8a;
-                                color: #dbeafe;
-                                border-color: #3b82f6;
-                            }
-                            </style>
-                            
+                            <!-- ✅ Estilos agora estão globais no topo da aba -->
                             <div class="forca-elenco-dashboard">
                                 <h2>Top 100 Clubes Mundiais</h2>
                                 <div class="info-box blue">
