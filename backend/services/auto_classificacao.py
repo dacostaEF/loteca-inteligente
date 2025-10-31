@@ -380,10 +380,10 @@ class AutoClassificacao:
     
     def ler_tabela_tradicional_serie_b(self) -> List[Dict]:
         """
-        Lê diretamente do arquivo Serir_B_tabela_tradicional.csv
+        Lê diretamente do arquivo Serie_B_tabela_tradicional.csv
         """
         try:
-            csv_path = os.path.join(self.base_path, "Serir_B_tabela_tradicional.csv")
+            csv_path = os.path.join(self.base_path, "Serie_B_tabela_tradicional.csv")
             # logger.info(f"🔍 Procurando arquivo Série B em: {csv_path}")
             # logger.info(f"🔍 Arquivo existe: {os.path.exists(csv_path)}")
             
