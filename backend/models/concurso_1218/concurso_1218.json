@@ -1,94 +1,94 @@
 {
   "metadados": {
     "numero": "1218",
-    "salvo_em": "2025-10-29T08:59:41.487003",
+    "salvo_em": "2025-10-31T08:43:41.366831",
     "versao": "1.0"
   },
   "concurso": {},
   "jogos": [
     {
+      "data": "Domingo",
       "numero": 1,
       "time_casa": "CORINTHIANS/SP",
-      "time_fora": "GREMIO/RS",
-      "data": "Domingo"
+      "time_fora": "GREMIO/RS"
     },
     {
+      "data": "Sábado",
       "numero": 2,
       "time_casa": "SANTOS/SP",
-      "time_fora": "FORTALEZA/CE",
-      "data": "Sábado"
+      "time_fora": "FORTALEZA/CE"
     },
     {
+      "data": "Sábado",
       "numero": 3,
       "time_casa": "CRUZEIRO/MG",
-      "time_fora": "VITORIA/BA",
-      "data": "Sábado"
+      "time_fora": "VITORIA/BA"
     },
     {
+      "data": "Sábado",
       "numero": 4,
       "time_casa": "GOIAS/GO",
-      "time_fora": "ATHLETICO/PR",
-      "data": "Sábado"
+      "time_fora": "ATHLETICO/PR"
     },
     {
+      "data": "Sábado",
       "numero": 5,
       "time_casa": "MIRASSOL/SP",
-      "time_fora": "BOTAFOGO/RJ",
-      "data": "Sábado"
+      "time_fora": "BOTAFOGO/RJ"
     },
     {
+      "data": "Sábado",
       "numero": 6,
       "time_casa": "AVAI/SC",
-      "time_fora": "ATHLETIC CLUB/MG",
-      "data": "Sábado"
+      "time_fora": "ATHLETIC CLUB/MG"
     },
     {
+      "data": "Sábado",
       "numero": 7,
       "time_casa": "FLAMENGO/RJ",
-      "time_fora": "SPORT/PE",
-      "data": "Sábado"
+      "time_fora": "SPORT/PE"
     },
     {
+      "data": "Domingo",
       "numero": 8,
       "time_casa": "BAHIA/BA",
-      "time_fora": "BRAGANTINO/SP",
-      "data": "Domingo"
+      "time_fora": "BRAGANTINO/SP"
     },
     {
+      "data": "Domingo",
       "numero": 9,
       "time_casa": "CEARA/CE",
-      "time_fora": "FLUMINENSE/RJ",
-      "data": "Domingo"
+      "time_fora": "FLUMINENSE/RJ"
     },
     {
+      "data": "Domingo",
       "numero": 10,
       "time_casa": "JUVENTUDE/RS",
-      "time_fora": "PALMEIRAS/SP",
-      "data": "Domingo"
+      "time_fora": "PALMEIRAS/SP"
     },
     {
+      "data": "Domingo",
       "numero": 11,
       "time_casa": "INTERNACIONAL/RS",
-      "time_fora": "ATLETICO/MG",
-      "data": "Domingo"
+      "time_fora": "ATLETICO/MG"
     },
     {
+      "data": "Domingo",
       "numero": 12,
       "time_casa": "REMO/PA",
-      "time_fora": "CHAPECOENSE/SC",
-      "data": "Domingo"
+      "time_fora": "CHAPECOENSE/SC"
     },
     {
+      "data": "Domingo",
       "numero": 13,
       "time_casa": "VASCO DA GAMA/RJ",
-      "time_fora": "SAO PAULO/SP",
-      "data": "Domingo"
+      "time_fora": "SAO PAULO/SP"
     },
     {
+      "data": "Domingo",
       "numero": 14,
       "time_casa": "OPERARIO/PR",
-      "time_fora": "VILA NOVA/GO",
-      "data": "Domingo"
+      "time_fora": "VILA NOVA/GO"
     }
   ],
   "estatisticas": {}
