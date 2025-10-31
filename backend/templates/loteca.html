@@ -25,6 +25,8 @@
     <script type="module" src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
     <script src="{{ url_for('static', filename='js/confrontos-break.js') }}"></script>
     <script src="{{ url_for('static', filename='js/sticky-tabs-mobile.js') }}"></script>
+    <!-- ✅ Dicionário de mapeamento de times -->
+    <script src="{{ url_for('static', filename='js/loteca/dados-times.js') }}"></script>
     
     <!-- SAFETY SHIM ADDED BY SCRIPT -->
     <script>
@@ -11785,94 +11787,8 @@
                 return { casa: null, fora: null };
             }
             
-            // Mapeamento específico para os nomes dos times
-            const mapeamentoNomes = {
-                'flamengo/rj': 'flamengo',
-                'flamengo': 'flamengo',
-                'palmeiras/sp': 'palmeiras', 
-                'palmeiras': 'palmeiras',
-                'são paulo/sp': 'sao_paulo',
-                'sao paulo': 'sao_paulo',
-                'são paulo': 'sao_paulo',
-                'corinthians/sp': 'corinthians',
-                'corinthians': 'corinthians',
-                'atletico/mg': 'atletico_mg',
-                'atletico mg': 'atletico_mg',
-                'atlético-mg': 'atletico_mg',
-                'atletico-mg': 'atletico_mg',
-                'internacional': 'internacional',
-                'gremio/rs': 'gremio',
-                'gremio': 'gremio',
-                'grêmio': 'gremio',
-                'cruzeiro/mg': 'cruzeiro',
-                'cruzeiro': 'cruzeiro',
-                'botafogo/rj': 'botafogo',
-                'botafogo': 'botafogo',
-                'vasco': 'vasco',
-                'vasco da gama': 'vasco',
-                'vasco/rj': 'vasco',
-                'fluminense': 'fluminense',
-                'athletico/pr': 'athletico_pr',
-                'athletico-pr': 'athletico_pr',
-                'athletico pr': 'athletico_pr',
-                'fortaleza/ce': 'fortaleza',
-                'fortaleza': 'fortaleza',
-                'bahia/ba': 'bahia',
-                'bahia': 'bahia',
-                'santos': 'santos',
-                // ✅ TIMES ADICIONADOS 2025 (TODAS AS VARIAÇÕES - API e CSV!)
-                'mirassol': 'mirassol',
-                'red bull bragantino': 'red_bull_bragantino',
-                'bragantino': 'red_bull_bragantino',
-                'ceará': 'ceara',
-                'ceara': 'ceara',
-                'sport': 'sport',
-                'sport recife': 'sport',
-                'juventude': 'juventude',
-                // OPERÁRIO-PR (todos os formatos!)
-                'operário-pr': 'operario_pr',  // ← Nome display após conversão!
-                'operario-pr': 'operario_pr',
-                'operario pr': 'operario_pr',
-                'operário': 'operario_pr',
-                'operario': 'operario_pr',
-                'fantasma': 'operario_pr',
-                // VILA NOVA (todos os formatos!)
-                'vila nova': 'vila_nova',  // ← Nome display após conversão!
-                'vila-nova': 'vila_nova',
-                'tigre': 'vila_nova',
-                // AVAÍ (todos os formatos!)
-                'avai': 'avai',
-                'avaí': 'avai',  // ← Nome display após conversão!
-                'avaí fc': 'avai',
-                'leão da ilha': 'avai',
-                // ATHLETIC-MG (todos os formatos!)
-                'athletic-mg': 'athletic_mg',  // ← Nome display após conversão!
-                'athletic club': 'athletic_mg',
-                'athletic mg': 'athletic_mg',
-                'athletic': 'athletic_mg',
-                'coelho': 'athletic_mg',
-                // REMO (todos os formatos!)
-                'remo': 'remo',  // ← Nome display já correto!
-                'leão azul': 'remo',
-                'clube do remo': 'remo',
-                // CHAPECOENSE (todos os formatos!)
-                'chapecoense': 'chapecoense',  // ← Nome display já correto!
-                'chape': 'chapecoense',
-                'verdão do oeste': 'chapecoense',
-                // VITÓRIA
-                'vitoria': 'vitoria',
-                'vitória': 'vitoria',
-                // GOIÁS
-                'goias': 'goias',  // ← API usa!
-                'goiás': 'goias',
-                // ATHLETICO-PR (todos os formatos possíveis!)
-                'atlhetico': 'athletico_pr',
-                'athltetico-pr': 'athletico_pr',
-                'athletico-pr': 'athletico_pr',  // ← Nome display após conversão!
-                'athletico pr': 'athletico_pr',
-                'athletico paranaense': 'athletico_pr',
-                'furacão': 'athletico_pr',
-            };
+            // Usar dicionário externo de mapeamento de times
+            const mapeamentoNomes = window.MAPEAMENTO_TIMES_BR || {};
             
             const timeCasaKey = timeCasa.toLowerCase().trim();
             const timeForaKey = timeFora.toLowerCase().trim();
