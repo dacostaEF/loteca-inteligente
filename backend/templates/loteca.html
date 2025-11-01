@@ -79,6 +79,9 @@
                              !window.location.hostname.includes('192.168.');
         
         if (isProduction) {
+            // ✅ MENSAGEM ANTES de desabilitar
+            console.log('🔇 [PROD] Desabilitando console logs para melhor performance...');
+            
             // Salvar referências originais para debug se necessário
             window.__console = {
                 log: console.log,
@@ -93,9 +96,7 @@
             console.warn = () => {};
             console.debug = () => {};
             console.info = () => {};
-            // Mantemos console.error ativo para debug crítico
-            
-            console.log('[PROD] Console logs desabilitados para melhor performance');
+            // ✅ Mantemos console.error ativo para debug crítico
         } else {
             console.log('🚀 [DEV] Console ativo - Ambiente de desenvolvimento');
         }

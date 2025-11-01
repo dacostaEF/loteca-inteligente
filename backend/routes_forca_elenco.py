@@ -42,8 +42,9 @@ def dashboard():
         serie_b_data = []
         
         # Ler Top 100 Mundial
-        print(f"🔍 Verificando arquivo Top 100: {top100_csv}")
-        print(f"📁 Arquivo existe: {os.path.exists(top100_csv)}")
+        if DEBUG:
+            print(f"🔍 Verificando arquivo Top 100: {top100_csv}")
+            print(f"📁 Arquivo existe: {os.path.exists(top100_csv)}")
         if os.path.exists(top100_csv):
             with open(top100_csv, 'r', encoding='utf-8-sig') as f:  # utf-8-sig para BOM
                 reader = csv.DictReader(f)
@@ -55,11 +56,13 @@ def dashboard():
                         'pais': r.get('pais') or r.get('país') or '',
                         'valor': r.get('valor', '')
                     })
-            print(f"✅ Top 100 carregado: {len(top100_data)} clubes")
+            if DEBUG:
+                print(f"✅ Top 100 carregado: {len(top100_data)} clubes")
         
         # Ler Série A
-        print(f"🔍 Verificando arquivo Série A: {serie_a_csv}")
-        print(f"📁 Arquivo existe: {os.path.exists(serie_a_csv)}")
+        if DEBUG:
+            print(f"🔍 Verificando arquivo Série A: {serie_a_csv}")
+            print(f"📁 Arquivo existe: {os.path.exists(serie_a_csv)}")
         if os.path.exists(serie_a_csv):
             with open(serie_a_csv, 'r', encoding='utf-8-sig') as f:  # utf-8-sig para BOM
                 reader = csv.DictReader(f)
@@ -77,12 +80,14 @@ def dashboard():
                         'passes_certos': r.get('passes certos') or r.get('passes certos') or '',
                         'chutes_jogo': r.get('chutes/jogo') or r.get('chutes jogo') or ''
                     })
-                    print(f"Debug Série A - Primeira linha: {serie_a_data[-1] if serie_a_data else 'Nenhum dado'}")
-            print(f"✅ Série A carregada: {len(serie_a_data)} clubes")
+                    # ❌ REMOVIDO: print de cada clube (20 prints!)
+            if DEBUG:
+                print(f"✅ Série A carregada: {len(serie_a_data)} clubes")
         
         # Ler Série B
-        print(f"🔍 Verificando arquivo Série B: {serie_b_csv}")
-        print(f"📁 Arquivo existe: {os.path.exists(serie_b_csv)}")
+        if DEBUG:
+            print(f"🔍 Verificando arquivo Série B: {serie_b_csv}")
+            print(f"📁 Arquivo existe: {os.path.exists(serie_b_csv)}")
         if os.path.exists(serie_b_csv):
             with open(serie_b_csv, 'r', encoding='utf-8-sig') as f:  # utf-8-sig para BOM
                 reader = csv.DictReader(f)
@@ -100,17 +105,20 @@ def dashboard():
                         'passes_certos': r.get('passes certos') or r.get('passes certos') or '',
                         'chutes_jogo': r.get('chutes/jogo') or r.get('chutes jogo') or ''
                     })
-                    print(f"Debug Série B - Primeira linha: {serie_b_data[-1] if serie_b_data else 'Nenhum dado'}")
-            print(f"✅ Série B carregada: {len(serie_b_data)} clubes")
+                    # ❌ REMOVIDO: print de cada clube (20 prints!)
+            if DEBUG:
+                print(f"✅ Série B carregada: {len(serie_b_data)} clubes")
         
-        print(f"📊 Resumo dos dados carregados:")
-        print(f"   Top 100: {len(top100_data)} clubes")
-        print(f"   Série A: {len(serie_a_data)} clubes") 
-        print(f"   Série B: {len(serie_b_data)} clubes")
+        if DEBUG:
+            print(f"📊 Resumo dos dados carregados:")
+            print(f"   Top 100: {len(top100_data)} clubes")
+            print(f"   Série A: {len(serie_a_data)} clubes") 
+            print(f"   Série B: {len(serie_b_data)} clubes")
         
         # Dados de teste se não conseguir carregar dos CSVs
         if not top100_data and not serie_a_data and not serie_b_data:
-            print("⚠️ Nenhum dado CSV carregado, usando dados de teste...")
+            # ⚠️ Print CRÍTICO: Sempre mostrar quando não houver dados
+            print("⚠️ [CRÍTICO] Nenhum dado CSV carregado, usando dados de teste...")
             top100_data = [
                 {"posicao": "1", "clube": "Real Madrid", "pais": "Espanha", "valor": "€ 1.726 M"},
                 {"posicao": "2", "clube": "Manchester City", "pais": "Inglaterra", "valor": "€ 1.538 M"}

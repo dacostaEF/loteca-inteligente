@@ -1764,6 +1764,24 @@
         /* RESPONSIVIDADE ESPEC�FICA PARA FOR�A DOS ELENCOS */
         @media (max-width: 768px) {
             
+            /* ===== ESCONDER CAIXAS DE INFO (Resumo/Dados) EM MOBILE ===== */
+            .forca-elenco-container .info-box {
+                display: none !important; /* Esconder para economizar espaço */
+            }
+            
+            /* ===== TÍTULOS DAS TABELAS (Série A, B, Top 100) - MESMO PADRÃO DO PLANTEL ===== */
+            .forca-elenco-container .fe-tab-content h2,
+            .forca-elenco-dashboard h2,
+            .forca-elenco-container #serie-a h2,
+            .forca-elenco-container #serie-b h2,
+            .forca-elenco-container #top100 h2 {
+                font-size: 11px !important; /* Mesmo tamanho do Plantel ($) */
+                color: var(--cor-destaque-primaria) !important; /* Mesma cor */
+                font-weight: 700 !important;
+                margin-bottom: 0.5rem !important;
+                text-align: center !important;
+            }
+            
             /* APLICAR MESMAS CONFIGURA��ES DE FONTE DA ABA OTIMIZADOR DE APOSTA */
             
             /* 1. T�TULOS DAS SE��ES - MESMO PADR�O DO OTIMIZADOR */
@@ -1779,6 +1797,39 @@
                 color: var(--cor-texto-secundario) !important;
                 font-weight: 600 !important;
             }
+        }
+        
+        /* ===== LANDSCAPE: TAMBÉM ESCONDER INFO-BOXES ===== */
+        @media (orientation: landscape) and (max-height: 800px) {
+            .forca-elenco-container .info-box {
+                display: none !important; /* Esconder em landscape também */
+            }
+            
+            /* Títulos das tabelas em landscape (Mobile) */
+            .forca-elenco-container .fe-tab-content h2,
+            .forca-elenco-dashboard h2,
+            .forca-elenco-container #serie-a h2,
+            .forca-elenco-container #serie-b h2,
+            .forca-elenco-container #top100 h2 {
+                font-size: 10px !important; /* Mesmo tamanho do Plantel em landscape */
+                color: var(--cor-destaque-primaria) !important;
+                font-weight: 700 !important;
+                margin-bottom: 0.4rem !important;
+            }
+        }
+        
+        /* ===== TABLET LANDSCAPE (altura maior) ===== */
+        @media (orientation: landscape) and (min-height: 501px) and (max-height: 800px) {
+            .forca-elenco-container .fe-tab-content h2,
+            .forca-elenco-dashboard h2,
+            .forca-elenco-container #serie-a h2,
+            .forca-elenco-container #serie-b h2,
+            .forca-elenco-container #top100 h2 {
+                font-size: 12px !important; /* Tamanho intermediário para tablet */
+                color: var(--cor-destaque-primaria) !important;
+                font-weight: 700 !important;
+            }
+        }
             
             /* 2. TEXTOS DAS CAIXAS - MESMO PADR�O (9px) */
             .forca-elenco-container .card h4,
