@@ -1430,12 +1430,13 @@ def salvar_analise_jogo():
         
         # Extrair informações do jogo
         jogo_numero = data.get('metadados', {}).get('jogo_numero', '1')
-        concurso_numero = data.get('metadados', {}).get('concurso_numero', '1215')
+        # MODIFICADO: Usar concurso atual ou default para 1219
+        concurso_numero = data.get('metadados', {}).get('concurso_numero', '1219')
         
         logger.info(f"💾 [SALVAR] Salvando JOGO {jogo_numero} do CONCURSO {concurso_numero}")
         logger.info(f"📊 [SALVAR] Dados recebidos: {data}")
         
-        # NOVA ESTRUTURA: Pasta por concurso
+        # ESTRUTURA DINÂMICA: Pasta baseada no concurso recebido
         pasta_concurso = f'models/concurso_{concurso_numero}'
         pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
         nome_arquivo = f'jogo_{jogo_numero}.json'
@@ -1475,7 +1476,8 @@ def carregar_analise_jogo():
     try:
         data = request.get_json()
         jogo_numero = data.get('jogo_numero')
-        concurso_numero = data.get('concurso_numero', '1215')
+        # MODIFICADO: Default para 1219
+        concurso_numero = data.get('concurso_numero', '1219')
         
         if not jogo_numero:
             return jsonify({
@@ -1483,7 +1485,7 @@ def carregar_analise_jogo():
                 'error': 'Número do jogo é obrigatório'
             }), 400
         
-        # NOVA ESTRUTURA: Pasta por concurso
+        # ESTRUTURA DINÂMICA: Pasta por concurso
         pasta_concurso = f'models/concurso_{concurso_numero}'
         pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
         nome_arquivo = f'jogo_{jogo_numero}.json'
@@ -1616,6 +1618,8 @@ def sincronizar_analise_site():
         data = request.get_json()
         jogo_numero = data.get('jogo_numero')
         dados_jogo = data.get('dados')
+        # MODIFICADO: Obter número do concurso dos dados, default 1219
+        concurso_numero = data.get('concurso_numero') or dados_jogo.get('concurso_numero', '1219')
         
         if not jogo_numero or not dados_jogo:
             return jsonify({
@@ -1623,9 +1627,8 @@ def sincronizar_analise_site():
                 'error': 'Número do jogo e dados são obrigatórios'
             }), 400
         
-        # Salvar dados em arquivo JSON para a página do usuário
-        # ESTRUTURA FIXA: Usar APENAS concurso 1216
-        pasta_concurso = 'models/concurso_1218'
+        # ESTRUTURA DINÂMICA: Usar concurso recebido
+        pasta_concurso = f'models/concurso_{concurso_numero}'
         pasta_analise = os.path.join(pasta_concurso, 'analise_rapida')
         os.makedirs(pasta_analise, exist_ok=True)
         
@@ -1696,7 +1699,8 @@ def obter_dados_analise_jogo(jogo_numero):
         return BACKEND_DIR / "models" / concurso / "analise_rapida"
     
     # Parâmetros
-    concurso = request.args.get("concurso", "concurso_1218")
+    # MODIFICADO: Default para concurso_1219
+    concurso = request.args.get("concurso", "concurso_1219")
     # print(f"[NOVA-API] Concurso recebido: '{concurso}'")
     
     pasta = _dir_analise(concurso)

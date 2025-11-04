@@ -1791,7 +1791,7 @@
             <div class="form-row" style="margin-bottom: 30px;">
                 <div class="form-group" style="flex: 1; margin-right: 15px;">
                     <label>Concurso Nº:</label>
-                    <input type="number" id="numeroConcurso" class="form-control" placeholder="1213" value="1213">
+                    <input type="number" id="numeroConcurso" class="form-control" placeholder="1219" value="1219">
                 </div>
                 <div class="form-group" style="flex: 2; margin-right: 15px;">
                     <label>Período de Apostas:</label>
@@ -2829,6 +2829,9 @@
                 
                 console.log(`📊 [ANÁLISE] Sincronizando JOGO ${jogoSelecionado} com o site...`);
                 
+                // MODIFICADO: Obter número do concurso e enviar
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1219';
+                
                 // Enviar dados para o servidor (atualizar página do usuário)
                 const response = await fetch(`${API_BASE}/api/admin/analise/sincronizar`, {
                     method: 'POST',
@@ -2837,6 +2840,7 @@
                     },
                     body: JSON.stringify({
                         jogo_numero: jogoSelecionado,
+                        concurso_numero: numeroConcurso,
                         dados: dadosJogo
                     })
                 });
@@ -3433,8 +3437,8 @@
             try {
                 console.log(`💾 [ANÁLISE] Salvando análise no servidor para JOGO ${dadosJogo.numero}...`);
                 
-                // Obter número do concurso atual
-                const numeroConcurso = document.getElementById('numeroConcurso').value || '1216';
+                // MODIFICADO: Obter número do concurso atual, default 1219
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1219';
                 console.log(`📊 [ANÁLISE] Concurso atual: ${numeroConcurso}`);
                 
                 // CORRIGIDO: Usar FORMATO NOVO (dados) em vez de dados_publicos
@@ -3573,8 +3577,8 @@
         
         async function carregarAnaliseDoServidor(jogoSelecionado) {
             try {
-                // Obter número do concurso atual
-                const numeroConcurso = document.getElementById('numeroConcurso').value || '1216';
+                // MODIFICADO: Obter número do concurso atual, default 1219
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1219';
                 
                 console.log(`🔍 [ANÁLISE] Buscando dados do JOGO ${jogoSelecionado} do CONCURSO ${numeroConcurso}`);
                 

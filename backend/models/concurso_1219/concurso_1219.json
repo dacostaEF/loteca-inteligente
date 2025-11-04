@@ -1,7 +1,7 @@
 {
   "metadados": {
-    "numero": "1216",
-    "salvo_em": "2025-11-04T11:25:00.771385",
+    "numero": "1219",
+    "salvo_em": "2025-11-04T10:41:25.098401",
     "versao": "1.0"
   },
   "concurso": {},
@@ -33,7 +33,7 @@
     {
       "numero": 5,
       "time_casa": "SAO PAULO/SP",
-      "time_fora": "BRAGANTINO/SP",
+      "time_fora": "MIRASSOL/SP",
       "data": "BOTAFOGO/RJ"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
       "numero": 10,
-      "time_casa": "CRUZEIRO/MG",
+      "time_casa": "CRUEIRO/MG",
       "time_fora": "FLUMINENSE/RJ",
       "data": "Domingo"
     },
