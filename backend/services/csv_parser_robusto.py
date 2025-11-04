@@ -35,6 +35,12 @@ class CSVParserRobusto:
         """Inicializar formatos reconhecidos"""
         self.formatos_reconhecidos = [
             {
+                'nome': 'Formato Padrão com Resultado',
+                'colunas': ['data', 'mandante', 'placar', 'visitante', 'vencedor', 'campeonato', 'resultado'],
+                'indices': {'data': 0, 'mandante': 1, 'placar': 2, 'visitante': 3, 'vencedor': 4, 'campeonato': 5, 'resultado': 6},
+                'identificador': lambda header: 'resultado' in header.lower() and 'mandante' in header.lower() and len(header.split(',')) == 7
+            },
+            {
                 'nome': 'Formato Antigo - Corinthians',
                 'colunas': ['data', 'mandante', 'placar', 'visitante', 'vencedor', 'rodada', 'competicao'],
                 'indices': {'data': 0, 'mandante': 1, 'placar': 2, 'visitante': 3, 'vencedor': 4, 'rodada': 5, 'competicao': 6},
@@ -43,7 +49,7 @@ class CSVParserRobusto:
             {
                 'nome': 'Formato Novo - Flamengo vs Palmeiras',
                 'colunas': ['data', 'time_casa', 'placar', 'time_visitante', 'vencedor', 'campeonato', 'resultado_time'],
-                'indices': {'data': 0, 'mandante': 1, 'placar': 2, 'visitante': 3, 'vencedor': 4, 'campeonato': 5, 'resultado_time': 6},
+                'indices': {'data': 0, 'mandante': 1, 'placar': 2, 'visitante': 3, 'vencedor': 4, 'campeonato': 5, 'resultado': 6},
                 'identificador': lambda header: 'time da casa' in header.lower() and len(header.split(',')) == 7
             },
             {
@@ -106,12 +112,18 @@ class CSVParserRobusto:
             r'(\d{1,2})-(\d{1,2})-(\d{4})',   # DD-MM-YYYY
         ]
         
-        for padrao in padroes_data:
+        for idx, padrao in enumerate(padroes_data):
             match = re.match(padrao, data_str)
             if match:
                 grupos = match.groups()
                 if len(grupos) == 3:
-                    dia, mes, ano = grupos
+                    # CORRIGIDO: Verificar formato específico
+                    if idx == 2:  # YYYY-MM-DD (índice 2)
+                        ano, mes, dia = grupos
+                    elif idx == 3:  # DD-MM-YYYY (índice 3)
+                        dia, mes, ano = grupos
+                    else:  # DD/MM/YYYY ou DD/MM/YY (índices 0 e 1)
+                        dia, mes, ano = grupos
                     
                     # Normalizar ano de 2 dígitos
                     if len(ano) == 2:
@@ -187,18 +199,25 @@ class CSVParserRobusto:
             confronto['visitante_nome'] = partes[indices.get('visitante', 3)]
             
             # Campos opcionais
-            confronto['vencedor'] = partes[indices.get('vencedor', 4)] if indices.get('vencedor') is not None else ''
-            confronto['resultado'] = partes[indices.get('resultado', 6)] if indices.get('resultado') is not None else ''
-            confronto['rodada'] = partes[indices.get('rodada', 5)] if indices.get('rodada') is not None else ''
-            confronto['campeonato'] = partes[indices.get('competicao', 6)] if indices.get('competicao') is not None else ''
+            confronto['vencedor'] = partes[indices.get('vencedor', 4)] if indices.get('vencedor') is not None and indices.get('vencedor') < len(partes) else ''
+            resultado_direto = partes[indices.get('resultado', 6)] if indices.get('resultado') is not None and indices.get('resultado') < len(partes) else ''
+            confronto['rodada'] = partes[indices.get('rodada', 5)] if indices.get('rodada') is not None and indices.get('rodada') < len(partes) else ''
+            confronto['campeonato'] = partes[indices.get('campeonato', 6)] if indices.get('campeonato') is not None and indices.get('campeonato') < len(partes) else ''
+            if not confronto['campeonato']:
+                confronto['campeonato'] = partes[indices.get('competicao', 6)] if indices.get('competicao') is not None and indices.get('competicao') < len(partes) else ''
             
-            # Determinar resultado V/E/D
-            confronto['resultado'] = self.determinar_resultado(
-                confronto.get('vencedor', ''),
-                confronto.get('mandante_nome', ''),
-                confronto.get('visitante_nome', ''),
-                confronto.get('resultado', '')
-            )
+            # Determinar resultado V/E/D - PRIORIZAR resultado direto do CSV
+            if resultado_direto and resultado_direto.upper() in ['V', 'E', 'D']:
+                confronto['resultado'] = resultado_direto.upper()
+                logger.info(f"✅ [PARSER] Usando resultado direto do CSV: {resultado_direto.upper()}")
+            else:
+                confronto['resultado'] = self.determinar_resultado(
+                    confronto.get('vencedor', ''),
+                    confronto.get('mandante_nome', ''),
+                    confronto.get('visitante_nome', ''),
+                    ''
+                )
+                logger.info(f"🔄 [PARSER] Resultado calculado: {confronto['resultado']}")
             
             # Validar confronto
             if not self.validar_confronto(confronto):

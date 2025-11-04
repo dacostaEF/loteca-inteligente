@@ -7731,7 +7731,7 @@
                     body: JSON.stringify({
                         metadados: {
                             jogo_numero: idx.toString(),
-                            concurso_numero: '1216'
+                            concurso_numero: '1219'
                         },
                         dados: payload,
                         admin_key: ADMIN_KEY
@@ -8611,12 +8611,12 @@
                     console.warn(`⚠️ [LOTECA] API falhou para concurso ${numeroConcurso}:`, apiError);
                 }
                 
-                // Fallback: tentar carregar dados hardcoded se for concurso 1216
-                if (numeroConcurso === '1216') {
-                    console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1216...');
+                // Fallback: tentar carregar dados hardcoded se for concurso 1219
+                if (numeroConcurso === '1219') {
+                    console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1219...');
                     
                     const dadosHardcoded = {
-                        numero: '1216',
+                        numero: '1219',
                         periodo_apostas: '07/10/2025 a 08/10/2025',
                         realizacao_jogos: '27/09/2025 a 28/09/2025',
                         jogos: [
@@ -9009,12 +9009,12 @@
                 
                 // Tentar carregar via API primeiro
                 try {
-                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/1216`);
+                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/1219`);
                 const result = await response.json();
                 
                 if (result.success) {
                     const dados = result.concurso;
-                        const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '1216';
+                        const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '1219';
                     
                     // Atualizar campos
                     document.getElementById('numeroConcurso').value = numeroConcurso;
@@ -9034,11 +9034,11 @@
                     console.warn('⚠️ [LOTECA] API falhou, usando dados hardcoded:', apiError);
                 }
                 
-                // Fallback: usar dados hardcoded do concurso 1216
-                console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1216...');
+                // Fallback: usar dados hardcoded do concurso 1219
+                console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1219...');
                 
                 const dadosHardcoded = {
-                    numero: '1216',
+                    numero: '1219',
                     periodo_apostas: '07/10/2025 a 08/10/2025',
                     realizacao_jogos: '27/09/2025 a 28/09/2025',
                     jogos: [
