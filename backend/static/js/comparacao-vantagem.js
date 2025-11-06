@@ -121,8 +121,8 @@ function compararEAtualizarVantagem(timeMandante, timeVisitante) {
     }
 
     // OVER 2.5 (maior é melhor)
-    const flaOver25 = parseFloat(timeMandante['Over 2.5']);
-    const palOver25 = parseFloat(timeVisitante['Over 2.5']);
+    const flaOver25 = parseFloat(timeMandante['Over 2.5 %']);
+    const palOver25 = parseFloat(timeVisitante['Over 2.5 %']);
     if (flaOver25 > palOver25) {
         atualizarVantagem('vencedor-over25', timeMandante.Time, 'vermelho');
     } else if (palOver25 > flaOver25) {
@@ -132,8 +132,8 @@ function compararEAtualizarVantagem(timeMandante, timeVisitante) {
     }
 
     // BTTS (maior é melhor)
-    const flaBtts = parseFloat(timeMandante['BTTS']);
-    const palBtts = parseFloat(timeVisitante['BTTS']);
+    const flaBtts = parseFloat(timeMandante['BTTS Sim %']);
+    const palBtts = parseFloat(timeVisitante['BTTS Sim %']);
     if (flaBtts > palBtts) {
         atualizarVantagem('vencedor-btts', timeMandante.Time, 'vermelho');
     } else if (palBtts > flaBtts) {
@@ -143,8 +143,8 @@ function compararEAtualizarVantagem(timeMandante, timeVisitante) {
     }
 
     // CLEAN SHEET (maior é melhor)
-    const flaClean = parseFloat(timeMandante['Clean Sheet']);
-    const palClean = parseFloat(timeVisitante['Clean Sheet']);
+    const flaClean = parseFloat(timeMandante['Clean Sheets %']);
+    const palClean = parseFloat(timeVisitante['Clean Sheets %']);
     if (flaClean > palClean) {
         atualizarVantagem('vencedor-clean', timeMandante.Time, 'vermelho');
     } else if (palClean > flaClean) {
@@ -154,14 +154,14 @@ function compararEAtualizarVantagem(timeMandante, timeVisitante) {
     }
 
     // GOLS SOFRIDOS TOTAL (menor é melhor)
-    const flaGolsSofridos = parseInt(timeMandante['Gols Sofridos Total']);
-    const palGolsSofridos = parseInt(timeVisitante['Gols Sofridos Total']);
+    const flaGolsSofridos = parseInt(timeMandante['Gols Contra']);
+    const palGolsSofridos = parseInt(timeVisitante['Gols Contra']);
     if (flaGolsSofridos < palGolsSofridos) {
-        atualizarVantagem('vencedor-gols-sofridos', timeMandante.Time, 'vermelho');
+        atualizarVantagem('vencedor-gols-sofridos-total', timeMandante.Time, 'vermelho');
     } else if (palGolsSofridos < flaGolsSofridos) {
-        atualizarVantagem('vencedor-gols-sofridos', timeVisitante.Time, 'verde');
+        atualizarVantagem('vencedor-gols-sofridos-total', timeVisitante.Time, 'verde');
     } else {
-        atualizarVantagem('vencedor-gols-sofridos', 'Empate', 'amarelo');
+        atualizarVantagem('vencedor-gols-sofridos-total', 'Empate', 'amarelo');
     }
 
     // PONTOS ÚLTIMOS 5 (maior é melhor)

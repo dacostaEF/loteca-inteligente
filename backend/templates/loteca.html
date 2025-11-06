@@ -4250,7 +4250,17 @@
                     }
                 }
                 
-                // FALLBACK FINAL: Se nem a API principal nem individual funcionarem, usar dados padrão
+                // FALLBACK FINAL: Se nem a API principal nem individual funcionarem
+                if (jogos.length === 0) {
+                    console.error('❌ [ERRO CRÍTICO] Nenhum jogo carregado! API falhou completamente.');
+                    alert('⚠️ Erro ao carregar jogos do concurso.\n\nPor favor, recarregue a página.\n\nSe o problema persistir, entre em contato com o suporte.');
+                    return; // Não continuar com dados errados
+                }
+                
+                /* ========================================
+                   ❌ CÓDIGO ANTIGO DESABILITADO (DADOS DESATUALIZADOS)
+                   ======================================== 
+                // FALLBACK FINAL ANTIGO: Dados genéricos desatualizados (REMOVIDO)
                 if (jogos.length === 0) {
                     console.log('🔄 [SYNC-FALLBACK-FINAL] Usando dados padrão da Loteca...');
                     const jogosPadrao = {
@@ -4285,6 +4295,7 @@
                         console.log(`✅ [SYNC-FALLBACK-FINAL] JOGO ${numeroJogo}: ${timeCasaMapeado} vs ${timeForaMapeado}`);
                     });
                 }
+                ======================================== */
             }
             
             console.log(`📋 [SYNC] Total de jogos extraídos: ${jogos.length} (JOGO 1 até JOGO 14)`);
@@ -4954,6 +4965,13 @@
             console.log('✅ [DADOS-SIMULADOS] Dados simulados carregados!');
         }
 
+        /* ========================================
+           ❌ CÓDIGO OBSOLETO - MAPEAMENTO_CSV NUNCA USADO
+           ========================================
+           Este mapeamento foi declarado mas nunca é referenciado no código.
+           Os IDs são usados diretamente nas funções (ex: linha 5247).
+           Comentado para limpeza de código e melhor performance.
+           
         // MAPEAMENTO DE IDs PARA CAMPOS DO CSV
         const MAPEAMENTO_CSV = {
             // FLAMENGO
@@ -4988,6 +5006,7 @@
             'pal-fora-gols-pro': 'Gols Pró Fora',
             'pal-fora-gols-contra': 'Gols Contra Fora'
         };
+        ======================================== */
 
         // CARREGAR DADOS REAIS DO CSV (SÉRIE A E SÉRIE B)
         async function carregarDadosReaisCSV(timeMandante, timeVisitante) {
@@ -5299,6 +5318,30 @@
             // Destacar valores vencedores
             destacarValoresVencedores(timeMandante, timeVisitante);
             
+            // ✅ PREENCHER COLUNA "VANTAGEM" - Comparar e determinar vantagens estatísticas
+            if (typeof window.compararEAtualizarVantagem === 'function') {
+                console.log('🎯 [VANTAGEM] Chamando compararEAtualizarVantagem...');
+                window.compararEAtualizarVantagem(timeMandante, timeVisitante);
+            } else {
+                console.error('❌ [VANTAGEM] Função compararEAtualizarVantagem não encontrada!');
+            }
+            
+            /* ========================================
+               ❌ CÓDIGO OBSOLETO - AVALIAÇÃO AUTOMÁTICA INCOMPLETA
+               ========================================
+               Este código chama a função avaliarParDados() que NUNCA foi implementada.
+               Causa 14 erros JavaScript no console (avaliarParDados is not defined).
+               Funcionalidade incompleta que foi abandonada durante o desenvolvimento.
+               
+               PROBLEMAS:
+               - 14 chamadas para função inexistente
+               - setTimeout de 500ms executando código inútil
+               - 122 linhas de código morto
+               - Console poluído com erros constantes
+               - IDs hardcoded para Flamengo/Palmeiras (não genérico)
+               
+               Comentado para eliminar erros e melhorar performance.
+               
             // Comparar e determinar vantagens AUTOMATICAMENTE
             console.log('🔄 [AUTO-VANTAGEM] Iniciando avaliação automática...');
             
@@ -5424,6 +5467,7 @@
                 
                 console.log('✅ [AUTO-VANTAGEM] Avaliação automática concluída!');
             }, 500);
+            ======================================== */
             
             console.log('✅ [TABELA-COMPARACAO] Tabela atualizada com sucesso!');
         }
@@ -7864,6 +7908,22 @@
             console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] ${confrontos.length} bolinhas renderizadas na tabela`);
         }
 
+        /* ========================================
+           ❌ CÓDIGO OBSOLETO - FUNÇÃO ESPECÍFICA DO JOGO 1 ANTIGA
+           ========================================
+           Esta função é OBSOLETA e contém dados INCORRETOS para o Concurso 1219.
+           
+           PROBLEMAS:
+           - Dados hardcoded de "FLAMENGO vs PALMEIRAS" (jogo antigo)
+           - Concurso 1219 Jogo 1: MIRASSOL vs PALMEIRAS (dados corretos)
+           - Existe função genérica carregarUltimosConfrontosGenerico(numeroJogo)
+           - Tenta carregar CSV desnecessariamente
+           - 113 linhas de código duplicado
+           
+           SUBSTITUIR POR: carregarUltimosConfrontosGenerico(1)
+           
+           Comentado para evitar mostrar dados incorretos ao usuário.
+           
         // FUNÇÃO PARA CARREGAR ÚLTIMOS CONFRONTOS DO JOGO 1 (DADOS REAIS DO CSV)
         async function carregarUltimosConfrontosJogo1() {
             console.log('🎯 [CONFRONTOS-JOGO1] Carregando últimos confrontos...');
@@ -7978,6 +8038,7 @@
             container.innerHTML = bolinhasHtml;
             console.log(`✅ [CONFRONTOS-JOGO1] ${confrontos.length} bolinhas renderizadas na tabela`);
         }
+        ======================================== */
         
         // CRIAR GRÁFICO DE BARRAS PARA JOGO 1 (Times serão carregados via API)
         async function criarGraficoConfrontosJogo1(confrontos) {
@@ -8594,8 +8655,9 @@
             }
             
             // 3. CARREGAR BOLINHAS DOS CONFRONTOS
+            // ✅ SUBSTITUÍDO: Usando função genérica em vez da obsoleta
             setTimeout(() => {
-                carregarUltimosConfrontosJogo1();
+                carregarUltimosConfrontosGenerico(1); // ✅ Função genérica (funciona para todos os jogos)
             }, 2000);
             
             // CARREGAR CONFRONTOS DO JOGO 2
