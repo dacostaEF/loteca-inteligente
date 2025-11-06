@@ -335,11 +335,11 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
                 confrontoDireto.innerHTML = `
                     <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
                         <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 20px; height: 20px; border-radius: 50%;">
-                        <span style="font-weight: 400; color: #ffffff; font-size: 17px; letter-spacing: 0.5px;">${vitorias}V</span>
+                        <span style="font-weight: 400; color: #ffffff; font-size: 17px; letter-spacing: 0.5px;">${vitorias}</span>
                         <span style="color: #ffffff; font-weight: 400; font-size: 17px; letter-spacing: 0.5px;">-</span>
                         <span style="color: #ffffff; font-weight: 400; font-size: 17px; letter-spacing: 0.5px;">${empates}E</span>
                         <span style="color: #ffffff; font-weight: 400; font-size: 17px; letter-spacing: 0.5px;">-</span>
-                        <span style="font-weight: 400; color: #ffffff; font-size: 17px; letter-spacing: 0.5px;">${derrotas}D</span>
+                        <span style="font-weight: 400; color: #ffffff; font-size: 17px; letter-spacing: 0.5px;">${derrotas}</span>
                         <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 20px; height: 20px; border-radius: 50%;">
                     </div>
                 `;

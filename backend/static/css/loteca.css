@@ -9675,6 +9675,20 @@
         padding-right: 0.1rem !important; /* ~1.6px */
     }
 
+    /* AUMENTAR PARA 11px AS COLUNAS 2 E 3 DAS LINHAS POSICAO, CONFRONTO E FATOR */
+    .page--analise-rapida .analysis-table td[id^="posicao-casa-"],
+    .page--analise-rapida .analysis-table td[id^="posicao-fora-"],
+    .page--analise-rapida .analysis-table td[id^="fator-casa-"],
+    .page--analise-rapida .analysis-table td[id^="fator-fora-"] {
+        font-size: 11px !important;
+    }
+
+    /* CONFRONTO DIRETO - AUMENTAR TEXTOS PARA 11px */
+    .page--analise-rapida .analysis-table .confronto-direto-resumo,
+    .page--analise-rapida .analysis-table .confronto-direto-resumo * {
+        font-size: 11px !important;
+    }
+
     /* FORCAR 9px EM TODAS CELULAS DA COLUNA 4 ANALISE */
     .page--analise-rapida .analysis-table td[id^="posicao-analise-"],
     .page--analise-rapida .analysis-table td[id^="h2h-analise-"],
