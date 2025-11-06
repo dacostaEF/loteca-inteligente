@@ -11,7 +11,7 @@
     "campeonato": "Premier League 24/25",
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/Manchester_City/Manchester_City.png",
-    "escudo_fora": "/static/escudos/Liverpool/Liverpool.png",
+    "escudo_fora": "/static/escudos/Liverpool/liverpool.png",
     "probabilidade_casa": "50",
     "probabilidade_empate": "30",
     "probabilidade_fora": "20",

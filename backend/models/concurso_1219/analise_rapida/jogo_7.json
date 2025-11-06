@@ -11,7 +11,7 @@
     "campeonato": "Brasileirãso Seire A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/Parma_IT/Parma.png",
-    "escudo_fora": "/static/escudos/Milan_IT/Milan.png",
+    "escudo_fora": "/static/escudos/Milan_IT/milan.png",
     "probabilidade_casa": "20",
     "probabilidade_empate": "25",
     "probabilidade_fora": "55",

@@ -11,7 +11,7 @@
     "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/VAS_Vasco/Vasco.png",
-    "escudo_fora": "/static/escudos/JUV_Juventude/Juventude.png",
+    "escudo_fora": "/static/escudos/JUV_Juventude/Juventude.PNG",
     "probabilidade_casa": "45",
     "probabilidade_empate": "30",
     "probabilidade_fora": "25",

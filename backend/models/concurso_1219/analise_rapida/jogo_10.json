@@ -11,7 +11,7 @@
     "campeonato": "Brasileirão Serie A",
     "dia": "Domingo",
     "escudo_casa": "/static/escudos/CRU_Cruzeiro/Cruzeiro.png",
-    "escudo_fora": "/static/escudos/FLU_Fluminense/Fluminense.png",
+    "escudo_fora": "/static/escudos/FLU_Fluminense/Fluminense.PNG",
     "probabilidade_casa": "40",
     "probabilidade_empate": "35",
     "probabilidade_fora": "25",

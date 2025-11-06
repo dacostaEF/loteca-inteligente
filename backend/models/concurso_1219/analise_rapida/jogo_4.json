@@ -11,7 +11,7 @@
     "campeonato": "Brasileiro Série A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/INT_Internacional/Internacional.png",
-    "escudo_fora": "/static/escudos/BAH_Bahia\\Bahia.png",
+    "escudo_fora": "/static/escudos/BAH_Bahia/Bahia.PNG",
     "probabilidade_casa": "50",
     "probabilidade_empate": "30",
     "probabilidade_fora": "20",
