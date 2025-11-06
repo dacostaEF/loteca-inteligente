@@ -389,13 +389,68 @@ async function carregarConfrontosAutomatico(numeroJogo) {
  * @param {string} escudoFora - Caminho do escudo do time de fora
  */
 async function carregarConfrontosGenerico(numeroJogo, timeCasa, timeFora, arquivoCsv, escudoCasa, escudoFora) {
-    console.log(`🎯 [CONFRONTOS-JOGO${numeroJogo}] Carregando últimos confrontos ${timeCasa} vs ${timeFora}...`);
+    console.log(`🎯 [CONFRONTOS-JOGO${numeroJogo}] ✨ NOVA LÓGICA SIMPLES - Carregando confrontos...`);
     
     const container = document.getElementById(`confrontos-principais-${numeroJogo}`);
     if (!container) {
         console.error(`❌ [CONFRONTOS-JOGO${numeroJogo}] Container confrontos-principais-${numeroJogo} não encontrado!`);
         return;
     }
+    
+    // ✅ NOVA SOLUÇÃO SIMPLES: Ler confrontos formatados do JSON
+    // Formato: (data, placar, vencedor|escudo)
+    try {
+        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+        if (jogoResponse.ok) {
+            const jogoData = await jogoResponse.json();
+            if (jogoData.success && jogoData.dados && jogoData.dados.confrontos_sequence) {
+                const sequenciaFormatada = jogoData.dados.confrontos_sequence;
+                console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] Sequência formatada encontrada:`, sequenciaFormatada);
+                
+                // Parse da string formatada: (data, placar, vencedor|escudo)
+                const regex = /\(([^,]+),\s*([^,]+),\s*([^|]+)\|([^)]+)\)/g;
+                let matches;
+                const confrontos = [];
+                
+                while ((matches = regex.exec(sequenciaFormatada)) !== null) {
+                    confrontos.push({
+                        data: matches[1].trim(),
+                        placar: matches[2].trim(),
+                        vencedor: matches[3].trim(),
+                        escudo: matches[4].trim()
+                    });
+                }
+                
+                if (confrontos.length > 0) {
+                    console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] ${confrontos.length} confrontos parseados!`, confrontos);
+                    
+                    // Renderizar boxes DIRETAMENTE com ESCUDOS
+                    const bolinhasHtml = confrontos.map((conf, index) => {
+                        const escudoHtml = conf.vencedor === 'Empate' 
+                            ? 'E'
+                            : `<img src="${conf.escudo}" style="width:20px;height:20px;" onerror="this.src='/static/placeholder-team-logo.svg'" title="${conf.vencedor}">`;
+                        
+                        return `
+                            <div class="confronto-item">
+                                <div class="confronto-data">${conf.data}</div>
+                                <div class="confronto-placar">${conf.placar}</div>
+                                <div class="confronto-result" title="${conf.data}: ${conf.placar} - ${conf.vencedor}">${escudoHtml}</div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    container.innerHTML = bolinhasHtml;
+                    console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] Boxes renderizados com ESCUDOS corretos!`);
+                    return; // ✅ SUCESSO! Sair da função
+                }
+            }
+        }
+    } catch (error) {
+        console.log(`⚠️ [CONFRONTOS-JOGO${numeroJogo}] Erro ao buscar sequência formatada:`, error);
+    }
+    
+    // ⚠️ FALLBACK: Continuar com lógica antiga se não encontrou sequência formatada
+    console.warn(`⚠️ [CONFRONTOS-JOGO${numeroJogo}] Usando lógica antiga (fallback)...`);
     
     // DADOS DE FALLBACK
     let confrontos = [

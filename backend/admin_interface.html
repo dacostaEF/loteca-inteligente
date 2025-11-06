@@ -2295,7 +2295,7 @@
                     <select id="jogo-analise-select" class="form-select" onchange="carregarDadosJogo()" style="flex: 0 0 70%; min-width: 400px;">
                         <option value="">📋 Selecionar jogo...</option>
                         <option value="1">JOGO 1 - Ponte Preta/SP vs Guarani/RJ</option>
-                        <option value="2">JOGO 2 - Fortaleza/CE vs Sport/PE</option>
+                        <option value="2">JOGO 2 - Sport/PE vs Atlético-MG/MG</option>
                         <option value="3">JOGO 3 - Juventude/RS vs Internacional/RS</option>
                         <option value="4">JOGO 4 - Vasco da Gama/RJ vs Cruzeiro/MG</option>
                         <option value="5">JOGO 5 - Athletico/PR vs Operário/PR</option>
@@ -3089,6 +3089,14 @@
             return false;
         }
         
+        // ==================================================================================
+        // [OBSOLETO] COMENTADO PARA LIMPEZA FUTURA
+        // Esta função tem dados hardcoded desatualizados de concursos antigos
+        // (ex: Fortaleza/CE vs Sport/PE no Jogo 2, quando o correto é Sport/PE vs Atlético-MG)
+        // Atualmente os dados são carregados dinamicamente do servidor via jogo_X.json
+        // Manter comentado até decisão de remoção definitiva
+        // ==================================================================================
+        /*
         function autoPreencherDadosJogo(numeroJogo) {
             console.log(`🔄 [ANÁLISE] Auto-preenchendo dados do JOGO ${numeroJogo}...`);
             
@@ -3104,8 +3112,8 @@
                     escudo_fora: '/static/escudos/GUA_Guarani/Guarani.png'
                 },
                 '2': {
-                    time_casa: 'Fortaleza/CE',
-                    time_fora: 'Sport/PE',
+                    time_casa: 'Sport/PE',
+                    time_fora: 'Atlético Mineiro/MG',
                     arena: 'Arena Castelão',
                     campeonato: 'Brasileirão Série A',
                     dia: 'Sábado',
@@ -3244,6 +3252,10 @@
                 console.warn(`⚠️ [ANÁLISE] Dados não encontrados para JOGO ${numeroJogo}`);
             }
         }
+        */
+        // ============================================================
+        // FIM DO BLOCO OBSOLETO
+        // ============================================================
         
         function atualizarPreviewEscudo(tipo) {
             const pathInput = document.getElementById(`escudo-${tipo}-path`);
@@ -3663,6 +3675,13 @@
                         if (option) {
                             select.value = nomeArquivo;
                             console.log('📁 [ANÁLISE] Arquivo selecionado no dropdown:', nomeArquivo);
+                            
+                            // ✅ CARREGAR AUTOMATICAMENTE OS CONFRONTOS
+                            setTimeout(() => {
+                                console.log('🔄 [AUTO-LOAD] Carregando confrontos automaticamente...');
+                                carregarConfrontos();
+                            }, 500);
+                            
                         } else {
                             console.log('⚠️ [ANÁLISE] Arquivo não encontrado na lista:', nomeArquivo);
                             // Tentar adicionar a opção se não existir
@@ -3672,6 +3691,12 @@
                             select.appendChild(novaOption);
                             select.value = nomeArquivo;
                             console.log('📁 [ANÁLISE] Arquivo adicionado ao dropdown:', nomeArquivo);
+                            
+                            // ✅ CARREGAR AUTOMATICAMENTE OS CONFRONTOS
+                            setTimeout(() => {
+                                console.log('🔄 [AUTO-LOAD] Carregando confrontos automaticamente (arquivo adicionado)...');
+                                carregarConfrontos();
+                            }, 500);
                         }
                     }, 1000); // Aumentar tempo para garantir carregamento
                 }
@@ -3852,46 +3877,88 @@
             const escudoCasa = document.getElementById('escudo-casa-path').value;
             const escudoFora = document.getElementById('escudo-fora-path').value;
             
+            console.log('🏠 [PREVIEW] Time Casa:', timeCasa, '| Escudo:', escudoCasa);
+            console.log('✈️ [PREVIEW] Time Fora:', timeFora, '| Escudo:', escudoFora);
+            
+            // Função auxiliar para normalizar nomes de times (remover acentos, espaços, maiúsculas)
+            function normalizarNome(nome) {
+                if (!nome) return '';
+                return nome
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')  // Remove acentos
+                    .replace(/[^a-z]/g, '');           // Remove tudo exceto letras
+            }
+            
+            // Função para extrair palavras principais (mínimo 4 letras)
+            function extrairPalavrasChave(nome) {
+                if (!nome) return [];
+                const normalizado = normalizarNome(nome);
+                // Dividir em palavras de pelo menos 4 letras
+                const palavras = [];
+                for (let i = 0; i <= normalizado.length - 4; i++) {
+                    palavras.push(normalizado.substring(i, i + 4));
+                }
+                return palavras;
+            }
+            
+            // Função para verificar se dois nomes são do mesmo time
+            function mesmoTime(nome1, nome2) {
+                if (!nome1 || !nome2) return false;
+                
+                const norm1 = normalizarNome(nome1);
+                const norm2 = normalizarNome(nome2);
+                
+                // Verificação direta
+                if (norm1.includes(norm2) || norm2.includes(norm1)) return true;
+                
+                // Verificar palavras de 4+ letras em comum
+                const palavras1 = extrairPalavrasChave(nome1);
+                const palavras2 = extrairPalavrasChave(nome2);
+                
+                for (const p1 of palavras1) {
+                    for (const p2 of palavras2) {
+                        if (p1 === p2 && p1.length >= 4) return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            const timeCasaNorm = normalizarNome(timeCasa);
+            const timeForaNorm = normalizarNome(timeFora);
+            
             // Gerar HTML da coluna 1 (jogos 1-5)
             let htmlColuna1 = '';
             for (let i = 0; i < 5 && i < ultimosConfrontos.length; i++) {
                 const confronto = ultimosConfrontos[i];
                 const data = confronto.data || 'Data não disponível';
-                const resultado = confronto.resultado || 'Resultado não disponível';
                 const placar = confronto.placar || 'Placar não disponível';
+                const vencedor = confronto.vencedor || '';
                 
-                // Determinar qual escudo mostrar baseado no resultado
+                // Normalizar nome do vencedor
+                const vencedorNorm = normalizarNome(vencedor);
+                
+                // Determinar escudo: simples comparação com time casa/fora
                 let escudoMostrar = '/static/placeholder-team-logo.svg';
-                let nomeTimeMostrar = resultado;
+                let nomeTimeMostrar = vencedor;
                 
-                console.log('🔍 [PREVIEW] Analisando confronto:', confronto);
-                console.log('🔍 [PREVIEW] Resultado:', resultado, 'Tipo:', typeof resultado);
-                console.log('🔍 [PREVIEW] Mandante:', confronto.mandante_nome);
-                console.log('🔍 [PREVIEW] Visitante:', confronto.visitante_nome);
-                
-                // LÓGICA CORRIGIDA: Usar resultado V/E/D para determinar o vencedor
-                if (resultado === 'E') {
+                if (vencedorNorm.includes('empate')) {
+                    // É empate
                     escudoMostrar = '/static/escudos/Empate.png?v=' + Date.now();
                     nomeTimeMostrar = 'E Empate';
-                    console.log('🛡️ [PREVIEW] Empate identificado:', escudoMostrar);
-                } else if (resultado === 'V') {
-                    // Vitória do time da casa
-                    const mandante = confronto.mandante_nome || 'Time Casa';
-                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
-                    nomeTimeMostrar = `V ${mandante}`;
-                    console.log('⚽ [PREVIEW] Vitória do time da casa:', mandante);
-                } else if (resultado === 'D') {
-                    // Vitória do time visitante
-                    const visitante = confronto.visitante_nome || 'Time Fora';
-                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
-                    nomeTimeMostrar = `V ${visitante}`;
-                    console.log('⚽ [PREVIEW] Vitória do time visitante:', visitante);
+                } else if (mesmoTime(vencedor, timeCasa)) {
+                    // Vencedor = time da casa
+                    escudoMostrar = escudoCasa || '/static/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${timeCasa}`;
+                } else if (mesmoTime(vencedor, timeFora)) {
+                    // Vencedor = time de fora
+                    escudoMostrar = escudoFora || '/static/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${timeFora}`;
                 } else {
-                    console.log('⚠️ [PREVIEW] Resultado não identificado:', resultado, 'para confronto:', confronto);
-                    // Fallback para empate se não conseguir identificar
+                    // Não identificou, usa empate
                     escudoMostrar = '/static/escudos/Empate.png';
-                    nomeTimeMostrar = 'E Empate';
-                    console.log('🛡️ [PREVIEW] Fallback para empate:', escudoMostrar);
+                    nomeTimeMostrar = vencedor ? `V ${vencedor}` : 'E Empate';
                 }
                 
                 console.log('🖼️ [PREVIEW] Gerando HTML para confronto', i + 1, 'com escudo:', escudoMostrar);
@@ -3918,41 +3985,32 @@
             for (let i = 5; i < 10 && i < ultimosConfrontos.length; i++) {
                 const confronto = ultimosConfrontos[i];
                 const data = confronto.data || 'Data não disponível';
-                const resultado = confronto.resultado || 'Resultado não disponível';
                 const placar = confronto.placar || 'Placar não disponível';
+                const vencedor = confronto.vencedor || '';
                 
-                // Determinar qual escudo mostrar baseado no resultado
+                // Normalizar nome do vencedor
+                const vencedorNorm = normalizarNome(vencedor);
+                
+                // Determinar escudo: simples comparação com time casa/fora
                 let escudoMostrar = '/static/placeholder-team-logo.svg';
-                let nomeTimeMostrar = resultado;
+                let nomeTimeMostrar = vencedor;
                 
-                console.log('🔍 [PREVIEW] Analisando confronto:', confronto);
-                console.log('🔍 [PREVIEW] Resultado:', resultado, 'Tipo:', typeof resultado);
-                console.log('🔍 [PREVIEW] Mandante:', confronto.mandante_nome);
-                console.log('🔍 [PREVIEW] Visitante:', confronto.visitante_nome);
-                
-                // LÓGICA CORRIGIDA: Usar resultado V/E/D para determinar o vencedor
-                if (resultado === 'E') {
+                if (vencedorNorm.includes('empate')) {
+                    // É empate
                     escudoMostrar = '/static/escudos/Empate.png?v=' + Date.now();
                     nomeTimeMostrar = 'E Empate';
-                    console.log('🛡️ [PREVIEW] Empate identificado:', escudoMostrar);
-                } else if (resultado === 'V') {
-                    // Vitória do time da casa
-                    const mandante = confronto.mandante_nome || 'Time Casa';
-                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
-                    nomeTimeMostrar = `V ${mandante}`;
-                    console.log('⚽ [PREVIEW] Vitória do time da casa:', mandante);
-                } else if (resultado === 'D') {
-                    // Vitória do time visitante
-                    const visitante = confronto.visitante_nome || 'Time Fora';
-                    escudoMostrar = '/static/escudos/placeholder-team-logo.svg';
-                    nomeTimeMostrar = `V ${visitante}`;
-                    console.log('⚽ [PREVIEW] Vitória do time visitante:', visitante);
+                } else if (mesmoTime(vencedor, timeCasa)) {
+                    // Vencedor = time da casa
+                    escudoMostrar = escudoCasa || '/static/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${timeCasa}`;
+                } else if (mesmoTime(vencedor, timeFora)) {
+                    // Vencedor = time de fora
+                    escudoMostrar = escudoFora || '/static/placeholder-team-logo.svg';
+                    nomeTimeMostrar = `V ${timeFora}`;
                 } else {
-                    console.log('⚠️ [PREVIEW] Resultado não identificado:', resultado, 'para confronto:', confronto);
-                    // Fallback para empate se não conseguir identificar
+                    // Não identificou, usa empate
                     escudoMostrar = '/static/escudos/Empate.png';
-                    nomeTimeMostrar = 'E Empate';
-                    console.log('🛡️ [PREVIEW] Fallback para empate:', escudoMostrar);
+                    nomeTimeMostrar = vencedor ? `V ${vencedor}` : 'E Empate';
                 }
                 
                 console.log('🖼️ [PREVIEW] Gerando HTML para confronto', i + 1, 'com escudo:', escudoMostrar);
@@ -4067,19 +4125,42 @@
                                 resultadoFinal = 'E';
                                 console.log(`⚖️ [ANÁLISE] Empate detectado: ${vencedor}`);
                             } else {
-                                // SIMPLES: Se o vencedor é o mandante, V. Se não, D.
-                                const mandanteLower = (confronto.mandante_nome || '').toLowerCase().trim();
+                                // Função auxiliar para normalizar nome de time
+                                function normalizarNome(nome) {
+                                    return nome.toLowerCase()
+                                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                                        .replace(/[^\w\s]/g, '') // Remove caracteres especiais
+                                        .trim();
+                                }
                                 
-                                // Verificar se o vencedor contém palavras do mandante
-                                const palavrasMandante = mandanteLower.split(' ').filter(p => p.length > 2);
-                                const vencedorContemMandante = palavrasMandante.some(palavra => vencedorLower.includes(palavra));
+                                // Função auxiliar para comparar times robustamente
+                                function mesmoTime(time1, time2) {
+                                    const norm1 = normalizarNome(time1);
+                                    const norm2 = normalizarNome(time2);
+                                    
+                                    // Comparação exata
+                                    if (norm1 === norm2) return true;
+                                    
+                                    // Comparação por palavras-chave
+                                    const palavras1 = norm1.split(/\s+/).filter(p => p.length > 2);
+                                    const palavras2 = norm2.split(/\s+/).filter(p => p.length > 2);
+                                    
+                                    // ✅ AJUSTADO: 1+ palavra em comum (resolve "Vasco" vs "Vasco da Gama")
+                                    const palavrasComuns = palavras1.filter(p => palavras2.includes(p));
+                                    return palavrasComuns.length >= 1;
+                                }
                                 
-                                if (vencedorContemMandante) {
+                                // Comparar vencedor com os times do formulário (time casa e time fora)
+                                if (mesmoTime(vencedor, timeCasa)) {
                                     resultadoFinal = 'V'; // Time da casa venceu
                                     console.log(`🏠 [ANÁLISE] Time da casa venceu: ${vencedor}`);
-                                } else {
+                                } else if (mesmoTime(vencedor, timeFora)) {
                                     resultadoFinal = 'D'; // Time visitante venceu
                                     console.log(`✈️ [ANÁLISE] Time visitante venceu: ${vencedor}`);
+                                } else {
+                                    // Fallback: assumir empate se não identificar
+                                    resultadoFinal = 'E';
+                                    console.log(`⚠️ [ANÁLISE] Vencedor "${vencedor}" não identificado, assumindo empate`);
                                 }
                             }
                         }
@@ -4186,6 +4267,10 @@
             }
         }
         
+        // ==================================================================================
+        // NOVA SOLUÇÃO SIMPLES: Salvar confrontos formatados no campo sequência
+        // Formato: (data, placar, vencedor|escudo)
+        // ==================================================================================
         function confirmarConfrontos() {
             console.log('🔄 [ANÁLISE] Iniciando confirmação de confrontos...');
             console.log('📊 [ANÁLISE] Confrontos disponíveis:', window.confrontosPreview);
@@ -4248,21 +4333,49 @@
                     console.log(`✅ [ANÁLISE] Campo confronto direto preenchido com valores da tabela modal: ${confrontoDireto}`);
                 }
                 
-                // Auto-preencher a sequência
-                console.log('🔄 [ANÁLISE] Chamando autoPreencherSequenciaConfrontos...');
-                autoPreencherSequenciaConfrontos(window.confrontosPreview);
+                // ✅ NOVA SOLUÇÃO SIMPLES: Salvar confrontos formatados
+                console.log('🔄 [ANÁLISE] Gerando sequência formatada SIMPLES...');
                 
-                // Aguardar um pouco e verificar se o campo foi preenchido
-                setTimeout(() => {
-                    const campoSequencia = document.getElementById('confrontos-sequence-admin');
-                    console.log('📝 [ANÁLISE] Campo sequência após preenchimento:', campoSequencia ? campoSequencia.value : 'Campo não encontrado');
+                const escudoCasa = document.getElementById('escudo-casa-path').value;
+                const escudoFora = document.getElementById('escudo-fora-path').value;
+                const timeCasa = document.getElementById('time-casa-admin').value;
+                const timeFora = document.getElementById('time-fora-admin').value;
+                
+                // Gerar string formatada: (data, placar, vencedor|escudo)
+                const sequenciaFormatada = confrontos.map(conf => {
+                    const vencedor = (conf.vencedor || '').trim();
+                    const vencedorLower = vencedor.toLowerCase();
                     
-                    if (campoSequencia && campoSequencia.value) {
-                        console.log('✅ [ANÁLISE] Campo preenchido com sucesso!');
+                    // Determinar qual escudo usar
+                    let escudoUsar = '/static/escudos/Empate.png';
+                    let nomeVencedor = 'Empate';
+                    
+                    if (vencedorLower.includes('empate')) {
+                        escudoUsar = '/static/escudos/Empate.png';
+                        nomeVencedor = 'Empate';
+                    } else if (timeCasa && vencedorLower.includes(timeCasa.split('/')[0].toLowerCase().trim())) {
+                        escudoUsar = escudoCasa;
+                        nomeVencedor = timeCasa.split('/')[0];
+                    } else if (timeFora && vencedorLower.includes(timeFora.split('/')[0].toLowerCase().trim())) {
+                        escudoUsar = escudoFora;
+                        nomeVencedor = timeFora.split('/')[0];
                     } else {
-                        console.error('❌ [ANÁLISE] Campo não foi preenchido!');
+                        // Fallback: tentar identificar pelo vencedor
+                        nomeVencedor = vencedor;
+                        escudoUsar = '/static/placeholder-team-logo.svg';
                     }
-                }, 100);
+                    
+                    return `(${conf.data}, ${conf.placar}, ${nomeVencedor}|${escudoUsar})`;
+                }).join(' ');
+                
+                // Preencher campo
+                const campoSequencia = document.getElementById('confrontos-sequence-admin');
+                if (campoSequencia) {
+                    campoSequencia.value = sequenciaFormatada;
+                    console.log('✅ [ANÁLISE] Sequência formatada salva:', sequenciaFormatada);
+                } else {
+                    console.error('❌ [ANÁLISE] Campo confrontos-sequence-admin não encontrado!');
+                }
                 
                 // Preparar dados completos para a página do usuário
                 prepararDadosConfrontosParaUsuario(window.confrontosPreview);
@@ -4306,20 +4419,55 @@
                     const placar = confronto.placar || 'Placar não disponível';
                     const resultado = confronto.resultado || 'Resultado não disponível';
                     
-                    // Determinar qual escudo mostrar baseado no campo "resultado" do CSV
-                    let escudoMostrar = '/static/placeholder-team-logo.svg';
-                    let nomeTimeMostrar = resultado;
+                    // Determinar qual escudo mostrar baseado na coluna "vencedor" do CSV
+                    const vencedor = (confronto.vencedor || '').trim();
+                    const vencedorNorm = vencedor.toLowerCase();
                     
-                    // LÓGICA CORRETA: Usar o campo "resultado" diretamente do CSV
-                    if (resultado.toLowerCase().includes('ponte preta')) {
+                    let escudoMostrar = '/static/placeholder-team-logo.svg';
+                    let nomeTimeMostrar = vencedor;
+                    
+                    // Função auxiliar para normalizar nome de time
+                    function normalizarNome(nome) {
+                        return nome.toLowerCase()
+                            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                            .replace(/[^\w\s]/g, '') // Remove caracteres especiais
+                            .trim();
+                    }
+                    
+                    // Função auxiliar para comparar times robustamente
+                    function mesmoTime(time1, time2) {
+                        const norm1 = normalizarNome(time1);
+                        const norm2 = normalizarNome(time2);
+                        
+                        // Comparação exata
+                        if (norm1 === norm2) return true;
+                        
+                        // Comparação por palavras-chave
+                        const palavras1 = norm1.split(/\s+/).filter(p => p.length > 2);
+                        const palavras2 = norm2.split(/\s+/).filter(p => p.length > 2);
+                        
+                        // Se compartilham palavras significativas, considerar o mesmo time
+                        const palavrasComuns = palavras1.filter(p => palavras2.includes(p));
+                        
+                        // ✅ AJUSTADO: 1+ palavra em comum (antes era 2+)
+                        // Isso resolve casos como "Vasco" vs "Vasco da Gama"
+                        return palavrasComuns.length >= 1;
+                    }
+                    
+                    // LÓGICA GENÉRICA: Usar a coluna "vencedor" e comparar com os times do jogo
+                    if (vencedorNorm.includes('empate')) {
+                        escudoMostrar = '/static/escudos/Empate.png?v=' + Date.now();
+                        nomeTimeMostrar = 'Empate';
+                    } else if (mesmoTime(vencedor, timeCasa)) {
                         escudoMostrar = escudoCasa || '/static/placeholder-team-logo.svg';
                         nomeTimeMostrar = timeCasa;
-                    } else if (resultado.toLowerCase().includes('guarani')) {
+                    } else if (mesmoTime(vencedor, timeFora)) {
                         escudoMostrar = escudoFora || '/static/placeholder-team-logo.svg';
                         nomeTimeMostrar = timeFora;
-                    } else if (resultado.toLowerCase().includes('empate')) {
-                        escudoMostrar = '/static/escudos/Empate.png';
-                        nomeTimeMostrar = 'Empate';
+                    } else {
+                        // Fallback: usar placeholder se não identificar
+                        escudoMostrar = '/static/placeholder-team-logo.svg';
+                        nomeTimeMostrar = vencedor || 'Não identificado';
                     }
                     
                     return {

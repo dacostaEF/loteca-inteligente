@@ -710,6 +710,18 @@ def dados():
     except Exception as e:
         return jsonify({'error': str(e), 'status': 'error'}), 500
 
+@forca_elenco_bp.route('/teste')
+def teste_api():
+    """Página de teste da API"""
+    from flask import render_template
+    return render_template('test_api_forca_elenco.html')
+
+@forca_elenco_bp.route('/debug-matching')
+def debug_matching():
+    """Página de debug de matching"""
+    from flask import render_template
+    return render_template('debug_matching.html')
+
 @forca_elenco_bp.route('/clube/<nome_clube>')
 def clube_especifico(nome_clube):
     """Retorna dados de um clube específico"""
@@ -718,3 +730,293 @@ def clube_especifico(nome_clube):
         return jsonify({'clube': nome_clube, 'dados': 'em desenvolvimento'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@forca_elenco_bp.route('/dados-unificados')
+def dados_unificados():
+    """Retorna dados unificados dos CSVs (Série A, Série B e Top 100) em formato JSON"""
+    try:
+        # Caminho configurável para os arquivos CSV
+        base_dir = os.environ.get('FORCA_ELENCO_CSV_DIR') or os.path.join(os.path.dirname(__file__), 'models', 'EstatisticasElenco')
+        top100_csv = os.path.join(base_dir, 'Valor_Elenco_top_100_clubes_mais_valiosos.csv')
+        serie_a_csv = os.path.join(base_dir, 'Valor_Elenco_serie_a_brasileirao.csv')
+        serie_b_csv = os.path.join(base_dir, 'Valor_Elenco_serie_b_brasileirao.csv')
+        
+        # LOG DE DEBUG
+        if DEBUG:
+            print(f"\n🔍 [API dados-unificados] Iniciando...")
+            print(f"   Base dir: {base_dir}")
+            print(f"   Top 100 existe: {os.path.exists(top100_csv)}")
+            print(f"   Série A existe: {os.path.exists(serie_a_csv)}")
+            print(f"   Série B existe: {os.path.exists(serie_b_csv)}")
+        
+        clubes = {}
+        
+        # Dicionário de aliases/apelidos (casos especiais)
+        ALIASES = {
+            'wolves': 'wolverhampton',
+            'galo': 'atletico-mg',
+            'cam': 'atletico-mg',
+            'man city': 'manchester city',
+            'city': 'manchester city'
+        }
+        
+        # Função auxiliar para normalizar nome do clube para chave
+        def normalizar_chave(nome):
+            """Converte nome do clube para chave (lowercase, sem acentos, com underscores)"""
+            nome = nome.lower().strip()
+            # Remove acentos
+            nome = ''.join(c for c in unicodedata.normalize('NFD', nome) if unicodedata.category(c) != 'Mn')
+            # Substitui espaços por underscores
+            nome = nome.replace(' ', '_').replace('-', '_')
+            return nome
+        
+        # Função para gerar variações de nomes para facilitar busca
+        def gerar_variacoes(nome):
+            """Gera múltiplas variações de nomes para facilitar a busca"""
+            import re
+            variacoes = set()
+            nome_lower = nome.lower().strip()
+            
+            # Remove acentos
+            nome_sem_acento = ''.join(c for c in unicodedata.normalize('NFD', nome_lower) if unicodedata.category(c) != 'Mn')
+            
+            # Variação 1: Nome completo (com underscores)
+            variacoes.add(normalizar_chave(nome))
+            
+            # Variação 2: Nome completo (com espaços) - IMPORTANTE para frontend
+            nome_com_espacos = nome_sem_acento.replace('-', ' ').replace('/', ' ').replace('_', ' ').strip()
+            variacoes.add(nome_com_espacos)
+            
+            # Variação 3: Nome completo (com hífens)
+            nome_com_hifens = nome_sem_acento.replace(' ', '-').replace('/', '-').replace('_', '-').strip()
+            variacoes.add(nome_com_hifens)
+            
+            # Variação 4: Sem sufixos de estado (ex: "Atletico-MG" -> "atletico")
+            nome_sem_estado = re.sub(r'[-/\s](sp|rj|mg|rs|ce|ba|pe|pr|sc|go|df|es|am|pa|mt|ms|al|se|pb|rn|pi|ap|rr|to|ac|ro)$', '', nome_sem_acento, flags=re.IGNORECASE)
+            nome_sem_estado = re.sub(r'[-/\s](ing|esp|it|fra|ale|por|bra|brasil|brazil)$', '', nome_sem_estado, flags=re.IGNORECASE).strip()
+            if nome_sem_estado and nome_sem_estado != nome_sem_acento:
+                variacoes.add(nome_sem_estado)
+                variacoes.add(normalizar_chave(nome_sem_estado))
+            
+            # Variação 5: Primeira palavra significativa
+            palavras = re.split(r'[\s\-/]+', nome_sem_acento)
+            if palavras and len(palavras[0]) >= 3:
+                variacoes.add(palavras[0])
+            
+            # Variação 6: Última palavra significativa
+            if len(palavras) > 1 and len(palavras[-1]) >= 3:
+                variacoes.add(palavras[-1])
+            
+            # Variação 7: Sem separadores
+            sem_separadores = nome_sem_acento.replace(' ', '').replace('-', '').replace('/', '')
+            if sem_separadores:
+                variacoes.add(sem_separadores)
+            
+            # Aplicar aliases (INVERSO: se o nome do CSV contém o ALVO, adicionar o ALIAS)
+            for alias, alvo in ALIASES.items():
+                # Exemplo: Se CSV tem "Wolverhampton", adicionar "wolves"
+                if alvo.lower() in nome_sem_acento.lower():
+                    variacoes.add(normalizar_chave(alias))
+                    variacoes.add(alias)
+                # Também funciona no sentido original: se CSV tem "wolves", adicionar "wolverhampton"
+                elif alias in nome_sem_acento.lower():
+                    variacoes.add(normalizar_chave(alvo))
+                    variacoes.add(alvo)
+            
+            # Garantir variações em uppercase/lowercase/titlecase
+            variacoes_extras = set()
+            for v in list(variacoes):
+                variacoes_extras.add(v.lower())
+                variacoes_extras.add(v.upper())
+                variacoes_extras.add(v.title())
+            variacoes.update(variacoes_extras)
+            
+            return list(variacoes)
+        
+        # Função auxiliar para extrair valor em milhões de euros
+        def extrair_valor_euros(valor_str):
+            """Extrai valor numérico de strings como '€ 1.726 M' ou '€ 85,50 mi.'"""
+            if not valor_str:
+                return 0.0
+            try:
+                # Remove símbolos e texto
+                valor_str = valor_str.replace('€', '').replace('mi.', '').replace('M', '').strip()
+                # Remove pontos de milhares e substitui vírgula por ponto
+                valor_str = valor_str.replace('.', '').replace(',', '.')
+                return float(valor_str)
+            except:
+                return 0.0
+        
+        # Função para calcular força do elenco baseada no valor
+        def calcular_forca(valor_euros):
+            """Calcula força do elenco (0-10) baseada no valor em milhões de euros"""
+            if valor_euros >= 1000:
+                return 10.0
+            elif valor_euros >= 800:
+                return 9.5
+            elif valor_euros >= 600:
+                return 9.0
+            elif valor_euros >= 400:
+                return 8.5
+            elif valor_euros >= 200:
+                return 8.0
+            elif valor_euros >= 100:
+                return 7.0
+            elif valor_euros >= 50:
+                return 6.0
+            elif valor_euros >= 25:
+                return 5.0
+            elif valor_euros >= 10:
+                return 4.0
+            else:
+                return 3.0
+        
+        # ⚠️ ORDEM IMPORTANTE: Ler brasileiros PRIMEIRO para ter prioridade!
+        
+        # Ler Série A (PRIORIDADE 1)
+        if os.path.exists(serie_a_csv):
+            print("📊 [API] Lendo Série A (PRIORIDADE 1)...")
+            with open(serie_a_csv, 'r', encoding='utf-8-sig') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    r = _normalize_headers(row)
+                    clube_nome = r.get('clube', '').strip()
+                    if not clube_nome:
+                        continue
+                    
+                    valor_euros = extrair_valor_euros(r.get('valor total', '0'))
+                    
+                    dados_clube = {
+                        'nome_oficial': clube_nome,
+                        'pais': 'Brasil',
+                        'valor_elenco_euros': valor_euros,
+                        'forca_elenco': calcular_forca(valor_euros),
+                        'categoria': 'nacional_grande',
+                        'posicao_mundial': None,
+                        'liga': 'Brasileirão Série A',
+                        'fonte': 'Série A CSV',
+                        'plantel': r.get('plantel', ''),
+                        'idade_media': r.get('idade media') or r.get('idade média') or '',
+                        'estrangeiros': r.get('estrangeiros', '')
+                    }
+                    
+                    # Criar múltiplas entradas com diferentes chaves
+                    variacoes = gerar_variacoes(clube_nome)
+                    
+                    # LOG ESPECÍFICO para clubes problemáticos
+                    clubes_debug_br = ['atletico-mg', 'atletico', 'sport', 'vitoria', 'ceara']
+                    if DEBUG and any(termo in clube_nome.lower() for termo in clubes_debug_br):
+                        print(f"🔍 [DEBUG SÉRIE A] Processando: {clube_nome}")
+                        print(f"   Variações geradas: {variacoes[:8]}...")
+                    
+                    for chave in variacoes:
+                        clubes[chave] = dados_clube  # Série A tem prioridade máxima
+        
+        # Ler Série B (PRIORIDADE 2)
+        if os.path.exists(serie_b_csv):
+            print("📊 [API] Lendo Série B (PRIORIDADE 2)...")
+            with open(serie_b_csv, 'r', encoding='utf-8-sig') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    r = _normalize_headers(row)
+                    clube_nome = r.get('clube', '').strip()
+                    if not clube_nome:
+                        continue
+                    
+                    valor_euros = extrair_valor_euros(r.get('valor total', '0'))
+                    
+                    dados_clube = {
+                        'nome_oficial': clube_nome,
+                        'pais': 'Brasil',
+                        'valor_elenco_euros': valor_euros,
+                        'forca_elenco': calcular_forca(valor_euros),
+                        'categoria': 'nacional_medio',
+                        'posicao_mundial': None,
+                        'liga': 'Brasileirão Série B',
+                        'fonte': 'Série B CSV',
+                        'plantel': r.get('plantel', ''),
+                        'idade_media': r.get('idade media') or r.get('idade média') or '',
+                        'estrangeiros': r.get('estrangeiros', '')
+                    }
+                    
+                    # Criar múltiplas entradas com diferentes chaves
+                    variacoes = gerar_variacoes(clube_nome)
+                    for chave in variacoes:
+                        if chave not in clubes:  # Não sobrescrever Série A
+                            clubes[chave] = dados_clube
+        
+        # Ler Top 100 Mundial (PRIORIDADE 3 - menor prioridade)
+        if os.path.exists(top100_csv):
+            print("🌍 [API] Lendo Top 100 Mundial (PRIORIDADE 3)...")
+            with open(top100_csv, 'r', encoding='utf-8-sig') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    r = _normalize_headers(row)
+                    clube_nome = r.get('clube', '').strip()
+                    if not clube_nome:
+                        continue
+                    
+                    valor_euros = extrair_valor_euros(r.get('valor', '0'))
+                    
+                    dados_clube = {
+                        'nome_oficial': clube_nome,
+                        'pais': r.get('pais') or r.get('país') or '',
+                        'valor_elenco_euros': valor_euros,
+                        'forca_elenco': calcular_forca(valor_euros),
+                        'categoria': 'mundial',
+                        'posicao_mundial': r.get('posicao') or r.get('posição'),
+                        'liga': f"Top 100 Mundial - {r.get('pais') or r.get('país') or 'Internacional'}",
+                        'fonte': 'Top 100 Mundial CSV'
+                    }
+                    
+                    # Criar múltiplas entradas com diferentes chaves
+                    variacoes = gerar_variacoes(clube_nome)
+                    
+                    # LOG ESPECÍFICO para clubes problemáticos
+                    clubes_debug = ['atletico madrid', 'chelsea', 'wolverhampton', 'wolves', 'manchester city', 'liverpool', 'valencia']
+                    if DEBUG and any(termo in clube_nome.lower() for termo in clubes_debug):
+                        print(f"🔍 [DEBUG TOP 100] Processando: {clube_nome}")
+                        print(f"   Variações geradas ({len(variacoes)} total): {variacoes[:15]}")
+                    
+                    for chave in variacoes:
+                        if chave not in clubes:  # Não sobrescrever brasileiros
+                            clubes[chave] = dados_clube
+        
+        # LOG DE DEBUG FINAL
+        if DEBUG:
+            print(f"\n✅ [API dados-unificados] Processamento concluído!")
+            print(f"   Total de chaves criadas: {len(clubes)}")
+            # Mostrar chaves com "atletico"
+            atleticos = [k for k in clubes.keys() if 'atletico' in k]
+            if atleticos:
+                print(f"   Chaves com 'atletico': {atleticos[:10]}...")
+            # Mostrar chaves com "wolves"
+            wolves_chaves = [k for k in clubes.keys() if 'wolve' in k.lower()]
+            if wolves_chaves:
+                print(f"   Chaves com 'wolves': {wolves_chaves}")
+            # Mostrar chaves com "manchester"
+            manchesters = [k for k in clubes.keys() if 'manchester' in k]
+            if manchesters:
+                print(f"   Chaves com 'manchester': {manchesters[:10]}...")
+        
+        return jsonify({
+            'success': True,
+            'clubes': clubes,
+            'total_clubes': len(clubes),
+            'metadata': {
+                'versao': '2.0',
+                'fonte': 'CSVs Unificados (Top 100 + Série A + Série B)',
+                'data_atualizacao': '2025-01-18'
+            }
+        })
+    
+    except Exception as e:
+        if DEBUG:
+            print(f"\n❌ [API dados-unificados] ERRO: {e}")
+            import traceback
+            traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e),
+            'traceback': str(e.__traceback__) if DEBUG else None
+        }), 500

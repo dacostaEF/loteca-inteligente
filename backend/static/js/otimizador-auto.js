@@ -31,13 +31,20 @@
       // empate px~p2 com 1 favorito → 1X
       const eps = 0.015;
       if (arr[0].k === '1' && (px >= p2 - eps)) top2 = '1X';
+      // ✅ PERMITE SUGESTÃO "12" QUANDO APROPRIADO (já calculado automaticamente em top2)
       sugestao = top2;
     } else {
       sugestao = '1X2';
     }
 
     const pick = (c) => (c==='1'?p1 : c==='X'?px : p2);
-    let cobertura = sugestao === '1X2' ? (p1+px+p2) : sugestao.split('').reduce((acc,c)=>acc+pick(c),0);
+    // ✅ Cálculo correto para duplos (incluindo "12")
+    let cobertura;
+    if (sugestao === '1X2') cobertura = p1 + px + p2;
+    else if (sugestao === '12') cobertura = p1 + p2;
+    else if (sugestao === '1X') cobertura = p1 + px;
+    else if (sugestao === 'X2') cobertura = px + p2;
+    else cobertura = pick(sugestao);  // SECO: apenas uma escolha
     let risco = 1 - cobertura;
 
     if (classe === 'SECO' && cobertura < 0.55) {
@@ -45,7 +52,12 @@
       let top2 = [arr[0].k, arr[1].k].sort((a,b)=>CHOICES.indexOf(a)-CHOICES.indexOf(b)).join('');
       if (arr[0].k === '1' && px >= p2 - 0.015) top2 = '1X';
       sugestao = top2;
-      cobertura = sugestao === '1X2' ? (p1+px+p2) : sugestao.split('').reduce((acc,c)=>acc+pick(c),0);
+      // ✅ Recalcular com lógica correta para todos os duplos
+      if (sugestao === '1X2') cobertura = p1 + px + p2;
+      else if (sugestao === '12') cobertura = p1 + p2;
+      else if (sugestao === '1X') cobertura = p1 + px;
+      else if (sugestao === 'X2') cobertura = px + p2;
+      else cobertura = pick(sugestao);
       risco = 1 - cobertura;
     }
 

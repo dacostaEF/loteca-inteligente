@@ -1,7 +1,7 @@
 {
   "metadados": {
     "jogo_numero": "12",
-    "concurso_numero": "1216"
+    "concurso_numero": "1219"
   },
   "dados": {
     "numero": "12",
@@ -17,7 +17,7 @@
     "probabilidade_fora": "10",
     "recomendacao": "Recomendação Estatística: Triplo- Risco ALTO",
     "conclusao_analista": "O confronto entre Flamengo e Santos é equilibrado historicamente. Em mais de 100 jogos em todas as competições, o Flamengo venceu 44, o Santos venceu 43, e houve 29 empates. \nEm jogos do Flamengo em casa contra o Santos, o Flamengo venceu 31 vezes em 62 jogos, com 13 empates e 18 vitórias do Santos. \nEm casa do Santos, contra o Flamengo, o Santos conseguiu 25 vitórias em 54 jogos, com 16 empates e 13 derrotas para o Flamengo. \nNos últimos jogos relevantes, o Flamengo tende a ter vantagem recente.",
-    "confrontos_sequence": "V-D-D-V-D-D-D-V-D-V",
+    "confrontos_sequence": "(16/07/2025, 1-0, SANTOS|/static/escudos/SAN_Santos/Santos.png) (01/11/2023, 1-2, SANTOS|/static/escudos/SAN_Santos/Santos.png) (25/06/2023, 2-3, FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (25/10/2022, 3-2, FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (02/07/2022, 1-2, FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (06/12/2021, 0-1, SANTOS|/static/escudos/SAN_Santos/Santos.png) (28/08/2021, 0-4, FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (13/12/2020, 4-1, FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (30/08/2020, 0-1, FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (08/12/2019, 4-0, SANTOS|/static/escudos/SAN_Santos/Santos.png)",
     "posicao_casa": "3",
     "posicao_fora": "2",
     "confronto_direto": "4V-0E-6D",
@@ -27,7 +27,7 @@
     "analise_posicao_tabelas": "Vantagem Flamengo",
     "analise_confronto_direto": "Vantagem Flamengo",
     "analise_fator_casa": "Vantagem Flamengo",
-    "sincronizado_em": "2025-11-04T17:35:35.818Z"
+    "sincronizado_em": "2025-11-06T11:06:26.352Z"
   },
   "admin_key": "loteca2024admin"
 }

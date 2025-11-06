@@ -1,7 +1,7 @@
 {
   "metadados": {
     "jogo_numero": "9",
-    "concurso_numero": "1216"
+    "concurso_numero": "1219"
   },
   "dados": {
     "numero": "9",
@@ -17,17 +17,17 @@
     "probabilidade_fora": "40",
     "recomendacao": "Recomendação Estatística: Duplo Chance x2 (Empate ou Botafogo) - Risco Médio",
     "conclusao_analista": "Nos confrontos diretos entre Vitória e Botafogo RJ há vantagem para o Botafogo: por exemplo, 12 vitórias do Botafogo, 8 da Vitória e 9 empates em cerca de 29 jogos. \nA média de gols nesses confrontos é relativamente baixa (~2,4 a 2,8 gols por jogo) o que indica que os jogos tendem a ser equilibrados e sem goleadas frequentes.\nUm mercado de valor para este jogo é \"Ambas as equipes marcam - Sim\". O Vitória dificilmente sai em branco em casa, e o Botafogo possui um ataque potente que tende a furar qualquer defesa. Uma aposta alternativa e arriscada é \"Mais de 2,5 Gols\", esperando um jogo aberto com chances para os dois lados.",
-    "confrontos_sequence": "E-E-D-D-V-E-V-D-E-D",
+    "confrontos_sequence": "(16/07/2025, 0-0, Empate|/static/escudos/Empate.png) (23/11/2024, 1-1, Empate|/static/escudos/Empate.png) (11/07/2024, 0-1, BOTAFOGO|/static/escudos/Botafogo-RJ/Botafogo_RJ.png) (22/05/2024, 1-2, BOTAFOGO|/static/escudos/Botafogo-RJ/Botafogo_RJ.png) (02/05/2024, 1-0, BOTAFOGO|/static/escudos/Botafogo-RJ/Botafogo_RJ.png) (29/09/2021, 0-0, Empate|/static/escudos/Empate.png) (30/06/2021, 1-0, BOTAFOGO|/static/escudos/Botafogo-RJ/Botafogo_RJ.png) (23/09/2018, 3-4, BOTAFOGO|/static/escudos/Botafogo-RJ/Botafogo_RJ.png) (27/05/2018, 1-1, Empate|/static/escudos/Empate.png) (01/10/2017, 2-3, Vitória|/static/escudos/VIT_Vitoria/Vitoria.png)",
     "posicao_casa": "17",
     "posicao_fora": "6",
-    "confronto_direto": "2V-4E-4D",
+    "confronto_direto": "1V-4E-5D",
     "fator_casa": "43",
     "fator_fora": "57",
     "analise_posicao": "Vitoria-BA e Botafogo/RJ",
     "analise_posicao_tabelas": "Vantagem Botafogo",
     "analise_confronto_direto": "Vitoria-BA e Botafogo/RJ",
     "analise_fator_casa": "confronto Equilibrado",
-    "sincronizado_em": "2025-11-04T16:36:25.187Z"
+    "sincronizado_em": "2025-11-06T11:03:15.792Z"
   },
   "admin_key": "loteca2024admin"
 }

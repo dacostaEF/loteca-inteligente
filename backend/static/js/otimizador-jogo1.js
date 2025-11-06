@@ -50,7 +50,13 @@
 
     // 6) cobertura e risco
     const pick = (c) => (c==='1'?p1 : c==='X'?px : p2);
-    const cobertura = sugestao === '1X2' ? (p1+px+p2) : sugestao.split('').reduce((acc,c)=>acc+pick(c),0);
+    // ✅ Cálculo correto para duplos (incluindo "12")
+    let cobertura;
+    if (sugestao === '1X2') cobertura = p1 + px + p2;
+    else if (sugestao === '12') cobertura = p1 + p2;
+    else if (sugestao === '1X') cobertura = p1 + px;
+    else if (sugestao === 'X2') cobertura = px + p2;
+    else cobertura = pick(sugestao);  // SECO: apenas uma escolha
     const risco = 1 - cobertura;
 
     // Para-choque: evitar SECO fraco
@@ -58,6 +64,12 @@
       classe = 'DUPLO';
       const top2 = [arr[0].k, arr[1].k].sort((a,b)=>CHOICES.indexOf(a)-CHOICES.indexOf(b)).join('');
       sugestao = top2;
+      // ✅ Recalcular com lógica correta para todos os duplos
+      if (sugestao === '1X2') cobertura = p1 + px + p2;
+      else if (sugestao === '12') cobertura = p1 + p2;
+      else if (sugestao === '1X') cobertura = p1 + px;
+      else if (sugestao === 'X2') cobertura = px + p2;
+      else cobertura = pick(sugestao);
     }
 
     // Regra final de desempate: se 1 é o favorito e px == p2, preferir 1X

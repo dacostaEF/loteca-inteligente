@@ -1,7 +1,7 @@
 {
   "metadados": {
     "jogo_numero": "11",
-    "concurso_numero": "1216"
+    "concurso_numero": "1219"
   },
   "dados": {
     "numero": "11",
@@ -17,17 +17,17 @@
     "probabilidade_fora": "20",
     "recomendacao": "Recomendação Estatística: Duplo (Mancheser City e Empate) - Risco Médio",
     "conclusao_analista": "O Manchester City ainda é favorito em seus jogos em casa, especialmente contra rivais topo de tabela, por seu poderio técnico, elenco e mando de campo.\nO Liverpool, embora forte, jogando como visitante contra o City verá uma combinação de fatores contrários: pressão adversária, ambiente hostil, e os detalhes táticos do City.\nConsiderandDado o histórico de jogos eletrizantes, a aposta com maior valor é \"Ambas as equipes marcam - Sim\". Um palpite com bom retorno financeiro seria o \"Manchester City vencer e ambas marcarem\"o a temporada 2025/26, o City ainda busca retorno à supremacia doméstica e tem motivação extra em casa.",
-    "confrontos_sequence": "E-E-D-V-E-V-V-V-D-D",
+    "confrontos_sequence": "(23/02/2025, 0-2, LIVERPOOL|/static/escudos/Liverpool/Liverpool.png) (01/12/2024, 2-0, LIVERPOOL|/static/escudos/Liverpool/Liverpool.png) (10/03/2024, 1-1, Empate|/static/escudos/Empate.png) (25/11/2023, 1-1, Empate|/static/escudos/Empate.png) (01/04/2023, 4-1, MANCHESTER CITY|/static/escudos/Manchester_City/Manchester_City.png) (22/12/2022, 3-2, MANCHESTER CITY|/static/escudos/Manchester_City/Manchester_City.png) (16/10/2022, 1-0, LIVERPOOL|/static/escudos/Liverpool/Liverpool.png) (30/07/2022, 3-1, LIVERPOOL|/static/escudos/Liverpool/Liverpool.png) (16/04/2022, 2-3, LIVERPOOL|/static/escudos/Liverpool/Liverpool.png) (10/04/2022, 2-2, Empate|/static/escudos/Empate.png)",
     "posicao_casa": "2",
     "posicao_fora": "3",
-    "confronto_direto": "4V-3E-3D",
+    "confronto_direto": "5V-3E-2D",
     "fator_casa": "65",
     "fator_fora": "35",
     "analise_posicao": "Vantagem Manchester City",
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Vantagem Manchester City",
-    "sincronizado_em": "2025-11-04T16:55:53.922Z"
+    "sincronizado_em": "2025-11-06T11:05:28.168Z"
   },
   "admin_key": "loteca2024admin"
 }

@@ -19,13 +19,112 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
         <link rel="stylesheet" href="{{ url_for('static', filename='css/loteca.css') }}">
+    <!-- ========================================
+         📋 INVENTÁRIO DE SCRIPTS JS - CONFRONTOS
+         ========================================
+         
+         🎯 OBJETIVO: Identificar qual script está sobrescrevendo os escudos dos confrontos
+         
+         📝 SCRIPTS CARREGADOS NO HEADER (6 arquivos):
+         
+         [JS-01] js/ui/rendering.js
+                 ├─ Função: Renderização de UI geral
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         [JS-02] js/loteca-confrontos.js (ES6 MODULE)
+                 ├─ Função: Carregar confrontos de CSV e renderizar boxes
+                 ├─ Funções principais:
+                 │  ├─ carregarConfrontosJogo5()
+                 │  ├─ carregarConfrontosAutomatico(numeroJogo) ⚠️ SUSPEITO
+                 │  └─ carregarConfrontosGenerico() ⚠️ SUSPEITO
+                 ├─ Mexe com confrontos? SIM - RENDERIZA OS 10 BOXES
+                 └─ Status: 🔴 SUSPEITO - Pode estar sobrescrevendo
+         
+         [JS-03] js/loteca-functions.js (ES6 MODULE)
+                 ├─ Função: Funções principais para carregar dados dos jogos
+                 ├─ Funções principais:
+                 │  ├─ carregarDadosCompletosJogo(numeroJogo)
+                 │  └─ carregarERenderizarConfrontos() ⚠️ SUSPEITO (JÁ CORRIGIDO)
+                 ├─ Mexe com confrontos? SIM - CHAMA carregarERenderizarConfrontos
+                 └─ Status: 🟡 MONITORAR - Foi corrigido recentemente
+         
+         [JS-04] js/loteca/dados-times.js
+                 ├─ Função: Dados estáticos dos times (nomes, escudos, cores)
+                 ├─ Mexe com confrontos? NÃO - Apenas dados
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         [JS-05] js/confrontos-break.js
+                 ├─ Função: Quebra/separação visual de confrontos
+                 ├─ Mexe com confrontos? DESCONHECIDO
+                 └─ Status: ⚠️ VERIFICAR
+         
+         [JS-06] js/sticky-tabs-mobile.js
+                 ├─ Função: Tabs fixas em mobile
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         📝 SCRIPTS CARREGADOS NO FOOTER (5 arquivos):
+         
+         [JS-07] js/vinculo-confrontos.js
+                 ├─ Função: Vincular confrontos entre abas
+                 ├─ Mexe com confrontos? POSSÍVEL
+                 └─ Status: ⚠️ VERIFICAR
+         
+         [JS-08] js/navegacao-inteligente.js
+                 ├─ Função: Navegação entre abas
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         [JS-09] js/comparacao-vantagem.js
+                 ├─ Função: Comparação de vantagens entre times
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         [JS-10] js/loteca-otimizador.js
+                 ├─ Função: Otimizador de apostas (Aba 5)
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         [JS-11] js/otimizador-jogo1.js
+                 ├─ Função: Otimizador específico do Jogo 1
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         [JS-12] js/otimizador-auto.js
+                 ├─ Função: Otimizador automático
+                 ├─ Mexe com confrontos? NÃO
+                 └─ Status: ✅ SEGURO - Não comentar
+         
+         🎯 SCRIPTS SUSPEITOS (3):
+            [JS-02] loteca-confrontos.js - carregarConfrontosAutomatico() ⚠️
+            [JS-03] loteca-functions.js - carregarERenderizarConfrontos() (corrigido)
+            [JS-05] confrontos-break.js - Desconhecido
+            [JS-07] vinculo-confrontos.js - Pode mexer com confrontos
+         
+         📋 PLANO DE TESTE:
+            1. Comentar [JS-02] loteca-confrontos.js → Testar
+            2. Se não resolver, comentar [JS-05] confrontos-break.js → Testar
+            3. Se não resolver, comentar [JS-07] vinculo-confrontos.js → Testar
+         
+         ======================================== -->
+    
     <!-- Sistema de elenco integrado -->
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
+    
     <!-- ✅ Scripts com suporte a ES6 modules (imports/exports) -->
-    <script type="module" src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script>
+    
+    <!-- [JS-02] ⚠️ SUSPEITO - Comentado para teste -->
+    <!-- <script type="module" src="{{ url_for('static', filename='js/loteca-confrontos.js') }}"></script> -->
+    
+    <!-- [JS-03] 🟡 MONITORAR - Foi corrigido (carregarERenderizarConfrontos) -->
     <script type="module" src="{{ url_for('static', filename='js/loteca-functions.js') }}"></script>
+    
     <script src="{{ url_for('static', filename='js/loteca/dados-times.js') }}"></script>
+    
+    <!-- [JS-05] ⚠️ VERIFICAR - Nome suspeito -->
     <script src="{{ url_for('static', filename='js/confrontos-break.js') }}"></script>
+    
     <script src="{{ url_for('static', filename='js/sticky-tabs-mobile.js') }}"></script>
     
     <!-- ===== DOCUMENTAÇÃO DA ESTRUTURA DO ARQUIVO ===== -->
@@ -101,6 +200,28 @@
             console.log('🚀 [DEV] Console ativo - Ambiente de desenvolvimento');
         }
     })();
+
+    // ========================================
+    // 🎯 FUNÇÃO GLOBAL: QUEBRAR TEXTO EM 2 LINHAS
+    // ========================================
+    // Converte o marcador ||| do backend em <br> HTML
+    // Backend envia: "Vantagem|||Atletico-MG"
+    // Frontend renderiza: "Vantagem<br>Atletico-MG"
+    // ========================================
+    window.quebrarTextoAnalise = function(texto) {
+        if (!texto) return texto;
+        
+        console.log('🔧 [QUEBRA] Texto recebido:', texto);
+        
+        // Substituir marcador ||| por <br>
+        // Backend já processou e enviou com |||
+        // Usar split/join para compatibilidade
+        const resultado = String(texto).split('|||').join('<br>');
+        
+        console.log('✅ [QUEBRA] Texto processado:', resultado);
+        
+        return resultado;
+    };
     </script>
     
     <!-- ===== RESPONSIVIDADE: ESCONDER "dos" NO TÍTULO PANORAMA ===== -->
@@ -161,7 +282,7 @@
                     Otimizador de Aposta
                 </button>
                 <button class="tab-btn" data-tab="analise-rapida">
-                    Análise Rápida
+                    Análise<br>Rápida
                 </button>
                 <button class="tab-btn" data-tab="forca-elenco">
                     Força dos Elencos
@@ -1511,7 +1632,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- TABELA ANTIGA (MANTIDA PARA COMPATIBILIDADE) -->
                     <div class="comparacao-tabela" style="display: none;">
                         <table class="tabela-comparacao">
@@ -5602,22 +5723,71 @@
         
         // ✅ BUSCAR DADOS DIRETAMENTE DO JSON LOCAL
         async function buscarDadosDoJSON(nomeTime) {
-            console.log(`📁 [JSON] Buscando "${nomeTime}" no JSON local...`);
+            console.log(`📁 [CSV-API] Buscando "${nomeTime}" na API unificada...`);
             
             try {
-                // Buscar dados do JSON de força de elenco
-                const response = await fetch('/static/valor_elenco/forca_elenco_unificado.json');
-                const jsonData = await response.json();
-                const clubes = jsonData.clubes || {};
+                // ✅ MUDANÇA: Agora busca da API que lê os CSVs, não mais do JSON estático
+                const response = await fetch('/api/forca-elenco/dados-unificados');
+                const apiData = await response.json();
                 
-                // Mapear nome para chave JSON usando arquivo externo
-                const chaveBusca = window.MAPEAMENTO_TIMES_BR[nomeTime.toLowerCase().trim()] || nomeTime.toLowerCase().replace(/[^a-z0-9]/g, '_');
-                console.log(`🔍 [JSON] Chave de busca: "${chaveBusca}"`);
+                if (!apiData.success) {
+                    throw new Error('API retornou erro');
+                }
                 
-                const dadosClube = clubes[chaveBusca];
+                const clubes = apiData.clubes || {};
+                
+                // NORMALIZAÇÃO INTELIGENTE (mesma do verificarForcaElenco)
+                function normalizar(texto) {
+                    return texto
+                        .toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                        .replace(/\/(sp|rj|mg|rs|ce|ba|pe|pr|sc|go|ing|esp|it|fra|ale|por)/gi, '') // Remove sufixos
+                        .replace(/[^a-z0-9\s\-]/g, '') // Mantém letras, números, espaços e hífens
+                        .trim();
+                }
+                
+                const nomeNorm = normalizar(nomeTime);
+                console.log(`🔍 [CSV-API] Nome normalizado: "${nomeNorm}"`);
+                
+                // BUSCA INTELIGENTE
+                let dadosClube = null;
+                
+                // 1. Busca direta
+                if (clubes[nomeNorm]) {
+                    dadosClube = clubes[nomeNorm];
+                    console.log(`✅ [CSV-API] Encontrado por chave direta`);
+                }
+                
+                // 2. Busca por comparação normalizada
+                if (!dadosClube) {
+                    for (const [chave, dados] of Object.entries(clubes)) {
+                        if (normalizar(chave) === nomeNorm || 
+                            (dados.nome_oficial && normalizar(dados.nome_oficial) === nomeNorm)) {
+                            dadosClube = dados;
+                            console.log(`✅ [CSV-API] Encontrado por comparação: "${chave}"`);
+                            break;
+                        }
+                    }
+                }
+                
+                // 3. Busca por palavra-chave
+                if (!dadosClube) {
+                    const palavras = nomeNorm.split(/[\s\-]+/).filter(p => p.length >= 3);
+                    for (const palavra of palavras) {
+                        for (const [chave, dados] of Object.entries(clubes)) {
+                            if (normalizar(chave).includes(palavra) || 
+                                (dados.nome_oficial && normalizar(dados.nome_oficial).includes(palavra))) {
+                                dadosClube = dados;
+                                console.log(`✅ [CSV-API] Encontrado por palavra "${palavra}": "${chave}"`);
+                                break;
+                            }
+                        }
+                        if (dadosClube) break;
+                    }
+                }
                 
                 if (dadosClube) {
-                    console.log(`✅ [JSON] Dados encontrados no JSON:`, dadosClube);
+                    console.log(`✅ [CSV-API] Dados encontrados:`, dadosClube);
                     
                     return {
                         nome: dadosClube.nome_oficial || nomeTime,
@@ -5628,18 +5798,18 @@
                         preco_medio: `€ ${dadosClube.valor_elenco_euros}MM`,
                         rating: (dadosClube.forca_elenco || 5.0) / 10,
                         badge: gerarBadgeTime((dadosClube.forca_elenco || 5.0) / 10),
-                        fonte: 'json_local',
-                        brasileiro: true,
+                        fonte: 'csv_api',
+                        brasileiro: dadosClube.liga ? dadosClube.liga.includes('Brasil') : true,
                         valor_mm_euros: dadosClube.valor_elenco_euros,
                         serie: dadosClube.liga
                     };
                 } else {
-                    console.warn(`⚠️ [JSON] Clube "${nomeTime}" não encontrado (chave: "${chaveBusca}")`);
+                    console.warn(`⚠️ [CSV-API] Clube "${nomeTime}" não encontrado (normalizado: "${nomeNorm}")`);
                     return criarDadosFallback(nomeTime);
                 }
                 
             } catch (error) {
-                console.error(`❌ [JSON] Erro ao buscar no JSON:`, error);
+                console.error(`❌ [CSV-API] Erro ao buscar na API:`, error);
                 return criarDadosFallback(nomeTime);
             }
         }
@@ -5647,61 +5817,10 @@
         // ✅ FUNÇÃO SEPARADA PARA CLUBES INTERNACIONAIS
         async function buscarDadosInternacional(nomeTime) {
             console.log(`🌍 [INTERNACIONAL] Buscando dados para clube internacional: "${nomeTime}"`);
-            console.log(`🔍 [DEBUG-INTERNACIONAL] Nome original: "${nomeTime}"`);
+            console.log(`🔍 [DEBUG-INTERNACIONAL] Chamando buscarDadosDoJSON (API CSV) para: "${nomeTime}"`);
             
-            // Lista específica de clubes internacionais com dados conhecidos
-            const dadosInternacionais = {
-                'ROMA': { valor: '€ 700 M', posicao: 26, pais: 'Itália' },
-                'INTER MILAN': { valor: '€ 818 M', posicao: 20, pais: 'Itália' },
-                'INTER DE MILAO': { valor: '€ 818 M', posicao: 20, pais: 'Itália' },
-                'ATLETICO MADRID': { valor: '€ 939 M', posicao: 12, pais: 'Espanha' },
-                'OSASUNA': { valor: '€ 88,70 M', posicao: 101, pais: 'Espanha' },
-                'TOTTENHAM': { valor: '€ 1.108 M', posicao: 9, pais: 'Inglaterra' },
-                'ASTON VILLA': { valor: '€ 838 M', posicao: 18, pais: 'Inglaterra' },
-                'LIVERPOOL': { valor: '€ 1.363 M', posicao: 5, pais: 'Inglaterra' },
-                'MANCHESTER UNITED': { valor: '€ 1.394 M', posicao: 4, pais: 'Inglaterra' },
-                'MILAN': { valor: '€ 893 M', posicao: 15, pais: 'Itália' },
-                'FIORENTINA': { valor: '€ 400 M', posicao: 50, pais: 'Itália' },
-                'ATALANTA': { valor: '€ 500 M', posicao: 40, pais: 'Itália' },
-                'ATALANTA BERGAMAS': { valor: '€ 500 M', posicao: 40, pais: 'Itália' },
-                'LAZIO': { valor: '€ 450 M', posicao: 45, pais: 'Itália' },
-                'GETAFE': { valor: '€ 200 M', posicao: 80, pais: 'Espanha' },
-                'REAL MADRID': { valor: '€ 1.726 M', posicao: 1, pais: 'Espanha' }
-            };
-            
-            // Normalizar nome para busca
-            const nomeNormalizado = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '');
-            console.log(`🔍 [DEBUG-INTERNACIONAL] Nome normalizado: "${nomeNormalizado}"`);
-            console.log(`🔍 [DEBUG-INTERNACIONAL] Chaves disponíveis:`, Object.keys(dadosInternacionais));
-            
-            const dadosClube = dadosInternacionais[nomeNormalizado];
-            console.log(`🔍 [DEBUG-INTERNACIONAL] Dados encontrados:`, dadosClube);
-            
-            if (dadosClube) {
-                console.log(`✅ [INTERNACIONAL] Dados encontrados para: ${nomeNormalizado}`, dadosClube);
-                
-                // Converter valor para número
-                const valorNumerico = parseFloat(dadosClube.valor.replace(/[€\s,]/g, '').replace('M', '')) || 0;
-                
-                return {
-                    nome: nomeTime,
-                    abrev: nomeNormalizado.substring(0, 3).toUpperCase(),
-                    total_atletas: 25, // Valor padrão para internacionais
-                    pct_provaveis: 'S/I',
-                    forca_elenco: (valorNumerico / 100).toFixed(2),
-                    preco_medio: dadosClube.valor,
-                    rating: Math.min(valorNumerico / 1000, 1.0),
-                    badge: gerarBadgeTime(Math.min(valorNumerico / 1000, 1.0)),
-                    fonte: 'top100_internacional',
-                    brasileiro: false,
-                    valor_mm_euros: valorNumerico,
-                    pais: dadosClube.pais,
-                    posicao: dadosClube.posicao
-                };
-            } else {
-                console.log(`⚠️ [INTERNACIONAL] Clube não encontrado na lista: ${nomeNormalizado}`);
-                return criarDadosFallback(nomeTime);
-            }
+            // ✅ MUDANÇA: Agora busca da API CSV (Top 100) em vez de dados hardcoded
+            return await buscarDadosDoJSON(nomeTime);
         }
 
         // CRIAR DADOS DE FALLBACK - MENSAGEM DE ERRO QUANDO API NÃO ENCONTRA DADOS
@@ -5741,8 +5860,9 @@
             // ✅ CLUBES INTERNACIONAIS - NÃO SÃO BRASILEIROS
             const internacionais = [
                 'ROMA', 'INTER MILAN', 'INTER DE MILAO', 'ATLETICO MADRID', 'OSASUNA',
-                'TOTTENHAM', 'ASTON VILLA', 'LIVERPOOL', 'MANCHESTER UNITED',
-                'MILAN', 'FIORENTINA', 'ATALANTA', 'ATALANTA BERGAMAS', 'LAZIO', 'GETAFE', 'REAL MADRID'
+                'TOTTENHAM', 'ASTON VILLA', 'LIVERPOOL', 'MANCHESTER UNITED', 'MANCHESTER CITY',
+                'MILAN', 'FIORENTINA', 'ATALANTA', 'ATALANTA BERGAMAS', 'LAZIO', 'GETAFE', 'REAL MADRID',
+                'CHELSEA', 'WOLVES', 'WOLVERHAMPTON', 'VALENCIA', 'REAL BETIS', 'BETIS', 'PARMA'
             ];
             
             const nomeLimpo = nomeTime.toUpperCase().replace(/\/[A-Z]{2}$/, '');
@@ -5754,7 +5874,8 @@
             const brasileiros = [
                 // Times da Série A
                 'CORINTHIANS', 'FLAMENGO', 'PALMEIRAS', 'SÃO PAULO', 'SANTOS',
-                'VASCO', 'VASCO DA GAMA', 'BOTAFOGO', 'FLUMINENSE', 'CRUZEIRO', 'ATLÉTICO-MG',
+                'VASCO', 'VASCO DA GAMA', 'BOTAFOGO', 'FLUMINENSE', 'CRUZEIRO', 
+                'ATLÉTICO-MG', 'ATLÉTICO MINEIRO', 'ATLETICO MINEIRO',
                 'INTERNACIONAL', 'GRÊMIO', 'BAHIA', 'VITÓRIA', 'FORTALEZA',
                 'CEARÁ', 'SPORT', 'SPORT/PE', 'SPORTE', 'SPORTE/PE', 'NÁUTICO', 'GOIÁS', 'ATLÉTICO-GO', 'ATLETICO/MG',
                 'CUIABÁ', 'CORITIBA', 'AMÉRICA-MG', 'JUVENTUDE', 'CAXIAS',
@@ -5799,6 +5920,9 @@
             return isBrazilian;
         }
 
+        // ✅ ARMAZENAR DADOS DOS JOGOS GLOBALMENTE
+        window.dadosJogosElenco = {};
+
         // RENDERIZAR JOGOS DA TIMES LOTECA - TODOS OS 14 JOGOS
         function renderizarTimesLotecaJogos(dadosCompletos) {
             console.log('🎨 [TIMES-LOTECA] Renderizando TODOS OS 14 JOGOS...');
@@ -5810,6 +5934,15 @@
             
             // Renderizar todos os 14 jogos
             dadosCompletos.forEach(jogo => {
+                // Armazenar dados globalmente
+                window.dadosJogosElenco[jogo.numero] = {
+                    numero: jogo.numero,
+                    casa: jogo.casa,
+                    visitante: jogo.visitante,
+                    timeCasaNome: jogo.casa?.nome || jogo.timeCasa || 'N/A',
+                    timeVisitanteNome: jogo.visitante?.nome || jogo.timeVisitante || 'N/A'
+                };
+                
                 const jogoHtml = `
                     <div class="jogo-confronto">
                         <div class="jogo-header">
@@ -5820,7 +5953,10 @@
                         <div class="times-confronto">
                             ${renderizarTimeContainer(jogo.casa, 'casa')}
                             
-                            <div class="vs-divider-confronto">VS</div>
+                            <div class="vs-divider-confronto">
+                                <span class="info-icon-elenco" onclick="abrirModalComparacao(${jogo.numero})">?</span>
+                                VS
+                            </div>
                             
                             ${renderizarTimeContainer(jogo.visitante, 'visitante')}
                         </div>
@@ -7505,25 +7641,28 @@
 
         // MAPEAMENTO DE JOGOS PARA ARQUIVOS CSV DE CONFRONTOS (com nomes alternativos)
         const jogosCsvMap = {
-            1: ['corinthians_gremio.csv', 'gremio_corinthians.csv'],
-            2: ['santos_fortaleza.csv', 'fortaleza_santos.csv'],
-            3: ['cruzeiro_vitoria.csv', 'vitoria_cruzeiro.csv'],
-            4: ['goias_athletico-pr.csv', 'athletico-pr_goias.csv'],
-            5: ['mirassol_botafogo.csv', 'botafogo_mirassol.csv'],
-            6: ['avai_athetic-mg.csv', 'athetic-mg_avai.csv'],
-            7: ['flamengo_sport.csv', 'sport_flamengo.csv'],
-            8: ['bahia_bragantino.csv', 'bragantino_bahia.csv'],
-            9: ['ceara_fluminense.csv', 'fluminense_ceara.csv'],
-            10: ['juventude_palmeiras.csv', 'palmeiras_juventude.csv'],
-            11: ['internacional_atletico-mg.csv', 'atletico-mg_internacional.csv'],
-            12: ['remo_chapecoense.csv', 'chapecoense_remo.csv'],
-            13: ['vasco_sao_paulo.csv', 'sao_paulo_vasco.csv'],
-            14: ['operario-pr_vilanova.csv', 'vilanova_operario-pr.csv']
+            1: ['mirassol_vs_palmeiras.csv', 'palmeiras_vs_mirassol.csv'],
+            2: ['Sport_vs_Atletico-MG.csv', 'Atletico-MG_vs_Sport.csv'],
+            3: ['vasco_vs_juventude.csv', 'juventude_vs_vasco.csv'],
+            4: ['Internacional_vs_bahia.csv', 'bahia_vs_Internacional.csv'],
+            5: ['Sao_Paulo_vs_bragantino.csv', 'bragantino_vs_Sao_Paulo.csv'],
+            6: ['chelsea_vs_wolves.csv', 'wolves_vs_chelsea.csv'],
+            7: ['parma_vs_milan.csv', 'milan_vs_parma.csv'],
+            8: ['corinthians_vs_ceara.csv', 'ceara_vs_corinthians.csv'],
+            9: ['vitoria_vs_botafogo-RJ.csv', 'botafogo-RJ_vs_vitoria.csv'],
+            10: ['cruzeiro_vs_fluminente.csv', 'fluminente_vs_cruzeiro.csv'],
+            11: ['Mancheter_city_vs_Liverpool.csv', 'Liverpool_vs_Mancheter_city.csv'],
+            12: ['Flamengo_vs_santos.csv', 'santos_vs_Flamengo.csv'],
+            13: ['valencia_real_betis.csv', 'real_betis_valencia.csv'],
+            14: ['fortaleza_vs_gremio.csv', 'gremio_vs_fortaleza.csv']
         };
 
-        // FUNÇÃO GENÉRICA PARA CARREGAR ÚLTIMOS CONFRONTOS DE QUALQUER JOGO
+        // ==================================================================================
+        // NOVA SOLUÇÃO SIMPLES: Ler confrontos formatados do JSON
+        // Formato: (data, placar, vencedor|escudo)
+        // ==================================================================================
         async function carregarUltimosConfrontosGenerico(numeroJogo) {
-            console.log(`🎯 [CONFRONTOS-JOGO${numeroJogo}] Carregando últimos confrontos...`);
+            console.log(`🎯 [CONFRONTOS-JOGO${numeroJogo}] Carregando últimos confrontos SIMPLES...`);
             
             const container = document.getElementById(`confrontos-principais${numeroJogo === 1 ? '' : '-' + numeroJogo}`);
             
@@ -7531,6 +7670,60 @@
                 console.error(`❌ [CONFRONTOS-JOGO${numeroJogo}] Container confrontos-principais${numeroJogo === 1 ? '' : '-' + numeroJogo} não encontrado!`);
                 return;
             }
+            
+            // ✅ NOVA LÓGICA SIMPLES: Buscar string formatada do JSON
+            try {
+                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados && jogoData.dados.confrontos_sequence) {
+                        const sequenciaFormatada = jogoData.dados.confrontos_sequence;
+                        console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] Sequência formatada encontrada:`, sequenciaFormatada);
+                        
+                        // Parse da string formatada: (data, placar, vencedor|escudo)
+                        const regex = /\(([^,]+),\s*([^,]+),\s*([^|]+)\|([^)]+)\)/g;
+                        let matches;
+                        const confrontos = [];
+                        
+                        while ((matches = regex.exec(sequenciaFormatada)) !== null) {
+                            confrontos.push({
+                                data: matches[1].trim(),
+                                placar: matches[2].trim(),
+                                vencedor: matches[3].trim(),
+                                escudo: matches[4].trim()
+                            });
+                        }
+                        
+                        if (confrontos.length > 0) {
+                            console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] ${confrontos.length} confrontos parseados!`, confrontos);
+                            
+                            // Renderizar boxes DIRETAMENTE
+                            const bolinhasHtml = confrontos.map((conf, index) => {
+                                const escudoHtml = conf.vencedor === 'Empate' 
+                                    ? `<img src="/static/escudos/Empate.png" style="width:20px;height:20px;" onerror="this.style.display='none'" title="Empate">`
+                                    : `<img src="${conf.escudo}" style="width:20px;height:20px;" onerror="this.src='/static/placeholder-team-logo.svg'" title="${conf.vencedor}">`;
+                                
+                                return `
+                                    <div class="confronto-item">
+                                        <div class="confronto-data">${conf.data}</div>
+                                        <div class="confronto-placar">${conf.placar}</div>
+                                        <div class="confronto-result" title="${conf.data}: ${conf.placar} - ${conf.vencedor}">${escudoHtml}</div>
+                                    </div>
+                                `;
+                            }).join('');
+                            
+                            container.innerHTML = bolinhasHtml;
+                            console.log(`✅ [CONFRONTOS-JOGO${numeroJogo}] Boxes renderizados com sucesso!`);
+                            return; // ✅ SUCESSO! Sair da função
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log(`⚠️ [CONFRONTOS-JOGO${numeroJogo}] Erro ao buscar sequência formatada:`, error);
+            }
+            
+            // ⚠️ FALLBACK: Se não encontrou sequência formatada, mostrar mensagem
+            console.warn(`⚠️ [CONFRONTOS-JOGO${numeroJogo}] Nenhuma sequência formatada encontrada, usando fallback...`);
             
             // DADOS PADRÃO (fallback) - serão sobrescritos se CSV for carregado
             let confrontos = [
@@ -7569,6 +7762,7 @@
                                     mandante: timeCasa,
                                     visitante: timeFora,
                                     placar: placar,
+                                    vencedor: (vencedor || '').trim(),  // ✅ USAR COLUNA VENCEDOR
                                     resultado: resultadoTimeCasa === 'Vitória' ? 'V' : resultadoTimeCasa === 'Derrota' ? 'D' : 'E'
                                 };
                             });
@@ -7611,24 +7805,48 @@
                 console.log(`⚠️ [CONFRONTOS-JOGO${numeroJogo}] Usando escudos padrão:`, error);
             }
             
-            // Renderizar bolinhas
-            console.log(`🎯 [CONFRONTOS-JOGO${numeroJogo}] Renderizando`, ultimos10.length, 'confrontos...');
+            // Renderizar bolinhas COM ESCUDOS
+            console.log(`🎯 [CONFRONTOS-JOGO${numeroJogo}] Renderizando`, ultimos10.length, 'confrontos com escudos...');
+            
+            // Buscar times do jogo da Central Admin
+            let timeCasaJogo = '';
+            let timeForaJogo = '';
+            try {
+                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+                if (jogoResponse.ok) {
+                    const jogoData = await jogoResponse.json();
+                    if (jogoData.success && jogoData.dados) {
+                        timeCasaJogo = (jogoData.dados.time_casa || '').toLowerCase().replace(/\//g, '').trim();
+                        timeForaJogo = (jogoData.dados.time_fora || '').toLowerCase().replace(/\//g, '').trim();
+                    }
+                }
+            } catch (e) {}
+            
             const bolinhasHtml = ultimos10.map((confronto, index) => {
-                const resultado = confronto.resultado.toUpperCase();
-                let classe, conteudo;
+                // ✅ USAR COLUNA VENCEDOR DO CSV
+                const vencedor = (confronto.vencedor || '').toLowerCase().trim();
+                const vencedorNorm = vencedor.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\s]/g, '');
                 
-                const timeCasa = confronto.mandante || 'Time Casa';
-                const timeFora = confronto.visitante || 'Time Fora';
+                let escudoMostrar = '/static/placeholder-team-logo.svg';
+                let classe = 'empate';
+                let conteudo = 'E';
                 
-                if (resultado === 'V') {
-                    classe = 'time-casa';
-                    conteudo = timeCasa.substring(0,3).toUpperCase();
-                } else if (resultado === 'D') {
-                    classe = 'time-fora';
-                    conteudo = timeFora.substring(0,3).toUpperCase();
-                } else {
+                // ✅ COMPARAR VENCEDOR COM OS TIMES DO JOGO
+                if (vencedorNorm.includes('empate')) {
+                    escudoMostrar = '/static/escudos/Empate.png';
                     classe = 'empate';
                     conteudo = 'E';
+                } else if (timeCasaJogo && vencedorNorm.includes(timeCasaJogo.substring(0, 5))) {
+                    escudoMostrar = escudoCasa;
+                    classe = 'time-casa';
+                    conteudo = `<img src="${escudoCasa}" style="width:20px;height:20px;" onerror="this.src='/static/placeholder-team-logo.svg'">`;
+                } else if (timeForaJogo && vencedorNorm.includes(timeForaJogo.substring(0, 5))) {
+                    escudoMostrar = escudoFora;
+                    classe = 'time-fora';
+                    conteudo = `<img src="${escudoFora}" style="width:20px;height:20px;" onerror="this.src='/static/placeholder-team-logo.svg'">`;
+                } else {
+                    // Fallback: usar placeholder
+                    conteudo = vencedor ? vencedor.substring(0,3).toUpperCase() : 'E';
                 }
                 
                 let dataFormatada = confronto.data || '';
@@ -7637,7 +7855,7 @@
                     <div class="confronto-item">
                         <div class="confronto-data">${dataFormatada}</div>
                         <div class="confronto-placar">${confronto.placar}</div>
-                        <div class="confronto-result ${classe}" title="${confronto.data}: ${confronto.mandante} ${confronto.placar} ${confronto.visitante}">${conteudo}</div>
+                        <div class="confronto-result ${classe}" title="${confronto.data}: ${confronto.mandante} ${confronto.placar} ${confronto.visitante} - Vencedor: ${vencedor}">${conteudo}</div>
                     </div>
                 `;
             }).join('');
@@ -7990,6 +8208,12 @@
             }
         }
 
+        // ==================================================================================
+        // [OBSOLETO] COMENTADO PARA LIMPEZA FUTURA
+        // Esta função tem hardcode de "Corinthians" e "Flamengo" de concursos antigos
+        // Atualmente os confrontos são renderizados pela função genérica carregarUltimosConfrontosGenerico()
+        // ==================================================================================
+        /*
         // RENDERIZAR BOLINHAS NA TABELA PRINCIPAL
         function renderizarBolinhasTabela(confrontos) {
             const container = document.getElementById('confrontos-principais');
@@ -8042,7 +8266,16 @@
             
             console.log(`🔴 [CONFRONTOS] ${ultimos10.length} bolinhas renderizadas na tabela (linha única)`);
         }
+        */
+        // ==================================================================================
+        // FIM DO BLOCO OBSOLETO - renderizarBolinhasTabela
+        // ==================================================================================
 
+        // ==================================================================================
+        // [OBSOLETO] COMENTADO PARA LIMPEZA FUTURA  
+        // Esta função também tem hardcode antigo e não é mais usada
+        // ==================================================================================
+        /*
         // RENDERIZAR BOLINHAS NO MODAL DE COMPARAÇÃO
         function renderizarBolinhasModal(confrontos) {
             const container = document.getElementById('confrontos-modal-principais');
@@ -8089,6 +8322,10 @@
             
             console.log(`🔴 [CONFRONTOS] ${ultimos10.length} bolinhas renderizadas no modal (linha única)`);
         }
+        */
+        // ==================================================================================
+        // FIM DO BLOCO OBSOLETO - renderizarBolinhasModal
+        // ==================================================================================
 
         // FUNÇÕES AUXILIARES
         function updateFormSequence(selector, form) {
@@ -8363,14 +8600,17 @@
             
             // CARREGAR CONFRONTOS DO JOGO 2
             // ===== FUNÇÃO ESSENCIAL - REATIVADA =====
+            // ⚠️ TESTE: Comentado temporariamente para identificar conflito
             // OBSERVAÇÃO: Esta função é ESSENCIAL para carregar os boxes dos "Últimos Confrontos"
             // MOTIVO: carregarConfrontosAutomatico() renderiza os 10 boxes com dados históricos
-            // STATUS: REATIVADA - NÃO COMENTAR
+            // STATUS: COMENTADA TEMPORARIAMENTE PARA TESTE
+            /*
             setTimeout(() => {
                 if (typeof carregarConfrontosAutomatico === 'function') {
                     window.carregarConfrontosAutomatico(2);
                 }
             }, 2500);
+            */
             
             // CARREGAR CONFRONTOS DO JOGO 3
             // ===== FUNÇÃO ESSENCIAL - REATIVADA =====
@@ -8943,11 +9183,11 @@
                 }
             }
             
-            // 8. ATUALIZAR ANÁLISES TEXTUAIS
+            // 8. ATUALIZAR ANÁLISES TEXTUAIS (COM QUEBRA EM 2 LINHAS - FUNÇÃO GLOBAL)
             if (dados.analise_posicao) {
                 const posicaoAnalise = document.getElementById('posicao-analise-3');
                 if (posicaoAnalise) {
-                    posicaoAnalise.textContent = dados.analise_posicao;
+                    posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao); // ✅ innerHTML para suportar <br>
                     console.log('✅ [DEBUG] Análise posição jogo 3 atualizada:', dados.analise_posicao);
                 }
             }
@@ -8955,7 +9195,7 @@
             if (dados.analise_confronto_direto) {
                 const h2hAnalise = document.getElementById('h2h-analise-3');
                 if (h2hAnalise) {
-                    h2hAnalise.textContent = dados.analise_confronto_direto;
+                    h2hAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto); // ✅ innerHTML para suportar <br>
                     console.log('✅ [DEBUG] Análise confronto direto jogo 3 atualizada:', dados.analise_confronto_direto);
                 }
             }
@@ -8963,7 +9203,7 @@
             if (dados.analise_fator_casa) {
                 const fatorAnalise = document.getElementById('fator-analise-3');
                 if (fatorAnalise) {
-                    fatorAnalise.textContent = dados.analise_fator_casa;
+                    fatorAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa); // ✅ innerHTML para suportar <br>
                     console.log('✅ [DEBUG] Análise fator casa jogo 3 atualizada:', dados.analise_fator_casa);
                 }
             }
@@ -9158,7 +9398,7 @@
                 posicaoFora.textContent = dados.posicao_fora;
             }
             if (posicaoAnalise && dados.analise_posicao) {
-                posicaoAnalise.textContent = dados.analise_posicao;
+                posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao);
             }
             
             // 6. ATUALIZAR ÚLTIMOS CONFRONTOS (SEQUÊNCIA) - DESABILITADO PARA JOGOS 5 E 11
@@ -9232,10 +9472,10 @@
             const fatorAnalise = document.getElementById(`fator-analise-${numeroJogo}`);
             
             if (h2hAnalise && dados.analise_confronto_direto) {
-                h2hAnalise.textContent = dados.analise_confronto_direto;
+                h2hAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto);
             }
             if (fatorAnalise && dados.analise_fator_casa) {
-                fatorAnalise.textContent = dados.analise_fator_casa;
+                fatorAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa);
             }
             
             // 8.1. ATUALIZAR FATOR CASA (VALORES NUMÉRICOS)
@@ -9275,13 +9515,13 @@
                 mobileFora.textContent = dados.time_fora ? dados.time_fora.substring(0,3).toUpperCase() : 'FORA';
             }
             if (mobileResultado) {
-                mobileResultado.textContent = dados.analise_posicao || 'Equilibrado';
+                mobileResultado.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao || 'Equilibrado');
             }
             if (mobileRivalry) {
-                mobileRivalry.textContent = dados.analise_confronto_direto || 'Equilibrado';
+                mobileRivalry.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto || 'Equilibrado');
             }
             if (mobileEquilibrio) {
-                mobileEquilibrio.textContent = dados.analise_fator_casa || 'Equilibrado';
+                mobileEquilibrio.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa || 'Equilibrado');
             }
             if (mobileSugestao) {
                 mobileSugestao.textContent = dados.recomendacao || 'Analisando...';
@@ -9356,6 +9596,7 @@
                     'recomendacao-jogo-2-novo': 'recomendacao-2',
                     'posicao-casa-2-novo': 'posicao-casa-2',
                     'posicao-fora-2-novo': 'posicao-fora-2',
+                    'confrontos-principais-2-novo': 'confrontos-principais-2',  // ✅ ADICIONADO: 10 boxes de confrontos
                     'confronto-direto-principais-2-novo': 'confronto-direto-principais-2',
                     'fator-casa-2-novo': 'fator-casa-2',
                     'fator-fora-2-novo': 'fator-fora-2',
@@ -9419,6 +9660,7 @@
                     'recomendacao-jogo-3-novo': 'recomendacao-3',
                     'posicao-casa-3-novo': 'posicao-casa-3',
                     'posicao-fora-3-novo': 'posicao-fora-3',
+                    'confrontos-principais-3-novo': 'confrontos-principais-3',  // ✅ ADICIONADO: 10 boxes de confrontos
                     'confronto-direto-principais-3-novo': 'confronto-direto-principais-3',
                     'fator-casa-3-novo': 'fator-casa-3',
                     'fator-fora-3-novo': 'fator-fora-3',
@@ -9481,15 +9723,15 @@
                     'recomendacao-jogo-1-novo': 'recomendacao-1',
                     'posicao-casa-1-novo': 'posicao-casa-1',
                     'posicao-fora-1-novo': 'posicao-fora-1',
-                    'h2h-analise-1-novo': 'h2h-analise-1-novo',
+                    'confrontos-principais-1-novo': 'confrontos-principais-1',  // ✅ CORRIGIDO: 10 boxes de confrontos
+                    'confronto-direto-principais-1-novo': 'confronto-direto-principais-1',
                     'fator-casa-1-novo': 'fator-casa-1',
                     'fator-fora-1-novo': 'fator-fora-1',
-                    'fator-analise-1-novo': 'fator-analise-1-novo',
                     'conclusao-analista-jogo1-novo': 'conclusao-1',
-                    'confrontos-principais-1-novo': 'confrontos-principais-1-novo',
-                    'confronto-direto-principais-1-novo': 'confronto-direto-principais-1',
-                    'forma-analise-1-novo': 'forma-analise-1-novo',
-                    'posicao-analise-1-novo': 'posicao-analise-1-novo'
+                    'forma-analise-1-novo': 'forma-analise-1',
+                    'posicao-analise-1-novo': 'posicao-analise-1',
+                    'h2h-analise-1-novo': 'h2h-analise-1',
+                    'fator-analise-1-novo': 'fator-analise-1'
                 };
                 
                 // 3. TEMPORARIAMENTE RENOMEAR IDs PARA USAR AS FUNÇÕES EXTERNAS
@@ -9513,20 +9755,11 @@
                     console.warn('⚠️ [JOGO1-NOVO] carregarDadosCompletosJogo não disponível');
                 }
                 
-                // 5. USAR FUNÇÃO DO loteca-confrontos.js PARA DADOS CSV
-                // ===== FUNÇÃO ESSENCIAL - REATIVADA =====
-                // OBSERVAÇÃO: Esta função é ESSENCIAL para carregar os boxes dos "Últimos Confrontos"
-                // MOTIVO: carregarConfrontosAutomatico() renderiza os 10 boxes com dados históricos
-                // STATUS: REATIVADA - NÃO COMENTAR
-                if (typeof carregarConfrontosAutomatico === 'function') {
-                    console.log('📊 [JOGO1-NOVO] Chamando carregarConfrontosAutomatico(1)...');
-                    await carregarConfrontosAutomatico(1);
-                    console.log('✅ [JOGO1-NOVO] carregarConfrontosAutomatico(1) executado!');
-                } else {
-                    console.warn('⚠️ [JOGO1-NOVO] carregarConfrontosAutomatico não disponível');
-                }
+                // ✅ REMOVIDO carregarConfrontosAutomatico() - loteca-confrontos.js está comentado
+                // Os confrontos agora são carregados via carregarDadosCompletosJogo()
+                // que usa o novo sistema simplificado (confrontos_sequence do JSON)
                 
-                // Restaurar IDs originais (FALTANDO NO JOGO 1)
+                // Restaurar IDs originais
                 Object.entries(mapeamentoIds).forEach(([novoId, antigoId]) => {
                     const elemento = document.getElementById(antigoId);
                     if (elemento) {
@@ -9534,32 +9767,7 @@
                     }
                 });
                 
-                // ❌ HARDCODE REMOVIDO - API deve retornar dados reais ou mostrar erro
-                // ANTES: Mostrava "Flamengo/RJ vs Palmeiras/SP" mesmo quando jogo era Corinthians x Grêmio
-                // AGORA: Se API falhar, mostra "Carregando..." ou erro claro
-                // MOTIVO: Hardcodes mascaram problemas e enganam o usuário com dados falsos
-                // EXEMPLO DO PROBLEMA: Jogo 1 era Corinthians x Grêmio mas aparecia Flamengo x Palmeiras
-                
-                // CORREÇÃO CIRÚRGICA PARA JOGO 1 - SUBSTITUIR TEXTO GENÉRICO DOS CONFRONTOS
-                // O texto "Baseado nos últimos 10 jogos" deve ser substituído pelo texto correto do JSON
-                setTimeout(() => {
-                    // Método 1: Procurar por ID específico se existir
-                    const confrontosAnalise1 = document.getElementById('confrontos-analise-1-novo');
-                    if (confrontosAnalise1 && confrontosAnalise1.textContent.includes('Baseado nos últimos 10 jogos')) {
-                        confrontosAnalise1.textContent = 'Confronto Equilibrado';
-                        console.log('✅ [JOGO1-NOVO] Texto substituído via ID específico');
-                        return;
-                    }
-                    
-                    // Método 2: Procurar por todos os elementos que contêm o texto genérico
-                    const elementos = document.querySelectorAll('*');
-                    elementos.forEach(elemento => {
-                        if (elemento.textContent && elemento.textContent.trim() === 'Baseado nos últimos 10 jogos') {
-                            elemento.textContent = 'Confronto Equilibrado';
-                            // console.log('✅ [JOGO1-NOVO] Texto genérico substituído:', elemento);
-                        }
-                    });
-                }, 2000); // Aguarda 2 segundos para garantir que os confrontos foram carregados
+                debugLog('JOGO1-NOVO', 'Dados carregados com sucesso!', 'success');
                 
                 console.log('✅ [JOGO1-NOVO] Carregamento concluído com sucesso!');
                 
@@ -10818,22 +11026,22 @@
             const fatorAnalise = document.getElementById('fator-analise-6-novo');
             
             if (formaAnalise && dados.analise_posicao) {
-                formaAnalise.textContent = dados.analise_posicao;
+                formaAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao);
                 console.log('✅ [JOGO6-NOVO] Análise forma atualizada');
             }
             
             if (posicaoAnalise && dados.analise_posicao_tabelas) {
-                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+                posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao_tabelas);
                 console.log('✅ [JOGO6-NOVO] Análise posição atualizada');
             }
             
             if (h2hAnalise && dados.analise_confronto_direto) {
-                h2hAnalise.textContent = dados.analise_confronto_direto;
+                h2hAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto);
                 console.log('✅ [JOGO6-NOVO] Análise H2H atualizada');
             }
             
             if (fatorAnalise && dados.analise_fator_casa) {
-                fatorAnalise.textContent = dados.analise_fator_casa;
+                fatorAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa);
                 console.log('✅ [JOGO6-NOVO] Análise fator atualizada');
             }
             
@@ -11033,19 +11241,19 @@
             const fatorAnalise = document.getElementById('fator-analise-5-novo');
             
             if (formaAnalise && dados.analise_posicao) {
-                formaAnalise.textContent = dados.analise_posicao;
+                formaAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao);
             }
             
             if (posicaoAnalise && dados.analise_posicao_tabelas) {
-                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+                posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao_tabelas);
             }
             
             if (h2hAnalise && dados.analise_confronto_direto) {
-                h2hAnalise.textContent = dados.analise_confronto_direto;
+                h2hAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto);
             }
             
             if (fatorAnalise && dados.analise_fator_casa) {
-                fatorAnalise.textContent = dados.analise_fator_casa;
+                fatorAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa);
             }
             
             // 9. ATUALIZAR CONCLUSÃO DO ANALISTA
@@ -11174,19 +11382,19 @@
             const fatorAnalise = document.getElementById('fator-analise-5-novo');
             
             if (formaAnalise && dados.analise_posicao) {
-                formaAnalise.textContent = dados.analise_posicao;
+                formaAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao);
             }
             
             if (posicaoAnalise && dados.analise_posicao_tabelas) {
-                posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+                posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao_tabelas);
             }
             
             if (h2hAnalise && dados.analise_confronto_direto) {
-                h2hAnalise.textContent = dados.analise_confronto_direto;
+                h2hAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto);
             }
             
             if (fatorAnalise && dados.analise_fator_casa) {
-                fatorAnalise.textContent = dados.analise_fator_casa;
+                fatorAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa);
             }
             
             // 9. CONCLUSÃO DO ANALISTA
@@ -11894,6 +12102,7 @@
                             <button type="button" class="choice-btn" data-game="${game.id}" data-choice="X" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">X</button>
                             <button type="button" class="choice-btn" data-game="${game.id}" data-choice="2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">2</button>
                             <button type="button" class="choice-btn" data-game="${game.id}" data-choice="1X" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">1X</button>
+                            <button type="button" class="choice-btn" data-game="${game.id}" data-choice="12" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">12</button>
                             <button type="button" class="choice-btn" data-game="${game.id}" data-choice="X2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">X2</button>
                             <button type="button" class="choice-btn" data-game="${game.id}" data-choice="1X2" style="padding: 8px 12px; margin: 2px; border: 1px solid #444; background: #2d2d2d; color: #ffffff; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-weight: 500;">1X2</button>
                         </div>
@@ -12010,17 +12219,34 @@
 
         async function carregarDadosForcaElenco() {
             try {
-                console.log('🔄 Carregando dados de força do elenco...');
-                const response = await fetch('/static/valor_elenco/forca_elenco_unificado.json');
+                console.log('🔄 Carregando dados de força do elenco dos CSVs...');
+                const response = await fetch('/api/forca-elenco/dados-unificados');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-                forcaElencoData = await response.json();
-                console.log('✅ Dados de força do elenco carregados:', forcaElencoData);
-                console.log('📊 Clubes disponíveis:', Object.keys(forcaElencoData.clubes));
+                const dados = await response.json();
+                
+                if (dados.success) {
+                    forcaElencoData = {
+                        clubes: dados.clubes,
+                        metadata: dados.metadata
+                    };
+                    console.log('✅ Dados de força do elenco carregados dos CSVs!');
+                    console.log('📊 Total de clubes:', dados.total_clubes);
+                    console.log('🌍 Clubes disponíveis:', Object.keys(dados.clubes).sort());
+                    
+                    // DEBUG: Mostrar clubes com "atletico" no nome
+                    const atleticos = Object.keys(dados.clubes).filter(k => k.includes('atletico'));
+                    if (atleticos.length > 0) {
+                        console.log('🔍 DEBUG - Chaves com "atletico":', atleticos);
+                        console.log('🔍 DEBUG - Dados do primeiro Atlético:', dados.clubes[atleticos[0]]);
+                    }
+                } else {
+                    throw new Error(dados.error || 'Erro desconhecido');
+                }
             } catch (error) {
                 console.error('❌ Erro ao carregar dados de força do elenco:', error);
-                console.error('🔍 URL tentada:', '/static/valor_elenco/forca_elenco_unificado.json');
+                console.error('🔍 URL tentada:', '/api/forca-elenco/dados-unificados');
             }
         }
 
@@ -12030,47 +12256,114 @@
                 return { casa: null, fora: null };
             }
             
-            // ✅ MAPEAMENTO MOVIDO PARA: backend/static/js/loteca/dados-times.js
-            // Agora está disponível em: window.MAPEAMENTO_TIMES_BR
-            
-            const timeCasaKey = timeCasa.toLowerCase().trim();
-            const timeForaKey = timeFora.toLowerCase().trim();
-            
-            // ✅ USAR MAPEAMENTO DO ARQUIVO EXTERNO
-            const chaveCasa = window.MAPEAMENTO_TIMES_BR[timeCasaKey] || null;
-            const chaveFora = window.MAPEAMENTO_TIMES_BR[timeForaKey] || null;
-            
-            // DEBUG: Se não encontrar no mapeamento, logar
-            if (!chaveCasa) {
-                console.warn(`⚠️ Time casa "${timeCasa}" (lowercase: "${timeCasaKey}") não está no mapeamento!`);
+            // Função auxiliar para buscar clube de forma inteligente
+            function buscarClube(nomeTime) {
+                if (!nomeTime) return null;
+                
+                // NORMALIZAÇÃO COMPLETA: remove acentos, sufixos e caracteres especiais
+                function normalizar(texto) {
+                    return texto
+                        .toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                        .replace(/\/(sp|rj|mg|rs|ce|ba|pe|pr|sc|go|ing|esp|it|fra|ale|por)/gi, '') // Remove sufixos
+                        .replace(/[^a-z0-9\s\-]/g, '') // Mantém letras, números, espaços e hífens
+                        .trim();
+                }
+                
+                const nomeOriginal = nomeTime;
+                const nomeNorm = normalizar(nomeTime);
+                
+                console.log(`🔍 Buscando: "${nomeOriginal}"`);
+                console.log(`   → Normalizado: "${nomeNorm}"`);
+                
+                // 1. BUSCA DIRETA (nome normalizado exato)
+                if (forcaElencoData.clubes[nomeNorm]) {
+                    console.log(`✅ Encontrado por chave exata: "${nomeNorm}"`);
+                    return forcaElencoData.clubes[nomeNorm];
+                }
+                
+                // 2. BUSCA POR TODAS AS CHAVES (comparando normalizadas)
+                for (const [chave, dados] of Object.entries(forcaElencoData.clubes)) {
+                    const chaveNorm = normalizar(chave);
+                    
+                    // Comparação exata normalizada
+                    if (chaveNorm === nomeNorm) {
+                        console.log(`✅ Encontrado por comparação normalizada: "${chave}"`);
+                        return dados;
+                    }
+                    
+                    // Comparação por nome_oficial
+                    if (dados.nome_oficial) {
+                        const oficialNorm = normalizar(dados.nome_oficial);
+                        if (oficialNorm === nomeNorm) {
+                            console.log(`✅ Encontrado por nome oficial: "${dados.nome_oficial}"`);
+                            return dados;
+                        }
+                    }
+                }
+                
+                // 2.5. ALIASES especiais (casos hardcoded)
+                const ALIASES_FRONTEND = {
+                    'wolves': ['wolverhampton', 'wolves'],
+                    'galo': ['atletico', 'atletico-mg', 'atletico mg'],
+                    'manchester city': ['man city', 'city', 'manchester_city', 'manchester city'],
+                    'chelsea': ['chelsea', 'che'],
+                    'liverpool': ['liverpool', 'liv'],
+                    'valencia': ['valencia', 'val']
+                };
+                
+                // Verificar aliases
+                const nomeSimples = nomeNorm.split(/[\s\-\/]+/)[0]; // Primeira palavra
+                if (ALIASES_FRONTEND[nomeSimples]) {
+                    console.log(`🔍 Testando aliases para "${nomeSimples}": ${ALIASES_FRONTEND[nomeSimples].join(', ')}`);
+                    for (const variacao of ALIASES_FRONTEND[nomeSimples]) {
+                        if (forcaElencoData.clubes[variacao]) {
+                            console.log(`✅ Encontrado via alias "${nomeSimples}" → "${variacao}"`);
+                            return forcaElencoData.clubes[variacao];
+                        }
+                    }
+                }
+                
+                // Também testar com o nome completo normalizado
+                if (ALIASES_FRONTEND[nomeNorm]) {
+                    console.log(`🔍 Testando aliases para nome completo "${nomeNorm}": ${ALIASES_FRONTEND[nomeNorm].join(', ')}`);
+                    for (const variacao of ALIASES_FRONTEND[nomeNorm]) {
+                        if (forcaElencoData.clubes[variacao]) {
+                            console.log(`✅ Encontrado via alias (nome completo) "${nomeNorm}" → "${variacao}"`);
+                            return forcaElencoData.clubes[variacao];
+                        }
+                    }
+                }
+                
+                // 3. BUSCA POR PALAVRAS-CHAVE (para nomes compostos)
+                const palavras = nomeNorm.split(/[\s\-]+/).filter(p => p.length >= 3);
+                console.log(`   → Palavras-chave: [${palavras.join(', ')}]`);
+                
+                for (const [chave, dados] of Object.entries(forcaElencoData.clubes)) {
+                    const chaveNorm = normalizar(chave);
+                    const oficialNorm = dados.nome_oficial ? normalizar(dados.nome_oficial) : '';
+                    
+                    // Busca por cada palavra significativa
+                    for (const palavra of palavras) {
+                        if (chaveNorm.includes(palavra) || oficialNorm.includes(palavra)) {
+                            console.log(`✅ Encontrado por palavra-chave "${palavra}": "${chave}"`);
+                            return dados;
+                        }
+                    }
+                }
+                
+                console.warn(`❌ Clube "${nomeOriginal}" não encontrado nos dados CSV`);
+                return null;
             }
-            if (!chaveFora) {
-                console.warn(`⚠️ Time fora "${timeFora}" (lowercase: "${timeForaKey}") não está no mapeamento!`);
-            }
             
-            console.log('🔍 Verificando clubes:', { 
-                timeCasa, 
-                timeFora, 
-                chaveCasa, 
-                chaveFora,
-                clubesDisponiveis: Object.keys(forcaElencoData.clubes),
-                dadosCasa: forcaElencoData.clubes[chaveCasa],
-                dadosFora: forcaElencoData.clubes[chaveFora]
-            });
+            const dadosCasa = buscarClube(timeCasa);
+            const dadosFora = buscarClube(timeFora);
             
-            // ✅ LOG ESPECÍFICO PARA JOGO 2 E 3
-            if (timeCasa === 'INTERNACI0NAL' || timeCasa === 'CORINTHIANS/SP') {
-                console.log('🎯 [DEBUG] JOGO 2/3 - Clubes disponíveis:', Object.keys(forcaElencoData.clubes));
-                console.log('🎯 [DEBUG] JOGO 2/3 - Chave casa:', chaveCasa);
-                console.log('🎯 [DEBUG] JOGO 2/3 - Chave fora:', chaveFora);
-            }
-            
-            const dadosCasa = forcaElencoData.clubes[chaveCasa] || null;
-            const dadosFora = forcaElencoData.clubes[chaveFora] || null;
-            
-            console.log('📊 Resultado da verificação:', { 
-                casa: dadosCasa ? 'ENCONTRADO' : 'NÃO ENCONTRADO', 
-                fora: dadosFora ? 'ENCONTRADO' : 'NÃO ENCONTRADO' 
+            console.log('📊 Resultado final:', { 
+                timeCasa: timeCasa,
+                timeFora: timeFora,
+                casa: dadosCasa ? `ENCONTRADO (${dadosCasa.nome_oficial})` : 'NÃO ENCONTRADO', 
+                fora: dadosFora ? `ENCONTRADO (${dadosFora.nome_oficial})` : 'NÃO ENCONTRADO' 
             });
             
             return { casa: dadosCasa, fora: dadosFora };
@@ -13239,9 +13532,11 @@
         }
 
         // Inicializa o sistema de força do elenco para TODOS os jogos
-        console.log('🚀 Iniciando sistema de força do elenco para TODOS os jogos...');
+        console.log('🚀 [FORÇA DOS ELENCOS] Iniciando sistema - USANDO CSVs via API!');
+        console.log('📁 [FORÇA DOS ELENCOS] Fontes: Top 100 Mundial + Série A + Série B');
         carregarDadosForcaElenco().then(() => {
-          console.log('✅ Dados carregados, aguardando carregamento completo dos jogos...');
+          console.log('✅ [FORÇA DOS ELENCOS] Dados carregados dos CSVs com sucesso!');
+          console.log('⏳ [FORÇA DOS ELENCOS] Aguardando carregamento completo dos jogos...');
           
           // Função para aplicar força do elenco em todos os jogos
           function aplicarForcaElencoTodosJogos() {
@@ -13618,14 +13913,167 @@
             modal.style.display = 'none';
         }
 
+        // ✅ FUNÇÕES DO MODAL DE COMPARAÇÃO DE ELENCOS
+        function abrirModalComparacao(jogoNum) {
+            console.log(`🔍 [MODAL-ELENCO] Abrindo modal para Jogo ${jogoNum}`);
+            
+            // Buscar dados do jogo
+            const jogoData = window.dadosJogosElenco[jogoNum];
+            if (!jogoData) {
+                console.error(`❌ [MODAL-ELENCO] Dados do jogo ${jogoNum} não encontrados!`);
+                alert('Dados do jogo não disponíveis. Tente novamente.');
+                return;
+            }
+            
+            const dadosCasa = jogoData.casa;
+            const dadosVisitante = jogoData.visitante;
+            const timeCasaNome = jogoData.timeCasaNome;
+            const timeVisitanteNome = jogoData.timeVisitanteNome;
+            
+            console.log(`🏠 Casa: ${timeCasaNome}`, dadosCasa);
+            console.log(`✈️ Visitante: ${timeVisitanteNome}`, dadosVisitante);
+            
+            const modal = document.getElementById('modal-comparacao-elenco');
+            const title = document.getElementById('modal-comparacao-title');
+            const body = document.getElementById('modal-comparacao-body');
+            
+            console.log('🔍 [MODAL-ELENCO] Elementos do modal:', {
+                modal: !!modal,
+                title: !!title,
+                body: !!body
+            });
+            
+            if (!modal) {
+                console.error('❌ [MODAL-ELENCO] Modal não encontrado no DOM!');
+                return;
+            }
+            
+            // Atualizar título
+            title.innerHTML = `💪 Comparação de Força dos Elencos - JOGO ${jogoNum}`;
+            
+            // Calcular diferenças
+            const valorCasa = parseFloat((dadosCasa?.valor_mm_euros || 0));
+            const valorVisitante = parseFloat((dadosVisitante?.valor_mm_euros || 0));
+            const forcaCasa = parseFloat((dadosCasa?.forca_elenco || 0));
+            const forcaVisitante = parseFloat((dadosVisitante?.forca_elenco || 0));
+            
+            const difValor = valorCasa - valorVisitante;
+            const difPct = valorVisitante > 0 ? ((difValor / valorVisitante) * 100).toFixed(1) : 0;
+            const difForca = (forcaCasa - forcaVisitante).toFixed(1);
+            
+            // Determinar vantagens
+            const vantagemValor = difValor > 0 ? timeCasaNome : (difValor < 0 ? timeVisitanteNome : 'Empate');
+            const vantagemForca = difForca > 0 ? timeCasaNome : (difForca < 0 ? timeVisitanteNome : 'Empate');
+            
+            // Gerar HTML da tabela comparativa
+            body.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2 style="color: #00E38C; margin: 0;">${timeCasaNome} <span style="color: #999;">vs</span> ${timeVisitanteNome}</h2>
+                </div>
+                
+                <table style="width: 100%; border-collapse: collapse; background: #2a2a2a; border-radius: 8px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: #00E38C;">
+                            <th style="padding: 12px; text-align: left; color: white; font-weight: 600;">Métrica</th>
+                            <th style="padding: 12px; text-align: center; color: white; font-weight: 600;">${timeCasaNome}</th>
+                            <th style="padding: 12px; text-align: center; color: white; font-weight: 600;">${timeVisitanteNome}</th>
+                            <th style="padding: 12px; text-align: center; color: white; font-weight: 600;">Vantagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #444;">
+                            <td style="padding: 12px; color: #ccc;">Valor do Plantel</td>
+                            <td style="padding: 12px; text-align: center; color: white; font-weight: bold;">${dadosCasa?.preco_medio || 'N/A'}</td>
+                            <td style="padding: 12px; text-align: center; color: white; font-weight: bold;">${dadosVisitante?.preco_medio || 'N/A'}</td>
+                            <td style="padding: 12px; text-align: center; color: ${difValor > 0 ? '#4ade80' : (difValor < 0 ? '#f87171' : '#fbbf24')}; font-weight: bold;">
+                                ${vantagemValor}${difPct != 0 ? ` (${Math.abs(difPct)}%)` : ''}
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #444;">
+                            <td style="padding: 12px; color: #ccc;">Força do Elenco</td>
+                            <td style="padding: 12px; text-align: center; color: white; font-weight: bold;">${forcaCasa}/10</td>
+                            <td style="padding: 12px; text-align: center; color: white; font-weight: bold;">${forcaVisitante}/10</td>
+                            <td style="padding: 12px; text-align: center; color: ${difForca > 0 ? '#4ade80' : (difForca < 0 ? '#f87171' : '#fbbf24')}; font-weight: bold;">
+                                ${vantagemForca}${difForca != 0 ? ` (${Math.abs(difForca)})` : ''}
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #444;">
+                            <td style="padding: 12px; color: #ccc;">Classificação</td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="padding: 4px 8px; border-radius: 4px; background: ${dadosCasa?.badge?.class === 'badge-elite' ? '#4ade80' : (dadosCasa?.badge?.class === 'badge-forte' ? '#fbbf24' : '#f87171')}; color: white; font-size: 11px; font-weight: 600;">
+                                    ${dadosCasa?.badge?.text || 'N/A'}
+                                </span>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="padding: 4px 8px; border-radius: 4px; background: ${dadosVisitante?.badge?.class === 'badge-elite' ? '#4ade80' : (dadosVisitante?.badge?.class === 'badge-forte' ? '#fbbf24' : '#f87171')}; color: white; font-size: 11px; font-weight: 600;">
+                                    ${dadosVisitante?.badge?.text || 'N/A'}
+                                </span>
+                            </td>
+                            <td style="padding: 12px; text-align: center; color: #ccc;">-</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #444;">
+                            <td style="padding: 12px; color: #ccc;">Total de Atletas</td>
+                            <td style="padding: 12px; text-align: center; color: white;">${dadosCasa?.total_atletas || 'N/A'}</td>
+                            <td style="padding: 12px; text-align: center; color: white;">${dadosVisitante?.total_atletas || 'N/A'}</td>
+                            <td style="padding: 12px; text-align: center; color: #ccc;">-</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; color: #ccc;">Liga/Competição</td>
+                            <td style="padding: 12px; text-align: center; color: white; font-size: 11px;">${dadosCasa?.serie || dadosCasa?.liga || 'N/A'}</td>
+                            <td style="padding: 12px; text-align: center; color: white; font-size: 11px;">${dadosVisitante?.serie || dadosVisitante?.liga || 'N/A'}</td>
+                            <td style="padding: 12px; text-align: center; color: #ccc;">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0, 227, 140, 0.1); border-radius: 8px; border-left: 4px solid #00E38C;">
+                    <h4 style="color: #00E38C; margin: 0 0 10px 0; font-size: 14px;">📊 Análise da Comparação:</h4>
+                    <ul style="margin: 0; padding-left: 20px; color: #ccc; font-size: 13px; line-height: 1.6;">
+                        <li><strong>Valor Plantel:</strong> ${vantagemValor} tem elenco mais valioso (diferença de ${Math.abs(difPct)}%)</li>
+                        <li><strong>Força Calculada:</strong> ${vantagemForca} tem força superior (diferença de ${Math.abs(difForca)} pontos)</li>
+                        <li><strong>Conclusão:</strong> ${Math.abs(difForca) >= 1.5 ? `${vantagemForca} possui vantagem significativa no elenco` : 'Confronto equilibrado em termos de força dos elencos'}</li>
+                    </ul>
+                </div>
+            `;
+            
+            // Mostrar modal
+            console.log('🔍 [MODAL-ELENCO] Exibindo modal...');
+            modal.style.display = 'block';
+            console.log('✅ [MODAL-ELENCO] Modal.style.display =', modal.style.display);
+            console.log('✅ [MODAL-ELENCO] Modal aberto com sucesso!');
+        }
+
+        function fecharModalComparacao() {
+            const modal = document.getElementById('modal-comparacao-elenco');
+            modal.style.display = 'none';
+        }
+
         // Fechar modal ao clicar fora dele
         window.onclick = function(event) {
             const modal = document.getElementById('modal-info');
+            const modalComparacao = document.getElementById('modal-comparacao-elenco');
+            
             if (event.target === modal) {
                 modal.style.display = 'none';
             }
+            if (event.target === modalComparacao) {
+                modalComparacao.style.display = 'none';
+            }
         }
     </script>
+
+    <!-- ✅ MODAL DE COMPARAÇÃO DE ELENCOS (GLOBAL - FORA DE TODAS AS ABAS) -->
+    <div id="modal-comparacao-elenco" class="modal-info">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-comparacao-title">💪 Comparação de Força dos Elencos</h3>
+                <span class="close" onclick="fecharModalComparacao()">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-comparacao-body" style="padding: 20px;">
+                <!-- Conteúdo será inserido dinamicamente -->
+            </div>
+        </div>
+    </div>
 
     </body>
 </html>

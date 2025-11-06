@@ -333,14 +333,14 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
                 console.log(`📊 [JOGO${numeroJogo}] Parse confronto: ${vitorias}V-${empates}E-${derrotas}D`);
                 
                 confrontoDireto.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 15px; height: 15px; border-radius: 50%;">
-                        <span style="font-weight: bold; color: #ffffff;">${vitorias}V</span>
-                        <span style="color: #ffffff; font-weight: bold;">-</span>
-                        <span style="color: #ffffff; font-weight: bold;">${empates}E</span>
-                        <span style="color: #ffffff; font-weight: bold;">-</span>
-                        <span style="font-weight: bold; color: #ffffff;">${derrotas}D</span>
-                        <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 15px; height: 15px; border-radius: 50%;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <img src="${dados.escudo_casa || '/static/escudos/placeholder.png'}" alt="${dados.time_casa || 'Time Casa'}" style="width: 20px; height: 20px; border-radius: 50%;">
+                        <span style="font-weight: 400; color: #ffffff; font-size: 17px; letter-spacing: 0.5px;">${vitorias}V</span>
+                        <span style="color: #ffffff; font-weight: 400; font-size: 17px; letter-spacing: 0.5px;">-</span>
+                        <span style="color: #ffffff; font-weight: 400; font-size: 17px; letter-spacing: 0.5px;">${empates}E</span>
+                        <span style="color: #ffffff; font-weight: 400; font-size: 17px; letter-spacing: 0.5px;">-</span>
+                        <span style="font-weight: 400; color: #ffffff; font-size: 17px; letter-spacing: 0.5px;">${derrotas}D</span>
+                        <img src="${dados.escudo_fora || '/static/escudos/placeholder.png'}" alt="${dados.time_fora || 'Time Fora'}" style="width: 20px; height: 20px; border-radius: 50%;">
                     </div>
                 `;
                 console.log(`✅ [JOGO${numeroJogo}] Confronto direto atualizado com dados reais!`);
@@ -369,28 +369,28 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
     if (dados.analise_posicao) {
         const formaAnalise = document.getElementById(ids.formaAnalise);
         if (formaAnalise) {
-            formaAnalise.textContent = dados.analise_posicao;
+            formaAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao);
         }
     }
     
     if (dados.analise_posicao_tabelas) {
         const posicaoAnalise = document.getElementById(ids.posicaoAnalise);
         if (posicaoAnalise) {
-            posicaoAnalise.textContent = dados.analise_posicao_tabelas;
+            posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao_tabelas);
         }
     }
     
     if (dados.analise_confronto_direto) {
         const h2hAnalise = document.getElementById(ids.h2hAnalise);
         if (h2hAnalise) {
-            h2hAnalise.textContent = dados.analise_confronto_direto;
+            h2hAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_confronto_direto);
         }
     }
     
     if (dados.analise_fator_casa) {
         const fatorAnalise = document.getElementById(ids.fatorAnalise);
         if (fatorAnalise) {
-            fatorAnalise.textContent = dados.analise_fator_casa;
+            fatorAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_fator_casa);
         }
     }
     
@@ -417,13 +417,7 @@ async function atualizarCamposPrincipais(numeroJogo, responseData) {
  * @param {object} dados - Dados do jogo
  */
 async function carregarERenderizarConfrontos(numeroJogo, dados) {
-    console.log(`📊 [JOGO${numeroJogo}] Carregando confrontos do CSV...`);
-    
-    const jogoInfo = jogosMap[numeroJogo];
-    if (!jogoInfo) {
-        console.error(`❌ [JOGO${numeroJogo}] Jogo não encontrado no mapeamento!`);
-        return;
-    }
+    console.log(`📊 [JOGO${numeroJogo}] ✨ NOVA LÓGICA SIMPLES - Carregando confrontos...`);
     
     const container = document.getElementById(`confrontos-principais-${numeroJogo}`);
     if (!container) {
@@ -431,91 +425,68 @@ async function carregarERenderizarConfrontos(numeroJogo, dados) {
         return;
     }
     
+    // ✅ NOVA SOLUÇÃO SIMPLES: Ler confrontos formatados do JSON
+    // Formato: (data, placar, vencedor|escudo)
     try {
-        // CARREGAR CSV
-        const response = await fetch(`/api/confrontos/${jogoInfo.csv}`);
-        if (!response.ok) {
-            throw new Error(`Erro ao carregar CSV: ${response.status}`);
-        }
-        
-        const csvText = await response.text();
-        const linhas = csvText.split('\n').filter(linha => linha.trim());
-        
-        console.log(`📊 [JOGO${numeroJogo}] CSV carregado: ${linhas.length} linhas`);
-        
-        // PROCESSAR DADOS
-        const confrontos = [];
-        for (let i = 1; i < Math.min(linhas.length, 11); i++) { // Máximo 10 confrontos
-            const colunas = linhas[i].split(',');
-            if (colunas.length >= 4) {
-                const data = colunas[0]?.trim();
-                const placar = colunas[1]?.trim();
-                const vencedor = colunas[2]?.trim();
-                const competicao = colunas[3]?.trim();
+        // Buscar sequência formatada do JSON
+        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+        if (jogoResponse.ok) {
+            const jogoData = await jogoResponse.json();
+            if (jogoData.success && jogoData.dados && jogoData.dados.confrontos_sequence) {
+                const sequenciaFormatada = jogoData.dados.confrontos_sequence;
+                console.log(`✅ [JOGO${numeroJogo}] Sequência formatada encontrada:`, sequenciaFormatada);
                 
-                // DETERMINAR RESULTADO
-                let resultado = 'E'; // Empate por padrão
-                if (placar && placar.includes('x')) {
-                    const [golsCasa, golsFora] = placar.split('x').map(g => parseInt(g.trim()));
-                    if (golsCasa > golsFora) {
-                        resultado = 'V';
-                    } else if (golsFora > golsCasa) {
-                        resultado = 'D';
-                    }
-                } else if (vencedor && vencedor !== 'Empate') {
-                    if (vencedor === jogoInfo.casa) {
-                        resultado = 'V';
-                    } else if (vencedor === jogoInfo.fora) {
-                        resultado = 'D';
-                    }
+                // Parse da string formatada: (data, placar, vencedor|escudo)
+                const regex = /\(([^,]+),\s*([^,]+),\s*([^|]+)\|([^)]+)\)/g;
+                let matches;
+                const confrontos = [];
+                
+                while ((matches = regex.exec(sequenciaFormatada)) !== null) {
+                    confrontos.push({
+                        data: matches[1].trim(),
+                        placar: matches[2].trim(),
+                        vencedor: matches[3].trim(),
+                        escudo: matches[4].trim()
+                    });
                 }
                 
-                confrontos.push({
-                    data: data || 'Data não disponível',
-                    placar: placar || 'N/A',
-                    resultado: resultado,
-                    competicao: competicao || 'Competição não disponível'
-                });
+                if (confrontos.length > 0) {
+                    console.log(`✅ [JOGO${numeroJogo}] ${confrontos.length} confrontos parseados!`, confrontos);
+                    
+                    // Renderizar boxes DIRETAMENTE com ESCUDOS
+                    const bolinhasHtml = confrontos.map((conf, index) => {
+                        const escudoHtml = conf.vencedor === 'Empate' 
+                            ? `<img src="/static/escudos/Empate.png" style="width:20px;height:20px;" onerror="this.style.display='none'" title="Empate">`
+                            : `<img src="${conf.escudo}" style="width:20px;height:20px;" onerror="this.src='/static/placeholder-team-logo.svg'" title="${conf.vencedor}">`;
+                        
+                        return `
+                            <div class="confronto-item">
+                                <div class="confronto-data">${conf.data}</div>
+                                <div class="confronto-placar">${conf.placar}</div>
+                                <div class="confronto-result" title="${conf.data}: ${conf.placar} - ${conf.vencedor}">${escudoHtml}</div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    container.innerHTML = bolinhasHtml;
+                    console.log(`✅ [JOGO${numeroJogo}] Boxes renderizados com ESCUDOS corretos!`);
+                    return; // ✅ SUCESSO! Sair da função
+                }
             }
         }
-        
-        // RENDERIZAR HTML
-        let htmlConfrontos = '';
-        confrontos.forEach((confronto, index) => {
-            const corBolinha = confronto.resultado === 'V' ? 'green' : 
-                              confronto.resultado === 'D' ? 'red' : 'gray';
-            
-            htmlConfrontos += `
-                <div class="confronto-box">
-                    <div class="confronto-data">${confronto.data}</div>
-                    <div class="confronto-placar">${confronto.placar}</div>
-                    <div class="confronto-resultado ${corBolinha}">${confronto.resultado}</div>
-                    <div class="confronto-competicao">${confronto.competicao}</div>
-                </div>
-            `;
-        });
-        
-        // PREENCHER CONTAINER
-        container.innerHTML = htmlConfrontos;
-        
-        console.log(`✅ [JOGO${numeroJogo}] ${confrontos.length} confrontos renderizados!`);
-        
     } catch (error) {
-        console.error(`❌ [JOGO${numeroJogo}] Erro ao carregar confrontos:`, error);
-        
-        // FALLBACK: Dados hardcoded
-        const fallbackHtml = `
-            <div class="confronto-box">
-                <div class="confronto-data">Data não disponível</div>
-                <div class="confronto-placar">N/A</div>
-                <div class="confronto-resultado gray">E</div>
-                <div class="confronto-competicao">Competição não disponível</div>
-            </div>
-        `;
-        
-        container.innerHTML = fallbackHtml;
-        console.log(`🔄 [JOGO${numeroJogo}] Usando dados de fallback`);
+        console.log(`⚠️ [JOGO${numeroJogo}] Erro ao buscar sequência formatada:`, error);
     }
+    
+    // ⚠️ FALLBACK: Se não encontrou sequência formatada, mostrar mensagem
+    console.warn(`⚠️ [JOGO${numeroJogo}] Nenhuma sequência formatada encontrada, usando fallback...`);
+    container.innerHTML = `
+        <div class="confronto-item">
+            <div class="confronto-data">N/A</div>
+            <div class="confronto-placar">N/A</div>
+            <div class="confronto-result">E</div>
+        </div>
+    `;
 }
 
 /**

@@ -636,6 +636,89 @@
         
         /* DESKTOP - GARANTIR LAYOUT ORIGINAL DOS BOT�ES */
         @media (min-width: 769px) {
+        /* ========================================
+           🎯 PADRONIZAÇÃO TOTAL - TODOS OS TEXTOS DA TABELA
+           TAMANHO: 17px | COR: Branco #ffffff
+           ======================================== */
+        .analysis-table td {
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+        }
+        
+        .analysis-table .team-header {
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+        }
+        
+        /* ========================================
+           🎯 CÉLULAS ESPECÍFICAS: POSIÇÃO E FATOR CASA
+           TODOS COM 17px E BRANCO
+           ======================================== */
+        .analysis-table td[id^="posicao-casa-"],
+        .analysis-table td[id^="posicao-fora-"],
+        .analysis-table td[id^="fator-casa-"],
+        .analysis-table td[id^="fator-fora-"],
+        #posicao-casa-1-novo, #posicao-fora-1-novo,
+        #posicao-casa-2-novo, #posicao-fora-2-novo,
+        #posicao-casa-3-novo, #posicao-fora-3-novo,
+        #posicao-casa-4-novo, #posicao-fora-4-novo,
+        #posicao-casa-5-novo, #posicao-fora-5-novo,
+        #posicao-casa-6-novo, #posicao-fora-6-novo,
+        #posicao-casa-7-novo, #posicao-fora-7-novo,
+        #posicao-casa-8-novo, #posicao-fora-8-novo,
+        #posicao-casa-9-novo, #posicao-fora-9-novo,
+        #posicao-casa-10-novo, #posicao-fora-10-novo,
+        #posicao-casa-11-novo, #posicao-fora-11-novo,
+        #posicao-casa-12-novo, #posicao-fora-12-novo,
+        #posicao-casa-13-novo, #posicao-fora-13-novo,
+        #posicao-casa-14-novo, #posicao-fora-14-novo,
+        #fator-casa-1-novo, #fator-fora-1-novo,
+        #fator-casa-2-novo, #fator-fora-2-novo,
+        #fator-casa-3-novo, #fator-fora-3-novo,
+        #fator-casa-4-novo, #fator-fora-4-novo,
+        #fator-casa-5-novo, #fator-fora-5-novo,
+        #fator-casa-6-novo, #fator-fora-6-novo,
+        #fator-casa-7-novo, #fator-fora-7-novo,
+        #fator-casa-8-novo, #fator-fora-8-novo,
+        #fator-casa-9-novo, #fator-fora-9-novo,
+        #fator-casa-10-novo, #fator-fora-10-novo,
+        #fator-casa-11-novo, #fator-fora-11-novo,
+        #fator-casa-12-novo, #fator-fora-12-novo,
+        #fator-casa-13-novo, #fator-fora-13-novo,
+        #fator-casa-14-novo, #fator-fora-14-novo {
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+        }
+        
+        /* Coluna "Análise" (4ª coluna) */
+        .analysis-table td[id^="posicao-analise-"],
+        .analysis-table td[id^="h2h-analise-"],
+        .analysis-table td[id^="fator-analise-"],
+        .analysis-table td[id^="forma-analise-"] {
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+            line-height: 1.4 !important;
+        }
+        
+        /* ========================================
+           🎯 CABEÇALHOS DA TABELA (THEAD)
+           PADRONIZADO: 17px E BRANCO
+           ======================================== */
+        .analysis-table th {
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+        }
+            
             .page--otimizador-aposta .choice-buttons {
                 display: grid !important; /* Layout grid para desktop tamb�m */
                 grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas */
@@ -850,10 +933,12 @@
         
         .analysis-table td {
             font-weight: 500;
+            font-size: 1rem; /* ✅ PADRONIZADO PARA DESKTOP */
         }
         
         .analysis-table .team-header {
             text-align: center;
+            font-size: 1.05rem; /* ✅ CÉLULAS DOS TIMES LIGEIRAMENTE MAIORES */
         }
 
         /* Ajuste dos chips para mobile - �ltimos Confrontos */
@@ -1320,6 +1405,25 @@
             font-size: 0.9rem;
         }
 
+        /* ========================================
+           🎯 REDUÇÃO DE 80% DAS FONTES DOS BOXES
+           ========================================
+           Aplicado apenas nos boxes de "Últimos Confrontos"
+           dentro das tabelas de análise (desktop)
+           ======================================== */
+        .analysis-table .confrontos-sequence .confronto-data {
+            font-size: 0.6rem !important; /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA */
+            font-weight: 500;
+            line-height: 1 !important; /* Line-height ajustado */
+        }
+
+        .analysis-table .confrontos-sequence .confronto-placar {
+            font-size: 0.6rem !important; /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA */
+            font-weight: 600;
+            padding: 1px 2px; /* Padding mínimo */
+            line-height: 1 !important; /* Line-height ajustado */
+        }
+
         .confronto-resultado {
             text-align: center;
             font-weight: 700;
@@ -1358,6 +1462,21 @@
             flex-wrap: wrap;
         }
 
+        /* ========================================
+           🎯 LAYOUT EM GRID: 2 LINHAS x 5 COLUNAS
+           ========================================
+           Organiza os 10 boxes em 2 linhas com espaço
+           ======================================== */
+        .analysis-table .confrontos-sequence {
+            display: grid !important;
+            grid-template-columns: repeat(5, 1fr) !important; /* 5 colunas */
+            grid-template-rows: repeat(2, 1fr) !important; /* 2 linhas */
+            row-gap: 20px !important; /* ✅ Espaço entre linhas 1 e 2 */
+            column-gap: 6px !important; /* ✅ Espaço ajustado para boxes maiores */
+            justify-items: center !important;
+            align-items: center !important;
+        }
+
         /* CSS para grid de confrontos em linha horizontal */
         .confrontos-grid {
             display: flex;
@@ -1377,19 +1496,105 @@
             padding: 4px;
         }
 
+        /* ========================================
+           🎯 BOXES RETANGULARES DEITADOS
+           ========================================
+           Largura > Altura (formato retangular horizontal)
+           ELEMENTOS CENTRALIZADOS para elegância
+           ======================================== */
+        .analysis-table .confrontos-sequence .confronto-item {
+            min-width: 60px !important; /* ✅ LARGURA PERFEITA */
+            max-width: 70px !important; /* ✅ LARGURA MÁXIMA */
+            height: 45px !important; /* ✅ ALTURA PERFEITA */
+            padding: 5px 6px !important; /* Padding confortável */
+            gap: 2px !important; /* Gap entre elementos */
+            
+            /* ✅ CENTRALIZAÇÃO DOS ELEMENTOS INTERNOS */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important; /* Centraliza horizontalmente */
+            justify-content: center !important; /* Centraliza verticalmente */
+        }
+        
+        /* Centralizar DATA, PLACAR e ESCUDO individualmente */
+        .analysis-table .confrontos-sequence .confronto-data,
+        .analysis-table .confrontos-sequence .confronto-placar,
+        .analysis-table .confrontos-sequence .confronto-result {
+            text-align: center !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        /* ESCUDOS mantêm tamanho original (20px) */
+        .analysis-table .confrontos-sequence .confronto-result img {
+            width: 20px !important; /* MANTIDO: Tamanho original */
+            height: 20px !important; /* MANTIDO: Tamanho original */
+        }
+
+        .analysis-table .confrontos-sequence .confronto-result {
+            width: 20px !important; /* Container do escudo */
+            height: 20px !important;
+            font-size: 0.5rem !important; /* Letra "E" de empate */
+        }
+
+        /* ========================================
+           🎯 COLUNA ANÁLISE - QUEBRA EM 2 LINHAS
+           ========================================
+           Formata os textos da 4ª coluna "Análise"
+           para exibir em 2 linhas ALINHADAS À DIREITA
+           PADRONIZADO: 17px E BRANCO
+           ======================================== */
+        .analysis-table tbody td:nth-child(4) {
+            text-align: right !important; /* ✅ ALINHADO À DIREITA */
+            vertical-align: middle !important;
+            line-height: 1.3 !important;
+            padding: 8px 12px 8px 4px !important; /* Mais espaço à direita */
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+            white-space: normal !important; /* Permite quebra de linha */
+        }
+
+        /* ========================================
+           🎯 CASOS ESPECIAIS: Linhas com colspan
+           ========================================
+           "Últimos Confrontos" e "Confronto Direto" têm colspan=2
+           então precisam de regra específica para a 3ª célula
+           PADRONIZADO: 17px E BRANCO
+           ======================================== */
+        .analysis-table tbody tr td:nth-child(3):not([colspan]) {
+            text-align: right !important; /* Para células normais da coluna 3 */
+        }
+
+        .analysis-table tbody tr td[colspan="2"] + td {
+            text-align: right !important; /* Para célula APÓS colspan (coluna Análise) */
+            vertical-align: middle !important;
+            line-height: 1.3 !important;
+            padding: 8px 12px 8px 4px !important;
+            font-size: 17px !important; /* ✅ PADRONIZADO: 17px */
+            color: #ffffff !important; /* ✅ BRANCO PURO */
+            font-weight: 400 !important; /* ✅ PESO NORMAL */
+            letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
+            white-space: normal !important;
+        }
+
         .confronto-data {
-            font-size: 0.715rem; /* 0.65rem * 1.1 - Aumento de 10% para desktop */
+            font-size: 0.6rem !important; /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA */
             color: #888;
             font-weight: 600;
             white-space: nowrap;
             text-align: center;
+            line-height: 1 !important;
         }
 
         .confronto-placar {
-            font-size: 0.77rem; /* 0.7rem * 1.1 - Aumento de 10% para desktop */
+            font-size: 0.6rem !important; /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA */
             font-weight: 700;
             white-space: nowrap;
             text-align: center;
+            line-height: 1 !important;
             color: #fff;
             margin-bottom: 2px;
             background: rgba(0, 0, 0, 0.3);
@@ -7694,6 +7899,40 @@
             box-shadow: 0 4px 8px rgba(239, 68, 68, 0.5);
         }
 
+        /* ✅ ÍCONE DE INFORMAÇÃO PARA FORÇA DOS ELENCOS */
+        .info-icon-elenco {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .info-icon-elenco:hover {
+            background: #dc2626;
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.6);
+        }
+
+        /* Ajustar vs-divider para acomodar o ícone */
+        .vs-divider-confronto {
+            position: relative;
+            padding-top: 20px;
+        }
+
         /* Estilos para o modal */
         .modal-info {
             display: none;
@@ -7928,34 +8167,35 @@
   .analysis-table .confrontos-sequence{
     display: grid !important;
     grid-auto-flow: row !important;
-    grid-template-columns: repeat(5, minmax(38px, 1fr)) !important;
+    grid-template-columns: repeat(5, minmax(50px, 1fr)) !important; /* ✅ Ajustado para boxes maiores */
     column-gap: 6px !important;     /* espa�o entre colunas */
-    row-gap: 8px !important;        /* *** espa�o entre as LINHAS *** */
+    row-gap: 15px !important;       /* ✅ Espaço aumentado entre as LINHAS */
     justify-items: center !important;
     align-items: center !important;
     width: 100%;
     padding: 4px 0;                 /* d� "ar" e evita encostar no topo */
   }
 
-  /* Os pills compactos (n�o invadem colunas 1 e 4) */
+  /* Os pills - RETÂNGULO DEITADO (mais largo que alto) */
   .analysis-table .confrontos-sequence .confronto-item{
-    min-width: 38px !important;
-    height: 28px !important;
-    padding: 4px 6px !important;
+    min-width: 50px !important; /* ✅ LARGURA para mobile */
+    max-width: 60px !important; /* ✅ LARGURA MÁXIMA */
+    height: 45px !important; /* ✅ ALTURA PERFEITA */
+    padding: 5px 6px !important;
     border-radius: 8px !important;
     gap: 2px !important;
     font-size: 10.5px !important;
     line-height: 1 !important;
   }
   .analysis-table .confrontos-sequence .confronto-placar{
-    font-size: 5px !important;     /* Reduzido de 6px para 5px - APENAS MOBILE */
+    font-size: 0.6rem !important;     /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA */
     line-height: 1 !important;
     padding: 1px 2px !important;
     margin-bottom: 0 !important;    /* evita empurrar a segunda linha */
     border-radius: 2px !important;
   }
   .analysis-table .confrontos-sequence .confronto-data{
-    font-size: 5px !important;     /* Reduzido de 6px para 5px - APENAS MOBILE */
+    font-size: 0.6rem !important;     /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA */
     line-height: 1 !important;
   }
   .analysis-table .confrontos-sequence .confronto-escudo,
@@ -8709,11 +8949,11 @@
 @media (min-width: 769px) {
   /* SELETORES MAIS ESPEC�FICOS PARA SOBRESCREVER REGRAS MOBILE */
   .analysis-table .confrontos-sequence .confronto-data {
-    font-size: 0.858rem !important; /* 0.715rem * 1.2 - Aumento de 20% */
+    font-size: 0.6rem !important; /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA - DESKTOP */
   }
   
   .analysis-table .confrontos-sequence .confronto-placar {
-    font-size: 0.924rem !important; /* 0.77rem * 1.2 - Aumento de 20% */
+    font-size: 0.6rem !important; /* ✅ TAMANHO CONFORTÁVEL PARA LEITURA - DESKTOP */
   }
   
   .analysis-table .confrontos-sequence .confronto-escudo,

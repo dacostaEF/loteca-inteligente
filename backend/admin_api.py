@@ -1742,6 +1742,52 @@ def obter_dados_analise_jogo(jogo_numero):
             if any(v is not None for v in prob.values()):
                 dados["probabilidades"] = prob
         
+        # ========================================
+        # 🎯 QUEBRAR TEXTOS DA COLUNA ANÁLISE EM 2 LINHAS
+        # ========================================
+        # Processa os campos de análise para quebrar em 2 linhas:
+        # - "Vantagem Time" → "Vantagem<br>Time"
+        # - "Confronto Equilibrado" → "Confronto<br>Equilibrado"
+        # ========================================
+        def quebrar_texto_analise(texto):
+            if not texto:
+                return texto
+            
+            # IMPORTANTE: Usar ||| como marcador de quebra (será substituído por <br> no frontend)
+            # Flask JSON escapa <br>, então usamos marcador especial
+            
+            # Padrão 1: "Vantagem [TIME]" → "Vantagem|||[TIME]"
+            if 'Vantagem ' in texto:
+                import re
+                return re.sub(r'Vantagem\s+(.+)', r'Vantagem|||\1', texto)
+            
+            # Padrão 2: "Confronto Equilibrado" → "Confronto|||Equilibrado"
+            if 'Confronto Equilibrado' in texto:
+                return 'Confronto|||Equilibrado'
+            
+            # Padrão 3: "Equilibrado" sozinho → "Confronto|||Equilibrado"
+            if texto.strip() == 'Equilibrado':
+                return 'Confronto|||Equilibrado'
+            
+            # Padrão 4: "Baseado nos últimos X jogos" → Manter em uma linha
+            if 'Baseado nos' in texto:
+                return texto
+            
+            # Fallback: retornar como está
+            return texto
+        
+        # Aplicar quebra nos campos de análise
+        campos_analise = [
+            'analise_posicao',
+            'analise_posicao_tabelas',
+            'analise_confronto_direto',
+            'analise_fator_casa'
+        ]
+        
+        for campo in campos_analise:
+            if campo in dados and dados[campo]:
+                dados[campo] = quebrar_texto_analise(dados[campo])
+        
         # MESMO PAYLOAD DO TESTE
         payload = {
             "success": True,

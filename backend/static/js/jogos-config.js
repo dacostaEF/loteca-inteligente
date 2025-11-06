@@ -18,102 +18,102 @@
 
 export const JOGOS_LOTECA = {
     1: {
-        csv: 'corinthians_gremio.csv',
-        timeCasa: 'CORINTHIANS',
-        timeFora: 'GREMIO',
-        escudoCasa: '/static/escudos/COR_Corinthians/Corinthians.png',
-        escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
-    },
-    2: {
-        csv: 'santos_fortaleza.csv',
-        timeCasa: 'SANTOS',
-        timeFora: 'FORTALEZA',
-        escudoCasa: '/static/escudos/SAN_Santos/Santos.png',
-        escudoFora: '/static/escudos/FOR_Fortaleza/Fortaleza.png'
-    },
-    3: {
-        csv: 'cruzeiro_vitoria.csv',
-        timeCasa: 'CRUZEIRO',
-        timeFora: 'VITORIA',
-        escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
-        escudoFora: '/static/escudos/VIT_Vitoria/Vitoria.png'
-    },
-    4: {
-        csv: 'goias_athletico-pr.csv',
-        timeCasa: 'GOIAS',
-        timeFora: 'ATHLETICO-PR',
-        escudoCasa: '/static/escudos/GOI_Goias/Goias.png',
-        escudoFora: '/static/escudos/Athletico-PR/Athletico_PR.png'
-    },
-    5: {
-        csv: 'mirassol_botafogo.csv',
+        csv: 'mirassol_vs_palmeiras.csv',
         timeCasa: 'MIRASSOL',
-        timeFora: 'BOTAFOGO',
+        timeFora: 'PALMEIRAS',
         escudoCasa: '/static/escudos/MIR_Mirassol/Mirassol.png',
-        escudoFora: '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
-    },
-    6: {
-        csv: 'avai_athetic-mg.csv',
-        timeCasa: 'AVAI',
-        timeFora: 'ATHLETIC-MG',
-        escudoCasa: '/static/escudos/Avaí/Avaí.PNG',
-        escudoFora: '/static/escudos/Athletic-MG/Athletic-MG.PNG'
-    },
-    7: {
-        csv: 'flamengo_sport.csv',
-        timeCasa: 'FLAMENGO',
-        timeFora: 'SPORT',
-        escudoCasa: '/static/escudos/FLA_Flamengo/Flamengo.png',
-        escudoFora: '/static/escudos/SPT_Sport/Sport.png'
-    },
-    8: {
-        csv: 'bahia_bragantino.csv',
-        timeCasa: 'BAHIA',
-        timeFora: 'RED BULL BRAGANTINO',
-        escudoCasa: '/static/escudos/BAH_Bahia/Bahia.PNG',
-        escudoFora: '/static/escudos/RBB_Bragantino/RedBull_Bragantino.png'
-    },
-    9: {
-        csv: 'ceara_fluminense.csv',
-        timeCasa: 'Ceará',
-        timeFora: 'Fluminense',
-        escudoCasa: '/static/escudos/Ceara/ceara.png',
-        escudoFora: '/static/escudos/FLU_Fluminense/Fluminense.PNG'
-    },
-    10: {
-        csv: 'juventude_palmeiras.csv',
-        timeCasa: 'Juventude',
-        timeFora: 'Palmeiras',
-        escudoCasa: '/static/escudos/JUV_Juventude/Juventude.PNG',
         escudoFora: '/static/escudos/PAL_Palmeiras/Palmeiras.png'
     },
-    11: {
-        csv: 'internacional_atletico-mg.csv',
-        timeCasa: 'Internacional',
-        timeFora: 'Atlético-MG',
-        escudoCasa: '/static/escudos/INT_Internacional/Internacional.png',
+    2: {
+        csv: 'Sport_vs_Atletico-MG.csv',
+        timeCasa: 'SPORT',
+        timeFora: 'ATLETICO-MG',
+        escudoCasa: '/static/escudos/SPT_Sport/Sport.png',
         escudoFora: '/static/escudos/CAM_Atletico-MG/Atletico_MG.png'
     },
+    3: {
+        csv: 'vasco_vs_juventude.csv',
+        timeCasa: 'VASCO',
+        timeFora: 'JUVENTUDE',
+        escudoCasa: '/static/escudos/VAS_Vasco/Vasco.png',
+        escudoFora: '/static/escudos/JUV_Juventude/Juventude.PNG'
+    },
+    4: {
+        csv: 'Internacional_vs_bahia.csv',
+        timeCasa: 'INTERNACIONAL',
+        timeFora: 'BAHIA',
+        escudoCasa: '/static/escudos/INT_Internacional/Internacional.png',
+        escudoFora: '/static/escudos/BAH_Bahia/Bahia.PNG'
+    },
+    5: {
+        csv: 'Sao_Paulo_vs_bragantino.csv',
+        timeCasa: 'SAO PAULO',
+        timeFora: 'BRAGANTINO',
+        escudoCasa: '/static/escudos/SAP_SaoPaulo/SaoPaulo.png',
+        escudoFora: '/static/escudos/RBB_Bragantino/RedBull_Bragantino.png'
+    },
+    6: {
+        csv: 'chelsea_vs_wolves.csv',
+        timeCasa: 'CHELSEA',
+        timeFora: 'WOLVES',
+        escudoCasa: '/static/escudos/Chelsea/Chelsea.png',
+        escudoFora: '/static/escudos/Wolverhampton/Wolfes.png'
+    },
+    7: {
+        csv: 'parma_vs_milan.csv',
+        timeCasa: 'PARMA',
+        timeFora: 'MILAN',
+        escudoCasa: '/static/escudos/Parma_IT/Parma.png',
+        escudoFora: '/static/escudos/Milan_IT/Milan.png'
+    },
+    8: {
+        csv: 'corinthians_vs_ceara.csv',
+        timeCasa: 'CORINTHIANS',
+        timeFora: 'CEARA',
+        escudoCasa: '/static/escudos/COR_Corinthians/Corinthians.png',
+        escudoFora: '/static/escudos/Ceara/ceara.png'
+    },
+    9: {
+        csv: 'vitoria_vs_botafogo-RJ.csv',
+        timeCasa: 'VITORIA',
+        timeFora: 'BOTAFOGO',
+        escudoCasa: '/static/escudos/VIT_Vitoria/Vitoria.png',
+        escudoFora: '/static/escudos/Botafogo-RJ/Botafogo_RJ.png'
+    },
+    10: {
+        csv: 'cruzeiro_vs_fluminente.csv',
+        timeCasa: 'CRUZEIRO',
+        timeFora: 'FLUMINENSE',
+        escudoCasa: '/static/escudos/CRU_Cruzeiro/Cruzeiro.png',
+        escudoFora: '/static/escudos/FLU_Fluminense/Fluminense.PNG'
+    },
+    11: {
+        csv: 'Mancheter_city_vs_Liverpool.csv',
+        timeCasa: 'MANCHESTER CITY',
+        timeFora: 'LIVERPOOL',
+        escudoCasa: '/static/escudos/Manchester_City/Manchester_City.png',
+        escudoFora: '/static/escudos/Liverpool/liverpool.png'
+    },
     12: {
-        csv: 'remo_chapecoense.csv',
-        timeCasa: 'remo',
-        timeFora: 'chapecoense',
-        escudoCasa: '/static/escudos/Remo/Remo.PNG',
-        escudoFora: '/static/escudos/Chapecoense/Chapecoense.PNG'
+        csv: 'Flamengo_vs_santos.csv',
+        timeCasa: 'FLAMENGO',
+        timeFora: 'SANTOS',
+        escudoCasa: '/static/escudos/FLA_Flamengo/Flamengo.png',
+        escudoFora: '/static/escudos/SAN_Santos/Santos.png'
     },
     13: {
-        csv: 'vasco_sao_paulo.csv',
-        timeCasa: 'Vasco',
-        timeFora: 'São Paulo',
-        escudoCasa: '/static/escudos/VAS_Vasco/Vasco.png',
-        escudoFora: '/static/escudos/SAP_SaoPaulo/SaoPaulo.png'
+        csv: 'valencia_real_betis.csv',
+        timeCasa: 'VALENCIA',
+        timeFora: 'REAL BETIS',
+        escudoCasa: '/static/escudos/Valencia/valencia.png',
+        escudoFora: '/static/escudos/Real_Betis/Real_Betis.png'
     },
     14: {
-        csv: 'operario-pr_vilanova.csv',
-        timeCasa: 'Operário-PR',
-        timeFora: 'Vila Nova',
-        escudoCasa: '/static/escudos/OPE_Operario-PR/Operario_PR.PNG',
-        escudoFora: '/static/escudos/Vila_Nova/Vila_Nova.PNG'
+        csv: 'fortaleza_vs_gremio.csv',
+        timeCasa: 'FORTALEZA',
+        timeFora: 'GREMIO',
+        escudoCasa: '/static/escudos/FOR_Fortaleza/Fortaleza.png',
+        escudoFora: '/static/escudos/GRE_Gremio/Gremio.png'
     }
 };
 

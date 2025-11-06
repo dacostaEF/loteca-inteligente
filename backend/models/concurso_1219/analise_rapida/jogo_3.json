@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "3",
-    "concurso_numero": "1216"
+    "concurso_numero": "1219"
   },
   "dados": {
     "numero": "3",
     "time_casa": "Vasco da Gama/RJ",
-    "time_fora": "Sport/PE",
+    "time_fora": "Juventude/RS",
     "arena": "Sao Januario/RJ",
     "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/VAS_Vasco/Vasco.png",
-    "escudo_fora": "static\\escudos\\JUV_Juventude\\Juventude.png",
+    "escudo_fora": "/static/escudos/JUV_Juventude/Juventude.png",
     "probabilidade_casa": "45",
     "probabilidade_empate": "30",
     "probabilidade_fora": "25",
     "recomendacao": "Recomendação Estatística: Coluna 1 (Vasco) - Risco Baixo",
     "conclusao_analista": "O Vasco, atuando como mandante, apresenta uma força significativa em casa. Apesar da ultima derrota pra o São Paulo, o time está numa fase de recuperação na tabela e depende crucialmente dos resultados em seus domínios para almejar objetivo de libertadores. \nO Juventude, por sua vez, é uma equipe complicada, conhecida por ser um adversário incômodo e por conseguir resultados positivos fora de casa. No entanto, sua campanha como visitante ainda é irregular.\n\nA pressão por pontos e o fator \"casa\" do Vasco pesam a favor dos cariocas.",
-    "confrontos_sequence": "E-E-V-E-E-D-V-V-E-E",
+    "confrontos_sequence": "(20/08/2025, 2-0, Juventude|/static/escudos/JUV_Juventude/Juventude.png) (05/10/2024, 1-1, Empate|/static/escudos/Empate.png) (19/06/2024, 2-0, Juventude|/static/escudos/JUV_Juventude/Juventude.png) (07/11/2009, 2-1, Vasco|/static/escudos/VAS_Vasco/Vasco.png) (01/08/2009, 1-2, Vasco|/static/escudos/VAS_Vasco/Vasco.png) (03/10/2007, 0-1, Juventude|/static/escudos/JUV_Juventude/Juventude.png) (07/07/2007, 2-0, Juventude|/static/escudos/JUV_Juventude/Juventude.png) (11/11/2006, 1-1, Empate|/static/escudos/Empate.png) (12/08/2006, 0-0, Empate|/static/escudos/Empate.png) (11/09/2005, 5-2, Vasco|/static/escudos/VAS_Vasco/Vasco.png)",
     "posicao_casa": "9",
     "posicao_fora": "19",
-    "confronto_direto": "3V-6E-1D",
+    "confronto_direto": "4V-3E-3D",
     "fator_casa": "65",
     "fator_fora": "35",
     "analise_posicao": "Vantagem Vasco",
     "analise_posicao_tabelas": "Vantagem Vasco",
     "analise_confronto_direto": "Vantagem Vasco",
     "analise_fator_casa": "Vantagem Vasco",
-    "sincronizado_em": "2025-11-04T14:09:58.885Z"
+    "sincronizado_em": "2025-11-06T10:50:35.256Z"
   },
   "admin_key": "loteca2024admin"
 }

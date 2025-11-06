@@ -1,7 +1,7 @@
 {
   "metadados": {
     "jogo_numero": "13",
-    "concurso_numero": "1216"
+    "concurso_numero": "1219"
   },
   "dados": {
     "numero": "13",
@@ -10,24 +10,24 @@
     "arena": "Estadio de Mestalla/ESP",
     "campeonato": "CAmpeonato Espannhol - La Liga ",
     "dia": "Domingo",
-    "escudo_casa": "\\static\\escudos\\Valencia/Valencia.png",
+    "escudo_casa": "/static/escudos/Valencia/Valencia.png",
     "escudo_fora": "/static/escudos/Real_Betis/Real_Betis.png",
     "probabilidade_casa": "45",
     "probabilidade_empate": "30",
     "probabilidade_fora": "25",
     "recomendacao": "Recomendação Estatística: Duplo 1X (Valencia e Empate) - Risco Médio",
     "conclusao_analista": "Nos confrontos diretos entre Valencia e Real Betis, o Valencia tem uma vantagem, com mais vitórias no histórico. \nPor exemplo, em “desde 2003” o Valencia venceu cerca de 22 vezes, o Betis 12, e houve cerca de 9 empates. \nEm jogos em que o Valencia era mandante, sua taxa de vitórias aumenta consideravelmente.\nAPesar de melhor posicionado na tabela, Betis em 5, Valenecia em 18, a tradição tem um peso extra nesse confronto. A posição na tabela ajuda a medir a motivação e pressão que cada time enfrenta (ex: lutar por classificação européia ou escapar de rebaixamento), e desempenho recente, esse é um dos tipicos jogos que a tradição tem uma importancia a ser considerada. \nUm mercado de valor para este confronto é \"Ambas as equipes marcam - Sim\".",
-    "confrontos_sequence": "E-V-D-V-E-V-D-V-V-E",
+    "confrontos_sequence": "(23/05/2025, 1-1, Empate|/static/escudos/Empate.png) (23/11/2024, 4-2, Valencia|/static/escudos/Valencia/Valencia.png) (20/04/2024, 1-2, REAL BETIS|/static/escudos/Real_Betis/Real_Betis.png) (01/10/2023, 3-0, REAL BETIS|/static/escudos/Real_Betis/Real_Betis.png) (04/06/2023, 1-1, Empate|/static/escudos/Empate.png) (10/11/2022, 3-0, Valencia|/static/escudos/Valencia/Valencia.png) (10/05/2022, 0-3, REAL BETIS|/static/escudos/Real_Betis/Real_Betis.png) (23/04/2022, 1-1 (5-4 Pen.), REAL BETIS|/static/escudos/Real_Betis/Real_Betis.png) (27/10/2021, 4-1, REAL BETIS|/static/escudos/Real_Betis/Real_Betis.png) (18/04/2021, 2-2, Empate|/static/escudos/Empate.png)",
     "posicao_casa": "18",
     "posicao_fora": "5",
-    "confronto_direto": "5V-3E-2D",
+    "confronto_direto": "2V-3E-5D",
     "fator_casa": "65",
     "fator_fora": "35",
     "analise_posicao": "Confronto Equilibrado",
     "analise_posicao_tabelas": "Confronto Equilibrado",
     "analise_confronto_direto": "Confronto Equilibrado",
     "analise_fator_casa": "Confronto Equilibrado",
-    "sincronizado_em": "2025-11-04T18:16:56.186Z"
+    "sincronizado_em": "2025-11-06T11:07:39.976Z"
   },
   "admin_key": "loteca2024admin"
 }

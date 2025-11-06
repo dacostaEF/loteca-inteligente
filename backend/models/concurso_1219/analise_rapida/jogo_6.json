@@ -1,7 +1,7 @@
 {
   "metadados": {
     "jogo_numero": "6",
-    "concurso_numero": "1216"
+    "concurso_numero": "1219"
   },
   "dados": {
     "numero": "6",
@@ -11,23 +11,23 @@
     "campeonato": "Premier League 2024/25",
     "dia": "Sábado",
     "escudo_casa": "/static/escudos/Chelsea/Chelsea.png",
-    "escudo_fora": "/static/escudos/Wolverhampton/Wolfes.png",
+    "escudo_fora": "/static/escudos/Wolverhampton/wolfes.png",
     "probabilidade_casa": "65",
     "probabilidade_empate": "25",
     "probabilidade_fora": "10",
     "recomendacao": "Recomendação Estatística: Coluna 1 (Chelsea) - Risco Baixo",
     "conclusao_analista": "O Chelsea domina amplamente o retrospecto, especialmente em Stamford Bridge, onde não perde para os Wolves desde 2020. Nos últimos três jogos em casa, o time londrino marcou 10 gols e sofreu apenas 2 contra o adversário.\n\nMomento atual (Premier League 2024/25):\nO Chelsea reencontrou consistência ofensiva com um elenco jovem e veloz (Mudryk, Palmer, Jackson), melhorando muito a média de gols: 2,2 gols/jogo nas últimas 6 rodadas.\n\nO Wolverhampton,apresenta irregularidade fora de casa, com apenas 1 vitória nas últimas 8 partidas como visitante. Se o Chelsea marcar primeiro, o jogo tende a se definir sem reação adversária — o time londrino venceu 86% dos jogos em casa quando abriu o placar desde 2023.\n",
-    "confrontos_sequence": "V",
+    "confrontos_sequence": "(29/10/2025, 3-4, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (20/01/2025, 3-1, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (25/08/2024, 2-6, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (04/02/2024, 2-4, Wolverhampton|/static/escudos/Wolverhampton/wolfes.png) (24/12/2023, 2-1, Wolverhampton|/static/escudos/Wolverhampton/wolfes.png) (08/04/2023, 1-0, Wolverhampton|/static/escudos/Wolverhampton/wolfes.png) (08/10/2022, 3-0, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (07/05/2022, 2-2, Empate|/static/escudos/Empate.png) (19/12/2021, 0-0, Empate|/static/escudos/Empate.png) (27/01/2021, 0-0, Empate|/static/escudos/Empate.png)",
     "posicao_casa": "7",
     "posicao_fora": "20",
-    "confronto_direto": "1V-0E-0D",
+    "confronto_direto": "4V-3E-3D",
     "fator_casa": "80",
     "fator_fora": "20",
     "analise_posicao": "Vantagem Chelsea",
     "analise_posicao_tabelas": "Vantagem Chelsea",
     "analise_confronto_direto": "Vantagem Chelsea",
     "analise_fator_casa": "Vantagem Chelsea",
-    "sincronizado_em": "2025-11-04T15:04:07.892Z"
+    "sincronizado_em": "2025-11-06T10:59:50.496Z"
   },
   "admin_key": "loteca2024admin"
 }

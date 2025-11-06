@@ -52,6 +52,7 @@ window.LotecaOtimizador = (function () {
   const mapChoiceToArray = (choice) => {
     if (choice === '1X2') return ['1','X','2'];
     if (choice === '1X') return ['1','X'];
+    if (choice === '12') return ['1','2'];  // ✅ DUPLO 12 ADICIONADO
     if (choice === 'X2') return ['X','2'];
     return [choice];
   };
@@ -176,6 +177,9 @@ window.LotecaOtimizador = (function () {
   function probabilidadeCoberta(p1, px, p2, sugestao) {
     const p = { '1': p1, 'X': px, '2': p2 };
     if (sugestao === '1X2') return (p1 + px + p2);
+    if (sugestao === '12') return (p1 + p2);  // ✅ DUPLO 12
+    if (sugestao === '1X') return (p1 + px);
+    if (sugestao === 'X2') return (px + p2);
     return sugestao.split('').reduce((acc, s) => acc + (p[s] || 0), 0);
   }
 
