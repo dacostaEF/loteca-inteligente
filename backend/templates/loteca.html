@@ -9463,6 +9463,25 @@
                 posicaoAnalise.innerHTML = window.quebrarTextoAnalise(dados.analise_posicao);
             }
             
+            /* ========================================
+               ❌ CÓDIGO OBSOLETO - ÚLTIMOS CONFRONTOS HARDCODED E DESABILITADO
+               ========================================
+               Este código nunca é executado (linha final comentada).
+               
+               PROBLEMAS:
+               - 42 linhas de código morto
+               - Dados hardcoded genéricos (10 confrontos de jogo desconhecido)
+               - Ignora completamente dados.confrontos_sequence do JSON
+               - Linha final desabilitada: confrontosSequence.innerHTML = confrontosHtml
+               - Comentário indica conflito com carregarConfrontosAutomatico
+               - Exclusão arbitrária dos jogos 5 e 11
+               
+               MOTIVO DA DESATIVAÇÃO:
+               O sistema já usa carregarUltimosConfrontosGenerico() que lê
+               os dados corretos do JSON (campo confrontos_sequence).
+               
+               Comentado para limpeza de código e melhor performance.
+               
             // 6. ATUALIZAR ÚLTIMOS CONFRONTOS (SEQUÊNCIA) - DESABILITADO PARA JOGOS 5 E 11
             if (numeroJogo !== 5 && numeroJogo !== 11) {
             const confrontosSequence = document.getElementById(`confrontos-principais-${numeroJogo}`);
@@ -9504,6 +9523,7 @@
                 // confrontosSequence.innerHTML = confrontosHtml; // DESABILITADO: Conflito com carregarConfrontosAutomatico
                 }
             }
+            ======================================== */
             
             // 7. ATUALIZAR CONFRONTO DIRETO
             {
