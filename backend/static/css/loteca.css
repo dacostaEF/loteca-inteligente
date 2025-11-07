@@ -696,6 +696,42 @@
             letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
         }
         
+        /* ========================================
+           🎯 CENTRALIZAR COLUNA 3 (TIME FORA)
+           ========================================
+           Apenas nas linhas "Posição na Tabela" e "Fator Casa"
+           ======================================== */
+        .analysis-table td[id^="posicao-fora-"],
+        #posicao-fora-1-novo, #posicao-fora-2-novo, #posicao-fora-3-novo,
+        #posicao-fora-4-novo, #posicao-fora-5-novo, #posicao-fora-6-novo,
+        #posicao-fora-7-novo, #posicao-fora-8-novo, #posicao-fora-9-novo,
+        #posicao-fora-10-novo, #posicao-fora-11-novo, #posicao-fora-12-novo,
+        #posicao-fora-13-novo, #posicao-fora-14-novo,
+        .analysis-table td[id^="fator-fora-"],
+        #fator-fora-1-novo, #fator-fora-2-novo, #fator-fora-3-novo,
+        #fator-fora-4-novo, #fator-fora-5-novo, #fator-fora-6-novo,
+        #fator-fora-7-novo, #fator-fora-8-novo, #fator-fora-9-novo,
+        #fator-fora-10-novo, #fator-fora-11-novo, #fator-fora-12-novo,
+        #fator-fora-13-novo, #fator-fora-14-novo {
+            text-align: center !important;
+        }
+        
+        /* CENTRALIZAR COLUNA 3 (TIME FORA) - JOGOS 9-14 - ESPECIFICIDADE ABSOLUTA MÁXIMA */
+        html body .analysis-table td.team-header#posicao-fora-9-novo,
+        html body .analysis-table td.team-header#fator-fora-9-novo,
+        html body .analysis-table td.team-header#posicao-fora-10-novo,
+        html body .analysis-table td.team-header#fator-fora-10-novo,
+        html body .analysis-table td.team-header#posicao-fora-11-novo,
+        html body .analysis-table td.team-header#fator-fora-11-novo,
+        html body .analysis-table td.team-header#posicao-fora-12-novo,
+        html body .analysis-table td.team-header#fator-fora-12-novo,
+        html body .analysis-table td.team-header#posicao-fora-13-novo,
+        html body .analysis-table td.team-header#fator-fora-13-novo,
+        html body .analysis-table td.team-header#posicao-fora-14-novo,
+        html body .analysis-table td.team-header#fator-fora-14-novo {
+            text-align: center !important;
+        }
+        
         /* Coluna "Análise" (4ª coluna) */
         .analysis-table td[id^="posicao-analise-"],
         .analysis-table td[id^="h2h-analise-"],
@@ -1540,6 +1576,10 @@
         }
 
         /* ========================================
+           🎯 REMOVER TABLE-LAYOUT FIXED - NÃO FUNCIONOU
+           ======================================== */
+        
+        /* ========================================
            🎯 COLUNA ANÁLISE - QUEBRA EM 2 LINHAS
            ========================================
            Formata os textos da 4ª coluna "Análise"
@@ -1555,7 +1595,13 @@
             color: #ffffff !important; /* ✅ BRANCO PURO */
             font-weight: 400 !important; /* ✅ PESO NORMAL */
             letter-spacing: 0.5px !important; /* ✅ ESPAÇAMENTO */
-            white-space: normal !important; /* Permite quebra de linha */
+            max-width: 200px !important; /* Largura máxima */
+            min-width: 150px !important; /* Largura mínima */
+            width: 200px !important; /* Largura fixa */
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            hyphens: auto !important; /* Hifenização automática */
         }
 
         /* ========================================
@@ -8256,14 +8302,14 @@
   
 }
 
-/* Colunas 2 e 3 - Nomes dos Times */
-.analysis-table tr td.team-header {
-  font-size: 9px !important;
-  text-transform: none !important; /* Remove caps locks */
-}
-
 /* REDUZIR FONTES DA CONCLUS�O DO ANALISTA - APENAS MOBILE */
 @media (max-width: 768px) {
+  /* Colunas 2 e 3 - Nomes dos Times - MOVIDO PARA MOBILE */
+  .analysis-table tr td.team-header {
+    font-size: 9px !important;
+    text-transform: none !important; /* Remove caps locks */
+  }
+  
   .analyst-conclusion h4 {
     font-size: 14px !important; /* Reduzido de 1.1rem (17.6px) para 14px */
   }
@@ -9675,27 +9721,23 @@
         padding-right: 0.1rem !important; /* ~1.6px */
     }
 
-    /* AUMENTAR PARA 11px AS COLUNAS 2 E 3 DAS LINHAS POSICAO, CONFRONTO E FATOR */
-    .page--analise-rapida .analysis-table td[id^="posicao-casa-"],
-    .page--analise-rapida .analysis-table td[id^="posicao-fora-"],
-    .page--analise-rapida .analysis-table td[id^="fator-casa-"],
-    .page--analise-rapida .analysis-table td[id^="fator-fora-"] {
-        font-size: 11px !important;
-    }
-
     /* CONFRONTO DIRETO - AUMENTAR TEXTOS PARA 11px */
     .page--analise-rapida .analysis-table .confronto-direto-resumo,
     .page--analise-rapida .analysis-table .confronto-direto-resumo * {
         font-size: 11px !important;
     }
 
-    /* FORCAR 9px EM TODAS CELULAS DA COLUNA 4 ANALISE */
+    /* FORCAR 9px EM TODAS CELULAS DA COLUNA 4 ANALISE + QUEBRA DE LINHA */
+    /* SÓ APLICAR EM MOBILE - DESKTOP USA 17px DAS REGRAS GERAIS */
     .page--analise-rapida .analysis-table td[id^="posicao-analise-"],
     .page--analise-rapida .analysis-table td[id^="h2h-analise-"],
     .page--analise-rapida .analysis-table td[id^="fator-analise-"],
     .page--analise-rapida .analysis-table td[id^="forma-analise-"] {
         font-size: 9px !important;
         line-height: 1.3 !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
     }
 
     /* Escudos nos 10 boxes */
@@ -9719,6 +9761,93 @@
         max-width: 42px !important;
         padding: 3px !important;
     }
+}
+
+/* ========================================
+   🖥️ DESKTOP - FORÇAR 17px NOS JOGOS 9-14
+   ESPECIFICIDADE MÁXIMA COM html body
+   ======================================== */
+@media (min-width: 769px) {
+    /* COLUNAS 2 E 3 - POSIÇÃO E FATOR - JOGOS 9-14 - ESPECIFICIDADE MÁXIMA */
+    html body #posicao-casa-9-novo, html body #posicao-fora-9-novo,
+    html body #fator-casa-9-novo, html body #fator-fora-9-novo,
+    html body #posicao-casa-10-novo, html body #posicao-fora-10-novo,
+    html body #fator-casa-10-novo, html body #fator-fora-10-novo,
+    html body #posicao-casa-11-novo, html body #posicao-fora-11-novo,
+    html body #fator-casa-11-novo, html body #fator-fora-11-novo,
+    html body #posicao-casa-12-novo, html body #posicao-fora-12-novo,
+    html body #fator-casa-12-novo, html body #fator-fora-12-novo,
+    html body #posicao-casa-13-novo, html body #posicao-fora-13-novo,
+    html body #fator-casa-13-novo, html body #fator-fora-13-novo,
+    html body #posicao-casa-14-novo, html body #posicao-fora-14-novo,
+    html body #fator-casa-14-novo, html body #fator-fora-14-novo {
+        font-size: 17px !important;
+        color: #ffffff !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    /* CENTRALIZAR COLUNA 3 (TIME FORA) - JOGOS 9-14 - ESPECIFICIDADE ABSOLUTA MÁXIMA */
+    html body .analysis-table td.team-header#posicao-fora-9-novo,
+    html body .analysis-table td.team-header#fator-fora-9-novo,
+    html body .analysis-table td.team-header#posicao-fora-10-novo,
+    html body .analysis-table td.team-header#fator-fora-10-novo,
+    html body .analysis-table td.team-header#posicao-fora-11-novo,
+    html body .analysis-table td.team-header#fator-fora-11-novo,
+    html body .analysis-table td.team-header#posicao-fora-12-novo,
+    html body .analysis-table td.team-header#fator-fora-12-novo,
+    html body .analysis-table td.team-header#posicao-fora-13-novo,
+    html body .analysis-table td.team-header#fator-fora-13-novo,
+    html body .analysis-table td.team-header#posicao-fora-14-novo,
+    html body .analysis-table td.team-header#fator-fora-14-novo {
+        text-align: center !important;
+    }
+
+    /* COLUNA 4 ANÁLISE - JOGOS 9-14 - ESPECIFICIDADE MÁXIMA + QUEBRA DE LINHA */
+    html body #forma-analise-9-novo, html body #posicao-analise-9-novo,
+    html body #h2h-analise-9-novo, html body #fator-analise-9-novo,
+    html body #forma-analise-10-novo, html body #posicao-analise-10-novo,
+    html body #h2h-analise-10-novo, html body #fator-analise-10-novo,
+    html body #forma-analise-11-novo, html body #posicao-analise-11-novo,
+    html body #h2h-analise-11-novo, html body #fator-analise-11-novo,
+    html body #forma-analise-12-novo, html body #posicao-analise-12-novo,
+    html body #h2h-analise-12-novo, html body #fator-analise-12-novo,
+    html body #forma-analise-13-novo, html body #posicao-analise-13-novo,
+    html body #h2h-analise-13-novo, html body #fator-analise-13-novo,
+    html body #forma-analise-14-novo, html body #posicao-analise-14-novo,
+    html body #h2h-analise-14-novo, html body #fator-analise-14-novo {
+        font-size: 17px !important;
+        color: #ffffff !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px !important;
+        line-height: 1.4 !important;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+        max-width: 150px !important;
+    }
+}
+
+/* ========================================
+   🎯 FIX FINAL - CENTRALIZAR COLUNA 3 JOGOS 9-14
+   REGRA ADICIONADA NO FINAL COM .page--analise-rapida
+   PARA TER PRIORIDADE ABSOLUTA
+   IDs CORRETOS SEM "-novo"
+   ======================================== */
+html body .page--analise-rapida .analysis-table td.team-header#posicao-fora-9,
+html body .page--analise-rapida .analysis-table td.team-header#fator-fora-9,
+html body .page--analise-rapida .analysis-table td.team-header#posicao-fora-10,
+html body .page--analise-rapida .analysis-table td.team-header#fator-fora-10,
+html body .page--analise-rapida .analysis-table td.team-header#posicao-fora-11,
+html body .page--analise-rapida .analysis-table td.team-header#fator-fora-11,
+html body .page--analise-rapida .analysis-table td.team-header#posicao-fora-12,
+html body .page--analise-rapida .analysis-table td.team-header#fator-fora-12,
+html body .page--analise-rapida .analysis-table td.team-header#posicao-fora-13,
+html body .page--analise-rapida .analysis-table td.team-header#fator-fora-13,
+html body .page--analise-rapida .analysis-table td.team-header#posicao-fora-14,
+html body .page--analise-rapida .analysis-table td.team-header#fator-fora-14 {
+    text-align: center !important;
 }
 
 
