@@ -5613,6 +5613,44 @@
             return pontos;
         }
 
+        // 🚀 FASE 2: CARREGAR CACHE DE TODOS OS CLUBES (Otimização de Performance)
+        async function carregarCacheClubes() {
+            console.log('🚀 [CACHE-BATCH] Carregando TODOS os clubes de uma vez...');
+            
+            try {
+                const startTime = performance.now();
+                
+                // UMA ÚNICA REQUISIÇÃO para pegar TODOS os clubes
+                const response = await fetch('/api/br/elenco');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const apiData = await response.json();
+                
+                if (apiData.success && apiData.dados) {
+                    // Armazenar cache global
+                    window.cacheClubesBrasileiros = apiData.dados;
+                    
+                    const endTime = performance.now();
+                    const tempo = (endTime - startTime).toFixed(0);
+                    
+                    console.log(`✅ [CACHE-BATCH] ${apiData.total_clubes} clubes carregados em ${tempo}ms!`);
+                    console.log(`📊 [CACHE-BATCH] Clubes disponíveis:`, Object.keys(apiData.dados));
+                    
+                    return true;
+                } else {
+                    console.warn('⚠️ [CACHE-BATCH] API retornou dados inválidos');
+                    return false;
+                }
+                
+            } catch (error) {
+                console.error('❌ [CACHE-BATCH] Erro ao carregar cache:', error);
+                return false;
+            }
+        }
+
         // CARREGAR DADOS DA ABA TIMES LOTECA JOGOS - TODOS OS 14 JOGOS
         async function carregarTimesLotecaJogos() {
             console.log('⚽ [TIMES-LOTECA] Carregando dados dos TODOS OS 14 JOGOS...');
@@ -5624,11 +5662,19 @@
             if (containerEl) containerEl.innerHTML = '';
             
             try {
+                // 🚀 FASE 2: Carregar cache de todos os clubes PRIMEIRO
+                const cacheCarregado = await carregarCacheClubes();
+                if (cacheCarregado) {
+                    console.log('✅ [TIMES-LOTECA] Cache carregado, usando modo otimizado!');
+                } else {
+                    console.warn('⚠️ [TIMES-LOTECA] Cache falhou, usando modo tradicional (fallback)');
+                }
+                
                 // ✅ USAR A MESMA API QUE A ABA "ANÁLISE RÁPIDA" USA
                 const jogos = await extrairJogosDaAba1();
                 console.log(`⚽ [TIMES-LOTECA] ${jogos.length} jogos extraídos da MESMA API da Aba 1`);
                 
-                // Buscar dados dos times via API
+                // Buscar dados dos times via API (agora usa cache se disponível)
                 const dadosCompletos = await buscarDadosTodosJogos(jogos);
                 
                 // Renderizar todos os jogos
@@ -5707,6 +5753,55 @@
             console.log(`📊 [ELENCO] Buscando dados para: "${nomeTime}"`);
             console.log(`🔍 [DEBUG-BUSCAR] Função buscarDadosTime chamada para: "${nomeTime}"`);
             
+            // 🚀 FASE 2: TENTAR CACHE PRIMEIRO (Otimização)
+            if (window.cacheClubesBrasileiros) {
+                console.log(`🔍 [CACHE] Tentando buscar "${nomeTime}" no cache...`);
+                
+                // Normalizar nome para busca no cache
+                const nomeNormalizado = nomeTime.toUpperCase().trim();
+                
+                // Tentar diferentes variações do nome
+                const variacoes = [
+                    nomeNormalizado,
+                    nomeNormalizado.replace(/^RED BULL/, 'RED BULL'),
+                    nomeNormalizado.replace(/^RB /, 'RED BULL '),
+                    nomeNormalizado.replace(/ATLETICO-MG/, 'ATLETICO-MG'),
+                    nomeNormalizado.replace(/SAO PAULO/, 'SAO PAULO')
+                ];
+                
+                for (const variacao of variacoes) {
+                    if (window.cacheClubesBrasileiros[variacao]) {
+                        const dadosCache = window.cacheClubesBrasileiros[variacao];
+                        console.log(`✅ [CACHE] Dados de "${nomeTime}" encontrados no cache! (${variacao})`);
+                        
+                        // Calcular nacionais
+                        const nacionais = dadosCache.plantel - dadosCache.estrangeiros;
+                        
+                        // Retornar dados formatados do cache
+                        return {
+                            nome: nomeTime,
+                            abrev: nomeTime.substring(0, 3).toUpperCase(),
+                            total_atletas: dadosCache.plantel || 30,
+                            pct_provaveis: `${nacionais}/${dadosCache.estrangeiros}`,
+                            forca_elenco: dadosCache.forca_elenco || 5.0,
+                            preco_medio: dadosCache.valor_mm_formatado || '€ 50.0MM',
+                            rating: dadosCache.rating || 0.5,
+                            badge: gerarBadgeTime(dadosCache.rating || 0.5),
+                            fonte: 'cache_batch',
+                            brasileiro: true,
+                            // Dados extras
+                            valor_mm_euros: dadosCache.valor_mm_euros,
+                            idade_media: dadosCache.idade_media,
+                            estrangeiros: dadosCache.estrangeiros,
+                            serie: dadosCache.serie,
+                            nacionais: nacionais
+                        };
+                    }
+                }
+                
+                console.log(`⚠️ [CACHE] "${nomeTime}" não encontrado no cache, usando fallback...`);
+            }
+            
             // Verificar se é time brasileiro
             const isBrazilian = isBrazilianTeam(nomeTime);
             console.log(`🔍 [ELENCO] É brasileiro: ${isBrazilian}`);
@@ -5714,8 +5809,8 @@
             
             if (isBrazilian) {
                 try {
-                    // NOVA API: Buscar dados de elenco da planilha
-                    console.log(`🔍 [ELENCO] Buscando dados de elenco via API...`);
+                    // FALLBACK: Buscar dados de elenco da planilha via API individual
+                    console.log(`🔍 [FALLBACK] Buscando dados de elenco via API individual...`);
                     const elencoResponse = await fetch(`/api/br/elenco/${nomeTime}`);
                     
                     if (elencoResponse.ok) {
