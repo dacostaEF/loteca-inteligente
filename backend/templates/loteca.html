@@ -109,6 +109,28 @@
          
          ======================================== -->
     
+    <!-- 🚀 OTIMIZAÇÃO: Desabilitar console.logs em produção (Fase 1) -->
+    <script>
+        // Detectar se está em produção (não é localhost)
+        if (window.location.hostname !== 'localhost' && 
+            window.location.hostname !== '127.0.0.1' &&
+            !window.location.hostname.includes('192.168')) {
+            
+            console.log('🚀 [PERFORMANCE] Desabilitando logs em produção...');
+            
+            // Desabilitar console.log e console.warn (mantém console.error)
+            setTimeout(() => {
+                console.log = function() {};
+                console.warn = function() {};
+                console.info = function() {};
+                console.debug = function() {};
+                // console.error continua funcionando para debug de erros críticos
+            }, 100);
+        } else {
+            console.log('🛠️ [DEV MODE] Logs habilitados (ambiente local)');
+        }
+    </script>
+    
     <!-- Sistema de elenco integrado -->
     <script src="{{ url_for('static', filename='js/ui/rendering.js') }}"></script>
     
