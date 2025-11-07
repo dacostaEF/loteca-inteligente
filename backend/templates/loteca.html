@@ -10405,10 +10405,18 @@
             if (conclusao && dados.conclusao_analista) conclusao.textContent = dados.conclusao_analista;
         }
 
+        /* =================================================================
+           🗑️ CÓDIGO MORTO - BLOCO 3: Função nunca chamada (comentado em 2025-11-07)
+           Motivo: carregarConfrontosJogo4Novo() não é chamada em lugar nenhum
+           Risco: ZERO - função vazia que não faz nada
+           ================================================================= */
+        /*
         function carregarConfrontosJogo4Novo() {
             console.log('🔄 [JOGO4-NOVO] Carregando confrontos fallback...');
             // Implementar confrontos fallback se necessário
         }
+        */
+        // ============== FIM DO CÓDIGO MORTO - BLOCO 3 ==============
 
         // FUNÇÃO PARA O NOVO JOGO 10 (USANDO SCRIPTS EXTERNOS)
         async function carregarJogo10Novo() {
@@ -11838,60 +11846,46 @@
                 renderizarConfrontoDirectoResumo([]);
             }, 3000);
 
+            /* =================================================================
+               🗑️ CÓDIGO MORTO - BLOCO 1: APIs antigas (comentado em 2025-11-07)
+               Motivo: APIs antigas que interferiam com sistema novo baseado em JSON
+               Seguro para remoção futura após validação
+               ================================================================= */
+            /*
             // DESABILITADO: APIs antigas que interferiam com o sistema novo
             // O confronto direto do JOGO 1 agora vem da função carregarDadosJogo1() que usa o JSON
-            /*
             setTimeout(() => forcarConfrontoDirecto(), 1000);
             setTimeout(() => forcarConfrontoDirecto(), 2000);
             setTimeout(() => forcarConfrontoDirecto(), 4000);
             setTimeout(() => forcarConfrontoDirecto(), 6000);
-            */
 
             // FUNÇÕES HARDCODED REMOVIDAS - JOGO 2 AGORA USA APENAS API
-            // setTimeout(() => forcarConfrontoDirectoJogo2(), 1500);
-            // setTimeout(() => forcarConfrontoDirectoJogo2(), 3000);
-            // setTimeout(() => forcarConfrontoDirectoJogo2(), 5000);
-            // setTimeout(() => forcarConfrontoDirectoJogo2(), 7000);
+            setTimeout(() => forcarConfrontoDirectoJogo2(), 1500);
+            setTimeout(() => forcarConfrontoDirectoJogo2(), 3000);
+            setTimeout(() => forcarConfrontoDirectoJogo2(), 5000);
+            setTimeout(() => forcarConfrontoDirectoJogo2(), 7000);
 
             // DESABILITADO: Função hardcoded que sobrescreve dados da API
-            /*
             // CARREGAR DADOS REAIS DO DASHBOARD - ABA 1 JOGO 3
             setTimeout(() => {
                 console.log('🎯 [LOTECA-JOGO3] Carregando dados reais DIRETOS do dashboard...');
                 carregarDadosReaisDiretosJogo3();
-            }, 3000); // Aguardar 3 segundos para garantir que a página carregou
-            */
+            }, 3000);
 
             // DESABILITADO: Função hardcoded que sobrescreve dados da API
-            /*
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 3
             setTimeout(() => forcarConfrontoDirectoJogo3(), 2000);
             setTimeout(() => forcarConfrontoDirectoJogo3(), 3500);
             setTimeout(() => forcarConfrontoDirectoJogo3(), 5500);
             setTimeout(() => forcarConfrontoDirectoJogo3(), 7500);
-            */
 
             // JOGO 4 ANTIGO REMOVIDO CIRURGICAMENTE
-            /*
-
-            
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 5
-            
-            
-            
-            
-            
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 11
-            
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGO 12
-            
-            
-            
-            */
 
             // DESABILITADO: Funções hardcoded dos JOGOS 5 A 14 que interferiam com o sistema novo
             // Os JOGOS 6 A 14 agora usam carregarDadosJogo6() até carregarDadosJogo14() que carregam dados via API do JSON
-            /*
             // CARREGAR DADOS REAIS DO DASHBOARD - JOGOS 5 A 14
             setTimeout(() => {
                 console.log('🎯 [LOTECA-JOGOS5-14] Carregando dados reais DIRETOS do dashboard...');
@@ -11903,28 +11897,30 @@
                 carregarDadosReaisDiretosJogo13();
                 carregarDadosReaisDiretosJogo14();
             }, 4000);
-            */
 
             // DESABILITADO: Funções hardcoded que sobrescrevem dados da API
             // Os JOGOS 6-14 agora usam carregarDadosJogo6() até carregarDadosJogo14() que carregam dados via API do JSON
-            /*
             setTimeout(() => {
                 carregarUltimosConfrontosJogo7();
                 carregarUltimosConfrontosJogo9();
             }, 4500);
-            */
+            */ 
+            // ============== FIM DO CÓDIGO MORTO - BLOCO 1 ==============
             
+            /* =================================================================
+               🗑️ CÓDIGO MORTO - BLOCO 2: setTimeout vazio e funções hardcoded (comentado em 2025-11-07)
+               Motivo: setTimeout vazio não faz nada + funções hardcoded substituídas por API JSON
+               Risco: ZERO - completamente seguro para remoção
+               ================================================================= */
+            /*
             // ATIVAR JOGOS 5, 11, 12, 13 E 14 (com API CSV)
             // JOGO 5 AGORA USA carregarDadosCompletosJogo(5) - REMOVIDO
             
-            
             setTimeout(() => {
+                // COMPLETAMENTE VAZIO - NÃO FAZ NADA
             }, 5500);
-            
-            
 
             // DESABILITADO: Funções hardcoded que sobrescrevem dados da API
-            /*
             // ATUALIZAR ANÁLISES DE FORMA PARA TODOS OS JOGOS
             setTimeout(() => {
                 atualizarFormaAnaliseJogo3();
@@ -11937,10 +11933,8 @@
                 atualizarFormaAnaliseJogo13();
                 atualizarFormaAnaliseJogo14();
             }, 4700);
-            */
 
             // DESABILITADO: Funções de posições hardcoded que sobrescrevem dados da API
-            /*
             // CARREGAR POSIÇÕES NA TABELA PARA JOGOS 5 A 14 (FORA DO SETTIMEOUT DOS DADOS)
             setTimeout(() => {
                 carregarPosicoesTabelaJogo5();
@@ -11950,6 +11944,7 @@
                 carregarPosicoesTabelaJogo14();
             }, 4600);
             */
+            // ============== FIM DO CÓDIGO MORTO - BLOCO 2 ==============
 
             // FORÇAR CONFRONTO DIRETO MÚLTIPLAS TENTATIVAS - JOGOS 5 A 14
             for (let i = 5; i <= 14; i++) {
