@@ -680,23 +680,44 @@
             
             // Match com clubes conhecidos (da pasta selecionada)
             if (knownClubs.size > 0) {
-                // Tentativa 1: match exato
+                // Tentativa 1: match exato (mais seguro e preciso)
                 for (const club of knownClubs) {
                     const c = removerAcentos(club.toLowerCase());
                     if (n === c) return club;
                 }
                 
-                // Tentativa 2: contém ou é contido
+                // Tentativa 2: match por palavras completas (evita confusão entre "Manchester United" e "Manchester City")
+                const nWords = n.split(/\s+/);
+                const nWordsStr = nWords.join(' ');
+                
                 for (const club of knownClubs) {
                     const c = removerAcentos(club.toLowerCase());
-                    if (c.includes(n) || n.includes(c)) return club;
+                    const cWords = c.split(/\s+/);
+                    const cWordsStr = cWords.join(' ');
+                    
+                    // Match exato de palavras
+                    if (nWordsStr === cWordsStr) return club;
                 }
                 
-                // Tentativa 3: começa com as mesmas 3 letras
-                const prefix = n.slice(0, 3);
+                // Tentativa 3: match fuzzy APENAS se o nome tem palavras suficientes para ser único
+                // Exemplo: "Manchester United" tem 2 palavras, então precisa de match em pelo menos 2 palavras
                 for (const club of knownClubs) {
                     const c = removerAcentos(club.toLowerCase());
-                    if (c.startsWith(prefix) && prefix.length >= 3) return club;
+                    const cWords = c.split(/\s+/);
+                    
+                    // Se todas as palavras do input estão no clube, considera match
+                    const allWordsMatch = nWords.every(word => cWords.includes(word));
+                    if (allWordsMatch && nWords.length > 0) {
+                        return club;
+                    }
+                }
+                
+                // Tentativa 4: match por substring APENAS se o nome tem +8 caracteres (evita "Man" matchear tudo)
+                if (n.length >= 8) {
+                    for (const club of knownClubs) {
+                        const c = removerAcentos(club.toLowerCase());
+                        if (c.includes(n) && n.length >= c.length * 0.6) return club;
+                    }
                 }
             }
             
@@ -1713,6 +1734,27 @@
                         break;
                     default:
                         return 0;
+                }
+                
+                // 🏆 CRITÉRIOS DE DESEMPATE (quando ordena por pontos)
+                if (column === 'pontos' && valueA === valueB) {
+                    // 1º Desempate: Número de Vitórias
+                    if (a.vitorias !== b.vitorias) {
+                        return currentSort.direction === 'desc' ? 
+                            (b.vitorias - a.vitorias) : (a.vitorias - b.vitorias);
+                    }
+                    // 2º Desempate: Saldo de Gols
+                    if (a.saldoGols !== b.saldoGols) {
+                        return currentSort.direction === 'desc' ? 
+                            (b.saldoGols - a.saldoGols) : (a.saldoGols - b.saldoGols);
+                    }
+                    // 3º Desempate: Gols Pró
+                    if (a.golsPro !== b.golsPro) {
+                        return currentSort.direction === 'desc' ? 
+                            (b.golsPro - a.golsPro) : (a.golsPro - b.golsPro);
+                    }
+                    // 4º Desempate: Ordem Alfabética
+                    return a.time.toLowerCase().localeCompare(b.time.toLowerCase());
                 }
                 
                 if (currentSort.direction === 'asc') {
