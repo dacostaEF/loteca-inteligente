@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estatísticas Automáticas - CSV Reader</title>
+    <title>🌍 Analisador Universal de Ligas - CSV Statistics</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         * {
@@ -351,9 +351,9 @@
     <div class="container">
         <!-- Upload Section -->
         <div class="upload-section">
-            <h2>📊 Sistema de Estatísticas Automáticas</h2>
+            <h2>🌍 Analisador Universal de Ligas de Futebol</h2>
             <p style="color: #888; margin-bottom: 20px;">
-                Faça upload do arquivo CSV com os resultados dos jogos ou selecione a pasta do Brasileirão para carregar automaticamente todos os clubes
+                Carregue CSVs de QUALQUER liga: Brasileirão (A/B/C), Premier League, La Liga, Ligue 1, Champions League, etc. O sistema detecta automaticamente a estrutura e gera estatísticas completas!
             </p>
             
             <!-- Controles em linha única -->
@@ -368,7 +368,7 @@
                 <div class="file-input-wrapper">
                     <input type="file" id="dirPicker" webkitdirectory directory multiple onchange="handleDirectoryUpload(event)">
                     <label for="dirPicker" class="file-input-label">
-                        🗂️ Selecionar Pasta do Brasileirão
+                        🌍 Selecionar Pasta da Liga (Brasileirão, Premier League, La Liga, etc.)
                     </label>
                 </div>
 
@@ -436,99 +436,45 @@
         let pontosAcumuladosCSV = {}; // Armazena pontos acumulados dos CSVs por time
         let timesProcessados = []; // Armazena os times processados
         let currentSort = { column: 'pontos', direction: 'desc' }; // Ordenação atual
-        let serieAtual = 'A'; // Série atual detectada
-        // Mapeamentos base (comuns)
-        const ABBR_TO_CLUB_BASE = {
-            pal: 'Palmeiras', vas: 'Vasco', bah: 'Bahia', for: 'Fortaleza', int: 'Internacional',
-            cor: 'Corinthians', spo: 'Sport Recife', bot: 'Botafogo', cea: 'Ceara', vit: 'Vitoria',
-            flu: 'Fluminense', cru: 'Cruzeiro', fla: 'Flamengo', red: 'Red Bull Bragantino', 
-            sao: 'Sao Paulo', san: 'Santos', cap: 'Athletico-PR'
-        };
-
-        // Mapeamentos específicos para Brasileirão
-        const ABBR_TO_CLUB_SERIE_A = {
-            gre: 'Gremio',
-            atl: 'Atletico-MG',
-            ame: 'America-MG',
-            goi: 'Goias',
-            cfc: 'Coritiba',
-            cui: 'Cuiaba',
-            cha: 'Chapecoense',
-            crb: 'CRB'
-        };
-
-        // Mapeamentos específicos para Série B
-        const ABBR_TO_CLUB_SERIE_B = {
-            gre: 'Novo Horizontino',
-            atl: 'Atletico Go',
-            ame: 'América-MG',
-            goi: 'Goiás',
-            cfc: 'Coritiba',
-            cui: 'Cuiabá',
-            cha: 'Chapecoense',
-            crb: 'CRB',
-            vol: 'Volta Redonda',
-            rem: 'Remo',
-            ama: 'Amazonas',
-            cri: 'Criciúma',
-            pay: 'Paysandu',
-            'ath-mg': 'Athletic Club MG',
-            'athletic mg': 'Athletic Club MG',
-            'athletic-mg': 'Athletic Club MG',
-            'ath-pr': 'Athletico-PR',
-            fer: 'Ferroviária',
-            nho: 'Novo Horizontino',
-            ava: 'Avaí',
-            bot: 'Botafogo-SP',
-            ope: 'Operário-PR',
-            vil: 'Vila Nova',
-            novohorizontino: 'Novo Horizontino',
-            nov: 'Novo Horizontino'
-        };
-
-        // Função para obter mapeamentos corretos baseado na série
-        function getMapeamentosSerie(serie) {
-            const mapeamentos = { ...ABBR_TO_CLUB_BASE };
-            if (serie === 'A') {
-                Object.assign(mapeamentos, ABBR_TO_CLUB_SERIE_A);
-            } else if (serie === 'B') {
-                Object.assign(mapeamentos, ABBR_TO_CLUB_SERIE_B);
-            }
-            return mapeamentos;
-        }
-
-        let ABBR_TO_CLUB = getMapeamentosSerie(serieAtual);
-
-        // Função para detectar automaticamente a série
-        function detectarSerie(webkitRelativePath) {
-            if (webkitRelativePath && webkitRelativePath.toLowerCase().includes('serie_b')) {
-                return 'B';
-            }
-            return 'A'; // padrão para Brasileirão
-        }
-
-        // Função para atualizar mapeamentos baseado na série detectada
-        function atualizarMapeamentos(serie) {
-            serieAtual = serie;
-            ABBR_TO_CLUB = getMapeamentosSerie(serie);
-            console.log(`🔍 DEBUG: Série detectada: ${serie}`);
-            console.log(`🔍 DEBUG: Mapeamentos atualizados para Série ${serie}`);
+        let ligaAtual = 'Genérica'; // Liga atual detectada (Serie_A, Premier_League, La_Liga, etc)
+        
+        // 🌍 SISTEMA UNIVERSAL - SEM MAPEAMENTOS HARDCODED
+        // Funciona com QUALQUER liga: Brasileirão, Premier League, La Liga, Ligue 1, Champions, etc.
+        
+        // Função para detectar automaticamente a liga
+        function detectarLiga(webkitRelativePath) {
+            if (!webkitRelativePath) return 'Genérica';
+            
+            const path = webkitRelativePath.toLowerCase();
+            
+            // Detecta pela pasta principal
+            if (path.includes('serie_a') || path.includes('serie a')) return 'Brasileirão Série A';
+            if (path.includes('serie_b') || path.includes('serie b')) return 'Brasileirão Série B';
+            if (path.includes('serie_c') || path.includes('serie c')) return 'Brasileirão Série C';
+            if (path.includes('premier') || path.includes('premier_league')) return 'Premier League';
+            if (path.includes('la_liga') || path.includes('laliga')) return 'La Liga';
+            if (path.includes('ligue1') || path.includes('frances')) return 'Ligue 1';
+            if (path.includes('champions')) return 'Champions League';
+            
+            return 'Genérica';
         }
 
         /**
-         * Canoniza o nome de um time fornecido como entrada (pode ser abreviado ou não).
-         * @param {string} nome - O nome ou abreviação do time.
-         * @returns {string} O nome do time canonizado (ex: "Volta Redonda").
+         * 🌍 NORMALIZAÇÃO UNIVERSAL DE NOMES DE TIMES
+         * Funciona com qualquer liga sem mapeamentos hardcoded
+         * @param {string} nome - O nome do time
+         * @returns {string} O nome do time normalizado e capitalizado
          */
         function normalizarNomeTimeEntrada(nome) {
             if (!nome) return '';
-            const raw = String(nome).trim().toLowerCase();
             
-            // 1. Tenta mapear abreviações conhecidas usando os mapeamentos corretos da série
-            const mapeado = (raw.length <= 4 && ABBR_TO_CLUB[raw]) ? ABBR_TO_CLUB[raw] : nome;
+            // Remove caracteres especiais e capitaliza
+            const normalizado = String(nome)
+                .trim()
+                .replace(/[-_]/g, ' ')  // Troca - e _ por espaço
+                .replace(/\s+/g, ' ');   // Remove espaços duplos
             
-            // 2. Aplica a normalização usada nos dados dos jogos (remove acentos, padroniza caixa, etc.)
-            return normalizarTime(mapeado);
+            return capitalizar(normalizado);
         }
 
         function handleFileUpload(event) {
@@ -709,19 +655,13 @@
             showStatus('✅ Dados processados com sucesso!', 'success');
         }
 
-        // Normaliza nomes de colunas vindas de diferentes fontes
+        // 🌍 NORMALIZAÇÃO UNIVERSAL - Funciona com qualquer formato de CSV
         function normalizarLinha(row) {
             const Data = row.Data ?? row["data"] ?? row["Data_Jogo"] ?? row["Date"] ?? '';
             
             // Aplica sanitização ANTES da normalização
             let Time_Casa = sanitizeCorruptText(row.Time_Casa ?? row["Time Casa"] ?? row["Mandante"] ?? row["home"] ?? row["time_casa"] ?? '');
             let Time_Visitante = sanitizeCorruptText(row.Time_Visitante ?? row.Time_Fora ?? row["Time Fora"] ?? row["Visitante"] ?? row["away"] ?? row["time_fora"] ?? '');
-            
-            // Se vier abreviação (3 letras), mapeia para nome canônico
-            const abbrCasa = String(Time_Casa||'').trim().toLowerCase();
-            const abbrFora = String(Time_Visitante||'').trim().toLowerCase();
-            if (abbrCasa.length <= 3 && ABBR_TO_CLUB[abbrCasa]) Time_Casa = ABBR_TO_CLUB[abbrCasa];
-            if (abbrFora.length <= 3 && ABBR_TO_CLUB[abbrFora]) Time_Visitante = ABBR_TO_CLUB[abbrFora];
             
             // Normaliza nomes de times contra lista conhecida de pastas
             Time_Casa = normalizarTime(Time_Casa);
@@ -733,54 +673,34 @@
             return { Data, Time_Casa, Time_Visitante, Gols_Casa, Gols_Visitante };
         }
 
+        // 🌍 NORMALIZAÇÃO UNIVERSAL DE TIMES - Funciona com QUALQUER liga
         function normalizarTime(nome) {
             if (!nome) return '';
             const n = removerAcentos(String(nome).trim().toLowerCase());
             
-            // Tratamento especial para Athletic Club MG
-            if (n.includes('athletic') && n.includes('mg')) {
-                return 'Athletic Club MG';
-            }
-            if (n === 'ath-mg' || n === 'ath mg') {
-                return 'Athletic Club MG';
-            }
-            
-            // Tratamento especial para Atlético Goianiense
-            if (n.includes('atletico') && n.includes('go')) {
-                return 'Atletico Go';
-            }
-            if (n === 'atl' || n === 'atletico-go' || n === 'atletico go') {
-                return 'Atletico Go';
-            }
-            
-            // Tratamento especial para Novo Horizontino
-            if (n === 'gre' && knownClubs.has('Novo Horizontino')) {
-                return 'Novo Horizontino';
-            }
-            if (n.includes('novo') && n.includes('horizontino')) {
-                return 'Novo Horizontino';
-            }
-            if (n === 'novohorizontino') {
-                return 'Novo Horizontino';
+            // Match com clubes conhecidos (da pasta selecionada)
+            if (knownClubs.size > 0) {
+                // Tentativa 1: match exato
+                for (const club of knownClubs) {
+                    const c = removerAcentos(club.toLowerCase());
+                    if (n === c) return club;
+                }
+                
+                // Tentativa 2: contém ou é contido
+                for (const club of knownClubs) {
+                    const c = removerAcentos(club.toLowerCase());
+                    if (c.includes(n) || n.includes(c)) return club;
+                }
+                
+                // Tentativa 3: começa com as mesmas 3 letras
+                const prefix = n.slice(0, 3);
+                for (const club of knownClubs) {
+                    const c = removerAcentos(club.toLowerCase());
+                    if (c.startsWith(prefix) && prefix.length >= 3) return club;
+                }
             }
             
-            // Tentativa 1: match exato com clubes conhecidos
-            for (const club of knownClubs) {
-                const c = removerAcentos(club.toLowerCase());
-                if (n === c) return club; // exato
-            }
-            // Tentativa 2: começa com as 3 primeiras letras
-            const prefix = n.slice(0, 3);
-            for (const club of knownClubs) {
-                const c = removerAcentos(club.toLowerCase());
-                if (c.startsWith(prefix)) return club;
-            }
-            // Tentativa 3: contém
-            for (const club of knownClubs) {
-                const c = removerAcentos(club.toLowerCase());
-                if (c.includes(n) || n.includes(c)) return club;
-            }
-            // Sem mapeamento, capitaliza entrada
+            // Sem match, capitaliza entrada
             return capitalizar(nome);
         }
 
@@ -1281,57 +1201,42 @@
             status.className = `status ${type}`;
         }
 
-        // Leitura de uma pasta inteira (Brasileirão ou Serie_B) com múltiplos jogos.csv
+        // 🌍 LEITURA UNIVERSAL - Funciona com QUALQUER liga (Brasileirão, Premier League, La Liga, etc.)
         function handleDirectoryUpload(event) {
             const files = Array.from(event.target.files || []);
             if (files.length === 0) return;
 
-            const csvFiles = files.filter(f => f.name.toLowerCase() === 'jogos.csv');
+            const csvFiles = files.filter(f => f.name.toLowerCase() === 'jogos.csv' || f.name.toLowerCase().endsWith('.csv'));
             
-            // Detectar série automaticamente
-            const serieDetectada = detectarSerie(files[0]?.webkitRelativePath || '');
-            atualizarMapeamentos(serieDetectada);
+            // Detectar liga automaticamente
+            ligaAtual = detectarLiga(files[0]?.webkitRelativePath || '');
+            console.log(`🌍 Liga detectada: ${ligaAtual}`);
             
-            // DEBUG: Listar todos os arquivos encontrados
-            console.log(`🔍 DEBUG: Total de arquivos encontrados: ${files.length}`);
-            console.log(`🔍 DEBUG: Arquivos CSV encontrados: ${csvFiles.length}`);
-            console.log(`🔍 DEBUG: Lista de arquivos CSV:`, csvFiles.map(f => f.webkitRelativePath));
-            
-            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
-            const gremioFile = csvFiles.find(f => f.webkitRelativePath && f.webkitRelativePath.toLowerCase().includes('novohorizontino'));
-            if (gremioFile) {
-                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - Arquivo encontrado na lista:`);
-                console.log(`  - webkitRelativePath: "${gremioFile.webkitRelativePath}"`);
-            } else {
-                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - Arquivo NÃO encontrado na lista!`);
-                console.log(`🔍 DEBUG: Procurando por arquivos com 'novo' ou 'horizontino':`);
-                const similarFiles = csvFiles.filter(f => f.webkitRelativePath && 
-                    (f.webkitRelativePath.toLowerCase().includes('novo') || 
-                     f.webkitRelativePath.toLowerCase().includes('horizontino')));
-                console.log(`🔍 DEBUG: Arquivos similares:`, similarFiles.map(f => f.webkitRelativePath));
-            }
+            console.log(`🌍 Total de arquivos: ${files.length} | CSVs encontrados: ${csvFiles.length}`);
             
             if (csvFiles.length === 0) {
-                showStatus('Nenhum arquivo jogos.csv encontrado na pasta selecionada.', 'error');
+                showStatus('❌ Nenhum arquivo CSV encontrado na pasta selecionada.', 'error');
                 return;
             }
 
-            // Deriva nomes de clubes a partir das subpastas da Serie_B
+            // 🌍 DERIVA NOMES DOS CLUBES - UNIVERSAL para qualquer estrutura de pastas
             knownClubs = new Set();
             csvFiles.forEach(f => {
                 const rel = f.webkitRelativePath || '';
-                // Ex.: Serie_B/flamengo/jogos.csv -> pega segmento do meio
-                const parts = rel.split(/\\|\//g);
-                const idx = parts.findIndex(p => {
-                    const lower = p.toLowerCase();
-                    return lower.includes('serie') && (lower.includes('_b') || lower.includes(' b'));
-                });
-                const clubSeg = idx >= 0 && parts[idx+1] ? parts[idx+1] : (parts[parts.length-2] || '');
-                if (clubSeg) knownClubs.add(capitalizar(clubSeg.replace(/[-_]/g,' ')));
+                const parts = rel.split(/[\\\/]/g).filter(p => p && p !== '.'); // Separa por / ou \
+                
+                // Pega o nome da pasta do time (penúltimo segmento antes do arquivo)
+                const clubSeg = parts[parts.length - 2] || '';
+                
+                if (clubSeg && clubSeg.toLowerCase() !== 'jogos.csv') {
+                    const nomeClube = capitalizar(clubSeg.replace(/[-_]/g, ' '));
+                    knownClubs.add(nomeClube);
+                    console.log(`✅ Time detectado: ${nomeClube}`);
+                }
             });
 
-            document.getElementById('fileName').textContent = `Arquivos: ${csvFiles.length} jogos.csv encontrados | Clubes: ${Array.from(knownClubs).length}`;
-            showStatus('Lendo arquivos, aguarde...', 'success');
+            document.getElementById('fileName').textContent = `🌍 ${ligaAtual} | ${csvFiles.length} times detectados`;
+            showStatus(`✅ Liga: ${ligaAtual} | Carregando ${csvFiles.length} times...`, 'success');
 
             // Parsear todos em paralelo
             const parsePromises = csvFiles.map(file => new Promise((resolve, reject) => {
@@ -1395,60 +1300,29 @@
             });
         }
 
+        // 🌍 EXTRAÇÃO UNIVERSAL DE NOMES - Funciona com QUALQUER estrutura de pastas
         function extrairNomeTime(fileName, webkitRelativePath) {
-            console.log(`🔍 DEBUG: extrairNomeTime - fileName: ${fileName}, webkitRelativePath: ${webkitRelativePath}`);
-            
             const rel = webkitRelativePath || '';
-            const parts = rel.split(/\\|\//g);
-            console.log(`🔍 DEBUG: parts =`, parts);
+            const parts = rel.split(/[\\\/]/g).filter(p => p && p !== '.');
             
-            // Procura por Brasileirão ou Serie_B
-            const idx = parts.findIndex(p => {
-                const lower = p.toLowerCase();
-                return lower.includes('serie') && (lower.includes('_a') || lower.includes('_b') || lower.includes(' a') || lower.includes(' b'));
-            });
-            console.log(`🔍 DEBUG: idx = ${idx}`);
+            // Pega o nome da pasta do time (penúltimo segmento antes do arquivo)
+            const clubSeg = parts[parts.length - 2] || '';
             
-            const clubSeg = idx >= 0 && parts[idx+1] ? parts[idx+1] : (parts[parts.length-2] || '');
-            console.log(`🔍 DEBUG: clubSeg = ${clubSeg}`);
-            
-            let result = clubSeg ? capitalizar(clubSeg.replace(/[-_]/g,' ')) : null;
-            
-            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO (Série B)
-            if (clubSeg && clubSeg.toLowerCase().includes('novohorizontino')) {
-                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - extrairNomeTime:`);
-                console.log(`  - clubSeg: "${clubSeg}"`);
-                console.log(`  - result antes: "${result}"`);
+            if (!clubSeg || clubSeg.toLowerCase() === 'jogos.csv') {
+                return null;
             }
             
-            // Tratamento especial para Novo Horizontino (Série B)
-            if (result && result.toLowerCase().includes('novohorizontino')) {
-                result = 'Novo Horizontino';
-                console.log(`🔍 DEBUG NOVO HORIZONTINO - result após correção: "${result}"`);
-            }
-            
-            console.log(`🔍 DEBUG: result = ${result}`);
+            const result = capitalizar(clubSeg.replace(/[-_]/g, ' '));
+            console.log(`✅ Time extraído: ${result}`);
             
             return result;
         }
 
         function processarTime(nomeTime, dados) {
-            console.log(`\n=== PROCESSANDO: ${nomeTime} ===`);
-            console.log(`Total de jogos no arquivo: ${dados.length}`);
-            console.log(`🔍 DEBUG: nomeTime = "${nomeTime}"`);
+            console.log(`\n📊 PROCESSANDO: ${nomeTime} (${dados.length} jogos)`);
 
-            // Se você está BLINDANDO, mantenha:
             const nomeTimeCanon = normalizarNomeTimeEntrada(nomeTime);
-            console.log(`🔍 DEBUG: nomeTimeCanon = "${nomeTimeCanon}"`);
-
-            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
-            if (nomeTime.toLowerCase().includes('novo') || nomeTime.toLowerCase().includes('horizontino')) {
-                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO:`);
-                console.log(`  - nomeTime original: "${nomeTime}"`);
-                console.log(`  - nomeTimeCanon: "${nomeTimeCanon}"`);
-                console.log(`  - dados.length: ${dados.length}`);
-                console.log(`  - Primeiros 3 jogos:`, dados.slice(0, 3));
-            }
+            console.log(`✅ Nome normalizado: ${nomeTimeCanon}`);
 
             // Verifica se o time já foi processado
             if (timesProcessados.find(t => t.time === nomeTimeCanon)) {
@@ -1470,11 +1344,9 @@
                     return da.getTime() - db.getTime();
                 });
 
-            console.log(`🔍 DEBUG: dadosOrdenados.length = ${dadosOrdenados.length}`);
-            console.log(`🔍 DEBUG: Primeiros 3 jogos:`, dadosOrdenados.slice(0, 3));
+            console.log(`📋 Jogos ordenados: ${dadosOrdenados.length}`);
 
             // Se o nome do time for genérico, processa TODOS os times do arquivo
-            console.log(`🔍 DEBUG: Verificando se nomeTime === 'Time Selecionado': ${nomeTime === 'Time Selecionado'}`);
             if (nomeTime === 'Time Selecionado') {
                 const statsMap = new Map();
                 const seen = new Set();
