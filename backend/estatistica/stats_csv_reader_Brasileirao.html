@@ -1223,12 +1223,24 @@
             knownClubs = new Set();
             csvFiles.forEach(f => {
                 const rel = f.webkitRelativePath || '';
-                const parts = rel.split(/[\\\/]/g).filter(p => p && p !== '.'); // Separa por / ou \
+                const parts = rel.split(/[\\\/]/g).filter(p => p && p !== '.');
                 
-                // Pega o nome da pasta do time (penúltimo segmento antes do arquivo)
-                const clubSeg = parts[parts.length - 2] || '';
+                const ultimoSegmento = parts[parts.length - 1] || '';
+                const penultimoSegmento = parts[parts.length - 2] || '';
                 
-                if (clubSeg && clubSeg.toLowerCase() !== 'jogos.csv') {
+                let clubSeg = '';
+                
+                // CASO 1: CSV direto na pasta (ex: Premier_ligue/arsenal.csv)
+                if (ultimoSegmento.toLowerCase().endsWith('.csv') && 
+                    ultimoSegmento.toLowerCase() !== 'jogos.csv') {
+                    clubSeg = ultimoSegmento.replace(/\.csv$/i, '');
+                }
+                // CASO 2: CSV em subpasta (ex: Serie_A/flamengo/jogos.csv)
+                else {
+                    clubSeg = penultimoSegmento;
+                }
+                
+                if (clubSeg) {
                     const nomeClube = capitalizar(clubSeg.replace(/[-_]/g, ' '));
                     knownClubs.add(nomeClube);
                     console.log(`✅ Time detectado: ${nomeClube}`);
@@ -1305,10 +1317,26 @@
             const rel = webkitRelativePath || '';
             const parts = rel.split(/[\\\/]/g).filter(p => p && p !== '.');
             
-            // Pega o nome da pasta do time (penúltimo segmento antes do arquivo)
-            const clubSeg = parts[parts.length - 2] || '';
+            const ultimoSegmento = parts[parts.length - 1] || '';
+            const penultimoSegmento = parts[parts.length - 2] || '';
             
-            if (!clubSeg || clubSeg.toLowerCase() === 'jogos.csv') {
+            let clubSeg = '';
+            
+            // CASO 1: CSV direto na pasta (ex: Premier_ligue/arsenal.csv)
+            // Detecta se o último segmento é um arquivo CSV com nome próprio (não "jogos.csv")
+            if (ultimoSegmento.toLowerCase().endsWith('.csv') && 
+                ultimoSegmento.toLowerCase() !== 'jogos.csv') {
+                clubSeg = ultimoSegmento.replace(/\.csv$/i, '');
+                console.log(`✅ Estrutura DIRETA detectada: ${clubSeg}`);
+            }
+            // CASO 2: CSV em subpasta (ex: Serie_A/flamengo/jogos.csv)
+            else {
+                clubSeg = penultimoSegmento;
+                console.log(`✅ Estrutura SUBPASTA detectada: ${clubSeg}`);
+            }
+            
+            if (!clubSeg) {
+                console.warn(`⚠️ Não foi possível extrair nome do time de: ${rel}`);
                 return null;
             }
             
