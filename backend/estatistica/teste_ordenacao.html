@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Teste de Ordenação - Critérios de Desempate</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 40px;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px solid #4CAF50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+        }
+        th {
+            background: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background: #333;
+        }
+        .pos {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .empate {
+            background: #ff9800 !important;
+            font-weight: bold;
+        }
+        .criterio {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background: #1e7e34;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+        code {
+            background: #000;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .legenda {
+            margin-top: 20px;
+            padding: 15px;
+            background: #333;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 TESTE DE ORDENAÇÃO - CRITÉRIOS DE DESEMPATE</h1>
+
+    <!-- TESTE 1: Sem Empate -->
+    <div class="test-section">
+        <h2>✅ TESTE 1: Ordenação Normal (sem empate)</h2>
+        <p>Times com pontuações diferentes devem ser ordenados apenas por pontos.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>POS</th>
+                    <th>TIME</th>
+                    <th class="criterio">PONTOS</th>
+                    <th>VITÓRIAS</th>
+                    <th>SALDO</th>
+                    <th>GOLS PRÓ</th>
+                </tr>
+            </thead>
+            <tbody id="teste1"></tbody>
+        </table>
+        
+        <div class="resultado">
+            ✅ Arsenal (26) → Manchester City (22) → Liverpool (18)
+        </div>
+    </div>
+
+    <!-- TESTE 2: Empate em Pontos -->
+    <div class="test-section">
+        <h2>🏆 TESTE 2: Empate em Pontos (desempate por vitórias)</h2>
+        <p>Times com mesma pontuação devem ser ordenados por <strong>número de vitórias</strong>.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>POS</th>
+                    <th>TIME</th>
+                    <th>PONTOS</th>
+                    <th class="criterio">VITÓRIAS</th>
+                    <th>SALDO</th>
+                    <th>GOLS PRÓ</th>
+                </tr>
+            </thead>
+            <tbody id="teste2"></tbody>
+        </table>
+        
+        <div class="resultado">
+            ✅ Chelsea (8 vit) → Arsenal (6 vit) → Tottenham (5 vit)
+        </div>
+    </div>
+
+    <!-- TESTE 3: Empate em Pontos E Vitórias -->
+    <div class="test-section">
+        <h2>⚖️ TESTE 3: Empate em Pontos e Vitórias (desempate por saldo)</h2>
+        <p>Times com mesma pontuação e vitórias devem ser ordenados por <strong>saldo de gols</strong>.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>POS</th>
+                    <th>TIME</th>
+                    <th>PONTOS</th>
+                    <th>VITÓRIAS</th>
+                    <th class="criterio">SALDO</th>
+                    <th>GOLS PRÓ</th>
+                </tr>
+            </thead>
+            <tbody id="teste3"></tbody>
+        </table>
+        
+        <div class="resultado">
+            ✅ Liverpool (+12) → Manchester United (+8) → Newcastle (+5)
+        </div>
+    </div>
+
+    <!-- TESTE 4: Empate Total -->
+    <div class="test-section">
+        <h2>🎯 TESTE 4: Empate Completo (desempate por gols pró)</h2>
+        <p>Times idênticos até o saldo devem ser ordenados por <strong>gols pró</strong>.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>POS</th>
+                    <th>TIME</th>
+                    <th>PONTOS</th>
+                    <th>VITÓRIAS</th>
+                    <th>SALDO</th>
+                    <th class="criterio">GOLS PRÓ</th>
+                </tr>
+            </thead>
+            <tbody id="teste4"></tbody>
+        </table>
+        
+        <div class="resultado">
+            ✅ Fulham (25 gols) → Brighton (20 gols) → West Ham (18 gols)
+        </div>
+    </div>
+
+    <div class="legenda">
+        <h3>📋 CRITÉRIOS DE ORDENAÇÃO (em ordem):</h3>
+        <ol>
+            <li><strong>1º PONTOS:</strong> <code>(b.pontos - a.pontos)</code></li>
+            <li><strong>2º VITÓRIAS:</strong> <code>(b.vitorias - a.vitorias)</code></li>
+            <li><strong>3º SALDO DE GOLS:</strong> <code>(b.saldoGols - a.saldoGols)</code></li>
+            <li><strong>4º GOLS PRÓ:</strong> <code>(b.golsPro - a.golsPro)</code></li>
+            <li><strong>5º ALFABÉTICO:</strong> <code>a.time.localeCompare(b.time)</code></li>
+        </ol>
+    </div>
+
+    <script>
+        // Dados de teste
+        const teste1 = [
+            { pos: 0, time: 'Arsenal', pontos: 26, vitorias: 8, saldo: 15, golsPro: 20 },
+            { pos: 0, time: 'Manchester City', pontos: 22, vitorias: 7, saldo: 16, golsPro: 24 },
+            { pos: 0, time: 'Liverpool', pontos: 18, vitorias: 6, saldo: 1, golsPro: 15 }
+        ];
+
+        const teste2 = [
+            { pos: 0, time: 'Chelsea', pontos: 20, vitorias: 8, saldo: 10, golsPro: 22, classe: 'empate' },
+            { pos: 0, time: 'Arsenal', pontos: 20, vitorias: 6, saldo: 12, golsPro: 20, classe: 'empate' },
+            { pos: 0, time: 'Tottenham', pontos: 20, vitorias: 5, saldo: 8, golsPro: 18, classe: 'empate' }
+        ];
+
+        const teste3 = [
+            { pos: 0, time: 'Liverpool', pontos: 18, vitorias: 5, saldo: 12, golsPro: 20, classe: 'empate' },
+            { pos: 0, time: 'Manchester United', pontos: 18, vitorias: 5, saldo: 8, golsPro: 19, classe: 'empate' },
+            { pos: 0, time: 'Newcastle', pontos: 18, vitorias: 5, saldo: 5, golsPro: 17, classe: 'empate' }
+        ];
+
+        const teste4 = [
+            { pos: 0, time: 'Fulham', pontos: 15, vitorias: 4, saldo: 5, golsPro: 25, classe: 'empate' },
+            { pos: 0, time: 'Brighton', pontos: 15, vitorias: 4, saldo: 5, golsPro: 20, classe: 'empate' },
+            { pos: 0, time: 'West Ham', pontos: 15, vitorias: 4, saldo: 5, golsPro: 18, classe: 'empate' }
+        ];
+
+        // Função de ordenação (IGUAL AO CÓDIGO ORIGINAL)
+        function ordenar(times) {
+            return times.sort((a, b) =>
+                (b.pontos - a.pontos) ||
+                (b.vitorias - a.vitorias) ||
+                (b.saldo - a.saldo) ||
+                (b.golsPro - a.golsPro) ||
+                a.time.localeCompare(b.time)
+            );
+        }
+
+        // Renderizar testes
+        function renderizar(dados, elemento) {
+            const ordenados = ordenar([...dados]);
+            const tbody = document.getElementById(elemento);
+            
+            ordenados.forEach((time, i) => {
+                time.pos = i + 1;
+                const tr = document.createElement('tr');
+                if (time.classe) tr.className = time.classe;
+                
+                tr.innerHTML = `
+                    <td class="pos">${time.pos}º</td>
+                    <td>${time.time}</td>
+                    <td><strong>${time.pontos}</strong></td>
+                    <td>${time.vitorias}</td>
+                    <td>${time.saldo >= 0 ? '+' : ''}${time.saldo}</td>
+                    <td>${time.golsPro}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Executar testes
+        renderizar(teste1, 'teste1');
+        renderizar(teste2, 'teste2');
+        renderizar(teste3, 'teste3');
+        renderizar(teste4, 'teste4');
+    </script>
+</body>
+</html>
+
