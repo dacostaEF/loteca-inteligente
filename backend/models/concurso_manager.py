@@ -30,7 +30,7 @@ class ConcursoManager:
     
     def get_concurso_file_path(self, numero: str) -> str:
         """Retorna o caminho do arquivo do concurso"""
-        # Salvar na pasta específica do concurso (ex: models/concurso_1219/)
+        # Salvar na pasta específica do concurso (ex: models/concurso_atual/)
         concurso_dir = os.path.join(os.path.dirname(self.base_path), f"concurso_{numero}")
         os.makedirs(concurso_dir, exist_ok=True)
         return os.path.join(concurso_dir, f"concurso_{numero}.json")

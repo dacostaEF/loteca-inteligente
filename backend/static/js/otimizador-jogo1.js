@@ -88,7 +88,7 @@
   }
 
   async function carregarDadosJogo1() {
-    const url = '/api/analise/jogo/1?concurso=concurso_1219';
+    const url = '/api/analise/jogo/1?concurso=concurso_atual';
     const res = await fetch(url);
     if (!res.ok) throw new Error('Falha ao carregar jogo 1');
     const json = await res.json();

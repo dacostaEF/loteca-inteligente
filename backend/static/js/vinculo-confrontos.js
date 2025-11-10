@@ -59,7 +59,7 @@ class VinculoConfrontos {
 
   // CARREGAR DADOS DE UM JOGO ESPECÍFICO VIA ARQUIVO JSON
   async carregarJogoViaJSON(jogoNum) {
-    const jsonUrl = `/api/analise/jogo/${jogoNum}?concurso=concurso_1219`;
+    const jsonUrl = `/api/analise/jogo/${jogoNum}?concurso=concurso_atual`;
     console.log(`📡 [VÍNCULO] Carregando Jogo ${jogoNum} via JSON: ${jsonUrl}`);
     
     const response = await fetch(jsonUrl);

@@ -103,7 +103,7 @@ async function carregarConfrontosJogo5() {
     
     try {
         console.log('🔄 [CONFRONTOS-JOGO5] Buscando escudos da Central Admin...');
-        const jogoResponse = await fetch('/api/analise/jogo/5?concurso=concurso_1219');
+        const jogoResponse = await fetch('/api/analise/jogo/5?concurso=concurso_atual');
         
         if (jogoResponse.ok) {
             const jogoData = await jogoResponse.json();
@@ -400,7 +400,7 @@ async function carregarConfrontosGenerico(numeroJogo, timeCasa, timeFora, arquiv
     // ✅ NOVA SOLUÇÃO SIMPLES: Ler confrontos formatados do JSON
     // Formato: (data, placar, vencedor|escudo)
     try {
-        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
         if (jogoResponse.ok) {
             const jogoData = await jogoResponse.json();
             if (jogoData.success && jogoData.dados && jogoData.dados.confrontos_sequence) {
@@ -526,7 +526,7 @@ async function carregarConfrontosGenerico(numeroJogo, timeCasa, timeFora, arquiv
     
     try {
         console.log(`🔄 [CONFRONTOS-JOGO${numeroJogo}] Buscando escudos da Central Admin...`);
-        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
         
         if (jogoResponse.ok) {
             const jogoData = await jogoResponse.json();

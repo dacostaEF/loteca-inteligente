@@ -1,7 +1,7 @@
 // CARREGAMENTO DE DADOS DOS JOGOS - API INTEGRATION
 (async function(){
   async function carregarDados(jogo){
-    const url = `/api/analise/jogo/${jogo}?concurso=concurso_1219`; // ajuste o 1219 se necessário
+    const url = `/api/analise/jogo/${jogo}?concurso=concurso_atual`; // ajuste o 1219 se necessário
     const resp = await fetch(url);
     if (!resp.ok) { console.error('HTTP', resp.status, url); return; }
     const api = await resp.json();

@@ -221,7 +221,7 @@ window.LotecaOtimizador = (function () {
 
   async function fetchProb(gameId) {
     try {
-      const url = `/api/analise/jogo/${gameId}?concurso=concurso_1219`;
+      const url = `/api/analise/jogo/${gameId}?concurso=concurso_atual`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`${res.status}`);
       const data = await res.json();
@@ -303,7 +303,7 @@ window.LotecaOtimizador = (function () {
   async function renderClassificacaoSugestaoFromAPI() {
     for (let id=1; id<=14; id++) {
       try {
-        const res = await fetch(`/api/analise/jogo/${id}?concurso=concurso_1219`);
+        const res = await fetch(`/api/analise/jogo/${id}?concurso=concurso_atual`);
         if (!res.ok) continue;
         const data = await res.json();
         const source = data?.dados || data;

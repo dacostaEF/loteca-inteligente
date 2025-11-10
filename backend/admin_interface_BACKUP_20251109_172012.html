@@ -1686,13 +1686,31 @@
             <button class="tab active" onclick="showTab('jogos-loteca')">
                 <i class="fas fa-gamepad"></i> Jogos Loteca
             </button>
+            <button class="tab" onclick="showTab('classificacao')">
+                <i class="fas fa-table"></i> Classificação
+            </button>
+            <button class="tab" onclick="showTab('clubes')">
+                <i class="fas fa-users"></i> Clubes
+            </button>
+            <button class="tab" onclick="showTab('ranking-estatisticas')">
+                <i class="fas fa-trophy"></i> Ranking Estatísticas
+            </button>
+            <button class="tab" onclick="showTab('estatisticas')">
+                <i class="fas fa-chart-bar"></i> Estatísticas
+            </button>
             <button class="tab" onclick="showTab('analise-rapida')">
                 <i class="fas fa-table"></i> Planilha Análise Rápida
+            </button>
+            <button class="tab" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="tab" onclick="showTab('backup')">
+                <i class="fas fa-download"></i> Backup
             </button>
         </div>
 
         <!-- === ABA CLASSIFICAÇÃO === -->
-        <div class="tab-content" id="classificacao" style="display: none !important;">
+        <div class="tab-content" id="classificacao">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-table"></i> Gestão de Classificação
             </h2>
@@ -1897,8 +1915,7 @@
         </div>
 
         <!-- === ABA CLUBES - ESTATÍSTICAS DETALHADAS === -->
-        <!-- REMOVIDA: Não essencial para o Loteca X-Ray -->
-        <div class="tab-content" id="clubes" style="display: none !important;">
+        <div class="tab-content" id="clubes">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h2 style="color: #6f42c1; font-weight: 600; text-shadow: 0 2px 4px rgba(111, 66, 193, 0.3); margin: 0;">
                     <i class="fas fa-chart-line" style="margin-right: 10px;"></i> Estatísticas Detalhadas dos Clubes
@@ -2141,8 +2158,7 @@
         </div>
 
         <!-- === ABA RANKING ESTATÍSTICAS === -->
-        <!-- REMOVIDA: Não essencial para o Loteca X-Ray -->
-        <div class="tab-content" id="ranking-estatisticas" style="display: none !important;">
+        <div class="tab-content" id="ranking-estatisticas">
             <div class="ranking-header">
                 <h2 style="color: #333333; font-weight: 600; text-shadow: none; margin: 0;">
                     <i class="fas fa-trophy" style="margin-right: 10px; color: #333333;"></i> Ranking Completo - Análise Técnica
@@ -2238,8 +2254,7 @@
         </div>
 
         <!-- === ABA ESTATÍSTICAS === -->
-        <!-- REMOVIDA: Não essencial para o Loteca X-Ray -->
-        <div class="tab-content" id="estatisticas" style="display: none !important;">
+        <div class="tab-content" id="estatisticas">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-chart-bar"></i> Gestão de Estatísticas
             </h2>
@@ -2319,13 +2334,41 @@
                 <i class="fas fa-table"></i> Planilha Análise Rápida
             </h2>
             
+            <!-- CONTROLES -->
+            <div class="admin-section">
+                <div class="control-buttons">
+                    <button id="btn-sincronizar-analise" class="btn-secondary" onclick="sincronizarAnaliseRapida()" style="background: #666; color: white; font-weight: bold; border: 2px solid #555;" title="Método secundário - Use 'Salvar Dados do Jogo' como principal">
+                        <i class="fas fa-sync"></i> Sincronizar com Site (Secundário)
+                    </button>
+                    <button id="btn-calcular-estatisticas" class="btn-success" onclick="calcularEstatisticasAnalise()" style="background: #00ff00; color: black; font-weight: bold; border: 2px solid #00cc00;">
+                        <i class="fas fa-calculator"></i> Calcular Estatísticas
+                    </button>
+                    <button class="btn-success" onclick="salvarTodosJogos()" style="background: #ff6600; color: white; font-weight: bold; border: 2px solid #ff4400;">
+                        <i class="fas fa-save"></i> Salvar Todos os 14 Jogos
+                    </button>
+                </div>
+            </div>
+
             <!-- SELEÇÃO DE JOGO -->
             <div class="admin-section">
                 <h3>🎮 Selecione o Jogo para Análise</h3>
                 <div class="form-group" style="display: flex; align-items: center; gap: 12px;">
                     <select id="jogo-analise-select" class="form-select" onchange="carregarDadosJogo()" style="flex: 0 0 70%; min-width: 400px;">
                         <option value="">📋 Selecionar jogo...</option>
-                        <!-- Opções carregadas dinamicamente via JavaScript -->
+                        <option value="1">JOGO 1 - Ponte Preta/SP vs Guarani/RJ</option>
+                        <option value="2">JOGO 2 - Sport/PE vs Atlético-MG/MG</option>
+                        <option value="3">JOGO 3 - Juventude/RS vs Internacional/RS</option>
+                        <option value="4">JOGO 4 - Vasco da Gama/RJ vs Cruzeiro/MG</option>
+                        <option value="5">JOGO 5 - Athletico/PR vs Operário/PR</option>
+                        <option value="6">JOGO 6 - Atlético/MG vs Mirassol/SP</option>
+                        <option value="7">JOGO 7 - Grêmio/RS vs Vitória/BA</option>
+                        <option value="8">JOGO 8 - Aston Villa vs Fulham</option>
+                        <option value="9">JOGO 9 - Bahia/BA vs Palmeiras/SP</option>
+                        <option value="10">JOGO 10 - Fluminense/RJ vs Botafogo/RJ</option>
+                        <option value="11">JOGO 11 - Criciúma/SC vs Paysandu/PA</option>
+                        <option value="12">JOGO 12 - Newcastle vs Arsenal</option>
+                        <option value="13">JOGO 13 - Bragantino/SP vs Santos/SP</option>
+                        <option value="14">JOGO 14 - Barcelona vs Real Sociedad</option>
                     </select>
                     <button onclick="carregarDadosJogoExistente()" class="btn btn-success" style="background: linear-gradient(135deg, #00ff00, #00cc00); border: none; color: white; padding: 8px 16px; border-radius: 8px; font-weight: bold; white-space: nowrap; flex: 0 0 auto; font-size: 0.9rem; height: 38px; min-width: 120px; max-width: 150px;">
                         <i class="fas fa-download"></i> Carregar
@@ -2583,8 +2626,7 @@
         </div>
 
         <!-- === ABA DASHBOARD === -->
-        <!-- REMOVIDA: Não essencial para o Loteca X-Ray -->
-        <div class="tab-content" id="dashboard" style="display: none !important;">
+        <div class="tab-content" id="dashboard">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-tachometer-alt"></i> Dashboard do Sistema
             </h2>
@@ -2609,8 +2651,7 @@
         </div>
 
         <!-- === ABA BACKUP === -->
-        <!-- REMOVIDA: Não essencial para o Loteca X-Ray -->
-        <div class="tab-content" id="backup" style="display: none !important;">
+        <div class="tab-content" id="backup">
             <h2 style="margin-bottom: 25px; color: #333;">
                 <i class="fas fa-download"></i> Backup e Restore
             </h2>
@@ -2808,16 +2849,85 @@
 
         // === FUNÇÕES DA PLANILHA ANÁLISE RÁPIDA ===
         
-        /* ============================================================
-           FUNÇÃO OBSOLETA - REMOVIDA (Botão removido da interface)
-           async function sincronizarAnaliseRapida() { ... }
-           ============================================================ */
+        async function sincronizarAnaliseRapida() {
+            try {
+                console.log('🔄 [ANÁLISE] Sincronizando dados com o site...');
+                
+                const btn = document.getElementById('btn-sincronizar-analise');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sincronizando...';
+                
+                // Obter dados do formulário atual
+                const jogoSelecionado = document.getElementById('jogo-analise-select').value;
+                
+                if (!jogoSelecionado) {
+                    mostrarNotificacao('❌ Selecione um jogo primeiro!', 'error');
+                    return;
+                }
+                
+                // CORRIGIDO: Coletar dados no FORMATO NOVO
+                const dadosJogo = {
+                    numero: jogoSelecionado,
+                    time_casa: document.getElementById('time-casa-admin').value,
+                    time_fora: document.getElementById('time-fora-admin').value,
+                    arena: document.getElementById('arena-admin').value,
+                    campeonato: document.getElementById('campeonato-admin').value,
+                    dia: document.getElementById('dia-admin').value,
+                    escudo_casa: document.getElementById('escudo-casa-path').value,
+                    escudo_fora: document.getElementById('escudo-fora-path').value,
+                    probabilidade_casa: document.getElementById('prob-col1-admin').value,
+                    probabilidade_empate: document.getElementById('prob-colX-admin').value,
+                    probabilidade_fora: document.getElementById('prob-col2-admin').value,
+                    recomendacao: document.getElementById('recomendacao-admin').value,
+                    confrontos_sequence: document.getElementById('confrontos-sequence-admin').value,
+                    posicao_casa: document.getElementById('posicao-casa-admin').value,
+                    posicao_fora: document.getElementById('posicao-fora-admin').value,
+                    confronto_direto: document.getElementById('confronto-direto-admin').value,
+                    fator_casa: document.getElementById('fator-casa-admin').value,
+                    fator_fora: document.getElementById('fator-fora-admin').value,
+                    sincronizado_em: new Date().toISOString()
+                };
+                
+                console.log(`📊 [ANÁLISE] Sincronizando JOGO ${jogoSelecionado} com o site...`);
+                
+                // MODIFICADO: Obter número do concurso e enviar
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1219';
+                
+                // Enviar dados para o servidor (atualizar página do usuário)
+                const response = await fetch(`${API_BASE}/api/admin/analise/sincronizar`, {
+                    method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        jogo_numero: jogoSelecionado,
+                        concurso_numero: numeroConcurso,
+                        dados: dadosJogo
+                    })
+                });
+                
+                if (response.ok) {
+                    const resultado = await response.json();
+                    console.log('✅ [ANÁLISE] Dados sincronizados com sucesso:', resultado);
+                    mostrarNotificacao(`✅ JOGO ${jogoSelecionado} sincronizado! A página do usuário foi atualizada.`, 'success');
+                } else {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.error('❌ [ANÁLISE] Erro ao sincronizar:', error);
+                mostrarNotificacao('❌ Erro ao sincronizar dados!', 'error');
+            } finally {
+                const btn = document.getElementById('btn-sincronizar-analise');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sync"></i> Sincronizar com Site (Secundário)';
+                
+                // Re-anexar event listeners após mudança no DOM
+                setTimeout(() => reanexarEventListeners(), 100);
+            }
+        }
         
-        /* ============================================================
-           FUNÇÃO OBSOLETA - REMOVIDA (Botão removido da interface)
-           async function calcularEstatisticasAnalise() { ... }
-           ============================================================ */
-        async function calcularEstatisticasAnalise_OBSOLETA() {
+        async function calcularEstatisticasAnalise() {
             try {
                 console.log('📊 [ANÁLISE] Calculando estatísticas...');
                 
@@ -2944,11 +3054,7 @@
                 // Re-anexar event listeners após mudança no DOM
                 setTimeout(() => reanexarEventListeners(), 100);
             }
-        } // FIM calcularEstatisticasAnalise_OBSOLETA()
-        
-        /* ============================================================
-           FIM DO BLOCO OBSOLETO - Funções removidas
-           ============================================================ */
+        }
         
         // === DADOS DOS JOGOS ===
         let jogosAnaliseData = {};
@@ -3313,11 +3419,8 @@
             }
         }
         
-        /* ============================================================
-           FUNÇÃO OBSOLETA - REMOVIDA (Botão removido da interface)
-           async function salvarTodosJogos() { ... }
-           ============================================================ */
-        async function salvarTodosJogos_OBSOLETA() {
+        // FUNÇÃO PARA SALVAR TODOS OS 14 JOGOS (AUTOMATIZAÇÃO COMPLETA)
+        async function salvarTodosJogos() {
             console.log('🚀 [AUTOMATIZAÇÃO] Iniciando salvamento de todos os 14 jogos...');
             
             try {
@@ -3407,8 +3510,8 @@
             try {
                 console.log(`💾 [ANÁLISE] Salvando análise no servidor para JOGO ${dadosJogo.numero}...`);
                 
-                // MODIFICADO: Obter número do concurso atual, default 'atual'
-                const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
+                // MODIFICADO: Obter número do concurso atual, default 1219
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1219';
                 console.log(`📊 [ANÁLISE] Concurso atual: ${numeroConcurso}`);
                 
                 // CORRIGIDO: Usar FORMATO NOVO (dados) em vez de dados_publicos
@@ -3472,11 +3575,7 @@
             } catch (error) {
                 console.error('❌ [ANÁLISE] Erro ao salvar análise no servidor:', error);
             }
-        } // FIM salvarTodosJogos_OBSOLETA()
-        
-        /* ============================================================
-           FIM DO BLOCO OBSOLETO - Botão "Salvar Todos" removido
-           ============================================================ */
+        }
         
         function limparFormularioJogo() {
             console.log('🧹 [ANÁLISE] Limpando formulário...');
@@ -3518,7 +3617,7 @@
             
             console.log(`📥 [ANÁLISE] Carregando dados existentes do JOGO ${jogoSelecionado}...`);
             
-            // PRIORIDADE: Carregar APENAS do servidor (backend/models/concurso_atual/analise_rapida/)
+            // Primeiro tentar carregar do servidor
             const dadosServidor = await carregarAnaliseDoServidor(jogoSelecionado);
             
             if (dadosServidor) {
@@ -3529,15 +3628,30 @@
                 return;
             }
             
-            // NENHUM fallback para localStorage (pode ter dados antigos/fake)
-            console.log(`📝 [ANÁLISE] Nenhum arquivo JSON encontrado para JOGO ${jogoSelecionado}`);
-            mostrarNotificacao(`📝 Nenhum arquivo JSON encontrado para JOGO ${jogoSelecionado}. Crie um novo.`, 'info');
+            // Se não encontrou no servidor, tentar localStorage
+            const dadosSalvos = localStorage.getItem('jogosAnaliseData');
+            if (dadosSalvos) {
+                jogosAnaliseData = JSON.parse(dadosSalvos);
+                
+                if (jogosAnaliseData[jogoSelecionado]) {
+                    const dados = jogosAnaliseData[jogoSelecionado];
+                    preencherFormularioComDados(dados);
+                    console.log(`✅ [ANÁLISE] Dados do JOGO ${jogoSelecionado} carregados do localStorage!`);
+                    mostrarNotificacao(`✅ Dados do JOGO ${jogoSelecionado} carregados do localStorage!`, 'success');
+                } else {
+                    console.log(`📝 [ANÁLISE] Nenhum dado salvo para JOGO ${jogoSelecionado}`);
+                    mostrarNotificacao(`📝 Nenhum dado salvo para JOGO ${jogoSelecionado}`, 'info');
+                }
+            } else {
+                console.log('📝 [ANÁLISE] Nenhum dado salvo encontrado');
+                mostrarNotificacao('📝 Nenhum dado salvo encontrado', 'info');
+            }
         }
         
         async function carregarAnaliseDoServidor(jogoSelecionado) {
             try {
-                // MODIFICADO: Obter número do concurso atual, default 'atual'
-                const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
+                // MODIFICADO: Obter número do concurso atual, default 1219
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1219';
                 
                 console.log(`🔍 [ANÁLISE] Buscando dados do JOGO ${jogoSelecionado} do CONCURSO ${numeroConcurso}`);
                 
@@ -8085,7 +8199,7 @@
         }
         
         // FUNÇÃO PARA ATUALIZAR DROPDOWN DA ABA "PLANILHA ANÁLISE RÁPIDA"
-        async function atualizarDropdownAnaliseRapida() {
+        function atualizarDropdownAnaliseRapida() {
             try {
                 console.log('🔄 [DROPDOWN] Atualizando dropdown da aba Análise Rápida...');
                 
@@ -8095,69 +8209,50 @@
                     return;
                 }
                 
-                // Limpar opções existentes (exceto a primeira)
-                while (dropdown.children.length > 1) {
-                    dropdown.removeChild(dropdown.lastChild);
+                // PRIORIDADE 1: Usar dados do arquivo JSON salvo (jogosAtuais)
+                if (jogosAtuais && jogosAtuais.length > 0) {
+                    console.log('📊 [DROPDOWN] Usando dados do arquivo JSON salvo:', jogosAtuais);
+                    
+                    // Limpar opções existentes (exceto a primeira)
+                    while (dropdown.children.length > 1) {
+                        dropdown.removeChild(dropdown.lastChild);
+                    }
+                    
+                    // Adicionar jogos do arquivo JSON
+                    jogosAtuais.forEach(jogo => {
+                        const option = document.createElement('option');
+                        option.value = jogo.numero || jogo.id;
+                        
+                        // Formatar nome dos times
+                        const timeCasa = jogo.time_casa || jogo.coluna1 || '';
+                        const timeFora = jogo.time_fora || jogo.coluna2 || '';
+                        
+                        option.textContent = `JOGO ${jogo.numero || jogo.id} - ${timeCasa} vs ${timeFora}`;
+                        dropdown.appendChild(option);
+                        
+                        console.log(`✅ [DROPDOWN] Opção ${jogo.numero || jogo.id} adicionada: ${option.textContent}`);
+                    });
+                    
+                    console.log(`✅ [DROPDOWN] ${jogosAtuais.length} jogos carregados do arquivo JSON!`);
+                    return;
                 }
                 
-                // PRIORIDADE 1: Buscar arquivos JSON salvos em backend/models/concurso_atual/analise_rapida/
-                console.log('📂 [DROPDOWN] Buscando arquivos JSON salvos (jogo_1.json a jogo_14.json)...');
+                // PRIORIDADE 2: Fallback - usar dados da tabela (método antigo)
+                console.log('📊 [DROPDOWN] Usando dados da tabela (fallback)...');
                 
-                let jogosCarregados = 0;
-                
+                // Atualizar cada opção do dropdown com os dados da tabela
                 for (let i = 1; i <= 14; i++) {
-                    try {
-                        const response = await fetch(`${API_BASE}/api/admin/analise/carregar`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                jogo_numero: i.toString(),
-                                concurso_numero: 'atual'
-                            })
-                        });
-                        
-                        if (response.ok) {
-                            const resultado = await response.json();
-                            if (resultado.success && resultado.dados?.dados) {
-                                const dados = resultado.dados.dados;
-                                
-                                const option = document.createElement('option');
-                                option.value = i;
-                                
-                                const timeCasa = dados.time_casa || `Time Casa ${i}`;
-                                const timeFora = dados.time_fora || `Time Fora ${i}`;
-                                
-                                option.textContent = `JOGO ${i} - ${timeCasa} vs ${timeFora}`;
-                                dropdown.appendChild(option);
-                                
-                                jogosCarregados++;
-                                console.log(`✅ [DROPDOWN] JOGO ${i} carregado do JSON: ${timeCasa} vs ${timeFora}`);
-                            }
-                        }
-                    } catch (error) {
-                        console.log(`⚠️ [DROPDOWN] JOGO ${i} não encontrado no JSON, usando fallback...`);
-                        
-                        // FALLBACK: Usar dados da tabela "Jogos Loteca"
-                        const timeCasa = document.getElementById(`coluna1_${i}`)?.value || '';
-                        const timeFora = document.getElementById(`coluna2_${i}`)?.value || '';
-                        
-                        if (timeCasa && timeFora) {
-                            const option = document.createElement('option');
-                            option.value = i;
-                            option.textContent = `JOGO ${i} - ${timeCasa} vs ${timeFora}`;
-                            dropdown.appendChild(option);
-                            
-                            jogosCarregados++;
-                            console.log(`✅ [DROPDOWN] JOGO ${i} carregado da tabela: ${timeCasa} vs ${timeFora}`);
-                        }
+                    const timeCasa = document.getElementById(`coluna1_${i}`)?.value || '';
+                    const timeFora = document.getElementById(`coluna2_${i}`)?.value || '';
+                    
+                    const opcao = dropdown.querySelector(`option[value="${i}"]`);
+                    if (opcao && timeCasa && timeFora) {
+                        opcao.textContent = `JOGO ${i} - ${timeCasa} vs ${timeFora}`;
+                        console.log(`✅ [DROPDOWN] Opção ${i} atualizada: ${opcao.textContent}`);
                     }
                 }
                 
-                if (jogosCarregados === 0) {
-                    console.warn('⚠️ [DROPDOWN] Nenhum jogo carregado! Verifique se há arquivos JSON ou dados na tabela.');
-                } else {
-                    console.log(`✅ [DROPDOWN] Total de ${jogosCarregados} jogos carregados no dropdown!`);
-                }
+                console.log('✅ [DROPDOWN] Dropdown da aba Análise Rápida atualizado!');
                 
             } catch (error) {
                 console.error('❌ [DROPDOWN] Erro ao atualizar dropdown:', error);
@@ -8386,13 +8481,13 @@
             };
             
             // Identificar arena (baseada no time da casa)
-            info.arena = mapeamentoArenas[timeCasa.toUpperCase()] || '';
-            info.campeonato = '';  // NÃO inserir dados fake - deixar vazio
-            info.dia = dataJogo || '';  // NÃO inserir dados fake - deixar vazio
+            info.arena = mapeamentoArenas[timeCasa.toUpperCase()] || 'Arena não identificada';
+            info.campeonato = 'Brasileirão Série A';
+            info.dia = dataJogo || 'Sábado';
             
-            console.log(`🏟️ [INFO] Arena: ${info.arena || '(vazio)'}`);
-            console.log(`🏆 [INFO] Campeonato: ${info.campeonato || '(vazio)'}`);
-            console.log(`📅 [INFO] Dia: ${info.dia || '(vazio)'}`);
+            console.log(`🏟️ [INFO] Arena: ${info.arena}`);
+            console.log(`🏆 [INFO] Campeonato: ${info.campeonato}`);
+            console.log(`📅 [INFO] Dia: ${info.dia}`);
             
             return info;
         }
@@ -8402,9 +8497,9 @@
             try {
                 console.log('💾 [AUTO-SAVE] Salvando dados automaticamente...');
                 
-                const numeroConcurso = document.getElementById('numeroConcurso').value || '';
-                const periodoApostas = document.getElementById('periodoApostas').value || '';
-                const realizacaoJogos = document.getElementById('realizacaoJogos').value || '';
+                const numeroConcurso = document.getElementById('numeroConcurso').value || '1215';
+                const periodoApostas = document.getElementById('periodoApostas').value || '07/10/2025 a 08/10/2025';
+                const realizacaoJogos = document.getElementById('realizacaoJogos').value || '27/09/2025 a 28/09/2025';
 
                 // Preparar dados para salvar
                 const dadosConcurso = {
@@ -8478,8 +8573,8 @@
                 mostrarNotificacao('💾 Salvando em: backend/models/concurso_atual/', 'info');
                 
                 const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
-                const periodoApostas = document.getElementById('periodoApostas').value || '';
-                const realizacaoJogos = document.getElementById('realizacaoJogos').value || '';
+                const periodoApostas = document.getElementById('periodoApostas').value || '07/10/2025 a 08/10/2025';
+                const realizacaoJogos = document.getElementById('realizacaoJogos').value || '27/09/2025 a 28/09/2025';
 
                 // Preparar dados para salvar
                 const dadosConcurso = {
@@ -8815,15 +8910,15 @@
                     });
                     
                     if (numeroConcurso) {
-                        numeroConcurso.value = info.numero || '';
+                        numeroConcurso.value = info.numero || '1213';
                         console.log('📂 [LOTECA] Campo número preenchido:', numeroConcurso.value);
                     }
                     if (periodoApostas) {
-                        periodoApostas.value = info.periodoApostas || '';
+                        periodoApostas.value = info.periodoApostas || '24/09/2025 até 15h do dia 27/09/2025';
                         console.log('📂 [LOTECA] Campo período preenchido:', periodoApostas.value);
                     }
                     if (realizacaoJogos) {
-                        realizacaoJogos.value = info.realizacaoJogos || '';
+                        realizacaoJogos.value = info.realizacaoJogos || '27/09/2025 a 28/09/2025';
                         console.log('📂 [LOTECA] Campo realização preenchido:', realizacaoJogos.value);
                     }
                     
@@ -8832,9 +8927,9 @@
                     const displayPeriodo = document.getElementById('displayPeriodo');
                     const displayRealizacao = document.getElementById('displayRealizacao');
                     
-                    if (displayConcurso) displayConcurso.textContent = info.numero || '';
-                    if (displayPeriodo) displayPeriodo.textContent = info.periodoApostas || '';
-                    if (displayRealizacao) displayRealizacao.textContent = info.realizacaoJogos || '';
+                    if (displayConcurso) displayConcurso.textContent = info.numero || '1213';
+                    if (displayPeriodo) displayPeriodo.textContent = info.periodoApostas || '24/09/2025 até 15h do dia 27/09/2025';
+                    if (displayRealizacao) displayRealizacao.textContent = info.realizacaoJogos || '27/09/2025 a 28/09/2025';
                     
                     console.log('✅ [LOTECA] Informações do concurso carregadas:', info);
                 } else {
@@ -9306,12 +9401,12 @@
                 
                 if (result.success) {
                     const dados = result.concurso;
-                        const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '';
+                        const numeroConcurso = dados?.metadados?.numero || dados?.concurso?.numero || '1219';
                     
                     // Atualizar campos
                     document.getElementById('numeroConcurso').value = numeroConcurso;
-                        document.getElementById('periodoApostas').value = dados?.concurso?.periodo_apostas || '';
-                        document.getElementById('realizacaoJogos').value = dados?.concurso?.realizacao_jogos || '';
+                        document.getElementById('periodoApostas').value = dados?.concurso?.periodo_apostas || '07/10/2025 a 08/10/2025';
+                        document.getElementById('realizacaoJogos').value = dados?.concurso?.realizacao_jogos || '27/09/2025 a 28/09/2025';
                     
                     // Atualizar jogos
                         if (dados?.jogos && dados.jogos.length > 0) {
@@ -9365,10 +9460,10 @@
                 
             } catch (error) {
                 console.error('💥 [LOTECA] Erro geral ao carregar concurso:', error);
-                // NÃO inserir dados fake - deixar campos vazios
-                document.getElementById('numeroConcurso').value = '';
-                document.getElementById('periodoApostas').value = '';
-                document.getElementById('realizacaoJogos').value = '';
+                // Usar valores mínimos
+                document.getElementById('numeroConcurso').value = '1215';
+                document.getElementById('periodoApostas').value = '07/10/2025 a 08/10/2025';
+                document.getElementById('realizacaoJogos').value = '27/09/2025 a 28/09/2025';
             }
         }
 

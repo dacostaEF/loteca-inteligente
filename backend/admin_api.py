@@ -1182,10 +1182,10 @@ def get_proximo_numero():
 @bp_admin.route('/api/admin/loteca/listar-csv', methods=['GET'])
 @cross_origin()
 def listar_arquivos_csv():
-    """Listar arquivos CSV da pasta Concursos_CEF"""
+    """Listar arquivos CSV da pasta concurso_atual"""
     try:
         # Caminho da pasta de concursos CSV
-        pasta_csv = os.path.join(os.path.dirname(__file__), '..', 'Concursos_CEF')
+        pasta_csv = os.path.join(os.path.dirname(__file__), 'models', 'concurso_atual')
         
         if not os.path.exists(pasta_csv):
             logger.warning(f"⚠️ Pasta CSV não encontrada: {pasta_csv}")
@@ -1224,7 +1224,7 @@ def carregar_arquivo_csv(nome_arquivo):
     """Carregar conteúdo de um arquivo CSV específico"""
     try:
         # Caminho da pasta de concursos CSV
-        pasta_csv = os.path.join(os.path.dirname(__file__), '..', 'Concursos_CEF')
+        pasta_csv = os.path.join(os.path.dirname(__file__), 'models', 'concurso_atual')
         caminho_arquivo = os.path.join(pasta_csv, nome_arquivo)
         
         # Verificar se arquivo existe
@@ -1699,8 +1699,8 @@ def obter_dados_analise_jogo(jogo_numero):
         return BACKEND_DIR / "models" / concurso / "analise_rapida"
     
     # Parâmetros
-    # MODIFICADO: Default para concurso_1219
-    concurso = request.args.get("concurso", "concurso_1219")
+    # MODIFICADO: Default para concurso_atual
+    concurso = request.args.get("concurso", "concurso_atual")
     # print(f"[NOVA-API] Concurso recebido: '{concurso}'")
     
     pasta = _dir_analise(concurso)

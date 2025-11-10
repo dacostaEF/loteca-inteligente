@@ -4244,7 +4244,7 @@
                 for (let numeroJogo = 1; numeroJogo <= 14; numeroJogo++) {
                     try {
                         console.log(`🔍 [SYNC-FALLBACK] Buscando JOGO ${numeroJogo} via API individual...`);
-                        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+                        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
                         
                         if (response.ok) {
                             const data = await response.json();
@@ -6250,7 +6250,7 @@
             
             try {
                 // Fazer requisição para a API com parâmetro de concurso
-                const response = await fetch(`/api/analise/jogo/${jogoNumero}?concurso=concurso_1219`);
+                const response = await fetch(`/api/analise/jogo/${jogoNumero}?concurso=concurso_atual`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -7834,7 +7834,7 @@
             
             // ✅ NOVA LÓGICA SIMPLES: Buscar string formatada do JSON
             try {
-                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
                     if (jogoData.success && jogoData.dados && jogoData.dados.confrontos_sequence) {
@@ -7953,7 +7953,7 @@
             let escudoFora = '/static/placeholder-team-logo.svg';
             
             try {
-                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
                     if (jogoData.success && jogoData.dados) {
@@ -7973,7 +7973,7 @@
             let timeCasaJogo = '';
             let timeForaJogo = '';
             try {
-                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+                const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
                     if (jogoData.success && jogoData.dados) {
@@ -8109,7 +8109,7 @@
             let escudoFora = '/static/escudos/PAL_Palmeiras/Palmeiras.png';
             
             try {
-                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1219');
+                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_atual');
                 if (jogoResponse.ok) {
                     const jogoData = await jogoResponse.json();
                     if (jogoData.success && jogoData.dados) {
@@ -8340,7 +8340,7 @@
             
             try {
                 // PRIMEIRO: Buscar dados do jogo 1 da Central Admin
-                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_1219');
+                const jogoResponse = await fetch('/api/analise/jogo/1?concurso=concurso_atual');
                 const nomeCasa = document.getElementById('time-casa-nome-jogo1')?.textContent?.trim() || 'CORINTHIANS';
                 const nomeFora = document.getElementById('time-fora-nome-jogo1')?.textContent?.trim() || 'FLAMENGO';
                 let timeCasa = nomeCasa;
@@ -8572,7 +8572,7 @@
                 
                 // Determinar concurso atual
                 const concursoMatch = document.querySelector('h1')?.textContent.match(/Concurso (\d+)/);
-                const concursoAtual = concursoMatch ? `concurso_${concursoMatch[1]}` : 'concurso_1219';
+                const concursoAtual = concursoMatch ? `concurso_${concursoMatch[1]}` : 'concurso_atual';
                 console.log(`📡 [LOAD-REAL] Concurso: ${concursoAtual}`);
                 
                 // Buscar todos os 14 jogos em paralelo
@@ -9097,11 +9097,11 @@
         // FUNÇÃO REMOVIDA - JOGO 3 ANTIGO DELETADO
         /* async function carregarDadosJogo3() {
             console.log('🎯 [JOGO3] Iniciando carregamento dos dados do JOGO 3...');
-            console.log('🔍 [JOGO3] URL da API:', '/api/analise/jogo/3?concurso=concurso_1219');
+            console.log('🔍 [JOGO3] URL da API:', '/api/analise/jogo/3?concurso=concurso_atual');
             
             try {
                 // Fazer requisição para a API com parâmetro de concurso
-                const response = await fetch('/api/analise/jogo/3?concurso=concurso_1219');
+                const response = await fetch('/api/analise/jogo/3?concurso=concurso_atual');
                 
                 console.log('📡 [JOGO3] Response status:', response.status);
                 console.log('📡 [JOGO3] Response ok:', response.ok);
@@ -12206,7 +12206,7 @@
             try {
                 // Determinar concurso atual
                 const concursoMatch = document.querySelector('h1')?.textContent.match(/Concurso (\d+)/);
-                const concursoAtual = concursoMatch ? `concurso_${concursoMatch[1]}` : 'concurso_1219';
+                const concursoAtual = concursoMatch ? `concurso_${concursoMatch[1]}` : 'concurso_atual';
                 console.log(`📡 [DADOS-JOGOS] Concurso: ${concursoAtual}`);
                 
                 // Buscar todos os 14 jogos em paralelo
@@ -13132,7 +13132,7 @@
     <script>
     (async function(){
       async function carregarDados(jogo){
-        const url = `/api/analise/jogo/${jogo}?concurso=concurso_1219`; // ajuste o 1219 se necessário
+        const url = `/api/analise/jogo/${jogo}?concurso=concurso_atual`; // ajuste o 1219 se necessário
         const resp = await fetch(url);
         if (!resp.ok) { console.error('HTTP', resp.status, url); return; }
         const api = await resp.json();

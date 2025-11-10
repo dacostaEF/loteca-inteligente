@@ -121,7 +121,7 @@ async function carregarDadosCompletosJogo(numeroJogo) {
     try {
         // 1. CARREGAR DADOS DO JSON (ANÁLISE)
         // console.log(`📊 [JOGO${numeroJogo}] Carregando análise JSON...`);
-        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+        const response = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
         
         if (!response.ok) {
             throw new Error(`Erro na API: ${response.status}`);
@@ -429,7 +429,7 @@ async function carregarERenderizarConfrontos(numeroJogo, dados) {
     // Formato: (data, placar, vencedor|escudo)
     try {
         // Buscar sequência formatada do JSON
-        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_1219`);
+        const jogoResponse = await fetch(`/api/analise/jogo/${numeroJogo}?concurso=concurso_atual`);
         if (jogoResponse.ok) {
             const jogoData = await jogoResponse.json();
             if (jogoData.success && jogoData.dados && jogoData.dados.confrontos_sequence) {
@@ -499,7 +499,7 @@ async function carregarDadosJogo5() {
     try {
         // 1. CARREGAR DADOS DO JSON
         console.log('📊 [JOGO5] Carregando análise JSON...');
-        const response = await fetch('/api/analise/jogo/5?concurso=concurso_1219');
+        const response = await fetch('/api/analise/jogo/5?concurso=concurso_atual');
         
         if (!response.ok) {
             throw new Error(`Erro na API: ${response.status}`);

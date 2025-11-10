@@ -87,7 +87,7 @@
 
   async function fetchProb(gameId) {
     try {
-      const res = await fetch(`/api/analise/jogo/${gameId}?concurso=concurso_1219`);
+      const res = await fetch(`/api/analise/jogo/${gameId}?concurso=concurso_atual`);
       if (!res.ok) return null;
       const data = await res.json();
       const src = data?.dados || data;
