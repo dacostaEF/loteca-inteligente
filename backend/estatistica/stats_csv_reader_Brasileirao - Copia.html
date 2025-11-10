@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas Automáticas - CSV Reader</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .upload-section {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px dashed #dc2626;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .upload-section h2 {
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .file-input-wrapper input[type=file] {
+            display: none;
+        }
+
+        .file-input-label {
+            background: #dc2626;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .file-input-label:hover {
+            background: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .clear-btn {
+            background: #ef4444;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .clear-btn:hover {
+            background: #dc2626;
+            transform: scale(1.05);
+        }
+
+        .sort-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 4px;
+            margin-left: 5px;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .sort-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sort-btn.active {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .sort-btn.asc::after {
+            content: " ↑";
+        }
+
+        .sort-btn.desc::after {
+            content: " ↓";
+        }
+
+        .file-name {
+            margin-top: 10px;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            display: block;
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            display: block;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #2a2a2a;
+            color: #888;
+        }
+
+        .tab-btn.active {
+            background: #dc2626;
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #333;
+        }
+
+        .tab-content {
+            display: none;
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #0f0f0f;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid #333;
+            white-space: nowrap;
+        }
+
+        th:first-child,
+        th:nth-child(2) {
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #222;
+        }
+
+        td:first-child,
+        td:nth-child(2) {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #252525;
+        }
+
+        .pos-1 {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22c55e;
+        }
+
+        .text-green { color: #22c55e; }
+        .text-yellow { color: #eab308; }
+        .text-red { color: #ef4444; }
+        .text-blue { color: #3b82f6; }
+        .text-purple { color: #a855f7; }
+        .text-orange { color: #f97316; }
+        .text-pink { color: #ec4899; }
+
+        .legend {
+            background: #0f0f0f;
+            padding: 20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .legend h3 {
+            color: #eab308;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .legend-item span {
+            color: #eab308;
+            font-weight: bold;
+        }
+
+        .header-gols { background: rgba(59, 130, 246, 0.3); }
+        .header-over { background: rgba(34, 197, 94, 0.3); }
+        .header-btts { background: rgba(234, 179, 8, 0.3); }
+        .header-casa { background: rgba(168, 85, 247, 0.3); }
+        .header-fora { background: rgba(249, 115, 22, 0.3); }
+        .header-extras { background: rgba(236, 72, 153, 0.3); }
+        .header-forma { background: rgba(220, 38, 38, 0.3); }
+
+        .tips {
+            background: #0f0f0f;
+            padding: 20px;
+            border-top: 2px solid #eab308;
+        }
+
+        .tips h4 {
+            color: #eab308;
+            margin-bottom: 10px;
+        }
+
+        .tips ul {
+            list-style: none;
+            font-size: 12px;
+        }
+
+        .tips li {
+            padding: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h2>📊 Sistema de Estatísticas Automáticas</h2>
+            <p style="color: #888; margin-bottom: 20px;">
+                Faça upload do arquivo CSV com os resultados dos jogos ou selecione a pasta do Brasileirão para carregar automaticamente todos os clubes
+            </p>
+            
+            <!-- Controles em linha única -->
+            <div class="controls-row">
+                <div class="file-input-wrapper">
+                    <input type="file" id="csvFile" accept=".csv" onchange="handleFileUpload(event)">
+                    <label for="csvFile" class="file-input-label">
+                        📁 Selecionar Arquivo CSV
+                    </label>
+                </div>
+
+                <div class="file-input-wrapper">
+                    <input type="file" id="dirPicker" webkitdirectory directory multiple onchange="handleDirectoryUpload(event)">
+                    <label for="dirPicker" class="file-input-label">
+                        🗂️ Selecionar Pasta do Brasileirão
+                    </label>
+                </div>
+
+                <button class="clear-btn" onclick="clearAllData()">
+                    🗑️ Limpar Tela/Dados
+                </button>
+            </div>
+            
+            <div id="fileName" class="file-name"></div>
+            <div id="status" class="status"></div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs" id="tabsSection" style="display: flex;">
+            <button class="tab-btn active" onclick="showTab('tradicional')">
+                📋 Tabela Tradicional
+            </button>
+            <button class="tab-btn" onclick="showTab('apostas')">
+                💰 Estatísticas para Apostas
+            </button>
+            <button class="tab-btn" onclick="exportarCSV()" style="background: #22c55e; color: white;">
+                📊 Exportar CSV
+            </button>
+        </div>
+
+        <!-- Tabela Tradicional -->
+        <div id="tradicional" class="tab-content active">
+            <div class="loading">Aguardando upload do arquivo CSV...</div>
+        </div>
+
+        <!-- Tabela de Apostas -->
+        <div id="apostas" class="tab-content">
+            <div class="loading">Aguardando upload do arquivo CSV...</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>⚽ Sistema de Estatísticas Automáticas via CSV | Cálculos em tempo real</p>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se os elementos estão visíveis
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadSection = document.querySelector('.upload-section');
+            const fileInputs = document.querySelectorAll('.file-input-wrapper');
+            const labels = document.querySelectorAll('.file-input-label');
+            
+            
+            if (uploadSection) {
+                uploadSection.style.display = 'block';
+                uploadSection.style.visibility = 'visible';
+                uploadSection.style.opacity = '1';
+            }
+            
+            labels.forEach((label, index) => {
+                label.style.display = 'inline-block';
+                label.style.visibility = 'visible';
+                label.style.opacity = '1';
+            });
+        });
+
+        let dadosProcessados = [];
+        let knownClubs = new Set();
+        let pontosAcumuladosCSV = {}; // Armazena pontos acumulados dos CSVs por time
+        let timesProcessados = []; // Armazena os times processados
+        let currentSort = { column: 'pontos', direction: 'desc' }; // Ordenação atual
+        let serieAtual = 'A'; // Série atual detectada
+        // Mapeamentos base (comuns)
+        const ABBR_TO_CLUB_BASE = {
+            pal: 'Palmeiras', vas: 'Vasco', bah: 'Bahia', for: 'Fortaleza', int: 'Internacional',
+            cor: 'Corinthians', spo: 'Sport Recife', bot: 'Botafogo', cea: 'Ceara', vit: 'Vitoria',
+            flu: 'Fluminense', cru: 'Cruzeiro', fla: 'Flamengo', red: 'Red Bull Bragantino', 
+            sao: 'Sao Paulo', san: 'Santos', cap: 'Athletico-PR'
+        };
+
+        // Mapeamentos específicos para Brasileirão
+        const ABBR_TO_CLUB_SERIE_A = {
+            gre: 'Gremio',
+            atl: 'Atletico-MG',
+            ame: 'America-MG',
+            goi: 'Goias',
+            cfc: 'Coritiba',
+            cui: 'Cuiaba',
+            cha: 'Chapecoense',
+            crb: 'CRB'
+        };
+
+        // Mapeamentos específicos para Série B
+        const ABBR_TO_CLUB_SERIE_B = {
+            gre: 'Novo Horizontino',
+            atl: 'Atletico Go',
+            ame: 'América-MG',
+            goi: 'Goiás',
+            cfc: 'Coritiba',
+            cui: 'Cuiabá',
+            cha: 'Chapecoense',
+            crb: 'CRB',
+            vol: 'Volta Redonda',
+            rem: 'Remo',
+            ama: 'Amazonas',
+            cri: 'Criciúma',
+            pay: 'Paysandu',
+            'ath-mg': 'Athletic Club MG',
+            'athletic mg': 'Athletic Club MG',
+            'athletic-mg': 'Athletic Club MG',
+            'ath-pr': 'Athletico-PR',
+            fer: 'Ferroviária',
+            nho: 'Novo Horizontino',
+            ava: 'Avaí',
+            bot: 'Botafogo-SP',
+            ope: 'Operário-PR',
+            vil: 'Vila Nova',
+            novohorizontino: 'Novo Horizontino',
+            nov: 'Novo Horizontino'
+        };
+
+        // Função para obter mapeamentos corretos baseado na série
+        function getMapeamentosSerie(serie) {
+            const mapeamentos = { ...ABBR_TO_CLUB_BASE };
+            if (serie === 'A') {
+                Object.assign(mapeamentos, ABBR_TO_CLUB_SERIE_A);
+            } else if (serie === 'B') {
+                Object.assign(mapeamentos, ABBR_TO_CLUB_SERIE_B);
+            }
+            return mapeamentos;
+        }
+
+        let ABBR_TO_CLUB = getMapeamentosSerie(serieAtual);
+
+        // Função para detectar automaticamente a série
+        function detectarSerie(webkitRelativePath) {
+            if (webkitRelativePath && webkitRelativePath.toLowerCase().includes('serie_b')) {
+                return 'B';
+            }
+            return 'A'; // padrão para Brasileirão
+        }
+
+        // Função para atualizar mapeamentos baseado na série detectada
+        function atualizarMapeamentos(serie) {
+            serieAtual = serie;
+            ABBR_TO_CLUB = getMapeamentosSerie(serie);
+            console.log(`🔍 DEBUG: Série detectada: ${serie}`);
+            console.log(`🔍 DEBUG: Mapeamentos atualizados para Série ${serie}`);
+        }
+
+        /**
+         * Canoniza o nome de um time fornecido como entrada (pode ser abreviado ou não).
+         * @param {string} nome - O nome ou abreviação do time.
+         * @returns {string} O nome do time canonizado (ex: "Volta Redonda").
+         */
+        function normalizarNomeTimeEntrada(nome) {
+            if (!nome) return '';
+            const raw = String(nome).trim().toLowerCase();
+            
+            // 1. Tenta mapear abreviações conhecidas usando os mapeamentos corretos da série
+            const mapeado = (raw.length <= 4 && ABBR_TO_CLUB[raw]) ? ABBR_TO_CLUB[raw] : nome;
+            
+            // 2. Aplica a normalização usada nos dados dos jogos (remove acentos, padroniza caixa, etc.)
+            return normalizarTime(mapeado);
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            
+            // Extrair nome do time do nome do arquivo
+            const nomeTime = extrairNomeTimeDoArquivo(file.name);
+            
+            if (!nomeTime) {
+                showStatus('⚠️ Não foi possível identificar o time. Renomeie o arquivo ou use a pasta.', 'error');
+                return;
+            }
+
+            document.getElementById('fileName').textContent = `Processando: ${nomeTime}`;
+            
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    
+                    // Se o nome do arquivo for genérico (ex: jogos.csv), tenta descobrir o time dentro do CSV
+                    let nomeTimeFinal = nomeTime;
+                    if (nomeTime === 'Time Selecionado') {
+                        nomeTimeFinal = inferirTimeDoCSV(results.data);
+                    }
+                    
+                    // >>> NOVO PASSO CRÍTICO: Canoniza nome do time (corrige "Vol" -> "Volta Redonda")
+                    const nomeTimeCanon = normalizarNomeTimeEntrada(nomeTimeFinal);
+                    
+                    document.getElementById('fileName').textContent = `Processando: ${nomeTimeCanon}`;
+                    processarTime(nomeTimeCanon, results.data); // Chama com o nome canonizado
+                },
+                error: function(error) {
+                    showStatus('Erro ao ler o arquivo: ' + error.message, 'error');
+                }
+            });
+        }
+
+        function extrairNomeTimeDoArquivo(fileName) {
+            // Remove extensão
+            const nameWithoutExt = fileName.replace(/\.csv$/i, '');
+            
+            // Se o nome for "jogos", tenta extrair do caminho do arquivo ou usa um nome padrão
+            if (nameWithoutExt.toLowerCase() === 'jogos') {
+                // Tenta extrair do caminho do arquivo se disponível
+                const filePath = fileName;
+                
+                // Para arquivo único, vamos usar um nome padrão ou pedir para o usuário
+                return 'Time Selecionado'; // Nome genérico para arquivo único
+            }
+            
+            // Tenta extrair do nome do arquivo (ex: "athletico-pr.csv" -> "Athletico Pr")
+            const normalized = capitalizar(nameWithoutExt.replace(/[-_]/g, ' '));
+            
+            
+            // >>> CORREÇÃO: Canoniza antes de retornar (ex: "volta_redonda" -> "Volta Redonda")
+            return normalizarNomeTimeEntrada(normalized);
+        }
+
+        // Descobre o nome do time principal olhando os dados do CSV
+        function inferirTimeDoCSV(linhas) {
+            const freq = new Map();
+            const add = nome => {
+                if (!nome) return;
+                const key = ('' + nome).trim();
+                if (!key) return;
+                freq.set(key, (freq.get(key) || 0) + 1);
+            };
+
+            linhas.forEach(l => {
+                add(l.Time_Casa);
+                add(l.Time_Visitante);
+            });
+
+            let best = null, mx = -1;
+            for (const [nome, qtd] of freq.entries()) {
+                if (qtd > mx) { mx = qtd; best = nome; }
+            }
+            
+            
+            // >>> CORREÇÃO: Canoniza antes de retornar (ex: "Vol" -> "Volta Redonda")
+            return best ? normalizarNomeTimeEntrada(best) : 'Time Selecionado';
+        }
+
+        function processarDados(dados) {
+            console.log('Dados recebidos:', dados);
+
+            // Agrupar dados por time
+            const timeStats = {};
+
+            // Evitar contagem em dobro: mesmíssimo jogo aparece em mais de um CSV
+            const seen = new Set();
+
+            // Ordena por data crescente para que "Últimos 5" reflita os jogos mais recentes
+            const normalizados = dados
+                .map(normalizarLinha)
+                .sort((a, b) => {
+                    const da = parseDateStr(a.Data), db = parseDateStr(b.Data);
+                    const ta = da ? da.getTime() : 0;
+                    const tb = db ? db.getTime() : 0;
+                    return ta - tb;
+                });
+
+            // Consolida duplicatas por (mandante, visitante, placar)
+            const consolidados = consolidarDuplicatas(normalizados);
+
+            consolidados.forEach(jogo => {
+                const data = (jogo.Data || '').trim();
+                const timeCasa = jogo.Time_Casa?.trim();
+                const timeVisitante = jogo.Time_Visitante?.trim();
+
+                if (!timeCasa || !timeVisitante) return; // linha inválida
+                // Filtra times fora da lista canônica quando conhecida (evita 21º clube por ruído)
+                if (knownClubs.size > 0 && (!knownClubs.has(timeCasa) || !knownClubs.has(timeVisitante))) {
+                    return;
+                }
+
+                // Captura pontos acumulados dos CSVs para verificação
+                const pontosAcumuladosCasa = parseInt(jogo.Pontos_Acumulados || jogo.Pontos_Ganhos || 0);
+                const pontosAcumuladosVisitante = parseInt(jogo.Pontos_Acumulados || jogo.Pontos_Ganhos || 0);
+                
+                // Armazena o último valor de pontos acumulados para cada time
+                if (pontosAcumuladosCasa > 0) {
+                    pontosAcumuladosCSV[timeCasa] = pontosAcumuladosCasa;
+                }
+                if (pontosAcumuladosVisitante > 0) {
+                    pontosAcumuladosCSV[timeVisitante] = pontosAcumuladosVisitante;
+                }
+
+                const golsCasa = parseInt(jogo.Gols_Casa) || 0;
+                const golsVisitante = parseInt(jogo.Gols_Visitante) || 0;
+                const totalGols = golsCasa + golsVisitante;
+
+                // Chave única do jogo com data e nomes normalizados
+                const iso = toISODate(parseDateStr(data)) || 'unk';
+                const key = `${iso}|${norm(timeCasa)}|${norm(timeVisitante)}|${golsCasa}-${golsVisitante}`;
+                if (seen.has(key)) return; // já processado a partir de outro CSV
+                seen.add(key);
+                
+                // Inicializar times
+                if (!timeStats[timeCasa]) timeStats[timeCasa] = initTimeStats(timeCasa);
+                if (!timeStats[timeVisitante]) timeStats[timeVisitante] = initTimeStats(timeVisitante);
+
+                // Processar jogo para time da casa
+                processarJogo(timeStats[timeCasa], golsCasa, golsVisitante, totalGols, true, jogo);
+                
+                // Processar jogo para time visitante
+                processarJogo(timeStats[timeVisitante], golsVisitante, golsCasa, totalGols, false, jogo);
+            });
+
+            // Converter para array e ordenar: Pontos → Vitórias → Saldo → Gols Pró → Nome
+            dadosProcessados = Object.values(timeStats)
+                .map(team => { calcularPercentuais(team); return team; })
+                .sort((a, b) =>
+                    (b.pontos - a.pontos) ||
+                    (b.vitorias - a.vitorias) ||
+                    (b.saldoGols - a.saldoGols) ||
+                    (b.golsPro - a.golsPro) ||
+                    a.time.localeCompare(b.time)
+                )
+                .map((t, i) => ({ ...t, pos: i + 1 }));
+
+            // Mantém apenas clubes da lista conhecida e garante no máximo 20
+            if (knownClubs.size > 0) {
+                dadosProcessados = dadosProcessados.filter(t => knownClubs.has(t.time));
+                dadosProcessados = dadosProcessados.map((t, i) => ({ ...t, pos: i + 1 }));
+            }
+            if (dadosProcessados.length > 20) {
+                dadosProcessados = dadosProcessados.slice(0, 20).map((t, i) => ({ ...t, pos: i + 1 }));
+            }
+
+            // Verificação de pontos removida - causava ruído por associar pontos do clube A ao adversário
+            
+            renderizarTabelas();
+            document.getElementById('tabsSection').style.display = 'flex';
+            showStatus('✅ Dados processados com sucesso!', 'success');
+        }
+
+        // Normaliza nomes de colunas vindas de diferentes fontes
+        function normalizarLinha(row) {
+            const Data = row.Data ?? row["data"] ?? row["Data_Jogo"] ?? row["Date"] ?? '';
+            
+            // Aplica sanitização ANTES da normalização
+            let Time_Casa = sanitizeCorruptText(row.Time_Casa ?? row["Time Casa"] ?? row["Mandante"] ?? row["home"] ?? row["time_casa"] ?? '');
+            let Time_Visitante = sanitizeCorruptText(row.Time_Visitante ?? row.Time_Fora ?? row["Time Fora"] ?? row["Visitante"] ?? row["away"] ?? row["time_fora"] ?? '');
+            
+            // Se vier abreviação (3 letras), mapeia para nome canônico
+            const abbrCasa = String(Time_Casa||'').trim().toLowerCase();
+            const abbrFora = String(Time_Visitante||'').trim().toLowerCase();
+            if (abbrCasa.length <= 3 && ABBR_TO_CLUB[abbrCasa]) Time_Casa = ABBR_TO_CLUB[abbrCasa];
+            if (abbrFora.length <= 3 && ABBR_TO_CLUB[abbrFora]) Time_Visitante = ABBR_TO_CLUB[abbrFora];
+            
+            // Normaliza nomes de times contra lista conhecida de pastas
+            Time_Casa = normalizarTime(Time_Casa);
+            Time_Visitante = normalizarTime(Time_Visitante);
+            
+            const Gols_Casa = row.Gols_Casa ?? row["Gols Casa"] ?? row["Placar_Casa"] ?? row["home_goals"] ?? row["gols_casa"] ?? row["Casa"] ?? row["Gols mandante"];
+            const Gols_Visitante = row.Gols_Visitante ?? row.Gols_Fora ?? row["Gols Fora"] ?? row["Placar_Visitante"] ?? row["away_goals"] ?? row["gols_fora"] ?? row["Fora"] ?? row["Gols visitante"];
+            
+            return { Data, Time_Casa, Time_Visitante, Gols_Casa, Gols_Visitante };
+        }
+
+        function normalizarTime(nome) {
+            if (!nome) return '';
+            const n = removerAcentos(String(nome).trim().toLowerCase());
+            
+            // Tratamento especial para Athletic Club MG
+            if (n.includes('athletic') && n.includes('mg')) {
+                return 'Athletic Club MG';
+            }
+            if (n === 'ath-mg' || n === 'ath mg') {
+                return 'Athletic Club MG';
+            }
+            
+            // Tratamento especial para Atlético Goianiense
+            if (n.includes('atletico') && n.includes('go')) {
+                return 'Atletico Go';
+            }
+            if (n === 'atl' || n === 'atletico-go' || n === 'atletico go') {
+                return 'Atletico Go';
+            }
+            
+            // Tratamento especial para Novo Horizontino
+            if (n === 'gre' && knownClubs.has('Novo Horizontino')) {
+                return 'Novo Horizontino';
+            }
+            if (n.includes('novo') && n.includes('horizontino')) {
+                return 'Novo Horizontino';
+            }
+            if (n === 'novohorizontino') {
+                return 'Novo Horizontino';
+            }
+            
+            // Tentativa 1: match exato com clubes conhecidos
+            for (const club of knownClubs) {
+                const c = removerAcentos(club.toLowerCase());
+                if (n === c) return club; // exato
+            }
+            // Tentativa 2: começa com as 3 primeiras letras
+            const prefix = n.slice(0, 3);
+            for (const club of knownClubs) {
+                const c = removerAcentos(club.toLowerCase());
+                if (c.startsWith(prefix)) return club;
+            }
+            // Tentativa 3: contém
+            for (const club of knownClubs) {
+                const c = removerAcentos(club.toLowerCase());
+                if (c.includes(n) || n.includes(c)) return club;
+            }
+            // Sem mapeamento, capitaliza entrada
+            return capitalizar(nome);
+        }
+
+        function removerAcentos(s) {
+            return s.normalize('NFD').replace(/\p{Diacritic}+/gu, '');
+        }
+
+        function capitalizar(s) {
+            return String(s).toLowerCase().replace(/\b\w/g, ch => ch.toUpperCase());
+        }
+
+        // Utilitários de data e normalização - Parser tolerante para datas "quebradas"
+        function parseDateStr(s){
+            if(!s) return null;
+            const m = String(s).trim();
+            const m1 = m.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,5})$/); // dd/mm/yy..yyyyy
+            if (m1){
+                const d = +m1[1], mm = +m1[2]-1;
+                let y = +m1[3];
+                
+                // Corrige anos estranhos
+                if (y > 2100) y = +String(y).slice(-4); // 20125 -> 0125 -> 125? então garanta 4 dígitos
+                if (y < 100) y = 2000 + y;              // 25 -> 2025
+                // corrige casos esquisitos tipo 0125
+                if (y < 2000 || y > 2100) y = 2025;     // fallback seguro
+                
+                return new Date(y, mm, d);
+            }
+            const t = Date.parse(m);
+            return Number.isNaN(t) ? null : new Date(t);
+        }
+        function toISODate(d){
+            return d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : '';
+        }
+        function norm(s){
+            return removerAcentos(String(s||'').toLowerCase().trim());
+        }
+
+        // Sanitização extra para textos corrompidos (ex.: S�o -> Sao)
+        function sanitizeCorruptText(s){
+            if (!s) return s;
+            return String(s)
+                .replace(/S�o/gi, 'Sao')
+                .replace(/Atl�tico/gi, 'Atletico')
+                .replace(/�/g, '');
+        }
+
+        // Consolida duplicatas por (mandante, visitante, placar)
+        function consolidarDuplicatas(lista) {
+            // Descobre ano dominante da temporada
+            const anos = lista.map(j => parseDateStr(j.Data)?.getFullYear()).filter(Boolean);
+            const anoFreq = anos.reduce((acc,a)=> (acc[a]=(acc[a]||0)+1, acc), {});
+            const anoTemporada = Object.keys(anoFreq).sort((a,b)=> anoFreq[b]-anoFreq[a])[0] || '2025';
+
+            const byKey = new Map(); // key: mand|visit|gc-gv -> jogo escolhido
+            for (const jogo of lista) {
+                const d = parseDateStr(jogo.Data);
+                const y = d?.getFullYear();
+                const gc = parseInt(jogo.Gols_Casa)||0, gv = parseInt(jogo.Gols_Visitante)||0;
+                const k = `${norm(jogo.Time_Casa)}|${norm(jogo.Time_Visitante)}|${gc}-${gv}`;
+
+                const curr = byKey.get(k);
+                if (!curr) { byKey.set(k, jogo); continue; }
+
+                const dCurr = parseDateStr(curr.Data);
+                const yCurr = dCurr?.getFullYear();
+
+                // Preferência: (1) ano == temporada, (2) data mais recente
+                const prefereNovo =
+                    (y == anoTemporada && yCurr != anoTemporada) ||
+                    (y == anoTemporada && yCurr == anoTemporada && d && dCurr && d > dCurr) ||
+                    (!yCurr && y); // fallback
+
+                if (prefereNovo) byKey.set(k, jogo);
+            }
+            return Array.from(byKey.values());
+        }
+
+        // Verifica pontos acumulados dos CSVs vs pontos calculados
+        function verificarPontosAcumulados() {
+            console.log('=== VERIFICAÇÃO DE PONTOS ACUMULADOS ===');
+            console.log('Pontos dos CSVs:', pontosAcumuladosCSV);
+            
+            const discrepâncias = [];
+            
+            dadosProcessados.forEach(team => {
+                const pontosCalculados = team.pontos;
+                const pontosCSV = pontosAcumuladosCSV[team.time];
+                
+                if (pontosCSV !== undefined) {
+                    const diferença = Math.abs(pontosCalculados - pontosCSV);
+                    if (diferença > 0) {
+                        discrepâncias.push({
+                            time: team.time,
+                            pontosCalculados,
+                            pontosCSV,
+                            diferença
+                        });
+                    }
+                    console.log(`${team.time}: Calculado=${pontosCalculados}, CSV=${pontosCSV}, Diferença=${diferença}`);
+                } else {
+                    console.log(`${team.time}: Calculado=${pontosCalculados}, CSV=N/A`);
+                }
+            });
+            
+            if (discrepâncias.length > 0) {
+                console.warn('⚠️ DISCREPÂNCIAS ENCONTRADAS:');
+                discrepâncias.forEach(d => {
+                    console.warn(`${d.time}: Calculado=${d.pontosCalculados}, CSV=${d.pontosCSV}, Diferença=${d.diferença}`);
+                });
+                
+                // Exibe alerta visual para o usuário
+                const mensagem = `⚠️ ATENÇÃO: Encontradas ${discrepâncias.length} discrepâncias nos pontos:\n\n` +
+                    discrepâncias.map(d => 
+                        `${d.time}: Calculado=${d.pontosCalculados}, CSV=${d.pontosCSV} (diferença: ${d.diferença})`
+                    ).join('\n');
+                
+                alert(mensagem);
+            } else {
+                console.log('✅ Todos os pontos coincidem com os CSVs!');
+            }
+        }
+
+        function initTimeStats(nome) {
+            return {
+                time: nome,
+                jogos: 0,
+                vitorias: 0,
+                empates: 0,
+                derrotas: 0,
+                pontos: 0,
+                golsPro: 0,
+                golsContra: 0,
+                // Casa
+                jogosCasa: 0,
+                vitoriasCasa: 0,
+                empatesCasa: 0,
+                derrotasCasa: 0,
+                golsProCasa: 0,
+                golsContraCasa: 0,
+                // Fora
+                jogosFora: 0,
+                vitoriasFora: 0,
+                empatesFora: 0,
+                derrotasFora: 0,
+                golsProFora: 0,
+                golsContraFora: 0,
+                // Estatísticas especiais
+                over15: 0,
+                over25: 0,
+                over35: 0,
+                bttsYes: 0,
+                cleanSheets: 0,
+                primeiroGol: 0,
+                viradas: 0,
+                ultimos5: [],
+                pontosUlt5: 0
+            };
+        }
+
+        function processarJogo(team, golsPro, golsContra, totalGols, isCasa, jogo) {
+            team.jogos++;
+            team.golsPro += golsPro;
+            team.golsContra += golsContra;
+
+            // Resultado
+            let resultado = '';
+            let pontosGanhos = 0;
+            if (golsPro > golsContra) {
+                team.vitorias++;
+                resultado = 'V';
+                pontosGanhos = 3;
+            } else if (golsPro === golsContra) {
+                team.empates++;
+                resultado = 'E';
+                pontosGanhos = 1;
+            } else {
+                team.derrotas++;
+                resultado = 'D';
+                pontosGanhos = 0;
+            }
+            team.pontos += pontosGanhos;
+
+            // Casa/Fora
+            if (isCasa) {
+                team.jogosCasa++;
+                team.golsProCasa += golsPro;
+                team.golsContraCasa += golsContra;
+                if (golsPro > golsContra) team.vitoriasCasa++;
+                else if (golsPro === golsContra) team.empatesCasa++;
+                else team.derrotasCasa++;
+            } else {
+                team.jogosFora++;
+                team.golsProFora += golsPro;
+                team.golsContraFora += golsContra;
+                if (golsPro > golsContra) team.vitoriasFora++;
+                else if (golsPro === golsContra) team.empatesFora++;
+                else team.derrotasFora++;
+            }
+
+            // Over/Under
+            if (totalGols >= 2) team.over15++;
+            if (totalGols >= 3) team.over25++;
+            if (totalGols >= 4) team.over35++;
+
+            // BTTS
+            if (golsPro > 0 && golsContra > 0) team.bttsYes++;
+
+            // Clean Sheet
+            if (golsContra === 0) team.cleanSheets++;
+
+            // Primeiro a marcar - REMOVIDO: cálculo incorreto sem dados de minuto
+            // if (golsPro > 0 && (golsContra === 0 || golsPro > golsContra)) team.primeiroGol++;
+
+            // Últimos 5 jogos (mais antigo → mais recente, da esquerda para direita)
+            team.ultimos5.push(resultado);
+            if (team.ultimos5.length > 5) team.ultimos5.shift();
+        }
+
+        function calcularPercentuais(team) {
+            team.aproveitamento = Math.round((team.pontos / (team.jogos * 3)) * 100);
+            team.mediaGolsPro = (team.golsPro / team.jogos).toFixed(2);
+            team.mediaGolsContra = (team.golsContra / team.jogos).toFixed(2);
+            team.saldoGols = team.golsPro - team.golsContra;
+
+            // Percentuais
+            team.over15Perc = Math.round((team.over15 / team.jogos) * 100);
+            team.over25Perc = Math.round((team.over25 / team.jogos) * 100);
+            team.over35Perc = Math.round((team.over35 / team.jogos) * 100);
+            team.under25Perc = 100 - team.over25Perc;
+            
+            team.bttsYesPerc = Math.round((team.bttsYes / team.jogos) * 100);
+            team.bttsNoPerc = 100 - team.bttsYesPerc;
+            
+            team.cleanSheetsPerc = Math.round((team.cleanSheets / team.jogos) * 100);
+            team.primeiroGolPerc = null; // N/D - sem dados de minuto
+            team.viradasPerc = null;     // N/D - sem dados de minuto
+
+            // Aproveitamento casa/fora
+            team.aprovCasa = team.jogosCasa > 0 ? Math.round((((team.vitoriasCasa * 3) + team.empatesCasa) / (team.jogosCasa * 3)) * 100) : 0;
+            team.aprovFora = team.jogosFora > 0 ? Math.round((((team.vitoriasFora * 3) + team.empatesFora) / (team.jogosFora * 3)) * 100) : 0;
+
+            // Últimos 5
+            team.ultimos5Str = team.ultimos5.join('-');
+            team.pontosUlt5 = team.ultimos5.reduce((sum, r) => {
+                if (r === 'V') return sum + 3;
+                if (r === 'E') return sum + 1;
+                return sum;
+            }, 0);
+
+            // Gols 2º tempo - N/D sem dados de minuto
+            team.gols2TempoPerc = null; // N/D - sem dados de minuto
+        }
+
+        function renderizarTabelas() {
+            dadosProcessados = timesProcessados
+                .map(t => { calcularPercentuais(t); return t; })
+                .sort((a, b) =>
+                    (b.pontos - a.pontos) ||
+                    (b.vitorias - a.vitorias) ||
+                    (b.saldoGols - a.saldoGols) ||
+                    (b.golsPro - a.golsPro) ||
+                    a.time.localeCompare(b.time)
+                )
+                .map((t, i) => ({ ...t, pos: i + 1 }));
+
+            // Mostra as abas
+            document.getElementById('tabsSection').style.display = 'flex';
+            
+            renderTradicional();
+            renderApostas();
+        }
+
+        function renderTradicional() {
+            const container = document.getElementById('tradicional');
+            
+            let html = `
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th># <button class="sort-btn ${currentSort.column === 'pos' ? currentSort.direction : ''}" onclick="sortData('pos')">↕</button></th>
+                                <th>CLASSIFICAÇÃO <button class="sort-btn ${currentSort.column === 'time' ? currentSort.direction : ''}" onclick="sortData('time')">↕</button></th>
+                                <th>P <button class="sort-btn ${currentSort.column === 'pontos' ? currentSort.direction : ''}" onclick="sortData('pontos')">↕</button></th>
+                                <th>J <button class="sort-btn ${currentSort.column === 'jogos' ? currentSort.direction : ''}" onclick="sortData('jogos')">↕</button></th>
+                                <th>V <button class="sort-btn ${currentSort.column === 'vitorias' ? currentSort.direction : ''}" onclick="sortData('vitorias')">↕</button></th>
+                                <th>E <button class="sort-btn ${currentSort.column === 'empates' ? currentSort.direction : ''}" onclick="sortData('empates')">↕</button></th>
+                                <th>D <button class="sort-btn ${currentSort.column === 'derrotas' ? currentSort.direction : ''}" onclick="sortData('derrotas')">↕</button></th>
+                                <th>GP <button class="sort-btn ${currentSort.column === 'golsPro' ? currentSort.direction : ''}" onclick="sortData('golsPro')">↕</button></th>
+                                <th>GC <button class="sort-btn ${currentSort.column === 'golsContra' ? currentSort.direction : ''}" onclick="sortData('golsContra')">↕</button></th>
+                                <th>SG <button class="sort-btn ${currentSort.column === 'saldoGols' ? currentSort.direction : ''}" onclick="sortData('saldoGols')">↕</button></th>
+                                <th>% <button class="sort-btn ${currentSort.column === 'aproveitamento' ? currentSort.direction : ''}" onclick="sortData('aproveitamento')">↕</button></th>
+                                <th>CSV</th>
+                                <th>ÚLTIMOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            dadosProcessados.forEach(team => {
+                const ultimos = team.ultimos5.map(r => {
+                    if (r === 'V') return '🟢';
+                    if (r === 'E') return '🟡';
+                    return '🔴';
+                }).join('');
+
+                html += `
+                    <tr class="${team.pos === 1 ? 'pos-1' : ''}">
+                        <td><strong>${team.pos}</strong></td>
+                        <td><strong>${team.time}</strong></td>
+                        <td><strong>${team.pontos}</strong></td>
+                        <td>${team.jogos}</td>
+                        <td class="text-green">${team.vitorias}</td>
+                        <td class="text-yellow">${team.empates}</td>
+                        <td class="text-red">${team.derrotas}</td>
+                        <td>${team.golsPro}</td>
+                        <td>${team.golsContra}</td>
+                        <td class="text-green"><strong>${team.saldoGols > 0 ? '+' : ''}${team.saldoGols}</strong></td>
+                        <td><strong>${team.aproveitamento}</strong></td>
+                        <td class="text-blue"><strong>${pontosAcumuladosCSV[team.time] || 'N/A'}</strong></td>
+                        <td style="font-size: 11px;">${ultimos}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function renderApostas() {
+            
+            if (dadosProcessados.length === 0) {
+                return;
+            }
+            
+            const container = document.getElementById('apostas');
+            
+            let html = `
+                <div class="legend">
+                    <h3>💡 LEGENDA DAS COLUNAS</h3>
+                    <div class="legend-grid">
+                        <div class="legend-item"><span>MG/MS:</span> Média Gols Pro/Contra</div>
+                        <div class="legend-item"><span>OV:</span> Over (% jogos)</div>
+                        <div class="legend-item"><span>UN:</span> Under (% jogos)</div>
+                        <div class="legend-item"><span>BTTS:</span> Ambas Marcam (%)</div>
+                        <div class="legend-item"><span>Casa/Fora:</span> J-V-E-D-GP-GC-AP%</div>
+                        <div class="legend-item"><span>CS:</span> Clean Sheets (%) - Jogos sem tomar gol</div>
+                        <div class="legend-item"><span>P1G:</span> Primeiro a Marcar (%) - Quantas vezes marcou primeiro</div>
+                        <div class="legend-item"><span>VIR:</span> Viradas (%) - Quantas vezes virou jogo perdendo</div>
+                        <div class="legend-item"><span>G2T:</span> Gols 2º Tempo (%) - % de gols no segundo tempo</div>
+                        <div class="legend-item"><span>ÚLT5:</span> Últimos 5 Jogos</div>
+                        <div class="legend-item"><span>PT5:</span> Pontos nos Últ. 5</div>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th rowspan="2"># <button class="sort-btn ${currentSort.column === 'pos' ? currentSort.direction : ''}" onclick="sortData('pos')">↕</button></th>
+                                <th rowspan="2">TIME <button class="sort-btn ${currentSort.column === 'time' ? currentSort.direction : ''}" onclick="sortData('time')">↕</button></th>
+                                <th rowspan="2">J <button class="sort-btn ${currentSort.column === 'jogos' ? currentSort.direction : ''}" onclick="sortData('jogos')">↕</button></th>
+                                <th colspan="4" class="header-gols">GOLS</th>
+                                <th colspan="4" class="header-over">OVER/UNDER (%)</th>
+                                <th colspan="2" class="header-btts">BTTS (%)</th>
+                                <th colspan="7" class="header-casa">MANDANTE (CASA)</th>
+                                <th colspan="7" class="header-fora">VISITANTE (FORA)</th>
+                                <th colspan="4" class="header-extras">EXTRAS (%)</th>
+                                <th colspan="2" class="header-forma">FORMA</th>
+                            </tr>
+                            <tr style="font-size: 11px;">
+                                <th class="header-gols">GP <button class="sort-btn ${currentSort.column === 'golsPro' ? currentSort.direction : ''}" onclick="sortData('golsPro')">↕</button></th>
+                                <th class="header-gols">GC <button class="sort-btn ${currentSort.column === 'golsContra' ? currentSort.direction : ''}" onclick="sortData('golsContra')">↕</button></th>
+                                <th class="header-gols">MG</th>
+                                <th class="header-gols">MS</th>
+                                <th class="header-over">1.5+</th>
+                                <th class="header-over">2.5+</th>
+                                <th class="header-over">3.5+</th>
+                                <th class="header-over">U2.5</th>
+                                <th class="header-btts">Sim</th>
+                                <th class="header-btts">Não</th>
+                                <th class="header-casa">J</th>
+                                <th class="header-casa">V</th>
+                                <th class="header-casa">E</th>
+                                <th class="header-casa">D</th>
+                                <th class="header-casa">GP</th>
+                                <th class="header-casa">GC</th>
+                                <th class="header-casa">AP%</th>
+                                <th class="header-fora">J</th>
+                                <th class="header-fora">V</th>
+                                <th class="header-fora">E</th>
+                                <th class="header-fora">D</th>
+                                <th class="header-fora">GP</th>
+                                <th class="header-fora">GC</th>
+                                <th class="header-fora">AP%</th>
+                                <th class="header-extras">CS</th>
+                                <th class="header-extras">P1G</th>
+                                <th class="header-extras">VIR</th>
+                                <th class="header-extras">G2T</th>
+                                <th class="header-forma">ÚLT5</th>
+                                <th class="header-forma">PT5</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            dadosProcessados.forEach((team, index) => {
+                
+                html += `
+                    <tr class="${team.pos === 1 ? 'pos-1' : ''}">
+                        <td><strong>${team.pos}</strong></td>
+                        <td><strong>${team.time}</strong></td>
+                        <td>${team.jogos}</td>
+                        
+                        <td>${team.golsPro}</td>
+                        <td>${team.golsContra}</td>
+                        <td class="text-green"><strong>${team.mediaGolsPro}</strong></td>
+                        <td class="text-red"><strong>${team.mediaGolsContra}</strong></td>
+                        
+                        <td class="text-green"><strong>${team.over15Perc}%</strong></td>
+                        <td class="text-green"><strong>${team.over25Perc}%</strong></td>
+                        <td class="text-yellow"><strong>${team.over35Perc}%</strong></td>
+                        <td class="text-red"><strong>${team.under25Perc}%</strong></td>
+                        
+                        <td class="text-yellow"><strong>${team.bttsYesPerc}%</strong></td>
+                        <td class="text-green"><strong>${team.bttsNoPerc}%</strong></td>
+                        
+                        <td>${team.jogosCasa}</td>
+                        <td class="text-green">${team.vitoriasCasa}</td>
+                        <td class="text-yellow">${team.empatesCasa}</td>
+                        <td class="text-red">${team.derrotasCasa}</td>
+                        <td>${team.golsProCasa}</td>
+                        <td>${team.golsContraCasa}</td>
+                        <td class="text-purple"><strong>${team.aprovCasa}%</strong></td>
+                        
+                        <td>${team.jogosFora}</td>
+                        <td class="text-green">${team.vitoriasFora}</td>
+                        <td class="text-yellow">${team.empatesFora}</td>
+                        <td class="text-red">${team.derrotasFora}</td>
+                        <td>${team.golsProFora}</td>
+                        <td>${team.golsContraFora}</td>
+                        <td class="text-orange"><strong>${team.aprovFora}%</strong></td>
+                        
+                        <td class="text-green"><strong>${team.cleanSheetsPerc}%</strong></td>
+                        <td class="text-blue"><strong>${team.primeiroGolPerc ?? 'N/D'}</strong></td>
+                        <td class="text-yellow"><strong>${team.viradasPerc ?? 'N/D'}</strong></td>
+                        <td class="text-pink"><strong>${team.gols2TempoPerc ?? 'N/D'}</strong></td>
+                        
+                        <td style="font-family: monospace; font-size: 10px;">${team.ultimos5Str}</td>
+                        <td class="text-green"><strong>${team.pontosUlt5}</strong></td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tips">
+                    <h4>💡 DICAS PARA APOSTAS</h4>
+                    <ul>
+                        <li>✅ <strong>Over 2.5 acima de 60%:</strong> Time ofensivo, bom para apostas de gols</li>
+                        <li>✅ <strong>Clean Sheets acima de 50%:</strong> Defesa sólida - aposte "Ambas Marcam = Não"</li>
+                        <li>✅ <strong>BTTS Não alto:</strong> Time que não toma muitos gols</li>
+                        <li>✅ <strong>Aprv. Casa vs Fora:</strong> Compare onde o time joga melhor</li>
+                        <li>✅ <strong>Forma (ÚLT5):</strong> Momento atual do time</li>
+                    </ul>
+                    
+                    <h4>🎯 INDICADORES EXTRAS PARA APOSTAS</h4>
+                    <ul>
+                        <li>🛡️ <strong>CS (Clean Sheets):</strong> Alto = aposte "Ambas Marcam = Não"</li>
+                        <li>🎯 <strong>P1G (Primeiro a Marcar):</strong> Alto = aposte "Primeiro a Marcar"</li>
+                        <li>🔄 <strong>VIR (Viradas):</strong> Alto = aposte "Handicap +1" ou "Ambas Marcam = Sim"</li>
+                        <li>⏰ <strong>G2T (Gols 2º Tempo):</strong> Alto = aposte "Over 0.5 2º tempo"</li>
+                        <li>⚠️ <strong>N/D:</strong> Indicadores sem dados suficientes (precisam minuto dos gols)</li>
+                    </ul>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+
+        // Leitura de uma pasta inteira (Brasileirão ou Serie_B) com múltiplos jogos.csv
+        function handleDirectoryUpload(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
+
+            const csvFiles = files.filter(f => f.name.toLowerCase() === 'jogos.csv');
+            
+            // Detectar série automaticamente
+            const serieDetectada = detectarSerie(files[0]?.webkitRelativePath || '');
+            atualizarMapeamentos(serieDetectada);
+            
+            // DEBUG: Listar todos os arquivos encontrados
+            console.log(`🔍 DEBUG: Total de arquivos encontrados: ${files.length}`);
+            console.log(`🔍 DEBUG: Arquivos CSV encontrados: ${csvFiles.length}`);
+            console.log(`🔍 DEBUG: Lista de arquivos CSV:`, csvFiles.map(f => f.webkitRelativePath));
+            
+            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
+            const gremioFile = csvFiles.find(f => f.webkitRelativePath && f.webkitRelativePath.toLowerCase().includes('novohorizontino'));
+            if (gremioFile) {
+                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - Arquivo encontrado na lista:`);
+                console.log(`  - webkitRelativePath: "${gremioFile.webkitRelativePath}"`);
+            } else {
+                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - Arquivo NÃO encontrado na lista!`);
+                console.log(`🔍 DEBUG: Procurando por arquivos com 'novo' ou 'horizontino':`);
+                const similarFiles = csvFiles.filter(f => f.webkitRelativePath && 
+                    (f.webkitRelativePath.toLowerCase().includes('novo') || 
+                     f.webkitRelativePath.toLowerCase().includes('horizontino')));
+                console.log(`🔍 DEBUG: Arquivos similares:`, similarFiles.map(f => f.webkitRelativePath));
+            }
+            
+            if (csvFiles.length === 0) {
+                showStatus('Nenhum arquivo jogos.csv encontrado na pasta selecionada.', 'error');
+                return;
+            }
+
+            // Deriva nomes de clubes a partir das subpastas da Serie_B
+            knownClubs = new Set();
+            csvFiles.forEach(f => {
+                const rel = f.webkitRelativePath || '';
+                // Ex.: Serie_B/flamengo/jogos.csv -> pega segmento do meio
+                const parts = rel.split(/\\|\//g);
+                const idx = parts.findIndex(p => {
+                    const lower = p.toLowerCase();
+                    return lower.includes('serie') && (lower.includes('_b') || lower.includes(' b'));
+                });
+                const clubSeg = idx >= 0 && parts[idx+1] ? parts[idx+1] : (parts[parts.length-2] || '');
+                if (clubSeg) knownClubs.add(capitalizar(clubSeg.replace(/[-_]/g,' ')));
+            });
+
+            document.getElementById('fileName').textContent = `Arquivos: ${csvFiles.length} jogos.csv encontrados | Clubes: ${Array.from(knownClubs).length}`;
+            showStatus('Lendo arquivos, aguarde...', 'success');
+
+            // Parsear todos em paralelo
+            const parsePromises = csvFiles.map(file => new Promise((resolve, reject) => {
+                Papa.parse(file, {
+                    header: true,
+                    skipEmptyLines: true,
+                    worker: true,
+                    complete: res => resolve(res.data || []),
+                    error: err => reject(err)
+                });
+            }));
+
+            // Processar arquivo por arquivo (um time por vez)
+            processarArquivosSequencialmente(csvFiles, 0);
+        }
+
+        function processarArquivosSequencialmente(files, index) {
+            console.log(`🔍 DEBUG: processarArquivosSequencialmente chamada - index: ${index}, files.length: ${files.length}`);
+            
+            if (index >= files.length) {
+                console.log(`✅ PROCESSAMENTO CONCLUÍDO! Total de times processados: ${timesProcessados.length}`);
+                console.log(`🔍 DEBUG: Lista final de times:`, timesProcessados.map(t => t.time));
+                showStatus(`✅ Concluído! ${timesProcessados.length} times processados.`, 'success');
+                return;
+            }
+
+            const file = files[index];
+            console.log(`🔍 DEBUG: Processando arquivo ${index + 1}/${files.length}: ${file.name}`);
+            console.log(`🔍 DEBUG: webkitRelativePath: ${file.webkitRelativePath}`);
+            
+            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
+            if (file.webkitRelativePath && file.webkitRelativePath.toLowerCase().includes('novohorizontino')) {
+                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - Arquivo encontrado:`);
+                console.log(`  - fileName: "${file.name}"`);
+                console.log(`  - webkitRelativePath: "${file.webkitRelativePath}"`);
+            }
+            
+            const nomeTime = extrairNomeTime(file.name, file.webkitRelativePath || '');
+            console.log(`🔍 DEBUG: nomeTime extraído: ${nomeTime}`);
+            
+            if (!nomeTime) {
+                console.log(`⚠️ Não foi possível identificar o time do arquivo: ${file.name}`);
+                processarArquivosSequencialmente(files, index + 1);
+                return;
+            }
+
+            document.getElementById('fileName').textContent = `Processando: ${nomeTime} (${index + 1}/${files.length})`;
+            
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    processarTime(nomeTime, results.data);
+                    console.log(`🔍 DEBUG: Time ${nomeTime} processado. Próximo arquivo...`);
+                    processarArquivosSequencialmente(files, index + 1);
+                },
+                error: function(error) {
+                    console.error('Erro ao ler arquivo:', error);
+                    processarArquivosSequencialmente(files, index + 1);
+                }
+            });
+        }
+
+        function extrairNomeTime(fileName, webkitRelativePath) {
+            console.log(`🔍 DEBUG: extrairNomeTime - fileName: ${fileName}, webkitRelativePath: ${webkitRelativePath}`);
+            
+            const rel = webkitRelativePath || '';
+            const parts = rel.split(/\\|\//g);
+            console.log(`🔍 DEBUG: parts =`, parts);
+            
+            // Procura por Brasileirão ou Serie_B
+            const idx = parts.findIndex(p => {
+                const lower = p.toLowerCase();
+                return lower.includes('serie') && (lower.includes('_a') || lower.includes('_b') || lower.includes(' a') || lower.includes(' b'));
+            });
+            console.log(`🔍 DEBUG: idx = ${idx}`);
+            
+            const clubSeg = idx >= 0 && parts[idx+1] ? parts[idx+1] : (parts[parts.length-2] || '');
+            console.log(`🔍 DEBUG: clubSeg = ${clubSeg}`);
+            
+            let result = clubSeg ? capitalizar(clubSeg.replace(/[-_]/g,' ')) : null;
+            
+            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO (Série B)
+            if (clubSeg && clubSeg.toLowerCase().includes('novohorizontino')) {
+                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - extrairNomeTime:`);
+                console.log(`  - clubSeg: "${clubSeg}"`);
+                console.log(`  - result antes: "${result}"`);
+            }
+            
+            // Tratamento especial para Novo Horizontino (Série B)
+            if (result && result.toLowerCase().includes('novohorizontino')) {
+                result = 'Novo Horizontino';
+                console.log(`🔍 DEBUG NOVO HORIZONTINO - result após correção: "${result}"`);
+            }
+            
+            console.log(`🔍 DEBUG: result = ${result}`);
+            
+            return result;
+        }
+
+        function processarTime(nomeTime, dados) {
+            console.log(`\n=== PROCESSANDO: ${nomeTime} ===`);
+            console.log(`Total de jogos no arquivo: ${dados.length}`);
+            console.log(`🔍 DEBUG: nomeTime = "${nomeTime}"`);
+
+            // Se você está BLINDANDO, mantenha:
+            const nomeTimeCanon = normalizarNomeTimeEntrada(nomeTime);
+            console.log(`🔍 DEBUG: nomeTimeCanon = "${nomeTimeCanon}"`);
+
+            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
+            if (nomeTime.toLowerCase().includes('novo') || nomeTime.toLowerCase().includes('horizontino')) {
+                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO:`);
+                console.log(`  - nomeTime original: "${nomeTime}"`);
+                console.log(`  - nomeTimeCanon: "${nomeTimeCanon}"`);
+                console.log(`  - dados.length: ${dados.length}`);
+                console.log(`  - Primeiros 3 jogos:`, dados.slice(0, 3));
+            }
+
+            // Verifica se o time já foi processado
+            if (timesProcessados.find(t => t.time === nomeTimeCanon)) {
+                console.log(`⚠️ Time ${nomeTimeCanon} já foi processado. Ignorando.`);
+                return;
+            }
+
+            const stats = initTimeStats(nomeTimeCanon);
+            const jogosProcessados = [];
+
+            // Ordena por data para garantir ordem cronológica
+            const dadosOrdenados = dados
+                .map(normalizarLinha)
+                .filter(jogo => jogo.Data && jogo.Time_Casa && jogo.Time_Visitante)
+                .sort((a, b) => {
+                    const da = parseDateStr(a.Data);
+                    const db = parseDateStr(b.Data);
+                    if (!da || !db) return 0;
+                    return da.getTime() - db.getTime();
+                });
+
+            console.log(`🔍 DEBUG: dadosOrdenados.length = ${dadosOrdenados.length}`);
+            console.log(`🔍 DEBUG: Primeiros 3 jogos:`, dadosOrdenados.slice(0, 3));
+
+            // Se o nome do time for genérico, processa TODOS os times do arquivo
+            console.log(`🔍 DEBUG: Verificando se nomeTime === 'Time Selecionado': ${nomeTime === 'Time Selecionado'}`);
+            if (nomeTime === 'Time Selecionado') {
+                const statsMap = new Map();
+                const seen = new Set();
+
+                const linhas = dados
+                    .filter(j => j.Data && j.Time_Casa && j.Time_Visitante)
+                    .sort((a, b) => new Date(a.Data) - new Date(b.Data));
+
+                for (const jogo of linhas) {
+                    const timeCasa = jogo.Time_Casa.trim();
+                    const timeVisitante = jogo.Time_Visitante.trim();
+                    const gc = parseInt(jogo.Gols_Casa) || 0;
+                    const gv = parseInt(jogo.Gols_Visitante) || 0;
+
+                    // Cria registro se o time ainda não estiver no mapa
+                    if (!statsMap.has(timeCasa)) statsMap.set(timeCasa, initTimeStats(timeCasa));
+                    if (!statsMap.has(timeVisitante)) statsMap.set(timeVisitante, initTimeStats(timeVisitante));
+
+                    // Identificadores únicos de jogo
+                    const chaveCasa = `${timeCasa}_${timeVisitante}_${gc}_${gv}_casa`;
+                    const chaveFora = `${timeCasa}_${timeVisitante}_${gc}_${gv}_fora`;
+
+                    if (!seen.has(chaveCasa)) {
+                        processarJogo(statsMap.get(timeCasa), gc, gv, gc + gv, true, jogo);
+                        seen.add(chaveCasa);
+                    }
+                    if (!seen.has(chaveFora)) {
+                        processarJogo(statsMap.get(timeVisitante), gv, gc, gc + gv, false, jogo);
+                        seen.add(chaveFora);
+                    }
+                }
+
+                for (const s of statsMap.values()) calcularPercentuais(s);
+                timesProcessados.push(...statsMap.values());
+                renderizarTabelas();
+                return;
+            } else {
+                console.log(`🔍 DEBUG: Processando time específico: ${nomeTime}`);
+                // Processa cada jogo - APENAS PARA O TIME ESPECÍFICO
+                dadosOrdenados.forEach(jogo => {
+                    const timeCasa = jogo.Time_Casa.trim();
+                    const timeVisitante = jogo.Time_Visitante.trim();
+                    const golsCasa = parseInt(jogo.Gols_Casa) || 0;
+                    const golsVisitante = parseInt(jogo.Gols_Visitante) || 0;
+
+                    // Verifica se o time que estamos processando está neste jogo
+                    const isTimeCasa = compararNomes(timeCasa, nomeTimeCanon);
+                    const isTimeVisitante = compararNomes(timeVisitante, nomeTimeCanon);
+                    
+                    // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
+                    if (nomeTimeCanon.toLowerCase().includes('novo') || nomeTimeCanon.toLowerCase().includes('horizontino')) {
+                        console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - Jogo: ${timeCasa} vs ${timeVisitante}`);
+                        console.log(`🔍 DEBUG: isTimeCasa(${timeCasa}, ${nomeTimeCanon}) = ${isTimeCasa}`);
+                        console.log(`🔍 DEBUG: isTimeVisitante(${timeVisitante}, ${nomeTimeCanon}) = ${isTimeVisitante}`);
+                    }
+                    
+                    console.log(`🔍 DEBUG: Jogo: ${timeCasa} vs ${timeVisitante}`);
+                    console.log(`🔍 DEBUG: isTimeCasa(${timeCasa}, ${nomeTimeCanon}) = ${isTimeCasa}`);
+                    console.log(`🔍 DEBUG: isTimeVisitante(${timeVisitante}, ${nomeTimeCanon}) = ${isTimeVisitante}`);
+
+                    if (!isTimeCasa && !isTimeVisitante) {
+                        console.log(`🔍 DEBUG: Jogo ignorado - time ${nomeTimeCanon} não está neste jogo`);
+                        return; // Este jogo não envolve o time sendo processado
+                    }
+
+                    // Determina os gols do time e do adversário
+                    const golsPro = isTimeCasa ? golsCasa : golsVisitante;
+                    const golsContra = isTimeCasa ? golsVisitante : golsCasa;
+                    const totalGols = golsCasa + golsVisitante;
+                    const isCasa = isTimeCasa;
+
+                    // Processa o jogo - APENAS PARA O TIME ESPECÍFICO
+                    processarJogo(stats, golsPro, golsContra, totalGols, isCasa, jogo);
+                    jogosProcessados.push({
+                        data: jogo.Data,
+                        adversario: isTimeCasa ? timeVisitante : timeCasa,
+                        placar: `${golsPro}-${golsContra}`,
+                        local: isCasa ? 'Casa' : 'Fora'
+                    });
+                });
+            }
+
+            console.log(`✅ APENAS ${nomeTimeCanon} processado: ${stats.jogos} jogos, ${stats.pontos} pontos`);
+            console.log(`🎯 NÃO acumulando dados de outros times`);
+
+            // Calcula percentuais
+            calcularPercentuais(stats);
+
+            // Adiciona às listas de times processados
+            timesProcessados.push(stats);
+            
+            console.log('🔍 DEBUG: timesProcessados após adicionar =', timesProcessados);
+            console.log('🔍 DEBUG: stats =', stats);
+            
+            // Renderiza as tabelas com apenas este time
+            renderizarTabelas();
+        }
+
+        function compararNomes(a, b) {
+            if (!a || !b) return false;
+            
+            // Canoniza os dois lados ANTES de comparar
+            const A = normalizarNomeTimeEntrada(a);
+            const B = normalizarNomeTimeEntrada(b);
+            
+            // Normalização final (deve ser a mesma que `normalizarTime` usa internamente)
+            const na = removerAcentos(A.toLowerCase().trim());
+            const nb = removerAcentos(B.toLowerCase().trim());
+            
+            const result = na === nb;
+            
+            // DEBUG ESPECÍFICO PARA GRÊMIO NOVO HORIZONTINO
+            if (a.toLowerCase().includes('gre') || b.toLowerCase().includes('novo') || b.toLowerCase().includes('horizontino')) {
+                console.log(`🔍 DEBUG GRÊMIO NOVO HORIZONTINO - compararNomes:`);
+                console.log(`  - a: "${a}"`);
+                console.log(`  - b: "${b}"`);
+                console.log(`  - A: "${A}"`);
+                console.log(`  - B: "${B}"`);
+                console.log(`  - na: "${na}"`);
+                console.log(`  - nb: "${nb}"`);
+                console.log(`  - result: ${result}`);
+            }
+            
+            console.log(`🔍 DEBUG: compararNomes("${a}", "${b}") = "${A}" vs "${B}" = "${na}" === "${nb}" = ${result}`);
+            return result;
+        }
+
+        function clearAllData() {
+            console.log('🗑️ DEBUG: Limpando todos os dados...');
+            
+            // Limpa os inputs de arquivo
+            document.getElementById('csvFile').value = '';
+            document.getElementById('dirPicker').value = '';
+            
+            // Limpa o nome do arquivo
+            document.getElementById('fileName').textContent = '';
+            
+            // Limpa o status
+            document.getElementById('status').textContent = '';
+            document.getElementById('status').className = 'status';
+            
+            // Limpa as tabelas
+            document.getElementById('tradicional').innerHTML = '<div class="loading">Aguardando upload do arquivo CSV...</div>';
+            document.getElementById('apostas').innerHTML = '<div class="loading">Aguardando upload do arquivo CSV...</div>';
+            
+            // Esconde as abas
+            document.getElementById('tabsSection').style.display = 'none';
+            
+            // RESET COMPLETO DAS VARIÁVEIS GLOBAIS
+            dadosProcessados = [];
+            knownClubs = new Set();
+            pontosAcumuladosCSV = {};
+            timesProcessados = [];
+            currentSort = { column: 'pontos', direction: 'desc' };
+            
+            // Limpa variáveis globais se existirem
+            if (typeof window.allGamesData !== 'undefined') {
+                window.allGamesData = [];
+            }
+            if (typeof window.processedTeams !== 'undefined') {
+                window.processedTeams = [];
+            }
+            
+            console.log('✅ DEBUG: Dados limpos com sucesso!');
+            console.log('✅ DEBUG: Sistema resetado completamente!');
+            showStatus('Dados limpos com sucesso! Sistema pronto para novos dados.', 'success');
+        }
+
+        // Função para exportar dados em CSV
+        function exportarCSV() {
+            if (dadosProcessados.length === 0) {
+                showStatus('⚠️ Nenhum dado para exportar. Carregue os dados primeiro.', 'error');
+                return;
+            }
+
+            // Detectar qual aba está ativa
+            const abaAtiva = document.querySelector('.tab-content.active').id;
+            console.log(`🔍 DEBUG: Aba ativa detectada: ${abaAtiva}`);
+
+            let headers, csvContent, nomeArquivo;
+
+            if (abaAtiva === 'tradicional') {
+                // Exportar dados da tabela tradicional
+                headers = [
+                    'Posição', 'Time', 'Pontos', 'Jogos', 'Vitórias', 'Empates', 'Derrotas',
+                    'Gols Pró', 'Gols Contra', 'Saldo Gols', 'Aproveitamento %', 'Últimos 5 Jogos'
+                ];
+
+                csvContent = [
+                    headers.join(','),
+                    ...dadosProcessados.map(team => [
+                        team.pos,
+                        `"${team.time}"`,
+                        team.pontos,
+                        team.jogos,
+                        team.vitorias,
+                        team.empates,
+                        team.derrotas,
+                        team.golsPro,
+                        team.golsContra,
+                        team.saldoGols,
+                        team.aproveitamento,
+                        `"${team.ultimos5Str}"`
+                    ].join(','))
+                ].join('\n');
+
+                const dataAtual = new Date().toISOString().split('T')[0];
+                nomeArquivo = `tabela_tradicional_${dataAtual}.csv`;
+
+            } else if (abaAtiva === 'apostas') {
+                // Exportar dados das estatísticas para apostas
+                headers = [
+                    'Posição', 'Time', 'Jogos', 'Gols Pró', 'Gols Contra', 'Média Gols Pró', 'Média Gols Contra',
+                    'Over 1.5 %', 'Over 2.5 %', 'Over 3.5 %', 'Under 2.5 %', 'BTTS Sim %', 'BTTS Não %',
+                    'Jogos Casa', 'Vitórias Casa', 'Empates Casa', 'Derrotas Casa', 'Gols Pró Casa', 'Gols Contra Casa', 'Aproveitamento Casa %',
+                    'Jogos Fora', 'Vitórias Fora', 'Empates Fora', 'Derrotas Fora', 'Gols Pró Fora', 'Gols Contra Fora', 'Aproveitamento Fora %',
+                    'Clean Sheets %', 'Últimos 5 Jogos', 'Pontos Últimos 5'
+                ];
+
+                csvContent = [
+                    headers.join(','),
+                    ...dadosProcessados.map(team => [
+                        team.pos,
+                        `"${team.time}"`,
+                        team.jogos,
+                        team.golsPro,
+                        team.golsContra,
+                        team.mediaGolsPro,
+                        team.mediaGolsContra,
+                        team.over15Perc,
+                        team.over25Perc,
+                        team.over35Perc,
+                        team.under25Perc,
+                        team.bttsYesPerc,
+                        team.bttsNoPerc,
+                        team.jogosCasa,
+                        team.vitoriasCasa,
+                        team.empatesCasa,
+                        team.derrotasCasa,
+                        team.golsProCasa,
+                        team.golsContraCasa,
+                        team.aprovCasa,
+                        team.jogosFora,
+                        team.vitoriasFora,
+                        team.empatesFora,
+                        team.derrotasFora,
+                        team.golsProFora,
+                        team.golsContraFora,
+                        team.aprovFora,
+                        team.cleanSheetsPerc,
+                        `"${team.ultimos5Str}"`,
+                        team.pontosUlt5
+                    ].join(','))
+                ].join('\n');
+
+                const dataAtual = new Date().toISOString().split('T')[0];
+                nomeArquivo = `estatisticas_apostas_${dataAtual}.csv`;
+            }
+
+            // Criar e baixar arquivo
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', nomeArquivo);
+            
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showStatus(`✅ Arquivo ${nomeArquivo} exportado com sucesso!`, 'success');
+            console.log(`📊 CSV exportado: ${dadosProcessados.length} times - Aba: ${abaAtiva}`);
+        }
+
+        // Função para ordenar dados
+        function sortData(column) {
+            console.log(`🔍 DEBUG: Ordenando por: ${column}`);
+            
+            // Se clicou na mesma coluna, inverte a direção
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'desc'; // Padrão: maior primeiro
+            }
+            
+            // Ordena os dados
+            dadosProcessados.sort((a, b) => {
+                let valueA, valueB;
+                
+                switch(column) {
+                    case 'pos':
+                        valueA = a.pos;
+                        valueB = b.pos;
+                        break;
+                    case 'time':
+                        valueA = a.time.toLowerCase();
+                        valueB = b.time.toLowerCase();
+                        break;
+                    case 'pontos':
+                        valueA = a.pontos;
+                        valueB = b.pontos;
+                        break;
+                    case 'jogos':
+                        valueA = a.jogos;
+                        valueB = b.jogos;
+                        break;
+                    case 'vitorias':
+                        valueA = a.vitorias;
+                        valueB = b.vitorias;
+                        break;
+                    case 'empates':
+                        valueA = a.empates;
+                        valueB = b.empates;
+                        break;
+                    case 'derrotas':
+                        valueA = a.derrotas;
+                        valueB = b.derrotas;
+                        break;
+                    case 'golsPro':
+                        valueA = a.golsPro;
+                        valueB = b.golsPro;
+                        break;
+                    case 'golsContra':
+                        valueA = a.golsContra;
+                        valueB = b.golsContra;
+                        break;
+                    case 'saldoGols':
+                        valueA = a.saldoGols;
+                        valueB = b.saldoGols;
+                        break;
+                    case 'aproveitamento':
+                        valueA = a.aproveitamento;
+                        valueB = b.aproveitamento;
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                if (currentSort.direction === 'asc') {
+                    return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+                } else {
+                    return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+                }
+            });
+            
+            // Atualiza as posições
+            dadosProcessados.forEach((team, index) => {
+                team.pos = index + 1;
+            });
+            
+            // Re-renderiza as tabelas
+            renderTradicional();
+            renderApostas();
+            
+            console.log(`✅ DEBUG: Ordenação aplicada: ${column} ${currentSort.direction}`);
+        }
+    </script>
+</body>
+</html>
