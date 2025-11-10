@@ -20,13 +20,20 @@ class ConcursoManager:
     
     def __init__(self):
         self.base_path = os.path.join(os.path.dirname(__file__), 'concursos')
-        self.ensure_base_directory()
+        # REMOVIDO: Criação automática da pasta 'concursos' (obsoleta, não mais usada)
+        # self.ensure_base_directory()
     
     def ensure_base_directory(self):
-        """Garante que o diretório de concursos existe"""
-        if not os.path.exists(self.base_path):
-            os.makedirs(self.base_path)
-            logger.info(f"📁 Diretório de concursos criado: {self.base_path}")
+        """
+        [FUNÇÃO OBSOLETA - COMENTADA]
+        A pasta 'concursos' não é mais usada.
+        Estrutura atual: concurso_atual/ e concurso_{numero}/
+        """
+        # REMOVIDO: Não criar mais pasta 'concursos' automaticamente
+        pass
+        # if not os.path.exists(self.base_path):
+        #     os.makedirs(self.base_path)
+        #     logger.info(f"📁 Diretório de concursos criado: {self.base_path}")
     
     def get_concurso_file_path(self, numero: str) -> str:
         """Retorna o caminho do arquivo do concurso"""

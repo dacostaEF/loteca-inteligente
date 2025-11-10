@@ -1773,7 +1773,7 @@
             <div class="form-row" style="margin-bottom: 30px;">
                 <div class="form-group" style="flex: 1; margin-right: 15px;">
                     <label>Concurso Nº:</label>
-                    <input type="number" id="numeroConcurso" class="form-control" placeholder="1219" value="1219">
+                    <input type="text" id="numeroConcurso" class="form-control" placeholder="atual" value="atual">
                 </div>
                 <div class="form-group" style="flex: 2; margin-right: 15px;">
                     <label>Período de Apostas:</label>
@@ -3576,8 +3576,8 @@
             console.log('📝 [ANÁLISE] Estrutura dos dados:', JSON.stringify(dados, null, 2));
             
             // Preencher TODOS os campos do formulário
-            // CORRIGIDO: Usar dados.dados em vez de dados.dados_publicos
-            const dadosJogo = dados.dados || dados.dados_publicos || dados;
+            // dados já vem com a estrutura correta (resultado.dados.dados da API)
+            const dadosJogo = dados;
             
             document.getElementById('time-casa-admin').value = dadosJogo.time_casa || '';
             document.getElementById('time-fora-admin').value = dadosJogo.time_fora || '';
@@ -3603,7 +3603,7 @@
             document.getElementById('analise-fator-casa-admin').value = dadosJogo.analise_fator_casa || '';
             
             // Preencher arquivo de confrontos se disponível
-            const arquivoConfrontos = dadosJogo.arquivo_confrontos || dados.arquivo_confrontos;
+            const arquivoConfrontos = dadosJogo.arquivo_confrontos;
             console.log('📁 [DEBUG] Arquivo de confrontos encontrado:', arquivoConfrontos);
             
             if (arquivoConfrontos && arquivoConfrontos !== '\\0 - Loteca\\backend\\models\\Confrontos\\') {
@@ -7820,14 +7820,17 @@
                 // 2) Nome de arquivo derivado do índice
                 const nomeArquivo = `jogo_${idx}.json`;
                 
-                // 3) POST para o backend (estrutura esperada pelo backend)
+                // 3) Obter número do concurso dinamicamente
+                const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
+                
+                // 4) POST para o backend (estrutura esperada pelo backend)
                 const response = await fetch('/api/admin/analise/salvar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         metadados: {
                             jogo_numero: idx.toString(),
-                            concurso_numero: '1219'
+                            concurso_numero: numeroConcurso
                         },
                         dados: payload,
                         admin_key: ADMIN_KEY
@@ -8688,94 +8691,11 @@
         }
 
         // FUNÇÃO REMOVIDA - não mais necessária
-        /* async function carregarConcursoEspecifico() {
-            try {
-                const numeroConcurso = document.getElementById('numeroConcursoCarregar').value;
-                
-                if (!numeroConcurso) {
-                    mostrarNotificacao('❌ Digite o número do concurso!', 'error');
-                    return;
-                }
-                
-                console.log(`🔍 [LOTECA] Carregando concurso ${numeroConcurso}...`);
-                
-                // Tentar carregar via API primeiro
-                try {
-                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/${numeroConcurso}`);
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        const dados = result.concurso;
-                        console.log('📊 [LOTECA] Dados recebidos da API:', dados);
-                        
-                        // Atualizar campos do formulário
-                        document.getElementById('numeroConcurso').value = numeroConcurso;
-                        document.getElementById('periodoApostas').value = dados?.concurso?.periodo_apostas || '';
-                        document.getElementById('realizacaoJogos').value = dados?.concurso?.realizacao_jogos || '';
-                        
-                        // Atualizar jogos
-                        if (dados?.jogos && dados.jogos.length > 0) {
-                            jogosAtuais = dados.jogos;
-                            console.log('🎮 [LOTECA] Jogos carregados:', jogosAtuais);
-                            carregarJogosAtuais();
-                        } else {
-                            console.warn('⚠️ [LOTECA] Nenhum jogo encontrado nos dados');
-                        }
-                        
-                        console.log(`✅ [LOTECA] Concurso ${numeroConcurso} carregado via API`);
-                        mostrarNotificacao(`✅ Concurso ${numeroConcurso} carregado com sucesso!`, 'success');
-                        return;
-                    }
-                } catch (apiError) {
-                    console.warn(`⚠️ [LOTECA] API falhou para concurso ${numeroConcurso}:`, apiError);
-                }
-                
-                // Fallback: tentar carregar dados hardcoded se for concurso 1219
-                if (numeroConcurso === '1219') {
-                    console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1219...');
-                    
-                    const dadosHardcoded = {
-                        numero: '1219',
-                        periodo_apostas: '07/10/2025 a 08/10/2025',
-                        realizacao_jogos: '27/09/2025 a 28/09/2025',
-                        jogos: [
-                            { numero: 1, time_casa: 'PONTE PRETA/SP', time_fora: 'GUARANIS/SP', data: 'Domingo' },
-                            { numero: 2, time_casa: 'PALMEIRAS/SP', time_fora: 'JUVENTUDE/RS', data: 'Domingo' },
-                            { numero: 3, time_casa: 'CORINTHIANS/SP', time_fora: 'ATLETICO/MG', data: 'Sábado' },
-                            { numero: 4, time_casa: 'ROMA', time_fora: 'INTER DE MILAO', data: 'Sábado' },
-                            { numero: 5, time_casa: 'ATLETICO MADRID', time_fora: 'OSASUNA', data: 'Sábado' },
-                            { numero: 6, time_casa: 'CRUZEIRO/MG', time_fora: 'FORTALEZA/CE', data: 'Sábado' },
-                            { numero: 7, time_casa: 'TOTTENHAM', time_fora: 'ASTON VILLA', data: 'Domingo' },
-                            { numero: 8, time_casa: 'MIRASSOL/SP', time_fora: 'SAO PAULO/SP', data: 'Domingo' },
-                            { numero: 9, time_casa: 'CEARA/CE', time_fora: 'BOTAFOGO/RJ', data: 'Domingo' },
-                            { numero: 10, time_casa: 'LIVERPOOL', time_fora: 'MANCHESTER UNITED', data: 'Domingo' },
-                            { numero: 11, time_casa: 'ATALANTA BERGAMAS', time_fora: 'LAZIO', data: 'Domingo' },
-                            { numero: 12, time_casa: 'BAHIA/BA', time_fora: 'GREMIO/RS', data: 'Domingo' },
-                            { numero: 13, time_casa: 'BRAGANTINO/SP', time_fora: 'SANTOS/SP', data: 'Domingo' },
-                            { numero: 14, time_casa: 'BARCELONA', time_fora: 'REAL SOCIEDAD', data: 'Domingo' }
-                        ]
-                    };
-                    
-                    // Atualizar campos
-                    document.getElementById('numeroConcurso').value = dadosHardcoded.numero;
-                    document.getElementById('periodoApostas').value = dadosHardcoded.periodo_apostas;
-                    document.getElementById('realizacaoJogos').value = dadosHardcoded.realizacao_jogos;
-                    
-                    // Atualizar jogos
-                    jogosAtuais = dadosHardcoded.jogos;
-                    carregarJogosAtuais();
-                    
-                    console.log(`✅ [LOTECA] Concurso 1215 carregado via dados hardcoded`);
-                    mostrarNotificacao(`✅ Concurso 1215 carregado com sucesso!`, 'success');
-                } else {
-                    mostrarNotificacao(`❌ Concurso ${numeroConcurso} não encontrado!`, 'error');
-                }
-                
-            } catch (error) {
-                console.error('💥 [LOTECA] Erro ao carregar concurso:', error);
-                mostrarNotificacao('❌ Erro ao carregar concurso!', 'error');
-            }
-        } */
+        /* 
+        async function carregarConcursoEspecifico() {
+            // FUNÇÃO COMPLETAMENTE COMENTADA - NÃO MAIS NECESSÁRIA
+        }
+        */
 
 
         function atualizarJogo(id, campo, valor) {
@@ -9299,9 +9219,12 @@
             try {
                 console.log('🔍 [LOTECA] Carregando último concurso...');
                 
+                // Obter número do concurso dinamicamente
+                const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
+                
                 // Tentar carregar via API primeiro
                 try {
-                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/1219`);
+                    const response = await fetch(`${API_BASE}/api/admin/loteca/concurso/${numeroConcurso}`);
                 const result = await response.json();
                 
                 if (result.success) {
@@ -9323,12 +9246,14 @@
                         return;
                     }
                 } catch (apiError) {
-                    console.warn('⚠️ [LOTECA] API falhou, usando dados hardcoded:', apiError);
+                    console.warn('⚠️ [LOTECA] API falhou:', apiError);
                 }
                 
-                // Fallback: usar dados hardcoded do concurso 1219
-                console.log('🔄 [LOTECA] Carregando dados hardcoded do concurso 1219...');
+                // REMOVIDO: Fallback hardcoded (não faz sentido com estrutura genérica)
+                console.error('❌ [LOTECA] Não foi possível carregar concurso');
+                mostrarNotificacao('❌ Erro ao carregar concurso. Verifique se os dados existem.', 'error');
                 
+                /* CÓDIGO HARDCODED REMOVIDO
                 const dadosHardcoded = {
                     numero: '1219',
                     periodo_apostas: '07/10/2025 a 08/10/2025',
@@ -9350,25 +9275,11 @@
                         { numero: 14, time_casa: 'BARCELONA', time_fora: 'REAL SOCIEDAD', data: 'Domingo' }
                     ]
                 };
-                
-                // Atualizar campos
-                document.getElementById('numeroConcurso').value = dadosHardcoded.numero;
-                document.getElementById('periodoApostas').value = dadosHardcoded.periodo_apostas;
-                document.getElementById('realizacaoJogos').value = dadosHardcoded.realizacao_jogos;
-                
-                
-                // Atualizar jogos
-                jogosAtuais = dadosHardcoded.jogos;
-                carregarJogosAtuais();
-                
-                console.log(`✅ [LOTECA] Concurso 1215 carregado via dados hardcoded`);
+                */
                 
             } catch (error) {
                 console.error('💥 [LOTECA] Erro geral ao carregar concurso:', error);
-                // NÃO inserir dados fake - deixar campos vazios
-                document.getElementById('numeroConcurso').value = '';
-                document.getElementById('periodoApostas').value = '';
-                document.getElementById('realizacaoJogos').value = '';
+                mostrarNotificacao('❌ Erro ao carregar concurso!', 'error');
             }
         }
 

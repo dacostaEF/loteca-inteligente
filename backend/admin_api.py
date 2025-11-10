@@ -1430,8 +1430,8 @@ def salvar_analise_jogo():
         
         # Extrair informações do jogo
         jogo_numero = data.get('metadados', {}).get('jogo_numero', '1')
-        # MODIFICADO: Usar concurso atual ou default para 1219
-        concurso_numero = data.get('metadados', {}).get('concurso_numero', '1219')
+        # MODIFICADO: Usar estrutura genérica 'atual' como padrão
+        concurso_numero = data.get('metadados', {}).get('concurso_numero', 'atual')
         
         logger.info(f"💾 [SALVAR] Salvando JOGO {jogo_numero} do CONCURSO {concurso_numero}")
         logger.info(f"📊 [SALVAR] Dados recebidos: {data}")
@@ -1476,8 +1476,8 @@ def carregar_analise_jogo():
     try:
         data = request.get_json()
         jogo_numero = data.get('jogo_numero')
-        # MODIFICADO: Default para 1219
-        concurso_numero = data.get('concurso_numero', '1219')
+        # MODIFICADO: Default para 'atual' (estrutura genérica)
+        concurso_numero = data.get('concurso_numero', 'atual')
         
         if not jogo_numero:
             return jsonify({
