@@ -109,3 +109,7 @@ logs/
 *.temp
 .DS_Store
 Thumbs.db
+
+# Arquivos marcados como lixo (para teste antes de deletar)
+LX_*
+**/LX_*
