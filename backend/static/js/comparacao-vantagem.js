@@ -175,69 +175,93 @@ function compararEAtualizarVantagem(timeMandante, timeVisitante) {
         atualizarVantagem('vencedor-pontos-ultimos', 'Empate', 'amarelo');
     }
 
-    // CASA - JOGOS (maior é melhor)
-    const flaCasaJogos = parseFloat(timeMandante['Casa - Jogos']);
-    const palCasaJogos = parseFloat(timeVisitante['Casa - Jogos']);
-    if (flaCasaJogos > palCasaJogos) {
+    // CASA - APROVEITAMENTO % (maior é melhor)
+    const flaCasaAprov = parseFloat(timeMandante['Aproveitamento Casa %']);
+    const palCasaAprov = parseFloat(timeVisitante['Aproveitamento Casa %']);
+    console.log(`🔍 [CASA-APROV] ${timeMandante.Time}: ${flaCasaAprov}%, ${timeVisitante.Time}: ${palCasaAprov}%`);
+    if (flaCasaAprov > palCasaAprov) {
+        console.log(`✅ [CASA-APROV] ${timeMandante.Time} tem vantagem (${flaCasaAprov}% > ${palCasaAprov}%)`);
         atualizarVantagem('vencedor-casa-jogos', timeMandante.Time, 'vermelho');
-    } else if (palCasaJogos > flaCasaJogos) {
+    } else if (palCasaAprov > flaCasaAprov) {
+        console.log(`✅ [CASA-APROV] ${timeVisitante.Time} tem vantagem (${palCasaAprov}% > ${flaCasaAprov}%)`);
         atualizarVantagem('vencedor-casa-jogos', timeVisitante.Time, 'verde');
     } else {
+        console.log(`✅ [CASA-APROV] Empate (${flaCasaAprov}% = ${palCasaAprov}%)`);
         atualizarVantagem('vencedor-casa-jogos', 'Empate', 'amarelo');
     }
 
-    // CASA - GOLS PRÓ (maior é melhor)
-    const flaCasaGolsPro = parseFloat(timeMandante['Casa - Gols Pró']);
-    const palCasaGolsPro = parseFloat(timeVisitante['Casa - Gols Pró']);
+    // CASA - GOLS PRÓ MÉDIA (maior é melhor)
+    const flaCasaGolsPro = parseFloat(timeMandante['Gols Pró Casa']) / parseFloat(timeMandante['Jogos Casa']);
+    const palCasaGolsPro = parseFloat(timeVisitante['Gols Pró Casa']) / parseFloat(timeVisitante['Jogos Casa']);
+    console.log(`🔍 [CASA-GOLS-PRO] ${timeMandante.Time}: ${flaCasaGolsPro.toFixed(2)}, ${timeVisitante.Time}: ${palCasaGolsPro.toFixed(2)}`);
     if (flaCasaGolsPro > palCasaGolsPro) {
+        console.log(`✅ [CASA-GOLS-PRO] ${timeMandante.Time} tem vantagem (${flaCasaGolsPro.toFixed(2)} > ${palCasaGolsPro.toFixed(2)})`);
         atualizarVantagem('vencedor-casa-gols-pro', timeMandante.Time, 'vermelho');
     } else if (palCasaGolsPro > flaCasaGolsPro) {
+        console.log(`✅ [CASA-GOLS-PRO] ${timeVisitante.Time} tem vantagem (${palCasaGolsPro.toFixed(2)} > ${flaCasaGolsPro.toFixed(2)})`);
         atualizarVantagem('vencedor-casa-gols-pro', timeVisitante.Time, 'verde');
     } else {
+        console.log(`✅ [CASA-GOLS-PRO] Empate (${flaCasaGolsPro.toFixed(2)} = ${palCasaGolsPro.toFixed(2)})`);
         atualizarVantagem('vencedor-casa-gols-pro', 'Empate', 'amarelo');
     }
 
-    // CASA - GOLS CONTRA (menor é melhor)
-    const flaCasaGolsContra = parseFloat(timeMandante['Casa - Gols Contra']);
-    const palCasaGolsContra = parseFloat(timeVisitante['Casa - Gols Contra']);
+    // CASA - GOLS CONTRA MÉDIA (menor é melhor)
+    const flaCasaGolsContra = parseFloat(timeMandante['Gols Contra Casa']) / parseFloat(timeMandante['Jogos Casa']);
+    const palCasaGolsContra = parseFloat(timeVisitante['Gols Contra Casa']) / parseFloat(timeVisitante['Jogos Casa']);
+    console.log(`🔍 [CASA-GOLS-CONTRA] ${timeMandante.Time}: ${flaCasaGolsContra.toFixed(2)}, ${timeVisitante.Time}: ${palCasaGolsContra.toFixed(2)}`);
     if (flaCasaGolsContra < palCasaGolsContra) {
+        console.log(`✅ [CASA-GOLS-CONTRA] ${timeMandante.Time} tem vantagem (${flaCasaGolsContra.toFixed(2)} < ${palCasaGolsContra.toFixed(2)})`);
         atualizarVantagem('vencedor-casa-gols-contra', timeMandante.Time, 'vermelho');
     } else if (palCasaGolsContra < flaCasaGolsContra) {
+        console.log(`✅ [CASA-GOLS-CONTRA] ${timeVisitante.Time} tem vantagem (${palCasaGolsContra.toFixed(2)} < ${flaCasaGolsContra.toFixed(2)})`);
         atualizarVantagem('vencedor-casa-gols-contra', timeVisitante.Time, 'verde');
     } else {
+        console.log(`✅ [CASA-GOLS-CONTRA] Empate (${flaCasaGolsContra.toFixed(2)} = ${palCasaGolsContra.toFixed(2)})`);
         atualizarVantagem('vencedor-casa-gols-contra', 'Empate', 'amarelo');
     }
 
-    // FORA - JOGOS (maior é melhor)
-    const flaForaJogos = parseFloat(timeMandante['Fora - Jogos']);
-    const palForaJogos = parseFloat(timeVisitante['Fora - Jogos']);
-    if (flaForaJogos > palForaJogos) {
+    // FORA - APROVEITAMENTO % (maior é melhor)
+    const flaForaAprov = parseFloat(timeMandante['Aproveitamento Fora %']);
+    const palForaAprov = parseFloat(timeVisitante['Aproveitamento Fora %']);
+    console.log(`🔍 [FORA-APROV] ${timeMandante.Time}: ${flaForaAprov}%, ${timeVisitante.Time}: ${palForaAprov}%`);
+    if (flaForaAprov > palForaAprov) {
+        console.log(`✅ [FORA-APROV] ${timeMandante.Time} tem vantagem (${flaForaAprov}% > ${palForaAprov}%)`);
         atualizarVantagem('vencedor-fora-jogos', timeMandante.Time, 'vermelho');
-    } else if (palForaJogos > flaForaJogos) {
+    } else if (palForaAprov > flaForaAprov) {
+        console.log(`✅ [FORA-APROV] ${timeVisitante.Time} tem vantagem (${palForaAprov}% > ${flaForaAprov}%)`);
         atualizarVantagem('vencedor-fora-jogos', timeVisitante.Time, 'verde');
     } else {
+        console.log(`✅ [FORA-APROV] Empate (${flaForaAprov}% = ${palForaAprov}%)`);
         atualizarVantagem('vencedor-fora-jogos', 'Empate', 'amarelo');
     }
 
-    // FORA - GOLS PRÓ (maior é melhor)
-    const flaForaGolsPro = parseFloat(timeMandante['Fora - Gols Pró']);
-    const palForaGolsPro = parseFloat(timeVisitante['Fora - Gols Pró']);
+    // FORA - GOLS PRÓ MÉDIA (maior é melhor)
+    const flaForaGolsPro = parseFloat(timeMandante['Gols Pró Fora']) / parseFloat(timeMandante['Jogos Fora']);
+    const palForaGolsPro = parseFloat(timeVisitante['Gols Pró Fora']) / parseFloat(timeVisitante['Jogos Fora']);
+    console.log(`🔍 [FORA-GOLS-PRO] ${timeMandante.Time}: ${flaForaGolsPro.toFixed(2)}, ${timeVisitante.Time}: ${palForaGolsPro.toFixed(2)}`);
     if (flaForaGolsPro > palForaGolsPro) {
+        console.log(`✅ [FORA-GOLS-PRO] ${timeMandante.Time} tem vantagem (${flaForaGolsPro.toFixed(2)} > ${palForaGolsPro.toFixed(2)})`);
         atualizarVantagem('vencedor-fora-gols-pro', timeMandante.Time, 'vermelho');
     } else if (palForaGolsPro > flaForaGolsPro) {
+        console.log(`✅ [FORA-GOLS-PRO] ${timeVisitante.Time} tem vantagem (${palForaGolsPro.toFixed(2)} > ${flaForaGolsPro.toFixed(2)})`);
         atualizarVantagem('vencedor-fora-gols-pro', timeVisitante.Time, 'verde');
     } else {
+        console.log(`✅ [FORA-GOLS-PRO] Empate (${flaForaGolsPro.toFixed(2)} = ${palForaGolsPro.toFixed(2)})`);
         atualizarVantagem('vencedor-fora-gols-pro', 'Empate', 'amarelo');
     }
 
-    // FORA - GOLS CONTRA (menor é melhor)
-    const flaForaGolsContra = parseFloat(timeMandante['Fora - Gols Contra']);
-    const palForaGolsContra = parseFloat(timeVisitante['Fora - Gols Contra']);
+    // FORA - GOLS CONTRA MÉDIA (menor é melhor)
+    const flaForaGolsContra = parseFloat(timeMandante['Gols Contra Fora']) / parseFloat(timeMandante['Jogos Fora']);
+    const palForaGolsContra = parseFloat(timeVisitante['Gols Contra Fora']) / parseFloat(timeVisitante['Jogos Fora']);
+    console.log(`🔍 [FORA-GOLS-CONTRA] ${timeMandante.Time}: ${flaForaGolsContra.toFixed(2)}, ${timeVisitante.Time}: ${palForaGolsContra.toFixed(2)}`);
     if (flaForaGolsContra < palForaGolsContra) {
+        console.log(`✅ [FORA-GOLS-CONTRA] ${timeMandante.Time} tem vantagem (${flaForaGolsContra.toFixed(2)} < ${palForaGolsContra.toFixed(2)})`);
         atualizarVantagem('vencedor-fora-gols-contra', timeMandante.Time, 'vermelho');
     } else if (palForaGolsContra < flaForaGolsContra) {
+        console.log(`✅ [FORA-GOLS-CONTRA] ${timeVisitante.Time} tem vantagem (${palForaGolsContra.toFixed(2)} < ${flaForaGolsContra.toFixed(2)})`);
         atualizarVantagem('vencedor-fora-gols-contra', timeVisitante.Time, 'verde');
     } else {
+        console.log(`✅ [FORA-GOLS-CONTRA] Empate (${flaForaGolsContra.toFixed(2)} = ${palForaGolsContra.toFixed(2)})`);
         atualizarVantagem('vencedor-fora-gols-contra', 'Empate', 'amarelo');
     }
 
