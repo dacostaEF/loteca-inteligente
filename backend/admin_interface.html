@@ -2415,9 +2415,9 @@
                         <small class="form-text">V=Vitória, E=Empate, D=Derrota</small>
                     </div>
                     
-                    <!-- Analise Posição -->
+                    <!-- Análise Últimos Confrontos -->
                     <div class="form-group">
-                        <label>Analise Posição:</label>
+                        <label>Análise Últimos Confrontos:</label>
                         <input type="text" id="analise-posicao-admin" class="form-control" placeholder="Ex: Vantagem Flamengo">
                     </div>
                     
@@ -2432,7 +2432,7 @@
                             <input type="number" id="posicao-fora-admin" class="form-control" min="1" max="20" placeholder="Ex: 12">
                         </div>
                         <div class="form-group">
-                            <label>Analise Posição tabelas:</label>
+                            <label>Análise Posição na Tabela:</label>
                             <input type="text" id="analise-posicao-tabelas-admin" class="form-control" placeholder="Ex: Carregando dados...">
                         </div>
                     </div>
@@ -2460,7 +2460,7 @@
                             <input type="text" id="fator-fora-admin" class="form-control" placeholder="Ex: 25% aproveitamento fora">
                         </div>
                         <div class="form-group">
-                            <label>Analise Fator Caas:</label>
+                            <label>Analise Fator Casa:</label>
                             <input type="text" id="analise-fator-casa-admin" class="form-control" placeholder="Ex: Carregando dados...">
                         </div>
                     </div>
@@ -4237,39 +4237,153 @@
                     console.log(`✅ [ANÁLISE] Campo confronto direto preenchido com valores da tabela modal: ${confrontoDireto}`);
                 }
                 
-                // ✅ NOVA SOLUÇÃO SIMPLES: Salvar confrontos formatados
-                console.log('🔄 [ANÁLISE] Gerando sequência formatada SIMPLES...');
+                // ✅ NOVA SOLUÇÃO ROBUSTA: Salvar confrontos formatados com escudos corretos
+                console.log('🔄 [ANÁLISE] Gerando sequência formatada com escudos corretos...');
                 
-                const escudoCasa = document.getElementById('escudo-casa-path').value;
-                const escudoFora = document.getElementById('escudo-fora-path').value;
+                // BUSCAR ESCUDOS: priorizar os paths, senão usar os dos previews
+                let escudoCasa = document.getElementById('escudo-casa-path').value;
+                let escudoFora = document.getElementById('escudo-fora-path').value;
+                
+                // Se os paths estão vazios ou só têm o prefixo, usar os previews
+                if (!escudoCasa || escudoCasa === '/static/escudos/') {
+                    const previewCasa = document.getElementById('preview-escudo-casa');
+                    if (previewCasa && previewCasa.src && !previewCasa.src.includes('placeholder')) {
+                        escudoCasa = previewCasa.src.replace(window.location.origin, '');
+                    }
+                }
+                
+                if (!escudoFora || escudoFora === '/static/escudos/') {
+                    const previewFora = document.getElementById('preview-escudo-fora');
+                    if (previewFora && previewFora.src && !previewFora.src.includes('placeholder')) {
+                        escudoFora = previewFora.src.replace(window.location.origin, '');
+                    }
+                }
+                
                 const timeCasa = document.getElementById('time-casa-admin').value;
                 const timeFora = document.getElementById('time-fora-admin').value;
                 
-                // Gerar string formatada: (data, placar, vencedor|escudo)
-                const sequenciaFormatada = confrontos.map(conf => {
-                    const vencedor = (conf.vencedor || '').trim();
-                    const vencedorLower = vencedor.toLowerCase();
+                console.log('🏠 [ANÁLISE] Escudo Casa para sequência:', escudoCasa);
+                console.log('✈️ [ANÁLISE] Escudo Fora para sequência:', escudoFora);
+                
+                // ✅ NOVA FUNÇÃO: Extrai o nome do clube do PATH do escudo
+                function extrairNomeDoEscudo(pathEscudo) {
+                    if (!pathEscudo || pathEscudo === '/static/escudos/') return '';
                     
-                    // Determinar qual escudo usar
-                    let escudoUsar = '/static/escudos/Empate.png';
-                    let nomeVencedor = 'Empate';
+                    // Exemplo: /static/escudos/CAM_Atletico-MG/Atletico_MG.png
+                    // Objetivo: Extrair "Atletico" ou "Atletico-MG"
                     
-                    if (vencedorLower.includes('empate')) {
-                        escudoUsar = '/static/escudos/Empate.png';
-                        nomeVencedor = 'Empate';
-                    } else if (timeCasa && vencedorLower.includes(timeCasa.split('/')[0].toLowerCase().trim())) {
-                        escudoUsar = escudoCasa;
-                        nomeVencedor = timeCasa.split('/')[0];
-                    } else if (timeFora && vencedorLower.includes(timeFora.split('/')[0].toLowerCase().trim())) {
-                        escudoUsar = escudoFora;
-                        nomeVencedor = timeFora.split('/')[0];
-                    } else {
-                        // Fallback: tentar identificar pelo vencedor
-                        nomeVencedor = vencedor;
-                        escudoUsar = '/static/placeholder-team-logo.svg';
+                    // Remover barras invertidas e normalizar
+                    let path = pathEscudo.replace(/\\/g, '/');
+                    
+                    // Pegar o segmento entre /escudos/ e o arquivo final
+                    // Ex: /static/escudos/CAM_Atletico-MG/Atletico_MG.png -> CAM_Atletico-MG
+                    const match = path.match(/\/escudos\/([^\/]+)\//);
+                    if (match && match[1]) {
+                        let nomeCompleto = match[1];
+                        
+                        // Remover prefixo de 3 letras (ex: CAM_, RBB_, FLA_)
+                        nomeCompleto = nomeCompleto.replace(/^[A-Z]{3}_/, '');
+                        
+                        // Substituir _ e - por espaço para normalização
+                        nomeCompleto = nomeCompleto.replace(/[-_]/g, ' ');
+                        
+                        console.log(`🔍 [ESCUDO] Path: ${pathEscudo} -> Nome extraído: ${nomeCompleto}`);
+                        return nomeCompleto;
                     }
                     
-                    return `(${conf.data}, ${conf.placar}, ${nomeVencedor}|${escudoUsar})`;
+                    // Fallback: tentar extrair do nome do arquivo
+                    const nomeArquivo = path.split('/').pop()?.replace(/\.png$/i, '') || '';
+                    const nomeProcessado = nomeArquivo.replace(/[-_]/g, ' ');
+                    console.log(`🔍 [ESCUDO] Fallback - Path: ${pathEscudo} -> Nome: ${nomeProcessado}`);
+                    return nomeProcessado;
+                }
+                
+                // Função auxiliar para normalizar nome de time
+                function normalizarNome(nome) {
+                    return nome.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                        .replace(/[^\w\s]/g, '') // Remove caracteres especiais
+                        .trim();
+                }
+                
+                // ✅ NOVA FUNÇÃO: Compara vencedor com os nomes extraídos dos escudos
+                function identificarEscudoVencedor(vencedor, escudoCasa, escudoFora, timeCasa, timeFora) {
+                    const vencedorNorm = normalizarNome(vencedor);
+                    
+                    // Empate
+                    if (vencedorNorm.includes('empate')) {
+                        console.log(`✅ [MATCH] Empate detectado`);
+                        return {
+                            escudo: '/static/escudos/Empate.png',
+                            nome: 'Empate'
+                        };
+                    }
+                    
+                    // Extrair nomes dos clubes dos paths dos escudos
+                    const nomeCasaDoEscudo = extrairNomeDoEscudo(escudoCasa);
+                    const nomeForaDoEscudo = extrairNomeDoEscudo(escudoFora);
+                    
+                    console.log(`🔍 [MATCH] Vencedor CSV: "${vencedor}"`);
+                    console.log(`🔍 [MATCH] Nome Casa (do escudo): "${nomeCasaDoEscudo}"`);
+                    console.log(`🔍 [MATCH] Nome Fora (do escudo): "${nomeForaDoEscudo}"`);
+                    
+                    // Normalizar nomes dos escudos
+                    const nomeCasaNorm = normalizarNome(nomeCasaDoEscudo);
+                    const nomeForaNorm = normalizarNome(nomeForaDoEscudo);
+                    
+                    // Comparar vencedor com nomes extraídos dos escudos
+                    // Usar comparação por palavras-chave
+                    const palavrasVencedor = vencedorNorm.split(/\s+/).filter(p => p.length > 2);
+                    const palavrasCasa = nomeCasaNorm.split(/\s+/).filter(p => p.length > 2);
+                    const palavrasFora = nomeForaNorm.split(/\s+/).filter(p => p.length > 2);
+                    
+                    // Contar palavras em comum
+                    const comunsCasa = palavrasVencedor.filter(p => palavrasCasa.includes(p)).length;
+                    const comunsFora = palavrasVencedor.filter(p => palavrasFora.includes(p)).length;
+                    
+                    console.log(`🔍 [MATCH] Palavras vencedor: [${palavrasVencedor.join(', ')}]`);
+                    console.log(`🔍 [MATCH] Palavras casa: [${palavrasCasa.join(', ')}] - Match: ${comunsCasa}`);
+                    console.log(`🔍 [MATCH] Palavras fora: [${palavrasFora.join(', ')}] - Match: ${comunsFora}`);
+                    
+                    // Se casa tem mais palavras em comum
+                    if (comunsCasa > 0 && comunsCasa >= comunsFora) {
+                        console.log(`✅ [MATCH] Vencedor "${vencedor}" = Time Casa (${nomeCasaDoEscudo})`);
+                        return {
+                            escudo: escudoCasa,
+                            nome: timeCasa.split('/')[0]
+                        };
+                    }
+                    
+                    // Se fora tem mais palavras em comum
+                    if (comunsFora > 0) {
+                        console.log(`✅ [MATCH] Vencedor "${vencedor}" = Time Fora (${nomeForaDoEscudo})`);
+                        return {
+                            escudo: escudoFora,
+                            nome: timeFora.split('/')[0]
+                        };
+                    }
+                    
+                    // Fallback: usar escudo da casa
+                    console.warn(`⚠️ [MATCH] Nenhum match encontrado. Usando escudo da casa como fallback.`);
+                    return {
+                        escudo: escudoCasa || escudoFora || '',
+                        nome: vencedor || timeCasa.split('/')[0]
+                    };
+                }
+                
+                // ✅ NOVA LÓGICA: Gerar string formatada usando identificação por path do escudo
+                const sequenciaFormatada = confrontos.map((conf, index) => {
+                    const vencedor = (conf.vencedor || '').trim();
+                    
+                    console.log(`\n🎯 [CONFRONTO ${index + 1}] Processando...`);
+                    console.log(`📅 Data: ${conf.data} | 🏆 Placar: ${conf.placar} | 👑 Vencedor: ${vencedor}`);
+                    
+                    // Usar a nova função de identificação por path do escudo
+                    const resultado = identificarEscudoVencedor(vencedor, escudoCasa, escudoFora, timeCasa, timeFora);
+                    
+                    console.log(`✅ [RESULTADO] Escudo: ${resultado.escudo} | Nome: ${resultado.nome}`);
+                    
+                    return `(${conf.data}, ${conf.placar}, ${resultado.nome}|${resultado.escudo})`;
                 }).join(' ');
                 
                 // Preencher campo
@@ -4343,59 +4457,67 @@
                     const placar = confronto.placar || 'Placar não disponível';
                     const resultado = confronto.resultado || 'Resultado não disponível';
                     
-                    // Determinar qual escudo mostrar baseado na coluna "vencedor" do CSV
+                    // ✅ NOVA LÓGICA: Determinar escudo baseado no PATH do escudo
                     const vencedor = (confronto.vencedor || '').trim();
-                    const vencedorNorm = vencedor.toLowerCase();
                     
-                    // ✅ Inicializar com escudo da casa (será substituído se necessário)
-                    let escudoMostrar = escudoCasa;
-                    let nomeTimeMostrar = vencedor;
+                    // Função auxiliar para extrair nome do escudo (IGUAL à de confirmarConfrontos)
+                    function extrairNomeDoEscudo(pathEscudo) {
+                        if (!pathEscudo || pathEscudo === '/static/escudos/') return '';
+                        let path = pathEscudo.replace(/\\/g, '/');
+                        const match = path.match(/\/escudos\/([^\/]+)\//);
+                        if (match && match[1]) {
+                            let nomeCompleto = match[1];
+                            nomeCompleto = nomeCompleto.replace(/^[A-Z]{3}_/, '');
+                            nomeCompleto = nomeCompleto.replace(/[-_]/g, ' ');
+                            return nomeCompleto;
+                        }
+                        const nomeArquivo = path.split('/').pop()?.replace(/\.png$/i, '') || '';
+                        return nomeArquivo.replace(/[-_]/g, ' ');
+                    }
                     
-                    // Função auxiliar para normalizar nome de time
+                    // Função auxiliar para normalizar nome
                     function normalizarNome(nome) {
                         return nome.toLowerCase()
-                            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
-                            .replace(/[^\w\s]/g, '') // Remove caracteres especiais
+                            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                            .replace(/[^\w\s]/g, '')
                             .trim();
                     }
                     
-                    // Função auxiliar para comparar times robustamente
-                    function mesmoTime(time1, time2) {
-                        const norm1 = normalizarNome(time1);
-                        const norm2 = normalizarNome(time2);
-                        
-                        // Comparação exata
-                        if (norm1 === norm2) return true;
-                        
-                        // Comparação por palavras-chave
-                        const palavras1 = norm1.split(/\s+/).filter(p => p.length > 2);
-                        const palavras2 = norm2.split(/\s+/).filter(p => p.length > 2);
-                        
-                        // Se compartilham palavras significativas, considerar o mesmo time
-                        const palavrasComuns = palavras1.filter(p => palavras2.includes(p));
-                        
-                        // ✅ AJUSTADO: 1+ palavra em comum (antes era 2+)
-                        // Isso resolve casos como "Vasco" vs "Vasco da Gama"
-                        return palavrasComuns.length >= 1;
-                    }
+                    // Identificar escudo e nome corretos
+                    const vencedorNorm = normalizarNome(vencedor);
+                    let escudoMostrar = escudoCasa;
+                    let nomeTimeMostrar = vencedor;
                     
-                    // LÓGICA GENÉRICA: Usar a coluna "vencedor" e comparar com os times do jogo
                     if (vencedorNorm.includes('empate')) {
                         escudoMostrar = '/static/escudos/Empate.png';
                         nomeTimeMostrar = 'Empate';
-                    } else if (mesmoTime(vencedor, timeCasa)) {
-                        // ✅ SEMPRE usar o escudo correto (sem fallback para placeholder)
-                        escudoMostrar = escudoCasa;
-                        nomeTimeMostrar = timeCasa;
-                    } else if (mesmoTime(vencedor, timeFora)) {
-                        // ✅ SEMPRE usar o escudo correto (sem fallback para placeholder)
-                        escudoMostrar = escudoFora;
-                        nomeTimeMostrar = timeFora;
                     } else {
-                        // Fallback: tentar usar o escudo da casa por padrão
-                        console.warn(`⚠️ [ANÁLISE] Vencedor "${vencedor}" não corresponde a nenhum time`);
-                        escudoMostrar = escudoCasa || escudoFora;
-                        nomeTimeMostrar = vencedor || timeCasa;
+                        // Extrair nomes dos clubes dos paths dos escudos
+                        const nomeCasaDoEscudo = extrairNomeDoEscudo(escudoCasa);
+                        const nomeForaDoEscudo = extrairNomeDoEscudo(escudoFora);
+                        
+                        const nomeCasaNorm = normalizarNome(nomeCasaDoEscudo);
+                        const nomeForaNorm = normalizarNome(nomeForaDoEscudo);
+                        
+                        // Comparar por palavras-chave
+                        const palavrasVencedor = vencedorNorm.split(/\s+/).filter(p => p.length > 2);
+                        const palavrasCasa = nomeCasaNorm.split(/\s+/).filter(p => p.length > 2);
+                        const palavrasFora = nomeForaNorm.split(/\s+/).filter(p => p.length > 2);
+                        
+                        const comunsCasa = palavrasVencedor.filter(p => palavrasCasa.includes(p)).length;
+                        const comunsFora = palavrasVencedor.filter(p => palavrasFora.includes(p)).length;
+                        
+                        if (comunsCasa > 0 && comunsCasa >= comunsFora) {
+                            escudoMostrar = escudoCasa;
+                            nomeTimeMostrar = timeCasa;
+                        } else if (comunsFora > 0) {
+                            escudoMostrar = escudoFora;
+                            nomeTimeMostrar = timeFora;
+                        } else {
+                            console.warn(`⚠️ [ANÁLISE] Vencedor "${vencedor}" não matchou. Fallback: casa`);
+                            escudoMostrar = escudoCasa || escudoFora;
+                            nomeTimeMostrar = vencedor || timeCasa;
+                        }
                     }
                     
                     return {

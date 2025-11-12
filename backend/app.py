@@ -11,6 +11,7 @@ from admin_api import bp_admin
 from routes_forca_elenco import forca_elenco_bp
 from routes_auto_classificacao import bp_auto
 from routes_csv_stats import csv_stats_bp
+from routes_selecoes import bp_selecoes
 from services.auto_monitor import start_auto_monitoring
 # from analise_routes import bp_analise  # Comentado para usar apenas bp_admin
 
@@ -83,6 +84,7 @@ def create_app():
     app.register_blueprint(forca_elenco_bp)
     app.register_blueprint(bp_auto)  # Automação de classificação
     app.register_blueprint(csv_stats_bp)  # Estatísticas do CSV
+    app.register_blueprint(bp_selecoes)  # API de Seleções Nacionais
     
     # Registrar blueprint das ligas internacionais
     from routes_internacionais import bp_int

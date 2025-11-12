@@ -17,7 +17,7 @@
     "probabilidade_fora": "30",
     "recomendacao": "Recomendação Estatística: Duplo 1X (Italia e Empate) - Risco Alto",
     "conclusao_analista": "CONFRONTO DO GRUPO I: Situação totalmente definida no grupo. Somente um goleada impensável e histórica, a Itália tiraria o primeiro lugar na Noruega. Por isso, o resultado do jogo, não afetara a liderança da Noruega e o segundo da Itália, que disputara a repescagem. Ambos cumprem cumprem tabela. CONFIANÇA: 6/10 | RISCO: Alto | Valor: Empate",
-    "confrontos_sequence": "(06/06/2025, 3-0, NORUEGA|/static/escudos/Noruega/Noruega.png) (13/10/2015, 2-1, Itália|/static/escudos/ITALIA/ITALIA.png) (09/09/2014, 0-2, Itália|/static/escudos/ITALIA/ITALIA.png) (04/06/2005, 0-0, Empate|/static/escudos/Empate.png) (04/09/2004, 2-1, Itália|/static/escudos/ITALIA/ITALIA.png) (02/06/2000, 1-0, NORUEGA|/static/escudos/Noruega/Noruega.png) (09/02/1999, 0-0, Empate|/static/escudos/Empate.png) (27/06/1998, 1-0, Itália|/escudos/ITALIA/ITALIA.png) (23/06/1994, 1-0, Itália|/static/escudos/ITALIA/ITALIA.png) (12/11/1991, 1-1, Empate|/static/escudos/Empate.png)",
+    "confrontos_sequence": "(06/06/2025, 3-0, NORUEGA|/static/escudos/Noruega/Noruega.png) (13/10/2015, 2-1, Itália|/static/escudos/ITALIA/ITALIA.png) (09/09/2014, 0-2, Itália|/static/escudos/ITALIA/ITALIA.png) (04/06/2005, 0-0, Empate|/static/escudos/Empate.png) (04/09/2004, 2-1, Itália|/static/escudos/ITALIA/ITALIA.png) (02/06/2000, 1-0, NORUEGA|/static/escudos/Noruega/Noruega.png) (09/02/1999, 0-0, Empate|/static/escudos/Empate.png) (27/06/1998, 1-0, Itália|/static/escudos/ITALIA/ITALIA.png) (23/06/1994, 1-0, Itália|/static/escudos/ITALIA/ITALIA.png) (12/11/1991, 1-1, Empate|/static/escudos/Empate.png)",
     "posicao_casa": "2",
     "posicao_fora": "1",
     "confronto_direto": "2V-3E-5D",
@@ -28,6 +28,6 @@
     "analise_confronto_direto": "Vantagem Italia",
     "analise_fator_casa": "Confronto Equilibrado",
     "arquivo_confrontos": "Italia_vs_Noruega.csv",
-    "sincronizado_em": "2025-11-12T10:58:20.843Z"
+    "sincronizado_em": "2025-11-12T12:04:43.404Z"
   }
 }

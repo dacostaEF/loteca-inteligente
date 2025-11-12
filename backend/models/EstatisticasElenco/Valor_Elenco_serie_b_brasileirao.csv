@@ -1,4 +1,4 @@
-Posição,Clube,Plantel,Idade Média,Estrangeiros,Valor Médio,Valor Total,Posse Bola (%),Passes Certos,Chutes/Jogo
+Posição,Clube,Plantel,Idade Média,Estrangeiros,Valor_médio_jogador,Valor Total,Posse Bola (%),Passes Certos,Chutes/Jogo
 "1","Athletico-PR","33","26.5","10","€ 35.18 mi.","€ 1.17 mi.","54.8%","356","11.2"
 "2","Remo","40","27.4","7","€ 408 mil","€ 408 mil","48.3%","289","8.4"
 "3","Coritiba","30","28.9","4","€ 529 mil","€ 529 mil","49.7%","302","8.9"
@@ -17,5 +17,7 @@ Posição,Clube,Plantel,Idade Média,Estrangeiros,Valor Médio,Valor Total,Posse
 "16","Vila Nova","29","28.3","2","€ 345 mil","€ 345 mil","40.2%","218","5.3"
 "17","Londrina","34","29.1","1","€ 294 mil","€ 294 mil","39.8%","215","5.2"
 "18","Chapecoense","32","28.8","","€ 312 mil","€ 312 mil","39.4%","212","5.0"
-"19","Brusque","30","29.5","1","€ 330 mil","€ 330 mil","39.1%","208","4.9"
-"20","Ituano","28","30.2","","€ 353 mil","€ 353 mil","38.7%","205","4.7"
+"19","Volta Redonda","39","27.65","1","€ 330 mil","€ 330 mil","55%",,"4.9"
+"20","Ituano","28","30.2","","€ 353 mil","€ 4.18 mil","38.7%","205","4.7"
+"21","Brusque","30","29.5","1","€ 330 mil","€ 330 mil","39.1%","208","4.9"
+"22","Ferroviaria","33","27.5","0","€ 145 mil","€ 5,08 milhoes","39.1%","208","4.9"

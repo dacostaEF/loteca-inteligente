@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "14",
-    "concurso_numero": "1219"
+    "concurso_numero": "atual"
   },
   "dados": {
-    "numero": "14",
-    "time_casa": "FORTALEZA/CE",
-    "time_fora": "GREMIO/RS",
-    "arena": "Arena do Gremio/RS",
-    "campeonato": "Brasileirão Serie A",
+    "numero": "jogo_14",
+    "time_casa": "UCRANIA",
+    "time_fora": "ISLANDIA",
+    "arena": "Stadion Miejski Legii/Varsovia-Polonia",
+    "campeonato": "Eliminatórias Europeias para a Copa do Mundo FIFA de 2026",
     "dia": "Domingo",
-    "escudo_casa": "/static/escudos/FOR_Fortaleza/Fortaleza.png",
-    "escudo_fora": "/static/escudos/GRE_Gremio/Gremio.png",
-    "probabilidade_casa": "45",
+    "escudo_casa": "/static/escudos/UCRANIA/UCRANIA.png",
+    "escudo_fora": "/static/escudos/ISLANDIA/ISLANDIA.png",
+    "probabilidade_casa": "55",
     "probabilidade_empate": "30",
-    "probabilidade_fora": "25",
+    "probabilidade_fora": "15",
     "recomendacao": "Recomendação Estatística: Duplo 1X (Fortaleza e Empate) - Risco Baixo",
-    "conclusao_analista": "Em confrontos entre Fortaleza e Grêmio, o Grêmio tem leve vantagem histórica: por exemplo, foram cerca de 23 jogos com 11 vitórias do Grêmio, 4 vitórias do Fortaleza e 6 empates.Em casa, o Fortaleza tem melhores condições e resultados mais favoráveis. \nUm mercado interessante é o \"Fortaleza não tomar gol\". A equipe de Vojvoda é conhecida por sua organização defensiva em casa, e o Grêmio, em transição, pode ter dificuldades para criar chances claras. Outra boa opção é \"Menos de 2,5 Gols\", esperando um jogo tático e truncado, típico do Fortaleza em grandes jogos.",
-    "confrontos_sequence": "(29/07/2025, 2-1, Grêmio|/static/escudos/GRE_Gremio/Gremio.png) (04/10/2024, 3-1, Grêmio|/static/escudos/GRE_Gremio/Gremio.png) (19/06/2024, 1-0, FORTALEZA|/static/escudos/FOR_Fortaleza/Fortaleza.png) (30/09/2023, 1-1, Empate|/static/escudos/Empate.png) (14/05/2023, 0-0, Empate|/static/escudos/Empate.png) (13/10/2021, 1-0, FORTALEZA|/static/escudos/FOR_Fortaleza/Fortaleza.png) (27/06/2021, 0-0, Empate|/static/escudos/Empate.png) (09/01/2021, 0-0, Empate|/static/escudos/Empate.png) (13/09/2020, 1-1, Empate|/static/escudos/Empate.png) (19/10/2019, 2-1, FORTALEZA|/static/escudos/FOR_Fortaleza/Fortaleza.png)",
-    "posicao_casa": "18",
-    "posicao_fora": "11",
-    "confronto_direto": "2V-5E-3D",
-    "fator_casa": "65",
-    "fator_fora": "35",
-    "analise_posicao": "Confronto<br>Equilibrado",
-    "analise_posicao_tabelas": "Confronto<br>Equilibrado",
-    "analise_confronto_direto": "Confronto<br>Equilibrado",
-    "analise_fator_casa": "Confronto<br>Equilibrado",
-    "sincronizado_em": "2025-11-06T11:08:33.640Z"
-  },
-  "admin_key": "loteca2024admin"
+    "conclusao_analista": "CONFRONTO DO GRUPO D: No ultimo confronto, na Islândia, a Ucrânia derrotou a Islândia por 5 a 3. A vitória, em uma partida com muitos gols, foi crucial para a Ucrânia, que assumiu a segunda posição do grupo, atrás da líder França.  Este jogo tende a ser aberto, com duas equipes que marcam e sofrem gols.\nA Ucrânia tem mais qualidade individual e coletiva, mas a Islândia não será fácil – pode marcar.\nCONFIANÇA: 6/10 | RISCO: Alto | Valor: Empate (A odd para o empate deve estar em torno de 3.50 a 4.00, o que compensa o risco)",
+    "confrontos_sequence": "(10/10/2025, 3-5, UCRANIA|/static/escudos/UCRANIA/UCRANIA.png) (26/03/2024, 2-1, UCRANIA|/static/escudos/UCRANIA/UCRANIA.png) (05/09/2017, 2-0, ISLANDIA|/static/escudos/ISLANDIA/ISLANDIA.png) (05/09/2016, 1-1, Empate|/static/escudos/Empate.png) (08/09/1999, 0-1, UCRANIA|/static/escudos/UCRANIA/UCRANIA.png) (31/03/1999, 1-1, Empate|/static/escudos/Empate.png)",
+    "posicao_casa": "2",
+    "posicao_fora": "3",
+    "confronto_direto": "3V-2E-0D",
+    "fator_casa": "70",
+    "fator_fora": "30",
+    "analise_posicao": "Vantagem Ucrania",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Vantagem Ucrania",
+    "analise_fator_casa": "Vantagem Ucrania",
+    "arquivo_confrontos": "Islandia_vs_Ucrania.csv",
+    "sincronizado_em": "2025-11-12T12:57:06.461Z"
+  }
 }

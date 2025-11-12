@@ -248,6 +248,51 @@
     
     <!-- ===== RESPONSIVIDADE: ESCONDER "dos" NO TÍTULO PANORAMA ===== -->
     <style>
+    /* ===== BADGES DE CATEGORIA (Largura Total com Cores Transparentes) ===== */
+    .badge-categoria {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.3px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 12px;
+        border: 1px solid;
+    }
+    
+    .badge-categoria-a-plus {
+        background: rgba(106, 13, 173, 0.15);
+        color: #C084FC;
+        border-color: rgba(106, 13, 173, 0.4);
+    }
+    
+    .badge-categoria-a {
+        background: rgba(30, 64, 175, 0.15);
+        color: #60A5FA;
+        border-color: rgba(30, 64, 175, 0.4);
+    }
+    
+    .badge-categoria-b {
+        background: rgba(5, 150, 105, 0.15);
+        color: #34D399;
+        border-color: rgba(5, 150, 105, 0.4);
+    }
+    
+    .badge-categoria-c {
+        background: rgba(234, 88, 12, 0.15);
+        color: #FB923C;
+        border-color: rgba(234, 88, 12, 0.4);
+    }
+    
+    .badge-categoria-d {
+        background: rgba(107, 114, 128, 0.15);
+        color: #D1D5DB;
+        border-color: rgba(107, 114, 128, 0.4);
+    }
+    
     /* Desktop: mostrar "dos" normalmente */
     .hide-mobile-text {
         display: inline;
@@ -1394,7 +1439,7 @@
                 <div class="sub-tab-content" id="times-loteca" style="display: block;">
                     <div class="times-loteca-section">
                         <div class="section-header">
-                            <h2>💰 Plantel ($) - Comparação Direta</h2>
+                            <h2>💰 Plantel ($) - Comparação Direta (Ago/2024)</h2>
                             <!-- Botão removido: carregamento automático ativo -->
                         </div>
 
@@ -5701,6 +5746,36 @@
             }
         }
 
+        // ===== FUNÇÕES DE CATEGORIA (A+, A, B, C, D) =====
+        
+        /**
+         * Calcula a categoria do elenco baseada no valor de mercado
+         * A+ = >€800MM | A = €300-800MM | B = €100-300MM | C = €30-100MM | D = <€30MM
+         */
+        function calcularCategoria(valorMM) {
+            if (valorMM >= 800) return 'A+';
+            if (valorMM >= 300) return 'A';
+            if (valorMM >= 100) return 'B';
+            if (valorMM >= 30) return 'C';
+            return 'D';
+        }
+        
+        /**
+         * Gera o HTML do badge de categoria com cores personalizadas
+         */
+        function gerarBadgeCategoria(categoria) {
+            const classes = {
+                'A+': 'badge-categoria badge-categoria-a-plus',
+                'A': 'badge-categoria badge-categoria-a',
+                'B': 'badge-categoria badge-categoria-b',
+                'C': 'badge-categoria badge-categoria-c',
+                'D': 'badge-categoria badge-categoria-d'
+            };
+            
+            const classCSS = classes[categoria] || 'badge-categoria badge-categoria-d';
+            return `<span class="${classCSS}">${categoria}</span>`;
+        }
+
         // BUSCAR DADOS DOS TIMES VIA API - TODOS OS 14 JOGOS
         async function buscarDadosTodosJogos(jogos) {
             console.log('🔍 [TIMES-LOTECA] Buscando dados para TODOS OS 14 JOGOS...');
@@ -5777,16 +5852,23 @@
                         // Calcular nacionais
                         const nacionais = dadosCache.plantel - dadosCache.estrangeiros;
                         
+                        // ✅ PADRONIZAR: Garantir 1 casa decimal
+                        const forcaElenco = parseFloat((dadosCache.forca_elenco || 5.0).toFixed(1));
+                        
+                        // ✅ CALCULAR CATEGORIA (se não vier do cache)
+                        const categoria = dadosCache.categoria || calcularCategoria(dadosCache.valor_mm_euros || 0);
+                        
                         // Retornar dados formatados do cache
                         return {
                             nome: nomeTime,
                             abrev: nomeTime.substring(0, 3).toUpperCase(),
                             total_atletas: dadosCache.plantel || 30,
                             pct_provaveis: `${nacionais}/${dadosCache.estrangeiros}`,
-                            forca_elenco: dadosCache.forca_elenco || 5.0,
+                            forca_elenco: forcaElenco, // ✅ SEMPRE 1 casa decimal
+                            categoria: categoria, // ✅ NOVO: Categoria A+/A/B/C/D
                             preco_medio: dadosCache.valor_mm_formatado || '€ 50.0MM',
                             rating: dadosCache.rating || 0.5,
-                            badge: gerarBadgeTime(dadosCache.rating || 0.5),
+                            badge: gerarBadgeTime(dadosCache.rating || 0.5, categoria, dadosCache.valor_mm_euros), // ✅ NOVA ASSINATURA
                             fonte: 'cache_batch',
                             brasileiro: true,
                             // Dados extras
@@ -5807,6 +5889,65 @@
             console.log(`🔍 [ELENCO] É brasileiro: ${isBrazilian}`);
             console.log(`🔍 [DEBUG-BUSCAR] isBrazilian: ${isBrazilian}, nomeTime: "${nomeTime}"`);
             
+            // ✅ NOVA LÓGICA: Se NÃO é brasileiro, tentar API de seleções
+            if (!isBrazilian) {
+                try {
+                    console.log(`🌍 [SELEÇÃO] Detectada seleção nacional: "${nomeTime}"`);
+                    console.log(`🌍 [SELEÇÃO] Buscando dados via API de seleções...`);
+                    
+                    const selecaoResponse = await fetch(`/api/selecoes/buscar/${encodeURIComponent(nomeTime)}`);
+                    
+                    if (selecaoResponse.ok) {
+                        const selecaoData = await selecaoResponse.json();
+                        
+                        if (selecaoData.success && selecaoData.selecao) {
+                            const dados = selecaoData.selecao;
+                            console.log(`✅ [SELEÇÃO] Dados encontrados:`, dados);
+                            
+                            // ✅ CRITÉRIO UNIFICADO: Converter valor de mercado para rating (0-1)
+                            // Inglaterra (1410M) = 1.0, Letônia (15.2M) = 0.1
+                            const maxValor = 1410.0; // Inglaterra (1º lugar)
+                            const minValor = 15.0;   // Base mínima
+                            
+                            // Calcular rating proporcional (0.1 a 1.0)
+                            let rating = (dados.valor_mercado_milhoes - minValor) / (maxValor - minValor);
+                            rating = Math.min(1.0, Math.max(0.1, rating));
+                            
+                            // ✅ FORÇA DO ELENCO: Arredondar para 1 casa decimal (0.0 a 10.0)
+                            const forcaElenco = Math.round(rating * 100) / 10; // Ex: 6.0, 7.2, 9.5
+                            
+                            // ✅ CATEGORIA: Usar da API ou calcular
+                            const categoria = dados.categoria || calcularCategoria(dados.valor_mercado_milhoes);
+                            
+                            return {
+                                nome: dados.selecao,
+                                abrev: dados.selecao.substring(0, 3).toUpperCase(),
+                                total_atletas: 23, // Seleções geralmente têm 23 jogadores convocados
+                                pct_provaveis: `${dados.posicao}º`, // Posição no ranking
+                                forca_elenco: forcaElenco, // ✅ SEMPRE 1 casa decimal
+                                categoria: categoria, // ✅ NOVO: Categoria A+/A/B/C/D
+                                preco_medio: dados.valor_mercado_texto,
+                                rating: rating,
+                                badge: gerarBadgeTime(rating, categoria, dados.valor_mercado_milhoes), // ✅ NOVA ASSINATURA
+                                fonte: 'selecao_nacional',
+                                brasileiro: false,
+                                // Dados extras da seleção
+                                valor_mm_euros: dados.valor_mercado_milhoes,
+                                continente: dados.continente,
+                                confederacao: dados.confederacao,
+                                posicao_ranking: dados.posicao,
+                                tipo: 'seleção'
+                            };
+                        }
+                    }
+                    
+                    console.log(`⚠️ [SELEÇÃO] API de seleções falhou ou seleção não encontrada`);
+                    
+                } catch (error) {
+                    console.error(`❌ [SELEÇÃO] Erro ao buscar seleção "${nomeTime}":`, error);
+                }
+            }
+            
             if (isBrazilian) {
                 try {
                     // FALLBACK: Buscar dados de elenco da planilha via API individual
@@ -5822,15 +5963,22 @@
                             
                             const nacionais = dados.plantel - dados.estrangeiros;
                             
+                            // ✅ PADRONIZAR: Garantir 1 casa decimal
+                            const forcaElenco = parseFloat((dados.forca_elenco || 5.0).toFixed(1));
+                            
+                            // ✅ CATEGORIA: Usar da API ou calcular
+                            const categoria = dados.categoria || calcularCategoria(dados.valor_mm_euros || 0);
+                            
                             return {
                                 nome: nomeTime,
                                 abrev: nomeTime.substring(0, 3).toUpperCase(),
                                 total_atletas: dados.plantel || 30,
                                 pct_provaveis: `${nacionais}/${dados.estrangeiros}`,
-                                forca_elenco: dados.forca_elenco || 5.0,
+                                forca_elenco: forcaElenco, // ✅ SEMPRE 1 casa decimal
+                                categoria: categoria, // ✅ NOVO: Categoria A+/A/B/C/D
                                 preco_medio: dados.valor_mm_formatado || '€ 50.0MM',
                                 rating: dados.rating || 0.5,
-                                badge: gerarBadgeTime(dados.rating || 0.5),
+                                badge: gerarBadgeTime(dados.rating || 0.5, categoria, dados.valor_mm_euros), // ✅ NOVA ASSINATURA
                                 fonte: 'elenco_real',
                                 brasileiro: true,
                                 // Dados extras da planilha
@@ -5851,15 +5999,19 @@
                         const stats = await centralAdminProvider.getEstatisticasClube(clubeId);
                         const clubeInfo = await centralAdminProvider.getClubeInfo(clubeId);
                         
+                        // ✅ CATEGORIA: Calcular baseado nos dados disponíveis
+                        const categoria = calcularCategoria(0); // Fallback: Categoria D
+                        
                         return {
                             nome: nomeTime,
                             abrev: clubeInfo?.abreviacao || nomeTime.substring(0, 3).toUpperCase(),
                             total_atletas: stats.total_atletas || 0,
                             pct_provaveis: stats.pct_provaveis || 0,
                             forca_elenco: stats.media_pontos_elenco || 0,
+                            categoria: categoria, // ✅ NOVO: Categoria A+/A/B/C/D
                             preco_medio: stats.preco_medio || 0,
                             rating: stats.rating || 0,
-                            badge: gerarBadgeTime(stats.rating || 0),
+                            badge: gerarBadgeTime(stats.rating || 0, categoria, 0), // ✅ NOVA ASSINATURA
                             fonte: 'central_admin',
                             brasileiro: true
                         };
@@ -5950,15 +6102,19 @@
                 if (dadosClube) {
                     console.log(`✅ [CSV-API] Dados encontrados:`, dadosClube);
                     
+                    // ✅ CATEGORIA: Calcular baseado no valor de mercado
+                    const categoria = calcularCategoria(dadosClube.valor_elenco_euros || 0);
+                    
                     return {
                         nome: dadosClube.nome_oficial || nomeTime,
                         abrev: nomeTime.substring(0, 3).toUpperCase(),
                         total_atletas: 30,
                         pct_provaveis: '24/8',
                         forca_elenco: dadosClube.forca_elenco || 5.0,
+                        categoria: categoria, // ✅ NOVO: Categoria A+/A/B/C/D
                         preco_medio: `€ ${dadosClube.valor_elenco_euros}MM`,
                         rating: (dadosClube.forca_elenco || 5.0) / 10,
-                        badge: gerarBadgeTime((dadosClube.forca_elenco || 5.0) / 10),
+                        badge: gerarBadgeTime((dadosClube.forca_elenco || 5.0) / 10, categoria, dadosClube.valor_elenco_euros), // ✅ NOVA ASSINATURA
                         fonte: 'csv_api',
                         brasileiro: dadosClube.liga ? dadosClube.liga.includes('Brasil') : true,
                         valor_mm_euros: dadosClube.valor_elenco_euros,
@@ -6006,12 +6162,37 @@
         }
 
         // GERAR BADGE DO TIME - CORRIGIDO PARA DADOS REAIS DO CSV
-        function gerarBadgeTime(rating) {
-            // ✅ CORRIGIDO: Thresholds baseados nos dados reais do CSV Série A
-            if (rating >= 0.8) return { text: 'Elenco Elite', class: 'badge-elite' };
-            if (rating >= 0.6) return { text: 'Elenco Forte', class: 'badge-forte' };
-            if (rating >= 0.4) return { text: 'Elenco Sólido', class: 'badge-solido' };
-            return { text: 'Elenco em Desenvolvimento', class: 'badge-desenvolvimento' };
+        function gerarBadgeTime(rating, categoria = null, valorMM = null) {
+            // ✅ NOVO SISTEMA: Priorizar categoria se disponível
+            if (categoria) {
+                const categoriaInfo = {
+                    'A+': { text: 'Superpotências', class: 'badge-categoria badge-categoria-a-plus', descricao: 'Superpotências' },
+                    'A': { text: 'Elite Mundial', class: 'badge-categoria badge-categoria-a', descricao: 'Elite Mundial' },
+                    'B': { text: 'Competitivos', class: 'badge-categoria badge-categoria-b', descricao: 'Competitivos' },
+                    'C': { text: 'Em Desenvolvimento', class: 'badge-categoria badge-categoria-c', descricao: 'Em Desenvolvimento' },
+                    'D': { text: 'Bases Sólidas', class: 'badge-categoria badge-categoria-d', descricao: 'Bases Sólidas' }
+                };
+                return categoriaInfo[categoria] || categoriaInfo['D'];
+            }
+            
+            // FALLBACK: Se não tiver categoria, calcular baseado no valor de mercado
+            if (valorMM !== null && valorMM !== undefined) {
+                const cat = calcularCategoria(valorMM);
+                const categoriaInfo = {
+                    'A+': { text: 'Superpotências', class: 'badge-categoria badge-categoria-a-plus', descricao: 'Superpotências' },
+                    'A': { text: 'Elite Mundial', class: 'badge-categoria badge-categoria-a', descricao: 'Elite Mundial' },
+                    'B': { text: 'Competitivos', class: 'badge-categoria badge-categoria-b', descricao: 'Competitivos' },
+                    'C': { text: 'Em Desenvolvimento', class: 'badge-categoria badge-categoria-c', descricao: 'Em Desenvolvimento' },
+                    'D': { text: 'Bases Sólidas', class: 'badge-categoria badge-categoria-d', descricao: 'Bases Sólidas' }
+                };
+                return categoriaInfo[cat];
+            }
+            
+            // FALLBACK FINAL: Sistema antigo (apenas para compatibilidade)
+            if (rating >= 0.8) return { text: 'Elite Mundial', class: 'badge-categoria badge-categoria-a', descricao: 'Elite Mundial' };
+            if (rating >= 0.6) return { text: 'Competitivos', class: 'badge-categoria badge-categoria-b', descricao: 'Competitivos' };
+            if (rating >= 0.4) return { text: 'Em Desenvolvimento', class: 'badge-categoria badge-categoria-c', descricao: 'Em Desenvolvimento' };
+            return { text: 'Bases Sólidas', class: 'badge-categoria badge-categoria-d', descricao: 'Bases Sólidas' };
         }
 
         // VERIFICAR SE É TIME BRASILEIRO - TODOS OS TIMES DA LOTECA

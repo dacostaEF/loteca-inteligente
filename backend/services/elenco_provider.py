@@ -80,6 +80,7 @@ class ElencoProvider:
                     
                     valor_total_str = valor_total_match.group(1) if valor_total_match else '€ 0 mi.'
                     valor_mm_euros = self._extrair_valor_em_mm_euros(valor_total_str)
+                    categoria = self._calcular_categoria_elenco(valor_mm_euros)
                     
                     self.dados_elenco[clube_normalizado] = {
                         'nome_original': clube_nome,
@@ -92,7 +93,8 @@ class ElencoProvider:
                         'estrangeiros': int(estrangeiros_match.group(1)) if estrangeiros_match else 0,
                         'valor_medio': valor_medio_match.group(1) if valor_medio_match else '€ 0 mil',
                         'forca_elenco': self._calcular_forca_elenco(valor_total_str),
-                        'rating': self._calcular_rating(valor_total_str, serie)
+                        'rating': self._calcular_rating(valor_total_str, serie),
+                        'categoria': categoria  # ✅ NOVO: Categoria A+/A/B/C/D
                     }
                     
         except Exception as e:
@@ -154,36 +156,49 @@ class ElencoProvider:
         
         return mapeamento_entrada.get(nome_entrada.upper(), nome_entrada.upper())
     
+    def _calcular_categoria_elenco(self, valor_mm):
+        """
+        Calcula CATEGORIA do elenco baseada no valor total em MM Euros
+        ✅ SISTEMA DE CATEGORIAS PROFISSIONAL (A+, A, B, C, D)
+        
+        A+ → SUPERPOTÊNCIAS       (>€800MM)   | Inglaterra, França, Real Madrid
+        A  → ELITE                (€300-800MM) | Brasil, Argentina, Bayern
+        B  → COMPETITIVOS         (€100-300MM) | Flamengo, Palmeiras, Uruguai
+        C  → EM DESENVOLVIMENTO   (€30-100MM)  | Japão, Fortaleza, Bósnia
+        D  → BASES SÓLIDAS        (<€30MM)     | Letônia, Série B baixa
+        """
+        if valor_mm >= 800:
+            return 'A+'
+        elif valor_mm >= 300:
+            return 'A'
+        elif valor_mm >= 100:
+            return 'B'
+        elif valor_mm >= 30:
+            return 'C'
+        else:
+            return 'D'
+    
     def _calcular_forca_elenco(self, valor_total_str):
-        """Calcula força do elenco baseada no valor total em MM Euros"""
+        """
+        Calcula categoria e mantém compatibilidade com força numérica legada
+        """
         try:
-            # Extrair valor numérico e converter para MM Euros
             valor_mm = self._extrair_valor_em_mm_euros(valor_total_str)
+            categoria = self._calcular_categoria_elenco(valor_mm)
             
-            # Escala de força baseada no valor em MM Euros (0-10)
-            if valor_mm >= 200:    # € 200MM+
-                return 10.0
-            elif valor_mm >= 150:  # € 150-200MM
-                return 9.0
-            elif valor_mm >= 100:  # € 100-150MM
-                return 8.0
-            elif valor_mm >= 80:   # € 80-100MM
-                return 7.0
-            elif valor_mm >= 60:   # € 60-80MM
-                return 6.0
-            elif valor_mm >= 40:   # € 40-60MM
-                return 5.0
-            elif valor_mm >= 25:   # € 25-40MM
-                return 4.0
-            elif valor_mm >= 15:   # € 15-25MM
-                return 3.0
-            elif valor_mm >= 10:   # € 10-15MM
-                return 2.0
-            else:                  # < € 10MM
-                return 1.0
+            # Mapear categoria para valor numérico (para compatibilidade)
+            mapa_categoria_numero = {
+                'A+': 10.0,
+                'A': 8.5,
+                'B': 7.0,
+                'C': 5.0,
+                'D': 3.0
+            }
+            
+            return mapa_categoria_numero.get(categoria, 5.0)
             
         except:
-            return 1.0
+            return 5.0  # Fallback: valor médio
     
     def _extrair_valor_em_mm_euros(self, valor_str):
         """Extrai valor e converte para MM Euros (milhões)"""
