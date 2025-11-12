@@ -405,26 +405,68 @@ def api_force_update():
 @cross_origin()
 def current_loteca_matches():
     """
-    Retorna os confrontos atuais da Loteca com dados reais
-    Combina dados do Cartola FC para jogos brasileiros + estimativas para internacionais
+    Retorna os confrontos atuais da Loteca lendo do concurso_atual.json
     GET /api/br/loteca/current
+    
+    🔥 LÊ DO: backend/models/concurso_atual/concurso_atual.json
     """
     try:
-        # Usar provider CORRIGIDO que implementa as correções identificadas
-        # result = get_current_loteca_matches()  # REMOVIDO: código morto
-        result = {"success": False, "error": "Endpoint removido - código morto"}
+        import json
         
-        # O novo provider já retorna um dict completo
-        if isinstance(result, dict):
-            return jsonify(result)
+        # Caminho do arquivo concurso_atual.json
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        concurso_path = os.path.join(base_dir, 'models', 'concurso_atual', 'concurso_atual.json')
         
-        # Fallback se retornar lista (compatibilidade)
+        # Verificar se arquivo existe
+        if not os.path.exists(concurso_path):
+            return jsonify({
+                "success": False,
+                "error": "Arquivo concurso_atual.json não encontrado",
+                "matches": [],
+                "total": 0,
+                "data_source": "file_not_found",
+                "note": "Configure o concurso atual no Central Admin"
+            }), 404
+        
+        # Ler arquivo JSON
+        with open(concurso_path, 'r', encoding='utf-8') as f:
+            concurso_data = json.load(f)
+        
+        # Extrair jogos
+        jogos = concurso_data.get('jogos', [])
+        
+        if not jogos:
+            return jsonify({
+                "success": False,
+                "error": "Nenhum jogo encontrado no concurso atual",
+                "matches": [],
+                "total": 0,
+                "data_source": "concurso_atual",
+                "note": "Adicione jogos no Central Admin"
+            }), 404
+        
+        # Formatar jogos para o formato esperado pelo frontend
+        matches = []
+        for jogo in jogos:
+            matches.append({
+                "numero": jogo.get('numero'),
+                "home_team": jogo.get('time_casa'),
+                "away_team": jogo.get('time_fora'),
+                "time_casa": jogo.get('time_casa'),
+                "time_fora": jogo.get('time_fora'),
+                "data": jogo.get('data'),
+                "stadium": jogo.get('arena', ''),
+                "campeonato": jogo.get('campeonato', '')
+            })
+        
         return jsonify({
             "success": True,
-            "matches": result,
-            "total": len(result),
-            "data_source": "corrected_provider",
-            "note": "Dados corrigidos - sem hardcoded, com dados reais quando possível"
+            "matches": matches,
+            "total": len(matches),
+            "data_source": "concurso_atual.json",
+            "concurso_numero": concurso_data.get('metadados', {}).get('numero', 'atual'),
+            "salvo_em": concurso_data.get('metadados', {}).get('salvo_em', ''),
+            "note": "Dados lidos de concurso_atual.json"
         })
         
     except Exception as e:
@@ -434,7 +476,7 @@ def current_loteca_matches():
             "matches": [],
             "total": 0,
             "data_source": "error",
-            "note": "Configure APIs para dados 100% reais"
+            "note": "Erro ao ler concurso_atual.json"
         }), 500
 
 # === ROTAS DE CLASSIFICAÇÃO PARA O SITE ===
