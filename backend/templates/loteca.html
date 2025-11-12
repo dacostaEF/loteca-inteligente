@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D951EFQWFQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-D951EFQWFQ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Raio-X da Loteca - Loterias Inteligente</title>
@@ -14698,6 +14707,214 @@
             // Verificar estado inicial
             checkActiveTab();
             handleScroll();
+        })();
+    </script>
+
+    <!-- ============================================
+         📊 GOOGLE ANALYTICS - RASTREAMENTO DE EVENTOS
+         ============================================ -->
+    <script>
+        (function() {
+            'use strict';
+            
+            console.log('📊 [GA] Sistema de rastreamento de eventos iniciado');
+            
+            // ============================================
+            // 🎯 RASTREAMENTO DE ABAS/PÁGINAS
+            // ============================================
+            
+            // Rastrear cliques nas abas principais
+            document.querySelectorAll('.tab-button, .tab-btn, [data-tab]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const abaTexto = this.textContent.trim();
+                    const abaId = this.getAttribute('data-tab') || this.getAttribute('onclick') || 'desconhecido';
+                    
+                    console.log(`📊 [GA] Aba clicada: ${abaTexto}`);
+                    
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'clique_aba', {
+                            'event_category': 'navegacao',
+                            'event_label': abaTexto,
+                            'value': 1
+                        });
+                    }
+                });
+            });
+            
+            // ============================================
+            // 🎲 RASTREAMENTO DE SELEÇÃO DE JOGOS
+            // ============================================
+            
+            // Rastrear seleção de jogos no dropdown "Dados Avançados"
+            const jogoSelect = document.getElementById('jogo-select');
+            if (jogoSelect) {
+                jogoSelect.addEventListener('change', function() {
+                    const jogoSelecionado = this.value;
+                    const jogoTexto = this.options[this.selectedIndex].text;
+                    
+                    console.log(`📊 [GA] Jogo selecionado: ${jogoTexto}`);
+                    
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'selecionar_jogo', {
+                            'event_category': 'analise',
+                            'event_label': jogoTexto,
+                            'value': parseInt(jogoSelecionado) || 0
+                        });
+                    }
+                });
+            }
+            
+            // ============================================
+            // 📊 RASTREAMENTO DE CLIQUES EM CARDS DE JOGOS
+            // ============================================
+            
+            // Rastrear cliques nos cards de jogos (1-14)
+            for (let i = 1; i <= 14; i++) {
+                const gameCard = document.getElementById(`jogo-${i}-novo`) || document.getElementById(`jogo-${i}`);
+                if (gameCard) {
+                    gameCard.addEventListener('click', function() {
+                        const timeCasa = this.querySelector('.time-casa-nome')?.textContent || 'Desconhecido';
+                        const timeFora = this.querySelector('.time-fora-nome')?.textContent || 'Desconhecido';
+                        
+                        console.log(`📊 [GA] Card de jogo ${i} clicado: ${timeCasa} vs ${timeFora}`);
+                        
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'visualizar_card_jogo', {
+                                'event_category': 'jogo',
+                                'event_label': `Jogo ${i}: ${timeCasa} vs ${timeFora}`,
+                                'value': i
+                            });
+                        }
+                    });
+                }
+            }
+            
+            // ============================================
+            // 🎰 RASTREAMENTO DE CLIQUES EM PROBABILIDADES
+            // ============================================
+            
+            // Rastrear cliques nos botões de probabilidades (1, X, 2)
+            document.querySelectorAll('.probabilidade-btn, [class*="prob-btn"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tipo = this.textContent.trim(); // "1", "X" ou "2"
+                    const jogoCard = this.closest('[id^="jogo-"]');
+                    const jogoNum = jogoCard ? jogoCard.id.match(/\d+/)?.[0] : 'desconhecido';
+                    
+                    console.log(`📊 [GA] Probabilidade clicada: ${tipo} (Jogo ${jogoNum})`);
+                    
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'clique_probabilidade', {
+                            'event_category': 'aposta',
+                            'event_label': `${tipo} - Jogo ${jogoNum}`,
+                            'value': 1
+                        });
+                    }
+                });
+            });
+            
+            // ============================================
+            // 📈 RASTREAMENTO DE EXPANSÃO DE CONFRONTOS
+            // ============================================
+            
+            // Rastrear cliques em "Ver mais confrontos"
+            document.querySelectorAll('[class*="ver-mais"], [class*="expand"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const jogoCard = this.closest('[id^="jogo-"]');
+                    const jogoNum = jogoCard ? jogoCard.id.match(/\d+/)?.[0] : 'desconhecido';
+                    
+                    console.log(`📊 [GA] Confrontos expandidos: Jogo ${jogoNum}`);
+                    
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'expandir_confrontos', {
+                            'event_category': 'interacao',
+                            'event_label': `Jogo ${jogoNum}`,
+                            'value': 1
+                        });
+                    }
+                });
+            });
+            
+            // ============================================
+            // 🔄 RASTREAMENTO DE ATUALIZAÇÃO DE DADOS
+            // ============================================
+            
+            // Rastrear cliques em botões de atualização
+            document.querySelectorAll('[class*="atualizar"], [class*="refresh"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const contexto = this.closest('[id]')?.id || 'geral';
+                    
+                    console.log(`📊 [GA] Atualização solicitada: ${contexto}`);
+                    
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'atualizar_dados', {
+                            'event_category': 'acao',
+                            'event_label': contexto,
+                            'value': 1
+                        });
+                    }
+                });
+            });
+            
+            // ============================================
+            // ⏱️ RASTREAMENTO DE TEMPO NA PÁGINA
+            // ============================================
+            
+            let tempoInicio = Date.now();
+            let ultimaAba = 'analise-rapida';
+            
+            // Registrar mudança de aba
+            document.querySelectorAll('.tab-button, .tab-btn, [data-tab]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tempoDecorrido = Math.round((Date.now() - tempoInicio) / 1000);
+                    
+                    console.log(`📊 [GA] Tempo na aba "${ultimaAba}": ${tempoDecorrido}s`);
+                    
+                    if (typeof gtag === 'function' && tempoDecorrido > 3) {
+                        gtag('event', 'tempo_na_aba', {
+                            'event_category': 'engajamento',
+                            'event_label': ultimaAba,
+                            'value': tempoDecorrido
+                        });
+                    }
+                    
+                    ultimaAba = this.getAttribute('data-tab') || this.textContent.trim();
+                    tempoInicio = Date.now();
+                });
+            });
+            
+            // Registrar tempo ao sair da página
+            window.addEventListener('beforeunload', function() {
+                const tempoTotal = Math.round((Date.now() - tempoInicio) / 1000);
+                
+                console.log(`📊 [GA] Tempo total na última aba: ${tempoTotal}s`);
+                
+                if (typeof gtag === 'function' && tempoTotal > 3) {
+                    gtag('event', 'tempo_na_aba', {
+                        'event_category': 'engajamento',
+                        'event_label': ultimaAba,
+                        'value': tempoTotal
+                    });
+                }
+            });
+            
+            // ============================================
+            // 📱 RASTREAMENTO DE TIPO DE DISPOSITIVO
+            // ============================================
+            
+            const isMobile = window.innerWidth <= 768;
+            const dispositivo = isMobile ? 'mobile' : 'desktop';
+            
+            console.log(`📊 [GA] Dispositivo detectado: ${dispositivo}`);
+            
+            if (typeof gtag === 'function') {
+                gtag('event', 'acesso', {
+                    'event_category': 'dispositivo',
+                    'event_label': dispositivo,
+                    'value': 1
+                });
+            }
+            
+            console.log('✅ [GA] Sistema de rastreamento configurado com sucesso!');
         })();
     </script>
 
