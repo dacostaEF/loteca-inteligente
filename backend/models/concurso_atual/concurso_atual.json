@@ -1,93 +1,93 @@
 {
   "metadados": {
     "numero": "atual",
-    "salvo_em": "2025-11-09T17:09:25.817485",
+    "salvo_em": "2025-11-11T10:12:40.745126",
     "versao": "1.0"
   },
   "concurso": {},
   "jogos": [
     {
       "numero": 1,
-      "time_casa": "MIRASSOL/SP",
+      "time_casa": "SANTOS/SP",
       "time_fora": "PALMEIRAS/SP",
-      "data": "Domingo"
+      "data": "Sabado"
     },
     {
       "numero": 2,
-      "time_casa": "SPORT/PE",
-      "time_fora": "ATLETICO/MG",
-      "data": "Sábado"
+      "time_casa": "VOLTA REDONDA/RJ",
+      "time_fora": "CHAPECOENSE/SC",
+      "data": "Sabado"
     },
     {
       "numero": 3,
-      "time_casa": "VASCO DA GAMA/RJ",
-      "time_fora": "JUVENUDE/RS",
-      "data": "Sábado"
+      "time_casa": "SPORT/PE",
+      "time_fora": "FLAMENGO/RJ",
+      "data": "Sabado"
     },
     {
       "numero": 4,
-      "time_casa": "INTERNACIONAL/RS",
-      "time_fora": "BAHIA/BA",
-      "data": "Sábado"
+      "time_casa": "BOSNIA HERZEGOVINA",
+      "time_fora": "ROMÊNIA",
+      "data": "Sabado"
     },
     {
       "numero": 5,
-      "time_casa": "SAO PAULO/SP",
-      "time_fora": "BRAGANTINO/SP",
-      "data": "Sábado"
+      "time_casa": "SUICA",
+      "time_fora": "SUECIA",
+      "data": "Sabado"
     },
     {
       "numero": 6,
-      "time_casa": "CHELSEA",
-      "time_fora": "WOLVES",
-      "data": "Sábado"
+      "time_casa": "GRECIA",
+      "time_fora": "ESCOCIA/SCT",
+      "data": "Sabado"
     },
     {
       "numero": 7,
-      "time_casa": "PARMA",
-      "time_fora": "MILAN",
-      "data": "Sábado"
+      "time_casa": "HUNGRIA",
+      "time_fora": "IRLANDA",
+      "data": "Domingo"
     },
     {
       "numero": 8,
-      "time_casa": "CORINTHIANS/SP",
-      "time_fora": "CEARA/CE",
+      "time_casa": "FERROVIARIA/SP",
+      "time_fora": "ATHLETICO/PR",
       "data": "Domingo"
     },
     {
       "numero": 9,
-      "time_casa": "VITORIA/BA",
-      "time_fora": "BOTAFOGO/RJ",
+      "time_casa": "GOIAS/GO",
+      "time_fora": "NOVORIZONTINO/SP",
       "data": "Domingo"
     },
     {
       "numero": 10,
-      "time_casa": "CRUZEIRO/MG",
-      "time_fora": "FLUMINENSE/RJ",
+      "time_casa": "ALBANIA",
+      "time_fora": "INGLATERRA",
       "data": "Domingo"
     },
     {
       "numero": 11,
-      "time_casa": "MANCHESTER CITY",
-      "time_fora": "LIVERPOOL",
+      "time_casa": "SERVIA/SER",
+      "time_fora": "LETONIA",
       "data": "Domingo"
     },
     {
       "numero": 12,
-      "time_casa": "FLAMENGO/RJ",
-      "time_fora": "SANTO/SP",
+      "time_casa": "ITALIA",
+      "time_fora": "NORUEGA",
       "data": "Domingo"
     },
     {
       "numero": 13,
-      "time_casa": "VALENCIA",
-      "time_fora": "REAL BETIS",
+      "time_casa": "BRAGANTINO/SP",
+      "time_fora": "ATLETICO/MG",
       "data": "Domingo"
     },
     {
       "numero": 14,
-      "time_casa": "FORTALEZA/CE",
-      "time_fora": "GREMIO/RS",
+      "time_casa": "UCRANIA",
+      "time_fora": "ISLANDIA",
       "data": "Domingo"
     }
   ],

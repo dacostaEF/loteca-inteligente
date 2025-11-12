@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "2",
-    "concurso_numero": "1219"
+    "concurso_numero": "atual"
   },
   "dados": {
     "numero": "2",
-    "time_casa": "Sport/PE",
-    "time_fora": "Atlético Mineiro/MG",
-    "arena": "Ilha do Retiro/PE",
-    "campeonato": "Brasileirão Série A",
+    "time_casa": "VOLTA REDONDA/RJ",
+    "time_fora": "CHAPECOENSE/SC",
+    "arena": "Volta Redonda/RJ",
+    "campeonato": "Brasileirão Série B",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/SPT_Sport/Sport.png",
-    "escudo_fora": "/static/escudos/CAM_Atletico-MG/Atletico_MG.png",
-    "probabilidade_casa": "20",
+    "escudo_casa": "/static/escudos/Volta_Redonda/VoltaRedonda.png",
+    "escudo_fora": "/static/escudos/Chapecoense/Chapecoense.png",
+    "probabilidade_casa": "15",
     "probabilidade_empate": "25",
-    "probabilidade_fora": "55",
-    "recomendacao": "Recomendação Estatística: Coluna 2 (Atletico-MG) - Risco Médio",
-    "conclusao_analista": "O Sport está praticamente rebaixado, ocupando a lanterna com apenas 17 pontos em 28 jogos. O time não vence há seis jogos e conquistou apenas duas vitórias em todo o Brasileirão 2025.\nO Atlético-MG está focado na final da Sul-Americana contra o Lanús em 22 de novembro. A estratégia de Sampaoli é poupar titulares gradualmente para chegar em forma na decisão continental, alternando escalações conforme o adversário.\nNo retrospecto histórico, o Atlético domina com 25 vitórias em 60 confrontos contra 15 do Sport, com 85 gols marcados ESPN (BR). Mesmo com possível time misto do Galo, a diferença de momento é enorme: Sport em crise total versus Atlético focado, mas tecnicamente superior.\n\n",
-    "confrontos_sequence": "(08/10/2025, 3-1, Atlético Mineiro|/static/escudos/CAM_Atletico-MG/Atletico_MG.png) (22/05/2024, 1-0, Sport|/static/escudos/SPT_Sport/Sport.png) (30/04/2024, 2-0, Atlético Mineiro|/static/escudos/CAM_Atletico-MG/Atletico_MG.png) (18/09/2021, 3-0, Atlético Mineiro|/static/escudos/CAM_Atletico-MG/Atletico_MG.png) (06/06/2021, 0-1, Atlético Mineiro|/static/escudos/CAM_Atletico-MG/Atletico_MG.png) (21/02/2021, 2-3, Atlético Mineiro|/static/escudos/CAM_Atletico-MG/Atletico_MG.png) (24/10/2020, 0-0, Empate|/static/escudos/Empate.png) (30/09/2018, 5-2, Atlético Mineiro|/static/escudos/CAM_Atletico-MG/Atletico_MG.png) (30/05/2018, 3-2, Sport|/static/escudos/SPT_Sport/Sport.png) (15/10/2017, 1-1, Empate|/static/escudos/Empate.png)",
-    "posicao_casa": "20",
-    "posicao_fora": "13",
-    "confronto_direto": "2V-2E-6D",
-    "fator_casa": "30",
-    "fator_fora": "70",
-    "analise_posicao": "Vantagem Atletico-MG",
-    "analise_posicao_tabelas": "Vantagem Atletico-MG",
-    "analise_confronto_direto": "Vantagem Atletico-MG",
-    "analise_fator_casa": "Vantagem Atletico-MG",
-    "sincronizado_em": "2025-11-06T11:21:35.930Z"
-  },
-  "admin_key": "loteca2024admin"
+    "probabilidade_fora": "60",
+    "recomendacao": "Recomendação Estatística: Coluna 2 (Chapecoense) - Risco Baixo",
+    "conclusao_analista": "Enquanto a Chapecoense luta por um sonho, o Volta Redonda já vive um pesadelo consumado. A diferença de motivação é abismal e deve refletir em campo. A equipe visitante, com ataque eficiente e tudo para ganhar, não deve ter piedade do anfitrião desmotivado.\nVOLTA REDONDA: Ataque mais fraco: 22 gols em 34 jogos (0.65/game) | Casa: 50% aproveitamento (7V-6E-5D) | Clean Sheets: 32% (razoável defensivamente)\nCHAPECOENSE: Ataque sólido: 50 gols (1.43/game) | Fora: 46% aproveitamento (7V-4E-7D) | Over 2.5: 43% dos jogos\n\nCONFIANÇA: 8/10     |     RISCO: BAIXO-MÉDIO     | VALOR: Chapecoense -1.5",
+    "confrontos_sequence": "(23/07/2025, 4-2,  CHAPECOENSE|/static/escudos/Chapecoense/Chapecoense.png)",
+    "posicao_casa": "19",
+    "posicao_fora": "4",
+    "confronto_direto": "0V-0E-1D",
+    "fator_casa": "20",
+    "fator_fora": "80",
+    "analise_posicao": "Vantagem Chapecoense",
+    "analise_posicao_tabelas": "Vantagem Chapecoense",
+    "analise_confronto_direto": "Vantagem Chapecoense",
+    "analise_fator_casa": "Vantagem Chapecoense",
+    "arquivo_confrontos": "VoltaRedonda_vs_Chapecoense.csv",
+    "sincronizado_em": "2025-11-11T17:54:12.271Z"
+  }
 }

@@ -90,39 +90,7 @@
             }
         }
 
-        /* === TELA DE LOGIN === */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .login-box {
-            background: var(--cor-fundo-card);
-            border: 1px solid var(--cor-borda);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .login-box h1 {
-            color: var(--cor-destaque-primaria);
-            margin-bottom: 30px;
-            font-size: 28px;
-            font-weight: 800;
-        }
-
-        .login-box .icon {
-            font-size: 60px;
-            color: var(--cor-destaque-secundaria);
-            margin-bottom: 20px;
-        }
-
+        /* === ESTILOS DE FORMULÁRIO (USADOS EM TODA INTERFACE) === */
         .form-group {
             margin-bottom: 20px;
             text-align: left;
@@ -135,7 +103,9 @@
             color: var(--cor-texto-secundario);
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid var(--cor-borda);
@@ -146,7 +116,9 @@
             color: var(--cor-texto-principal);
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--cor-destaque-primaria);
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
@@ -192,18 +164,8 @@
             box-shadow: 0 5px 15px rgba(0,227,140,0.3);
         }
 
-        .error-message {
-            color: #e74c3c;
-            margin-top: 15px;
-            padding: 10px;
-            background: #ffeaea;
-            border-radius: 5px;
-            display: none;
-        }
-
         /* === INTERFACE PRINCIPAL === */
         .admin-container {
-            display: none;
             padding: 20px;
             max-width: 1400px;
             margin: 0 auto;
@@ -229,21 +191,6 @@
             font-weight: 800;
         }
 
-        .logout-btn {
-            background: #e74c3c;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
 
         .stats-grid {
             display: flex;
@@ -842,11 +789,6 @@
         .help-scale-average { color: #fd7e14; }
         .help-scale-poor { color: #dc3545; }
 
-        /* === ÍCONE TOGGLE SENHA === */
-        #togglePassword:hover {
-            color: #00E38C !important;
-            transform: scale(1.1);
-        }
 
         /* === BOTÕES DE AÇÃO DESTACADOS === */
         .btn-primary:hover {
@@ -1629,45 +1571,14 @@
     <!-- SAFETY SHIM REMOVIDO TEMPORARIAMENTE -->
 </head>
 <body>
-    <!-- === TELA DE LOGIN === -->
-    <div class="login-container" id="loginContainer">
-        <div class="login-box">
-            <i class="fas fa-shield-alt icon"></i>
-            <h1>Acesso Administrativo</h1>
-            <p style="margin-bottom: 30px; color: #666;">Central de Dados - Loteca Inteligente</p>
-            
-            <div class="form-group">
-                <label for="adminKey">Chave de Administrador:</label>
-                <div style="position: relative; display: flex; align-items: center;">
-                    <input type="password" id="adminKey" placeholder="Digite a chave de acesso" style="padding-right: 45px; width: 100%; border: 1px solid #444; background: #2a2a2a; color: #fff; padding: 12px; border-radius: 6px; font-size: 16px;" onkeypress="handleKeyPress(event)" autocomplete="off">
-                    <i class="fas fa-eye" id="togglePassword" 
-                       style="position: absolute; right: 15px; cursor: pointer; color: #666; font-size: 16px; transition: color 0.3s ease;" 
-                       onclick="togglePasswordVisibility()" 
-                       title="Mostrar/Ocultar senha"></i>
-                </div>
-            </div>
-            
-            <button class="btn" onclick="login()">
-                <i class="fas fa-sign-in-alt"></i> Acessar Sistema
-            </button>
-            
-            <div class="error-message" id="loginError">
-                <i class="fas fa-exclamation-triangle"></i> Chave de acesso inválida!
-            </div>
-        </div>
-    </div>
-
     <!-- === INTERFACE PRINCIPAL === -->
-    <div class="admin-container" id="adminContainer">
+    <div class="admin-container" id="adminContainer" style="display: block !important;">
         <!-- Header -->
         <div class="header">
             <h1>
                 <i class="fas fa-database"></i>
                 Central Admin - Loteca Inteligente
             </h1>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> Sair
-            </button>
         </div>
 
         
@@ -2322,15 +2233,21 @@
             <!-- SELEÇÃO DE JOGO -->
             <div class="admin-section">
                 <h3>🎮 Selecione o Jogo para Análise</h3>
-                <div class="form-group" style="display: flex; align-items: center; gap: 12px;">
-                    <select id="jogo-analise-select" class="form-select" onchange="carregarDadosJogo()" style="flex: 0 0 70%; min-width: 400px;">
+                <div class="form-group" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <select id="jogo-analise-select" class="form-select" onchange="carregarDadosJogoExistente()" style="flex: 0 0 70%; min-width: 400px;">
                         <option value="">📋 Selecionar jogo...</option>
                         <!-- Opções carregadas dinamicamente via JavaScript -->
                     </select>
+                    <button onclick="atualizarDropdownConcursoAtual()" class="btn btn-primary" style="background: linear-gradient(135deg, #00E38C, #00B377); border: none; color: white; padding: 8px 16px; border-radius: 8px; font-weight: bold; white-space: nowrap; flex: 0 0 auto; font-size: 0.9rem; height: 38px; min-width: 150px; max-width: 180px;" title="Recarrega lista de jogos do concurso_atual.json">
+                        <i class="fas fa-sync-alt"></i> Atualizar Concurso
+                    </button>
                     <button onclick="carregarDadosJogoExistente()" class="btn btn-success" style="background: linear-gradient(135deg, #00ff00, #00cc00); border: none; color: white; padding: 8px 16px; border-radius: 8px; font-weight: bold; white-space: nowrap; flex: 0 0 auto; font-size: 0.9rem; height: 38px; min-width: 120px; max-width: 150px;">
                         <i class="fas fa-download"></i> Carregar
                     </button>
                 </div>
+                <p style="margin-top: 8px; color: var(--cor-texto-secundario); font-size: 0.85rem;">
+                    💡 Clique em "<i class="fas fa-sync-alt"></i> Atualizar Concurso" para recarregar a lista de jogos do <code>concurso_atual.json</code>
+                </p>
             </div>
 
             <!-- DADOS DO JOGO SELECIONADO -->
@@ -2731,80 +2648,10 @@
 
     <script>
         // === CONFIGURAÇÕES === 
-        const ADMIN_KEY = 'loteca2024admin'; // Chave de acesso padrão
         const API_BASE = window.location.port === '5001' ? 'http://127.0.0.1:5001' : window.location.origin; // Base URL para APIs
 
         // Controle de estado para evitar piscar
         let isClassificacaoLoading = false;
-        // === FUNÇÃO PARA LIDAR COM TECLA ENTER ===
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                login();
-            }
-        }
-        
-        // Tornar função global
-        window.handleKeyPress = handleKeyPress;
-
-        // === FUNÇÃO PARA MOSTRAR/OCULTAR SENHA ===
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById('adminKey');
-            const toggleIcon = document.getElementById('togglePassword');
-            
-            if (passwordField.type === 'password') {
-                // Mostrar senha
-                passwordField.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-                toggleIcon.style.color = '#00E38C'; // Verde quando visível
-                toggleIcon.title = 'Ocultar senha';
-            } else {
-                // Ocultar senha
-                passwordField.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-                toggleIcon.style.color = '#666'; // Cinza quando oculta
-                toggleIcon.title = 'Mostrar senha';
-            }
-        }
-
-        // === INICIALIZAÇÃO ===
-        document.addEventListener('DOMContentLoaded', function() {
-            // Focar no campo de senha quando a página carregar
-            const adminKeyField = document.getElementById('adminKey');
-            if (adminKeyField) {
-                adminKeyField.focus();
-                console.log('✅ [LOGIN] Campo de senha focado automaticamente');
-            }
-        });
-
-        // === SISTEMA DE LOGIN ===
-        function login() {
-            const key = document.getElementById('adminKey').value;
-            const errorDiv = document.getElementById('loginError');
-            
-            if (key === ADMIN_KEY) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('adminContainer').style.display = 'block';
-                carregarDashboard();
-                carregarClubes();
-                carregarEstatisticas();
-            } else {
-                errorDiv.style.display = 'block';
-                setTimeout(() => {
-                    errorDiv.style.display = 'none';
-                }, 3000);
-            }
-        }
-        
-        // Tornar função global
-        window.login = login;
-
-        function logout() {
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('adminContainer').style.display = 'none';
-            document.getElementById('adminKey').value = '';
-        }
 
         // === FUNÇÕES DA PLANILHA ANÁLISE RÁPIDA ===
         
@@ -2959,11 +2806,14 @@
             const nomeArquivo = document.getElementById('nome-arquivo-salvamento');
             const caminhoArquivo = document.getElementById('caminho-arquivo-salvamento');
             
+            // EXTRAIR NÚMERO DO JOGO (jogo_1 -> 1)
+            const numeroJogo = jogoSelecionado.replace('jogo_', '');
+            
             // Obter número do concurso atual
             const numeroConcurso = document.getElementById('numeroConcurso').value || '1215';
             
             // Nome do arquivo baseado no jogo selecionado
-            const nomeArquivoCompleto = `jogo_${jogoSelecionado}.json`;
+            const nomeArquivoCompleto = `jogo_${numeroJogo}.json`;
             const caminhoCompleto = `backend/models/concurso_atual/analise_rapida/`;
             
             // Atualizar botão com nome do arquivo
@@ -3247,11 +3097,14 @@
                 return;
             }
             
-            console.log(`💾 [ANÁLISE] Salvando dados do JOGO ${jogoSelecionado}...`);
+            // EXTRAIR NÚMERO DO JOGO (jogo_1 -> 1)
+            const numeroJogo = jogoSelecionado.replace('jogo_', '');
+            
+            console.log(`💾 [ANÁLISE] Salvando dados do JOGO ${numeroJogo}...`);
             
             // Coletar dados do formulário
             const dadosJogo = {
-                numero: jogoSelecionado,
+                numero: numeroJogo,
                 time_casa: document.getElementById('time-casa-admin').value,
                 time_fora: document.getElementById('time-fora-admin').value,
                 arena: document.getElementById('arena-admin').value,
@@ -3276,16 +3129,16 @@
                 fator_casa: document.getElementById('fator-casa-admin').value,
                 fator_fora: document.getElementById('fator-fora-admin').value,
                 analise_fator_casa: document.getElementById('analise-fator-casa-admin').value,
-                arquivo_confrontos: document.getElementById('arquivo-confrontos-base').value,
+                arquivo_confrontos: document.getElementById('arquivo-confrontos-select').value,
                 salvo_em: new Date().toISOString()
             };
             
             // DEBUG: Verificar se arquivo de confrontos está sendo salvo
-            const arquivoConfrontos = document.getElementById('arquivo-confrontos-base').value;
+            const arquivoConfrontos = document.getElementById('arquivo-confrontos-select').value;
             console.log('📁 [DEBUG] Arquivo de confrontos sendo salvo:', arquivoConfrontos);
             
             // Salvar no objeto global
-            jogosAnaliseData[jogoSelecionado] = dadosJogo;
+            jogosAnaliseData[numeroJogo] = dadosJogo;
             
             // Salvar no localStorage
             localStorage.setItem('jogosAnaliseData', JSON.stringify(jogosAnaliseData));
@@ -3293,8 +3146,8 @@
             // MÉTODO PRINCIPAL: Salvar e sincronizar automaticamente
             salvarESincronizarAnalise(dadosJogo);
             
-            console.log(`✅ [ANÁLISE] Dados do JOGO ${jogoSelecionado} salvos e sincronizados:`, dadosJogo);
-            mostrarNotificacao(`✅ Dados do JOGO ${jogoSelecionado} salvos e sincronizados com o site!`, 'success');
+            console.log(`✅ [ANÁLISE] Dados do JOGO ${numeroJogo} salvos e sincronizados:`, dadosJogo);
+            mostrarNotificacao(`✅ Dados do JOGO ${numeroJogo} salvos e sincronizados com o site!`, 'success');
         }
         
         // CORRIGIDO: SALVAR APENAS UMA VEZ (ELIMINAR DUPLICAÇÃO)
@@ -3508,38 +3361,134 @@
             mostrarNotificacao('🧹 Formulário limpo!', 'success');
         }
         
+        // 🔄 ATUALIZAR DROPDOWN DO CONCURSO ATUAL
+        async function atualizarDropdownConcursoAtual() {
+            try {
+                console.log('🔄 [ADMIN] Atualizando dropdown com jogos do concurso_atual.json...');
+                
+                const dropdown = document.getElementById('jogo-analise-select');
+                if (!dropdown) {
+                    console.error('❌ [ADMIN] Dropdown não encontrado!');
+                    return;
+                }
+                
+                // Feedback visual
+                dropdown.disabled = true;
+                dropdown.innerHTML = '<option value="">⏳ Carregando jogos...</option>';
+                
+                // Buscar jogos do concurso_atual.json via API
+                const response = await fetch(`${API_BASE}/api/br/loteca/current`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.success || !data.matches) {
+                    throw new Error(data.error || 'Dados inválidos retornados');
+                }
+                
+                console.log(`✅ [ADMIN] ${data.matches.length} jogos carregados do concurso_atual.json!`);
+                
+                // Limpar dropdown
+                dropdown.innerHTML = '<option value="">📋 Selecionar jogo...</option>';
+                
+                // Adicionar jogos ao dropdown
+                data.matches.forEach((jogo) => {
+                    const option = document.createElement('option');
+                    option.value = `jogo_${jogo.numero}`;
+                    option.textContent = `Jogo ${jogo.numero}: ${jogo.time_casa} vs ${jogo.time_fora}`;
+                    dropdown.appendChild(option);
+                });
+                
+                dropdown.disabled = false;
+                
+                // Feedback visual de sucesso
+                dropdown.style.border = '2px solid #00E38C';
+                setTimeout(() => {
+                    dropdown.style.border = '';
+                }, 2000);
+                
+                mostrarNotificacao(`✅ ${data.matches.length} jogos carregados do concurso ${data.concurso_numero || 'atual'}!`, 'success');
+                
+                console.log(`✅ [ADMIN] Dropdown atualizado com sucesso!`);
+                
+            } catch (error) {
+                console.error('❌ [ADMIN] Erro ao atualizar dropdown:', error);
+                
+                const dropdown = document.getElementById('jogo-analise-select');
+                if (dropdown) {
+                    dropdown.innerHTML = '<option value="">❌ Erro ao carregar</option>';
+                    dropdown.disabled = false;
+                }
+                
+                mostrarNotificacao(`❌ Erro ao atualizar lista: ${error.message}`, 'error');
+            }
+        }
+        
         async function carregarDadosJogoExistente() {
             const jogoSelecionado = document.getElementById('jogo-analise-select').value;
+            const container = document.getElementById('dados-jogo-container');
+            const titulo = document.getElementById('titulo-jogo');
             
             if (!jogoSelecionado) {
                 mostrarNotificacao('❌ Selecione um jogo primeiro!', 'error');
+                if (container) container.style.display = 'none';
                 return;
             }
             
-            console.log(`📥 [ANÁLISE] Carregando dados existentes do JOGO ${jogoSelecionado}...`);
+            // MOSTRAR CONTAINER
+            if (container) {
+                container.style.display = 'block';
+                console.log('📦 [ANÁLISE] Container mostrado');
+            }
+            
+            // ATUALIZAR TÍTULO
+            if (titulo) {
+                const opcaoSelecionada = document.querySelector(`#jogo-analise-select option[value="${jogoSelecionado}"]`);
+                if (opcaoSelecionada) {
+                    titulo.textContent = `🎯 ${opcaoSelecionada.textContent}`;
+                    console.log('🎯 [ANÁLISE] Título atualizado:', opcaoSelecionada.textContent);
+                }
+            }
+            
+            // EXTRAIR NÚMERO DO JOGO (jogo_1 -> 1)
+            const numeroJogo = jogoSelecionado.replace('jogo_', '');
+            const numeroJogoInt = parseInt(numeroJogo);
+            
+            // ATUALIZAR ÍNDICE E ARQUIVO DE SALVAMENTO
+            if (!isNaN(numeroJogoInt)) {
+                atualizarIndiceJogo(numeroJogoInt);
+                atualizarInfoArquivoSalvamento(jogoSelecionado);
+                console.log(`📝 [ANÁLISE] Índice atualizado para jogo ${numeroJogoInt}`);
+            }
+            
+            console.log(`📥 [ANÁLISE] Carregando dados existentes do JOGO ${numeroJogo}...`);
             
             // PRIORIDADE: Carregar APENAS do servidor (backend/models/concurso_atual/analise_rapida/)
-            const dadosServidor = await carregarAnaliseDoServidor(jogoSelecionado);
+            const dadosServidor = await carregarAnaliseDoServidor(numeroJogo);
             
             if (dadosServidor) {
                 // Dados encontrados no servidor - usar estes
+                console.log(`🔄 [ANÁLISE] Chamando preencherFormularioComDados para JOGO ${numeroJogo}...`);
                 preencherFormularioComDados(dadosServidor);
-                console.log(`✅ [ANÁLISE] Dados do JOGO ${jogoSelecionado} carregados do servidor!`);
-                mostrarNotificacao(`✅ Dados do JOGO ${jogoSelecionado} carregados do servidor!`, 'success');
+                console.log(`✅ [ANÁLISE] Dados do JOGO ${numeroJogo} carregados do servidor!`);
+                mostrarNotificacao(`✅ Dados do JOGO ${numeroJogo} carregados do servidor!`, 'success');
                 return;
             }
             
             // NENHUM fallback para localStorage (pode ter dados antigos/fake)
-            console.log(`📝 [ANÁLISE] Nenhum arquivo JSON encontrado para JOGO ${jogoSelecionado}`);
-            mostrarNotificacao(`📝 Nenhum arquivo JSON encontrado para JOGO ${jogoSelecionado}. Crie um novo.`, 'info');
+            console.log(`📝 [ANÁLISE] Nenhum arquivo JSON encontrado para JOGO ${numeroJogo}`);
+            mostrarNotificacao(`📝 Nenhum arquivo JSON encontrado para JOGO ${numeroJogo}. Crie um novo.`, 'info');
         }
         
-        async function carregarAnaliseDoServidor(jogoSelecionado) {
+        async function carregarAnaliseDoServidor(numeroJogo) {
             try {
                 // MODIFICADO: Obter número do concurso atual, default 'atual'
                 const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
                 
-                console.log(`🔍 [ANÁLISE] Buscando dados do JOGO ${jogoSelecionado} do CONCURSO ${numeroConcurso}`);
+                console.log(`🔍 [ANÁLISE] Buscando dados do JOGO ${numeroJogo} do CONCURSO ${numeroConcurso}`);
                 
                 // Buscar arquivo no servidor usando nova estrutura
                 const response = await fetch(`${API_BASE}/api/admin/analise/carregar`, {
@@ -3548,7 +3497,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        jogo_numero: jogoSelecionado,
+                        jogo_numero: numeroJogo,
                         concurso_numero: numeroConcurso
                     })
                 });
@@ -3556,13 +3505,13 @@
                 if (response.ok) {
                     const resultado = await response.json();
                     if (resultado.success && resultado.dados) {
-                        console.log(`✅ [ANÁLISE] Arquivo encontrado no servidor: jogo_${jogoSelecionado}.json`);
+                        console.log(`✅ [ANÁLISE] Arquivo encontrado no servidor: jogo_${numeroJogo}.json`);
                         // A API retorna: { success: true, dados: { nome_arquivo, dados: { metadados, dados_publicos } } }
                         return resultado.dados.dados;
                     }
                 }
                 
-                console.log(`📝 [ANÁLISE] Arquivo não encontrado no servidor: jogo_${jogoSelecionado}.json`);
+                console.log(`📝 [ANÁLISE] Arquivo não encontrado no servidor: jogo_${numeroJogo}.json`);
                 return null;
                 
             } catch (error) {
@@ -3575,12 +3524,26 @@
             console.log('📝 [ANÁLISE] Preenchendo formulário com dados salvos:', dados);
             console.log('📝 [ANÁLISE] Estrutura dos dados:', JSON.stringify(dados, null, 2));
             
+            // Verificar se o container está visível
+            const container = document.getElementById('dados-jogo-container');
+            console.log('📦 [DEBUG] Container visível?', container ? container.style.display : 'N/A');
+            
             // Preencher TODOS os campos do formulário
             // dados já vem com a estrutura correta (resultado.dados.dados da API)
             const dadosJogo = dados;
             
-            document.getElementById('time-casa-admin').value = dadosJogo.time_casa || '';
-            document.getElementById('time-fora-admin').value = dadosJogo.time_fora || '';
+            // Preencher e logar cada campo
+            const timeCasaEl = document.getElementById('time-casa-admin');
+            if (timeCasaEl) {
+                timeCasaEl.value = dadosJogo.time_casa || '';
+                console.log('✏️ [CAMPO] Time Casa:', timeCasaEl.value);
+            }
+            
+            const timeForaEl = document.getElementById('time-fora-admin');
+            if (timeForaEl) {
+                timeForaEl.value = dadosJogo.time_fora || '';
+                console.log('✏️ [CAMPO] Time Fora:', timeForaEl.value);
+            }
             document.getElementById('arena-admin').value = dadosJogo.arena || '';
             document.getElementById('campeonato-admin').value = dadosJogo.campeonato || '';
             document.getElementById('dia-admin').value = dadosJogo.dia || 'Sábado';
@@ -3606,22 +3569,16 @@
             const arquivoConfrontos = dadosJogo.arquivo_confrontos;
             console.log('📁 [DEBUG] Arquivo de confrontos encontrado:', arquivoConfrontos);
             
-            if (arquivoConfrontos && arquivoConfrontos !== '\\0 - Loteca\\backend\\models\\Confrontos\\') {
-                document.getElementById('arquivo-confrontos-base').value = arquivoConfrontos;
-                
-                // Extrair nome do arquivo do caminho completo
-                const nomeArquivo = arquivoConfrontos.split('\\').pop();
-                console.log('📁 [ANÁLISE] Nome do arquivo extraído:', nomeArquivo);
-                
+            if (arquivoConfrontos && arquivoConfrontos !== '') {
                 // Selecionar o arquivo no dropdown
                 const select = document.getElementById('arquivo-confrontos-select');
                 if (select) {
                     // Aguardar um pouco para garantir que a lista foi carregada
                     setTimeout(() => {
-                        const option = Array.from(select.options).find(opt => opt.value === nomeArquivo);
+                        const option = Array.from(select.options).find(opt => opt.value === arquivoConfrontos);
                         if (option) {
-                            select.value = nomeArquivo;
-                            console.log('📁 [ANÁLISE] Arquivo selecionado no dropdown:', nomeArquivo);
+                            select.value = arquivoConfrontos;
+                            console.log('📁 [ANÁLISE] Arquivo selecionado no dropdown:', arquivoConfrontos);
                             
                             // ✅ CARREGAR AUTOMATICAMENTE OS CONFRONTOS
                             setTimeout(() => {
@@ -3630,14 +3587,14 @@
                             }, 500);
                             
                         } else {
-                            console.log('⚠️ [ANÁLISE] Arquivo não encontrado na lista:', nomeArquivo);
+                            console.log('⚠️ [ANÁLISE] Arquivo não encontrado na lista:', arquivoConfrontos);
                             // Tentar adicionar a opção se não existir
                             const novaOption = document.createElement('option');
-                            novaOption.value = nomeArquivo;
-                            novaOption.textContent = nomeArquivo;
+                            novaOption.value = arquivoConfrontos;
+                            novaOption.textContent = arquivoConfrontos;
                             select.appendChild(novaOption);
-                            select.value = nomeArquivo;
-                            console.log('📁 [ANÁLISE] Arquivo adicionado ao dropdown:', nomeArquivo);
+                            select.value = arquivoConfrontos;
+                            console.log('📁 [ANÁLISE] Arquivo adicionado ao dropdown:', arquivoConfrontos);
                             
                             // ✅ CARREGAR AUTOMATICAMENTE OS CONFRONTOS
                             setTimeout(() => {
@@ -4346,8 +4303,28 @@
                 
                 const timeCasa = document.getElementById('time-casa-admin').value;
                 const timeFora = document.getElementById('time-fora-admin').value;
-                const escudoCasa = document.getElementById('escudo-casa-path').value;
-                const escudoFora = document.getElementById('escudo-fora-path').value;
+                
+                // BUSCAR ESCUDOS: priorizar os paths, senão usar os dos previews
+                let escudoCasa = document.getElementById('escudo-casa-path').value;
+                let escudoFora = document.getElementById('escudo-fora-path').value;
+                
+                // Se os paths estão vazios ou só têm o prefixo, usar os previews
+                if (!escudoCasa || escudoCasa === '/static/escudos/') {
+                    const previewCasa = document.getElementById('preview-escudo-casa');
+                    if (previewCasa && previewCasa.src && !previewCasa.src.includes('placeholder')) {
+                        escudoCasa = previewCasa.src.replace(window.location.origin, '');
+                    }
+                }
+                
+                if (!escudoFora || escudoFora === '/static/escudos/') {
+                    const previewFora = document.getElementById('preview-escudo-fora');
+                    if (previewFora && previewFora.src && !previewFora.src.includes('placeholder')) {
+                        escudoFora = previewFora.src.replace(window.location.origin, '');
+                    }
+                }
+                
+                console.log('🏠 [ANÁLISE] Escudo Casa:', escudoCasa);
+                console.log('✈️ [ANÁLISE] Escudo Fora:', escudoFora);
                 
                 // ORDENAR POR DATA: Mais recente para mais antiga (igual às outras funções)
                 const confrontosOrdenados = confrontos.sort((a, b) => {
@@ -4370,7 +4347,8 @@
                     const vencedor = (confronto.vencedor || '').trim();
                     const vencedorNorm = vencedor.toLowerCase();
                     
-                    let escudoMostrar = '/static/placeholder-team-logo.svg';
+                    // ✅ Inicializar com escudo da casa (será substituído se necessário)
+                    let escudoMostrar = escudoCasa;
                     let nomeTimeMostrar = vencedor;
                     
                     // Função auxiliar para normalizar nome de time
@@ -4403,18 +4381,21 @@
                     
                     // LÓGICA GENÉRICA: Usar a coluna "vencedor" e comparar com os times do jogo
                     if (vencedorNorm.includes('empate')) {
-                        escudoMostrar = '/static/escudos/Empate.png?v=' + Date.now();
+                        escudoMostrar = '/static/escudos/Empate.png';
                         nomeTimeMostrar = 'Empate';
                     } else if (mesmoTime(vencedor, timeCasa)) {
-                        escudoMostrar = escudoCasa || '/static/placeholder-team-logo.svg';
+                        // ✅ SEMPRE usar o escudo correto (sem fallback para placeholder)
+                        escudoMostrar = escudoCasa;
                         nomeTimeMostrar = timeCasa;
                     } else if (mesmoTime(vencedor, timeFora)) {
-                        escudoMostrar = escudoFora || '/static/placeholder-team-logo.svg';
+                        // ✅ SEMPRE usar o escudo correto (sem fallback para placeholder)
+                        escudoMostrar = escudoFora;
                         nomeTimeMostrar = timeFora;
                     } else {
-                        // Fallback: usar placeholder se não identificar
-                        escudoMostrar = '/static/placeholder-team-logo.svg';
-                        nomeTimeMostrar = vencedor || 'Não identificado';
+                        // Fallback: tentar usar o escudo da casa por padrão
+                        console.warn(`⚠️ [ANÁLISE] Vencedor "${vencedor}" não corresponde a nenhum time`);
+                        escudoMostrar = escudoCasa || escudoFora;
+                        nomeTimeMostrar = vencedor || timeCasa;
                     }
                     
                     return {
@@ -4674,6 +4655,15 @@
                     carregarDadosSalvos();
                 }, 200);
             }
+            
+            // 🔄 CARREGAR LISTA DE CONFRONTOS AO ABRIR ABA ANÁLISE RÁPIDA
+            if (tabName === 'analise-rapida') {
+                console.log('📁 [INIT] Aba Análise Rápida aberta - carregando lista de confrontos...');
+                setTimeout(() => {
+                    carregarListaArquivosConfrontos();
+                    atualizarDropdownAnaliseRapida();
+                }, 300);
+            }
         }
 
         // === SISTEMA DE MENSAGENS ===
@@ -4855,8 +4845,7 @@
                 id: val('cartolaId'),
                 escudo_url: val('escudoUrl'),
                 cor_primaria: val('corPrimaria'),
-                cor_secundaria: val('corSecundaria'),
-                admin_key: ADMIN_KEY
+                cor_secundaria: val('corSecundaria')
             };
             
             if (!clube.nome_fantasia || !clube.abreviacao) {
@@ -4925,7 +4914,7 @@
                     const response = await fetch(`${API_BASE}/api/admin/clubes/${id}`, {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ admin_key: ADMIN_KEY })
+                        body: JSON.stringify({})
                     });
                     
                     const result = await response.json();
@@ -5015,8 +5004,7 @@
                 media_pontos_elenco: document.getElementById('mediaPontos').value,
                 preco_medio: document.getElementById('precoMedio').value,
                 rating: document.getElementById('rating').value,
-                fonte: document.getElementById('fonte').value,
-                admin_key: ADMIN_KEY
+                fonte: document.getElementById('fonte').value
             };
             
             if (!estatisticas.clube_id) {
@@ -5094,16 +5082,12 @@
             // Atualizando últimos confrontos automaticamente...
             
             try {
-                const adminKey = localStorage.getItem('admin_key') || 'loteca2024admin';
-                
                 const response = await fetch(`${API_BASE}/api/admin/atualizar-ultimos-confrontos`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        admin_key: adminKey
-                    })
+                    body: JSON.stringify({})
                 });
                 
                 if (response.ok) {
@@ -5134,16 +5118,12 @@
             }
             
             try {
-                const adminKey = localStorage.getItem('admin_key') || 'loteca2024admin';
-                
                 const response = await fetch(`${API_BASE}/api/admin/atualizar-ultimos-confrontos`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        admin_key: adminKey
-                    })
+                    body: JSON.stringify({})
                 });
                 
                 if (response.ok) {
@@ -5186,14 +5166,6 @@
             // Elementos DOM encontrados
             
             const campeonato = campeonatoSelect ? campeonatoSelect.value : 'serie-a';
-            let adminKey = localStorage.getItem('admin_key');
-            
-            // FORÇAR admin key se não existir
-            if (!adminKey) {
-                // Admin key não encontrada no localStorage! Usando padrão...
-                adminKey = 'loteca2024admin';
-                localStorage.setItem('admin_key', adminKey);
-            }
             
             // Configurações carregadas
             
@@ -5209,7 +5181,6 @@
             
             try {
                 const requestData = {
-                    admin_key: adminKey,
                     campeonato: campeonato
                 };
                 
@@ -5583,7 +5554,6 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        admin_key: localStorage.getItem('admin_key'),
                         campeonato: campeonato,
                         updates: updates
                     })
@@ -5641,7 +5611,6 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        admin_key: localStorage.getItem('admin_key'),
                         campeonato: campeonato,
                         updates: updates
                     })
@@ -5737,7 +5706,6 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        admin_key: localStorage.getItem('admin_key'),
                         campeonato: campeonato,
                         updates: [{
                             id: parseInt(timeId),
@@ -5803,10 +5771,9 @@
                     const response = await fetch(`${API_BASE}/api/admin/restore`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            backup_data: backupData,
-                            admin_key: ADMIN_KEY
-                        })
+                    body: JSON.stringify({
+                        backup_data: backupData
+                    })
                     });
                     
                     const result = await response.json();
@@ -5826,12 +5793,6 @@
             }
         }
 
-        // === TECLAS DE ATALHO ===
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && document.getElementById('loginContainer').style.display !== 'none') {
-                login();
-            }
-        });
 
         // === FUNÇÕES DE ESTATÍSTICAS DOS CLUBES ===
         
@@ -5907,8 +5868,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        campeonato: 'serie-a',
-                        admin_key: ADMIN_KEY
+                        campeonato: 'serie-a'
                     })
                 });
                 const result = await response.json();
@@ -5957,9 +5917,7 @@
         async function carregarDadosEditaveisSalvos(nomeClube) {
             try {
                 const response = await fetch(`/api/admin/estatisticas-editaveis/${nomeClube}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('admin_key')}`
-                    }
+                    headers: {}
                 });
                 
                 const result = await response.json();
@@ -6770,7 +6728,6 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        admin_key: localStorage.getItem('admin_key'),
                         dados: dadosEditaveis
                     })
                 });
@@ -7805,6 +7762,7 @@
                 analise_posicao_tabelas: getValue('analise-posicao-tabelas-admin'),
                 analise_confronto_direto: getValue('analise-confronto-direto-admin'),
                 analise_fator_casa: getValue('analise-fator-casa-admin'),
+                arquivo_confrontos: getValue('arquivo-confrontos-select'),
                 sincronizado_em: new Date().toISOString()
             };
         }
@@ -7832,8 +7790,7 @@
                             jogo_numero: idx.toString(),
                             concurso_numero: numeroConcurso
                         },
-                        dados: payload,
-                        admin_key: ADMIN_KEY
+                        dados: payload
                     }),
                 });
 
@@ -7857,7 +7814,6 @@
         // === INICIALIZAÇÃO ===
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔐 Central Admin - Loteca Inteligente carregada');
-            console.log('💡 Chave padrão:', ADMIN_KEY);
             
             // Inicializar sistema de cadeados
             setTimeout(() => {
@@ -7924,7 +7880,6 @@
                 
                 const response = await fetch(`${API_BASE}/api/admin/clubes`, {
                     headers: {
-                        'Authorization': localStorage.getItem('admin_key') || ADMIN_KEY,
                         'Content-Type': 'application/json'
                     }
                 });

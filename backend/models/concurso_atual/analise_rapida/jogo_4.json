@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "4",
-    "concurso_numero": "1219"
+    "concurso_numero": "atual"
   },
   "dados": {
     "numero": "4",
-    "time_casa": "Internacional/RS",
-    "time_fora": "Bahia/BA",
-    "arena": "Beira Rio/RS",
-    "campeonato": "Brasileiro Série A",
+    "time_casa": "BOSNIA HERZEGOVINA",
+    "time_fora": "ROMÊNIA",
+    "arena": "Stadion Bilino Polje / Bosnia",
+    "campeonato": "Eliminatórias Europeias para a Copa do Mundo FIFA de 2026",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/INT_Internacional/Internacional.png",
-    "escudo_fora": "/static/escudos/BAH_Bahia/Bahia.PNG",
-    "probabilidade_casa": "50",
+    "escudo_casa": "/static/escudos/BOSNIA_HERZEGOVIN/BOSNIA_HERZEGOVIN.png",
+    "escudo_fora": "/static/escudos/ROMENIA/ROMENIA.png",
+    "probabilidade_casa": "45",
     "probabilidade_empate": "30",
-    "probabilidade_fora": "20",
-    "recomendacao": "Recomendação Estatística: Duplo 1X (Internacional e Empate) - Risco Médio",
-    "conclusao_analista": "O Internacional é um dos times mais fortes em casa no Brasil. No Beira-Rio, a equipe é sempre candidata à vitória, imposta um futebol pressionante e tem a torcida como um fator decisivo. O Inter vive uma batalha firme pelo G4 da tabela e não pode perder pontos em seus domínios se quiser garantir uma vaga na Libertadores.\n\nO Bahia é uma equipe de qualidade, com um elenco que permite proposição de jogo, mas sua performance como visitante ainda é sua maior fragilidade. O time tricolor não consegue impor o mesmo ritmo que tem em casa e acaba sendo mais vulnerável defensivamente fora de seu ambiente.\n\nHistoricamente, o Internacional tem vantagem nos confrontos diretos no Beira-Rio. A combinação de necessidade na tabela, força da equipe da casa e a dificuldade visitante do Bahia fazem do Inter um claro favorito.\n",
-    "confrontos_sequence": "(22/10/2025, 1-0, Bahia|/static/escudos/BAH_Bahia/Bahia.PNG) (28/05/2025, 2-1, Internacional|/static/escudos/INT_Internacional/Internacional.png) (03/04/2025, 1-1, Empate|/static/escudos/Empate.png) (27/07/2024, 1-1, Empate|/static/escudos/Empate.png) (13/04/2024, 2-1, Internacional|/static/escudos/INT_Internacional/Internacional.png) (18/10/2023, 1-0, Bahia|/static/escudos/BAH_Bahia/Bahia.PNG) (28/05/2023, 2-0, Internacional|/static/escudos/INT_Internacional/Internacional.png) (26/09/2021, 2-0, Internacional|/static/escudos/INT_Internacional/Internacional.png) (13/06/2021, 0-1, Internacional|/static/escudos/INT_Internacional/Internacional.png) (27/12/2020, 1-2, Internacional|/static/escudos/INT_Internacional/Internacional.png)",
-    "posicao_casa": "4",
-    "posicao_fora": "7",
-    "confronto_direto": "2V-2E-6D",
-    "fator_casa": "70%",
-    "fator_fora": "30%",
-    "analise_posicao": "Vantagem Internacional",
-    "analise_posicao_tabelas": "Vantagem Internacional",
-    "analise_confronto_direto": "Vantagem Internacional",
-    "analise_fator_casa": "Vantagem Internacional",
-    "sincronizado_em": "2025-11-06T10:53:14.304Z"
-  },
-  "admin_key": "loteca2024admin"
+    "probabilidade_fora": "25",
+    "recomendacao": "Recomendação Estatística:  Confronto Equilibrado - Alto Risco (DUPLO 1X)",
+    "conclusao_analista": "CONFRONTO DIRETO NO GRUPO: Primeiro jogo Vitória da Seleção da Bósnia, na casa da Romênia (Romênia 0-1 Bósnia)\nCENÁRIO ATUAL DO GRUPO H: Bósnia: 2º lugar - brigando por vaga DIRETA e Romênia: 3º lugar - buscando repescagem.\n\nJogo CRUCIAL - define destino de ambas\n\nFalta 1 rodada após este jogo. ",
+    "confrontos_sequence": "(21/03/2025, 0-1, Bósnia-Herzegovina|/static/escudos/BOSNIA_HERZEGOVIN/BOSNIA_HERZEGOVIN.png) (26/09/2022, 4-1, Romênia|/static/escudos/ROMENIA/ROMENIA.png) (07/06/2022, 1-0, Bósnia-Herzegovina|/static/escudos/BOSNIA_HERZEGOVIN/BOSNIA_HERZEGOVIN.png) (03/06/2011, 3-0, Romênia|/static/escudos/ROMENIA/ROMENIA.png) (26/03/2011, 2-1, Bósnia-Herzegovina|/static/escudos/BOSNIA_HERZEGOVIN/BOSNIA_HERZEGOVIN.png) (06/06/2003, 2-0, Romênia|/static/escudos/ROMENIA/ROMENIA.png) (06/09/2002, 0-3, Romênia|/static/escudos/ROMENIA/ROMENIA.png)",
+    "posicao_casa": "2",
+    "posicao_fora": "3",
+    "confronto_direto": "3V-0E-4D",
+    "fator_casa": "65",
+    "fator_fora": "35",
+    "analise_posicao": "Vantagem Bosnia",
+    "analise_posicao_tabelas": "Confronto Equilibrado",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Vantagem Bosnia",
+    "arquivo_confrontos": "BosniaHerzogovina_vs_Romenia.csv",
+    "sincronizado_em": "2025-11-11T19:11:10.422Z"
+  }
 }

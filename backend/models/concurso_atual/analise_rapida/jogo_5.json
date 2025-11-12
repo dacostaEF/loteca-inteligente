@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "5",
-    "concurso_numero": "1219"
+    "concurso_numero": "atual"
   },
   "dados": {
-    "numero": "5",
-    "time_casa": "SAO PAULO/SP",
-    "time_fora": "BRAGANTINO/SP",
-    "arena": "Morumbi/SP",
-    "campeonato": "Brasaileiro Seria  A",
+    "numero": "jogo_5",
+    "time_casa": "SUICA",
+    "time_fora": "SUECIA",
+    "arena": "Stade de Genève, em Lancy, Suíça",
+    "campeonato": " Eliminatórias Europeias para a Copa do Mundo FIFA de 2026",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/SAP_SaoPaulo/SaoPaulo.png",
-    "escudo_fora": "/static/escudos/RBB_Bragantino/RedBull_Bragantino.png",
-    "probabilidade_casa": "55",
-    "probabilidade_empate": "25",
+    "escudo_casa": "/static/escudos/Suica/Suica.png",
+    "escudo_fora": "/static/escudos/Suecia/Suecia.png",
+    "probabilidade_casa": "50",
+    "probabilidade_empate": "30",
     "probabilidade_fora": "20",
-    "recomendacao": "Recomendação Estatística: Coluna 1 (Sao Paulo) - Risco Medio",
-    "conclusao_analista": "O São Paulo vem de boa sequência, invicto nos últimos 5 jogos em casa, com média de 1,8 gols marcados e apenas 0,6 sofridos.\nO Bragantino, apesar de competitivo, sente a diferença de rendimento fora de casa, marcando menos da metade dos gols que faz em Bragança Paulista.\nO Bragantino costuma sair bem nos duelos em casa, mas enfrenta dificuldades quando precisa propor o jogo fora.\nPlacar estimado: 2 × 1. Cobertura segura: Coluna 1 + Empate, pois o Red Bull costuma equilibrar bem os clássicos paulistas.",
-    "confrontos_sequence": "(16/07/2025, 2-2, Empate|/static/escudos/Empate.png) (08/02/2025, 1-0, BRAGANTINO|/static/escudos/RBB_Bragantino/RedBull_Bragantino.png) (20/11/2024, 1-1, Empate|/static/escudos/Empate.png) (06/07/2024, 2-0, São Paulo|/static/escudos/SAP_SaoPaulo/SaoPaulo.png) (17/02/2024, 2-2, Empate|/static/escudos/Empate.png) (08/11/2023, 1-0, São Paulo|/static/escudos/SAP_SaoPaulo/SaoPaulo.png) (09/07/2023, 0-0, Empate|/static/escudos/Empate.png) (08/02/2023, 2-1, BRAGANTINO|/static/escudos/RBB_Bragantino/RedBull_Bragantino.png) (14/08/2022, 3-0, São Paulo|/static/escudos/SAP_SaoPaulo/SaoPaulo.png) (23/04/2022, 1-1, Empate|/static/escudos/Empate.png)",
-    "posicao_casa": "8",
-    "posicao_fora": "14",
-    "confronto_direto": "2V-5E-3D",
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Suíça) - Risco Baixo",
+    "conclusao_analista": "CONFRONTO DO GRUPO B: Suíça motivada, disputando primeiro lugar no grupo, e a classificação direta para o Mundial. Suécia, já desclassificada cumpre tabela.\nCONFIANÇA: 7.5/10     |     RISCO: Baixo     |     VALOR: Suíça \n\n",
+    "confrontos_sequence": "(10/10/2025, 0-2, Suíça|/static/escudos/SUICA/SUICA.png) (03/07/2018, 1-0, Suécia|/static/escudos/SUECIA/SUECIA.png) (26/03/2002, 1-1, Empate|/static/escudos/Empate.png) (24/04/2001, 0-2, Suécia|/static/escudos/SUECIA/SUECIA.png) (05/09/1995, 0-0, Empate|/static/escudos/Empate.png) (11/10/1994, 4-2, Suíça|/static/escudos/SUICA/SUICA.png) (10/08/1993, 1-2, Suíça|//static/escudos/SUICA/SUICA.png) (08/10/1991, 3-1, Suíça|//static/escudos/SUICA/SUICA.png) (17/06/1987, 1-1, Empate|/static/escudos/Empate.png) (23/09/1986, 2-0, Suécia|//static/escudos/SUECIA/SUECIA.png",
+    "posicao_casa": "1",
+    "posicao_fora": "4",
+    "confronto_direto": "4V-3E-3D",
     "fator_casa": "70",
     "fator_fora": "30",
-    "analise_posicao": "Vantagem Sao Paulo",
-    "analise_posicao_tabelas": "Vantagem Sao Paulo",
-    "analise_confronto_direto": "Vantagem Sao Paulo",
-    "analise_fator_casa": "Vantagem Sao Paulo",
-    "sincronizado_em": "2025-11-06T10:56:23.041Z"
-  },
-  "admin_key": "loteca2024admin"
+    "analise_posicao": "Vantagem Suica",
+    "analise_posicao_tabelas": "Vantagem Suica",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Vantagem Suica",
+    "arquivo_confrontos": "Suica_vs_Suecia.csv",
+    "sincronizado_em": "2025-11-12T10:52:45.428Z"
+  }
 }

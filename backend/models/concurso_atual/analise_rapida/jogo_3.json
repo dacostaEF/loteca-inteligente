@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "3",
-    "concurso_numero": "1219"
+    "concurso_numero": "atual"
   },
   "dados": {
     "numero": "3",
-    "time_casa": "Vasco da Gama/RJ",
-    "time_fora": "Juventude/RS",
-    "arena": "Sao Januario/RJ",
+    "time_casa": "SPORT/PE",
+    "time_fora": "FLAMENGO/RJ",
+    "arena": "Ilha do Retiro/PE",
     "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/VAS_Vasco/Vasco.png",
-    "escudo_fora": "/static/escudos/JUV_Juventude/Juventude.PNG",
-    "probabilidade_casa": "45",
-    "probabilidade_empate": "30",
-    "probabilidade_fora": "25",
-    "recomendacao": "Recomendação Estatística: Coluna 1 (Vasco) - Risco Baixo",
-    "conclusao_analista": "O Vasco, atuando como mandante, apresenta uma força significativa em casa. Apesar da ultima derrota pra o São Paulo, o time está numa fase de recuperação na tabela e depende crucialmente dos resultados em seus domínios para almejar objetivo de libertadores. \nO Juventude, por sua vez, é uma equipe complicada, conhecida por ser um adversário incômodo e por conseguir resultados positivos fora de casa. No entanto, sua campanha como visitante ainda é irregular.\n\nA pressão por pontos e o fator \"casa\" do Vasco pesam a favor dos cariocas.",
-    "confrontos_sequence": "(20/08/2025, 2-0, Juventude|/static/escudos/JUV_Juventude/Juventude.PNG) (05/10/2024, 1-1, Empate|/static/escudos/Empate.png) (19/06/2024, 2-0, Juventude|/static/escudos/JUV_Juventude/Juventude.PNG) (07/11/2009, 2-1, Vasco|/static/escudos/VAS_Vasco/Vasco.png) (01/08/2009, 1-2, Vasco|/static/escudos/VAS_Vasco/Vasco.png) (03/10/2007, 0-1, Juventude|/static/escudos/JUV_Juventude/Juventude.PNG) (07/07/2007, 2-0, Juventude|/static/escudos/JUV_Juventude/Juventude.PNG) (11/11/2006, 1-1, Empate|/static/escudos/Empate.png) (12/08/2006, 0-0, Empate|/static/escudos/Empate.png) (11/09/2005, 5-2, Vasco|/static/escudos/VAS_Vasco/Vasco.png)",
-    "posicao_casa": "9",
-    "posicao_fora": "19",
-    "confronto_direto": "4V-3E-3D",
-    "fator_casa": "65",
-    "fator_fora": "35",
-    "analise_posicao": "Vantagem Vasco",
-    "analise_posicao_tabelas": "Vantagem Vasco",
-    "analise_confronto_direto": "Vantagem Vasco",
-    "analise_fator_casa": "Vantagem Vasco",
-    "sincronizado_em": "2025-11-06T10:50:35.256Z"
-  },
-  "admin_key": "loteca2024admin"
+    "escudo_casa": "/static/escudos/SPT_Sport/Sport.png",
+    "escudo_fora": "/static/escudos/FLA_Flamengo/Flamengo.png",
+    "probabilidade_casa": "5",
+    "probabilidade_empate": "10",
+    "probabilidade_fora": "85",
+    "recomendacao": "Recomendação Estatística: Coluna 2 (Flamengo) - Risco Baixo",
+    "conclusao_analista": "\"Enquanto o Flamengo vive o auge da disputa pelo título, o Sport já planeja 2025 na Série B. A diferença técnica, motivacional e momentânea é das maiores já vistas no Brasileirão. O rubro-negro carioca, com forte ataque e defesa fortíssima, a menos vazada do campeonato. Apesar dos desfalque que terá pela data FIFA e amplamente favorito. \nCONFIANÇA: 9/10     |     RISCO: MUITO BAIXO     |      VALOR: Flamengo -1.5 Handicap\n\n\n",
+    "confrontos_sequence": "(01/11/2025, 3-0,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (03/12/2021, 1-1, Empate|/static/escudos/Empate.png) (15/08/2021, 2-0,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (01/02/2021, 0-3,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (07/10/2020, 3-0,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (18/11/2018, 0-1,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (29/07/2018, 4-1,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (17/09/2017, 2-0,  FLAMENGO|/static/escudos/FLA_Flamengo/Flamengo.png) (07/06/2017, 2-0, SPORT|/static/escudos/SPT_Sport/Sport.png) (13/08/2016, 1-0, SPORT|/static/escudos/SPT_Sport/Sport.png)",
+    "posicao_casa": "20",
+    "posicao_fora": "2",
+    "confronto_direto": "2V-1E-7D",
+    "fator_casa": "10",
+    "fator_fora": "90",
+    "analise_posicao": "Vantagem Flamengo",
+    "analise_posicao_tabelas": "Vantagem Flamengo",
+    "analise_confronto_direto": "Vantagem Flamengo",
+    "analise_fator_casa": "Vantagem Flamengo",
+    "arquivo_confrontos": "flamengo_sport.csv",
+    "sincronizado_em": "2025-11-11T18:16:32.167Z"
+  }
 }

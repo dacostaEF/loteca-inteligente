@@ -1,17 +1,17 @@
 {
   "metadados": {
-    "jogo_numero": "1",
+    "jogo_numero": "NaN",
     "concurso_numero": "atual"
   },
   "dados": {
-    "numero": "1",
-    "time_casa": "SANTOS/SP",
-    "time_fora": "PALMEIRAS/SP",
+    "numero": "jogo_2",
+    "time_casa": "VOLTA REDONDA/RJ",
+    "time_fora": "CHAPECOENSE/SC",
     "arena": "Vila Belmiro",
     "campeonato": "Brasileirão Série A",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/SAN_Santos/Santos.png",
-    "escudo_fora": "/static/escudos/PAL_Palmeiras/Palmeiras.png",
+    "escudo_casa": "/static/escudos/Volta_Redonda/VoltaRedonda.png",
+    "escudo_fora": "/static/escudos/Chapecoense/Chapecoense.png",
     "probabilidade_casa": "15",
     "probabilidade_empate": "20",
     "probabilidade_fora": "65",
@@ -27,6 +27,6 @@
     "analise_posicao_tabelas": "Vantagem Palmeiras",
     "analise_confronto_direto": "Vantagem Palmeiras",
     "analise_fator_casa": "Vantagem Palmeiras",
-    "sincronizado_em": "2025-11-11T16:53:05.334Z"
+    "sincronizado_em": "2025-11-11T16:59:36.158Z"
   }
 }

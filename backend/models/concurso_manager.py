@@ -47,11 +47,13 @@ class ConcursoManager:
         Salva um concurso em arquivo JSON
         
         Args:
-            numero: Número do concurso (ex: "1213")
+            numero: Número do concurso (ex: "1213" ou "atual")
             dados: Dados completos do concurso
             
         Returns:
             bool: True se salvou com sucesso
+            
+        NOTA: NÃO remove jogo_X.json - esses arquivos são editados manualmente pelo admin
         """
         try:
             # Adicionar metadados

@@ -1,33 +1,33 @@
 {
   "metadados": {
     "jogo_numero": "6",
-    "concurso_numero": "1219"
+    "concurso_numero": "atual"
   },
   "dados": {
-    "numero": "6",
-    "time_casa": "CHELSEA/ING",
-    "time_fora": "WOLVES/ING",
-    "arena": "Stamford Bridge/ING",
-    "campeonato": "Premier League 2024/25",
+    "numero": "jogo_6",
+    "time_casa": "GRECIA",
+    "time_fora": "ESCOCIA",
+    "arena": "Stadio Georgios Karaiskakis, Grécia",
+    "campeonato": "Eliminatórias Europeias para a Copa do Mundo FIFA de 2026",
     "dia": "Sábado",
-    "escudo_casa": "/static/escudos/Chelsea/Chelsea.png",
-    "escudo_fora": "/static/escudos/Wolverhampton/wolfes.png",
-    "probabilidade_casa": "65",
-    "probabilidade_empate": "25",
+    "escudo_casa": "/static/escudos/Grecia/Grecia.png",
+    "escudo_fora": "/static/escudos/Escocia/Escocia.png",
+    "probabilidade_casa": "60",
+    "probabilidade_empate": "30",
     "probabilidade_fora": "10",
-    "recomendacao": "Recomendação Estatística: Coluna 1 (Chelsea) - Risco Baixo",
-    "conclusao_analista": "O Chelsea domina amplamente o retrospecto, especialmente em Stamford Bridge, onde não perde para os Wolves desde 2020. Nos últimos três jogos em casa, o time londrino marcou 10 gols e sofreu apenas 2 contra o adversário.\n\nMomento atual (Premier League 2024/25):\nO Chelsea reencontrou consistência ofensiva com um elenco jovem e veloz (Mudryk, Palmer, Jackson), melhorando muito a média de gols: 2,2 gols/jogo nas últimas 6 rodadas.\n\nO Wolverhampton,apresenta irregularidade fora de casa, com apenas 1 vitória nas últimas 8 partidas como visitante. Se o Chelsea marcar primeiro, o jogo tende a se definir sem reação adversária — o time londrino venceu 86% dos jogos em casa quando abriu o placar desde 2023.\n",
-    "confrontos_sequence": "(29/10/2025, 3-4, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (20/01/2025, 3-1, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (25/08/2024, 2-6, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (04/02/2024, 2-4, Wolverhampton|/static/escudos/Wolverhampton/wolfes.png) (24/12/2023, 2-1, Wolverhampton|/static/escudos/Wolverhampton/wolfes.png) (08/04/2023, 1-0, Wolverhampton|/static/escudos/Wolverhampton/wolfes.png) (08/10/2022, 3-0, CHELSEA|/static/escudos/Chelsea/Chelsea.png) (07/05/2022, 2-2, Empate|/static/escudos/Empate.png) (19/12/2021, 0-0, Empate|/static/escudos/Empate.png) (27/01/2021, 0-0, Empate|/static/escudos/Empate.png)",
-    "posicao_casa": "7",
-    "posicao_fora": "20",
-    "confronto_direto": "4V-3E-3D",
-    "fator_casa": "80",
-    "fator_fora": "20",
-    "analise_posicao": "Vantagem Chelsea",
-    "analise_posicao_tabelas": "Vantagem Chelsea",
-    "analise_confronto_direto": "Vantagem Chelsea",
-    "analise_fator_casa": "Vantagem Chelsea",
-    "sincronizado_em": "2025-11-06T10:59:50.496Z"
-  },
-  "admin_key": "loteca2024admin"
+    "recomendacao": "Recomendação Estatística: Coluna 1 (Escócia) - Risco Baixo",
+    "conclusao_analista": "CONFRONTO DO GRUPO C: Escócia esta empatada com a Dinamarca com 10 pontos e, joga em casa motivada pela disputa da vaga direta para o Mundial, Grécia eliminada.  CONFIANÇA: 8/10 | RISCO: Baixo | VALOR: Escócia",
+    "confrontos_sequence": "(09/10/2025, 3-1, Escócia|/static/escudos/ESCOCIA/ESCOCIA.png) (23/03/2025, 0-3, Grécia|/static/escudos/GRECIA/GRECIA.png) (20/03/2025, 0-1, Escócia|/static/escudos/ESCOCIA/ESCOCIA.png) (15/08/1995, 1-0, Escócia|/static/escudos/ESCOCIA/ESCOCIA.png) (17/12/1994, 1-0, Grécia|/static/escudos/GRECIA/GRECIA.png)",
+    "posicao_casa": "2",
+    "posicao_fora": "4",
+    "confronto_direto": "0V-0E-0D",
+    "fator_casa": "75",
+    "fator_fora": "25",
+    "analise_posicao": "Confronto Equilibrado",
+    "analise_posicao_tabelas": "Vantagem Escócia",
+    "analise_confronto_direto": "Confronto Equilibrado",
+    "analise_fator_casa": "Vantagem Escócia",
+    "arquivo_confrontos": "Escocia_vs_Grecia.csv",
+    "sincronizado_em": "2025-11-12T10:27:51.731Z"
+  }
 }
