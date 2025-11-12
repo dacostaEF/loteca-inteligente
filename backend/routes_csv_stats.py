@@ -77,6 +77,29 @@ def load_csv_data_serie_a():
         print(f"Erro ao carregar CSV: {e}")
         return None
 
+def load_selecoes_data():
+    """Carregar dados consolidados das seleções"""
+    try:
+        # Usar caminho relativo ao diretório backend
+        json_path = os.path.join('models', 'EstatisticasElenco', 'Estatisticas_Selecoes_CONSOLIDADO.json')
+        
+        print(f"[SELECOES] Tentando acessar: {json_path}")
+        print(f"[SELECOES] Arquivo existe: {os.path.exists(json_path)}")
+        
+        if not os.path.exists(json_path):
+            print(f"ERRO [SELECOES] Arquivo nao encontrado: {json_path}")
+            return None
+        
+        with open(json_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        
+        print(f"OK [SELECOES] {len(data)} selecoes carregadas com sucesso")
+        return data
+        
+    except Exception as e:
+        print(f"ERRO [SELECOES] Ao carregar dados: {e}")
+        return None
+
 def load_csv_data_serie_b():
     """Carregar dados do CSV de estatísticas da Série B"""
     try:
@@ -198,6 +221,37 @@ def get_serie_b_stats():
         
     except Exception as e:
         print(f"❌ [CSV-API-B] Erro: {str(e)}")
+        return jsonify({
+            "success": False,
+            "error": f"Erro ao carregar dados: {str(e)}"
+        }), 500
+
+@csv_stats_bp.route('/api/csv/selecoes/stats', methods=['GET'])
+@cross_origin()
+def get_selecoes_stats():
+    """Endpoint para obter estatísticas das seleções nacionais"""
+    try:
+        print("[SELECOES-API] Tentando carregar dados das selecoes...")
+        data = load_selecoes_data()
+        
+        if not data:
+            print("ERRO [SELECOES-API] Dados nao encontrados")
+            return jsonify({
+                "success": False,
+                "error": "Dados nao encontrados",
+                "data": []
+            }), 404
+        
+        print(f"OK [SELECOES-API] {len(data)} selecoes carregadas com sucesso")
+        return jsonify({
+            "success": True,
+            "data": data,
+            "total": len(data),
+            "source": "JSON - Estatisticas_Selecoes_CONSOLIDADO.json"
+        })
+        
+    except Exception as e:
+        print(f"ERRO [SELECOES-API] Erro: {str(e)}")
         return jsonify({
             "success": False,
             "error": f"Erro ao carregar dados: {str(e)}"

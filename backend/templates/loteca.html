@@ -5095,15 +5095,30 @@
                 return true;
             }
             
-            // SE NÃO ENCONTRAR EM NENHUMA SÉRIE
-            console.warn(`⚠️ [CSV-REAL] Times não encontrados em nenhuma série: ${timeMandante} vs ${timeVisitante}`);
+            // SE NÃO ENCONTRAR, TENTAR NAS SELEÇÕES
+            console.log('🌍 [SELECOES] Buscando nas Seleções Nacionais...');
+            const dadosSelecoes = await buscarDadosSerie('selecoes', timeMandante, timeVisitante);
+            if (dadosSelecoes) {
+                console.log('✅ [SELECOES] Seleções encontradas!');
+                return true;
+            }
+            
+            // SE NÃO ENCONTRAR EM NENHUMA FONTE
+            console.warn(`⚠️ [CSV-REAL] Times não encontrados: ${timeMandante} vs ${timeVisitante}`);
             return false;
         }
         
-        // BUSCAR DADOS EM UMA SÉRIE ESPECÍFICA
+        // BUSCAR DADOS EM UMA SÉRIE ESPECÍFICA OU SELEÇÕES
         async function buscarDadosSerie(serie, timeMandante, timeVisitante) {
             try {
-                const endpoint = serie === 'serie-a' ? '/api/csv/serie-a/stats' : '/api/csv/serie-b/stats';
+                let endpoint;
+                if (serie === 'serie-a') {
+                    endpoint = '/api/csv/serie-a/stats';
+                } else if (serie === 'serie-b') {
+                    endpoint = '/api/csv/serie-b/stats';
+                } else if (serie === 'selecoes') {
+                    endpoint = '/api/csv/selecoes/stats';
+                }
                 console.log(`🔍 [${serie.toUpperCase()}] Buscando em: ${endpoint}`);
                 
                 const response = await fetch(endpoint);
@@ -5140,8 +5155,10 @@
                     
                     // Buscar os times nos dados com múltiplas estratégias
                     const mandante = data.data.find(team => {
-                        const nomeTimeNorm = normalizarNomeTime(team.Time);
-                        const nomeTimeUpper = team.Time.toUpperCase();
+                        // Para seleções, usar campo "Selecao" ao invés de "Time"
+                        const nomeTime = team.Selecao || team.Time;
+                        const nomeTimeNorm = normalizarNomeTime(nomeTime);
+                        const nomeTimeUpper = nomeTime.toUpperCase();
                         const buscaUpper = timeMandante.toUpperCase();
                         
                         // Estratégia 1: Comparação normalizada
@@ -5159,8 +5176,10 @@
                     });
                     
                     const visitante = data.data.find(team => {
-                        const nomeTimeNorm = normalizarNomeTime(team.Time);
-                        const nomeTimeUpper = team.Time.toUpperCase();
+                        // Para seleções, usar campo "Selecao" ao invés de "Time"
+                        const nomeTime = team.Selecao || team.Time;
+                        const nomeTimeNorm = normalizarNomeTime(nomeTime);
+                        const nomeTimeUpper = nomeTime.toUpperCase();
                         const buscaUpper = timeVisitante.toUpperCase();
                         
                         // Estratégia 1: Comparação normalizada
@@ -5178,14 +5197,16 @@
                     });
                     
                     if (mandante && visitante) {
-                        console.log(`✅ [${serie.toUpperCase()}] Times encontrados: ${mandante.Time} vs ${visitante.Time}`);
+                        const nomeMandante = mandante.Selecao || mandante.Time;
+                        const nomeVisitante = visitante.Selecao || visitante.Time;
+                        console.log(`✅ [${serie.toUpperCase()}] Times encontrados: ${nomeMandante} vs ${nomeVisitante}`);
                         atualizarTabelaComDadosReais(mandante, visitante);
                         return true;
                     } else {
                         console.warn(`⚠️ [${serie.toUpperCase()}] Times não encontrados nesta série`);
                         console.log(`🔍 [${serie.toUpperCase()}] Mandante buscado: "${timeMandante}" (norm: "${mandanteNorm}") → ${mandante ? 'ENCONTRADO' : 'NÃO ENCONTRADO'}`);
                         console.log(`🔍 [${serie.toUpperCase()}] Visitante buscado: "${timeVisitante}" (norm: "${visitanteNorm}") → ${visitante ? 'ENCONTRADO' : 'NÃO ENCONTRADO'}`);
-                        console.log(`🔍 [${serie.toUpperCase()}] Times disponíveis:`, data.data.map(t => t.Time));
+                        console.log(`🔍 [${serie.toUpperCase()}] Times disponíveis:`, data.data.map(t => t.Selecao || t.Time));
                         return false;
                     }
                 } else {
@@ -5314,71 +5335,115 @@
             console.log('✅ [COMPARACAO-DADOS] Dados atualizados com sucesso!');
         }
 
+        // HELPER: Obter valor de campo (compatível com clubes e seleções)
+        function obterCampo(time, campoClube, campoSelecao = null) {
+            // Se for seleção, usar campo alternativo
+            if (time.Selecao && campoSelecao) {
+                return time[campoSelecao];
+            }
+            // Se for clube, usar campo padrão
+            return time[campoClube];
+        }
+        
         // ATUALIZAR TABELA DE COMPARAÇÃO
         function atualizarTabelaComparacao(timeMandante, timeVisitante) {
             console.log('📊 [TABELA-COMPARACAO] Atualizando tabela de comparação...');
             
-            // Posição
-            atualizarElementoComparacao('pal-posicao', timeMandante['Posição'] + 'º');
-            atualizarElementoComparacao('fla-posicao', timeVisitante['Posição'] + 'º');
+            // Posição (seleções não têm posição, usar 0)
+            const posicaoMandante = obterCampo(timeMandante, 'Posição') || 0;
+            const posicaoVisitante = obterCampo(timeVisitante, 'Posição') || 0;
+            atualizarElementoComparacao('pal-posicao', posicaoMandante ? posicaoMandante + 'º' : '-');
+            atualizarElementoComparacao('fla-posicao', posicaoVisitante ? posicaoVisitante + 'º' : '-');
             
             // Gols Pró (Média)
-            atualizarElementoComparacao('pal-gols-pro', timeMandante['Média Gols Pró']);
-            atualizarElementoComparacao('fla-gols-pro', timeVisitante['Média Gols Pró']);
+            const golsProMandante = obterCampo(timeMandante, 'Média Gols Pró', 'Media_Gols_Pro');
+            const golsProVisitante = obterCampo(timeVisitante, 'Média Gols Pró', 'Media_Gols_Pro');
+            atualizarElementoComparacao('pal-gols-pro', golsProMandante);
+            atualizarElementoComparacao('fla-gols-pro', golsProVisitante);
             
             // Gols Contra (Média)
-            atualizarElementoComparacao('pal-gols-contra', timeMandante['Média Gols Contra']);
-            atualizarElementoComparacao('fla-gols-contra', timeVisitante['Média Gols Contra']);
+            const golsContraMandante = obterCampo(timeMandante, 'Média Gols Contra', 'Media_Gols_Contra');
+            const golsContraVisitante = obterCampo(timeVisitante, 'Média Gols Contra', 'Media_Gols_Contra');
+            atualizarElementoComparacao('pal-gols-contra', golsContraMandante);
+            atualizarElementoComparacao('fla-gols-contra', golsContraVisitante);
             
             // Over 2.5%
-            atualizarElementoComparacao('pal-over25', timeMandante['Over 2.5 %'] + '%');
-            atualizarElementoComparacao('fla-over25', timeVisitante['Over 2.5 %'] + '%');
+            const over25Mandante = obterCampo(timeMandante, 'Over 2.5 %', 'Over_2.5_Percent');
+            const over25Visitante = obterCampo(timeVisitante, 'Over 2.5 %', 'Over_2.5_Percent');
+            atualizarElementoComparacao('pal-over25', over25Mandante + '%');
+            atualizarElementoComparacao('fla-over25', over25Visitante + '%');
             
             // BTTS Sim %
-            atualizarElementoComparacao('pal-btts', timeMandante['BTTS Sim %'] + '%');
-            atualizarElementoComparacao('fla-btts', timeVisitante['BTTS Sim %'] + '%');
+            const bttsMandante = obterCampo(timeMandante, 'BTTS Sim %', 'BTTS_Sim_Percent');
+            const bttsVisitante = obterCampo(timeVisitante, 'BTTS Sim %', 'BTTS_Sim_Percent');
+            atualizarElementoComparacao('pal-btts', bttsMandante + '%');
+            atualizarElementoComparacao('fla-btts', bttsVisitante + '%');
             
             // Clean Sheets %
-            atualizarElementoComparacao('pal-clean', timeMandante['Clean Sheets %'] + '%');
-            atualizarElementoComparacao('fla-clean', timeVisitante['Clean Sheets %'] + '%');
+            const cleanMandante = obterCampo(timeMandante, 'Clean Sheets %', 'Clean_Sheets_Percent');
+            const cleanVisitante = obterCampo(timeVisitante, 'Clean Sheets %', 'Clean_Sheets_Percent');
+            atualizarElementoComparacao('pal-clean', cleanMandante + '%');
+            atualizarElementoComparacao('fla-clean', cleanVisitante + '%');
             
             // Gols Sofridos Total
-            atualizarElementoComparacao('pal-gols-sofridos-total', timeMandante['Gols Contra']);
-            atualizarElementoComparacao('fla-gols-sofridos-total', timeVisitante['Gols Contra']);
+            const golsSofridosMandante = obterCampo(timeMandante, 'Gols Contra', 'Gols_Sofridos_Total');
+            const golsSofridosVisitante = obterCampo(timeVisitante, 'Gols Contra', 'Gols_Sofridos_Total');
+            atualizarElementoComparacao('pal-gols-sofridos-total', golsSofridosMandante);
+            atualizarElementoComparacao('fla-gols-sofridos-total', golsSofridosVisitante);
             
             // Pontos Últimos 5
-            atualizarElementoComparacao('pal-pontos-ultimos', timeMandante['Pontos Últimos 5'] + ' (' + timeMandante['Últimos 5 Jogos'] + ')');
-            atualizarElementoComparacao('fla-pontos-ultimos', timeVisitante['Pontos Últimos 5'] + ' (' + timeVisitante['Últimos 5 Jogos'] + ')');
+            const pontosMandante = obterCampo(timeMandante, 'Pontos Últimos 5', 'Pontos_Ultimos_5');
+            const ultimos5Mandante = obterCampo(timeMandante, 'Últimos 5 Jogos', 'Ultimos_5_Jogos');
+            const pontosVisitante = obterCampo(timeVisitante, 'Pontos Últimos 5', 'Pontos_Ultimos_5');
+            const ultimos5Visitante = obterCampo(timeVisitante, 'Últimos 5 Jogos', 'Ultimos_5_Jogos');
+            atualizarElementoComparacao('pal-pontos-ultimos', pontosMandante + ' (' + ultimos5Mandante + ')');
+            atualizarElementoComparacao('fla-pontos-ultimos', pontosVisitante + ' (' + ultimos5Visitante + ')');
             
             // Casa - Jogos / Aproveitamento
-            atualizarElementoComparacao('pal-casa-jogos', timeMandante['Jogos Casa'] + ' / ' + timeMandante['Aproveitamento Casa %'] + '%');
-            atualizarElementoComparacao('fla-casa-jogos', timeVisitante['Jogos Casa'] + ' / ' + timeVisitante['Aproveitamento Casa %'] + '%');
+            const jogosCasaMandante = obterCampo(timeMandante, 'Jogos Casa', 'Jogos_Casa');
+            const aprovCasaMandante = obterCampo(timeMandante, 'Aproveitamento Casa %', 'Aproveitamento_Casa_Percent');
+            const jogosCasaVisitante = obterCampo(timeVisitante, 'Jogos Casa', 'Jogos_Casa');
+            const aprovCasaVisitante = obterCampo(timeVisitante, 'Aproveitamento Casa %', 'Aproveitamento_Casa_Percent');
+            atualizarElementoComparacao('pal-casa-jogos', jogosCasaMandante + ' / ' + aprovCasaMandante + '%');
+            atualizarElementoComparacao('fla-casa-jogos', jogosCasaVisitante + ' / ' + aprovCasaVisitante + '%');
             
             // Casa - Gols Pró (Média)
-            const mediaGolsProCasaMandante = (timeMandante['Gols Pró Casa'] / timeMandante['Jogos Casa']).toFixed(2);
-            const mediaGolsProCasaVisitante = (timeVisitante['Gols Pró Casa'] / timeVisitante['Jogos Casa']).toFixed(2);
+            const golsProCasaMandante = obterCampo(timeMandante, 'Gols Pró Casa', 'Gols_Pro_Casa');
+            const golsProCasaVisitante = obterCampo(timeVisitante, 'Gols Pró Casa', 'Gols_Pro_Casa');
+            const mediaGolsProCasaMandante = (golsProCasaMandante / jogosCasaMandante).toFixed(2);
+            const mediaGolsProCasaVisitante = (golsProCasaVisitante / jogosCasaVisitante).toFixed(2);
             atualizarElementoComparacao('pal-casa-gols-pro', mediaGolsProCasaMandante);
             atualizarElementoComparacao('fla-casa-gols-pro', mediaGolsProCasaVisitante);
             
             // Casa - Gols Contra (Média)
-            const mediaGolsContraCasaMandante = (timeMandante['Gols Contra Casa'] / timeMandante['Jogos Casa']).toFixed(2);
-            const mediaGolsContraCasaVisitante = (timeVisitante['Gols Contra Casa'] / timeVisitante['Jogos Casa']).toFixed(2);
+            const golsContraCasaMandante = obterCampo(timeMandante, 'Gols Contra Casa', 'Gols_Contra_Casa');
+            const golsContraCasaVisitante = obterCampo(timeVisitante, 'Gols Contra Casa', 'Gols_Contra_Casa');
+            const mediaGolsContraCasaMandante = (golsContraCasaMandante / jogosCasaMandante).toFixed(2);
+            const mediaGolsContraCasaVisitante = (golsContraCasaVisitante / jogosCasaVisitante).toFixed(2);
             atualizarElementoComparacao('pal-casa-gols-contra', mediaGolsContraCasaMandante);
             atualizarElementoComparacao('fla-casa-gols-contra', mediaGolsContraCasaVisitante);
             
             // Fora - Jogos / Aproveitamento
-            atualizarElementoComparacao('pal-fora-jogos', timeMandante['Jogos Fora'] + ' / ' + timeMandante['Aproveitamento Fora %'] + '%');
-            atualizarElementoComparacao('fla-fora-jogos', timeVisitante['Jogos Fora'] + ' / ' + timeVisitante['Aproveitamento Fora %'] + '%');
+            const jogosForaMandante = obterCampo(timeMandante, 'Jogos Fora', 'Jogos_Fora');
+            const aprovForaMandante = obterCampo(timeMandante, 'Aproveitamento Fora %', 'Aproveitamento_Fora_Percent');
+            const jogosForaVisitante = obterCampo(timeVisitante, 'Jogos Fora', 'Jogos_Fora');
+            const aprovForaVisitante = obterCampo(timeVisitante, 'Aproveitamento Fora %', 'Aproveitamento_Fora_Percent');
+            atualizarElementoComparacao('pal-fora-jogos', jogosForaMandante + ' / ' + aprovForaMandante + '%');
+            atualizarElementoComparacao('fla-fora-jogos', jogosForaVisitante + ' / ' + aprovForaVisitante + '%');
             
             // Fora - Gols Pró (Média)
-            const mediaGolsProForaMandante = (timeMandante['Gols Pró Fora'] / timeMandante['Jogos Fora']).toFixed(2);
-            const mediaGolsProForaVisitante = (timeVisitante['Gols Pró Fora'] / timeVisitante['Jogos Fora']).toFixed(2);
+            const golsProForaMandante = obterCampo(timeMandante, 'Gols Pró Fora', 'Gols_Pro_Fora');
+            const golsProForaVisitante = obterCampo(timeVisitante, 'Gols Pró Fora', 'Gols_Pro_Fora');
+            const mediaGolsProForaMandante = (golsProForaMandante / jogosForaMandante).toFixed(2);
+            const mediaGolsProForaVisitante = (golsProForaVisitante / jogosForaVisitante).toFixed(2);
             atualizarElementoComparacao('pal-fora-gols-pro', mediaGolsProForaMandante);
             atualizarElementoComparacao('fla-fora-gols-pro', mediaGolsProForaVisitante);
             
             // Fora - Gols Contra (Média)
-            const mediaGolsContraForaMandante = (timeMandante['Gols Contra Fora'] / timeMandante['Jogos Fora']).toFixed(2);
-            const mediaGolsContraForaVisitante = (timeVisitante['Gols Contra Fora'] / timeVisitante['Jogos Fora']).toFixed(2);
+            const golsContraForaMandante = obterCampo(timeMandante, 'Gols Contra Fora', 'Gols_Contra_Fora');
+            const golsContraForaVisitante = obterCampo(timeVisitante, 'Gols Contra Fora', 'Gols_Contra_Fora');
+            const mediaGolsContraForaMandante = (golsContraForaMandante / jogosForaMandante).toFixed(2);
+            const mediaGolsContraForaVisitante = (golsContraForaVisitante / jogosForaVisitante).toFixed(2);
             atualizarElementoComparacao('pal-fora-gols-contra', mediaGolsContraForaMandante);
             atualizarElementoComparacao('fla-fora-gols-contra', mediaGolsContraForaVisitante);
             
