@@ -1,13 +1,21 @@
 Data,mandante,placar,visitante,Vencedor,Campeonato,Resultado (para o Mandante)
-2025-07-29,Goiás,1-1,Remo,Empate,"R19 Série B 2025",E
-2021-11-15,Remo,0-1,Goiás,Goiás,"R36 Série B 2021",D
-2021-08-10,Goiás,1-1,Remo,Empate,"R17 Série B 2021",E
-1999-09-19,Remo,3-1,Goiás,Remo,"1F Série B 1999",V
-1993-10-21,Remo,4-0,Goiás,Remo,"C Brasileirão 1993",V
-1993-09-15,Goiás,1-2,Remo,Remo,"C Brasileirão 1993",D
-1992-08-25,Remo,1-0,Goiás,Remo,"1F Copa Brasil 1992",V
-1992-07-28,Goiás,0-0,Remo,Empate,"1F Copa Brasil 1992",E
-1979-10-30,Remo,1-0,Goiás,Remo,"H Brasileirão 1979",V
-1975-10-19,Goiás,1-0,Remo,Goiás,"2F Brasileirão 1975",V
-1973-11-25,Remo,2-0,Goiás,Remo,"1F Brasileirão 1973",V
-1973-09-16,Remo,1-0,Goiás,Remo,"1F Brasileirão 1973",V
+2025-07-23,Corinthians,0-0,Cruzeiro,Empate,"R16 Brasileirão 2025",E
+2024-11-20,Corinthians,2-1,Cruzeiro,Corinthians,"R34 Brasileirão 2024",V
+2024-07-07,Cruzeiro,3-0,Corinthians,Cruzeiro,"R15 Brasileirão 2024",V
+2023-08-19,Cruzeiro,1-1,Corinthians,Empate,"R20 Brasileirão 2023",E
+2023-04-16,Corinthians,2-1,Cruzeiro,Corinthians,"R1 Brasileirão 2023",V
+2019-10-19,Corinthians,1-2,Cruzeiro,Cruzeiro,"R27 Brasileirão 2019",D
+2019-06-08,Cruzeiro,0-0,Corinthians,Empate,"R8 Brasileirão 2019",E
+2018-11-14,Cruzeiro,1-0,Corinthians,Cruzeiro,"R34 Brasileirão 2018",V
+2018-10-17,Corinthians,1-2,Cruzeiro,Cruzeiro,"F Copa do Brasil 2018",D
+2018-10-10,Cruzeiro,1-0,Corinthians,Cruzeiro,"F Copa do Brasil 2018",V
+2018-07-25,Corinthians,2-0,Cruzeiro,Corinthians,"R15 Brasileirão 2018",V
+2017-10-01,Cruzeiro,1-1,Corinthians,Empate,"R26 Brasileirão 2017",E
+2017-06-14,Corinthians,1-0,Cruzeiro,Corinthians,"R7 Brasileirão 2017",V
+2016-12-11,Cruzeiro,3-2,Corinthians,Cruzeiro,"R38 Brasileirão 2016",V
+2016-10-19,Cruzeiro,4-2,Corinthians,Cruzeiro,"QF Copa do Brasil 2016",V
+2016-09-28,Corinthians,2-1,Cruzeiro,Corinthians,"QF Copa do Brasil 2016",V
+2016-08-08,Corinthians,1-1,Cruzeiro,Empate,"R19 Brasileirão 2016",E
+2015-08-23,Corinthians,3-0,Cruzeiro,Corinthians,"R20 Brasileirão 2015",V
+2015-05-10,Cruzeiro,0-1,Corinthians,Corinthians,"R1 Brasileirão 2015",D
+2014-10-08,Cruzeiro,0-1,Corinthians,Corinthians,"R27 Brasileirão 2014",D

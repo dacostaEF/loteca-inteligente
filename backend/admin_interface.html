@@ -1684,7 +1684,7 @@
             <div class="form-row" style="margin-bottom: 30px;">
                 <div class="form-group" style="flex: 1; margin-right: 15px;">
                     <label>Concurso Nº:</label>
-                    <input type="text" id="numeroConcurso" class="form-control" placeholder="atual" value="atual">
+                    <input type="text" id="numeroConcurso" class="form-control" placeholder="atual" value="atual" readonly style="background-color: #f0f0f0; cursor: not-allowed;" title="Sempre usa 'atual' - não pode ser alterado">
                 </div>
                 <div class="form-group" style="flex: 2; margin-right: 15px;">
                     <label>Período de Apostas:</label>
@@ -3485,8 +3485,8 @@
         
         async function carregarAnaliseDoServidor(numeroJogo) {
             try {
-                // MODIFICADO: Obter número do concurso atual, default 'atual'
-                const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
+                // SEMPRE usar 'atual' para manter estrutura consistente
+                const numeroConcurso = 'atual';
                 
                 console.log(`🔍 [ANÁLISE] Buscando dados do JOGO ${numeroJogo} do CONCURSO ${numeroConcurso}`);
                 
@@ -7900,8 +7900,8 @@
                 // 2) Nome de arquivo derivado do índice
                 const nomeArquivo = `jogo_${idx}.json`;
                 
-                // 3) Obter número do concurso dinamicamente
-                const numeroConcurso = document.getElementById('numeroConcurso').value || 'atual';
+                // 3) Sempre usar 'atual' para manter estrutura consistente
+                const numeroConcurso = 'atual';
                 
                 // 4) POST para o backend (estrutura esperada pelo backend)
                 const response = await fetch('/api/admin/analise/salvar', {

@@ -1,93 +1,93 @@
 {
   "metadados": {
     "numero": "atual",
-    "salvo_em": "2025-11-11T10:12:40.745126",
+    "salvo_em": "2025-11-18T12:11:02.973822",
     "versao": "1.0"
   },
   "concurso": {},
   "jogos": [
     {
       "numero": 1,
-      "time_casa": "SANTOS/SP",
-      "time_fora": "PALMEIRAS/SP",
+      "time_casa": "FLAMENGO/RJ",
+      "time_fora": "BRAGANTINO/SP",
       "data": "Sabado"
     },
     {
       "numero": 2,
-      "time_casa": "VOLTA REDONDA/RJ",
-      "time_fora": "CHAPECOENSE/SC",
+      "time_casa": "PALMEIRAS/SP",
+      "time_fora": "FLUMINENSE/RJ",
       "data": "Sabado"
     },
     {
       "numero": 3,
-      "time_casa": "SPORT/PE",
-      "time_fora": "FLAMENGO/RJ",
-      "data": "Sabado"
+      "time_casa": "SAO PAULO/SP",
+      "time_fora": "JUVENTUDE/RS",
+      "data": "Domingo"
     },
     {
       "numero": 4,
-      "time_casa": "BOSNIA HERZEGOVINA",
-      "time_fora": "ROMÊNIA",
-      "data": "Sabado"
+      "time_casa": "AMAZONAS/AM",
+      "time_fora": "CORITIBA/PR",
+      "data": "Domingo"
     },
     {
       "numero": 5,
-      "time_casa": "SUICA",
-      "time_fora": "SUECIA",
-      "data": "Sabado"
+      "time_casa": "ATHLETIC CLUB/MG",
+      "time_fora": "PAYSANDU/PA",
+      "data": "Domingo"
     },
     {
       "numero": 6,
-      "time_casa": "GRECIA",
-      "time_fora": "ESCOCIA/SCT",
-      "data": "Sabado"
+      "time_casa": "ATHLETICO/PR",
+      "time_fora": "AMERICA/MG",
+      "data": "Domingo"
     },
     {
       "numero": 7,
-      "time_casa": "HUNGRIA",
-      "time_fora": "IRLANDA",
+      "time_casa": "BOTAFOGO/SP",
+      "time_fora": "AVAI/SC",
       "data": "Domingo"
     },
     {
       "numero": 8,
-      "time_casa": "FERROVIARIA/SP",
-      "time_fora": "ATHLETICO/PR",
+      "time_casa": "CHAPECOENSE/SC",
+      "time_fora": "ATLETICO/GO",
       "data": "Domingo"
     },
     {
       "numero": 9,
-      "time_casa": "GOIAS/GO",
-      "time_fora": "NOVORIZONTINO/SP",
+      "time_casa": "CUIABA/MT",
+      "time_fora": "CRICIUMA/SC",
       "data": "Domingo"
     },
     {
       "numero": 10,
-      "time_casa": "ALBANIA",
-      "time_fora": "INGLATERRA",
+      "time_casa": "NOVORIZONTINO/SP",
+      "time_fora": "CRB/AL",
       "data": "Domingo"
     },
     {
       "numero": 11,
-      "time_casa": "SERVIA/SER",
-      "time_fora": "LETONIA",
+      "time_casa": "OPERARIO/PR",
+      "time_fora": "FERROVIARIA/SP",
       "data": "Domingo"
     },
     {
       "numero": 12,
-      "time_casa": "ITALIA",
-      "time_fora": "NORUEGA",
+      "time_casa": "REMO/PA",
+      "time_fora": "GOIAS/GO",
       "data": "Domingo"
     },
     {
       "numero": 13,
-      "time_casa": "BRAGANTINO/SP",
-      "time_fora": "ATLETICO/MG",
+      "time_casa": "SPORT/PE",
+      "time_fora": "VITORIA/BA",
       "data": "Domingo"
     },
     {
       "numero": 14,
-      "time_casa": "UCRANIA",
-      "time_fora": "ISLANDIA",
+      "time_casa": "CRUZEIRO/MG",
+      "time_fora": "CORINTHIANS/SP",
       "data": "Domingo"
     }
   ],
