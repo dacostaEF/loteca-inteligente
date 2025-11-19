@@ -1506,17 +1506,68 @@
                 
                 <!-- SELETOR DE CONFRONTO -->
                 <div class="game-selector">
-                    <h3>🎮 Selecione o Confronto para Análise Detalhada</h3>
-                    <div style="display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap;">
-                        <select id="game-selector" class="game-select" style="flex: 1; min-width: 300px;">
-                            <option value="">Escolha um jogo...</option>
-                            <!-- Jogos serão carregados dinamicamente da Aba 1 -->
-                        </select>
-                        <button onclick="correlacionarDadosCSV()" class="correlate-csv-btn" style="padding: 8px 16px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem;">
-                            🔍 Correlacionar
-                        </button>
+                    <!-- GUIA VISUAL DE USO -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+                        <h3 style="color: white; margin: 0 0 1rem 0; font-size: 1.3rem; text-align: center;">
+                            📊 Como Usar: Análise Detalhada de Confrontos
+                        </h3>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+                            <!-- PASSO 1 -->
+                            <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); min-width: 200px;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="background: white; color: #667eea; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem;">1</span>
+                                    <span style="color: white; font-weight: 600; font-size: 0.95rem;">Escolha o Jogo</span>
+                                </div>
+                            </div>
+                            <!-- PASSO 2 -->
+                            <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); min-width: 200px;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="background: white; color: #667eea; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem;">2</span>
+                                    <span style="color: white; font-weight: 600; font-size: 0.95rem;">Clique em "Carregar Análise"</span>
+                                </div>
+                            </div>
+                            <!-- PASSO 3 -->
+                            <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 0.8rem 1.2rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); min-width: 200px;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="background: white; color: #667eea; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem;">3</span>
+                                    <span style="color: white; font-weight: 600; font-size: 0.95rem;">Veja os Dados Abaixo</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p style="margin-top: 1rem; color: var(--cor-texto-secundario); font-size: 0.9rem; text-align: center;">
+
+                    <!-- CONTROLES DE SELEÇÃO -->
+                    <div style="display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem;">
+                        <!-- DROPDOWN COM LABEL -->
+                        <div style="flex: 1; min-width: 300px; max-width: 500px;">
+                            <label for="game-selector" style="display: block; color: var(--cor-texto); font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem;">
+                                <span style="background: #667eea; color: white; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; margin-right: 0.5rem;">1</span>
+                                Selecione o Jogo:
+                            </label>
+                            <select id="game-selector" class="game-select" style="width: 100%; padding: 12px; border: 2px solid #667eea; border-radius: 8px; font-size: 1rem; background: white; color: #333; cursor: pointer; transition: all 0.3s ease;">
+                                <option value="">🎯 Escolha um confronto para analisar...</option>
+                                <!-- Jogos serão carregados dinamicamente da Aba 1 -->
+                            </select>
+                        </div>
+                        
+                        <!-- BOTÃO DE AÇÃO -->
+                        <div style="display: flex; flex-direction: column; gap: 0.3rem; align-items: center;">
+                            <label style="color: var(--cor-texto); font-weight: 600; font-size: 0.95rem; margin-bottom: 0.2rem;">
+                                <span style="background: #667eea; color: white; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; margin-right: 0.5rem;">2</span>
+                                Clique aqui:
+                            </label>
+                            <button onclick="correlacionarDadosCSV()" class="correlate-csv-btn" style="padding: 14px 28px; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 1.05rem; font-weight: 700; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 16px rgba(16, 185, 129, 0.5)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4)'">
+                                📊 Carregar Análise
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- MENSAGEM DE STATUS -->
+                    <div id="status-selecao" style="text-align: center; padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; display: none; margin-bottom: 1rem;">
+                        <!-- Preenchido dinamicamente via JavaScript -->
+                    </div>
+                    
+                    <p style="margin-top: 0.5rem; color: var(--cor-texto-secundario); font-size: 0.85rem; text-align: center; font-style: italic;">
                         💡 Os jogos são automaticamente sincronizados com a Aba "Análise Rápida"
                     </p>
                 </div>
@@ -4868,9 +4919,29 @@
             // Buscar jogo selecionado
             const gameSelector = document.getElementById('game-selector');
             const jogoSelecionado = gameSelector.value;
+            const statusDiv = document.getElementById('status-selecao');
             
             if (!jogoSelecionado) {
-                alert('⚠️ Por favor, selecione um jogo primeiro!');
+                // FEEDBACK VISUAL: Nenhum jogo selecionado
+                statusDiv.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: 2px solid #f87171; animation: shake 0.5s;">
+                        <span style="font-size: 1.5rem;">⚠️</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700; font-size: 1rem;">Ops! Nenhum jogo selecionado</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.2rem;">Por favor, escolha um confronto no dropdown acima primeiro</div>
+                        </div>
+                    </div>
+                `;
+                statusDiv.style.display = 'block';
+                
+                // Destacar o dropdown com animação
+                gameSelector.style.border = '3px solid #ef4444';
+                gameSelector.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    gameSelector.style.border = '2px solid #667eea';
+                    gameSelector.style.animation = '';
+                }, 500);
+                
                 return;
             }
             
@@ -4899,21 +4970,83 @@
             // Mostrar container de comparação
             mostrarContainerComparacao();
             
+            // FEEDBACK VISUAL: Carregando...
+            statusDiv.innerHTML = `
+                <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <div style="width: 24px; height: 24px; border: 3px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                    <div style="text-align: left;">
+                        <div style="font-weight: 700; font-size: 1rem;">Carregando análise...</div>
+                        <div style="font-size: 0.9rem; margin-top: 0.2rem; opacity: 0.9;">${times.mandante} vs ${times.visitante}</div>
+                    </div>
+                </div>
+            `;
+            statusDiv.style.display = 'block';
+            
             try {
                 // Tentar carregar dados reais do CSV para os times selecionados
                 const dadosReais = await carregarDadosReaisCSV(times.mandante, times.visitante);
                 
                 if (dadosReais) {
                     console.log('✅ [CORRELACAO] Dados reais carregados com sucesso!');
+                    
+                    // FEEDBACK VISUAL: Sucesso!
+                    statusDiv.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <span style="font-size: 1.8rem;">✅</span>
+                            <div style="text-align: left;">
+                                <div style="font-weight: 700; font-size: 1rem;">Análise Carregada com Sucesso!</div>
+                                <div style="font-size: 0.9rem; margin-top: 0.2rem; opacity: 0.95;">${times.mandante} vs ${times.visitante}</div>
+                                <div style="font-size: 0.85rem; margin-top: 0.3rem; font-weight: 600;">
+                                    👇 Role para baixo para ver todos os dados
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Esconder mensagem de sucesso após 5 segundos
+                    setTimeout(() => {
+                        statusDiv.style.display = 'none';
+                    }, 5000);
+                    
                 } else {
                     console.warn('⚠️ [CORRELACAO] Não foi possível carregar dados reais, usando dados simulados');
                     usarDadosSimulados();
+                    
+                    // FEEDBACK VISUAL: Aviso - Dados limitados
+                    statusDiv.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            <span style="font-size: 1.5rem;">⚠️</span>
+                            <div style="text-align: left;">
+                                <div style="font-weight: 700; font-size: 1rem;">Dados Limitados</div>
+                                <div style="font-size: 0.9rem; margin-top: 0.2rem;">Usando dados simulados para ${times.mandante} vs ${times.visitante}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        statusDiv.style.display = 'none';
+                    }, 5000);
                 }
                 
             } catch (error) {
                 console.error('❌ [CORRELACAO] Erro ao carregar dados reais:', error);
                 console.log('🔄 [CORRELACAO] Usando dados simulados como fallback...');
                 usarDadosSimulados();
+                
+                // FEEDBACK VISUAL: Erro - Usando fallback
+                statusDiv.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span style="font-size: 1.5rem;">⚠️</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700; font-size: 1rem;">Erro ao Carregar Dados</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.2rem;">Usando dados simulados: ${times.mandante} vs ${times.visitante}</div>
+                        </div>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
             }
         }
         
@@ -12095,6 +12228,53 @@
                         const jogosAba1 = await extrairJogosDaAba1();
                         console.log('📋 [DEBUG] Jogos extraídos:', jogosAba1);
                         atualizarDropdownAba2(gameSelector, jogosAba1);
+                        
+                        // ============================================
+                        // 🎯 FEEDBACK VISUAL AUTOMÁTICO - GUIA DO USUÁRIO
+                        // ============================================
+                        gameSelector.addEventListener('change', function() {
+                            const statusDiv = document.getElementById('status-selecao');
+                            
+                            if (this.value) {
+                                // USUÁRIO SELECIONOU UM JOGO
+                                const jogoTexto = this.options[this.selectedIndex].text;
+                                
+                                statusDiv.innerHTML = `
+                                    <div style="background: linear-gradient(135deg, #34d399, #10b981); color: white; padding: 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.5rem; animation: pulse 1.5s ease-in-out infinite;">
+                                        <span style="font-size: 1.5rem;">✅</span>
+                                        <div style="text-align: left;">
+                                            <div style="font-weight: 700; font-size: 1rem; margin-bottom: 0.2rem;">Jogo Selecionado!</div>
+                                            <div style="font-size: 0.9rem; opacity: 0.95;">${jogoTexto}</div>
+                                            <div style="font-size: 0.85rem; margin-top: 0.3rem; font-weight: 600;">
+                                                👉 Agora clique no botão verde "CARREGAR ANÁLISE"
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                                statusDiv.style.display = 'block';
+                                
+                                // Destacar o botão com animação
+                                const btnCarregar = document.querySelector('.correlate-csv-btn');
+                                if (btnCarregar) {
+                                    btnCarregar.style.animation = 'pulse 1.5s ease-in-out infinite';
+                                    setTimeout(() => {
+                                        btnCarregar.style.animation = '';
+                                    }, 3000);
+                                }
+                                
+                            } else {
+                                // USUÁRIO LIMPOU A SELEÇÃO
+                                statusDiv.innerHTML = `
+                                    <div style="background: #fef3c7; color: #92400e; padding: 0.8rem; border-radius: 8px; border: 2px solid #fbbf24;">
+                                        <span style="font-size: 1rem; font-weight: 600;">⚠️ Selecione um jogo no dropdown acima para começar</span>
+                                    </div>
+                                `;
+                                statusDiv.style.display = 'block';
+                            }
+                        });
+                        
+                        console.log('✅ [UX] Feedback visual automático configurado!');
+                        
                     } catch (error) {
                         console.error('❌ [DEBUG] Erro ao carregar jogos:', error);
                     }
@@ -12572,6 +12752,17 @@
                         @keyframes spin {
                             0% { transform: rotate(0deg); }
                             100% { transform: rotate(360deg); }
+                        }
+                        
+                        @keyframes pulse {
+                            0%, 100% { 
+                                transform: scale(1);
+                                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+                            }
+                            50% { 
+                                transform: scale(1.05);
+                                box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+                            }
                         }
                     </style>
                 `;
